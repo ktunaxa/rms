@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ktunaxa.referral</groupId>
+	<artifactId>ktunaxa-all</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Ktunaxa parent project</name>
+	<description>Ktunaxa parent project</description>
+	<url>http://www.ktunaxa.org/</url>
+
+	<scm>
+		<connection>scm:svn:https://svn.geomajas.org/geosparc/projects/ktunaxa</connection>
+		<developerConnection>scm:svn:https://svn.geomajas.org/geosparc/projects/ktunaxa</developerConnection>
+		<url>https://svn.geomajas.org/geosparc/projects/ktunaxa</url>
+	</scm>
+
+	<licenses>
+		<license>
+			<name>GNU Affero General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/agpl-3.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>jvda</id>
+			<name>Joachim Van der Auwera</name>
+			<email>joachim@geosparc.com</email>
+		</developer>
+	</developers>
+
+	<modules>
+		<module>map</module>
+		<module>bpm</module>
+	<modules>	
+
+	<profiles>
+		<profile>
+			<id>documentation</id>
+			<activation>
+				<property>
+					<name>!skipDocs</name>
+				</property>
+			</activation>
+			<modules>
+				<module>documentation</module>
+			</modules>
+		</profile>
+	</profiles>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+</project>

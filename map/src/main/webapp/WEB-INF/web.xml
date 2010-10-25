@@ -1,0 +1,79 @@
+<web-app 
+    version="2.5"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="
+        http://java.sun.com/xml/ns/javaee 
+        http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>Geomajas application</display-name>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:org/ktunaxa/referral/shapeinmem/applicationContext.xml
+            classpath:org/ktunaxa/referral/shapeinmem/layerCountries110m.xml
+			classpath:org/ktunaxa/referral/shapeinmem/layerWmsBluemarble.xml
+  
+        <!--
+            classpath:org/ktunaxa/referral/hibernate/applicationContext.xml
+            classpath:org/ktunaxa/referral/hibernate/layerRoads.xml
+			classpath:org/ktunaxa/referral/hibernate/layerOsm.xml
+        -->
+        
+        <!--
+            classpath:org/ktunaxa/referral/geotools/applicationContext.xml
+            classpath:org/ktunaxa/referral/geotools/layerRoads.xml
+			classpath:org/ktunaxa/referral/geotools/layerOsm.xml
+        -->
+        </param-value>
+    </context-param>
+
+	<listener>
+ 		<listener-class>org.geomajas.servlet.PrepareScanningContextListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.geomajas.servlet.GeomajasContextListener</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>JettyFilter</filter-name>
+		<filter-class>org.geomajas.servlet.JettyThreadParentFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>JettyFilter</filter-name>
+		<servlet-name>GeomajasServiceServlet</servlet-name>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>GeomajasServiceServlet</servlet-name>
+		<servlet-class>org.geomajas.gwt.server.GeomajasServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<description>Spring Web-MVC specific (additional) context files.</description>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath*:META-INF/geomajasWebContext.xml</param-value>
+		</init-param>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	
+
+	<servlet-mapping>
+		<servlet-name>GeomajasServiceServlet</servlet-name>
+		<url-pattern>/org.ktunaxa.referral.GeomajasEntryPoint/geomajasService</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/d/*</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

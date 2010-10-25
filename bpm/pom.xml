@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.ktunaxa.referral</groupId>
+		<artifactId>ktunaxa-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<groupId>org.ktunaxa.referral</groupId>
+	<artifactId>ktunaxa-bpm</artifactId>
+	<packaging>war</packaging>
+	<name>Business processes</name>
+	<description>Business processes for Tkunaxa referral system</description>
+	<url>http://www.ktunaxa.org/</url>
+
+	<scm>
+		<connection>scm:svn:https://svn.geomajas.org/geosparc/projects/ktunaxa/bpm</connection>
+		<developerConnection>scm:svn:https://svn.geomajas.org/geosparc/projects/ktunaxa/bpm</developerConnection>
+		<url>https://svn.geomajas.org/geosparc/projects/ktunaxa/bpm</url>
+	</scm>
+
+	<licenses>
+		<license>
+			<name>GNU Affero General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/agpl-3.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<dependencies>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>utf8</encoding>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+
+			<!-- Run the application using "mvn jetty:run" -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.20</version>
+				<configuration>
+					<webAppConfig>
+						<contextPath>/</contextPath>
+						<baseResource implementation="org.mortbay.resource.ResourceCollection">
+							<!-- need both the webbapp dir and location where GWT puts stuff -->
+							<resourcesAsCSV>src/main/webapp,${project.build.directory}/${project.build.finalName}</resourcesAsCSV>
+						</baseResource>
+					</webAppConfig>
+					<reload>manual</reload>
+				</configuration>
+			</plugin>			
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>Geomajas</id>
+			<name>Geomajas repository</name>
+			<url>http://maven.geomajas.org/</url>
+		</repository>
+
+		<!-- uncomment if you want to use Geomajas snapshots, comment for faster builds  -->
+		<!--
+		<repository>
+			<id>Geomajas snapshots</id>
+			<name>Geomajas snapshot repository</name>
+			<url>http://apps.geomajas.org/nexus/content/groups/latest/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		-->
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>Geomajas</id>
+			<name>Geomajas repository</name>
+			<url>http://maven.geomajas.org/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+</project>
