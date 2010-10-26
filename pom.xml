@@ -34,7 +34,7 @@
 	<modules>
 		<module>map</module>
 		<module>bpm</module>
-	<modules>	
+	</modules>	
 
 	<profiles>
 		<profile>
