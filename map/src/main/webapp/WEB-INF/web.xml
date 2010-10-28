@@ -9,21 +9,9 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:org/ktunaxa/referral/shapeinmem/applicationContext.xml
-            classpath:org/ktunaxa/referral/shapeinmem/layerCountries110m.xml
-			classpath:org/ktunaxa/referral/shapeinmem/layerWmsBluemarble.xml
-  
-        <!--
-            classpath:org/ktunaxa/referral/hibernate/applicationContext.xml
-            classpath:org/ktunaxa/referral/hibernate/layerRoads.xml
-			classpath:org/ktunaxa/referral/hibernate/layerOsm.xml
-        -->
-        
-        <!--
-            classpath:org/ktunaxa/referral/geotools/applicationContext.xml
-            classpath:org/ktunaxa/referral/geotools/layerRoads.xml
-			classpath:org/ktunaxa/referral/geotools/layerOsm.xml
-        -->
+            classpath:org/ktunaxa/referral/context/applicationContext.xml
+            classpath:org/ktunaxa/referral/context/layerCountries110m.xml
+			classpath:org/ktunaxa/referral/context/layerWmsBluemarble.xml
         </param-value>
     </context-param>
 
