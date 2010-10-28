@@ -29,10 +29,16 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-pvm</artifactId>
+			<version>5.0.beta2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-explorer</artifactId>
+			<version>5.0.alpha2</version>
+			<type>war</type>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -40,6 +46,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<encoding>utf8</encoding>
 					<source>1.5</source>
@@ -71,6 +78,11 @@
 			<id>Geomajas</id>
 			<name>Geomajas repository</name>
 			<url>http://maven.geomajas.org/</url>
+		</repository>
+		<repository>
+			<id>Activiti</id>
+			<name>Activiti repository</name>
+			<url>http://maven.alfresco.com/nexus/content/repositories/activiti/</url>
 		</repository>
 
 		<!-- uncomment if you want to use Geomajas snapshots, comment for faster builds  -->
