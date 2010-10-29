@@ -29,11 +29,12 @@ import com.google.gwt.i18n.client.Messages;
  * <p>
  * Localization messages for the GWT test samples.
  * </p>
- * 
+ *
  * @author Jan De Moerloose
  */
 public interface LocalizedMessages extends Messages {
 
-	String applicationTitle(String version);
+	String applicationTitle(String id, String title);
 
+	String loadingNotice();
 }

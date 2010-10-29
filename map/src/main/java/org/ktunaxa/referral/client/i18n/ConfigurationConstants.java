@@ -29,7 +29,7 @@ import com.google.gwt.i18n.client.ConstantsWithLookup;
  * <p>
  * Localization constants that you may have defined in the server configuration.
  * </p>
- * 
+ *
  * @author Jan De Moerloose
  */
 public interface ConfigurationConstants extends ConstantsWithLookup {

@@ -2,6 +2,16 @@
     font-family: Arial,Verdana,tahoma,serif;
     color: #454545;
     font-size: 18px;
+	height: 1em;
+	overflow: hidden;
+}
+.sgwtSubTitle {
+    font-family: Arial,Verdana,tahoma,serif;
+    color: #454545;
+    font-size: 8px;
+	height: 1.2em;
+	line-height: 1.2em;
+	overflow: hidden;
 }
 
 /*------------- ATTRIBUTE FORMS -------------*/

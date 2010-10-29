@@ -23,51 +23,50 @@
 
 package org.ktunaxa.referral.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.ktunaxa.referral.client.i18n.ConfigurationConstants;
-import org.ktunaxa.referral.client.i18n.LocalizedMessages;
-import org.ktunaxa.referral.client.pages.AbstractTab;
-import org.ktunaxa.referral.client.pages.FeatureListGridPage;
-import org.ktunaxa.referral.client.pages.SearchPage;
-
-import org.geomajas.gwt.client.Geomajas;
-import org.geomajas.gwt.client.i18n.I18nProvider;
-import org.geomajas.gwt.client.map.event.MapModelEvent;
-import org.geomajas.gwt.client.map.event.MapModelHandler;
-import org.geomajas.gwt.client.widget.LayerTree;
-import org.geomajas.gwt.client.widget.Legend;
-import org.geomajas.gwt.client.widget.LoadingScreen;
-import org.geomajas.gwt.client.widget.LocaleSelect;
-import org.geomajas.gwt.client.widget.MapWidget;
-import org.geomajas.gwt.client.widget.OverviewMap;
-import org.geomajas.gwt.client.widget.ScaleSelect;
-import org.geomajas.gwt.client.widget.Toolbar;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
-import com.smartgwt.client.types.HeaderControls;
 import com.smartgwt.client.types.Side;
 import com.smartgwt.client.types.VisibilityMode;
+import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Img;
-import com.smartgwt.client.widgets.Label;
-import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.TabSet;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
+import org.geomajas.gwt.client.i18n.I18nProvider;
+import org.geomajas.gwt.client.widget.LayerTree;
+import org.geomajas.gwt.client.widget.Legend;
+import org.geomajas.gwt.client.widget.LoadingScreen;
+import org.geomajas.gwt.client.widget.LocaleSelect;
+import org.geomajas.gwt.client.widget.MapWidget;
+import org.geomajas.gwt.client.widget.OverviewMap;
+import org.geomajas.gwt.client.widget.Toolbar;
+import org.ktunaxa.referral.client.i18n.ConfigurationConstants;
+import org.ktunaxa.referral.client.i18n.LocalizedMessages;
+import org.ktunaxa.referral.client.pages.AbstractTab;
+import org.ktunaxa.referral.client.pages.FeatureListGridPage;
+import org.ktunaxa.referral.client.pages.SearchPage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Entry point and main class for GWT application. This class defines the layout and functionality of this
  * application.
- * 
+ *
  * @author Pieter De Graef
  */
 public class GeomajasEntryPoint implements EntryPoint {
+
+	private static final String RFA_ID = "MIN001";
+	private static final String RFA_TITLE = "Mining SoilDigger";
+	private static final String RFA_DESCRIPTION = "SoilDigger wants to create a copper mine. " +
+			"It will provide work for 12 permanent and sometimes up to 20 people. " +
+			"Twenty tons will be excavated daily. And I need more text because I want to see it being truncated. " +
+			"Even when the screen is large and the display font for this description is small.";
 
 	private MapWidget map;
 
@@ -78,9 +77,8 @@ public class GeomajasEntryPoint implements EntryPoint {
 	private TabSet tabSet = new TabSet();
 
 	private List<AbstractTab> tabs = new ArrayList<AbstractTab>();
-	
-	private LocalizedMessages messages = GWT.create(LocalizedMessages.class);
 
+	private LocalizedMessages messages = GWT.create(LocalizedMessages.class);
 
 	public GeomajasEntryPoint() {
 	}
@@ -106,10 +104,29 @@ public class GeomajasEntryPoint implements EntryPoint {
 		topBar.addMember(icon);
 		topBar.addSpacer(6);
 
-		Label title = new Label(messages.applicationTitle("hello world"));
+		HTMLFlow rfaLabel = new HTMLFlow(
+				"<div class=\"sgwtTitle\">"+messages.applicationTitle(RFA_ID, RFA_TITLE)+"</div>" +
+				"<div class=\"sgwtSubTitle\">"+RFA_DESCRIPTION+"</div>");
+		rfaLabel.setWidth100();
+
+		/*
+		VLayout rfaLabel = new VLayout();
+		rfaLabel.setAutoWidth();
+		Label title = new Label(messages.applicationTitle(RFA_ID, RFA_TITLE));
 		title.setStyleName("sgwtTitle");
 		title.setWidth(300);
-		topBar.addMember(title);
+		title.setAutoFit(true);
+		title.setWrap(false);
+		rfaLabel.addMember(title);
+		Label subTitle = new Label(RFA_DESCRIPTION);
+		subTitle.setStyleName("sgwtSubTitle");
+		subTitle.setWidth(300);
+		subTitle.setAutoFit(true);
+		subTitle.setWrap(false);
+		rfaLabel.addMember(subTitle);
+        */
+
+		topBar.addMember(rfaLabel);
 		topBar.addFill();
 		topBar.addMember(new LocaleSelect("English"));
 
@@ -124,20 +141,20 @@ public class GeomajasEntryPoint implements EntryPoint {
 		// ---------------------------------------------------------------------
 		// Create the left-side (map and tabs):
 		// ---------------------------------------------------------------------
-		map = new MapWidget("sampleFeaturesMap", "gwt-simple");
+		map = new MapWidget("mainMap", "app");
 		final Toolbar toolbar = new Toolbar(map);
 		toolbar.setButtonSize(Toolbar.BUTTON_SIZE_BIG);
 
 		VLayout mapLayout = new VLayout();
 		mapLayout.setShowResizeBar(true);
-		mapLayout.setResizeBarTarget("mytabs");
+		mapLayout.setResizeBarTarget("maptabs");
 		mapLayout.addMember(toolbar);
 		mapLayout.addMember(map);
 		mapLayout.setHeight("65%");
 		tabSet.setTabBarPosition(Side.TOP);
 		tabSet.setWidth100();
 		tabSet.setHeight("35%");
-		tabSet.setID("mytabs");
+		tabSet.setID("maptabs");
 
 		VLayout leftLayout = new VLayout();
 		leftLayout.setShowEdges(true);
@@ -159,7 +176,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 		// Overview map layout:
 		SectionStackSection section1 = new SectionStackSection("Overview map");
 		section1.setExpanded(true);
-		overviewMap = new OverviewMap("sampleOverviewMap", "gwt-simple", map, true, true);
+		overviewMap = new OverviewMap("mainOverviewMap", "app", map, true, true);
 		section1.addItem(overviewMap);
 		sectionStack.addSection(section1);
 
@@ -195,8 +212,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 
 		// Install a loading screen
 		// This only works if the application initially shows a map with at least 1 vector layer:
-		LoadingScreen loadScreen = new LoadingScreen(map, "Simple GWT application using Geomajas "
-				+ Geomajas.getVersion());
+		LoadingScreen loadScreen = new LoadingScreen(map, messages.loadingNotice());
 		loadScreen.draw();
 
 		// Then initialize:
