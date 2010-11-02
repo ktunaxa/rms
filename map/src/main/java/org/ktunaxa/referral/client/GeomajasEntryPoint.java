@@ -30,6 +30,7 @@ import com.smartgwt.client.types.Side;
 import com.smartgwt.client.types.VisibilityMode;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
@@ -49,6 +50,7 @@ import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.client.pages.AbstractTab;
 import org.ktunaxa.referral.client.pages.FeatureListGridPage;
 import org.ktunaxa.referral.client.pages.SearchPage;
+import org.ktunaxa.referral.client.widget.LeftCollapsibleColumn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,26 +107,9 @@ public class GeomajasEntryPoint implements EntryPoint {
 		topBar.addSpacer(6);
 
 		HTMLFlow rfaLabel = new HTMLFlow(
-				"<div class=\"sgwtTitle\">"+messages.applicationTitle(RFA_ID, RFA_TITLE)+"</div>" +
-				"<div class=\"sgwtSubTitle\">"+RFA_DESCRIPTION+"</div>");
+				"<div class=\"sgwtTitle\">" + messages.applicationTitle(RFA_ID, RFA_TITLE) + "</div>" +
+						"<div class=\"sgwtSubTitle\">" + RFA_DESCRIPTION + "</div>");
 		rfaLabel.setWidth100();
-
-		/*
-		VLayout rfaLabel = new VLayout();
-		rfaLabel.setAutoWidth();
-		Label title = new Label(messages.applicationTitle(RFA_ID, RFA_TITLE));
-		title.setStyleName("sgwtTitle");
-		title.setWidth(300);
-		title.setAutoFit(true);
-		title.setWrap(false);
-		rfaLabel.addMember(title);
-		Label subTitle = new Label(RFA_DESCRIPTION);
-		subTitle.setStyleName("sgwtSubTitle");
-		subTitle.setWidth(300);
-		subTitle.setAutoFit(true);
-		subTitle.setWrap(false);
-		rfaLabel.addMember(subTitle);
-        */
 
 		topBar.addMember(rfaLabel);
 		topBar.addFill();
@@ -137,6 +122,13 @@ public class GeomajasEntryPoint implements EntryPoint {
 		layout.setHeight100();
 		layout.setMembersMargin(5);
 		layout.setMargin(5);
+
+        LeftCollapsibleColumn docColumn = new LeftCollapsibleColumn(250);
+        layout.addMember(docColumn);
+        docColumn.show("Documents", new Label("docs"));
+
+        LeftCollapsibleColumn layerColumn = new LeftCollapsibleColumn(250);
+        layout.addMember(layerColumn);
 
 		// ---------------------------------------------------------------------
 		// Create the left-side (map and tabs):
@@ -194,8 +186,8 @@ public class GeomajasEntryPoint implements EntryPoint {
 		section3.addItem(legend);
 		sectionStack.addSection(section3);
 
-		// Putting the right side layouts together:
-		layout.addMember(sectionStack);
+		// Putting the layer layouts together:
+        layerColumn.show("Layers", sectionStack);
 
 		// ---------------------------------------------------------------------
 		// Bottom left: Add tabs here:
