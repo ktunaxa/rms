@@ -28,6 +28,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.smartgwt.client.types.Side;
 import com.smartgwt.client.types.VisibilityMode;
+import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
@@ -113,7 +114,11 @@ public class GeomajasEntryPoint implements EntryPoint {
 
 		topBar.addMember(rfaLabel);
 		topBar.addFill();
-		topBar.addMember(new LocaleSelect("English"));
+		topBar.addMember(new Button("Select"));
+		topBar.addMember(new Button("Print"));
+		topBar.addMember(new Button("Finish"));
+		topBar.addMember(new Button("Tasks"));
+		topBar.addMember(new Button("Request"));
 
 		mainLayout.addMember(topBar);
 
