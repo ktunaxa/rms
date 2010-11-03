@@ -42,7 +42,6 @@ import org.geomajas.gwt.client.i18n.I18nProvider;
 import org.geomajas.gwt.client.widget.LayerTree;
 import org.geomajas.gwt.client.widget.Legend;
 import org.geomajas.gwt.client.widget.LoadingScreen;
-import org.geomajas.gwt.client.widget.LocaleSelect;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.OverviewMap;
 import org.geomajas.gwt.client.widget.Toolbar;
@@ -128,12 +127,12 @@ public class GeomajasEntryPoint implements EntryPoint {
 		layout.setMembersMargin(5);
 		layout.setMargin(5);
 
-        LeftCollapsibleColumn docColumn = new LeftCollapsibleColumn(250);
-        layout.addMember(docColumn);
-        docColumn.show("Documents", new Label("docs"));
+		LeftCollapsibleColumn docColumn = new LeftCollapsibleColumn(250);
+		layout.addMember(docColumn);
+		docColumn.show("Documents", new Label("docs"));
 
-        LeftCollapsibleColumn layerColumn = new LeftCollapsibleColumn(250);
-        layout.addMember(layerColumn);
+		LeftCollapsibleColumn layerColumn = new LeftCollapsibleColumn(250);
+		layout.addMember(layerColumn);
 
 		// ---------------------------------------------------------------------
 		// Create the left-side (map and tabs):
@@ -192,7 +191,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 		sectionStack.addSection(section3);
 
 		// Putting the layer layouts together:
-        layerColumn.show("Layers", sectionStack);
+		layerColumn.show("Layers", sectionStack);
 
 		// ---------------------------------------------------------------------
 		// Bottom left: Add tabs here:
