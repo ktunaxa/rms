@@ -31,6 +31,16 @@
 		<dependencies>
 			<dependency>
 				<groupId>org.geomajas</groupId>
+				<artifactId>geomajas-backend</artifactId>
+				<version>1.8.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geomajas</groupId>
+				<artifactId>geomajas-face-gwt</artifactId>
+				<version>1.8.0-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geomajas</groupId>
 				<artifactId>geomajas-dep</artifactId>
 				<version>1.10.36</version>
 				<type>pom</type>
@@ -56,6 +66,16 @@
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
 			<artifactId>geomajas-layer-wms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-layer-openstreetmap</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-layer-google</artifactId>
+			<version>1.8.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas</groupId>
@@ -300,7 +320,6 @@
 		</repository>
 
 		<!-- uncomment if you want to use Geomajas snapshots, comment for faster builds  -->
-		<!--
 		<repository>
 			<id>Geomajas snapshots</id>
 			<name>Geomajas snapshot repository</name>
@@ -309,7 +328,6 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-		-->
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
