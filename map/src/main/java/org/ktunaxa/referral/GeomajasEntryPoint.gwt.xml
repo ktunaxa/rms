@@ -3,6 +3,9 @@
 	<inherits name="com.smartgwt.tools.SmartGwtTools"/>
     <inherits name="org.geomajas.gwt.GeomajasClient"/>
 
+    <!--inherits name="com.smartclient.theme.simplicity.Simplicity" /--> 
+    <inherits name="com.smartclient.theme.graphite.Graphite" /> 
+
 	<!-- add required languages
 	<extend-property name="locale" values="nl"/>
 	-->

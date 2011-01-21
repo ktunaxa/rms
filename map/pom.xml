@@ -29,20 +29,25 @@
 	
 	<dependencyManagement>
 		<dependencies>
+
 			<dependency>
 				<groupId>org.geomajas</groupId>
 				<artifactId>geomajas-backend</artifactId>
-				<version>1.8.0-SNAPSHOT</version>
+				<version>1.8.0</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.geomajas</groupId>
 				<artifactId>geomajas-face-gwt</artifactId>
-				<version>1.8.0-SNAPSHOT</version>
+				<version>1.8.0</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.geomajas</groupId>
 				<artifactId>geomajas-dep</artifactId>
-				<version>1.10.36</version>
+				<version>1.10.38-SNAPSHOT</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -52,6 +57,11 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.smartgwt</groupId>
+			<artifactId>smartgwt-skins</artifactId>
+			<version>2.4</version>
 		</dependency>
 
 		<!-- Geomajas dependencies -->
@@ -191,7 +201,8 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>1.2-CPFIX</version>
+				<!--version>1.2-CPFIX</version-->
+				<version>2.1.0-1</version>
 				<configuration>
 					<disableCastChecking>true</disableCastChecking>
 					<disableClassMetadata>true</disableClassMetadata>
@@ -319,7 +330,14 @@
 			<url>http://maven.geomajas.org/</url>
 		</repository>
 
+		<repository>
+			<id>Geomajas staging</id>
+			<name>Geomajas staging repository</name>
+			<url>https://oss.sonatype.org/content/groups/staging</url>
+		</repository>
+
 		<!-- uncomment if you want to use Geomajas snapshots, comment for faster builds  -->
+		<!-- 
 		<repository>
 			<id>Geomajas snapshots</id>
 			<name>Geomajas snapshot repository</name>
@@ -328,6 +346,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		 -->
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
