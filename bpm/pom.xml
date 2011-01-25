@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.ktunaxa.referral</groupId>
@@ -26,18 +27,115 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.geomajas</groupId>
+				<artifactId>geomajas-dep</artifactId>
+				<version>1.10.38-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.activiti</groupId>
-			<artifactId>activiti-pvm</artifactId>
-			<version>5.0.beta2</version>
+			<artifactId>activiti-engine</artifactId>
+			<version>5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.activiti</groupId>
-			<artifactId>activiti-explorer</artifactId>
-			<version>5.0.alpha2</version>
-			<type>war</type>
+			<artifactId>activiti-spring</artifactId>
+			<version>5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.smartgwt</groupId>
+			<artifactId>smartgwt</artifactId>
+			<version>2.4</version>
+		</dependency>
+		
+		<!-- Hibernate dependencies -->
+		<dependency>
+		    <groupId>org.geomajas.plugin</groupId>
+		    <artifactId>geomajas-layer-hibernate</artifactId>
+		    <version>1.7.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernatespatial</groupId>
+		    <artifactId>hibernate-spatial-postgis</artifactId>
+		    <version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.postgis</groupId>
+			<artifactId>postgis-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.0.2.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>3.5.2-Final</version>
+		</dependency>
+
+		<!-- Spring dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.0.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>3.0.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>3.0.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+		<!-- logging dependencies, delegate all to slf4j and use logback -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
 		</dependency>
 	</dependencies>
 
@@ -69,7 +167,7 @@
 					</webAppConfig>
 					<reload>manual</reload>
 				</configuration>
-			</plugin>			
+			</plugin>
 		</plugins>
 	</build>
 
@@ -84,18 +182,6 @@
 			<name>Activiti repository</name>
 			<url>http://maven.alfresco.com/nexus/content/repositories/activiti/</url>
 		</repository>
-
-		<!-- uncomment if you want to use Geomajas snapshots, comment for faster builds  -->
-		<!--
-		<repository>
-			<id>Geomajas snapshots</id>
-			<name>Geomajas snapshot repository</name>
-			<url>http://apps.geomajas.org/nexus/content/groups/latest/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		-->
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
