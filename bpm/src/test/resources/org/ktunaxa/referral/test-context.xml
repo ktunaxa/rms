@@ -41,7 +41,7 @@
 
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
 		<property name="databaseType" value="postgres" />
-		<property name="dataSource" ref="testDataSource" />
+		<property name="dataSource" ref="dataSource" />
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="databaseSchemaUpdate" value="true" />
 		<property name="jpaEntityManagerFactory" ref="entityManagerFactory" />
