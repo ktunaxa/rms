@@ -1,13 +1,23 @@
 package org.ktunaxa.referral.server.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * A comment that is associated with a certain document.
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "document_comment")
 public class DocumentComment extends Comment {
 
 	/** The document to which this comment is associated. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "document_id", nullable = false)
 	private Document document;
 
 	// ------------------------------------------------------------------------
@@ -15,10 +25,6 @@ public class DocumentComment extends Comment {
 	// ------------------------------------------------------------------------
 
 	public DocumentComment() {
-	};
-
-	public DocumentComment(long id) {
-		super(id);
 	};
 
 	// ------------------------------------------------------------------------

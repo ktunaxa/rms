@@ -2,22 +2,40 @@ package org.ktunaxa.referral.server.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Deadlines (start, stop, ...) that can be associated with a certain referral.
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "deadline")
 public class Deadline {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	/** The date associated with the deadline. */
+	@Column(nullable = false, name = "deadline_date")
 	private Date date;
 
 	/** The textual description for this deadline. */
+	@Column(nullable = false, name = "description")
 	private String description;
 
 	/** The referral that this deadline is associated with. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "referral_id", nullable = false)
 	private Referral referral;
 
 	// ------------------------------------------------------------------------

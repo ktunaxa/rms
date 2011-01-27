@@ -1,23 +1,37 @@
 package org.ktunaxa.referral.server.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * A template from which documents can be created. These templates will be used in multiple processes (e-mails, reports,
  * ...)
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "template")
 public class Template {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	/** This document's title. */
+	@Column(nullable = false, name = "title")
 	private String title;
 
 	/** A short description to further clarify this document. */
+	@Column(nullable = false, name = "description")
 	private String description;
 
 	/** The XML contents of the template. */
-	private String template;
+	@Column(nullable = false, name = "content")
+	private byte[] content;
 
 	// ------------------------------------------------------------------------
 	// Getters and setters:
@@ -96,17 +110,17 @@ public class Template {
 	 * 
 	 * @return The XML contents of the template.
 	 */
-	public String getTemplate() {
-		return template;
+	public byte[] getContent() {
+		return content;
 	}
 
 	/**
 	 * Set the XML contents of the template.
 	 * 
-	 * @param template
+	 * @param content
 	 *            The new value.
 	 */
-	public void setTemplate(String template) {
-		this.template = template;
+	public void setContent(byte[] content) {
+		this.content = content;
 	}
 }

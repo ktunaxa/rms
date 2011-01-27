@@ -1,5 +1,12 @@
 package org.ktunaxa.referral.server.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Status value object that referrals can point to. Only a limited set of possible status' are known:
  * <ul>
@@ -11,10 +18,15 @@ package org.ktunaxa.referral.server.domain;
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "referral_status")
 public class ReferralStatus {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@Column(nullable = false, name = "description")
 	private String description;
 
 	// ------------------------------------------------------------------------

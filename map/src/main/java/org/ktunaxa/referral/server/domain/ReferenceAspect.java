@@ -1,19 +1,36 @@
 package org.ktunaxa.referral.server.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Association object that associates an aspect to a reference feature within the reference layer. This is needed
  * because the different data types in the reference layers can be associated with multiple aspects.
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "reference_aspect")
 public class ReferenceAspect {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	/** The specific aspect to associate to the reference feature. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "aspect_id", nullable = false)
 	private Aspect aspect;
 
 	/** The reference feature object. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "reference_id", nullable = false)
 	private Reference reference;
 
 	// ------------------------------------------------------------------------

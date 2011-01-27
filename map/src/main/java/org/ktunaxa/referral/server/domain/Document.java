@@ -1,6 +1,19 @@
 package org.ktunaxa.referral.server.domain;
 
+import java.util.Collection;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * A document that can be associated with a certain referral. This document has some meta-data to further clarify it's
@@ -8,33 +21,50 @@ import java.util.Date;
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "document")
 public class Document {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	/** This document's title. */
+	@Column(nullable = false, name = "title")
 	private String title;
 
 	/** A short description to further clarify this document. */
+	@Column(nullable = false, name = "description")
 	private String description;
 
 	/** The unique identifier for the document within the CMS. */
+	@Column(nullable = false, name = "document_id")
 	private String documentId;
 
 	/** The date at which this document was added to the associated referral. */
+	@Column(nullable = false, name = "addition_date")
 	private Date additionDate;
 
 	/** The user who added this document to the associated referral. */
-	private User addedBy;
+	@Column(name = "added_by")
+	private String addedBy;
 
 	/** Is this document visible only to KLRA staff? */
+	@Column(nullable = false, name = "confidential")
 	private boolean confidential;
 
 	/** Should this document be added to the final report? */
+	@Column(nullable = false, name = "include_in_report")
 	private boolean includeInReport;
 
 	/** The associated referral. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "referral_id", nullable = false)
 	private Referral referral;
+
+	/** The collection of all comments made on this document. */
+	@OneToMany(mappedBy = "document", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	private Collection<DocumentComment> comments;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -151,7 +181,7 @@ public class Document {
 	 * 
 	 * @return The user who added this document to the associated referral.
 	 */
-	public User getAddedBy() {
+	public String getAddedBy() {
 		return addedBy;
 	}
 
@@ -161,7 +191,7 @@ public class Document {
 	 * @param addedBy
 	 *            The new value.
 	 */
-	public void setAddedBy(User addedBy) {
+	public void setAddedBy(String addedBy) {
 		this.addedBy = addedBy;
 	}
 
@@ -220,5 +250,24 @@ public class Document {
 	 */
 	public void setReferral(Referral referral) {
 		this.referral = referral;
+	}
+
+	/**
+	 * Get the collection of all comments made on this document.
+	 * 
+	 * @return The collection of all comments made on this document.
+	 */
+	public Collection<DocumentComment> getComments() {
+		return comments;
+	}
+
+	/**
+	 * Set the collection of all comments made on this document.
+	 * 
+	 * @param comments
+	 *            The new collection of comments.
+	 */
+	public void setComments(Collection<DocumentComment> comments) {
+		this.comments = comments;
 	}
 }

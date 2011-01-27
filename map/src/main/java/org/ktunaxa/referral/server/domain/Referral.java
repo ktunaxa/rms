@@ -1,43 +1,85 @@
 package org.ktunaxa.referral.server.domain;
 
+import java.util.Collection;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
- * The central referral object.
+ * The central referral object.<br/>
+ * TODO automatic sorting of all collections by date?
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "referral")
 public class Referral {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	/** This referral's title. */
+	@Column(nullable = false, name = "title")
 	private String title;
 
 	/** A short description to further clarify this referral. */
+	@Column(nullable = false, name = "description")
 	private String description;
 
 	/** The user who created this referral instance. */
-	private User createdBy;
+	@Column(name = "created_by")
+	private String createdBy;
 
 	/** The date at which this referral was created. */
+	@Column(nullable = false, name = "creation_date")
 	private Date creationDate;
 
 	/** The geometry that represents this referral on the map. */
+	@Type(type = "org.hibernatespatial.GeometryUserType")
+	@Column(nullable = false, name = "geom")
 	private Geometry geometry;
 
 	/** What is the current status of this referral? (new, in progress, approved, denied) */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "status_id", nullable = false)
 	private ReferralStatus status;
 
 	/** The full name of the person to contact concerning any and all updates in processing this referral. */
+	@Column(nullable = false, name = "contact_name")
 	private String contactName;
 
 	/** The email address to mail to concerning any and all updates in processing this referral. */
+	@Column(nullable = false, name = "contact_email")
 	private String contactEmail;
-	
-	//private Collection<ReferralAspect> aspects;
+
+	/** The full collection of deadlines associated with this referral. */
+	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	private Collection<Deadline> deadlines;
+
+	/** The collection of all documents associated with this referral. */
+	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	private Collection<Document> documents;
+
+	/** The collection of all comments made on this referral. */
+	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	private Collection<ReferralComment> comments;
+
+	// private Collection<ReferralAspect> aspects;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -114,7 +156,7 @@ public class Referral {
 	 * 
 	 * @return The user who created this referral instance.
 	 */
-	public User getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
@@ -124,7 +166,7 @@ public class Referral {
 	 * @param createdBy
 	 *            The new user.
 	 */
-	public void setCreatedBy(User createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -221,5 +263,62 @@ public class Referral {
 	 */
 	public void setContactEmail(String contactEmail) {
 		this.contactEmail = contactEmail;
+	}
+
+	/**
+	 * Get the collection of all documents associated with this referral.
+	 * 
+	 * @return The collection of all documents associated with this referral.
+	 */
+	public Collection<Document> getDocuments() {
+		return documents;
+	}
+
+	/**
+	 * Set the collection of all documents associated with this referral.
+	 * 
+	 * @param documents
+	 *            The new collection of associated documents.
+	 */
+	public void setDocuments(Collection<Document> documents) {
+		this.documents = documents;
+	}
+
+	/**
+	 * Get the full collection of deadlines associated with this referral.
+	 * 
+	 * @return The full collection of deadlines associated with this referral.
+	 */
+	public Collection<Deadline> getDeadlines() {
+		return deadlines;
+	}
+
+	/**
+	 * Set the full collection of deadlines associated with this referral.
+	 * 
+	 * @param deadlines
+	 *            The new collection of deadlines.
+	 */
+	public void setDeadlines(Collection<Deadline> deadlines) {
+		this.deadlines = deadlines;
+	}
+
+	/**
+	 * Get the collection of all comments made on this referral.
+	 * 
+	 * @return The collection of all comments made on this referral.
+	 */
+	public Collection<ReferralComment> getComments() {
+		return comments;
+	}
+
+	/**
+	 * Set the collection of all comments made on this referral.
+	 * 
+	 * @param comments
+	 *            The new collection of comments.
+	 */
+	public void setComments(Collection<ReferralComment> comments) {
+		this.comments = comments;
 	}
 }

@@ -1,13 +1,23 @@
 package org.ktunaxa.referral.server.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * A comment that is associated with a certain referral.
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "referral_comment")
 public class ReferralComment extends Comment {
 
 	/** The referral to which this comment is associated. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "referral_id", nullable = false)
 	private Referral referral;
 
 	// ------------------------------------------------------------------------
@@ -15,10 +25,6 @@ public class ReferralComment extends Comment {
 	// ------------------------------------------------------------------------
 
 	public ReferralComment() {
-	};
-
-	public ReferralComment(long id) {
-		super(id);
 	};
 
 	// ------------------------------------------------------------------------

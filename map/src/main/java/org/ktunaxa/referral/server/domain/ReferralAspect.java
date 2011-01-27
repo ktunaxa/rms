@@ -3,7 +3,7 @@ package org.ktunaxa.referral.server.domain;
 import java.util.Date;
 
 /**
- * Could be part of the BPM application....to be discussed.
+ * TODO Could be part of the BPM application....to be discussed.
  * 
  * @author Pieter De Graef
  */
@@ -17,11 +17,15 @@ public class ReferralAspect {
 
 	private boolean checked;
 
-	private User checkUser;
+	private String checkUser;
 
 	private String checkComment;
 
 	private Date checkDate;
+
+	// ------------------------------------------------------------------------
+	// Constructors:
+	// ------------------------------------------------------------------------
 
 	public ReferralAspect() {
 	};
@@ -112,7 +116,7 @@ public class ReferralAspect {
 	 * @param newVar
 	 *            the new value of checkUser
 	 */
-	public void setCheckUser(User newVar) {
+	public void setCheckUser(String newVar) {
 		checkUser = newVar;
 	}
 
@@ -121,7 +125,7 @@ public class ReferralAspect {
 	 * 
 	 * @return the value of checkUser
 	 */
-	public User getCheckUser() {
+	public String getCheckUser() {
 		return checkUser;
 	}
 

@@ -1,21 +1,39 @@
 package org.ktunaxa.referral.server.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * A key-value pair that stores an alpha-numerical attributes for a specific reference feature.
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "reference_key_value")
 public class ReferenceKeyValue {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	/** The associated reference feature. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "reference_id", nullable = false)
 	private Reference reference;
 
 	/** The attribute's key. */
+	@Column(nullable = false, name = "the_key")
 	private String key;
 
 	/** The attribute's textual value. */
+	@Column(name = "the_value")
 	private String value;
 
 	// ------------------------------------------------------------------------

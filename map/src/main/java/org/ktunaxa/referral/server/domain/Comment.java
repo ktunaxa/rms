@@ -2,36 +2,54 @@ package org.ktunaxa.referral.server.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
 /**
  * Base definition of a general comment. Extensions of this class will associate such comments with documents or
  * referrals.
  * 
  * @author Pieter De Graef
  */
-public class Comment {
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Comment {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private long id;
 
 	/** The comment's title. */
+	@Column(nullable = false, name = "title")
 	private String title;
 
 	/** The original textual content of the comment. Once saved, this is always left untouched. */
+	@Column(nullable = false, name = "content")
 	private String content;
 
 	/** The moment when the comment was created. */
+	@Column(nullable = false, name = "creation_date")
 	private Date creationDate;
 
 	/** The user who originally created the comment. */
-	private User createdBy;
+	@Column(name = "created_by")
+	private String createdBy;
 
 	/** Should this comment be included in the eventual report? */
+	@Column(nullable = false, name = "include_in_report")
 	private boolean includeInReport;
 
 	/**
 	 * The new content for this comment. If this comment is added to the report than this value is used, not the
 	 * original content.
 	 */
-	private String checkedContent;
+	@Column(name = "checked_content")
+	protected String checkedContent;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -39,10 +57,6 @@ public class Comment {
 
 	public Comment() {
 	};
-
-	public Comment(long id) {
-		this.id = id;
-	}
 
 	// ------------------------------------------------------------------------
 	// Getters and setters:
@@ -121,7 +135,7 @@ public class Comment {
 	/**
 	 * @return The user who originally created the comment.
 	 */
-	public User getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
@@ -131,7 +145,7 @@ public class Comment {
 	 * @param createdBy
 	 *            The new value.
 	 */
-	public void setCreatedBy(User createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 

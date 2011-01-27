@@ -2,6 +2,18 @@ package org.ktunaxa.referral.server.domain;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 /**
@@ -9,20 +21,29 @@ import com.vividsolutions.jts.geom.Geometry;
  * 
  * @author Pieter De Graef
  */
+@Entity
+@Table(name = "reference")
 public class Reference {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	/** The name of the basic data type (roads, wild life, provincial parks, ...). */
+	@Column(nullable = false, name = "type_name")
 	private String typeName;
 
 	/** The actual geometry of this reference feature on the map. */
+	@Type(type = "org.hibernatespatial.GeometryUserType")
+	@Column(nullable = false, name = "geom")
 	private Geometry geometry;
 
 	/** The collection of aspects this reference feature is associated with. */
+	@OneToMany(mappedBy = "reference", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	private Collection<ReferenceAspect> aspects;
 
 	/** The collection of key-value pairs that make up this reference feature. */
+	@OneToMany(mappedBy = "reference", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private Collection<ReferenceKeyValue> attributes;
 
 	// ------------------------------------------------------------------------
