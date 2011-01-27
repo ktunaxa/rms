@@ -1,9 +1,9 @@
-package org.ktunaxa.referral.pojo;
+package org.ktunaxa.referral.server.domain;
 
 import java.util.Date;
 
 /**
- * ...
+ * Could be part of the BPM application....to be discussed.
  * 
  * @author Pieter De Graef
  */
@@ -26,20 +26,24 @@ public class ReferralAspect {
 	public ReferralAspect() {
 	};
 
+	// ------------------------------------------------------------------------
+	// Getters and setters:
+	// ------------------------------------------------------------------------
+
 	/**
-	 * Set the value of id
+	 * The aspect's unique identifier.
 	 * 
-	 * @param newVar
-	 *            the new value of id
+	 * @param id
+	 *            The new value for the identifier.
 	 */
-	public void setId(long newVar) {
-		id = newVar;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	/**
-	 * Get the value of id
+	 * Get the value of the identifier.
 	 * 
-	 * @return the value of id
+	 * @return the value of the identifier.
 	 */
 	public long getId() {
 		return id;

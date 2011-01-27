@@ -1,4 +1,4 @@
-package org.ktunaxa.referral.pojo;
+package org.ktunaxa.referral.server.domain;
 
 /**
  * ...
