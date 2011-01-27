@@ -12,6 +12,8 @@
             classpath:org/ktunaxa/referral/context/applicationContext.xml
             classpath:org/ktunaxa/referral/context/layerCountries110m.xml
 			classpath:org/ktunaxa/referral/context/layerGoogleSat.xml
+
+			classpath:org/ktunaxa/referral/context/spring-hibernate.xml
         </param-value>
     </context-param>
 
