@@ -49,7 +49,7 @@ public abstract class Comment {
 	 * original content.
 	 */
 	@Column(name = "checked_content")
-	protected String checkedContent;
+	private String checkedContent;
 
 	// ------------------------------------------------------------------------
 	// Constructors:

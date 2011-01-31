@@ -29,25 +29,10 @@
 	
 	<dependencyManagement>
 		<dependencies>
-
-			<dependency>
-				<groupId>org.geomajas</groupId>
-				<artifactId>geomajas-backend</artifactId>
-				<version>1.8.0</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.geomajas</groupId>
-				<artifactId>geomajas-face-gwt</artifactId>
-				<version>1.8.0</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
 			<dependency>
 				<groupId>org.geomajas</groupId>
 				<artifactId>geomajas-dep</artifactId>
-				<version>1.10.38-SNAPSHOT</version>
+				<version>1.11.4</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -58,6 +43,11 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 		</dependency>
+		<!--dependency>
+			<groupId>com.smartgwt</groupId>
+			<artifactId>smartgwt</artifactId>
+			<version>2.4</version>
+		</dependency-->
 		<dependency>
 			<groupId>com.smartgwt</groupId>
 			<artifactId>smartgwt-skins</artifactId>
@@ -80,7 +70,7 @@
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
 			<artifactId>geomajas-layer-openstreetmap</artifactId>
-			<version>1.8.0</version>
+			<!--version>1.8.0</version-->
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
@@ -98,7 +88,6 @@
 			<artifactId>geomajas-layer-hibernate</artifactId>
 		</dependency>
 		<!-- uncomment if you want to use Hibernate with postgis, for another db you will need similar dependencies -->
-		<!--
 		<dependency>
 			<groupId>org.hibernatespatial</groupId>
 			<artifactId>hibernate-spatial-postgis</artifactId>
@@ -111,7 +100,6 @@
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
-		-->
 		
 		<!-- Google dependencies -->
 		<dependency>
@@ -141,6 +129,18 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
+		</dependency>
+
+		<!-- Unit testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
