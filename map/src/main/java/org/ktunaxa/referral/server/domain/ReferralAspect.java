@@ -1,3 +1,15 @@
+/*
+ * This is part of the Ktunaxa referral system.
+ *
+ * Copyright 2011 Geosparc nv, http://www.geosparc.com/, Belgium.
+ * Copyright 2011 Ktunaxa Nation Counsil, http://www.ktunaxa.org/, Canada.
+ *
+ * The program is available in open source according to the GNU Affero
+ * General Public License. All contributions in this program are covered
+ * by the Geomajas Contributors License Agreement. For full licensing
+ * details, see LICENSE.txt in the project root.
+ */
+
 package org.ktunaxa.referral.server.domain;
 
 import java.util.Date;
@@ -54,7 +66,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Set the value of referral
+	 * Set the value of referral.
 	 * 
 	 * @param newVar
 	 *            the new value of referral
@@ -64,7 +76,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Get the value of referral
+	 * Get the value of referral.
 	 * 
 	 * @return the value of referral
 	 */
@@ -73,7 +85,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Set the value of aspect
+	 * Set the value of aspect.
 	 * 
 	 * @param newVar
 	 *            the new value of aspect
@@ -83,7 +95,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Get the value of aspect
+	 * Get the value of aspect.
 	 * 
 	 * @return the value of aspect
 	 */
@@ -92,7 +104,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Set the value of checked
+	 * Set the value of checked.
 	 * 
 	 * @param newVar
 	 *            the new value of checked
@@ -102,7 +114,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Get the value of checked
+	 * Get the value of checked.
 	 * 
 	 * @return the value of checked
 	 */
@@ -111,7 +123,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Set the value of checkUser
+	 * Set the value of checkUser.
 	 * 
 	 * @param newVar
 	 *            the new value of checkUser
@@ -121,7 +133,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Get the value of checkUser
+	 * Get the value of checkUser.
 	 * 
 	 * @return the value of checkUser
 	 */
@@ -130,7 +142,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Set the value of checkComment
+	 * Set the value of checkComment.
 	 * 
 	 * @param newVar
 	 *            the new value of checkComment
@@ -140,7 +152,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Get the value of checkComment
+	 * Get the value of checkComment.
 	 * 
 	 * @return the value of checkComment
 	 */
@@ -149,7 +161,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Set the value of checkDate
+	 * Set the value of checkDate.
 	 * 
 	 * @param newVar
 	 *            the new value of checkDate
@@ -159,7 +171,7 @@ public class ReferralAspect {
 	}
 
 	/**
-	 * Get the value of checkDate
+	 * Get the value of checkDate.
 	 * 
 	 * @return the value of checkDate
 	 */

@@ -9,8 +9,8 @@
 	<groupId>org.ktunaxa.referral</groupId>
 	<artifactId>ktunaxa-map</artifactId>
 	<packaging>war</packaging>
-	<name>Map component</name>
-	<description>Map component for Tkunaxa referral system</description>
+	<name>Mapping dashboard</name>
+	<description>Mapping dashboard for Tkunaxa referral system</description>
 	<url>http://www.ktunaxa.org/</url>
 
 	<scm>
@@ -27,27 +27,12 @@
 		</license>
 	</licenses>
 	
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.geomajas</groupId>
-				<artifactId>geomajas-dep</artifactId>
-				<version>1.11.4</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 		</dependency>
-		<!--dependency>
-			<groupId>com.smartgwt</groupId>
-			<artifactId>smartgwt</artifactId>
-			<version>2.4</version>
-		</dependency-->
+
 		<dependency>
 			<groupId>com.smartgwt</groupId>
 			<artifactId>smartgwt-skins</artifactId>
@@ -70,7 +55,6 @@
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
 			<artifactId>geomajas-layer-openstreetmap</artifactId>
-			<!--version>1.8.0</version-->
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
@@ -161,7 +145,7 @@
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.5-DF</version>
 				<configuration>
-					<configLocation>config/geomajas-checkstyle.xml</configLocation>
+					<configLocation>${basedir}/src/main/resources/checkstyle.xml</configLocation>
 				</configuration>
 				<executions>
 					<execution>
@@ -171,14 +155,7 @@
 						</goals>
 					</execution>
 				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.geomajas</groupId>
-						<artifactId>geomajas-checkstyle</artifactId>
-						<version>1.0.4</version>
-					</dependency>
-				</dependencies>
-			</plugin>			
+			</plugin>
 
 			<!-- Run the application using "mvn jetty:run" -->
 			<plugin>
@@ -190,7 +167,7 @@
 						<contextPath>/</contextPath>
 						<baseResource implementation="org.mortbay.resource.ResourceCollection">
 							<!-- need both the webbapp dir and location where GWT puts stuff -->
-							<resourcesAsCSV>src/main/webapp,${project.build.directory}/${project.build.finalName}</resourcesAsCSV>
+							<resourcesAsCSV>${basedir}/src/main/webapp,${project.build.directory}/${project.build.finalName}</resourcesAsCSV>
 						</baseResource>
 					</webAppConfig>
 					<reload>manual</reload>
@@ -201,7 +178,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<!--version>1.2-CPFIX</version-->
 				<version>2.1.0-1</version>
 				<configuration>
 					<disableCastChecking>true</disableCastChecking>

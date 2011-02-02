@@ -29,12 +29,84 @@
 			<name>Joachim Van der Auwera</name>
 			<email>joachim@geosparc.com</email>
 		</developer>
+		<developer>
+			<id>pieterdg</id>
+			<name>Pieter De Graef</name>
+			<email>pieter.degraef@geosparc.com</email>
+		</developer>
 	</developers>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<encoding>utf8</encoding>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>org.geomajas</groupId>
+				<artifactId>geomajas-dep</artifactId>
+				<version>1.11.4</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.ktunaxa.referral</groupId>
+				<artifactId>ktunaxa-activiti-explorer</artifactId>
+				<type>war</type>
+				<version>${project.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-engine</artifactId>
+				<version>5.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>3.0.5.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.tuckey</groupId>
+				<artifactId>urlrewritefilter</artifactId>
+				<version>3.2.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.extensions.surf</groupId>
+				<artifactId>spring-surf-api</artifactId>
+				<version>1.0.0-RC2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.extensions.surf</groupId>
+				<artifactId>spring-surf-core-configservice</artifactId>
+				<version>1.0.0-RC2</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
 
 	<modules>
 		<module>map</module>
+		<module>activiti-explorer</module>
 		<module>bpm</module>
-	</modules>	
+	</modules>
 
 	<profiles>
 		<profile>
