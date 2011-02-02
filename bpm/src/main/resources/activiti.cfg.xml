@@ -1,0 +1,35 @@
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Geosparc nv, http://www.geosparc.com/, Belgium.
+  ~ Copyright 2011 Ktunaxa Nation Counsil, http://www.ktunaxa.org/, Canada.
+  ~
+  ~ The program is available in open source according to the GNU Affero
+  ~ General Public License. All contributions in this program are covered
+  ~ by the Geomajas Contributors License Agreement. For full licensing
+  ~ details, see LICENSE.txt in the project root.
+  -->
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+
+    <!-- Database configurations -->
+    <property name="databaseType" value="h2" />
+    <property name="jdbcUrl" value="jdbc:h2:tcp://localhost/activiti" />
+    <property name="jdbcDriver" value="org.h2.Driver" />
+    <property name="jdbcUsername" value="sa" />
+    <property name="jdbcPassword" value="" />
+<!--
+db=postgres
+jdbc.driver=org.postgresql.Driver
+jdbc.url=jdbc:postgresql://localhost:5432/activiti
+jdbc.username=activiti
+jdbc.password=activiti
+-->
+  </bean>
+
+</beans>
