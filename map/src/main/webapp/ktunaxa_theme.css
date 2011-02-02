@@ -1,0 +1,69 @@
+/*
+Dark borders: #327e04
+Dark header: top = #55a616 - bottom = #459e00
+Light header: top = #7ab93d - bottom = #67b021
+*/
+
+.header {
+	background: #555555 url('org.ktunaxa.referral.GeomajasEntryPoint/sc/images/header/header-bg-black.png') repeat-x;
+	border: none;
+	color: #FFFFFF;
+}
+
+.headerText {
+	font-size: 16px;
+	line-height: 44px;
+	padding-top: auto;
+	margin-bottom: auto;
+	margin-left: 20px;
+}
+
+.headerRight {
+	background: #555555 url('org.ktunaxa.referral.GeomajasEntryPoint/sc/images/header/header-right-bg-green.png') no-repeat;
+}
+.headerRight .toolbarButton {
+	color: #FFFFFF;
+}
+.headerRight .toolbarButtonOver {
+	color: #FFFFFF;
+}
+.headerRight .toolbarButtonDown {
+    color: #FFFFFF;
+}
+
+.subHeader {
+	background: #FFFFFF url('org.ktunaxa.referral.GeomajasEntryPoint/sc/images/header/content-bg.png') repeat-x;
+}
+
+
+
+/*------------ BLOCKS -----------------*/
+.block {
+	background: #f8f8f8;
+	margin: 5px;
+	padding: 3px;
+	border: 1px solid #DDD8D8;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.blockTitle {
+    border-bottom: 1px solid #DDD8D8;
+}
+.blockTitleText {
+	font-family: Arial,Verdana,sans-serif;
+	color: #327e04;
+	font-weight:bold;
+	font-size: 14px;
+	line-height:28px;
+	padding-left:10px;
+}
+.blockVerticalTitleText {
+	font-family: Arial,Verdana,sans-serif;
+	color: #327e04;
+	font-weight:bold;
+	font-size: 14px;
+	text-align: center;
+	padding-top: 10px;
+}
+
+

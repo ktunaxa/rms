@@ -23,24 +23,24 @@
 
 package org.ktunaxa.referral.client;
 
-import org.geomajas.gwt.client.widget.MapWidget;
-import org.geomajas.gwt.client.widget.Toolbar;
-import org.ktunaxa.referral.client.gui.CloseableLayout;
-import org.ktunaxa.referral.client.gui.LayerTreePanel;
-import org.ktunaxa.referral.client.gui.CloseableLayout.LayoutAlignment;
+import org.ktunaxa.referral.client.gui.LayerPanel;
+import org.ktunaxa.referral.client.gui.MainGui;
+import org.ktunaxa.referral.client.gui.SearchPanel;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.tab.Tab;
-import com.smartgwt.client.widgets.tab.TabSet;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
 
 /**
  * Entry point and main class for GWT application. This class defines the layout and functionality of this application.
@@ -60,90 +60,161 @@ public class GeomajasEntryPoint implements EntryPoint {
 
 	private LocalizedMessages messages = GWT.create(LocalizedMessages.class);
 
-	private MapWidget mapWidget;
+	private MainGui mainGui;
+	
+	private LayerPanel layerPanel;
+	
+	private SearchPanel searchPanel;
 
 	public void onModuleLoad() {
-		VLayout layout = new VLayout(5);
+		VLayout layout = new VLayout();
 		layout.setWidth100();
 		layout.setHeight100();
 
-		layout.addMember(createTitleBar());
+		mainGui = new MainGui();
 
-		HLayout mainLayout = new HLayout(5);
-		mainLayout.addMember(createLeftPanel());
-		Canvas rightPanel = createRightPanel();
-		mainLayout.addMember(rightPanel);
+		layout.addMember(createHeader());
+		layout.addMember(createMenuBar());
+		
+		VLayout subHeader = new VLayout();
+		subHeader.setSize("100%", "15px");
+		subHeader.setStyleName("subHeader");
+		layout.addMember(subHeader);
 
-		layout.addMember(mainLayout);
+		layout.addMember(mainGui);
 		layout.draw();
-
-		// Add the layer tree to the layout:
-		LayerTreePanel panel = new LayerTreePanel(mapWidget, rightPanel);
-		rightPanel.addChild(panel);
 	}
 
-	private Canvas createLeftPanel() {
-		CloseableLayout layout = new CloseableLayout(LayoutAlignment.LEFT, "Referral management");
-		layout.setSize("350px", "100%");
+	private Canvas createHeader() {
+		HLayout header = new HLayout();
+		header.setSize("100%", "44");
+		header.setStyleName("header");
 
-		TabSet tabs = new TabSet();
-		Tab tabSearch = new Tab("Search", "[ISOMORPHIC]/geomajas/silk/find.png");
-		Tab tabDocs = new Tab("Documents", "[ISOMORPHIC]/images/page.png");
-		Tab tabComments = new Tab("Comments", "[ISOMORPHIC]/images/comments.png");
-		tabs.addTab(tabSearch);
-		tabs.addTab(tabDocs);
-		tabs.addTab(tabComments);
-
-		layout.setPanel(tabs);
-		return layout;
-	}
-
-	private Canvas createRightPanel() {
-		VLayout layout = new VLayout();
-		layout.setSize("100%", "100%");
-		layout.setStyleName("mapLayout");
-
-		mapWidget = new MapWidget("mainMap", "app");
-		Toolbar toolbar = new Toolbar(mapWidget);
-		toolbar.setButtonSize(Toolbar.BUTTON_SIZE_BIG);
-		toolbar.setBackgroundImage("");
-		toolbar.setBackgroundColor("#647386");
-		toolbar.setBorder("0px");
-
-		layout.addMember(toolbar);
-		layout.addMember(mapWidget);
-
-		return layout;
-	}
-
-	private Canvas createTitleBar() {
-		ToolStrip topBar = new ToolStrip();
-		topBar.setMembersMargin(2);
-		topBar.setHeight(32);
-		topBar.setWidth100();
-		topBar.addSpacer(6);
-		topBar.setBackgroundImage("");
-		topBar.setBackgroundColor("#B6B6B6");
-		topBar.setBorder("");
-
-		Img icon = new Img("[ISOMORPHIC]/images/ktunaxa_logo.png", 24, 18);
-		icon.setSize(24);
-		topBar.addMember(icon);
-		topBar.addSpacer(6);
-
-		HTMLFlow rfaLabel = new HTMLFlow("<div class=\"sgwtTitle\">" + messages.applicationTitle(RFA_ID, RFA_TITLE)
-				+ "</div>");
+		HTMLFlow rfaLabel = new HTMLFlow(messages.applicationTitle(RFA_ID, RFA_TITLE));
+		rfaLabel.setStyleName("headerText");
 		rfaLabel.setTooltip(RFA_DESCRIPTION);
 		rfaLabel.setHoverWidth(500);
 		rfaLabel.setWidth100();
+		header.addMember(rfaLabel);
 
-		topBar.addMember(rfaLabel);
-		topBar.addFill();
-		topBar.addMember(new ToolStripButton("Select"));
-		topBar.addMember(new ToolStripButton("Print"));
-		topBar.addMember(new ToolStripButton("Finish"));
-		topBar.addMember(new ToolStripButton("Tasks"));
-		topBar.addMember(new ToolStripButton("Request"));
-		return topBar;
+		LayoutSpacer spacer = new LayoutSpacer();
+		header.addMember(spacer);
+
+		ToolStrip headerBar = new ToolStrip();
+		headerBar.setMembersMargin(2);
+		headerBar.setSize("445", "44");
+		headerBar.addFill();
+		headerBar.setStyleName("headerRight");
+
+		headerBar.addMember(new ToolStripButton("Select"));
+		headerBar.addMember(new ToolStripButton("Finish"));
+		headerBar.addMember(new ToolStripButton("Tasks"));
+		headerBar.addMember(new ToolStripButton("Request"));
+		headerBar.addSpacer(10);
+		header.addMember(headerBar);
+
+		return header;
+	}
+
+	private Canvas createMenuBar() {
+		ToolStrip menuBar = new ToolStrip();
+		menuBar.setMembersMargin(5);
+		menuBar.setSize("100%", "36");
+		menuBar.addSpacer(6);
+		menuBar.setBorder("none");
+		
+		// Create the panels:
+		layerPanel = new LayerPanel(mainGui.getMapWidget());
+		searchPanel = new SearchPanel(mainGui.getMapWidget());
+
+		// Layer button:
+		ToolStripButton layerButton = new ToolStripButton("Layers");
+		layerButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				mainGui.showLeftLayout(layerPanel, "Manage layers", "250");
+				mainGui.hideBottomLayout();
+			}
+		});
+		layerButton.setActionType(SelectionType.RADIO);
+		layerButton.setRadioGroup("the-only-one");
+		menuBar.addMember(layerButton);
+		menuBar.addMember(new ToolStripSeparator());
+
+		// Activate Layer stuff
+		layerButton.select();
+		mainGui.showLeftLayout(layerPanel, "Manage layers", "250");
+		mainGui.hideBottomLayout();
+
+		// Search button:
+		ToolStripButton searchButton = new ToolStripButton("Search");
+		searchButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				mainGui.showBottomLayout(searchPanel, "Search the map", "250");
+				mainGui.hideLeftLayout();
+			}
+		});
+		searchButton.setActionType(SelectionType.RADIO);
+		searchButton.setRadioGroup("the-only-one");
+		menuBar.addMember(searchButton);
+		menuBar.addMember(new ToolStripSeparator());
+
+		// Check button:
+		ToolStripButton checkButton = new ToolStripButton("Checks");
+		checkButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				mainGui.showLeftLayout(new VLayout(), "Execute checks", "400");
+				mainGui.hideBottomLayout();
+			}
+		});
+		checkButton.setActionType(SelectionType.RADIO);
+		checkButton.setRadioGroup("the-only-one");
+		menuBar.addMember(checkButton);
+		menuBar.addMember(new ToolStripSeparator());
+
+		// Print button:
+		ToolStripButton printButton = new ToolStripButton("Print");
+		printButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				mainGui.showLeftLayout(new VLayout(), "Print the map", "300");
+				mainGui.hideBottomLayout();
+			}
+		});
+		printButton.setActionType(SelectionType.RADIO);
+		printButton.setRadioGroup("the-only-one");
+		menuBar.addMember(printButton);
+		menuBar.addMember(new ToolStripSeparator());
+
+		// Document button:
+		ToolStripButton documentButton = new ToolStripButton("Documents");
+		documentButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				mainGui.showLeftLayout(new VLayout(), "Manage documents", "100%");
+				mainGui.hideBottomLayout();
+			}
+		});
+		documentButton.setActionType(SelectionType.RADIO);
+		documentButton.setRadioGroup("the-only-one");
+		menuBar.addMember(documentButton);
+		menuBar.addMember(new ToolStripSeparator());
+
+		// Comments button:
+		ToolStripButton commentButton = new ToolStripButton("Comments");
+		commentButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				mainGui.showLeftLayout(new VLayout(), "Manage comments", "100%");
+				mainGui.hideBottomLayout();
+			}
+		});
+		commentButton.setActionType(SelectionType.RADIO);
+		commentButton.setRadioGroup("the-only-one");
+		menuBar.addMember(commentButton);
+
+		return menuBar;
 	}
 }

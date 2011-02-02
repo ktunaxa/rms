@@ -115,10 +115,24 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 				<property name="treeNode">
 					<bean class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
 						<property name="label" value="Layers" />
-						<property name="layers">
+						<property name="treeNodes">
 							<list>
-								<ref bean="googleSatLayer" />
-								<ref bean="countries110mLayer" />
+								<bean class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
+									<property name="label" value="Base layers" />
+									<property name="layers">
+										<list>
+											<ref bean="googleSatLayer" />
+										</list>
+									</property>
+								</bean>
+								<bean class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
+									<property name="label" value="Aspect: Cultural" />
+									<property name="layers">
+										<list>
+											<ref bean="countries110mLayer" />
+										</list>
+									</property>
+								</bean>
 							</list>
 						</property>
 						<property name="expanded" value="true" />

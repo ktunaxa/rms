@@ -1,4 +1,5 @@
 
+
 /*------------- KTUNAXA styles ---------------*/
 
 /* Tooltip style: */
@@ -25,7 +26,7 @@
 
 /* LayerTree panel styles*/
 .search_panel_buttons {
-	background: #647386;
+	background: #55a616;
 	padding: 4px;
 	border-bottom-left-radius: 8px;
 	-moz-border-radius-bottomleft: 8px;
@@ -41,7 +42,7 @@
 }
 
 /* CloseableLayout */
-.closeableLayout {
+/*.closeableLayout {
 	background: #A0A0A0;
 	padding: 5px 5px 5px 0px;
 	border-bottom-right-radius: 6px;
@@ -68,26 +69,8 @@
 	text-align: center;
 	padding-top: 10px;
 }
+*/
 
-
-
-
-.sgwtTitle {
-    font-family: Arial,Verdana,tahoma,serif;
-    color: #454545;
-    font-size: 18px;
-    line-height: 32px;
-	/*height: 1em;*/
-	overflow: hidden;
-}
-.sgwtSubTitle {
-    font-family: Arial,Verdana,tahoma,serif;
-    color: #454545;
-    font-size: 8px;
-	height: 1.2em;
-	line-height: 1.2em;
-	overflow: hidden;
-}
 
 
 /*------------- ATTRIBUTE FORMS -------------*/
