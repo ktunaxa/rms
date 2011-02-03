@@ -17,6 +17,7 @@
 
 	<!-- Inherited modules: SmartGWT -->
 	<!--inherits name='com.smartgwt.SmartGwt'/-->
+	<inherits name='com.smartgwt.SmartGwtNoTheme'/>
 
 	<!-- Geomajas DTO source code, base path must be org/geomajas to access all packages !!! -->
 

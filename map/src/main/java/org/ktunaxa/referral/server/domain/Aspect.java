@@ -25,6 +25,7 @@ import javax.persistence.Table;
  * <li>Culture</li>
  * <li>Ecology</li>
  * <li>Archaeology</li>
+ * <li>Aquatic</li>
  * <li>...</li>
  * </ul>
  * 

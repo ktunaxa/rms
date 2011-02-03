@@ -1,75 +1,48 @@
+/*
+ * This is part of the Ktunaxa referral system.
+ *
+ * Copyright 2011 Geosparc nv, http://www.geosparc.com/, Belgium.
+ * Copyright 2011 Ktunaxa Nation Counsil, http://www.ktunaxa.org/, Canada.
+ *
+ * The program is available in open source according to the GNU Affero
+ * General Public License. All contributions in this program are covered
+ * by the Geomajas Contributors License Agreement. For full licensing
+ * details, see LICENSE.txt in the project root.
+ */
 
 
 /*------------- KTUNAXA styles ---------------*/
 
-/* Tooltip style: */
-.canvasHover, .gridHover, .formHover {
-    background-color: #E0E0E0;
-    border: 3px solid #999999;
-    color: black;
-    font-family: Arial,Verdana,sans-serif;
-    font-size: 12px;
-    padding: 3px 5px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-}
-
-/* Main map styles */
-.mapLayout {
-	background: #A0A0A0;
-	padding: 5px 0px 5px 5px;
-	border-bottom-left-radius: 6px;
-	-moz-border-radius-bottomleft: 6px;
-	border-top-left-radius: 6px;
-	-moz-border-radius-topleft: 6px;
-}
-
-/* LayerTree panel styles*/
-.search_panel_buttons {
-	background: #55a616;
-	padding: 4px;
-	border-bottom-left-radius: 8px;
-	-moz-border-radius-bottomleft: 8px;
-}
-.search_panel {
-	background: #A0A0A0;
-	padding: 0px 0px 8px 8px;
-	border-bottom-left-radius: 8px;
-	-moz-border-radius-bottomleft: 8px;
-}
-.search_panel_inner {
-	padding: 5px 37px 5px 5px;
-}
-
-/* CloseableLayout */
-/*.closeableLayout {
-	background: #A0A0A0;
-	padding: 5px 5px 5px 0px;
-	border-bottom-right-radius: 6px;
-	-moz-border-radius-bottomright: 6px;
-	border-top-right-radius: 6px;
-	-moz-border-radius-topright: 6px;
-}
-.closeableLayoutTitle {
-	font-family: Arial,Verdana,sans-serif;
+.header {
+	background: #555555 url('org.ktunaxa.referral.GeomajasEntryPoint/sc/images/header/header-bg-black.png') repeat-x;
+	border: none;
 	color: #FFFFFF;
-	font-weight:bold;
-	font-size: 13px;
-	line-height:24px;
-	padding-left:10px;
 }
-.closeableLayoutPanel {
-	margin-top: 5px;
+
+.headerText {
+	font-size: 16px;
+	line-height: 44px;
+	padding-top: auto;
+	margin-bottom: auto;
+	margin-left: 20px;
 }
-.closeableLayoutVerticalTitle {
-	font-family: Arial,Verdana,sans-serif;
+
+.headerRight {
+	background: #555555 url('org.ktunaxa.referral.GeomajasEntryPoint/sc/images/header/header-right-bg-green.png') no-repeat;
+}
+.headerRight .toolbarButton {
 	color: #FFFFFF;
-	font-weight:bold;
-	font-size: 13px;
-	text-align: center;
-	padding-top: 10px;
 }
-*/
+.headerRight .toolbarButtonOver {
+	color: #FFFFFF;
+}
+.headerRight .toolbarButtonDown {
+    color: #FFFFFF;
+}
+
+.subHeader {
+	background: #FFFFFF url('org.ktunaxa.referral.GeomajasEntryPoint/sc/images/header/content-bg.png') repeat-x;
+}
 
 
 
@@ -120,6 +93,12 @@
 
 
 /*------------- SEARCH -------------*/
+
+.headerBar {
+    background: #f6f6f6;
+    background-image: -moz-linear-gradient(top, #ffffff, #E6E6E6);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#E6E6E6));
+}
 
 .searchHeader {
 	height: 24px;

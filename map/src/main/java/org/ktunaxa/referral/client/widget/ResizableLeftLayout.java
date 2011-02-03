@@ -224,7 +224,7 @@ public class ResizableLeftLayout extends VLayout {
 		titleDiv.setStyleName("blockTitleText");
 
 		ImgButton minimizeImage = new ImgButton();
-		minimizeImage.setSrc("[ISOMORPHIC]/skins/KtunaxaTheme/images/headerIcons/minimize.gif");
+		minimizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/minimize.gif");
 		minimizeImage.setSize(16);
 		minimizeImage.setLayoutAlign(VerticalAlignment.CENTER);
 		minimizeImage.addClickHandler(new ClickHandler() {
@@ -236,16 +236,16 @@ public class ResizableLeftLayout extends VLayout {
 
 		final ImgButton maximizeImage = new ImgButton();
 		maximizeImage.setLayoutAlign(VerticalAlignment.CENTER);
-		maximizeImage.setSrc("[ISOMORPHIC]/skins/KtunaxaTheme/images/headerIcons/maximize.gif");
+		maximizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/maximize.gif");
 		maximizeImage.setSize(16);
 		maximizeImage.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 				if (viewState == ViewState.MAXIMIZED) {
-					maximizeImage.setSrc("[ISOMORPHIC]/skins/KtunaxaTheme/images/headerIcons/maximize.gif");
+					maximizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/maximize.gif");
 					restore();
 				} else if (viewState == ViewState.RESTORED) {
-					maximizeImage.setSrc("[ISOMORPHIC]/skins/KtunaxaTheme/images/headerIcons/cascade.gif");
+					maximizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/cascade.gif");
 					maximize();
 				}
 			}
@@ -265,7 +265,7 @@ public class ResizableLeftLayout extends VLayout {
 
 		ImgButton maximizeImage = new ImgButton();
 		maximizeImage.setLayoutAlign(Alignment.CENTER);
-		maximizeImage.setSrc("[ISOMORPHIC]/skins/KtunaxaTheme/images/headerIcons/maximize.gif");
+		maximizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/maximize.gif");
 		maximizeImage.setSize(16);
 		maximizeImage.addClickHandler(new ClickHandler() {
 
@@ -277,7 +277,7 @@ public class ResizableLeftLayout extends VLayout {
 
 		ImgButton restoreImage = new ImgButton();
 		restoreImage.setLayoutAlign(Alignment.CENTER);
-		restoreImage.setSrc("[ISOMORPHIC]/skins/KtunaxaTheme/images/headerIcons/cascade.gif");
+		restoreImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/cascade.gif");
 		restoreImage.setSize(16);
 		restoreImage.addClickHandler(new ClickHandler() {
 

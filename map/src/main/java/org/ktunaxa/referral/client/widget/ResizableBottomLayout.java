@@ -218,7 +218,7 @@ public class ResizableBottomLayout extends VLayout {
 		titleDiv.setStyleName("blockTitleText");
 
 		minimizeImage = new ImgButton();
-		minimizeImage.setSrc("[ISOMORPHIC]/skins/KtunaxaTheme/images/headerIcons/minimize.gif");
+		minimizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/minimize.gif");
 		minimizeImage.setSize(16);
 		minimizeImage.setLayoutAlign(VerticalAlignment.CENTER);
 		minimizeImage.addClickHandler(new ClickHandler() {
@@ -230,7 +230,7 @@ public class ResizableBottomLayout extends VLayout {
 
 		restoreImage = new ImgButton();
 		restoreImage.setLayoutAlign(VerticalAlignment.CENTER);
-		restoreImage.setSrc("[ISOMORPHIC]/skins/KtunaxaTheme/images/headerIcons/cascade.gif");
+		restoreImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/cascade.gif");
 		restoreImage.setSize(16);
 		restoreImage.addClickHandler(new ClickHandler() {
 
@@ -242,7 +242,7 @@ public class ResizableBottomLayout extends VLayout {
 
 		maximizeImage = new ImgButton();
 		maximizeImage.setLayoutAlign(VerticalAlignment.CENTER);
-		maximizeImage.setSrc("[ISOMORPHIC]/skins/KtunaxaTheme/images/headerIcons/maximize.gif");
+		maximizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/maximize.gif");
 		maximizeImage.setSize(16);
 		maximizeImage.addClickHandler(new ClickHandler() {
 

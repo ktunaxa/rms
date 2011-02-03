@@ -12,10 +12,12 @@
 
 package org.ktunaxa.referral.client;
 
+import org.ktunaxa.referral.client.gui.CommentPanel;
 import org.ktunaxa.referral.client.gui.LayerPanel;
 import org.ktunaxa.referral.client.gui.MainGui;
 import org.ktunaxa.referral.client.gui.SearchPanel;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
+import org.ktunaxa.referral.client.widget.ViewState;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -54,6 +56,14 @@ public class GeomajasEntryPoint implements EntryPoint {
 	private LayerPanel layerPanel;
 	
 	private SearchPanel searchPanel;
+	
+	private CommentPanel commentPanel;
+	
+	private VLayout checkPanel;
+	
+	private VLayout printPanel;
+	
+	private VLayout documentPanel;
 
 	public void onModuleLoad() {
 		VLayout layout = new VLayout();
@@ -82,7 +92,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 		HTMLFlow rfaLabel = new HTMLFlow(messages.applicationTitle(RFA_ID, RFA_TITLE));
 		rfaLabel.setStyleName("headerText");
 		rfaLabel.setTooltip(RFA_DESCRIPTION);
-		rfaLabel.setHoverWidth(500);
+		rfaLabel.setHoverWidth(700);
 		rfaLabel.setWidth100();
 		header.addMember(rfaLabel);
 
@@ -115,6 +125,10 @@ public class GeomajasEntryPoint implements EntryPoint {
 		// Create the panels:
 		layerPanel = new LayerPanel(mainGui.getMapWidget());
 		searchPanel = new SearchPanel(mainGui.getMapWidget());
+		commentPanel = new CommentPanel();
+		checkPanel = new VLayout();
+		printPanel = new VLayout();
+		documentPanel = new VLayout();
 
 		// Layer button:
 		ToolStripButton layerButton = new ToolStripButton("Layers");
@@ -154,7 +168,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 		checkButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(new VLayout(), "Execute checks", "400");
+				mainGui.showLeftLayout(checkPanel, "Execute checks", "400");
 				mainGui.hideBottomLayout();
 			}
 		});
@@ -168,7 +182,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 		printButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(new VLayout(), "Print the map", "300");
+				mainGui.showLeftLayout(printPanel, "Print the map", "300");
 				mainGui.hideBottomLayout();
 			}
 		});
@@ -182,7 +196,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 		documentButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(new VLayout(), "Manage documents", "100%");
+				mainGui.showLeftLayout(documentPanel, "Manage documents", "600");
 				mainGui.hideBottomLayout();
 			}
 		});
@@ -196,7 +210,8 @@ public class GeomajasEntryPoint implements EntryPoint {
 		commentButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(new VLayout(), "Manage comments", "100%");
+				mainGui.showLeftLayout(commentPanel, "Manage comments", "600");
+				mainGui.setLeftLayoutViewState(ViewState.MAXIMIZED);
 				mainGui.hideBottomLayout();
 			}
 		});

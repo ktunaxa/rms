@@ -1,0 +1,45 @@
+/*
+ * This is part of the Ktunaxa referral system.
+ *
+ * Copyright 2011 Geosparc nv, http://www.geosparc.com/, Belgium.
+ * Copyright 2011 Ktunaxa Nation Counsil, http://www.ktunaxa.org/, Canada.
+ *
+ * The program is available in open source according to the GNU Affero
+ * General Public License. All contributions in this program are covered
+ * by the Geomajas Contributors License Agreement. For full licensing
+ * details, see LICENSE.txt in the project root.
+ */
+ 
+/* Ktunaxa specific extension to the default SmartGwt styles. */
+
+/*============================================================
+BLOCKS
+============================================================*/
+
+.block {
+	background: #f8f8f8;
+	margin: 5px;
+	padding: 3px;
+	border: 1px solid #DDD8D8;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.blockTitle {
+    border-bottom: 1px solid #DDD8D8;
+}
+.blockTitleText {
+	font-family: Arial,Verdana,sans-serif;
+	color: #327e04;
+	font-weight:bold;
+	font-size: 14px;
+	line-height:28px;
+	padding-left:10px;
+}
+.blockVerticalTitleText {
+	font-family: Arial,Verdana,sans-serif;
+	color: #327e04;
+	font-weight:bold;
+	font-size: 14px;
+	text-align: center;
+	padding-top: 10px;
+}
