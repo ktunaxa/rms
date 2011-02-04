@@ -49,11 +49,13 @@ public class MainGui extends VLayout {
 	// ------------------------------------------------------------------------
 
 	public void showLeftLayout(Canvas canvas, String title, String width) {
+		mapWidget.setVisible(false);
 		leftLayout.restore();
-		leftLayout.setWidth(width);
 		leftLayout.setTitle(title);
 		leftLayout.setPane(canvas);
+		leftLayout.setWidth(width);
 		leftLayout.setVisible(true);
+		mapWidget.setVisible(true);
 	}
 
 	public void setLeftLayoutViewState(ViewState viewState) {
@@ -74,11 +76,13 @@ public class MainGui extends VLayout {
 	}
 
 	public void showBottomLayout(Canvas canvas, String title, String height) {
+		mapWidget.setVisible(false);
 		bottomLayout.restore();
 		bottomLayout.setHeight(height);
 		bottomLayout.setTitle(title);
 		bottomLayout.setPane(canvas);
 		bottomLayout.setVisible(true);
+		mapWidget.setVisible(true);
 	}
 
 	public void setBottomLayoutViewState(ViewState viewState) {
