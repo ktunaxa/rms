@@ -13,11 +13,11 @@
 package org.ktunaxa.referral.client;
 
 import org.ktunaxa.referral.client.gui.CommentPanel;
+import org.ktunaxa.referral.client.gui.DocumentPanel;
 import org.ktunaxa.referral.client.gui.LayerPanel;
 import org.ktunaxa.referral.client.gui.MainGui;
 import org.ktunaxa.referral.client.gui.SearchPanel;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
-import org.ktunaxa.referral.client.widget.ViewState;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -52,18 +52,18 @@ public class GeomajasEntryPoint implements EntryPoint {
 	private LocalizedMessages messages = GWT.create(LocalizedMessages.class);
 
 	private MainGui mainGui;
-	
+
 	private LayerPanel layerPanel;
-	
+
 	private SearchPanel searchPanel;
-	
-	private CommentPanel commentPanel;
-	
+
 	private VLayout checkPanel;
-	
+
 	private VLayout printPanel;
-	
-	private VLayout documentPanel;
+
+	private DocumentPanel documentPanel;
+
+	private CommentPanel commentPanel2;
 
 	public void onModuleLoad() {
 		VLayout layout = new VLayout();
@@ -74,7 +74,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 
 		layout.addMember(createHeader());
 		layout.addMember(createMenuBar());
-		
+
 		VLayout subHeader = new VLayout();
 		subHeader.setSize("100%", "15px");
 		subHeader.setStyleName("subHeader");
@@ -121,14 +121,14 @@ public class GeomajasEntryPoint implements EntryPoint {
 		menuBar.setSize("100%", "36");
 		menuBar.addSpacer(6);
 		menuBar.setBorder("none");
-		
+
 		// Create the panels:
 		layerPanel = new LayerPanel(mainGui.getMapWidget());
 		searchPanel = new SearchPanel(mainGui.getMapWidget());
-		commentPanel = new CommentPanel();
 		checkPanel = new VLayout();
 		printPanel = new VLayout();
-		documentPanel = new VLayout();
+		documentPanel = new DocumentPanel();
+		commentPanel2 = new CommentPanel();
 
 		// Layer button:
 		ToolStripButton layerButton = new ToolStripButton("Layers");
@@ -210,15 +210,14 @@ public class GeomajasEntryPoint implements EntryPoint {
 		commentButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(commentPanel, "Manage comments", "600");
-				mainGui.setLeftLayoutViewState(ViewState.MAXIMIZED);
+				mainGui.showLeftLayout(commentPanel2, "Manage comments", "700");
+				//mainGui.setLeftLayoutViewState(ViewState.MAXIMIZED);
 				mainGui.hideBottomLayout();
 			}
 		});
 		commentButton.setActionType(SelectionType.RADIO);
 		commentButton.setRadioGroup("the-only-one");
 		menuBar.addMember(commentButton);
-
 		return menuBar;
 	}
 }

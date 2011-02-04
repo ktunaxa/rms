@@ -12,17 +12,25 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import org.ktunaxa.referral.client.gui.comments.CommentList;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.smartgwt.client.types.VisibilityMode;
-import com.smartgwt.client.widgets.layout.SectionStack;
-import com.smartgwt.client.widgets.layout.SectionStackSection;
+import org.ktunaxa.referral.client.widget.CollapsibleListBlock;
+import org.ktunaxa.referral.client.widget.DetailView;
+import org.ktunaxa.referral.client.widget.ListLayout;
+import org.ktunaxa.referral.client.widget.ListView;
+import org.ktunaxa.referral.server.dto.CommentDto;
+
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.tab.Tab;
-import com.smartgwt.client.widgets.tab.TabSet;
 
 /**
- * Panel that displays 2 tabs: a FeatureSearch and a FeatureListGrid.
+ * Panel for managing the comments of a referral. This panel display the full list of comments or a more detailed view
+ * on a single comment.
  * 
  * @author Pieter De Graef
  */
@@ -31,29 +39,89 @@ public class CommentPanel extends VLayout {
 	public CommentPanel() {
 		setSize("100%", "100%");
 
-		SectionStack commentStack = new SectionStack();
-		commentStack.setVisibilityMode(VisibilityMode.MULTIPLE);
-		commentStack.setSize("100%", "100%");
+		Map<String, Comparator<CollapsibleListBlock<CommentDto>>> sortAttributes = new HashMap<String, Comparator<CollapsibleListBlock<CommentDto>>>();
+		sortAttributes.put("date", new DateComparator());
+		sortAttributes.put("author", new AuthorComparator());
+		sortAttributes.put("title", new TitleComparator());
+		ListView<CommentDto> listView = new ListView<CommentDto>(sortAttributes);
+		DetailView<CommentDto> detailView = new DetailView<CommentDto>();
+		ListLayout<CommentDto> layout = new ListLayout<CommentDto>(listView, detailView);
+		layout.populate(getBlocks());
+		addMember(layout);
+	}
 
-		// Comment list:
-		SectionStackSection section1 = new SectionStackSection("List of all comments");
-		section1.setExpanded(true);
-		CommentList commentList = new CommentList();
-		commentList.setMargin(5);
-		section1.addItem(commentList);
-		commentStack.addSection(section1);
+	private class DateComparator implements Comparator<CollapsibleListBlock<CommentDto>> {
 
-		// Comment list:
-		SectionStackSection section2 = new SectionStackSection("Comment details");
-		section2.setExpanded(true);
-		TabSet tabs = new TabSet();
-		tabs.setMargin(5);
-		Tab tab1 = new Tab("Edit selected comment");
-		Tab tab2 = new Tab("Create new comment");
-		tabs.setTabs(tab1, tab2);
-		section2.addItem(tabs);
-		commentStack.addSection(section2);
+		public int compare(CollapsibleListBlock<CommentDto> one, CollapsibleListBlock<CommentDto> two) {
+			if (one == null && two == null) {
+				return 0;
+			}
+			if (one == null) {
+				return -1;
+			}
+			if (two == null) {
+				return 1;
+			}
+			return one.getObject().getCreationDate().compareTo(two.getObject().getCreationDate());
+		}
+	}
 
-		addMember(commentStack);
+	private class AuthorComparator implements Comparator<CollapsibleListBlock<CommentDto>> {
+
+		public int compare(CollapsibleListBlock<CommentDto> one, CollapsibleListBlock<CommentDto> two) {
+			if (one == null && two == null) {
+				return 0;
+			}
+			if (one == null) {
+				return -1;
+			}
+			if (two == null) {
+				return 1;
+			}
+			return one.getObject().getCreatedBy().compareTo(two.getObject().getCreatedBy());
+		}
+	}
+
+	private class TitleComparator implements Comparator<CollapsibleListBlock<CommentDto>> {
+
+		public int compare(CollapsibleListBlock<CommentDto> one, CollapsibleListBlock<CommentDto> two) {
+			if (one == null && two == null) {
+				return 0;
+			}
+			if (one == null) {
+				return -1;
+			}
+			if (two == null) {
+				return 1;
+			}
+			return one.getObject().getTitle().compareTo(two.getObject().getTitle());
+		}
+	}
+
+	private List<CollapsibleListBlock<CommentDto>> getBlocks() {
+		List<CollapsibleListBlock<CommentDto>> list = new ArrayList<CollapsibleListBlock<CommentDto>>();
+		for (CommentDto comment : getCommentData()) {
+			list.add(new CommentBlock(comment));
+		}
+		return list;
+	}
+
+	private List<CommentDto> getCommentData() {
+		CommentDto c1 = new CommentDto();
+		c1.setTitle("Comment that expresses my deepest lorum ipsum feelings.");
+		c1.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae dolor rutrum sapien dapibus eleifend sed vitae massa. Suspendisse tortor tortor, porttitor quis blandit eget, dictum sed ipsum. Curabitur luctus turpis in diam accumsan convallis. Cras ultrices, ligula id adipiscing facilisis, arcu justo consequat quam, id pulvinar mauris magna ut tortor. Fusce vestibulum ligula at augue feugiat non elementum metus gravida. Nulla elit diam, interdum at lacinia id, pharetra eget tortor. Praesent tincidunt euismod posuere. Nulla sagittis adipiscing lacus, at suscipit leo fringilla sit amet. Cras pellentesque consequat turpis vel interdum. Nunc ligula nunc, porta quis aliquet non, luctus a odio. Sed feugiat pulvinar libero nec commodo. Nulla sed mi nisl. Nulla vulputate pulvinar leo, at accumsan odio fermentum et.");
+		c1.setCheckedContent("Let's take a shorter version of the above, shall we? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae dolor rutrum sapien dapibus eleifend sed vitae massa. Suspendisse tortor tortor, porttitor quis blandit eget, dictum sed ipsum. Curabitur luctus turpis in diam accumsan convallis. Cras ultrices, ligula id adipiscing facilisis, arcu justo consequat quam, id pulvinar mauris magna ut tortor. Fusce vestibulum ligula at augue feugiat non elementum metus gravida. Nulla elit diam, interdum at lacinia id, pharetra eget tortor. Praesent tincidunt euismod posuere. Nulla sagittis adipiscing lacus, at suscipit leo fringilla sit amet. Cras pellentesque consequat turpis vel interdum. Nunc ligula nunc, porta quis aliquet non, luctus a odio.");
+		c1.setIncludeInReport(true);
+		c1.setCreatedBy("Pieter De Graef");
+		c1.setCreationDate(new Date());
+		CommentDto c2 = new CommentDto();
+		c2.setTitle("Comment that is here just for testing purposes.");
+		c2.setContent("2Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae dolor rutrum sapien dapibus eleifend sed vitae massa. Suspendisse tortor tortor, porttitor quis blandit eget, dictum sed ipsum. Curabitur luctus turpis in diam accumsan convallis. Cras ultrices, ligula id adipiscing facilisis, arcu justo consequat quam, id pulvinar mauris magna ut tortor. Fusce vestibulum ligula at augue feugiat non elementum metus gravida. Nulla elit diam, interdum at lacinia id, pharetra eget tortor. Praesent tincidunt euismod posuere. Nulla sagittis adipiscing lacus, at suscipit leo fringilla sit amet. Cras pellentesque consequat turpis vel interdum. Nunc ligula nunc, porta quis aliquet non, luctus a odio. Sed feugiat pulvinar libero nec commodo. Nulla sed mi nisl. Nulla vulputate pulvinar leo, at accumsan odio fermentum et.");
+		c2.setIncludeInReport(false);
+		c2.setCreatedBy("Bob De Kerpel");
+		c2.setCreationDate(new Date());
+		List<CommentDto> list = new ArrayList<CommentDto>();
+		Collections.addAll(list, c1, c2, c1, c2, c1, c2, c1, c2, c1, c2, c1, c2);
+		return list;
 	}
 }

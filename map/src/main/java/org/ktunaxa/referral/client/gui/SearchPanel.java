@@ -36,7 +36,9 @@ public class SearchPanel extends VLayout {
 		Tab tab2 = new Tab("Feature Grid");
 
 		FeatureListGrid grid = new FeatureListGrid(mapWidget.getMapModel());
+		grid.setBackgroundColor("#FFFFFF");
 		FeatureSearch search = new FeatureSearch(mapWidget.getMapModel(), true);
+		search.setBackgroundColor("#FFFFFF");
 		search.addSearchHandler(new DefaultSearchHandler(grid) {
 
 			public void afterSearch() {
