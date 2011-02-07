@@ -49,6 +49,15 @@ public class Document {
 	@Column(nullable = false, name = "description")
 	private String description;
 
+	/** Content keywords as a comma separated list. */
+	@Column(name = "keywords")
+	private String keywords;
+
+	/** What type of document being stored in system - Internal response, external response, etc... */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "type_id", nullable = false)
+	private DocumentType type;
+
 	/** The unique identifier for the document within the CMS. */
 	@Column(nullable = false, name = "document_id")
 	private String documentId;
@@ -281,5 +290,43 @@ public class Document {
 	 */
 	public void setComments(Collection<DocumentComment> comments) {
 		this.comments = comments;
+	}
+
+	/**
+	 * Get content keywords as a comma separated list.
+	 * 
+	 * @return Content keywords as a comma separated list.
+	 */
+	public String getKeywords() {
+		return keywords;
+	}
+
+	/**
+	 * Set the content keywords as a comma separated list.
+	 * 
+	 * @param keywords
+	 *            The new keywords.
+	 */
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	/**
+	 * Get the type of document being stored in system - Internal response, external response, etc...
+	 * 
+	 * @return What type of document being stored in system - Internal response, external response, etc...
+	 */
+	public DocumentType getType() {
+		return type;
+	}
+
+	/**
+	 * Set the type of document being stored in system - Internal response, external response, etc...
+	 * 
+	 * @param type
+	 *            The new document type.
+	 */
+	public void setType(DocumentType type) {
+		this.type = type;
 	}
 }

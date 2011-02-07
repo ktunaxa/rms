@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+import org.ktunaxa.referral.server.domain.DocumentType;
+
 /**
  * A document that can be associated with a certain referral. This document has some meta-data to further clarify it's
  * contents, and can possibly be included in the final report.
@@ -21,6 +23,12 @@ public class DocumentDto implements Serializable {
 
 	/** A short description to further clarify this document. */
 	private String description;
+
+	/** Content keywords as a comma separated list. */
+	private String keywords;
+
+	/** What type of document being stored in system - Internal response, external response, etc... */
+	private DocumentType type;
 
 	/** The unique identifier for the document within the CMS. */
 	private String documentId;
@@ -246,5 +254,43 @@ public class DocumentDto implements Serializable {
 	 */
 	public void setComments(Collection<DocumentCommentDto> comments) {
 		this.comments = comments;
+	}
+
+	/**
+	 * Get content keywords as a comma separated list.
+	 * 
+	 * @return Content keywords as a comma separated list.
+	 */
+	public String getKeywords() {
+		return keywords;
+	}
+
+	/**
+	 * Set the content keywords as a comma separated list.
+	 * 
+	 * @param keywords
+	 *            The new keywords.
+	 */
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	/**
+	 * Get the type of document being stored in system - Internal response, external response, etc...
+	 * 
+	 * @return What type of document being stored in system - Internal response, external response, etc...
+	 */
+	public DocumentType getType() {
+		return type;
+	}
+
+	/**
+	 * Set the type of document being stored in system - Internal response, external response, etc...
+	 * 
+	 * @param type
+	 *            The new document type.
+	 */
+	public void setType(DocumentType type) {
+		this.type = type;
 	}
 }

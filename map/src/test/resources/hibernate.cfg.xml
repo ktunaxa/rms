@@ -9,19 +9,20 @@
       <property name="show_sql">false</property>
 
       <mapping class="org.ktunaxa.referral.server.domain.Aspect" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferralStatus" />
       <mapping class="org.ktunaxa.referral.server.domain.Template" />
       <mapping class="org.ktunaxa.referral.server.domain.Reference" />
       <mapping class="org.ktunaxa.referral.server.domain.ReferenceAspect" />
       <mapping class="org.ktunaxa.referral.server.domain.ReferenceKeyValue" />
       <mapping class="org.ktunaxa.referral.server.domain.Comment" />
-      <mapping class="org.ktunaxa.referral.server.domain.DocumentComment" />
+
       <mapping class="org.ktunaxa.referral.server.domain.Document" />
+      <mapping class="org.ktunaxa.referral.server.domain.DocumentType" />
+      <mapping class="org.ktunaxa.referral.server.domain.DocumentComment" />
+
       <mapping class="org.ktunaxa.referral.server.domain.Referral" />
+      <mapping class="org.ktunaxa.referral.server.domain.ReferralStatus" />
+      <mapping class="org.ktunaxa.referral.server.domain.ReferralType" />
+      <mapping class="org.ktunaxa.referral.server.domain.ReferralApplicationType" />
       <mapping class="org.ktunaxa.referral.server.domain.ReferralComment" />
-      <mapping class="org.ktunaxa.referral.server.domain.Deadline" />
-<!--
-      <mapping class="org.ktunaxa.referral.server.domain.ReferralAspect" />
--->
    </session-factory>
 </hibernate-configuration>

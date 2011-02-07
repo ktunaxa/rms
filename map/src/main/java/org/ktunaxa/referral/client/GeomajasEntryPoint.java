@@ -211,7 +211,6 @@ public class GeomajasEntryPoint implements EntryPoint {
 
 			public void onClick(ClickEvent event) {
 				mainGui.showLeftLayout(commentPanel2, "Manage comments", "700");
-				//mainGui.setLeftLayoutViewState(ViewState.MAXIMIZED);
 				mainGui.hideBottomLayout();
 			}
 		});
