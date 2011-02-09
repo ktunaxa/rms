@@ -10,62 +10,42 @@
  * details, see LICENSE.txt in the project root.
  */
 
-package org.ktunaxa.referral.server.domain;
+package org.ktunaxa.referral.server.dto;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
-
-import com.vividsolutions.jts.geom.Geometry;
+import org.geomajas.geometry.Geometry;
 
 /**
  * A feature of the reference layer with it's specific collection of key-value pairs and aspects.
  * 
  * @author Pieter De Graef
  */
-@Entity
-@Table(name = "reference")
-public class Reference {
+public class ReferenceValueDto implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	/** The name of the basic data type (roads, wild life, provincial parks, ...). */
-	@Column(nullable = false, name = "type_name")
-	private String typeName;
+	private String layerName;
 
 	/** The actual geometry of this reference feature on the map. */
-	@Type(type = "org.hibernatespatial.GeometryUserType")
-	@Column(nullable = false, name = "geom")
 	private Geometry geometry;
 
 	/** The collection of aspects this reference feature is associated with. */
-	@OneToMany(mappedBy = "reference", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	private Collection<ReferenceAspect> aspects;
+	private Collection<ReferenceValueAspectDto> aspects;
 
 	/** The collection of key-value pairs that make up this reference feature. */
-	@OneToMany(mappedBy = "reference", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-	private Collection<ReferenceKeyValue> attributes;
+	private Collection<ReferenceValueAttributeDto> attributes;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
 	// ------------------------------------------------------------------------
 
-	public Reference() {
+	public ReferenceValueDto() {
 	};
 
-	public Reference(long id) {
+	public ReferenceValueDto(long id) {
 		this.id = id;
 	};
 
@@ -97,18 +77,18 @@ public class Reference {
 	 * 
 	 * @return The name of the basic data type (roads, wild life, provincial parks, ...).
 	 */
-	public String getTypeName() {
-		return typeName;
+	public String getLayerName() {
+		return layerName;
 	}
 
 	/**
 	 * Set the name of the basic data type (roads, wild life, provincial parks, ...).
 	 * 
-	 * @param typeName
-	 *            The new type name.
+	 * @param layerName
+	 *            The new layer type name.
 	 */
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
+	public void setLayerName(String layerName) {
+		this.layerName = layerName;
 	}
 
 	/**
@@ -135,7 +115,7 @@ public class Reference {
 	 * 
 	 * @return The collection of aspects this reference feature is associated with.
 	 */
-	public Collection<ReferenceAspect> getAspects() {
+	public Collection<ReferenceValueAspectDto> getAspects() {
 		return aspects;
 	}
 
@@ -145,7 +125,7 @@ public class Reference {
 	 * @param aspects
 	 *            The new collection of aspects.
 	 */
-	public void setAspects(Collection<ReferenceAspect> aspects) {
+	public void setAspects(Collection<ReferenceValueAspectDto> aspects) {
 		this.aspects = aspects;
 	}
 
@@ -154,7 +134,7 @@ public class Reference {
 	 * 
 	 * @return The collection of key-value pairs that make up this reference feature.
 	 */
-	public Collection<ReferenceKeyValue> getAttributes() {
+	public Collection<ReferenceValueAttributeDto> getAttributes() {
 		return attributes;
 	}
 
@@ -164,7 +144,7 @@ public class Reference {
 	 * @param attributes
 	 *            The new collection of key-value pairs.
 	 */
-	public void setAttributes(Collection<ReferenceKeyValue> attributes) {
+	public void setAttributes(Collection<ReferenceValueAttributeDto> attributes) {
 		this.attributes = attributes;
 	}
 }

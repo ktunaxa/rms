@@ -23,13 +23,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * A key-value pair that stores an alpha-numerical attributes for a specific reference feature.
+ * A key-value pair that stores an alpha-numerical attributes for a specific base reference feature.
  * 
  * @author Pieter De Graef
  */
 @Entity
-@Table(name = "reference_key_value")
-public class ReferenceKeyValue {
+@Table(name = "reference_base_attribute")
+public class ReferenceBaseAttribute {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,8 +37,8 @@ public class ReferenceKeyValue {
 
 	/** The associated reference feature. */
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "reference_id", nullable = false)
-	private Reference reference;
+	@JoinColumn(name = "reference_base_id", nullable = false)
+	private ReferenceBase reference;
 
 	/** The attribute's key. */
 	@Column(nullable = false, name = "the_key")
@@ -52,10 +52,10 @@ public class ReferenceKeyValue {
 	// Constructors:
 	// ------------------------------------------------------------------------
 
-	public ReferenceKeyValue() {
+	public ReferenceBaseAttribute() {
 	};
 
-	public ReferenceKeyValue(long id) {
+	public ReferenceBaseAttribute(long id) {
 		this.id = id;
 	};
 
@@ -87,7 +87,7 @@ public class ReferenceKeyValue {
 	 * 
 	 * @return The associated reference feature.
 	 */
-	public Reference getReference() {
+	public ReferenceBase getReference() {
 		return reference;
 	}
 
@@ -97,7 +97,7 @@ public class ReferenceKeyValue {
 	 * @param reference
 	 *            The new reference feature.
 	 */
-	public void setReference(Reference reference) {
+	public void setReference(ReferenceBase reference) {
 		this.reference = reference;
 	}
 

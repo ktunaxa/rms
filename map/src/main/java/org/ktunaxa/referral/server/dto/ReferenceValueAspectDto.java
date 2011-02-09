@@ -10,16 +10,9 @@
  * details, see LICENSE.txt in the project root.
  */
 
-package org.ktunaxa.referral.server.domain;
+package org.ktunaxa.referral.server.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Association object that associates an aspect to a reference feature within the reference layer. This is needed
@@ -27,32 +20,26 @@ import javax.persistence.Table;
  * 
  * @author Pieter De Graef
  */
-@Entity
-@Table(name = "reference_aspect")
-public class ReferenceAspect {
+public class ReferenceValueAspectDto implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private static final long serialVersionUID = 100L;
+
 	private long id;
 
 	/** The specific aspect to associate to the reference feature. */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "aspect_id", nullable = false)
-	private Aspect aspect;
+	private AspectDto aspect;
 
 	/** The reference feature object. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "reference_id", nullable = false)
-	private Reference reference;
+	private ReferenceValueDto reference;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
 	// ------------------------------------------------------------------------
 
-	public ReferenceAspect() {
+	public ReferenceValueAspectDto() {
 	};
 
-	public ReferenceAspect(long id) {
+	public ReferenceValueAspectDto(long id) {
 		this.id = id;
 	};
 
@@ -84,7 +71,7 @@ public class ReferenceAspect {
 	 * 
 	 * @return The specific aspect to associate to the reference feature.
 	 */
-	public Aspect getAspect() {
+	public AspectDto getAspect() {
 		return aspect;
 	}
 
@@ -94,7 +81,7 @@ public class ReferenceAspect {
 	 * @param aspect
 	 *            The new aspect value.
 	 */
-	public void setAspect(Aspect aspect) {
+	public void setAspect(AspectDto aspect) {
 		this.aspect = aspect;
 	}
 
@@ -103,7 +90,7 @@ public class ReferenceAspect {
 	 * 
 	 * @return The reference feature object.
 	 */
-	public Reference getReference() {
+	public ReferenceValueDto getReference() {
 		return reference;
 	}
 
@@ -113,7 +100,7 @@ public class ReferenceAspect {
 	 * @param reference
 	 *            The new reference feature.
 	 */
-	public void setReference(Reference reference) {
+	public void setReference(ReferenceValueDto reference) {
 		this.reference = reference;
 	}
 }

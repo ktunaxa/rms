@@ -91,7 +91,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		</property>
 		<property name="layers">
 			<list>
-				<ref bean="googleSatLayer" />
+				<!--ref bean="googleSatLayer" /-->
+				<ref bean="osmLayer" />
 				<ref bean="countries110mLayer" />
 			</list>
 		</property>
@@ -133,7 +134,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 									<property name="label" value="Base layers" />
 									<property name="layers">
 										<list>
-											<ref bean="googleSatLayer" />
+											<!--ref bean="googleSatLayer" /-->
+											<ref bean="osmLayer" />
 										</list>
 									</property>
 								</bean>
@@ -188,7 +190,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		</property>
 		<property name="layers">
 			<list>
-				<ref bean="googleSatLayer" />
+				<ref bean="osmLayer" />
 			</list>
 		</property>
 	</bean>
