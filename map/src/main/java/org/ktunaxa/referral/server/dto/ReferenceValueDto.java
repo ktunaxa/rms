@@ -24,10 +24,18 @@ import org.geomajas.geometry.Geometry;
  */
 public class ReferenceValueDto implements Serializable {
 
+	private static final long serialVersionUID = 100L;
+
 	private long id;
 
 	/** The name of the basic data type (roads, wild life, provincial parks, ...). */
 	private String layerName;
+
+	/** Specific code that can be used for style differentiation. */
+	private String styleCode;
+
+	/** Text value that identifies this object and can be used for labeling purposes. */
+	private String label;
 
 	/** The actual geometry of this reference feature on the map. */
 	private Geometry geometry;
@@ -146,5 +154,43 @@ public class ReferenceValueDto implements Serializable {
 	 */
 	public void setAttributes(Collection<ReferenceValueAttributeDto> attributes) {
 		this.attributes = attributes;
+	}
+
+	/**
+	 * Get the specific code that can be used for style differentiation.
+	 * 
+	 * @return Specific code that can be used for style differentiation.
+	 */
+	public String getStyleCode() {
+		return styleCode;
+	}
+
+	/**
+	 * Set a specific code that can be used for style differentiation.
+	 * 
+	 * @param styleCode
+	 *            The new style code.
+	 */
+	public void setStyleCode(String styleCode) {
+		this.styleCode = styleCode;
+	}
+
+	/**
+	 * Get a text value that identifies this object and can be used for labeling purposes.
+	 * 
+	 * @return Text value that identifies this object and can be used for labeling purposes.
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * Set a text value that identifies this object and can be used for labeling purposes.
+	 * 
+	 * @param label
+	 *            The new label.
+	 */
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }

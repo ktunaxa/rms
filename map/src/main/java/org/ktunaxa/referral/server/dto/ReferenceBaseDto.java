@@ -17,7 +17,6 @@ import java.util.Collection;
 
 import org.geomajas.geometry.Geometry;
 
-
 /**
  * A feature of the reference layer with it's specific collection of key-value pairs and aspects.
  * 
@@ -34,6 +33,12 @@ public class ReferenceBaseDto implements Serializable {
 
 	/** The category of base layers this object belongs to. */
 	private ReferenceBaseTypeDto type;
+
+	/** Specific code that can be used for style differentiation. */
+	private String styleCode;
+
+	/** Text value that identifies this object and can be used for labeling purposes. */
+	private String label;
 
 	/** The actual geometry of this reference feature on the map. */
 	private Geometry geometry;
@@ -149,5 +154,43 @@ public class ReferenceBaseDto implements Serializable {
 	 */
 	public void setType(ReferenceBaseTypeDto type) {
 		this.type = type;
+	}
+
+	/**
+	 * Get the specific code that can be used for style differentiation.
+	 * 
+	 * @return Specific code that can be used for style differentiation.
+	 */
+	public String getStyleCode() {
+		return styleCode;
+	}
+
+	/**
+	 * Set a specific code that can be used for style differentiation.
+	 * 
+	 * @param styleCode
+	 *            The new style code.
+	 */
+	public void setStyleCode(String styleCode) {
+		this.styleCode = styleCode;
+	}
+
+	/**
+	 * Get a text value that identifies this object and can be used for labeling purposes.
+	 * 
+	 * @return Text value that identifies this object and can be used for labeling purposes.
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * Set a text value that identifies this object and can be used for labeling purposes.
+	 * 
+	 * @param label
+	 *            The new label.
+	 */
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }

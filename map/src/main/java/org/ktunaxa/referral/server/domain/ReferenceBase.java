@@ -52,6 +52,14 @@ public class ReferenceBase {
 	@JoinColumn(name = "type_id", nullable = false)
 	private ReferenceBaseType type;
 
+	/** Specific code that can be used for style differentiation. */
+	@Column(name = "style_code")
+	private String styleCode;
+
+	/** Text value that identifies this object and can be used for labeling purposes. */
+	@Column(name = "label")
+	private String label;
+
 	/** The actual geometry of this reference feature on the map. */
 	@Type(type = "org.hibernatespatial.GeometryUserType")
 	@Column(nullable = false, name = "geom")
@@ -169,5 +177,43 @@ public class ReferenceBase {
 	 */
 	public void setType(ReferenceBaseType type) {
 		this.type = type;
+	}
+
+	/**
+	 * Get the specific code that can be used for style differentiation.
+	 * 
+	 * @return Specific code that can be used for style differentiation.
+	 */
+	public String getStyleCode() {
+		return styleCode;
+	}
+
+	/**
+	 * Set a specific code that can be used for style differentiation.
+	 * 
+	 * @param styleCode
+	 *            The new style code.
+	 */
+	public void setStyleCode(String styleCode) {
+		this.styleCode = styleCode;
+	}
+
+	/**
+	 * Get a text value that identifies this object and can be used for labeling purposes.
+	 * 
+	 * @return Text value that identifies this object and can be used for labeling purposes.
+	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * Set a text value that identifies this object and can be used for labeling purposes.
+	 * 
+	 * @param label
+	 *            The new label.
+	 */
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }

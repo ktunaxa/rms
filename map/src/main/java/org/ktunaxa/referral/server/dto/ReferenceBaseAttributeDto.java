@@ -14,8 +14,6 @@ package org.ktunaxa.referral.server.dto;
 
 import java.io.Serializable;
 
-import org.ktunaxa.referral.server.domain.ReferenceBase;
-
 /**
  * A key-value pair that stores an alpha-numerical attributes for a specific base reference feature.
  * 
