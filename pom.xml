@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ktunaxa.referral</groupId>
 	<artifactId>ktunaxa-parent</artifactId>
@@ -73,8 +74,15 @@
 			<dependency>
 				<groupId>org.activiti</groupId>
 				<artifactId>activiti-engine</artifactId>
-				<version>5.1</version>
+				<version>${activiti.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-cycle</artifactId>
+				<version>${activiti.version}</version>
+			</dependency>
+
 
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -91,18 +99,47 @@
 			<dependency>
 				<groupId>org.springframework.extensions.surf</groupId>
 				<artifactId>spring-surf-api</artifactId>
-				<version>1.0.0-RC2</version>
+				<version>${spring.surf.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.extensions.surf</groupId>
 				<artifactId>spring-surf-core-configservice</artifactId>
-				<version>1.0.0-RC2</version>
+				<version>${spring.surf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.extensions.surf</groupId>
+				<artifactId>spring-surf</artifactId>
+				<version>${spring.surf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.extensions.surf</groupId>
+				<artifactId>spring-webscripts</artifactId>
+				<version>${spring.surf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.extensions.surf</groupId>
+				<artifactId>spring-webscripts-api</artifactId>
+				<version>${spring.surf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.extensions.surf</groupId>
+				<artifactId>spring-surf-application</artifactId>
+				<version>${spring.surf.version}</version>
+				<type>war</type>
+				<scope>runtime</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20070829</version>
 			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
 
 	<modules>
+		<module>themes</module>
 		<module>map</module>
 		<module>activiti-explorer</module>
 		<module>bpm</module>
@@ -123,6 +160,8 @@
 	</profiles>
 
 	<properties>
+		<activiti.version>5.2</activiti.version>
+		<spring.surf.version>1.0.0-RC2</spring.surf.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
