@@ -179,6 +179,8 @@ GRANT ALL ON TABLE referral TO postgres;
 CREATE TABLE reference_value(
 	id serial NOT NULL,
 	layer_name character varying NOT NULL,
+	style_code character varying,
+	label character varying,
 	geom geometry,
 	CONSTRAINT enforce_dims_geom CHECK ((ndims(geom) = 2)),
 --	CONSTRAINT enforce_geotype_geom CHECK (((geometrytype(geom) = 'POINT'::text) OR (geom IS NULL))),
@@ -256,6 +258,7 @@ CREATE TABLE reference_base(
 	id serial NOT NULL,
 	type_id bigint NOT NULL,
 	layer_name character varying NOT NULL,
+	label character varying,
 	geom geometry,
 	CONSTRAINT enforce_dims_geom CHECK ((ndims(geom) = 2)),
 --	CONSTRAINT enforce_geotype_geom CHECK (((geometrytype(geom) = 'POINT'::text) OR (geom IS NULL))),
