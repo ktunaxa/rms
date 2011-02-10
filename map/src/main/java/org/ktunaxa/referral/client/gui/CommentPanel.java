@@ -39,7 +39,8 @@ public class CommentPanel extends VLayout {
 	public CommentPanel() {
 		setSize("100%", "100%");
 
-		Map<String, Comparator<CollapsibleListBlock<CommentDto>>> sortAttributes = new HashMap<String, Comparator<CollapsibleListBlock<CommentDto>>>();
+		Map<String, Comparator<CollapsibleListBlock<CommentDto>>> sortAttributes;
+		sortAttributes = new HashMap<String, Comparator<CollapsibleListBlock<CommentDto>>>();
 		sortAttributes.put("date", new DateComparator());
 		sortAttributes.put("author", new AuthorComparator());
 		sortAttributes.put("title", new TitleComparator());
@@ -50,6 +51,11 @@ public class CommentPanel extends VLayout {
 		addMember(layout);
 	}
 
+	/**
+	 * Comparator for comments that compares the creation dates.
+	 * 
+	 * @author Pieter De Graef
+	 */
 	private class DateComparator implements Comparator<CollapsibleListBlock<CommentDto>> {
 
 		public int compare(CollapsibleListBlock<CommentDto> one, CollapsibleListBlock<CommentDto> two) {
@@ -66,6 +72,11 @@ public class CommentPanel extends VLayout {
 		}
 	}
 
+	/**
+	 * Comparator for comments that compares the users who created the comments.
+	 * 
+	 * @author Pieter De Graef
+	 */
 	private class AuthorComparator implements Comparator<CollapsibleListBlock<CommentDto>> {
 
 		public int compare(CollapsibleListBlock<CommentDto> one, CollapsibleListBlock<CommentDto> two) {
@@ -82,6 +93,11 @@ public class CommentPanel extends VLayout {
 		}
 	}
 
+	/**
+	 * Comparator for comments that compares the comment titles.
+	 * 
+	 * @author Pieter De Graef
+	 */
 	private class TitleComparator implements Comparator<CollapsibleListBlock<CommentDto>> {
 
 		public int compare(CollapsibleListBlock<CommentDto> one, CollapsibleListBlock<CommentDto> two) {
@@ -107,16 +123,26 @@ public class CommentPanel extends VLayout {
 	}
 
 	private List<CommentDto> getCommentData() {
+		String lorum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae dolor rutrum sapien"
+				+ " dapibus eleifend sed vitae massa. Suspendisse tortor tortor, porttitor quis blandit eget, dictum "
+				+ "sed ipsum. Curabitur luctus turpis in diam accumsan convallis. Cras ultrices, ligula id adipiscing "
+				+ "facilisis, arcu justo consequat quam, id pulvinar mauris magna ut tortor. Fusce vestibulum ligula"
+				+ " at augue feugiat non elementum metus gravida. Nulla elit diam, interdum at lacinia id, pharetra "
+				+ "eget tortor. Praesent tincidunt euismod posuere. Nulla sagittis adipiscing lacus, at suscipit leo "
+				+ "fringilla sit amet. Cras pellentesque consequat turpis vel interdum. Nunc ligula nunc, porta quis "
+				+ "aliquet non, luctus a odio. Sed feugiat pulvinar libero nec commodo. Nulla sed mi nisl. Nulla "
+				+ "vulputate pulvinar leo, at accumsan odio fermentum et.";
+
 		CommentDto c1 = new CommentDto();
 		c1.setTitle("Comment that expresses my deepest lorum ipsum feelings.");
-		c1.setContent("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae dolor rutrum sapien dapibus eleifend sed vitae massa. Suspendisse tortor tortor, porttitor quis blandit eget, dictum sed ipsum. Curabitur luctus turpis in diam accumsan convallis. Cras ultrices, ligula id adipiscing facilisis, arcu justo consequat quam, id pulvinar mauris magna ut tortor. Fusce vestibulum ligula at augue feugiat non elementum metus gravida. Nulla elit diam, interdum at lacinia id, pharetra eget tortor. Praesent tincidunt euismod posuere. Nulla sagittis adipiscing lacus, at suscipit leo fringilla sit amet. Cras pellentesque consequat turpis vel interdum. Nunc ligula nunc, porta quis aliquet non, luctus a odio. Sed feugiat pulvinar libero nec commodo. Nulla sed mi nisl. Nulla vulputate pulvinar leo, at accumsan odio fermentum et.");
-		c1.setCheckedContent("Let's take a shorter version of the above, shall we? Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae dolor rutrum sapien dapibus eleifend sed vitae massa. Suspendisse tortor tortor, porttitor quis blandit eget, dictum sed ipsum. Curabitur luctus turpis in diam accumsan convallis. Cras ultrices, ligula id adipiscing facilisis, arcu justo consequat quam, id pulvinar mauris magna ut tortor. Fusce vestibulum ligula at augue feugiat non elementum metus gravida. Nulla elit diam, interdum at lacinia id, pharetra eget tortor. Praesent tincidunt euismod posuere. Nulla sagittis adipiscing lacus, at suscipit leo fringilla sit amet. Cras pellentesque consequat turpis vel interdum. Nunc ligula nunc, porta quis aliquet non, luctus a odio.");
+		c1.setContent(lorum);
+		c1.setCheckedContent("Let's take a longer version of the above, shall we? " + lorum);
 		c1.setIncludeInReport(true);
 		c1.setCreatedBy("Pieter De Graef");
 		c1.setCreationDate(new Date());
 		CommentDto c2 = new CommentDto();
 		c2.setTitle("Comment that is here just for testing purposes.");
-		c2.setContent("2Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae dolor rutrum sapien dapibus eleifend sed vitae massa. Suspendisse tortor tortor, porttitor quis blandit eget, dictum sed ipsum. Curabitur luctus turpis in diam accumsan convallis. Cras ultrices, ligula id adipiscing facilisis, arcu justo consequat quam, id pulvinar mauris magna ut tortor. Fusce vestibulum ligula at augue feugiat non elementum metus gravida. Nulla elit diam, interdum at lacinia id, pharetra eget tortor. Praesent tincidunt euismod posuere. Nulla sagittis adipiscing lacus, at suscipit leo fringilla sit amet. Cras pellentesque consequat turpis vel interdum. Nunc ligula nunc, porta quis aliquet non, luctus a odio. Sed feugiat pulvinar libero nec commodo. Nulla sed mi nisl. Nulla vulputate pulvinar leo, at accumsan odio fermentum et.");
+		c2.setContent("Second time...." + lorum);
 		c2.setIncludeInReport(false);
 		c2.setCreatedBy("Bob De Kerpel");
 		c2.setCreationDate(new Date());
