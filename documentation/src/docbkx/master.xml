@@ -47,6 +47,8 @@
 	<xi:include href="introduction.xml"
 				xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	
+	<xi:include href="domain.xml"
+				xmlns:xi="http://www.w3.org/2001/XInclude"/>
 <!--
 	<xi:include href="configuration.xml"
 				xmlns:xi="http://www.w3.org/2001/XInclude"/>
