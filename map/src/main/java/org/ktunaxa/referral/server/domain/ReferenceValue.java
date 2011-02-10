@@ -21,6 +21,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -41,9 +43,10 @@ public class ReferenceValue {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	/** The name of the basic data type (roads, wild life, provincial parks, ...). */
-	@Column(nullable = false, name = "layer_name")
-	private String layerName;
+	/** The layer that this object belongs to. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "layer_id", nullable = false)
+	private ReferenceLayer layer;
 
 	/** Specific code that can be used for style differentiation. */
 	@Column(name = "style_code")
@@ -57,10 +60,6 @@ public class ReferenceValue {
 	@Type(type = "org.hibernatespatial.GeometryUserType")
 	@Column(nullable = false, name = "geom")
 	private Geometry geometry;
-
-	/** The collection of aspects this reference feature is associated with. */
-	@OneToMany(mappedBy = "reference", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	private Collection<ReferenceValueAspect> aspects;
 
 	/** The collection of key-value pairs that make up this reference feature. */
 	@OneToMany(mappedBy = "reference", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
@@ -101,25 +100,6 @@ public class ReferenceValue {
 	}
 
 	/**
-	 * Get the name of the basic data type (roads, wild life, provincial parks, ...).
-	 * 
-	 * @return The name of the basic data type (roads, wild life, provincial parks, ...).
-	 */
-	public String getLayerName() {
-		return layerName;
-	}
-
-	/**
-	 * Set the name of the basic data type (roads, wild life, provincial parks, ...).
-	 * 
-	 * @param layerName
-	 *            The new layer type name.
-	 */
-	public void setLayerName(String layerName) {
-		this.layerName = layerName;
-	}
-
-	/**
 	 * Return the actual geometry of this reference feature on the map.
 	 * 
 	 * @return The actual geometry of this reference feature on the map.
@@ -136,25 +116,6 @@ public class ReferenceValue {
 	 */
 	public void setGeometry(Geometry geometry) {
 		this.geometry = geometry;
-	}
-
-	/**
-	 * Get the collection of aspects this reference feature is associated with.
-	 * 
-	 * @return The collection of aspects this reference feature is associated with.
-	 */
-	public Collection<ReferenceValueAspect> getAspects() {
-		return aspects;
-	}
-
-	/**
-	 * Set the collection of aspects this reference feature is associated with.
-	 * 
-	 * @param aspects
-	 *            The new collection of aspects.
-	 */
-	public void setAspects(Collection<ReferenceValueAspect> aspects) {
-		this.aspects = aspects;
 	}
 
 	/**
@@ -212,5 +173,24 @@ public class ReferenceValue {
 	 */
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	/**
+	 * Get the layer that this object belongs to.
+	 * 
+	 * @return The layer that this object belongs to.
+	 */
+	public ReferenceLayer getLayer() {
+		return layer;
+	}
+
+	/**
+	 * Set the layer that this object belongs to.
+	 * 
+	 * @param layer
+	 *            The layer for this object.
+	 */
+	public void setLayer(ReferenceLayer layer) {
+		this.layer = layer;
 	}
 }

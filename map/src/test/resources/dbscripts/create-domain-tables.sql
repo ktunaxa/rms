@@ -8,41 +8,10 @@ DROP TABLE referral_comment;
 DROP TABLE document;
 DROP TABLE document_type;
 
-DROP TABLE reference_base_attribute;
-DROP TABLE reference_base;
-DROP TABLE reference_base_type;
-
-DROP TABLE reference_value_attribute;
-DROP TABLE reference_value_aspect;
-DROP TABLE reference_value;
-
 DROP TABLE referral;
 DROP TABLE referral_application_type;
 DROP TABLE referral_type;
 DROP TABLE referral_status;
-
-DROP TABLE aspect;
-
-
-
--- ----------------------------------------------------------------------------
--- Table: ASPECT
--- ----------------------------------------------------------------------------
-CREATE TABLE aspect(
-	id serial NOT NULL,
-	description character varying NOT NULL,
-	CONSTRAINT aspect_pkey PRIMARY KEY (id)
-) WITH (OIDS=FALSE);
-
-ALTER TABLE aspect OWNER TO ktunaxa;
-GRANT ALL ON TABLE aspect TO ktunaxa;
-GRANT ALL ON TABLE aspect TO postgres;
-
-INSERT INTO aspect (id, description) values (1, 'Aquatic');
-INSERT INTO aspect (id, description) values (2, 'Archaeological');
-INSERT INTO aspect (id, description) values (3, 'Cultural');
-INSERT INTO aspect (id, description) values (4, 'Ecology');
-INSERT INTO aspect (id, description) values (5, 'Treaty');
 
 
 
@@ -170,124 +139,6 @@ CREATE TABLE referral(
 ALTER TABLE referral OWNER TO ktunaxa;
 GRANT ALL ON TABLE referral TO ktunaxa;
 GRANT ALL ON TABLE referral TO postgres;
-
-
-
--- ----------------------------------------------------------------------------
--- Table: REFERENCE_VALUE layer
--- ----------------------------------------------------------------------------
-CREATE TABLE reference_value(
-	id serial NOT NULL,
-	layer_name character varying NOT NULL,
-	style_code character varying,
-	label character varying,
-	geom geometry,
-	CONSTRAINT enforce_dims_geom CHECK ((ndims(geom) = 2)),
---	CONSTRAINT enforce_geotype_geom CHECK (((geometrytype(geom) = 'POINT'::text) OR (geom IS NULL))),
---	CONSTRAINT enforce_srid_geom CHECK ((srid(geom) = 900913)),
-	CONSTRAINT reference_value_pkey PRIMARY KEY (id)
-) WITH (OIDS=FALSE);
-
-ALTER TABLE reference_value OWNER TO ktunaxa;
-GRANT ALL ON TABLE reference_value TO ktunaxa;
-GRANT ALL ON TABLE reference_value TO postgres;
-
-
-
--- ----------------------------------------------------------------------------
--- Table: REFERENCE ASPECT
--- ----------------------------------------------------------------------------
-CREATE TABLE reference_value_aspect(
-	id serial NOT NULL,
-	aspect_id bigint NOT NULL,
-	reference_value_id bigint NOT NULL,
-	CONSTRAINT reference_value_aspect_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_reference_value_aspect_aspect FOREIGN KEY (aspect_id) REFERENCES aspect (id),
-	CONSTRAINT fk_reference_value_aspect_reference FOREIGN KEY (reference_value_id) REFERENCES reference_value (id)
-) WITH (OIDS=FALSE);
-
-ALTER TABLE reference_value_aspect OWNER TO ktunaxa;
-GRANT ALL ON TABLE reference_value_aspect TO ktunaxa;
-GRANT ALL ON TABLE reference_value_aspect TO postgres;
-
-
-
--- ----------------------------------------------------------------------------
--- Table: REFERENCE VALUE KEY VALUE
--- ----------------------------------------------------------------------------
-CREATE TABLE reference_value_attribute(
-	id serial NOT NULL,
-	reference_value_id bigint NOT NULL,
-	the_key character varying NOT NULL,
-	the_value character varying,
-	CONSTRAINT reference_value_attribute_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_reference_value_attribute_reference FOREIGN KEY (reference_value_id) REFERENCES reference_value (id)
-) WITH (OIDS=FALSE);
-
-ALTER TABLE reference_value_attribute OWNER TO ktunaxa;
-GRANT ALL ON TABLE reference_value_attribute TO ktunaxa;
-GRANT ALL ON TABLE reference_value_attribute TO postgres;
-
-
-
--- ----------------------------------------------------------------------------
--- Table: REFERENCE BASE TYPE
--- ----------------------------------------------------------------------------
-CREATE TABLE reference_base_type(
-	id serial NOT NULL,
-	description character varying NOT NULL,
-	CONSTRAINT reference_base_type_pkey PRIMARY KEY (id)
-) WITH (OIDS=FALSE);
-
-ALTER TABLE reference_base_type OWNER TO ktunaxa;
-GRANT ALL ON TABLE reference_base_type TO ktunaxa;
-GRANT ALL ON TABLE reference_base_type TO postgres;
-
-INSERT INTO reference_base_type (id, description) values (1, 'Administrative');
-INSERT INTO reference_base_type (id, description) values (2, 'Mining');
-INSERT INTO reference_base_type (id, description) values (3, 'Neatlines');
-INSERT INTO reference_base_type (id, description) values (4, 'NTS');
-INSERT INTO reference_base_type (id, description) values (5, 'TRIM');
-
-
-
--- ----------------------------------------------------------------------------
--- Table: REFERENCE_BASE layer
--- ----------------------------------------------------------------------------
-CREATE TABLE reference_base(
-	id serial NOT NULL,
-	type_id bigint NOT NULL,
-	layer_name character varying NOT NULL,
-	label character varying,
-	geom geometry,
-	CONSTRAINT enforce_dims_geom CHECK ((ndims(geom) = 2)),
---	CONSTRAINT enforce_geotype_geom CHECK (((geometrytype(geom) = 'POINT'::text) OR (geom IS NULL))),
---	CONSTRAINT enforce_srid_geom CHECK ((srid(geom) = 900913)),
-	CONSTRAINT reference_base_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_reference_base_reference_base_type FOREIGN KEY (type_id) REFERENCES reference_base_type (id)
-) WITH (OIDS=FALSE);
-
-ALTER TABLE reference_base OWNER TO ktunaxa;
-GRANT ALL ON TABLE reference_base TO ktunaxa;
-GRANT ALL ON TABLE reference_base TO postgres;
-
-
-
--- ----------------------------------------------------------------------------
--- Table: REFERENCE VALUE KEY VALUE
--- ----------------------------------------------------------------------------
-CREATE TABLE reference_base_attribute(
-	id serial NOT NULL,
-	reference_base_id bigint NOT NULL,
-	the_key character varying NOT NULL,
-	the_value character varying,
-	CONSTRAINT reference_base_attribute_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_reference_base_attribute_reference FOREIGN KEY (reference_base_id) REFERENCES reference_base (id)
-) WITH (OIDS=FALSE);
-
-ALTER TABLE reference_base_attribute OWNER TO ktunaxa;
-GRANT ALL ON TABLE reference_base_attribute TO ktunaxa;
-GRANT ALL ON TABLE reference_base_attribute TO postgres;
 
 
 

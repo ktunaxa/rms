@@ -8,15 +8,14 @@
       <property name="cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
       <property name="show_sql">false</property>
 
-      <mapping class="org.ktunaxa.referral.server.domain.Aspect" />
       <mapping class="org.ktunaxa.referral.server.domain.Comment" />
       <mapping class="org.ktunaxa.referral.server.domain.Template" />
 
+      <mapping class="org.ktunaxa.referral.server.domain.ReferenceLayer" />
+      <mapping class="org.ktunaxa.referral.server.domain.ReferenceLayerType" />
       <mapping class="org.ktunaxa.referral.server.domain.ReferenceBase" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferenceBaseType" />
       <mapping class="org.ktunaxa.referral.server.domain.ReferenceBaseAttribute" />
       <mapping class="org.ktunaxa.referral.server.domain.ReferenceValue" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferenceValueAspect" />
       <mapping class="org.ktunaxa.referral.server.domain.ReferenceValueAttribute" />
 
       <mapping class="org.ktunaxa.referral.server.domain.Document" />

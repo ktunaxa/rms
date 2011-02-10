@@ -28,8 +28,8 @@ public class ReferenceValueDto implements Serializable {
 
 	private long id;
 
-	/** The name of the basic data type (roads, wild life, provincial parks, ...). */
-	private String layerName;
+	/** The layer that this object belongs to. */
+	private ReferenceLayerDto layer;
 
 	/** Specific code that can be used for style differentiation. */
 	private String styleCode;
@@ -39,9 +39,6 @@ public class ReferenceValueDto implements Serializable {
 
 	/** The actual geometry of this reference feature on the map. */
 	private Geometry geometry;
-
-	/** The collection of aspects this reference feature is associated with. */
-	private Collection<ReferenceValueAspectDto> aspects;
 
 	/** The collection of key-value pairs that make up this reference feature. */
 	private Collection<ReferenceValueAttributeDto> attributes;
@@ -81,25 +78,6 @@ public class ReferenceValueDto implements Serializable {
 	}
 
 	/**
-	 * Get the name of the basic data type (roads, wild life, provincial parks, ...).
-	 * 
-	 * @return The name of the basic data type (roads, wild life, provincial parks, ...).
-	 */
-	public String getLayerName() {
-		return layerName;
-	}
-
-	/**
-	 * Set the name of the basic data type (roads, wild life, provincial parks, ...).
-	 * 
-	 * @param layerName
-	 *            The new layer type name.
-	 */
-	public void setLayerName(String layerName) {
-		this.layerName = layerName;
-	}
-
-	/**
 	 * Return the actual geometry of this reference feature on the map.
 	 * 
 	 * @return The actual geometry of this reference feature on the map.
@@ -116,25 +94,6 @@ public class ReferenceValueDto implements Serializable {
 	 */
 	public void setGeometry(Geometry geometry) {
 		this.geometry = geometry;
-	}
-
-	/**
-	 * Get the collection of aspects this reference feature is associated with.
-	 * 
-	 * @return The collection of aspects this reference feature is associated with.
-	 */
-	public Collection<ReferenceValueAspectDto> getAspects() {
-		return aspects;
-	}
-
-	/**
-	 * Set the collection of aspects this reference feature is associated with.
-	 * 
-	 * @param aspects
-	 *            The new collection of aspects.
-	 */
-	public void setAspects(Collection<ReferenceValueAspectDto> aspects) {
-		this.aspects = aspects;
 	}
 
 	/**
@@ -192,5 +151,24 @@ public class ReferenceValueDto implements Serializable {
 	 */
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	/**
+	 * Get the layer that this object belongs to.
+	 * 
+	 * @return The layer that this object belongs to.
+	 */
+	public ReferenceLayerDto getLayer() {
+		return layer;
+	}
+
+	/**
+	 * Set the layer that this object belongs to.
+	 * 
+	 * @param layer
+	 *            The layer for this object.
+	 */
+	public void setLayer(ReferenceLayerDto layer) {
+		this.layer = layer;
 	}
 }

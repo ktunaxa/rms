@@ -20,20 +20,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Definition of an "aspect" to which referrals need to be checked. Possible aspects are:
+ * Definition of a category for base layers. Possible aspects are:
  * <ul>
- * <li>Culture</li>
- * <li>Ecology</li>
- * <li>Archaeology</li>
- * <li>Aquatic</li>
- * <li>...</li>
+ * <li>Base - Adminitrative</li>
+ * <li>Base - Mining</li>
+ * <li>Base - Neatlines</li>
+ * <li>Base - NTS</li>
+ * <li>Base - TRIM</li>
+ * <li>Value Aspect - Aquatic</li>
+ * <li>Value Aspect - Archaelogical</li>
+ * <li>Value Aspect - Cultural</li>
+ * <li>Value Aspect - Ecology</li>
+ * <li>Value Aspect - Treaty</li>
  * </ul>
  * 
  * @author Pieter De Graef
  */
 @Entity
-@Table(name = "aspect")
-public class Aspect {
+@Table(name = "reference_layerype")
+public class ReferenceLayerType {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,14 +47,17 @@ public class Aspect {
 	@Column(nullable = false, name = "description")
 	private String description;
 
+	@Column(nullable = false, name = "base_layer")
+	private boolean baseLayer;
+
 	// ------------------------------------------------------------------------
 	// Constructors:
 	// ------------------------------------------------------------------------
 
-	public Aspect() {
+	public ReferenceLayerType() {
 	};
 
-	public Aspect(long id) {
+	public ReferenceLayerType(long id) {
 		this.id = id;
 	};
 
@@ -77,21 +85,40 @@ public class Aspect {
 	}
 
 	/**
-	 * Set the value of description.
+	 * Set the name for this category of layers.
 	 * 
 	 * @param description
-	 *            The new value of description.
+	 *            The new value of description (administrative, TRIM, ecology, cultural, ...).
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
-	 * Get the value of description.
+	 * Get the name of the category for this type (administrative, TRIM, ecology, cultural, ...).
 	 * 
 	 * @return The value of description.
 	 */
 	public String getDescription() {
 		return description;
+	}
+
+	/**
+	 * See if layers of this type base layers or not?
+	 * 
+	 * @return Are layers of this type base layers or not?
+	 */
+	public boolean isBaseLayer() {
+		return baseLayer;
+	}
+
+	/**
+	 * Determine if layers of this type are base layers or not?
+	 * 
+	 * @param baseLayer
+	 *            true or false.
+	 */
+	public void setBaseLayer(boolean baseLayer) {
+		this.baseLayer = baseLayer;
 	}
 }

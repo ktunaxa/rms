@@ -15,31 +15,40 @@ package org.ktunaxa.referral.server.dto;
 import java.io.Serializable;
 
 /**
- * Association object that associates an aspect to a reference feature within the reference layer. This is needed
- * because the different data types in the reference layers can be associated with multiple aspects.
+ * Definition of a category for base layers. Possible aspects are:
+ * <ul>
+ * <li>Base - Adminitrative</li>
+ * <li>Base - Mining</li>
+ * <li>Base - Neatlines</li>
+ * <li>Base - NTS</li>
+ * <li>Base - TRIM</li>
+ * <li>Value Aspect - Aquatic</li>
+ * <li>Value Aspect - Archaelogical</li>
+ * <li>Value Aspect - Cultural</li>
+ * <li>Value Aspect - Ecology</li>
+ * <li>Value Aspect - Treaty</li>
+ * </ul>
  * 
  * @author Pieter De Graef
  */
-public class ReferenceValueAspectDto implements Serializable {
+public class ReferenceLayerTypeDto implements Serializable {
 
 	private static final long serialVersionUID = 100L;
 
 	private long id;
 
-	/** The specific aspect to associate to the reference feature. */
-	private AspectDto aspect;
-
-	/** The reference feature object. */
-	private ReferenceValueDto reference;
+	private String description;
+	
+	private boolean baseLayer;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
 	// ------------------------------------------------------------------------
 
-	public ReferenceValueAspectDto() {
+	public ReferenceLayerTypeDto() {
 	};
 
-	public ReferenceValueAspectDto(long id) {
+	public ReferenceLayerTypeDto(long id) {
 		this.id = id;
 	};
 
@@ -67,40 +76,40 @@ public class ReferenceValueAspectDto implements Serializable {
 	}
 
 	/**
-	 * Get the specific aspect to associate to the reference feature.
+	 * Set the value of description.
 	 * 
-	 * @return The specific aspect to associate to the reference feature.
+	 * @param description
+	 *            The new value of description.
 	 */
-	public AspectDto getAspect() {
-		return aspect;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
-	 * Set the specific aspect to associate to the reference feature.
+	 * Get the value of description.
 	 * 
-	 * @param aspect
-	 *            The new aspect value.
+	 * @return The value of description.
 	 */
-	public void setAspect(AspectDto aspect) {
-		this.aspect = aspect;
+	public String getDescription() {
+		return description;
 	}
 
 	/**
-	 * Get the reference feature object.
+	 * See if layers of this type base layers or not?
 	 * 
-	 * @return The reference feature object.
+	 * @return Are layers of this type base layers or not?
 	 */
-	public ReferenceValueDto getReference() {
-		return reference;
+	public boolean isBaseLayer() {
+		return baseLayer;
 	}
 
 	/**
-	 * Set the reference feature object.
+	 * Determine if layers of this type are base layers or not?
 	 * 
-	 * @param reference
-	 *            The new reference feature.
+	 * @param baseLayer
+	 *            true or false.
 	 */
-	public void setReference(ReferenceValueDto reference) {
-		this.reference = reference;
+	public void setBaseLayer(boolean baseLayer) {
+		this.baseLayer = baseLayer;
 	}
 }

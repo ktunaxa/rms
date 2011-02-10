@@ -28,11 +28,8 @@ public class ReferenceBaseDto implements Serializable {
 
 	private long id;
 
-	/** The name of the basic data type (roads, wild life, provincial parks, ...). */
-	private String layerName;
-
-	/** The category of base layers this object belongs to. */
-	private ReferenceBaseTypeDto type;
+	/** The layer that this object belongs to. */
+	private ReferenceLayerDto layer;
 
 	/** Specific code that can be used for style differentiation. */
 	private String styleCode;
@@ -81,25 +78,6 @@ public class ReferenceBaseDto implements Serializable {
 	}
 
 	/**
-	 * Get the name of the basic data type (roads, wild life, provincial parks, ...).
-	 * 
-	 * @return The name of the basic data type (roads, wild life, provincial parks, ...).
-	 */
-	public String getLayerName() {
-		return layerName;
-	}
-
-	/**
-	 * Set the name of the basic data type (roads, wild life, provincial parks, ...).
-	 * 
-	 * @param layerName
-	 *            The new layer type name.
-	 */
-	public void setLayerName(String layerName) {
-		this.layerName = layerName;
-	}
-
-	/**
 	 * Return the actual geometry of this reference feature on the map.
 	 * 
 	 * @return The actual geometry of this reference feature on the map.
@@ -138,25 +116,6 @@ public class ReferenceBaseDto implements Serializable {
 	}
 
 	/**
-	 * Get the category of base layers this object belongs to.
-	 * 
-	 * @return The category of base layers this object belongs to.
-	 */
-	public ReferenceBaseTypeDto getType() {
-		return type;
-	}
-
-	/**
-	 * Set the category of base layers this object belongs to.
-	 * 
-	 * @param type
-	 *            The new category.
-	 */
-	public void setType(ReferenceBaseTypeDto type) {
-		this.type = type;
-	}
-
-	/**
 	 * Get the specific code that can be used for style differentiation.
 	 * 
 	 * @return Specific code that can be used for style differentiation.
@@ -192,5 +151,24 @@ public class ReferenceBaseDto implements Serializable {
 	 */
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	/**
+	 * Get the layer that this object belongs to.
+	 * 
+	 * @return The layer that this object belongs to.
+	 */
+	public ReferenceLayerDto getLayer() {
+		return layer;
+	}
+
+	/**
+	 * Set the layer that this object belongs to.
+	 * 
+	 * @param layer
+	 *            The layer for this object.
+	 */
+	public void setLayer(ReferenceLayerDto layer) {
+		this.layer = layer;
 	}
 }

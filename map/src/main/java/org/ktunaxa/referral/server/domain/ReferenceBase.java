@@ -36,21 +36,17 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author Pieter De Graef
  */
 @Entity
-@Table(name = "reference_value")
+@Table(name = "reference_base")
 public class ReferenceBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	/** The name of the basic data type (roads, wild life, provincial parks, ...). */
-	@Column(nullable = false, name = "layer_name")
-	private String layerName;
-
-	/** The category of base layers this object belongs to. */
+	/** The layer that this object belongs to. */
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "type_id", nullable = false)
-	private ReferenceBaseType type;
+	@JoinColumn(name = "layer_id", nullable = false)
+	private ReferenceLayer layer;
 
 	/** Specific code that can be used for style differentiation. */
 	@Column(name = "style_code")
@@ -104,25 +100,6 @@ public class ReferenceBase {
 	}
 
 	/**
-	 * Get the name of the basic data type (roads, wild life, provincial parks, ...).
-	 * 
-	 * @return The name of the basic data type (roads, wild life, provincial parks, ...).
-	 */
-	public String getLayerName() {
-		return layerName;
-	}
-
-	/**
-	 * Set the name of the basic data type (roads, wild life, provincial parks, ...).
-	 * 
-	 * @param layerName
-	 *            The new layer type name.
-	 */
-	public void setLayerName(String layerName) {
-		this.layerName = layerName;
-	}
-
-	/**
 	 * Return the actual geometry of this reference feature on the map.
 	 * 
 	 * @return The actual geometry of this reference feature on the map.
@@ -161,25 +138,6 @@ public class ReferenceBase {
 	}
 
 	/**
-	 * Get the category of base layers this object belongs to.
-	 * 
-	 * @return The category of base layers this object belongs to.
-	 */
-	public ReferenceBaseType getType() {
-		return type;
-	}
-
-	/**
-	 * Set the category of base layers this object belongs to.
-	 * 
-	 * @param type
-	 *            The new category.
-	 */
-	public void setType(ReferenceBaseType type) {
-		this.type = type;
-	}
-
-	/**
 	 * Get the specific code that can be used for style differentiation.
 	 * 
 	 * @return Specific code that can be used for style differentiation.
@@ -215,5 +173,24 @@ public class ReferenceBase {
 	 */
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	/**
+	 * Get the layer that this object belongs to.
+	 * 
+	 * @return The layer that this object belongs to.
+	 */
+	public ReferenceLayer getLayer() {
+		return layer;
+	}
+
+	/**
+	 * Set the layer that this object belongs to.
+	 * 
+	 * @param layer
+	 *            The layer for this object.
+	 */
+	public void setLayer(ReferenceLayer layer) {
+		this.layer = layer;
 	}
 }

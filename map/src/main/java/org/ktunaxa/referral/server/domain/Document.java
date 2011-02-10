@@ -103,7 +103,7 @@ public class Document {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * The aspect's unique identifier.
+	 * The document's unique identifier.
 	 * 
 	 * @param id
 	 *            The new value for the identifier.
