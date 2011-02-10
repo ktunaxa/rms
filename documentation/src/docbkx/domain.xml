@@ -26,59 +26,172 @@
 <chapter id="chapter-introduction">
   <title>RMS domain objects</title>
 
-  <section>
+  <section id="sect-domain-referral">
     <title>Referral definition</title>
-    <para>This document briefly describes the known objects within the KLRA referral management system (RMS), and what properties they have. In a later paragraph these objects will be described in more detail, so that the reasoning behind all properties can be explained, and how they fit onto the requested functionalities within the RMS.</para>
+
+    <para>This document briefly describes the known objects within the KLRA
+    referral management system (RMS), and what properties they have. In a
+    later paragraph these objects will be described in more detail, so that
+    the reasoning behind all properties can be explained, and how they fit
+    onto the requested functionalities within the RMS.</para>
+
     <para><figure float="0">
-	   <title>Ktunaxa domain model</title>
-	   <screenshot><mediaobject>
-	     <imageobject><imagedata fileref="images/ktunaxa-domain.png" format="PNG"/></imageobject>
-	   </mediaobject></screenshot>
-    </figure></para>
-    <para>In the image above, the central object is the “referral” object. Objects of this type represent the referral projects within the RMS. They contain all the project information, contact information, etc that comes with a referral. Attached to the central “referral” object are several other types of objects. These are the following:</para>
+        <title>Ktunaxa domain model</title>
+
+        <screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/ktunaxa-domain.png" format="PNG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot>
+      </figure></para>
+
+    <para>In the image above, the central object is the “referral” object.
+    Objects of this type represent the referral projects within the RMS. They
+    contain all the project information, contact information, etc that comes
+    with a referral. Attached to the central “referral” object are several
+    other types of objects. These are the following:</para>
+
     <itemizedlist>
-	   <listitem><para><emphasis>ReferralType</emphasis>: The type of referral (i.e. agriculture, commercial, aquaculture, …)</para></listitem>
-	   <listitem><para><emphasis>ReferralApplicationType</emphasis>: The type of application that applies on this referral. (new, renewal, amendment, replacement)</para></listitem>
-	   <listitem><para><emphasis>ReferralStatus</emphasis>: The status in the business process (new, in progress, approved, denied).</para></listitem>
+      <listitem>
+        <para><emphasis>ReferralType</emphasis>: The type of referral (i.e.
+        agriculture, commercial, aquaculture, …)</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>ReferralApplicationType</emphasis>: The type of
+        application that applies on this referral. (new, renewal, amendment,
+        replacement)</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>ReferralStatus</emphasis>: The status in the business
+        process (new, in progress, approved, denied).</para>
+      </listitem>
     </itemizedlist>
-    <para>On top of the above attachments to a referral, there is also a list of comments and a list of documents that can be attached to a referral object. The documents in turn can also have a list of comments attached to them.</para>
-    <para>For each document and comment, it is possible to specify whether or not they should be added to the final report.</para>
-    <para>Note also that each referral object contains a “geometry” object. This geometry describes the geographical location for the project behind the referral.</para>
-    <para>In the image above, you will also find a stand-alone object for managing templates. Objects of this type contain a (XML) template that can be used to create new documents.</para>
+
+    <para>On top of the above attachments to a referral, there is also a list
+    of comments and a list of documents that can be attached to a referral
+    object. The documents in turn can also have a list of comments attached to
+    them.</para>
+
+    <para>For each document and comment, it is possible to specify whether or
+    not they should be added to the final report.</para>
+
+    <para>Note also that each referral object contains a “geometry” object.
+    This geometry describes the geographical location for the project behind
+    the referral.</para>
+
+    <para>In the image above, you will also find a stand-alone object for
+    managing templates. Objects of this type contain a (XML) template that can
+    be used to create new documents.</para>
   </section>
 
-  <section>
+  <section id="sect-domain-reference">
     <title>Reference data</title>
-    <para>The geographical reference data has been split up in 2 different types: base layers and values aspect layers. The reason for this has to do with performance (caching of the data). The base layers will always be used, no matter which value aspect is being inspected, and so can best be taken separately as it will be easier to cache.</para>
-    <para>In general it can be said that any geographical data type (shape file) will either be a value aspect layer or a base layer. In any case, a single definition for the available layers will be provided. This layer definition contains some meta-data regarding that layer, as well as a pointer to the type of layer. These types are actually the different categories of layers that exist (both base and aspect value). </para>
-    <para>The ReferenceLayerType object therefore is a definition for a category of layers (base – administrative, base – TRIM, value – ecology, …). Some categories are meant for base layers other categories represent the value aspects.</para>
-    <para>As said above, the ReferenceLayer itself contains some meta-data that help determine visibility factors at run-time, such as the scaleMin, scaleMax and visibleByDefault fields.</para>
+
+    <para>The geographical reference data has been split up in 2 different
+    types: base layers and values aspect layers. The reason for this has to do
+    with performance (caching of the data). The base layers will always be
+    used, no matter which value aspect is being inspected, and so can best be
+    taken separately as it will be easier to cache.</para>
+
+    <para>In general it can be said that any geographical data type (shape
+    file) will either be a value aspect layer or a base layer. In any case, a
+    single definition for the available layers will be provided. This layer
+    definition contains some meta-data regarding that layer, as well as a
+    pointer to the type of layer. These types are actually the different
+    categories of layers that exist (both base and aspect value).</para>
+
+    <para>The ReferenceLayerType object therefore is a definition for a
+    category of layers (base – administrative, base – TRIM, value – ecology,
+    …). Some categories are meant for base layers other categories represent
+    the value aspects.</para>
+
+    <para>As said above, the ReferenceLayer itself contains some meta-data
+    that help determine visibility factors at run-time, such as the scaleMin,
+    scaleMax and visibleByDefault fields.</para>
+
     <para><figure float="0">
-	   <title>Ktunaxa reference geo-data model</title>
-	   <screenshot><mediaobject>
-	     <imageobject><imagedata fileref="images/ktunaxa-geo-domain.png" format="PNG"/></imageobject>
-	   </mediaobject></screenshot>
-    </figure></para>
+        <title>Ktunaxa reference geo-data model</title>
 
-    <para>The setup of base layers and value-aspect layers are the same. Objects within to tables (see ReferenceBase and ReferenceValue) all have a pointer to the layer they belong to with some additional properties:</para>
+        <screenshot>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/ktunaxa-geo-domain.png" format="PNG" />
+            </imageobject>
+          </mediaobject>
+        </screenshot>
+      </figure></para>
+
+    <para>The setup of base layers and value-aspect layers are the same.
+    Objects within to tables (see ReferenceBase and ReferenceValue) all have a
+    pointer to the layer they belong to with some additional
+    properties:</para>
+
     <itemizedlist>
-	   <listitem><para><emphasis>layer</emphasis>: The layer an object belongs to. This layer in turn determines the category for layers.</para></listitem>
-	   <listitem><para><emphasis>styleCode</emphasis>: A specific attribute that can be used for styling this particular object. Within a certain layer, it can be necessary to define multiple styles that all depend on the value of a single attribute. This is that attribute.</para></listitem>
-	   <listitem><para><emphasis>label</emphasis>: A name for the object that can be used for labeling. Is usually a readable identification for the object (i.e. the name of a river)</para></listitem>
-	   <listitem><para><emphasis>geometry</emphasis>: The actual geometry of the object.</para></listitem>
+      <listitem>
+        <para><emphasis>layer</emphasis>: The layer an object belongs to. This
+        layer in turn determines the category for layers.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>styleCode</emphasis>: A specific attribute that can be
+        used for styling this particular object. Within a certain layer, it
+        can be necessary to define multiple styles that all depend on the
+        value of a single attribute. This is that attribute.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>label</emphasis>: A name for the object that can be
+        used for labeling. Is usually a readable identification for the object
+        (i.e. the name of a river)</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>geometry</emphasis>: The actual geometry of the
+        object.</para>
+      </listitem>
     </itemizedlist>
-   <para>For both object types there is also an additional list of attributes in the form of key-value pairs. These will contain extra attributes that have been defined in the original shape files.</para>
+
+    <para>For both object types there is also an additional list of attributes
+    in the form of key-value pairs. These will contain extra attributes that
+    have been defined in the original shape files.</para>
   </section>
-  
+
   <section>
-    <title>Uploading shape files</title>
-    <para>The RMS will support uploading shape files into the database on a one-by-one basis. Each type of data (roughly  80 types at the time of writing) will have to be uploaded individually. The advantage is that when having to replace the contents of one of these shape files afterward, no extra work needs to be done besides simply uploading this single shape file again.</para>
-    <para>There are restrictions though as to what these shape files should look like. For any shape file, at least the following attributes should be provided:</para>
-    <itemizedlist>
-	   <listitem><para><emphasis>RMS_STYLE</emphasis>: This attribute will be used internally to define styles around. It is only needed when a certain data type needs more than one style definition. If that is the case, the style definitions will use the values within this attribute.</para></listitem>
-	   <listitem><para><emphasis>RMS_LABEL</emphasis>: This attribute will be used internally as the name/label for all the features.</para></listitem>
-    </itemizedlist>
-    <para>The process of uploading shape files still needs to be defined. Later on, a third obligatory  attribute may be added that specifies the correct layer. Alternatively the process of uploading shape files will ask the user which layer to load the shape file in.</para>
-  </section>
+    <title id="sect-domain-uploading">Uploading shape files</title>
 
+    <para>The RMS will support uploading shape files into the database on a
+    one-by-one basis. Each type of data (roughly 80 types at the time of
+    writing) will have to be uploaded individually. The advantage is that when
+    having to replace the contents of one of these shape files afterward, no
+    extra work needs to be done besides simply uploading this single shape
+    file again.</para>
+
+    <para>There are restrictions though as to what these shape files should
+    look like. For any shape file, at least the following attributes should be
+    provided:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para><emphasis>RMS_STYLE</emphasis>: This attribute will be used
+        internally to define styles around. It is only needed when a certain
+        data type needs more than one style definition. If that is the case,
+        the style definitions will use the values within this
+        attribute.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>RMS_LABEL</emphasis>: This attribute will be used
+        internally as the name/label for all the features.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The process of uploading shape files still needs to be defined.
+    Later on, a third obligatory attribute may be added that specifies the
+    correct layer. Alternatively the process of uploading shape files will ask
+    the user which layer to load the shape file in.</para>
+  </section>
 </chapter>
