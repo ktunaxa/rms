@@ -23,7 +23,7 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<chapter id="chapter-introduction">
+<chapter id="chapter-domain">
   <title>RMS domain objects</title>
 
   <section id="sect-domain-referral">
