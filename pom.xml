@@ -139,7 +139,7 @@
 	</dependencyManagement>
 
 	<modules>
-		<module>themes</module>
+		<module>theme</module>
 		<module>map</module>
 		<module>activiti-explorer</module>
 		<module>bpm</module>
