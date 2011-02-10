@@ -97,7 +97,6 @@
 
 	<properties>
 		<activiti.version>5.2</activiti.version>
-		<spring.surf.version>1.0.0-RC2</spring.surf.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
