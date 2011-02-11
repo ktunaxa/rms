@@ -46,7 +46,7 @@ public class CommentDto implements Serializable {
 	 * The new content for this comment. If this comment is added to the report than this value is used, not the
 	 * original content.
 	 */
-	private String checkedContent;
+	private String reportContent;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -60,7 +60,7 @@ public class CommentDto implements Serializable {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * The aspect's unique identifier.
+	 * The comment's unique identifier.
 	 * 
 	 * @param id
 	 *            The new value for the identifier.
@@ -169,18 +169,18 @@ public class CommentDto implements Serializable {
 	 * 
 	 * @return Return the altered content.
 	 */
-	public String getCheckedContent() {
-		return checkedContent;
+	public String getReportContent() {
+		return reportContent;
 	}
 
 	/**
 	 * Set the new content for this comment. If this comment is added to the report than this value is used, not the
 	 * original content - which is always left untouched.
 	 * 
-	 * @param checkedContent
+	 * @param reportContent
 	 *            The new value.
 	 */
-	public void setCheckedContent(String checkedContent) {
-		this.checkedContent = checkedContent;
+	public void setReportContent(String reportContent) {
+		this.reportContent = reportContent;
 	};
 }

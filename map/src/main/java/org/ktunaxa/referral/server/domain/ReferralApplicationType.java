@@ -39,6 +39,10 @@ public class ReferralApplicationType {
 	private long id;
 
 	/** Description for the type of activity occurring in the land: forestry, mining, etc... */
+	@Column(nullable = false, name = "title")
+	private String title;
+
+	/** Extra clarification for this type of document, just in case the title alone is not clear enough. */
 	@Column(nullable = false, name = "description")
 	private String description;
 
@@ -77,7 +81,26 @@ public class ReferralApplicationType {
 	}
 
 	/**
-	 * Set the value of description.
+	 * Get the description for the type of activity occurring in the land: forestry, mining, etc...
+	 * 
+	 * @return Description for the type of activity occurring in the land: forestry, mining, etc...
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * Set the description for the type of activity occurring in the land: forestry, mining, etc...
+	 * 
+	 * @param title
+	 *            The new document type.
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * Set extra clarification for this type of document, just in case the title alone is not clear enough.
 	 * 
 	 * @param description
 	 *            The new value of description.
@@ -87,9 +110,9 @@ public class ReferralApplicationType {
 	}
 
 	/**
-	 * Get the value of description.
+	 * Ask extra clarification for this type of document, just in case the title alone is not clear enough.
 	 * 
-	 * @return The value of description.
+	 * @return Extra clarification for this type of document, just in case the title alone is not clear enough.
 	 */
 	public String getDescription() {
 		return description;

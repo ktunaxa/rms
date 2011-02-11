@@ -32,6 +32,9 @@ public class ReferralApplicationTypeDto implements Serializable {
 	private long id;
 
 	/** Description for the type of activity occurring in the land: forestry, mining, etc... */
+	private String title;
+
+	/** Extra clarification for this type of document, just in case the title alone is not clear enough. */
 	private String description;
 
 	// ------------------------------------------------------------------------
@@ -69,7 +72,26 @@ public class ReferralApplicationTypeDto implements Serializable {
 	}
 
 	/**
-	 * Set the value of description.
+	 * Get the description for the type of activity occurring in the land: forestry, mining, etc...
+	 * 
+	 * @return Description for the type of activity occurring in the land: forestry, mining, etc...
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * Set the description for the type of activity occurring in the land: forestry, mining, etc...
+	 * 
+	 * @param title
+	 *            The new document type.
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * Set extra clarification for this type of document, just in case the title alone is not clear enough.
 	 * 
 	 * @param description
 	 *            The new value of description.
@@ -79,9 +101,9 @@ public class ReferralApplicationTypeDto implements Serializable {
 	}
 
 	/**
-	 * Get the value of description.
+	 * Ask extra clarification for this type of document, just in case the title alone is not clear enough.
 	 * 
-	 * @return The value of description.
+	 * @return Extra clarification for this type of document, just in case the title alone is not clear enough.
 	 */
 	public String getDescription() {
 		return description;

@@ -117,6 +117,14 @@ public class Referral {
 	private ReferralApplicationType applicationType;
 
 	/**
+	 * If the application type is a renewal, amendment or replacement of an existing referral, this is that target
+	 * referral. Otherwise this object is null.
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "target_referral_id")
+	private Referral targetReferral;
+
+	/**
 	 * Access type. Default as non-confidential. Are all projects deemed to be open to staff at Lands and Community if
 	 * they have credentials?
 	 */
@@ -129,9 +137,13 @@ public class Referral {
 	@Column(nullable = false, name = "receive_date")
 	private Date receiveDate;
 
-	/** Deadline date for response. */
+	/** The date when the official response is sent to the contact. */
 	@Column(nullable = false, name = "response_date")
 	private Date reponseDate;
+
+	/** Deadline date for response. */
+	@Column(nullable = false, name = "response_deadline")
+	private Date reponseDeadline;
 
 	/** Active retention of record - in Years (2Y). */
 	@Column(nullable = false, name = "active_retention_period")
@@ -573,6 +585,27 @@ public class Referral {
 	}
 
 	/**
+	 * If the application type is a renewal, amendment or replacement of an existing referral, this is that target
+	 * referral. Otherwise this object is null.
+	 * 
+	 * @return The target referral, is there is one.
+	 */
+	public Referral getTargetReferral() {
+		return targetReferral;
+	}
+
+	/**
+	 * If the application type is a renewal, amendment or replacement of an existing referral, this is that target
+	 * referral. Otherwise this object is null.
+	 * 
+	 * @param targetReferral
+	 *            Set the target referral if there is one.
+	 */
+	public void setTargetReferral(Referral targetReferral) {
+		this.targetReferral = targetReferral;
+	}
+
+	/**
 	 * Get the access type. Default as non-confidential. Are all projects deemed to be open to staff at Lands and
 	 * Community if they have credentials?
 	 * 
@@ -614,22 +647,41 @@ public class Referral {
 	}
 
 	/**
-	 * Get the deadline date for response.
+	 * Get the date when the official response is sent to the contact.
 	 * 
-	 * @return Deadline date for response.
+	 * @return The date when the official response is sent to the contact.
 	 */
 	public Date getReponseDate() {
 		return reponseDate;
 	}
 
 	/**
-	 * Set the deadline date for response.
+	 * Set the date when the official response is sent to the contact
 	 * 
 	 * @param reponseDate
-	 *            The new deadline.
+	 *            The date when the response is given.
 	 */
 	public void setReponseDate(Date reponseDate) {
 		this.reponseDate = reponseDate;
+	}
+
+	/**
+	 * Get the deadline date for response.
+	 * 
+	 * @return Deadline date for response.
+	 */
+	public Date getReponseDeadline() {
+		return reponseDeadline;
+	}
+
+	/**
+	 * Set the deadline date for response.
+	 * 
+	 * @param reponseDeadline
+	 *            The new deadline for the response.
+	 */
+	public void setReponseDeadline(Date reponseDeadline) {
+		this.reponseDeadline = reponseDeadline;
 	}
 
 	/**

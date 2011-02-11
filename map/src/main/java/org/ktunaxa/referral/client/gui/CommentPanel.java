@@ -136,7 +136,7 @@ public class CommentPanel extends VLayout {
 		CommentDto c1 = new CommentDto();
 		c1.setTitle("Comment that expresses my deepest lorum ipsum feelings.");
 		c1.setContent(lorum);
-		c1.setCheckedContent("Let's take a longer version of the above, shall we? " + lorum);
+		c1.setReportContent("Let's take a longer version of the above, shall we? " + lorum);
 		c1.setIncludeInReport(true);
 		c1.setCreatedBy("Pieter De Graef");
 		c1.setCreationDate(new Date());

@@ -60,8 +60,8 @@ public abstract class Comment {
 	 * The new content for this comment. If this comment is added to the report than this value is used, not the
 	 * original content.
 	 */
-	@Column(name = "checked_content")
-	private String checkedContent;
+	@Column(name = "report_content")
+	private String reportContent;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -75,7 +75,7 @@ public abstract class Comment {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * The aspect's unique identifier.
+	 * The comment's unique identifier.
 	 * 
 	 * @param id
 	 *            The new value for the identifier.
@@ -184,18 +184,18 @@ public abstract class Comment {
 	 * 
 	 * @return Return the altered content.
 	 */
-	public String getCheckedContent() {
-		return checkedContent;
+	public String getReportContent() {
+		return reportContent;
 	}
 
 	/**
 	 * Set the new content for this comment. If this comment is added to the report than this value is used, not the
 	 * original content - which is always left untouched.
 	 * 
-	 * @param checkedContent
+	 * @param reportContent
 	 *            The new value.
 	 */
-	public void setCheckedContent(String checkedContent) {
-		this.checkedContent = checkedContent;
+	public void setReportContent(String reportContent) {
+		this.reportContent = reportContent;
 	};
 }

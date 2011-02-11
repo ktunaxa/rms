@@ -90,7 +90,7 @@ public class CommentBlock extends CollapsibleListBlock<CommentDto> {
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
-			compare = getObject().getCheckedContent();
+			compare = getObject().getReportContent();
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}

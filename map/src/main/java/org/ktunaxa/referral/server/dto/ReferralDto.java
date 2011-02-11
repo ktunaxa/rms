@@ -84,6 +84,12 @@ public class ReferralDto implements Serializable {
 	private ReferralApplicationTypeDto applicationType;
 
 	/**
+	 * If the application type is a renewal, amendment or replacement of an existing referral, this is that target
+	 * referral. Otherwise this object is null.
+	 */
+	private ReferralDto targetReferral;
+
+	/**
 	 * Access type. Default as non-confidential. Are all projects deemed to be open to staff at Lands and Community if
 	 * they have credentials?
 	 */
@@ -94,8 +100,11 @@ public class ReferralDto implements Serializable {
 	/** Date when initial referral package was received. */
 	private Date receiveDate;
 
-	/** Deadline date for response. */
+	/** The date when the official response is sent to the contact. */
 	private Date reponseDate;
+
+	/** Deadline date for response. */
+	private Date reponseDeadline;
 
 	/** Active retention of record - in Years (2Y). */
 	private int activeRetentionPeriod;
@@ -525,6 +534,27 @@ public class ReferralDto implements Serializable {
 	}
 
 	/**
+	 * If the application type is a renewal, amendment or replacement of an existing referral, this is that target
+	 * referral. Otherwise this object is null.
+	 * 
+	 * @return The target referral, is there is one.
+	 */
+	public ReferralDto getTargetReferral() {
+		return targetReferral;
+	}
+
+	/**
+	 * If the application type is a renewal, amendment or replacement of an existing referral, this is that target
+	 * referral. Otherwise this object is null.
+	 * 
+	 * @param targetReferral
+	 *            Set the target referral if there is one.
+	 */
+	public void setTargetReferral(ReferralDto targetReferral) {
+		this.targetReferral = targetReferral;
+	}
+
+	/**
 	 * Get the access type. Default as non-confidential. Are all projects deemed to be open to staff at Lands and
 	 * Community if they have credentials?
 	 * 
@@ -566,22 +596,41 @@ public class ReferralDto implements Serializable {
 	}
 
 	/**
-	 * Get the deadline date for response.
+	 * Get the date when the official response is sent to the contact.
 	 * 
-	 * @return Deadline date for response.
+	 * @return The date when the official response is sent to the contact.
 	 */
 	public Date getReponseDate() {
 		return reponseDate;
 	}
 
 	/**
-	 * Set the deadline date for response.
+	 * Set the date when the official response is sent to the contact
 	 * 
 	 * @param reponseDate
-	 *            The new deadline.
+	 *            The date when the response is given.
 	 */
 	public void setReponseDate(Date reponseDate) {
 		this.reponseDate = reponseDate;
+	}
+
+	/**
+	 * Get the deadline date for response.
+	 * 
+	 * @return Deadline date for response.
+	 */
+	public Date getReponseDeadline() {
+		return reponseDeadline;
+	}
+
+	/**
+	 * Set the deadline date for response.
+	 * 
+	 * @param reponseDeadline
+	 *            The new deadline for the response.
+	 */
+	public void setReponseDeadline(Date reponseDeadline) {
+		this.reponseDeadline = reponseDeadline;
 	}
 
 	/**

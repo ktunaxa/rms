@@ -35,6 +35,9 @@ public class TemplateDto implements Serializable {
 	/** The XML contents of the template. */
 	private byte[] content;
 
+	/** The mime-type for the actual template. */
+	private String mimeType;
+
 	// ------------------------------------------------------------------------
 	// Getters and setters:
 	// ------------------------------------------------------------------------
@@ -124,5 +127,24 @@ public class TemplateDto implements Serializable {
 	 */
 	public void setContent(byte[] content) {
 		this.content = content;
+	}
+
+	/**
+	 * Get the mime-type for the actual template.
+	 * 
+	 * @return The mime-type for the actual template.
+	 */
+	public String getMimeType() {
+		return mimeType;
+	}
+
+	/**
+	 * Set the mime-type for the actual template.
+	 * 
+	 * @param mimeType
+	 *            The new mime-type.
+	 */
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
 	}
 }

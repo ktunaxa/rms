@@ -31,6 +31,10 @@ public class ReferralStatusDto implements Serializable {
 
 	private long id;
 
+	/** The general process status of the referral (new, in progress, approved, denied). */
+	private String title;
+
+	/** Extra clarification for this type of document, just in case the title alone is not clear enough. */
 	private String description;
 
 	// ------------------------------------------------------------------------
@@ -68,7 +72,26 @@ public class ReferralStatusDto implements Serializable {
 	}
 
 	/**
-	 * Set the value of description.
+	 * Get the type of document being stored in system - Internal response, external response, etc...
+	 * 
+	 * @return What type of document being stored in system - Internal response, external response, etc...
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * Set the type of document being stored in system - Internal response, external response, etc...
+	 * 
+	 * @param title
+	 *            The new document type.
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * Set extra clarification for this type of document, just in case the title alone is not clear enough.
 	 * 
 	 * @param description
 	 *            The new value of description.
@@ -78,9 +101,9 @@ public class ReferralStatusDto implements Serializable {
 	}
 
 	/**
-	 * Get the value of description.
+	 * Ask extra clarification for this type of document, just in case the title alone is not clear enough.
 	 * 
-	 * @return The value of description.
+	 * @return Extra clarification for this type of document, just in case the title alone is not clear enough.
 	 */
 	public String getDescription() {
 		return description;
