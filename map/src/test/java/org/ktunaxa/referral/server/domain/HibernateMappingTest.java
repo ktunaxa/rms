@@ -14,7 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Pieter De Graef
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/org/geomajas/spring/geomajasContext.xml", "HibernateContext.xml" })
+@ContextConfiguration(locations = { "/org/geomajas/spring/geomajasContext.xml",
+		"/org/ktunaxa/referral/server/HibernateContext.xml" })
 public class HibernateMappingTest {
 
 	@Autowired
@@ -25,4 +26,3 @@ public class HibernateMappingTest {
 		Assert.assertNotNull(sessionFactory);
 	}
 }
-

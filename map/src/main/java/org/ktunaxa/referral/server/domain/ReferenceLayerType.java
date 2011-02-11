@@ -37,7 +37,7 @@ import javax.persistence.Table;
  * @author Pieter De Graef
  */
 @Entity
-@Table(name = "reference_layerype")
+@Table(name = "reference_layer_type")
 public class ReferenceLayerType {
 
 	@Id

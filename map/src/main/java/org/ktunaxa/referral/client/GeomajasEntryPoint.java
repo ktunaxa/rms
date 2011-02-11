@@ -146,7 +146,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 
 		// Activate Layer stuff
 		layerButton.select();
-		mainGui.showLeftLayout(layerPanel, "Manage layers", "250");
+		mainGui.showLeftLayout(layerPanel, "Manage layers", "350");
 		mainGui.hideBottomLayout();
 
 		// Search button:
