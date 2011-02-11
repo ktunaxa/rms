@@ -24,7 +24,7 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <book id="enduser" lang="en">
-	<title>Tkunaxa project</title>
+	<title>Ktunaxa project</title>
 
 	<bookinfo>
 		<copyright>
@@ -35,7 +35,7 @@
 
 		<releaseinfo><?eval ${project.version}?></releaseinfo>
 
-		<productname>Tkunaxa</productname>
+		<productname>Ktunaxa</productname>
 
 		<authorgroup>
 			<corpauthor>Geosparc</corpauthor>
@@ -49,6 +49,10 @@
 	
 	<xi:include href="domain.xml"
 				xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
+	<xi:include href="use-cases.xml"
+				xmlns:xi="http://www.w3.org/2001/XInclude"/>
+
 <!--
 	<xi:include href="configuration.xml"
 				xmlns:xi="http://www.w3.org/2001/XInclude"/>
