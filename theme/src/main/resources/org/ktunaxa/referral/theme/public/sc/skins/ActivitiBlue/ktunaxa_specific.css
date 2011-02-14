@@ -17,8 +17,7 @@ BLOCKS
 ============================================================*/
 
 .block {
-	background: #f6f6f6;
-	margin: 5px;
+	background: #f4f4f4;
 	padding: 3px;
 	border: 1px solid #C0C0CC;
     -moz-border-radius: 3px;
@@ -103,6 +102,20 @@ COMMENTS
     background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
 	color: #000000;
 }
+
+
+
+
+/*============================================================
+Layer Tree stuff
+============================================================*/
+
+.layerBlock {
+	border-bottom: 1px solid #E0E0E0;
+}
+
+
+
 
 
 /*============================================================

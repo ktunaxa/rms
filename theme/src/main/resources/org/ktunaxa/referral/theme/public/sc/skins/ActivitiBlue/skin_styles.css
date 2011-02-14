@@ -32,7 +32,7 @@ a:link {
 
 /* default text */
 .normal {
-    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:13px;
+    font-family:Arial,Verdana,Bitstream Vera Sans,sans-serif; font-size:13px;
 }
 
 .defaultBorder {
@@ -1279,6 +1279,7 @@ Button (also used as MenuButton base style)
     font-size:12px;
     padding:5px;
     color:#000000;
+    font-weight: bold;
 }
 
 .toolbarButton {
