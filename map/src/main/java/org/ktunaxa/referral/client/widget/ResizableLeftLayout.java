@@ -51,7 +51,7 @@ public class ResizableLeftLayout extends VLayout {
 
 	private ViewState viewState = ViewState.RESTORED;
 
-	private int restoredWidth = 350;
+	private int restoredWidth = 550;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -65,6 +65,7 @@ public class ResizableLeftLayout extends VLayout {
 	 */
 	public ResizableLeftLayout(String title) {
 		this.title = title;
+		setSize(restoredWidth + "px", "100%");
 
 		addMember(createTitle());
 

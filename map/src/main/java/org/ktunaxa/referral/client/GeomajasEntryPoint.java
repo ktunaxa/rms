@@ -134,11 +134,11 @@ public class GeomajasEntryPoint implements EntryPoint {
 		helpPanel = new VLayout();
 
 		// Layer button:
-		ToolStripButton layerButton = new ToolStripButton("Layers");
+		ToolStripButton layerButton = new ToolStripButton("LAYERS");
 		layerButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(layerPanel, "Manage layers", "350");
+				mainGui.showLeftLayout(layerPanel, "Manage layers");
 				mainGui.hideBottomLayout();
 			}
 		});
@@ -149,16 +149,16 @@ public class GeomajasEntryPoint implements EntryPoint {
 
 		// Activate Layer stuff
 		layerButton.select();
-		mainGui.showLeftLayout(layerPanel, "Manage layers", "350");
+		mainGui.showLeftLayout(layerPanel, "Manage layers");
 		mainGui.hideBottomLayout();
 
 		// Search button:
-		ToolStripButton searchButton = new ToolStripButton("Search Map");
+		ToolStripButton searchButton = new ToolStripButton("GIS SEARCH");
 		searchButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showBottomLayout(searchPanel, "Search the map", "250");
-				mainGui.hideLeftLayout();
+				mainGui.showLeftLayout(searchPanel, "Search the map");
+				mainGui.hideBottomLayout();
 			}
 		});
 		searchButton.setActionType(SelectionType.RADIO);
@@ -167,11 +167,11 @@ public class GeomajasEntryPoint implements EntryPoint {
 		menuBar.addMember(new ToolStripSeparator());
 
 		// Check button:
-		ToolStripButton checkButton = new ToolStripButton("Checks");
+		ToolStripButton checkButton = new ToolStripButton("CHECKS");
 		checkButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(checkPanel, "Execute checks", "400");
+				mainGui.showLeftLayout(checkPanel, "Execute checks");
 				mainGui.hideBottomLayout();
 			}
 		});
@@ -181,11 +181,11 @@ public class GeomajasEntryPoint implements EntryPoint {
 		menuBar.addMember(new ToolStripSeparator());
 
 		// Print button:
-		ToolStripButton printButton = new ToolStripButton("Print");
+		ToolStripButton printButton = new ToolStripButton("PRINT");
 		printButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(printPanel, "Print the map", "300");
+				mainGui.showLeftLayout(printPanel, "Print the map");
 				mainGui.hideBottomLayout();
 			}
 		});
@@ -195,11 +195,11 @@ public class GeomajasEntryPoint implements EntryPoint {
 		menuBar.addMember(new ToolStripSeparator());
 
 		// Document button:
-		ToolStripButton documentButton = new ToolStripButton("Documents");
+		ToolStripButton documentButton = new ToolStripButton("DOCUMENTS");
 		documentButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(documentPanel, "Manage documents", "600");
+				mainGui.showLeftLayout(documentPanel, "Manage documents");
 				mainGui.hideBottomLayout();
 			}
 		});
@@ -209,11 +209,11 @@ public class GeomajasEntryPoint implements EntryPoint {
 		menuBar.addMember(new ToolStripSeparator());
 
 		// Comments button:
-		ToolStripButton commentButton = new ToolStripButton("Comments");
+		ToolStripButton commentButton = new ToolStripButton("COMMENTS");
 		commentButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(commentPanel2, "Manage comments", "700");
+				mainGui.showLeftLayout(commentPanel2, "Manage comments");
 				mainGui.hideBottomLayout();
 			}
 		});
@@ -223,11 +223,11 @@ public class GeomajasEntryPoint implements EntryPoint {
 		menuBar.addMember(new ToolStripSeparator());
 
 		// Help button:
-		ToolStripButton helpButton = new ToolStripButton("Help");
+		ToolStripButton helpButton = new ToolStripButton("HELP");
 		helpButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(helpPanel, "Help", "500");
+				mainGui.showLeftLayout(helpPanel, "Help");
 				mainGui.hideBottomLayout();
 			}
 		});

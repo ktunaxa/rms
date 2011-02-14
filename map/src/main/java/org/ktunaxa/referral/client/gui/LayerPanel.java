@@ -107,11 +107,11 @@ public class LayerPanel extends VLayout {
 
 		public LayerBlock(ReferenceLayerDto layer) {
 			super();
-			setSize("100%", "32px");
+			setSize("100%", "30px");
 			setStyleName("layerBlock");
 
 			setLayoutLeftMargin(10);
-			HTMLFlow title = new HTMLFlow("<div style='line-height:32px;'>" + layer.getName() + "</div>");
+			HTMLFlow title = new HTMLFlow("<div style='line-height:30px;'>" + layer.getName() + "</div>");
 			title.setWidth100();
 			title.setLayoutAlign(VerticalAlignment.CENTER);
 			addMember(title);
@@ -130,8 +130,9 @@ public class LayerPanel extends VLayout {
 			menu.setShadowDepth(10);
 			MenuItem item1 = new MenuItem("Toggle labels", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
 			MenuItem item2 = new MenuItem("Refresh layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-			MenuItem item3 = new MenuItem("Show meta-data", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-			menu.setItems(item1, item2, item3);
+			MenuItem item3 = new MenuItem("Zoom to layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
+			MenuItem item4 = new MenuItem("Show meta-data", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
+			menu.setItems(item1, item2, item3, item4);
 
 			IMenuButton menuButton = new IMenuButton("", menu);
 			menuButton.setLayoutAlign(VerticalAlignment.CENTER);

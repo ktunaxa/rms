@@ -48,14 +48,11 @@ public class MainGui extends VLayout {
 	// Public methods:
 	// ------------------------------------------------------------------------
 
-	public void showLeftLayout(Canvas canvas, String title, String width) {
-		mapWidget.setVisible(false);
+	public void showLeftLayout(Canvas canvas, String title) {
 		leftLayout.restore();
 		leftLayout.setTitle(title);
 		leftLayout.setPane(canvas);
-		leftLayout.setWidth(width);
 		leftLayout.setVisible(true);
-		mapWidget.setVisible(true);
 	}
 
 	public void setLeftLayoutViewState(ViewState viewState) {
@@ -118,7 +115,6 @@ public class MainGui extends VLayout {
 		HLayout hLayout = new HLayout();
 		hLayout.setMargin(5);
 		leftLayout = new ResizableLeftLayout("Layers");
-		leftLayout.setSize("33%", "100%");
 		leftLayout.setStyleName("block");
 
 		VLayout rightLayout = new VLayout();

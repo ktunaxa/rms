@@ -217,7 +217,6 @@ public class ListView<T extends Serializable> extends VLayout {
 				}
 			});
 			toolStrip.addMember(sortBtn);
-			// toolStrip.addSeparator();
 		}
 		toolStrip.addSeparator();
 
@@ -255,13 +254,11 @@ public class ListView<T extends Serializable> extends VLayout {
 		toolStrip.addSeparator();
 
 		// Searching:
-		// toolStrip.addSeparator();
 		DynamicForm form = createSearchForm();
 		form.setPadding(0);
 		form.setStyleName("button");
 		form.setLayoutAlign(VerticalAlignment.CENTER);
 		toolStrip.addMember(form);
-		// toolStrip.addSpacer(new ToolStripSpacer(50));
 
 		header.addMember(toolStrip);
 		addMember(header);
@@ -274,7 +271,7 @@ public class ListView<T extends Serializable> extends VLayout {
 	private DynamicForm createSearchForm() {
 		DynamicForm searchForm = new DynamicForm();
 		final TextItem filterItem = new TextItem("search");
-		filterItem.setWidth(200);
+		filterItem.setWidth("150");
 		filterItem.setShowTitle(false);
 
 		PickerIcon searchPicker = new PickerIcon(PickerIcon.SEARCH, new FormItemClickHandler() {

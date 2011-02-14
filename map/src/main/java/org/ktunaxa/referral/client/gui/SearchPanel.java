@@ -33,7 +33,7 @@ public class SearchPanel extends VLayout {
 
 		final TabSet tabs = new TabSet();
 		Tab tab1 = new Tab("Search");
-		Tab tab2 = new Tab("Feature Grid");
+		Tab tab2 = new Tab("Search Results");
 
 		FeatureListGrid grid = new FeatureListGrid(mapWidget.getMapModel());
 		grid.setBackgroundColor("#FFFFFF");
