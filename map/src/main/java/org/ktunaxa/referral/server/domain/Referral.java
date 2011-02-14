@@ -656,7 +656,7 @@ public class Referral {
 	}
 
 	/**
-	 * Set the date when the official response is sent to the contact
+	 * Set the date when the official response is sent to the contact.
 	 * 
 	 * @param reponseDate
 	 *            The date when the response is given.

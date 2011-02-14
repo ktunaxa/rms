@@ -20,6 +20,7 @@ import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -110,6 +111,7 @@ public class ResizableLeftLayout extends VLayout {
 			addMember(closedCanvas);
 		}
 		viewState = ViewState.MINIMIZED;
+		disableResizeBar();
 	}
 
 	/**
@@ -131,6 +133,7 @@ public class ResizableLeftLayout extends VLayout {
 			setWidth100();
 		}
 		viewState = ViewState.MAXIMIZED;
+		disableResizeBar();
 	}
 
 	/**
@@ -149,6 +152,7 @@ public class ResizableLeftLayout extends VLayout {
 			setWidth(restoredWidth);
 		}
 		viewState = ViewState.RESTORED;
+		enableResizeBar();
 	}
 
 	/**
@@ -212,6 +216,22 @@ public class ResizableLeftLayout extends VLayout {
 	// ------------------------------------------------------------------------
 	// Private methods concerning GUI:
 	// ------------------------------------------------------------------------
+
+	private void enableResizeBar() {
+		setShowResizeBar(true);
+		if (getParentElement() instanceof Layout) {
+			Layout parent = (Layout) getParentElement();
+			parent.setMembersMargin(0);
+		}
+	}
+
+	private void disableResizeBar() {
+		setShowResizeBar(false);
+		if (getParentElement() instanceof Layout) {
+			Layout parent = (Layout) getParentElement();
+			parent.setMembersMargin(10);
+		}
+	}
 
 	/** Build the title canvas for the normal view. */
 	private HLayout createTitle() {

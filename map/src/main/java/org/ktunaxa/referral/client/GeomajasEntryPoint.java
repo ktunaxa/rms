@@ -65,6 +65,8 @@ public class GeomajasEntryPoint implements EntryPoint {
 
 	private CommentPanel commentPanel2;
 
+	private VLayout helpPanel;
+
 	public void onModuleLoad() {
 		VLayout layout = new VLayout();
 		layout.setWidth100();
@@ -129,13 +131,14 @@ public class GeomajasEntryPoint implements EntryPoint {
 		printPanel = new VLayout();
 		documentPanel = new DocumentPanel();
 		commentPanel2 = new CommentPanel();
+		helpPanel = new VLayout();
 
 		// Layer button:
 		ToolStripButton layerButton = new ToolStripButton("Layers");
 		layerButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(layerPanel, "Manage layers", "250");
+				mainGui.showLeftLayout(layerPanel, "Manage layers", "350");
 				mainGui.hideBottomLayout();
 			}
 		});
@@ -150,7 +153,7 @@ public class GeomajasEntryPoint implements EntryPoint {
 		mainGui.hideBottomLayout();
 
 		// Search button:
-		ToolStripButton searchButton = new ToolStripButton("Search");
+		ToolStripButton searchButton = new ToolStripButton("Search Map");
 		searchButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
@@ -217,6 +220,20 @@ public class GeomajasEntryPoint implements EntryPoint {
 		commentButton.setActionType(SelectionType.RADIO);
 		commentButton.setRadioGroup("the-only-one");
 		menuBar.addMember(commentButton);
+		menuBar.addMember(new ToolStripSeparator());
+
+		// Help button:
+		ToolStripButton helpButton = new ToolStripButton("Help");
+		helpButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				mainGui.showLeftLayout(helpPanel, "Help", "500");
+				mainGui.hideBottomLayout();
+			}
+		});
+		helpButton.setActionType(SelectionType.RADIO);
+		helpButton.setRadioGroup("the-only-one");
+		menuBar.addMember(helpButton);
 		return menuBar;
 	}
 }

@@ -34,8 +34,8 @@ public class DocumentDto implements Serializable {
 	/** A short description to further clarify this document. */
 	private String description;
 
-	/** Content keywords as a comma separated list. */
-	private String keywords;
+//	/** Content keywords as a comma separated list. */
+//	private String keywords;
 
 	/** What type of document being stored in system - Internal response, external response, etc... */
 	private DocumentTypeDto type;
@@ -266,24 +266,24 @@ public class DocumentDto implements Serializable {
 		this.comments = comments;
 	}
 
-	/**
-	 * Get content keywords as a comma separated list.
-	 * 
-	 * @return Content keywords as a comma separated list.
-	 */
-	public String getKeywords() {
-		return keywords;
-	}
-
-	/**
-	 * Set the content keywords as a comma separated list.
-	 * 
-	 * @param keywords
-	 *            The new keywords.
-	 */
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
+//	/**
+//	 * Get content keywords as a comma separated list.
+//	 * 
+//	 * @return Content keywords as a comma separated list.
+//	 */
+//	public String getKeywords() {
+//		return keywords;
+//	}
+//
+//	/**
+//	 * Set the content keywords as a comma separated list.
+//	 * 
+//	 * @param keywords
+//	 *            The new keywords.
+//	 */
+//	public void setKeywords(String keywords) {
+//		this.keywords = keywords;
+//	}
 
 	/**
 	 * Get the type of document being stored in system - Internal response, external response, etc...

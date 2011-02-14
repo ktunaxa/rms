@@ -49,9 +49,9 @@ public class Document {
 	@Column(nullable = false, name = "description")
 	private String description;
 
-	/** Content keywords as a comma separated list. */
-	@Column(name = "keywords")
-	private String keywords;
+//	/** Content keywords as a comma separated list. */
+//	@Column(name = "keywords")
+//	private String keywords;
 
 	/** What type of document being stored in system - Internal response, external response, etc... */
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -292,24 +292,24 @@ public class Document {
 		this.comments = comments;
 	}
 
-	/**
-	 * Get content keywords as a comma separated list.
-	 * 
-	 * @return Content keywords as a comma separated list.
-	 */
-	public String getKeywords() {
-		return keywords;
-	}
-
-	/**
-	 * Set the content keywords as a comma separated list.
-	 * 
-	 * @param keywords
-	 *            The new keywords.
-	 */
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
+//	/**
+//	 * Get content keywords as a comma separated list.
+//	 * 
+//	 * @return Content keywords as a comma separated list.
+//	 */
+//	public String getKeywords() {
+//		return keywords;
+//	}
+//
+//	/**
+//	 * Set the content keywords as a comma separated list.
+//	 * 
+//	 * @param keywords
+//	 *            The new keywords.
+//	 */
+//	public void setKeywords(String keywords) {
+//		this.keywords = keywords;
+//	}
 
 	/**
 	 * Get the type of document being stored in system - Internal response, external response, etc...

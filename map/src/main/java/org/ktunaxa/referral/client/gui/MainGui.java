@@ -116,10 +116,10 @@ public class MainGui extends VLayout {
 
 	private void buildGui() {
 		HLayout hLayout = new HLayout();
+		hLayout.setMargin(5);
 		leftLayout = new ResizableLeftLayout("Layers");
 		leftLayout.setSize("33%", "100%");
 		leftLayout.setStyleName("block");
-		// leftLayout.setShowResizeBar(true);
 
 		VLayout rightLayout = new VLayout();
 		rightLayout.setSize("100%", "100%");
@@ -127,7 +127,6 @@ public class MainGui extends VLayout {
 		VLayout mapLayout = new VLayout();
 		mapLayout.setSize("100%", "100%");
 		mapLayout.setStyleName("block");
-		// mapLayout.setShowResizeBar(true);
 		mapWidget = new MapWidget("mainMap", "app");
 		Toolbar toolbar = new Toolbar(mapWidget);
 		toolbar.setButtonSize(Toolbar.BUTTON_SIZE_BIG);

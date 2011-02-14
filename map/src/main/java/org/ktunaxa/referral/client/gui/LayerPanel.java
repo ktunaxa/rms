@@ -53,7 +53,7 @@ public class LayerPanel extends VLayout {
 		TabSet tabs = new TabSet();
 		tabs.setSize("100%", "100%");
 		Tab tabBase = new Tab("Base layers");
-		Tab tabValue = new Tab("Aspect value layers");
+		Tab tabValue = new Tab("Ktunaxa Values");
 		panelValue = new VLayout();
 		panelValue.setOverflow(Overflow.AUTO);
 		tabValue.setPane(panelValue);
