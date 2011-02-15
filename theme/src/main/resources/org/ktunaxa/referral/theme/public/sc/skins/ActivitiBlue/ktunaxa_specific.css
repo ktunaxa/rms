@@ -17,7 +17,7 @@ BLOCKS
 ============================================================*/
 
 .block {
-	background: #f4f4f4;
+	background: #f0f0f0;
 	padding: 3px;
 	border: 1px solid #C0C0CC;
     -moz-border-radius: 3px;
@@ -25,10 +25,11 @@ BLOCKS
 }
 .blockTitle {
     border-bottom: 1px solid #C0C0CC;
+    margin-bottom: 5px;
 }
 .blockTitleText {
 	font-family: Arial,Verdana,sans-serif;
-	color: #647386;
+	/*color: #647386;*/
 	font-weight:bold;
 	font-size: 14px;
 	line-height:28px;

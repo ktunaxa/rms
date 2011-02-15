@@ -269,10 +269,7 @@ Button (also used as MenuButton base style)
 ============================================================*/
 
 .menuTable {
-    border-top:1px solid #93A9C0;
-    border-bottom:1px solid #93A9C0;
-    border-left:1px solid #93A9C0;
-    border-right:1px solid #93A9C0;
+    border: 1px solid #647387;
 }
 .menu,
 .menuDark,
@@ -285,15 +282,17 @@ Button (also used as MenuButton base style)
 .menuDisabled,
 .treeMenuSelected,
 .treeMenuSelectedOver {
-    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:13px; background-color:white;
+    font-family:Arial,Verdana,Bitstream Vera Sans,sans-serif; font-size:13px; background-color:white;
 }
 .menuOver,
 .menuOverDark,
 .menuSelectedOver,
 .menuSelectedOverDark {
-    color:white; background-color:#3E74B3;
-    border-top:1px solid #5E94D3;
-    border-bottom:1px solid #1E5493;
+    color:white;
+    background: #647386;
+    background-image: -moz-linear-gradient(top, #7c8a9b, #647387);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#7c8a9b), to(#647387));
+    border: none;
 }
 .treeMenuSelected {
     background-color:#fff1a8;

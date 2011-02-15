@@ -107,11 +107,11 @@ public class LayerPanel extends VLayout {
 
 		public LayerBlock(ReferenceLayerDto layer) {
 			super();
-			setSize("100%", "30px");
+			setSize("100%", "26px");
 			setStyleName("layerBlock");
 
 			setLayoutLeftMargin(10);
-			HTMLFlow title = new HTMLFlow("<div style='line-height:30px;'>" + layer.getName() + "</div>");
+			HTMLFlow title = new HTMLFlow("<div style='line-height:26px;'>" + layer.getName() + "</div>");
 			title.setWidth100();
 			title.setLayoutAlign(VerticalAlignment.CENTER);
 			addMember(title);
@@ -119,7 +119,7 @@ public class LayerPanel extends VLayout {
 			IButton visibleBtn = new IButton("");
 			visibleBtn.setLayoutAlign(VerticalAlignment.CENTER);
 			visibleBtn.setShowTitle(false);
-			visibleBtn.setSize("24", "24");
+			visibleBtn.setSize("24", "22");
 			visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show.png");
 			visibleBtn.setIconSize(16);
 			visibleBtn.setActionType(SelectionType.CHECKBOX);
@@ -137,7 +137,7 @@ public class LayerPanel extends VLayout {
 			IMenuButton menuButton = new IMenuButton("", menu);
 			menuButton.setLayoutAlign(VerticalAlignment.CENTER);
 			menuButton.setShowTitle(false);
-			menuButton.setSize("24", "24");
+			menuButton.setSize("22", "22");
 			addMember(menuButton);
 		}
 	}
