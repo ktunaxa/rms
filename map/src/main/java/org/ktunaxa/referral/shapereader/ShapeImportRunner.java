@@ -27,7 +27,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 
  * @author Pieter De Graef
  */
-public class ShapeImportRunner {
+public final class ShapeImportRunner {
 
 	private ShapeReaderService service;
 

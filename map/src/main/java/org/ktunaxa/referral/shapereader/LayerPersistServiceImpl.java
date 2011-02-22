@@ -90,6 +90,9 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 			throw new IOException("An invalid geometry was found in the shape file: " + err.getMessage()
 					+ ". Feature ID=" + feature.getID());
 		}
+		if (geometry.getSRID() != 26911) {
+			throw new IOException("Geometry has wrong coordinate system. SRID=" + geometry.getSRID());
+		}
 	}
 
 	/**
