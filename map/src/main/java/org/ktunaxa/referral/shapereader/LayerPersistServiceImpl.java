@@ -105,8 +105,14 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 		ReferenceBase base = new ReferenceBase();
 		base.setLayer(layer);
 		base.setGeometry((Geometry) feature.getDefaultGeometry());
-		base.setLabel((String) feature.getAttribute("RMS_LABEL"));
-		base.setStyleCode((String) feature.getAttribute("RMS_STYLE"));
+		Object temp = feature.getAttribute("RMS_LABEL");
+		if (temp != null) {
+			base.setLabel(temp.toString());
+		}
+		temp = feature.getAttribute("RMS_STYLE");
+		if (temp != null) {
+			base.setStyleCode(temp.toString());
+		}
 
 		List<ReferenceBaseAttribute> attributes = new ArrayList<ReferenceBaseAttribute>();
 		for (AttributeDescriptor descr : feature.getFeatureType().getAttributeDescriptors()) {
@@ -139,8 +145,14 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 		ReferenceValue value = new ReferenceValue();
 		value.setLayer(layer);
 		value.setGeometry((Geometry) feature.getDefaultGeometry());
-		value.setLabel((String) feature.getAttribute("RMS_LABEL"));
-		value.setStyleCode((String) feature.getAttribute("RMS_STYLE"));
+		Object temp = feature.getAttribute("RMS_LABEL");
+		if (temp != null) {
+			value.setLabel(temp.toString());
+		}
+		temp = feature.getAttribute("RMS_STYLE");
+		if (temp != null) {
+			value.setStyleCode(temp.toString());
+		}
 
 		List<ReferenceValueAttribute> attributes = new ArrayList<ReferenceValueAttribute>();
 		for (AttributeDescriptor descr : feature.getFeatureType().getAttributeDescriptors()) {

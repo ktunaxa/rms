@@ -32,7 +32,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<context:annotation-config />
 
 	<bean name="shapeReaderService" class="org.ktunaxa.referral.shapereader.ShapeReaderServiceImpl">
-		<property name="basePath" value="/tmp/" />
+		<property name="basePath" value="/tmp/shapes/" />
 	</bean>
 
 </beans>
