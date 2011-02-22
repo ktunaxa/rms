@@ -177,6 +177,7 @@ CREATE TABLE reference_value(
 	label character varying,
 	geom geometry,
 	CONSTRAINT enforce_dims_geom CHECK ((ndims(geom) = 2)),
+	CONSTRAINT enforce_srid_geom CHECK ((srid(geom) = 26911)),
 	CONSTRAINT reference_value_pkey PRIMARY KEY (id),
 	CONSTRAINT fk_reference_value_layer FOREIGN KEY (layer_id) REFERENCES reference_layer (id)
 ) WITH (OIDS=FALSE);
@@ -215,6 +216,7 @@ CREATE TABLE reference_base(
 	label character varying,
 	geom geometry,
 	CONSTRAINT enforce_dims_geom CHECK ((ndims(geom) = 2)),
+	CONSTRAINT enforce_srid_geom CHECK ((srid(geom) = 26911)),
 	CONSTRAINT reference_base_pkey PRIMARY KEY (id),
 	CONSTRAINT fk_reference_base_layer FOREIGN KEY (layer_id) REFERENCES reference_layer (id)
 ) WITH (OIDS=FALSE);

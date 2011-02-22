@@ -36,6 +36,13 @@ import org.opengis.feature.simple.SimpleFeature;
 public interface LayerPersistService {
 
 	/**
+	 * Return the code for the SRID that all features/geometries should match.
+	 * 
+	 * @return The actual SRID code.
+	 */
+	int getSrid();
+
+	/**
 	 * Clear all contents in the given reference layer from the database.
 	 * 
 	 * @param layer

@@ -48,4 +48,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="sessionFactory" ref="postgisSessionFactory" />
 	</bean>
 
+	<!-- Needed when the Hibernate pojo classes contain dates. -->
+	<bean name="simpleDateFormat" class="java.text.SimpleDateFormat">
+	    <constructor-arg type="java.lang.String" value="dd/MM/yyyy" />
+	</bean>
+
 </beans>

@@ -42,8 +42,19 @@ import com.vividsolutions.jts.operation.valid.TopologyValidationError;
 @Component
 public class LayerPersistServiceImpl implements LayerPersistService {
 
+	private int srid = 26911;
+
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	/**
+	 * Return the code for the SRID that all features/geometries should match.
+	 * 
+	 * @return The actual SRID code.
+	 */
+	public int getSrid() {
+		return srid;
+	}
 
 	/**
 	 * Clear all contents in the given reference layer from the database.
@@ -90,7 +101,9 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 			throw new IOException("An invalid geometry was found in the shape file: " + err.getMessage()
 					+ ". Feature ID=" + feature.getID());
 		}
-		if (geometry.getSRID() != 26911) {
+		if (geometry.getSRID() == 0) {
+			geometry.setSRID(getSrid()); // special case...
+		} else if (geometry.getSRID() != getSrid()) {
 			throw new IOException("Geometry has wrong coordinate system. SRID=" + geometry.getSRID());
 		}
 	}
@@ -195,5 +208,19 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 	public void persist(ReferenceValue reference) {
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(reference);
+	}
+
+	// ------------------------------------------------------------------------
+	// Extra setters:
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Set a new value for the required SRID that all geometries must match.
+	 * 
+	 * @param srid
+	 *            The new SRID value.
+	 */
+	public void setSrid(int srid) {
+		this.srid = srid;
 	}
 }

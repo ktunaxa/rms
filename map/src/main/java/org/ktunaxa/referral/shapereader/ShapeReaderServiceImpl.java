@@ -22,6 +22,7 @@ import java.util.List;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.referencing.CRS;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.ktunaxa.referral.server.domain.ReferenceBase;
@@ -29,13 +30,14 @@ import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceValue;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
+import org.opengis.referencing.FactoryException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of the {@link ShapeReaderService} that uses a pre-configured base path to search for shape files, and
- * also uses the {@link LayerPersistServiceImpl} to actually persist shape files into the database.
+ * also uses the {@link LayerPersistService} to actually persist shape files into the database.
  * 
  * @author Pieter De Graef
  */
@@ -43,7 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ShapeReaderServiceImpl implements ShapeReaderService {
 
 	@Autowired
-	private LayerPersistServiceImpl persistService;
+	private LayerPersistService persistService;
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -126,6 +128,25 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 			}
 			if (schema.getType("RMS_LABEL") == null) {
 				throw new IOException("The attribute 'RMS_LABEL' is missing from the shape file definition.");
+			}
+			Integer code = null;
+			try {
+				code = CRS.lookupEpsgCode(schema.getCoordinateReferenceSystem(), false);
+			} catch (FactoryException e) {
+				throw new IOException("Could not look up EPSG code for coordinate reference system: " + e.getMessage());
+			}
+			if (code == null) {
+				// Backup plan:
+				String crsName = schema.getCoordinateReferenceSystem().getName().getCode();
+				if ("NAD_1983_UTM_Zone_11N".equalsIgnoreCase(crsName)) {
+					code = 26911;
+				} else {
+					throw new IOException("Unknown coordinate reference system: " + crsName);
+				}
+			}
+			if (code != persistService.getSrid()) {
+				throw new IOException("The shape files contains the wrong coordinate reference system. EPSG"
+						+ persistService.getSrid() + " was expected.");
 			}
 		}
 	}

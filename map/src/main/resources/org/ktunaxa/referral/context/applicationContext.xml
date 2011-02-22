@@ -69,31 +69,20 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="scaleConfiguration">
 			<bean class="org.geomajas.configuration.client.ScaleConfigurationInfo">
 				<property name="maximumScale" value="1:10000" />
-				<property name="zoomLevels">
-					<list>
-						<value>7.5</value>
-						<value>15</value>
-						<value>30</value>
-						<value>60</value>
-						<value>120</value>
-						<value>240</value>
-					</list>
-				</property>
 			</bean>
 		</property>
 		<property name="initialBounds">
 			<bean class="org.geomajas.geometry.Bbox">
-				<property name="x" value="505500" />
-				<property name="y" value="6588000" />
-				<property name="width" value="2000" />
-				<property name="height" value="2000" />
+				<property name="x" value="-19000000" />
+				<property name="y" value="-19000000" />
+				<property name="width" value="38000000" />
+				<property name="height" value="38000000" />
 			</bean>
 		</property>
 		<property name="layers">
 			<list>
-				<!--ref bean="googleSatLayer" /-->
 				<ref bean="osmLayer" />
-				<ref bean="countries110mLayer" />
+				<ref bean="referenceBaseLayer" />
 			</list>
 		</property>
 		<property name="toolbar">
@@ -134,16 +123,15 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 									<property name="label" value="Base layers" />
 									<property name="layers">
 										<list>
-											<!--ref bean="googleSatLayer" /-->
 											<ref bean="osmLayer" />
 										</list>
 									</property>
 								</bean>
 								<bean class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
-									<property name="label" value="Aspect: Cultural" />
+									<property name="label" value="Vector Layers" />
 									<property name="layers">
 										<list>
-											<ref bean="countries110mLayer" />
+											<ref bean="referenceBaseLayer" />
 										</list>
 									</property>
 								</bean>
@@ -193,25 +181,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 				<ref bean="osmLayer" />
 			</list>
 		</property>
-	</bean>
-
-	<bean class="org.geomajas.configuration.client.ClientVectorLayerInfo"
-		id="countries110mLayer">
-		<property name="serverLayerId" value="countries110m" />
-		<property name="label" value="Countries" />
-		<property name="visible" value="false" />
-		<property name="maximumScale" value="1:1000" />
-		<property name="minimumScale" value="1:500000000" />
-		<property name="snappingRules">
-			<list>
-				<bean class="org.geomajas.configuration.SnappingRuleInfo">
-					<property name="distance" value="10000" />
-					<property name="type" value="NEAREST_POINT" />
-					<property name="layerId" value="countries110mLayer" />
-				</bean>
-			</list>
-		</property>
-		<property name="namedStyleInfo" ref="countries110mStyleInfo" />
 	</bean>
 
 	<bean name="ToolbarSeparator" class="org.geomajas.configuration.client.ClientToolInfo" />
