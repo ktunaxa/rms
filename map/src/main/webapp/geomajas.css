@@ -14,7 +14,7 @@
 /*------------- KTUNAXA styles ---------------*/
 
 .header {
-	background: #555555 url('org.ktunaxa.referral.GeomajasEntryPoint/sc/images/header/header-bg-black.png') repeat-x;
+	background: #555555 url('org.ktunaxa.referral.KtunaxaEntryPoint/sc/images/header/header-bg-black.png') repeat-x;
 	border: none;
 	color: #FFFFFF;
 }
@@ -28,7 +28,7 @@
 }
 
 .headerRight {
-	background: #555555 url('org.ktunaxa.referral.GeomajasEntryPoint/sc/images/header/header-right-bg-blue.png') no-repeat;
+	background: #555555 url('org.ktunaxa.referral.KtunaxaEntryPoint/sc/images/header/header-right-bg-blue.png') no-repeat;
 }
 .headerRight .toolbarButton {
 	color: #FFFFFF;
@@ -41,7 +41,7 @@
 }
 
 .subHeader {
-	background: #FFFFFF url('org.ktunaxa.referral.GeomajasEntryPoint/sc/images/header/content-bg.png') repeat-x;
+	background: #FFFFFF url('org.ktunaxa.referral.KtunaxaEntryPoint/sc/images/header/content-bg.png') repeat-x;
 }
 
 

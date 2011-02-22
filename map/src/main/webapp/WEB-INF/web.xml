@@ -6,23 +6,26 @@
         http://java.sun.com/xml/ns/javaee 
         http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<display-name>Geomajas application</display-name>
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-            classpath:org/ktunaxa/referral/context/applicationContext.xml
-            classpath:org/ktunaxa/referral/context/layerReferenceBase.xml
-			classpath:org/ktunaxa/referral/context/layerOsm.xml
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:org/geomajas/spring/geomajasContext.xml
+			WEB-INF/applicationContext.xml
+			WEB-INF/spring-hibernate.xml
 
-			classpath:org/ktunaxa/referral/context/spring-hibernate.xml
+			WEB-INF/layer*.xml
         </param-value>
-    </context-param>
+	</context-param>
 
 	<listener>
  		<listener-class>org.geomajas.servlet.PrepareScanningContextListener</listener-class>
 	</listener>
 
 	<listener>
-		<listener-class>org.geomajas.servlet.GeomajasContextListener</listener-class>
+ 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+ 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 
 	<filter>
@@ -68,7 +71,7 @@
 
 	<servlet-mapping>
 		<servlet-name>GeomajasServiceServlet</servlet-name>
-		<url-pattern>/org.ktunaxa.referral.GeomajasEntryPoint/geomajasService</url-pattern>
+		<url-pattern>/org.ktunaxa.referral.KtunaxaEntryPoint/geomajasService</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

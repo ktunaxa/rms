@@ -257,7 +257,7 @@
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>gwt-maven-plugin</artifactId>
 						<configuration>
-							<module>org.ktunaxa.referral.GeomajasEntryPoint</module>
+							<module>org.ktunaxa.referral.KtunaxaEntryPoint</module>
 							<runTarget>index.html</runTarget>
 							<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
 						</configuration>
@@ -291,7 +291,7 @@
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>gwt-maven-plugin</artifactId>
 						<configuration>
-							<module>org.ktunaxa.referral.GeomajasEntryPoint</module>
+							<module>org.ktunaxa.referral.KtunaxaEntryPoint</module>
 							<runTarget>/ktunaxa-referral/index.html</runTarget>
 							<noServer>true</noServer>
 							<port>8080</port>
