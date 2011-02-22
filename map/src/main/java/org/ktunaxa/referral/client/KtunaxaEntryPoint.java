@@ -38,7 +38,7 @@ import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
  * 
  * @author Pieter De Graef
  */
-public class GeomajasEntryPoint implements EntryPoint {
+public class KtunaxaEntryPoint implements EntryPoint {
 
 	private static final String RFA_ID = "MIN001";
 
