@@ -249,6 +249,53 @@
 				<version>2.8</version>
 			</plugin>
 
+			<plugin>
+				<groupId>com.googlecode</groupId>
+				<artifactId>maven-db-plugin</artifactId>
+				<version>1.2-SNAPSHOT</version>
+				<configuration>
+					<adminDbConnectionSettings>
+						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
+						<jdbcUrl>jdbc:postgresql://localhost:5432/</jdbcUrl>
+						<userName>postgres</userName>
+						<password>postgres</password>
+					</adminDbConnectionSettings>
+					<appDbConnectionSettings>
+						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
+						<jdbcUrl>jdbc:postgresql://localhost:5432/ktunaxa</jdbcUrl>
+						<userName>ktunaxa</userName>
+						<password>toenacha</password>
+					</appDbConnectionSettings>
+					<sqlDelimiter> #--;</sqlDelimiter>
+					<dbDataScriptsDirectory>
+						<param>src/main/sql/data</param>
+					</dbDataScriptsDirectory>
+					<dbSchemaScriptsDirectory>
+						<param>src/main/sql/schema</param>
+					</dbSchemaScriptsDirectory>
+					<dbUpdateScriptsDirectory>
+						<param>src/main/sql/update</param>
+					</dbUpdateScriptsDirectory>
+					<dbCreateStatements>
+						create database ktunaxa TEMPLATE=template_postgis; #--;
+						ALTER DATABASE ktunaxa OWNER TO ktunaxa; #--;
+		                       </dbCreateStatements>
+					<dbDropStatements>drop database ktunaxa; #--;</dbDropStatements>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.postgis</groupId>
+						<artifactId>postgis-jdbc</artifactId>
+						<version>1.1.6</version>
+					</dependency>
+					<dependency>
+						<groupId>postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>8.1-407.jdbc3</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -350,62 +397,6 @@
 								</goals>
 							</execution>
 						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>database</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.googlecode</groupId>
-						<artifactId>maven-db-plugin</artifactId>
-						<version>1.2-SNAPSHOT</version>
-						<configuration>
-							<adminDbConnectionSettings>
-								<jdbcDriver>org.postgresql.Driver</jdbcDriver>
-								<jdbcUrl>jdbc:postgresql://localhost:5432/</jdbcUrl>
-								<userName>postgres</userName>
-								<password>postgres</password>
-							</adminDbConnectionSettings>
-							<appDbConnectionSettings>
-								<jdbcDriver>org.postgresql.Driver</jdbcDriver>
-								<jdbcUrl>jdbc:postgresql://localhost:5432/ktunaxa</jdbcUrl>
-								<userName>ktunaxa</userName>
-								<password>toenacha</password>
-							</appDbConnectionSettings>
-							<sqlDelimiter> #--;</sqlDelimiter>
-							<dbDataScriptsDirectory>
-								<param>src/main/sql/data</param>
-							</dbDataScriptsDirectory>
-							<dbSchemaScriptsDirectory>
-								<param>src/main/sql/schema</param>
-							</dbSchemaScriptsDirectory>
-							<dbUpdateScriptsDirectory>
-								<param>src/main/sql/update</param>
-							</dbUpdateScriptsDirectory>
-							<dbCreateStatements>
-								create database ktunaxa TEMPLATE=template_postgis; #--;
-								ALTER DATABASE ktunaxa OWNER TO ktunaxa; #--;
-	                        </dbCreateStatements>
-							<dbDropStatements>drop database ktunaxa; #--;</dbDropStatements>
-						</configuration>
-						<dependencies>
-							<dependency>
-								<groupId>org.postgis</groupId>
-								<artifactId>postgis-jdbc</artifactId>
-								<version>1.1.6</version>
-							</dependency>
-							<dependency>
-								<groupId>postgresql</groupId>
-								<artifactId>postgresql</artifactId>
-								<version>8.1-407.jdbc3</version>
-							</dependency>
-						</dependencies>
 					</plugin>
 				</plugins>
 			</build>
