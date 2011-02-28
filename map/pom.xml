@@ -55,6 +55,13 @@
 				<scope>import</scope>
 			</dependency>
 			<dependency>
+				<groupId>org.geomajas.plugin</groupId>
+				<artifactId>geomajas-layer-hibernate</artifactId>
+				<version>1.8.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
 				<groupId>org.geomajas</groupId>
 				<artifactId>geomajas-dep</artifactId>
 				<version>1.11.4</version>
@@ -347,9 +354,66 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>database</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.googlecode</groupId>
+						<artifactId>maven-db-plugin</artifactId>
+						<version>1.2-SNAPSHOT</version>
+						<configuration>
+							<adminDbConnectionSettings>
+								<jdbcDriver>org.postgresql.Driver</jdbcDriver>
+								<jdbcUrl>jdbc:postgresql://localhost:5432/</jdbcUrl>
+								<userName>postgres</userName>
+								<password>postgres</password>
+							</adminDbConnectionSettings>
+							<appDbConnectionSettings>
+								<jdbcDriver>org.postgresql.Driver</jdbcDriver>
+								<jdbcUrl>jdbc:postgresql://localhost:5432/ktunaxa</jdbcUrl>
+								<userName>ktunaxa</userName>
+								<password>toenacha</password>
+							</appDbConnectionSettings>
+							<sqlDelimiter> #--;</sqlDelimiter>
+							<dbDataScriptsDirectory>
+								<param>src/main/sql/data</param>
+							</dbDataScriptsDirectory>
+							<dbSchemaScriptsDirectory>
+								<param>src/main/sql/schema</param>
+							</dbSchemaScriptsDirectory>
+							<dbUpdateScriptsDirectory>
+								<param>src/main/sql/update</param>
+							</dbUpdateScriptsDirectory>
+							<dbCreateStatements>
+								create database ktunaxa TEMPLATE=template_postgis; #--;
+								ALTER DATABASE ktunaxa OWNER TO ktunaxa; #--;
+	                        </dbCreateStatements>
+							<dbDropStatements>drop database ktunaxa; #--;</dbDropStatements>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>org.postgis</groupId>
+								<artifactId>postgis-jdbc</artifactId>
+								<version>1.1.6</version>
+							</dependency>
+							<dependency>
+								<groupId>postgresql</groupId>
+								<artifactId>postgresql</artifactId>
+								<version>8.1-407.jdbc3</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<repositories>
+
 		<repository>
 			<id>Geomajas</id>
 			<name>Geomajas repository</name>
@@ -361,7 +425,7 @@
 			<name>Geomajas staging repository</name>
 			<url>https://oss.sonatype.org/content/groups/staging</url>
 		</repository>
-
+    
 		<!-- uncomment if you want to use Geomajas snapshots, comment for faster builds  -->
 		<!-- 
 		<repository>
@@ -380,6 +444,11 @@
 			<name>Geomajas repository</name>
 			<url>http://maven.geomajas.org/</url>
 		</pluginRepository>
+		<pluginRepository>
+	        <id>maven-db-plugin-repo</id>
+	        <name>maven db plugin repository</name>
+	        <url>http://maven-db-plugin.googlecode.com/svn/maven/repo</url>
+	    </pluginRepository>
 	</pluginRepositories>
 
 	<properties>
