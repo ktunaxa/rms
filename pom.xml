@@ -68,9 +68,15 @@
 					<sqlDelimiter> #--;</sqlDelimiter>
 					<dbCreateStatements> #--;</dbCreateStatements>
 					<dbDropStatements> #--;</dbDropStatements>
-					<dbSchemaStatements> #--;</dbSchemaStatements>
-					<dbDataStatements> #--;</dbDataStatements>
-					<dbUpdateStatements> #--;</dbUpdateStatements>
+					<dbDataScriptsDirectory>
+						<param>src/main/sql/data</param>
+					</dbDataScriptsDirectory>
+					<dbSchemaScriptsDirectory>
+						<param>src/main/sql/schema</param>
+					</dbSchemaScriptsDirectory>
+					<dbUpdateScriptsDirectory>
+						<param>src/main/sql/update</param>
+					</dbUpdateScriptsDirectory>
 				</configuration>
 				<dependencies>
 					<dependency>
