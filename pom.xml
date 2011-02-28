@@ -49,6 +49,42 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.googlecode</groupId>
+				<artifactId>maven-db-plugin</artifactId>
+				<configuration>
+					<adminDbConnectionSettings>
+						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
+						<jdbcUrl>jdbc:postgresql://localhost:5432/</jdbcUrl>
+						<userName>postgres</userName>
+						<password>postgres</password>
+					</adminDbConnectionSettings>
+					<appDbConnectionSettings>
+						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
+						<jdbcUrl>jdbc:postgresql://localhost:5432/ktunaxa</jdbcUrl>
+						<userName>ktunaxa</userName>
+						<password>toenacha</password>
+					</appDbConnectionSettings>
+					<sqlDelimiter> #--;</sqlDelimiter>
+					<dbCreateStatements> #--;</dbCreateStatements>
+					<dbDropStatements> #--;</dbDropStatements>
+					<dbSchemaStatements> #--;</dbSchemaStatements>
+					<dbDataStatements> #--;</dbDataStatements>
+					<dbUpdateStatements> #--;</dbUpdateStatements>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.postgis</groupId>
+						<artifactId>postgis-jdbc</artifactId>
+						<version>1.1.6</version>
+					</dependency>
+					<dependency>
+						<groupId>postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>8.1-407.jdbc3</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -92,6 +128,45 @@
 			</modules>
 		</profile>
 	</profiles>
+
+	<repositories>
+
+		<repository>
+			<id>Geomajas</id>
+			<name>Geomajas repository</name>
+			<url>http://maven.geomajas.org/</url>
+		</repository>
+
+		<repository>
+			<id>Geomajas staging</id>
+			<name>Geomajas staging repository</name>
+			<url>https://oss.sonatype.org/content/groups/staging</url>
+		</repository>
+    
+		<!-- uncomment if you want to use Geomajas snapshots, comment for faster builds  -->
+		<!-- 
+		<repository>
+			<id>Geomajas snapshots</id>
+			<name>Geomajas snapshot repository</name>
+			<url>http://apps.geomajas.org/nexus/content/groups/latest/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		 -->
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>Geomajas</id>
+			<name>Geomajas repository</name>
+			<url>http://maven.geomajas.org/</url>
+		</pluginRepository>
+		<pluginRepository>
+	        <id>maven-db-plugin-repo</id>
+	        <name>maven db plugin repository</name>
+	        <url>http://maven-db-plugin.googlecode.com/svn/maven/repo</url>
+	    </pluginRepository>
+	</pluginRepositories>
 
 	<properties>
 		<activiti.version>5.2</activiti.version>

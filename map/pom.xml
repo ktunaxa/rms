@@ -252,7 +252,6 @@
 			<plugin>
 				<groupId>com.googlecode</groupId>
 				<artifactId>maven-db-plugin</artifactId>
-				<version>1.2-SNAPSHOT</version>
 				<configuration>
 					<adminDbConnectionSettings>
 						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
@@ -279,7 +278,7 @@
 					<dbCreateStatements>
 						create database ktunaxa TEMPLATE=template_postgis; #--;
 						ALTER DATABASE ktunaxa OWNER TO ktunaxa; #--;
-		                       </dbCreateStatements>
+					</dbCreateStatements>
 					<dbDropStatements>drop database ktunaxa; #--;</dbDropStatements>
 				</configuration>
 				<dependencies>
