@@ -49,48 +49,6 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>com.googlecode</groupId>
-				<artifactId>maven-db-plugin</artifactId>
-				<configuration>
-					<adminDbConnectionSettings>
-						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
-						<jdbcUrl>jdbc:postgresql://localhost:5432/</jdbcUrl>
-						<userName>postgres</userName>
-						<password>postgres</password>
-					</adminDbConnectionSettings>
-					<appDbConnectionSettings>
-						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
-						<jdbcUrl>jdbc:postgresql://localhost:5432/ktunaxa</jdbcUrl>
-						<userName>ktunaxa</userName>
-						<password>toenacha</password>
-					</appDbConnectionSettings>
-					<sqlDelimiter> #--;</sqlDelimiter>
-					<dbCreateStatements> #--;</dbCreateStatements>
-					<dbDropStatements> #--;</dbDropStatements>
-					<dbDataScriptsDirectory>
-						<param>src/main/sql/data</param>
-					</dbDataScriptsDirectory>
-					<dbSchemaScriptsDirectory>
-						<param>src/main/sql/schema</param>
-					</dbSchemaScriptsDirectory>
-					<dbUpdateScriptsDirectory>
-						<param>src/main/sql/update</param>
-					</dbUpdateScriptsDirectory>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.postgis</groupId>
-						<artifactId>postgis-jdbc</artifactId>
-						<version>1.1.6</version>
-					</dependency>
-					<dependency>
-						<groupId>postgresql</groupId>
-						<artifactId>postgresql</artifactId>
-						<version>8.1-407.jdbc3</version>
-					</dependency>
-				</dependencies>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -208,11 +166,6 @@
 			<name>Geomajas repository</name>
 			<url>http://maven.geomajas.org/</url>
 		</pluginRepository>
-		<pluginRepository>
-	        <id>maven-db-plugin-repo</id>
-	        <name>maven db plugin repository</name>
-	        <url>http://maven-db-plugin.googlecode.com/svn/maven/repo</url>
-	    </pluginRepository>
 	</pluginRepositories>
 
 	<properties>

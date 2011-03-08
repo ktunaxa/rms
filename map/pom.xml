@@ -219,6 +219,7 @@
 			<plugin>
 				<groupId>com.googlecode</groupId>
 				<artifactId>maven-db-plugin</artifactId>
+				<version>1.2-SNAPSHOT</version>
 				<configuration>
 					<adminDbConnectionSettings>
 						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
