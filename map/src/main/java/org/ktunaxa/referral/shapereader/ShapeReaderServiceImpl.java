@@ -32,6 +32,8 @@ import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.referencing.FactoryException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,13 +74,19 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 	public File[] getAllFiles() throws IOException {
 		String path = basePath;
 		if (basePath.startsWith("classpath:")) {
-			URL url = getClass().getResource("/");
-			path = url.getFile() + basePath.substring(10);
+			PathMatchingResourcePatternResolver pmrpr = new PathMatchingResourcePatternResolver();
+			Resource[] resources = pmrpr.getResources(basePath.substring(10) + File.separator + "*.shp");
+			int length = resources.length;
+			File[] files = new File[length];
+			for (int i = 0 ; i < length ; i++) {
+				files[i] = resources[i].getFile();
+			}
+			return files;
 		}
 
 		File folder = new File(path); // We don't have to check for folder==null.
 		if (!folder.isDirectory()) {
-			throw new IOException("Configured base path is not a directory: " + basePath);
+			throw new IOException("Configured base path is not a directory: " + basePath + " translated to " + path);
 		}
 		File[] files = folder.listFiles(new FilenameFilter() {
 
