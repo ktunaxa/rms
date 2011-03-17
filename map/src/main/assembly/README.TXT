@@ -1,7 +1,8 @@
 Shape importer is used to import shape files in the Ktunaxa database
 
-HOW-TO CONFIGURE DATABASE USER
+HOW-TO CONFIGURE SHAPE PATH AND DATABASE USER
 - unzip ktunaxa.jar
+- modify parameters in org/ktunaxa/referral/shapereader/applicationContext.xml
 - modify parameters in org/ktunaxa/referral/shapereader/spring-hibernate.xml
 
 HOW-TO RUN ON WINDOWS 
