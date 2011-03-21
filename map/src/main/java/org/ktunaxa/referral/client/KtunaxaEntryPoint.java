@@ -12,20 +12,28 @@
 
 package org.ktunaxa.referral.client;
 
+import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
+import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
+import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
 import org.ktunaxa.referral.client.gui.CommentPanel;
 import org.ktunaxa.referral.client.gui.DocumentPanel;
 import org.ktunaxa.referral.client.gui.LayerPanel;
 import org.ktunaxa.referral.client.gui.MainGui;
+import org.ktunaxa.referral.client.gui.ReferralPanel;
 import org.ktunaxa.referral.client.gui.SearchPanel;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.form.fields.FormItem;
+import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -57,8 +65,6 @@ public class KtunaxaEntryPoint implements EntryPoint {
 
 	private SearchPanel searchPanel;
 
-	private VLayout checkPanel;
-
 	private VLayout printPanel;
 
 	private DocumentPanel documentPanel;
@@ -68,6 +74,18 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	private VLayout helpPanel;
 
 	public void onModuleLoad() {
+		AttributeFormFieldRegistry.registerCustomFormItem("textArea", new DataSourceFieldFactory() {
+
+			public DataSourceField create() {
+				return new DataSourceTextField();
+			}
+		}, new FormItemFactory() {
+
+			public FormItem create() {
+				return new TextAreaItem();
+			}
+		}, null);
+
 		VLayout layout = new VLayout();
 		layout.setWidth100();
 		layout.setHeight100();
@@ -127,7 +145,6 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		// Create the panels:
 		layerPanel = new LayerPanel(mainGui.getMapWidget());
 		searchPanel = new SearchPanel(mainGui.getMapWidget());
-		checkPanel = new VLayout();
 		printPanel = new VLayout();
 		documentPanel = new DocumentPanel();
 		commentPanel2 = new CommentPanel();
@@ -164,20 +181,6 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		searchButton.setActionType(SelectionType.RADIO);
 		searchButton.setRadioGroup("the-only-one");
 		menuBar.addMember(searchButton);
-		menuBar.addMember(new ToolStripSeparator());
-
-		// Check button:
-		ToolStripButton checkButton = new ToolStripButton("CHECKS");
-		checkButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(checkPanel, "Execute checks");
-				mainGui.hideBottomLayout();
-			}
-		});
-		checkButton.setActionType(SelectionType.RADIO);
-		checkButton.setRadioGroup("the-only-one");
-		menuBar.addMember(checkButton);
 		menuBar.addMember(new ToolStripSeparator());
 
 		// Print button:
@@ -234,6 +237,20 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		helpButton.setActionType(SelectionType.RADIO);
 		helpButton.setRadioGroup("the-only-one");
 		menuBar.addMember(helpButton);
+
+		// Referral button:
+		menuBar.addMember(new ToolStripSeparator());
+		ToolStripButton referralButton = new ToolStripButton("REFERRAL - TEST");
+		referralButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				mainGui.showLeftLayout(new ReferralPanel(mainGui.getMapWidget()), "Referral form test");
+				mainGui.hideBottomLayout();
+			}
+		});
+		referralButton.setActionType(SelectionType.RADIO);
+		referralButton.setRadioGroup("the-only-one");
+		menuBar.addMember(referralButton);
 		return menuBar;
 	}
 }

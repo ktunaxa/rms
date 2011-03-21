@@ -54,11 +54,9 @@
 .attributeForm .formTitleDisabled, .attributeForm .formCellDisabled
 {
 	/* Style for the form TD's */
-	padding: 3px 10px;
-	border: 1px solid #EBEADB;
+/*	border: 1px solid #EBEADB;
 	border-right-color: #D5CDB5;
-
-	background-color: #FFFFFF;
+	background-color: #FFFFFF;*/
 }
 .attributeForm .formTitleError, .attributeForm .formCellError {
 	/* Style title texts on the left side */
@@ -75,7 +73,7 @@
 {
 	/* Style for the disabled forms */
 	border: 0;
-	padding-top: 4px;
+	/*padding-top: 4px;*/
 	color: #000000;
 }
 
@@ -87,7 +85,7 @@
 
 .attributeForm table {
 	/* General style for the form table */
-	padding: 2px;
+	/*padding: 2px;*/
 }
 
 
