@@ -10,6 +10,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:org/geomajas/spring/geomajasContext.xml
+			classpath:org/geomajas/plugin/rasterizing/DefaultCachedAndRasterizedPipelines.xml
 			WEB-INF/applicationContext.xml
 			WEB-INF/spring-hibernate.xml
 

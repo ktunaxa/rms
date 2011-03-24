@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.geotools.data.DataStore;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
+import org.opengis.filter.expression.Expression;
 
 /**
  * <p>
@@ -32,7 +33,7 @@ import org.ktunaxa.referral.server.domain.ReferenceLayer;
  * @author Pieter De Graef
  */
 public interface ShapeReaderService {
-
+	
 	/**
 	 * Retrieve a list of available shape files to chose from. The idea is that in some location a list of shape files
 	 * can be retrieved, of which we want to upload one. Where these shape files come from, is up to the implementations
@@ -90,4 +91,17 @@ public interface ShapeReaderService {
 	 *             the original state.
 	 */
 	void persist(ReferenceLayer layer, DataStore dataStore) throws IOException;
+	
+	/**
+	 * Returns the expression to evaluate to obtain the label attribute of a feature.
+	 * @return the expression
+	 */
+	Expression getLabelAttributeExpression(String typeName);
+	
+	/**
+	 * Returns the expression to evaluate to obtain the style attribute of a feature.
+	 * @return the expression
+	 */
+	Expression getStyleAttributeExpression(String typeName);
+	
 }

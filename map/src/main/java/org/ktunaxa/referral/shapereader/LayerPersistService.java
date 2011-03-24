@@ -98,4 +98,9 @@ public interface LayerPersistService {
 	 *            The object to save.
 	 */
 	void persist(ReferenceValue reference);
+
+	/**
+	 * Flushes the in-memory session.
+	 */
+	void flushSession();
 }

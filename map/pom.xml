@@ -62,6 +62,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-plugin-rasterizing-gwt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
 			<artifactId>geomajas-layer-geotools</artifactId>
 		</dependency>
 		<dependency>
@@ -99,7 +103,7 @@
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
-		
+
 		<!-- Google dependencies -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -141,6 +145,13 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode</groupId>
+			<artifactId>maven-db-plugin</artifactId>
+			<version>1.2-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -187,7 +198,7 @@
 					</webAppConfig>
 					<reload>manual</reload>
 				</configuration>
-			</plugin>			
+			</plugin>
 
 			<!-- some default config, added to in profiles -->
 			<plugin>
@@ -214,17 +225,17 @@
 				<configuration>
 					<adminDbConnectionSettings>
 						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
-						<jdbcUrl>jdbc:postgresql://localhost:5432/</jdbcUrl>
-						<userName>postgres</userName>
-						<password>postgres</password>
+						<jdbcUrl>jdbc:postgresql://${dbHostPort}/postgres</jdbcUrl>
+						<userName>${dbAdminUser}</userName>
+						<password>${dbAdminPassword}</password>
 					</adminDbConnectionSettings>
 					<appDbConnectionSettings>
 						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
-						<jdbcUrl>jdbc:postgresql://localhost:5432/ktunaxa</jdbcUrl>
+						<jdbcUrl>jdbc:postgresql://${dbHostPort}/ktunaxa</jdbcUrl>
 						<userName>ktunaxa</userName>
 						<password>toenacha</password>
 					</appDbConnectionSettings>
-					<sqlDelimiter> #--;</sqlDelimiter>
+					<sqlDelimiter>#--;</sqlDelimiter>
 					<dbDataScriptsDirectory>
 						<param>src/main/sql/data</param>
 					</dbDataScriptsDirectory>
@@ -249,7 +260,7 @@
 					<dependency>
 						<groupId>postgresql</groupId>
 						<artifactId>postgresql</artifactId>
-						<version>8.1-407.jdbc3</version>
+						<version>8.4-701.jdbc4</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -287,9 +298,7 @@
 				</plugins>
 			</build>
 		</profile>
-		<!--
-			m2eclipse with WTP deployment, see http://jvminside.blogspot.com/2010/02/efficient-gwt-development-with-eclipse.html
-		-->
+		<!-- m2eclipse with embedded jetty -->
 		<profile>
 			<id>m2e</id>
 			<activation>
@@ -297,43 +306,22 @@
 					<name>m2e.version</name>
 				</property>
 			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>gwt-maven-plugin</artifactId>
-						<configuration>
-							<module>org.ktunaxa.referral.KtunaxaEntryPoint</module>
-							<runTarget>/ktunaxa-referral/index.html</runTarget>
-							<noServer>true</noServer>
-							<port>8080</port>
-							<debugPort>9008</debugPort>
-							<extra>${project.build.directory}/gwt-extra</extra>
-							<gen>${project.build.directory}/gwt-gen</gen>
-							<hostedWebapp>${project.build.directory}/generated-web-resources/gwt</hostedWebapp>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>clean</goal>
-									<goal>generateAsync</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<version>1.5</version>
-						<configuration>
-							<target>
-								<xslt in=".settings/org.eclipse.wst.common.component" out=".settings/org.eclipse.wst.common.tmp" style=".eclipse/wb-resource.xsl" />
-								<move file=".settings/org.eclipse.wst.common.tmp" tofile=".settings/org.eclipse.wst.common.component" />
-							</target>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
+			<dependencies>
+				<dependency>
+					<groupId>org.geomajas</groupId>
+					<artifactId>geomajas-jetty-runner</artifactId>
+					<version>1.0.0</version>
+				</dependency>
+				<dependency>
+					<groupId>com.google.gwt</groupId>
+					<artifactId>gwt-dev</artifactId>
+					<version>${gwt-version}</version>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+			<properties>
+				<gwt.compiler.skip>true</gwt.compiler.skip>
+			</properties>
 		</profile>
 		<profile>
 			<id>skipGwt</id>
@@ -367,10 +355,10 @@
 				</property>
 			</activation>
 			<build>
-				<!--  can't use generated name in assembly descriptor -->
+				<!-- can't use generated name in assembly descriptor -->
 				<finalName>ktunaxa</finalName>
 				<plugins>
-					<!--  executable jar -->
+					<!-- executable jar -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jar-plugin</artifactId>
@@ -393,7 +381,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!--  redefined here to be executed before assembly -->
+					<!-- redefined here to be executed before assembly -->
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
 						<executions>
@@ -406,7 +394,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!--  zip up executable jar and dependencies -->
+					<!-- zip up executable jar and dependencies -->
 					<plugin>
 						<artifactId>maven-assembly-plugin</artifactId>
 						<configuration>
@@ -428,6 +416,15 @@
 			</build>
 			<properties>
 				<gwt.compiler.skip>true</gwt.compiler.skip>
+			</properties>
+		</profile>
+		<profile>
+			<id>ktunaxa</id>
+			<properties>
+				<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+				<dbHostPort>localhost:5433</dbHostPort>
+				<dbAdminUser>dbadmin</dbAdminUser>
+				<dbAdminPassword>***</dbAdminPassword>
 			</properties>
 		</profile>
 	</profiles>
@@ -465,14 +462,17 @@
 			<url>http://maven.geomajas.org/</url>
 		</pluginRepository>
 		<pluginRepository>
-	        <id>maven-db-plugin-repo</id>
-	        <name>maven db plugin repository</name>
-	        <url>http://maven-db-plugin.googlecode.com/svn/maven/repo</url>
-	    </pluginRepository>
+			<id>maven-db-plugin-repo</id>
+			<name>maven db plugin repository</name>
+			<url>http://maven-db-plugin.googlecode.com/svn/maven/repo</url>
+		</pluginRepository>
 	</pluginRepositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<dbHostPort>localhost:5432</dbHostPort>
+		<dbAdminUser>postgres</dbAdminUser>
+		<dbAdminPassword>postgis</dbAdminPassword>
 	</properties>
 
 </project>

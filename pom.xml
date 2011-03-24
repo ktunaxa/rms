@@ -78,6 +78,13 @@
 			</dependency>
 			<dependency>
 				<groupId>org.geomajas.plugin</groupId>
+				<artifactId>geomajas-plugin-rasterizing-all</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.geomajas.plugin</groupId>
 				<artifactId>geomajas-plugin-hibernate-all</artifactId>
 				<version>1.8.0-SNAPSHOT</version>
 				<type>pom</type>
@@ -183,6 +190,7 @@
 	<properties>
 		<activiti.version>5.2</activiti.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<gwt-version>2.1.1</gwt-version>
 	</properties>
 
 </project>

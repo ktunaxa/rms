@@ -68,15 +68,15 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="panButtonsEnabled" value="true" />
 		<property name="scaleConfiguration">
 			<bean class="org.geomajas.configuration.client.ScaleConfigurationInfo">
-				<property name="maximumScale" value="1:10000" />
+				<property name="maximumScale" value="1" />
 			</bean>
 		</property>
 		<property name="initialBounds">
 			<bean class="org.geomajas.geometry.Bbox">
-				<property name="x" value="-19000000" />
-				<property name="y" value="-19000000" />
-				<property name="width" value="38000000" />
-				<property name="height" value="38000000" />
+				<property name="x" value="-12915305" />
+				<property name="y" value="6269056" />
+				<property name="maxX" value="-12683653" />
+				<property name="maxY" value="6449826.5" />
 			</bean>
 		</property>
 		<property name="layers">

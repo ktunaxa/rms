@@ -25,7 +25,7 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 		<property name="label" value="Reference Base" />
 		<property name="visible" value="true" />
 		<property name="viewScaleMax" value="1000000000" />
-		<property name="viewScaleMin" value="0" />
+		<property name="viewScaleMin" value="0.1" />
 		<property name="namedStyleInfo" ref="referenceBaseStyleInfo" />
 	</bean>
 
@@ -165,6 +165,7 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	<bean class="org.geomajas.configuration.NamedStyleInfo" name="referenceBaseStyleInfo">
 		<property name="featureStyles">
             <list>
+            <!-- 
                 <bean class="org.geomajas.configuration.FeatureStyleInfo">
                     <property name="name" value="Landscape Units"/>
                     <property name="formula" value="(layer.name like '%Landscape%')"/>
@@ -174,10 +175,11 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="strokeOpacity" value=".8"/>
                     <property name="strokeWidth" value="1"/>
                 </bean>
+                 -->
                 <bean class="org.geomajas.configuration.FeatureStyleInfo">
                     <property name="name" value="Everything else"/>
-                    <property name="fillColor" value="#FFFFFF"/>
-                    <property name="fillOpacity" value="0"/>
+                    <property name="fillColor" value="#9999FF"/>
+                    <property name="fillOpacity" value="0.5"/>
                     <property name="strokeColor" value="#000000"/>
                     <property name="strokeOpacity" value=".8"/>
                     <property name="strokeWidth" value="1"/>

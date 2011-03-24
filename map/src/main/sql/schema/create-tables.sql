@@ -14,6 +14,7 @@ GRANT ALL ON TABLE reference_layer_type TO postgres; #--;
 
 
 
+
 -- ----------------------------------------------------------------------------
 -- Table: REFERENCE LAYER
 -- ----------------------------------------------------------------------------
@@ -37,23 +38,33 @@ GRANT ALL ON TABLE reference_layer TO postgres; #--;
 -- ----------------------------------------------------------------------------
 -- Table: REFERENCE_VALUE layer
 -- ----------------------------------------------------------------------------
-CREATE TABLE reference_value(
-	id serial NOT NULL,
-	layer_id bigint NOT NULL,
-	style_code character varying,
-	label character varying,
-	geom geometry,
-	CONSTRAINT enforce_dims_geom CHECK ((ndims(geom) = 2)),
-	CONSTRAINT enforce_srid_geom CHECK ((srid(geom) = 26911)),
-	CONSTRAINT reference_value_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_reference_value_layer FOREIGN KEY (layer_id) REFERENCES reference_layer (id)
-) WITH (OIDS=FALSE); #--;
-
+CREATE TABLE reference_value
+(
+  id serial NOT NULL,
+  layer_id bigint NOT NULL,
+  style_code character varying,
+  label character varying,
+  geom geometry,
+  CONSTRAINT reference_value_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_reference_value_layer FOREIGN KEY (layer_id)
+      REFERENCES reference_layer (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT enforce_dims_geom CHECK (st_ndims(geom) = 2),
+  CONSTRAINT enforce_srid_geom CHECK (st_srid(geom) = 26911)
+)
+WITH (OIDS=FALSE); #--;
 ALTER TABLE reference_value OWNER TO ktunaxa; #--;
 GRANT ALL ON TABLE reference_value TO ktunaxa; #--;
 GRANT ALL ON TABLE reference_value TO postgres; #--;
 
+-- Index: reference_value_the_geom_gist
 
+-- DROP INDEX reference_value_the_geom_gist; #--;
+
+CREATE INDEX reference_value_the_geom_gist
+  ON reference_value
+  USING gist
+  (geom); #--;
 
 -- ----------------------------------------------------------------------------
 -- Table: REFERENCE VALUE KEY VALUE
@@ -76,22 +87,35 @@ GRANT ALL ON TABLE reference_value_attribute TO postgres; #--;
 -- ----------------------------------------------------------------------------
 -- Table: REFERENCE_BASE layer
 -- ----------------------------------------------------------------------------
-CREATE TABLE reference_base(
-	id serial NOT NULL,
-	layer_id bigint NOT NULL,
-	style_code character varying,
-	label character varying,
-	geom geometry,
-	CONSTRAINT enforce_dims_geom CHECK ((ndims(geom) = 2)),
-	CONSTRAINT enforce_srid_geom CHECK ((srid(geom) = 26911)),
-	CONSTRAINT reference_base_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_reference_base_layer FOREIGN KEY (layer_id) REFERENCES reference_layer (id)
-) WITH (OIDS=FALSE); #--;
-
+CREATE TABLE reference_base
+(
+  id serial NOT NULL,
+  layer_id bigint NOT NULL,
+  style_code character varying,
+  label character varying,
+  geom geometry,
+  CONSTRAINT reference_base_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_reference_base_layer FOREIGN KEY (layer_id)
+      REFERENCES reference_layer (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT enforce_dims_geom CHECK (st_ndims(geom) = 2),
+  CONSTRAINT enforce_srid_geom CHECK (st_srid(geom) = 26911)
+)
+WITH (
+  OIDS=FALSE
+); #--;
 ALTER TABLE reference_base OWNER TO ktunaxa; #--;
 GRANT ALL ON TABLE reference_base TO ktunaxa; #--;
 GRANT ALL ON TABLE reference_base TO postgres; #--;
 
+-- Index: reference_base_the_geom_gist
+
+-- DROP INDEX reference_base_the_geom_gist; #--;
+
+CREATE INDEX reference_base_the_geom_gist
+  ON reference_base
+  USING gist
+  (geom); #--;
 
 
 -- ----------------------------------------------------------------------------
@@ -163,47 +187,65 @@ GRANT ALL ON TABLE referral_application_type TO postgres; #--;
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL
 -- ----------------------------------------------------------------------------
-CREATE TABLE referral(
-	id serial NOT NULL,
-	land_referral_id character varying,
-	applicant_name character varying NOT NULL,
-	project_name character varying NOT NULL,
-	project_description character varying NOT NULL,
-	project_location character varying NOT NULL,
-	project_background character varying,
-	external_project_id character varying,
-	external_file_id character varying,
-	external_agency_name character varying NOT NULL,
-	contact_name character varying NOT NULL,
-	contact_email character varying NOT NULL,
-	contact_phone character varying NOT NULL,
-	contact_address character varying,
-	type_id bigint NOT NULL,
-	application_type_id bigint NOT NULL,
-	target_referral_id bigint NOT NULL,
-	confidential boolean NOT NULL DEFAULT FALSE,
-	receive_date timestamp NOT NULL,
-	response_date timestamp NOT NULL,
-	response_deadline timestamp NOT NULL,
-	active_retention_period int NOT NULL,
-	semi_active_retention_period int NOT NULL,
-	final_disposition int NOT NULL,
-	assessment_level int,
-	record_classification character varying NOT NULL,
-	status_id bigint NOT NULL,
-	geom geometry,
-	CONSTRAINT enforce_dims_geom CHECK ((ndims(geom) = 2)),
-	CONSTRAINT enforce_srid_geom CHECK ((srid(geom) = 26911)),
---	CONSTRAINT enforce_geotype_geom CHECK (((geometrytype(geom) = 'POINT'::text) OR (geom IS NULL))),
-	CONSTRAINT referral_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_referral_type FOREIGN KEY (type_id) REFERENCES referral_type (id),
-	CONSTRAINT fk_referral_application_type FOREIGN KEY (application_type_id) REFERENCES referral_application_type (id),
-	CONSTRAINT fk_referral_status FOREIGN KEY (status_id) REFERENCES referral_status (id)
-) WITH (OIDS=FALSE); #--;
-
+CREATE TABLE referral
+(
+  id serial NOT NULL,
+  land_referral_id character varying,
+  applicant_name character varying NOT NULL,
+  project_name character varying NOT NULL,
+  project_description character varying NOT NULL,
+  project_location character varying NOT NULL,
+  project_background character varying,
+  external_project_id character varying,
+  external_file_id character varying,
+  external_agency_name character varying NOT NULL,
+  contact_name character varying NOT NULL,
+  contact_email character varying NOT NULL,
+  contact_phone character varying NOT NULL,
+  contact_address character varying,
+  type_id bigint NOT NULL,
+  application_type_id bigint NOT NULL,
+  target_referral_id bigint NOT NULL,
+  confidential boolean NOT NULL DEFAULT false,
+  receive_date timestamp without time zone NOT NULL,
+  response_date timestamp without time zone NOT NULL,
+  response_deadline timestamp without time zone NOT NULL,
+  active_retention_period integer NOT NULL,
+  semi_active_retention_period integer NOT NULL,
+  final_disposition integer NOT NULL,
+  assessment_level integer,
+  record_classification character varying NOT NULL,
+  status_id bigint NOT NULL,
+  geom geometry,
+  CONSTRAINT referral_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_referral_application_type FOREIGN KEY (application_type_id)
+      REFERENCES referral_application_type (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_referral_status FOREIGN KEY (status_id)
+      REFERENCES referral_status (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_referral_type FOREIGN KEY (type_id)
+      REFERENCES referral_type (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT enforce_dims_geom CHECK (st_ndims(geom) = 2),
+  CONSTRAINT enforce_srid_geom CHECK (st_srid(geom) = 26911)
+)
+WITH (
+  OIDS=FALSE
+); #--;
 ALTER TABLE referral OWNER TO ktunaxa; #--;
 GRANT ALL ON TABLE referral TO ktunaxa; #--;
 GRANT ALL ON TABLE referral TO postgres; #--;
+
+-- Index: referral_the_geom_gist
+
+-- DROP INDEX referral_the_geom_gist; #--;
+
+CREATE INDEX referral_the_geom_gist
+  ON referral
+  USING gist
+  (geom); #--;
+
 
 
 
