@@ -46,8 +46,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.vividsolutions.jts.operation.valid.IsValidOp;
-
 /**
  * Implementation of the {@link ShapeReaderService} that uses a pre-configured
  * base path to search for shape files, and also uses the
@@ -318,7 +316,7 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 
 	public Expression getLabelAttributeExpression(String typeName) {
 		try {
-			if(labelAttributeMap.containsKey(typeName)){
+			if (labelAttributeMap.containsKey(typeName)) {
 				return CQL.toExpression(labelAttributeMap.get(typeName));
 			} else {
 				return CQL.toExpression(LABEL_ATTRIBUTE);
@@ -330,7 +328,7 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 
 	public Expression getStyleAttributeExpression(String typeName) {
 		try {
-			if(styleAttributeMap.containsKey(typeName)){
+			if (styleAttributeMap.containsKey(typeName)) {
 				return CQL.toExpression(styleAttributeMap.get(typeName));
 			} else {
 				return CQL.toExpression(STYLE_ATTRIBUTE);
@@ -342,8 +340,8 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 	
 	private boolean isValid(Expression expression, SimpleFeatureType schema) {
 		// can only validate if property
-		if(expression instanceof PropertyName){
-			PropertyName prop = (PropertyName)expression;
+		if (expression instanceof PropertyName) {
+			PropertyName prop = (PropertyName) expression;
 			return schema.getType(prop.getPropertyName()) != null;
 		}
 		return true;

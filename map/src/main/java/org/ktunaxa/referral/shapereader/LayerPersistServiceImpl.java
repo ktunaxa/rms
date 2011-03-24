@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geomajas.internal.layer.VectorLayerServiceImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -94,11 +93,11 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 		} else {
 			// batch delete
 			Session session = sessionFactory.getCurrentSession();
-			session
-					.createSQLQuery(
-							"delete from reference_value_attribute where id in " +
-							"(select attr.id from reference_value_attribute as attr, " +
-							"reference_value as value where attr.reference_value_id=value.id and value.layer_id=:layerId)")
+			session.createSQLQuery(
+					"delete from reference_value_attribute where id in "
+							+ "(select attr.id from reference_value_attribute as attr, "
+							+ "reference_value as value where attr.reference_value_id=value.id" +
+									" and value.layer_id=:layerId)")
 					.setLong("layerId", layer.getId()).executeUpdate();
 			count = session
 			.createSQLQuery(

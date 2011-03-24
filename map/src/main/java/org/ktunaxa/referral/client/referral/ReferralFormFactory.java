@@ -46,6 +46,12 @@ public class ReferralFormFactory implements AttributeFormFactory {
 		return delegate.createAttributeForm(layer);
 	}
 
+	/**
+	 * Custom form for referral.
+	 * 
+	 * @author Pieter De Graef
+	 * 
+	 */
 	private class ReferralAttributeForm extends AttributeForm {
 
 		public ReferralAttributeForm(VectorLayer layer) {
