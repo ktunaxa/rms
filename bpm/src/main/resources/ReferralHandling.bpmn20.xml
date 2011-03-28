@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-fe182de6-bd3b-42cc-bc25-a58f884de787" targetNamespace="http://www.omg.org/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
-   <process id="sid-080f4f3c-a281-437c-a8fa-2945b5afb411" isExecutable="false">
-      <startEvent id="sid-A231E5EC-AF94-41D8-BA17-959F7C4D5C6C" name="start">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-fe182de6-bd3b-42cc-bc25-a58f884de787" targetNamespace="http://www.omg.org/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema"
+			 xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+	   <process id="sid-4e9a3d6d-0255-447c-be01-28124358b134" isExecutable="false" name="Referral handling">
+		  <startEvent id="start" name="start">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
          </extensionElements>
          <outgoing>sid-A4E45384-3C5B-4D52-8A12-63FB09623658</outgoing>
       </startEvent>
+	  <sequenceFlow id="sid-A4E45384-3C5B-4D52-8A12-63FB09623658" name="" sourceRef="start" targetRef="sid-3F4651B1-B1F9-4E88-9F80-A24839796B84"/>
       <userTask completionQuantity="1" id="sid-3F4651B1-B1F9-4E88-9F80-A24839796B84" implementation="webService" isForCompensation="false" name="Check referral for completeness" startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
@@ -31,14 +33,14 @@
          <outgoing>sid-B1701A01-4C0C-46D9-8B48-7FC8D054A52B</outgoing>
          <outgoing>sid-D6BAA265-5BDB-4F74-AA6B-C712D232EFD2</outgoing>
       </exclusiveGateway>
-      <sendTask completionQuantity="1" id="sid-34FD7FB0-D713-425B-B428-BA049CE4739F" implementation="webService" isForCompensation="false" name="Send level 0 notification letter to province or proponent" startQuantity="1">
+      <manualTask completionQuantity="1" id="sid-34FD7FB0-D713-425B-B428-BA049CE4739F" isForCompensation="false" name="Send level 0 notification letter to province or proponent" startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
          </extensionElements>
          <incoming>sid-D1AD2C82-470C-42E5-9C67-04E491EE2CD2</incoming>
          <outgoing>sid-8DEA0AF4-D058-45E8-8443-EF9F0A26EF03</outgoing>
-      </sendTask>
-      <receiveTask completionQuantity="1" id="sid-5C506A92-D530-43CA-AC43-457B718AFEE0" implementation="webService" instantiate="false" isForCompensation="false" name="Receive &quot;notification of decision&quot; from province or proponent" startQuantity="1">
+      </manualTask>
+      <manualTask completionQuantity="1" id="sid-5C506A92-D530-43CA-AC43-457B718AFEE0" isForCompensation="false" name="Receive &quot;notification of decision&quot; from province or proponent" startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
          </extensionElements>
@@ -46,7 +48,7 @@
          <incoming>sid-9C6D3721-6BD5-4C30-BF38-4A216E985129</incoming>
          <incoming>sid-C131FA48-24E8-441F-AC2B-35CFA4682800</incoming>
          <outgoing>sid-9066E105-F60D-4D5E-8753-F6E89D634195</outgoing>
-      </receiveTask>
+      </manualTask>
       <exclusiveGateway gatewayDirection="Diverging" id="sid-C2B0F1D4-27A6-4F75-B6CE-C1813A93036C" name="provincial decision&#10;consistent with KLRA response?">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
@@ -55,20 +57,20 @@
          <outgoing>sid-6913249B-394A-4855-A2D3-1350530AAB1F</outgoing>
          <outgoing>sid-9C6D3721-6BD5-4C30-BF38-4A216E985129</outgoing>
       </exclusiveGateway>
-      <receiveTask completionQuantity="1" id="sid-9E52BD84-485A-424F-92A4-CBE8DAAB449C" implementation="webService" instantiate="false" isForCompensation="false" name="receive provincial decision" startQuantity="1">
+      <manualTask completionQuantity="1" id="sid-9E52BD84-485A-424F-92A4-CBE8DAAB449C" isForCompensation="false" name="receive provincial decision" startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
          </extensionElements>
          <incoming>sid-B0AD7D96-A243-41C7-BA37-D8C8D53C2352</incoming>
          <outgoing>sid-BD856EBC-A93E-436D-A6AB-3D44D0DE2E8A</outgoing>
-      </receiveTask>
-      <sendTask completionQuantity="1" id="sid-408F26C5-ACAB-4179-B584-C440AE0A9AB4" implementation="webService" isForCompensation="false" name="e-mail result to client" startQuantity="1">
+      </manualTask>
+      <manualTask completionQuantity="1" id="sid-408F26C5-ACAB-4179-B584-C440AE0A9AB4" isForCompensation="false" name="e-mail result to client" startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
          </extensionElements>
          <incoming>sid-A6F8C74F-415A-4EE8-AF56-EC0F3722C690</incoming>
          <outgoing>sid-B0AD7D96-A243-41C7-BA37-D8C8D53C2352</outgoing>
-      </sendTask>
+      </manualTask>
       <userTask completionQuantity="1" id="sid-EEF6C2C0-8F24-4F7B-A0D5-23E117C2B3E6" implementation="webService" isForCompensation="false" name="produce result report" startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
@@ -76,13 +78,13 @@
          <incoming>sid-7213F56C-318B-4C58-9ABF-BE85E50413E7</incoming>
          <outgoing>sid-A6F8C74F-415A-4EE8-AF56-EC0F3722C690</outgoing>
       </userTask>
-      <sendTask completionQuantity="1" id="sid-12B62A59-A6F0-4346-9F2C-960583266AAA" implementation="webService" isForCompensation="false" name="Notify that evaluation done, pending report compilation" startQuantity="1">
+      <manualTask completionQuantity="1" id="sid-12B62A59-A6F0-4346-9F2C-960583266AAA" isForCompensation="false" name="Notify that evaluation done, pending report compilation" startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
          </extensionElements>
          <incoming>sid-7868C038-B757-44BE-87C6-769AA402C94C</incoming>
          <outgoing>sid-7213F56C-318B-4C58-9ABF-BE85E50413E7</outgoing>
-      </sendTask>
+      </manualTask>
       <subProcess completionQuantity="1" id="sid-46A566D0-ABA1-4B54-ABED-9601DD9493CA" isForCompensation="false" name="Evaluate values" startQuantity="1" triggeredByEvent="false">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
@@ -113,27 +115,27 @@
          <incoming>sid-BDEDC7D8-3E74-4FB5-BAA2-CBFCC8092812</incoming>
          <outgoing>sid-BB7AC1EC-EE25-4848-B856-6B2F919052CC</outgoing>
       </userTask>
-      <sendTask completionQuantity="1" id="sid-1AD684DA-7777-4422-B902-E82209E06D39" implementation="webService" isForCompensation="false" name="Notify that referral has been received and will be processed. " startQuantity="1">
+      <manualTask completionQuantity="1" id="sid-1AD684DA-7777-4422-B902-E82209E06D39" isForCompensation="false" name="Notify that referral has been received and will be processed. " startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
          </extensionElements>
          <incoming>sid-D6BAA265-5BDB-4F74-AA6B-C712D232EFD2</incoming>
          <outgoing>sid-BDEDC7D8-3E74-4FB5-BAA2-CBFCC8092812</outgoing>
-      </sendTask>
+      </manualTask>
       <endEvent id="sid-27E43FC3-047B-4E96-854A-E198789C7335" name="">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
          </extensionElements>
          <incoming>sid-A9C84C62-5C86-4144-9C76-BC841E92546E</incoming>
       </endEvent>
-      <sendTask completionQuantity="1" id="sid-A8AB53F2-A11D-41A8-8752-A965F397E36D" implementation="webService" isForCompensation="false" name="Notify that referral has been received and will be processed. " startQuantity="1">
+      <manualTask completionQuantity="1" id="sid-A8AB53F2-A11D-41A8-8752-A965F397E36D" isForCompensation="false" name="Notify that referral has been received and will be processed. " startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
          </extensionElements>
          <incoming>sid-9020A2AD-3FB6-42D2-8E97-ED8203243240</incoming>
          <incoming>sid-561F0F74-689B-4049-BBD3-E62FF20B7005</incoming>
          <outgoing>sid-FCCBB7F0-1ADE-4F76-9D62-62D2B66BC219</outgoing>
-      </sendTask>
+      </manualTask>
       <userTask completionQuantity="1" id="sid-D705B172-183B-4BAD-9A75-898BAC639E3F" implementation="webService" isForCompensation="false" name="review timelines" startQuantity="1">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
@@ -156,7 +158,7 @@
          <outgoing>sid-4148789B-573E-4438-870B-37004AA00B86</outgoing>
       </userTask>
       <boundaryEvent attachedToRef="sid-EEF6C2C0-8F24-4F7B-A0D5-23E117C2B3E6" cancelActivity="true" id="sid-E78C5A00-90E7-4C44-8FCD-982B99AB62CC" name="" parallelMultiple="false">
-         <timerEventDefinition id="sid-fd26f524-25ac-4be6-87f5-efddf4f41208"/>
+         <timerEventDefinition id="sid-a660efc1-15e1-4870-b878-e65375a8fd63"/>
       </boundaryEvent>
       <userTask completionQuantity="1" id="sid-984DECA7-B7EB-4D13-B9BD-566733FB7096" implementation="webService" isForCompensation="false" name="make appointment with province to discuss referral" startQuantity="1">
          <extensionElements>
@@ -195,9 +197,8 @@
          <incoming>sid-9066E105-F60D-4D5E-8753-F6E89D634195</incoming>
       </endEvent>
       <boundaryEvent attachedToRef="sid-DEC0EA04-B576-4176-8FCE-AA66280CCA85" cancelActivity="true" id="sid-86750EAC-8B61-4EF0-BCDB-3A2AC79A92E0" name="" parallelMultiple="false">
-         <timerEventDefinition id="sid-ce5f8f1a-1541-4413-aade-8bfe66b19a89"/>
+         <timerEventDefinition id="sid-fcf050d9-4228-449b-b357-54f96b923ea4"/>
       </boundaryEvent>
-      <sequenceFlow id="sid-A4E45384-3C5B-4D52-8A12-63FB09623658" name="" sourceRef="sid-A231E5EC-AF94-41D8-BA17-959F7C4D5C6C" targetRef="sid-3F4651B1-B1F9-4E88-9F80-A24839796B84"/>
       <sequenceFlow id="sid-D1AD2C82-470C-42E5-9C67-04E491EE2CD2" name="0" sourceRef="sid-25467E57-A363-476A-A947-1F9DBACEAAF8" targetRef="sid-34FD7FB0-D713-425B-B428-BA049CE4739F"/>
       <sequenceFlow id="sid-8DEA0AF4-D058-45E8-8443-EF9F0A26EF03" name="" sourceRef="sid-34FD7FB0-D713-425B-B428-BA049CE4739F" targetRef="sid-5C506A92-D530-43CA-AC43-457B718AFEE0"/>
       <sequenceFlow id="sid-52A64F88-1591-4483-99A5-0B7A3EC40F38" name="" sourceRef="sid-DEC0EA04-B576-4176-8FCE-AA66280CCA85" targetRef="sid-25467E57-A363-476A-A947-1F9DBACEAAF8"/>
@@ -228,17 +229,18 @@
       <sequenceFlow id="sid-5CAA9C17-4905-419C-A192-86F2C924A494" name="evaluate" sourceRef="sid-984DDFD1-0AE8-4A8D-A730-635BACCA114D" targetRef="sid-46A566D0-ABA1-4B54-ABED-9601DD9493CA"/>
       <sequenceFlow id="sid-FCCBB7F0-1ADE-4F76-9D62-62D2B66BC219" name="" sourceRef="sid-A8AB53F2-A11D-41A8-8752-A965F397E36D" targetRef="sid-46A566D0-ABA1-4B54-ABED-9601DD9493CA"/>
    </process>
-   <process id="sid-c7994a23-9285-44a6-8fbc-332bd18e14a8" isExecutable="false">
+   <process id="sid-9de63352-99e7-43cb-aef0-3c490d6fe999" isExecutable="false">
       <intermediateCatchEvent id="sid-B75632B2-D393-4FDE-832B-0F832DF3D536" name="">
          <extensionElements>
             <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
          </extensionElements>
-         <timerEventDefinition id="sid-8a2fcf92-e52e-4787-9db4-34db5f68e400"/>
+         <timerEventDefinition id="sid-52ac94d0-e80a-4023-a6bc-badcd805f585"/>
       </intermediateCatchEvent>
    </process>
-   <bpmndi:BPMNDiagram id="sid-97e24d6a-1dea-48a0-b249-7a27b6da3fb0">
-      <bpmndi:BPMNPlane bpmnElement="sid-c7994a23-9285-44a6-8fbc-332bd18e14a8" id="sid-8ca6eb44-cd77-488b-bcd9-1f89c8a40df6">
-         <bpmndi:BPMNShape bpmnElement="sid-A231E5EC-AF94-41D8-BA17-959F7C4D5C6C" id="sid-A231E5EC-AF94-41D8-BA17-959F7C4D5C6C_gui">
+<!--
+   <bpmndi:BPMNDiagram id="sid-5921ca23-6e9c-4167-b9cc-e33d4c5f79eb">
+      <bpmndi:BPMNPlane bpmnElement="sid-9de63352-99e7-43cb-aef0-3c490d6fe999" id="sid-248e14ce-2a7b-4592-a811-7cfcc582b394">
+         <bpmndi:BPMNShape bpmnElement="start" id="start_gui">
             <omgdc:Bounds height="30.0" width="30.0" x="71.39190833725405" y="63.22171876928314"/>
          </bpmndi:BPMNShape>
          <bpmndi:BPMNShape bpmnElement="sid-3F4651B1-B1F9-4E88-9F80-A24839796B84" id="sid-3F4651B1-B1F9-4E88-9F80-A24839796B84_gui">
@@ -320,7 +322,7 @@
             <omgdc:Bounds height="28.0" width="28.0" x="1082.0479123210866" y="834.0633031702721"/>
          </bpmndi:BPMNShape>
          <bpmndi:BPMNShape bpmnElement="sid-86750EAC-8B61-4EF0-BCDB-3A2AC79A92E0" id="sid-86750EAC-8B61-4EF0-BCDB-3A2AC79A92E0_gui">
-            <omgdc:Bounds height="30.0" width="29.999999999999986" x="101.13241631834002" y="381.4946710925833"/>
+            <omgdc:Bounds height="30.0" width="30.0" x="101.13241631834003" y="381.4946710925833"/>
          </bpmndi:BPMNShape>
          <bpmndi:BPMNShape bpmnElement="sid-B75632B2-D393-4FDE-832B-0F832DF3D536" id="sid-B75632B2-D393-4FDE-832B-0F832DF3D536_gui">
             <omgdc:Bounds height="30.0" width="30.0" x="405.0" y="215.5928651034361"/>
@@ -468,4 +470,5 @@
          </bpmndi:BPMNEdge>
       </bpmndi:BPMNPlane>
    </bpmndi:BPMNDiagram>
+   -->
 </definitions>
