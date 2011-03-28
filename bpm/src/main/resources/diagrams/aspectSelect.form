@@ -1,0 +1,51 @@
+<h1>Vacation Request</h1>
+<table>
+  <tr>
+    <td>
+      <label>
+        <input type="checkbox" name="evalAquatic"/>Evaluate aquatic values
+        <input type="hidden" name="evalAquatic_boolean" value="true"/>
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <input type="checkbox" name="evalArchaeological"/>Evaluate archaeological values
+        <input type="hidden" name="evalArchaeological_boolean" value="true"/>
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <input type="checkbox" name="evalCultural"/>Evaluate cultural values
+        <input type="hidden" name="evalCultural_boolean" value="true"/>
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <input type="checkbox" name="evalEcological"/>Evaluate ecological values
+        <input type="hidden" name="evalEcological_boolean" value="true"/>
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <input type="checkbox" name="evalTreaty"/>Evaluate treaty values
+        <input type="hidden" name="evalTreaty_boolean" value="true"/>
+      </label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>
+        <input type="checkbox" name="communityInput"/>Request community input
+        <input type="hidden" name="communityInput_boolean" value="true"/>
+      </label>
+    </td>
+  </tr>
+</table>
