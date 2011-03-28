@@ -1,5 +1,9 @@
 .idea/
 .eclipse/
+.project
+.classpath
+.settings
+.metadata
 *.iml
 *.ipr
 *.iws
