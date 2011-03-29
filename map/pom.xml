@@ -472,7 +472,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<dbHostPort>localhost:5432</dbHostPort>
 		<dbAdminUser>postgres</dbAdminUser>
-		<dbAdminPassword>postgis</dbAdminPassword>
+		<dbAdminPassword>postgres</dbAdminPassword>
 	</properties>
 
 </project>
