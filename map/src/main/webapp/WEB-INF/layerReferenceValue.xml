@@ -41,7 +41,7 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	</bean>
 
 	<bean name="referenceValueInfo" class="org.geomajas.configuration.VectorLayerInfo">
-		<property name="layerType" value="GEOMETRY_COLLECTION"/>
+		<property name="layerType" value="GEOMETRY"/>
 		<property name="crs" value="EPSG:26911"/>
 		<property name="maxExtent">
 			<bean class="org.geomajas.geometry.Bbox">
