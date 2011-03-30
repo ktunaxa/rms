@@ -21,7 +21,7 @@
 	<artifactId>ktunaxa-map</artifactId>
 	<packaging>war</packaging>
 	<name>Mapping dashboard</name>
-	<description>Mapping dashboard for Tkunaxa referral system</description>
+	<description>Mapping dashboard for Ktunaxa referral system</description>
 	<url>http://www.ktunaxa.org/</url>
 
 	<scm>

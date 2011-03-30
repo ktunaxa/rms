@@ -16,10 +16,10 @@ import java.util.List;
 
 import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.widget.attribute.AttributeForm;
-import org.geomajas.gwt.client.widget.attribute.AttributeFormFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
-import org.geomajas.gwt.client.widget.attribute.DefaultAttributeFormFactory;
+import org.geomajas.gwt.client.widget.attribute.DefaultFeatureFormFactory;
+import org.geomajas.gwt.client.widget.attribute.FeatureForm;
+import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
 
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.DataSourceField;
@@ -33,17 +33,17 @@ import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
  * 
  * @author Pieter De Graef
  */
-public class ReferralFormFactory implements AttributeFormFactory {
+public class ReferralFormFactory implements FeatureFormFactory {
 
 	private static final String LAYER_ID = "referralLayer";
 
-	private AttributeFormFactory delegate = new DefaultAttributeFormFactory();
+	private FeatureFormFactory delegate = new DefaultFeatureFormFactory();
 
-	public AttributeForm createAttributeForm(VectorLayer layer) {
+	public FeatureForm createFeatureForm(VectorLayer layer) {
 		if (LAYER_ID.equals(layer.getId())) {
 			return new ReferralAttributeForm(layer);
 		}
-		return delegate.createAttributeForm(layer);
+		return delegate.createFeatureForm(layer);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class ReferralFormFactory implements AttributeFormFactory {
 	 * @author Pieter De Graef
 	 * 
 	 */
-	private class ReferralAttributeForm extends AttributeForm {
+	private class ReferralAttributeForm extends FeatureForm {
 
 		public ReferralAttributeForm(VectorLayer layer) {
 			super(layer);
