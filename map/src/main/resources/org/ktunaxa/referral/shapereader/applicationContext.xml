@@ -31,8 +31,57 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
 	<context:annotation-config />
 
-	<bean name="shapeReaderService" class="org.ktunaxa.referral.shapereader.ShapeReaderServiceImpl">
-		<property name="basePath" value="/tmp/shapes/" />
+	<bean name="shapeReaderService"
+		class="org.ktunaxa.referral.shapereader.ShapeReaderServiceImpl">
+		<property name="basePath" value="../../shapes/TRIM" />
+		<property name="labelAttributeMap">
+			<map>
+				<entry key="LandscapeUnits" value="LU_NAME" />
+				<entry key="Municipalities" value="MUN_NAME" />
+				<entry key="NativeCommunities" value="BAND_NAME" />
+				<entry key="RegisteredTraplines" value="TRPLN_A_ID" />
+				<entry key="WildlifeHabitatAreas" value="HAB_AR_ID" />
+				<entry key="CoalFields" value="COALBED_ID" />
+				<entry key="CoalTenures" value="TENURE_NO" />
+				<entry key="DominionCoalBlocks" value="DOMINION_" />
+				<entry key="NTS250K_Sheets" value="OBJECTID" />
+				<entry key="TRIM20K_Sheets" value="OBJECTID" />
+				<entry key="NTS_Cities" value="NAME" />
+				<entry key="NTS_Contours" value="ELEV" />
+				<entry key="NTS_Glaciers" value="FCODE" />
+				<entry key="NTS_Lakes" value="BASE" />
+				<entry key="NTS_Rivers" value="DLRIV_ID" />
+				<entry key="NTS_Streams" value="FEATURECOD" />
+				<entry key="NTS_Transportation" value="FEATURECOD" />
+				<entry key="TRIM_Pipeline" value="FCODE" />
+				<entry key="TRIM_TransmissionLine" value="CLASS" />
+				<entry key="TRIM1_Contours" value="FCODE" />
+			</map>
+		</property>
+		<property name="styleAttributeMap">
+			<map>
+				<entry key="LandscapeUnits" value="BEO" />
+				<entry key="Municipalities" value="CODE" />
+				<entry key="NativeCommunities" value="BAND_NAME" />
+				<entry key="RegisteredTraplines" value="TRPLN_A_ID" />
+				<entry key="WildlifeHabitatAreas" value="HAB_AR_ID" />
+				<entry key="CoalFields" value="COALBED_ID" />
+				<entry key="CoalTenures" value="TENURE_TYP" />
+				<entry key="DominionCoalBlocks" value="DOMINION_" />
+				<entry key="NTS250K_Sheets" value="OBJECTID" />
+				<entry key="TRIM20K_Sheets" value="OBJECTID" />
+				<entry key="NTS_Cities" value="POPULATION" />
+				<entry key="NTS_Contours" value="ELEV" />
+				<entry key="NTS_Glaciers" value="FCODE" />
+				<entry key="NTS_Lakes" value="BASE" />
+				<entry key="NTS_Rivers" value="DLRIV_ID" />
+				<entry key="NTS_Streams" value="FEATURECOD" />
+				<entry key="NTS_Transportation" value="TYPE" />
+				<entry key="TRIM_Pipeline" value="FCODE" />
+				<entry key="TRIM_TransmissionLine" value="CLASS" />
+				<entry key="TRIM1_Contours" value="ELEVATION" />
+			</map>
+		</property>
 	</bean>
 
 </beans>

@@ -12,6 +12,8 @@
 
 package org.ktunaxa.referral.client;
 
+import org.geomajas.gwt.client.map.event.MapModelEvent;
+import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
@@ -48,6 +50,7 @@ import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
  */
 public class KtunaxaEntryPoint implements EntryPoint {
 
+	
 	private static final String RFA_ID = "MIN001";
 
 	private static final String RFA_TITLE = "Mining SoilDigger";
@@ -101,6 +104,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		layout.addMember(subHeader);
 
 		layout.addMember(mainGui);
+		mainGui.getMapWidget().getMapModel().addMapModelHandler(new InitializingHandler());
 		layout.draw();
 	}
 
@@ -253,4 +257,19 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		menuBar.addMember(referralButton);
 		return menuBar;
 	}
+	
+	/**
+	 * Handles some initialization that requires the map to be loaded.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	public class InitializingHandler implements MapModelHandler {
+
+		public void onMapModelChange(MapModelEvent event) {
+			layerPanel.init(mainGui.getMapWidget());
+		}
+
+	}
+
 }

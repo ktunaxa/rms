@@ -16,10 +16,14 @@ import org.geomajas.command.CommandResponse;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.map.MapModel;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.MapWidget;
+import org.ktunaxa.referral.client.layer.ReferenceLayer;
+import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
+import org.ktunaxa.referral.client.layer.action.ShowMetadataHandler;
 import org.ktunaxa.referral.server.command.request.GetLayersRequest;
 import org.ktunaxa.referral.server.command.request.GetLayersResponse;
-import org.ktunaxa.referral.server.dto.ReferenceLayerDto;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
 
 import com.smartgwt.client.types.Overflow;
@@ -46,6 +50,10 @@ import com.smartgwt.client.widgets.tab.TabSet;
 public class LayerPanel extends VLayout {
 
 	private VLayout panelValue;
+	
+	private ReferenceLayer referenceLayer;
+	
+	private SectionStack baseStack;
 
 	public LayerPanel(MapWidget mapWidget) {
 		setSize("100%", "100%");
@@ -60,13 +68,16 @@ public class LayerPanel extends VLayout {
 		tabs.setTabs(tabBase, tabValue);
 		addMember(tabs);
 
-		final SectionStack baseStack = new SectionStack();
+		baseStack = new SectionStack();
 		baseStack.setSize("100%", "100%");
 		baseStack.setOverflow(Overflow.AUTO);
 		baseStack.setVisibilityMode(VisibilityMode.MULTIPLE);
 		baseStack.setPadding(5);
 		tabBase.setPane(baseStack);
+	}
 
+	public void init(MapWidget mapWidget) {
+		final MapModel mapModel = mapWidget.getMapModel();
 		GwtCommand command = new GwtCommand("command.GetLayers");
 		command.setCommandRequest(new GetLayersRequest());
 		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
@@ -74,6 +85,8 @@ public class LayerPanel extends VLayout {
 			public void execute(CommandResponse response) {
 				if (response instanceof GetLayersResponse) {
 					GetLayersResponse glr = (GetLayersResponse) response;
+					VectorLayer layer = (VectorLayer) mapModel.getLayer("referenceBaseLayer");
+					referenceLayer = new ReferenceLayer(layer, glr.getLayers(), glr.getLayerTypes());
 					for (ReferenceLayerTypeDto type : glr.getLayerTypes()) {
 						if (type.isBaseLayer()) {
 							// Create section in stack:
@@ -84,13 +97,13 @@ public class LayerPanel extends VLayout {
 						}
 					}
 
-					for (ReferenceLayerDto layer : glr.getLayers()) {
-						ReferenceLayerTypeDto type = layer.getType();
+					for (ReferenceSubLayer subLayer : referenceLayer.getSubLayers()) {
+						ReferenceLayerTypeDto type = subLayer.getDto().getType();
 						if (type.isBaseLayer()) {
 							((VLayout) baseStack.getSection((int) type.getId() - 1).getItems()[0])
-									.addMember(new LayerBlock(layer));
+									.addMember(new LayerBlock(subLayer));
 						} else {
-							panelValue.addMember(new HTMLFlow(layer.getName()));
+							panelValue.addMember(new HTMLFlow(subLayer.getDto().getName()));
 						}
 					}
 				}
@@ -105,13 +118,13 @@ public class LayerPanel extends VLayout {
 	 */
 	private class LayerBlock extends HLayout {
 
-		public LayerBlock(ReferenceLayerDto layer) {
+		public LayerBlock(ReferenceSubLayer subLayer) {
 			super();
 			setSize("100%", "26px");
 			setStyleName("layerBlock");
 
 			setLayoutLeftMargin(10);
-			HTMLFlow title = new HTMLFlow("<div style='line-height:26px;'>" + layer.getName() + "</div>");
+			HTMLFlow title = new HTMLFlow("<div style='line-height:26px;'>" + subLayer.getDto().getName() + "</div>");
 			title.setWidth100();
 			title.setLayoutAlign(VerticalAlignment.CENTER);
 			addMember(title);
@@ -133,7 +146,7 @@ public class LayerPanel extends VLayout {
 			MenuItem item3 = new MenuItem("Zoom to layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
 			MenuItem item4 = new MenuItem("Show meta-data", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
 			menu.setItems(item1, item2, item3, item4);
-
+			item4.addClickHandler(new ShowMetadataHandler(subLayer));
 			IMenuButton menuButton = new IMenuButton("", menu);
 			menuButton.setLayoutAlign(VerticalAlignment.CENTER);
 			menuButton.setShowTitle(false);
