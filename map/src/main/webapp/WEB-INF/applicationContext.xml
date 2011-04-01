@@ -25,6 +25,18 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<context:component-scan base-package="org.ktunaxa.referral"
 		name-generator="org.geomajas.spring.GeomajasBeanNameGenerator" />
 
+	<!-- ================================================================== -->
+	<!-- ===                    CMIS CONFIGURATION                      === -->
+	<!-- ================================================================== -->
+
+	<bean id="cmisConfig" class="org.ktunaxa.referral.server.service.CmisConfig">
+		<property name="userName" value="admin" />
+		<property name="password" value="sp@rklingH2O" />
+		<property name="url" value="http://alfresco.geomajas.org/alfresco/" />
+		<property name="repository" value="Main Repository" />
+		<property name="folder" value="ktunaxa" />
+	</bean>
+	
 	<bean name="security.securityInfo" class="org.geomajas.security.SecurityInfo">
 		<property name="loopAllServices" value="false" />
 		<property name="securityServices">

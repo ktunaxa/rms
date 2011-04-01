@@ -130,12 +130,12 @@ public class AddGeometryPage implements WizardPage {
 	private VLayout createUploadLayout() {
 		VLayout uploadLayout = new VLayout();
 		uploadLayout.setLayoutAlign(Alignment.CENTER);
-		// uploadLayout.setWidth("75%");
-		// uploadLayout.setStyleName("wizardInnerBody");
 		HTMLFlow explanation = new HTMLFlow("<h3>Attach a zipped shape file</h3><div><p>In order to attach a geometry"
 				+ " to this referral, you have to provide a shape file (zipped) that contains the project area. Please"
 				+ " make sure that the zipped file contains at least the .shp, .prj, .dbf and .shx files.</p>"
-				+ "<p>Please note that it may take a while to correctly interpret the provided shape file.</p></div>");
+				+ "<p>Please note that it may take a while to correctly interpret the provided shape file.</p>"
+				+ "<p style='color: #AA0000'>Warning: use polygons/multipolygons. No other types supported"
+				+ " yet.</p></div>");
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight(20);
 		final FileUploadForm form = new FileUploadForm("Select a file (.zip)", "uploadGeometry");

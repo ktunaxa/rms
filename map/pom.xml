@@ -39,6 +39,18 @@
 	</licenses>
 	
 	<dependencies>
+        <!-- OpenCMIS dependencies -->
+        <dependency>
+            <groupId>org.apache.chemistry.opencmis</groupId>
+            <artifactId>chemistry-opencmis-client-impl</artifactId>
+            <version>0.2.0-incubating</version>
+        </dependency>
+        <dependency>
+            <groupId>org.alfresco</groupId>
+            <artifactId>alfresco-opencmis-extension</artifactId>
+            <version>110208</version>
+        </dependency>
+
 		<dependency>
 			<groupId>org.ktunaxa.referral</groupId>
 			<artifactId>ktunaxa-theme</artifactId>
