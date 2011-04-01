@@ -39,6 +39,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 			<list>
 				<ref bean="mainMap" />
 				<ref bean="mainOverviewMap" />
+				<ref bean="mapTestReferral" />
 			</list>
 		</property>
 	</bean>

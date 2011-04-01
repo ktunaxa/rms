@@ -15,8 +15,19 @@
 			WEB-INF/spring-hibernate.xml
 
 			WEB-INF/layer*.xml
+			WEB-INF/map*.xml
         </param-value>
 	</context-param>
+
+	<servlet>
+		<servlet-name>UploadGeometryServlet</servlet-name>
+		<servlet-class>org.ktunaxa.referral.server.service.UploadGeometryServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UploadGeometryServlet</servlet-name>
+		<url-pattern>/uploadGeometry</url-pattern>
+	</servlet-mapping>
 
 	<listener>
  		<listener-class>org.geomajas.servlet.PrepareScanningContextListener</listener-class>

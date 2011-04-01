@@ -42,32 +42,29 @@ public class ReferralFormFactory implements FeatureFormFactory {
 
 	public FeatureForm createFeatureForm(VectorLayer layer) {
 		if (LAYER_ID.equals(layer.getId())) {
-			return new ReferralAttributeForm(layer);
+			return new ReferralFeatureForm(layer);
 		}
 		return delegate.createFeatureForm(layer);
 	}
 
 	/**
-	 * Custom form for referral.
+	 * Custom form for the referral layer.
 	 * 
 	 * @author Pieter De Graef
-	 * 
 	 */
-	private class ReferralAttributeForm extends FeatureForm {
+	private class ReferralFeatureForm extends FeatureForm {
 
-		public ReferralAttributeForm(VectorLayer layer) {
+		public ReferralFeatureForm(VectorLayer layer) {
 			super(layer);
-			getWidget().setWidth(800);
+			getWidget().setWidth("100%");
 			getWidget().setNumCols(4);
-			getWidget().setColWidths(175, 200, 225, 200);
+			getWidget().setColWidths(175, "50%", 225, "50%");
 
 			DataSource source = new DataSource();
 			List<FormItem> formItems = new ArrayList<FormItem>();
 			for (AttributeInfo info : layer.getLayerInfo().getFeatureInfo().getAttributes()) {
 				if (info.isIncludedInForm()) {
 					if ("landReferralId".equals(info.getName())) {
-						RowSpacerItem rowSpacer = new RowSpacerItem("project-info-spacer");
-						formItems.add(rowSpacer);
 						HeaderItem header = new HeaderItem("project-info-header");
 						header.setDefaultValue("General project information");
 						header.setColSpan(4);
@@ -107,18 +104,17 @@ public class ReferralFormFactory implements FeatureFormFactory {
 					source.addField(field);
 
 					FormItem formItem = AttributeFormFieldRegistry.createFormItem(layer, info);
-					formItem.setWidth("*");
 					formItems.add(formItem);
 
 					if ("externalAgencyName".equals(info.getName())) {
 						formItem.setColSpan(4);
 					} else if ("projectDescription".equals(info.getName())) {
 						formItem.setColSpan(4);
-						formItem.setHeight(45);
+						formItem.setHeight(50);
 					}
 					if ("projectBackground".equals(info.getName())) {
 						formItem.setColSpan(4);
-						formItem.setHeight(45);
+						formItem.setHeight(50);
 					} else if ("reponseDeadline".equals(info.getName())) {
 						formItem.setColSpan(4);
 					}
