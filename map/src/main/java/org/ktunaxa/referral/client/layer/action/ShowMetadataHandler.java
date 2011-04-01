@@ -72,11 +72,11 @@ public class ShowMetadataHandler implements ClickHandler {
 		private SelectItem type;
 
 		/** The minimum scale at which this layer is still visible. */
-		private SliderItem logScaleMin;
+		//private SliderItem logScaleMin;
 		private IntegerItem scaleMin;
 
 		/** The maximum scale at which this layer is still visible. */
-		private SliderItem logScaleMax;
+		//private SliderItem logScaleMax;
 		private IntegerItem scaleMax;
 
 		/** Should this layer be visible by default or not? */
@@ -95,35 +95,41 @@ public class ShowMetadataHandler implements ClickHandler {
 			}
 			type.setValueMap(types);
 
-			logScaleMin = new SliderItem("logScaleMin");
-			logScaleMin.setTitle("Minimum scale level");
-			logScaleMin.setWidth(250);
-			logScaleMin.setHeight(30);
-			logScaleMin.setMinValue(0);
-			logScaleMin.setMaxValue(8);
-			logScaleMin.setNumValues(8);
+//			logScaleMin = new SliderItem("logScaleMin");
+//			logScaleMin.setTitle("Minimum scale level");
+//			logScaleMin.setWidth(250);
+//			logScaleMin.setHeight(30);
+//			logScaleMin.setMinValue(0);
+//			logScaleMin.setMaxValue(8);
+//			logScaleMin.setNumValues(8);
 			scaleMin = new IntegerItem("scaleMin", "Minimum scale denominator");
 
-			logScaleMax = new SliderItem("logScaleMax");
-			logScaleMax.setTitle("Maximum scale level");
-			logScaleMax.setWidth(250);
-			logScaleMax.setHeight(30);
-			logScaleMax.setMinValue(0);
-			logScaleMax.setMaxValue(8);
-			logScaleMax.setNumValues(8);
+//			logScaleMax = new SliderItem("logScaleMax");
+//			logScaleMax.setTitle("Maximum scale level");
+//			logScaleMax.setWidth(250);
+//			logScaleMax.setHeight(30);
+//			logScaleMax.setMinValue(0);
+//			logScaleMax.setMaxValue(8);
+//			logScaleMax.setNumValues(8);
 			scaleMax = new IntegerItem("scaleMax", "Maximum scale denominator");
 
 			visibleByDefault = new CheckboxItem("visibleByDefault", "Default visible");
+			
 			form = new DynamicForm();
-			form.setFields(name, type, scaleMin, logScaleMin, scaleMax, logScaleMax, visibleByDefault);
+			name.disable();
+			type.disable();
+			scaleMin.disable();
+			scaleMax.disable();
+			visibleByDefault.disable();
+			form.setFields(name, type, scaleMin, scaleMax, visibleByDefault);
 			addMember(form);
 		}
 
 		public void setData() {
 			name.setValue(subLayer.getDto().getName());
 			type.setValue(subLayer.getDto().getId());
-			logScaleMin.setValue(Math.log10(subLayer.getScaleMinDenominator()));
-			logScaleMax.setValue(Math.log10(subLayer.getScaleMaxDenominator()));
+//			logScaleMin.setValue(Math.log10(subLayer.getScaleMinDenominator()));
+//			logScaleMax.setValue(Math.log10(subLayer.getScaleMaxDenominator()));
 			scaleMin.setValue(subLayer.getScaleMinDenominator());
 			scaleMax.setValue(subLayer.getScaleMaxDenominator());
 			visibleByDefault.setValue(subLayer.getDto().isVisibleByDefault());

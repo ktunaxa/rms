@@ -49,10 +49,11 @@ public class ReferenceSubLayer {
 		pixelLength = referenceLayer.getPixelLength();
 		minScale = stringToScale(referenceLayerDto.getScaleMin()) / pixelLength;
 		maxScale = stringToScale(referenceLayerDto.getScaleMax()) / pixelLength;
+		visible = referenceLayerDto.isVisibleByDefault();
 	}
 
-	public long getId() {
-		return referenceLayerDto.getId();
+	public long getCode() {
+		return referenceLayerDto.getCode();
 	}
 
 	public ReferenceLayerDto getDto() {
@@ -132,7 +133,8 @@ public class ReferenceSubLayer {
 	protected Double stringToScale(String s) {
 		String[] scale2 = s.split(":");
 		if (scale2.length == 1) {
-			return 1.0 / DENOMINATOR_FORMAT.parse(scale2[0].trim());
+			double denominator = DENOMINATOR_FORMAT.parse(scale2[0].trim());
+			return denominator == 0 ? 0 : 1/denominator;
 		} else {
 			return DENOMINATOR_FORMAT.parse(scale2[0].trim()) / DENOMINATOR_FORMAT.parse(scale2[1].trim());
 		}

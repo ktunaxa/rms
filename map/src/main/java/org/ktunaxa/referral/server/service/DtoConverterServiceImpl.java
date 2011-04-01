@@ -34,6 +34,7 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 
 	public ReferenceLayerDto toDto(ReferenceLayer layer) {
 		ReferenceLayerDto dto = new ReferenceLayerDto(layer.getId());
+		dto.setCode(layer.getCode());
 		dto.setName(layer.getName());
 		dto.setScaleMax(layer.getScaleMax());
 		dto.setScaleMin(layer.getScaleMin());

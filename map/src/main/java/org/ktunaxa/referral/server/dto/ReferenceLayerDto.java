@@ -25,6 +25,9 @@ public class ReferenceLayerDto implements Serializable {
 
 	private long id;
 
+	/** The code of the layer - business key. */
+	private long code;
+
 	/** The name of the layer - used in the GUI. */
 	private String name;
 
@@ -72,6 +75,25 @@ public class ReferenceLayerDto implements Serializable {
 	 */
 	public long getId() {
 		return id;
+	}
+
+	/**
+	 * The layer's unique code.
+	 * 
+	 * @param id
+	 *            The new value for the code.
+	 */
+	public void setCode(long code) {
+		this.code = code;
+	}
+
+	/**
+	 * Get the value of the code.
+	 * 
+	 * @return the value of the code.
+	 */
+	public long getCode() {
+		return code;
 	}
 
 	/**

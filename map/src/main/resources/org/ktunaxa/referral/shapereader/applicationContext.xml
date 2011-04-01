@@ -33,7 +33,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
 	<bean name="shapeReaderService"
 		class="org.ktunaxa.referral.shapereader.ShapeReaderServiceImpl">
-		<property name="basePath" value="../../shapes/TRIM" />
+		<property name="basePath" value="../../shapes/Administrative" />
 		<property name="labelAttributeMap">
 			<map>
 				<entry key="LandscapeUnits" value="LU_NAME" />

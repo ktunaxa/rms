@@ -15,11 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.geomajas.gwt.client.map.MapModel;
+import org.geomajas.gwt.client.map.event.LayerChangedHandler;
+import org.geomajas.gwt.client.map.event.LayerFilteredEvent;
+import org.geomajas.gwt.client.map.event.LayerLabeledEvent;
+import org.geomajas.gwt.client.map.event.LayerShownEvent;
 import org.geomajas.gwt.client.map.event.MapViewChangedEvent;
 import org.geomajas.gwt.client.map.event.MapViewChangedHandler;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.ktunaxa.referral.server.dto.ReferenceLayerDto;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
+
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * A reference layer is a wrapper of the Geomajas layer that takes care of handling the sublayers as if they were
@@ -38,15 +45,31 @@ public class ReferenceLayer {
 
 	private List<ReferenceLayerTypeDto> layerTypes;
 
+	private HandlerManager handlerManager;
+
 	public ReferenceLayer(VectorLayer layer, List<ReferenceLayerDto> subLayerDtos,
 			List<ReferenceLayerTypeDto> layerTypes) {
 		this.layer = layer;
 		this.layerTypes = layerTypes;
+		handlerManager = new HandlerManager(this);
+		// forward layer changed events
+		this.layer.addLayerChangedHandler(new LayerChangedForwarder());
 		mapModel = layer.getMapModel();
 		mapModel.getMapView().addMapViewChangedHandler(new LayerShowingHandler());
 		for (ReferenceLayerDto referenceLayerDto : subLayerDtos) {
 			subLayers.add(new ReferenceSubLayer(this, referenceLayerDto));
 		}
+		updateShowing();
+	}
+
+	/**
+	 * Add a handler that registers changes in layer status.
+	 * 
+	 * @param handler
+	 *            The new handler to be added.
+	 */
+	public HandlerRegistration addLayerChangedHandler(LayerChangedHandler handler) {
+		return handlerManager.addHandler(LayerChangedHandler.TYPE, handler);
 	}
 
 	public double getCurrentScale() {
@@ -62,24 +85,27 @@ public class ReferenceLayer {
 		for (ReferenceSubLayer subLayer : subLayers) {
 			subLayer.updateShowing();
 			if (subLayer.isShowing()) {
-				layerIds.add(subLayer.getId());
+				layerIds.add(subLayer.getCode());
 			}
 		}
 		StringBuilder builder = null;
 		if (layerIds.size() > 0) {
-			builder = new StringBuilder("(");
 			for (Long id : layerIds) {
-				builder.append(id + ",");
+				if (builder == null) {
+					builder = new StringBuilder();
+				} else {
+					builder.append(" or ");
+				}
+				builder.append("layer.code = " + id);
 			}
-			builder.replace(builder.length() - 1, builder.length(), ")");
 		}
-		String oldFilter = layer.getFilter();
-		String newFilter = (builder == null ? "" : "layer.id in " + builder.toString());
-		if (!newFilter.equals(oldFilter)) {
-			layer.setFilter(newFilter);
+		String filter = (builder == null ? null : builder.toString());
+		layer.setFilter(filter);
+		if (!layer.isVisible()) {
+			layer.setVisible(true);
 		}
-		// forces refresh, should be done by setFilter
-		layer.setVisible(true);
+		// indicates show status has changed for one or more sublayers
+		handlerManager.fireEvent(new LayerShownEvent(layer));
 	}
 
 	/**
@@ -91,7 +117,9 @@ public class ReferenceLayer {
 	public class LayerShowingHandler implements MapViewChangedHandler {
 
 		public void onMapViewChanged(MapViewChangedEvent event) {
-			updateShowing();
+			if(!event.isPanDragging()){
+				updateShowing();
+			}
 		}
 	}
 
@@ -101,6 +129,28 @@ public class ReferenceLayer {
 
 	public List<ReferenceLayerTypeDto> getLayerTypes() {
 		return layerTypes;
+	}
+
+	/**
+	 * Forwards layer changed events to our listeners.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	public class LayerChangedForwarder implements LayerChangedHandler {
+
+		public void onVisibleChange(LayerShownEvent event) {
+			handlerManager.fireEvent(event);
+		}
+
+		public void onLabelChange(LayerLabeledEvent event) {
+			handlerManager.fireEvent(event);
+		}
+
+		public void onFilterChange(LayerFilteredEvent event) {
+			handlerManager.fireEvent(event);
+		}
+
 	}
 
 }

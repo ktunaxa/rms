@@ -35,6 +35,10 @@ public class ReferenceLayer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	/** The unique code of the layer - business key. */
+	@Column(nullable = false, name = "code")
+	private long code;
+
 	/** The name of the layer - used in the GUI. */
 	@Column(nullable = false, name = "name")
 	private String name;
@@ -88,6 +92,25 @@ public class ReferenceLayer {
 	 */
 	public long getId() {
 		return id;
+	}
+
+	/**
+	 * The layer's unique code.
+	 * 
+	 * @param id
+	 *            The new value for the code.
+	 */
+	public void setCode(long code) {
+		this.code = code;
+	}
+
+	/**
+	 * Get the value of the code.
+	 * 
+	 * @return the value of the code.
+	 */
+	public long getCode() {
+		return code;
 	}
 
 	/**

@@ -20,13 +20,15 @@ GRANT ALL ON TABLE reference_layer_type TO postgres; #--;
 -- ----------------------------------------------------------------------------
 CREATE TABLE reference_layer(
 	id serial NOT NULL,
+	code integer NOT NULL,
 	name character varying NOT NULL,
 	type_id bigint NOT NULL,
 	scale_min character varying NOT NULL default 0,
 	scale_max character varying NOT NULL default 0,
 	visible_by_default boolean NOT NULL default false,
 	CONSTRAINT reference_layer_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_reference_layer_type FOREIGN KEY (type_id) REFERENCES reference_layer_type (id)
+	CONSTRAINT fk_reference_layer_type FOREIGN KEY (type_id) REFERENCES reference_layer_type (id),
+	CONSTRAINT reference_layer_code UNIQUE (code)
 ) WITH (OIDS=FALSE); #--;
 
 ALTER TABLE reference_layer OWNER TO ktunaxa; #--;

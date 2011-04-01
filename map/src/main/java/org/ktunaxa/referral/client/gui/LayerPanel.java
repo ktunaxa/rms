@@ -111,47 +111,4 @@ public class LayerPanel extends VLayout {
 		});
 	}
 
-	/**
-	 * Widget that represents a layer in the layer tree layout.
-	 * 
-	 * @author Pieter De Graef
-	 */
-	private class LayerBlock extends HLayout {
-
-		public LayerBlock(ReferenceSubLayer subLayer) {
-			super();
-			setSize("100%", "26px");
-			setStyleName("layerBlock");
-
-			setLayoutLeftMargin(10);
-			HTMLFlow title = new HTMLFlow("<div style='line-height:26px;'>" + subLayer.getDto().getName() + "</div>");
-			title.setWidth100();
-			title.setLayoutAlign(VerticalAlignment.CENTER);
-			addMember(title);
-
-			IButton visibleBtn = new IButton("");
-			visibleBtn.setLayoutAlign(VerticalAlignment.CENTER);
-			visibleBtn.setShowTitle(false);
-			visibleBtn.setSize("24", "22");
-			visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show.png");
-			visibleBtn.setIconSize(16);
-			visibleBtn.setActionType(SelectionType.CHECKBOX);
-			addMember(visibleBtn);
-
-			Menu menu = new Menu();
-			menu.setShowShadow(true);
-			menu.setShadowDepth(10);
-			MenuItem item1 = new MenuItem("Toggle labels", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-			MenuItem item2 = new MenuItem("Refresh layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-			MenuItem item3 = new MenuItem("Zoom to layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-			MenuItem item4 = new MenuItem("Show meta-data", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-			menu.setItems(item1, item2, item3, item4);
-			item4.addClickHandler(new ShowMetadataHandler(subLayer));
-			IMenuButton menuButton = new IMenuButton("", menu);
-			menuButton.setLayoutAlign(VerticalAlignment.CENTER);
-			menuButton.setShowTitle(false);
-			menuButton.setSize("22", "22");
-			addMember(menuButton);
-		}
-	}
 }
