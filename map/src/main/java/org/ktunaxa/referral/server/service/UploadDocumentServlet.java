@@ -62,6 +62,7 @@ public class UploadDocumentServlet extends HttpServlet {
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			List<FileItem> items = null;
+			String formId = req.getParameter(KtunaxaConstants.FORM_ID);
 			try {
 				items = upload.parseRequest(req);
 				for (FileItem item : items) {
@@ -86,7 +87,7 @@ public class UploadDocumentServlet extends HttpServlet {
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
 				// TODO also send the CMIS key back to the client...
-				out.println("if (parent.uploadComplete) parent.uploadComplete('" + fileName + "');");
+				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','" + fileName + "');");
 				out.println("</script>");
 			} catch (FileUploadException e) {
 				resp.setContentType("text/html");
@@ -96,7 +97,7 @@ public class UploadDocumentServlet extends HttpServlet {
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
 				// TODO also send the CMIS key back to the client...
-				out.println("if (parent.uploadComplete) parent.uploadComplete('error');");
+				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','error');");
 				out.println("</script>");
 			}
 		}

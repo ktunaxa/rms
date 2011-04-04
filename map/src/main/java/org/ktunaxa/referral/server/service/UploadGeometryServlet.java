@@ -41,11 +41,14 @@ import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
+import org.ktunaxa.referral.shapereader.LayerPersistServiceImpl;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -66,6 +69,8 @@ public class UploadGeometryServlet extends HttpServlet {
 
 	private List<String> tempFiles;
 
+	private final Logger log = LoggerFactory.getLogger(UploadGeometryServlet.class);
+
 	public void init() throws ServletException {
 		super.init();
 		context = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
@@ -79,6 +84,7 @@ public class UploadGeometryServlet extends HttpServlet {
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			List<FileItem> items = null;
+			String formId = req.getParameter(KtunaxaConstants.FORM_ID);
 			try {
 				items = upload.parseRequest(req);
 				for (FileItem item : items) {
@@ -97,7 +103,7 @@ public class UploadGeometryServlet extends HttpServlet {
 				out.println("<html>");
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
-				out.println("if (parent.uploadComplete) parent.uploadComplete('" + geometry.toText() + "');");
+				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','" + geometry.toText() + "');");
 				out.println("</script>");
 				cleanup();
 			} catch (FileUploadException e) {
@@ -164,7 +170,7 @@ public class UploadGeometryServlet extends HttpServlet {
 		ZipInputStream zin = new ZipInputStream(new ByteArrayInputStream(fileContent));
 		ZipEntry entry;
 		while ((entry = zin.getNextEntry()) != null) {
-			System.out.println("Extracting: " + entry);
+			log.info("Extracting: " + entry);
 			String name = tempDir + "/" + entry.getName();
 			tempFiles.add(name);
 			if (name.endsWith(".shp")) {

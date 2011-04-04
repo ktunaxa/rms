@@ -14,12 +14,15 @@ package org.ktunaxa.referral.client.referral;
 
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
+import org.ktunaxa.referral.server.service.KtunaxaConstants;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.NamedFrame;
 import com.smartgwt.client.types.Encoding;
+import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.HiddenItem;
 import com.smartgwt.client.widgets.form.fields.UploadItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
@@ -34,8 +37,15 @@ public class FileUploadForm extends DynamicForm {
 	private HandlerManager handlerManager;
 
 	private UploadItem fileItem;
+	
+	private String targetUrl;
 
 	public FileUploadForm(String title, String targetUrl) {
+		if (!targetUrl.contains("?")) {
+			targetUrl += "?" + KtunaxaConstants.FORM_ID + "=" + getID();
+		} else {
+			targetUrl += "&" + KtunaxaConstants.FORM_ID + "=" + getID();
+		}
 		handlerManager = new HandlerManager(this);
 		initComplete(this);
 		setEncoding(Encoding.MULTIPART);
@@ -81,9 +91,9 @@ public class FileUploadForm extends DynamicForm {
 		}
 	}
 
-	// Can we make this private??
-	public void uploadComplete(String response) {
-		handlerManager.fireEvent(new FileUploadDoneEvent(response));
+	private static void uploadComplete(String formId, String response) {
+		FileUploadForm form = (FileUploadForm)Canvas.getById(formId);
+		form.handlerManager.fireEvent(new FileUploadDoneEvent(response));
 	}
 
 	// ------------------------------------------------------------------------
@@ -92,7 +102,7 @@ public class FileUploadForm extends DynamicForm {
 
 	private native void initComplete(FileUploadForm upload) /*-{
 		$wnd.uploadComplete = function (response) {
-			upload.@org.ktunaxa.referral.client.referral.FileUploadForm::uploadComplete(Ljava/lang/String;)(response);
+			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadComplete(Ljava/lang/String;Ljava/lang/String;)(response);
 		};
 	}-*/;
 }
