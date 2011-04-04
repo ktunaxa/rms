@@ -16,13 +16,16 @@ import java.util.LinkedHashMap;
 import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
 
+import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.IntegerItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
-import com.smartgwt.client.widgets.form.fields.SliderItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.menu.events.ClickHandler;
 import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
@@ -42,99 +45,49 @@ public class ShowMetadataHandler implements ClickHandler {
 	}
 
 	public void onClick(MenuItemClickEvent event) {
-		MetadataForm form = new MetadataForm();
-		form.setData();
-		form.setMargin(10);
+		VLayout panel = new VLayout();
+		panel.setWidth(500);
+		panel.setHeight100();
+		panel.addMember(new MetadataLine("Name", subLayer.getDto().getName()));
+		panel.addMember(new MetadataLine("Layer type", subLayer.getDto().getType().getDescription()));
+		panel.addMember(new MetadataLine("Minimum scale", subLayer.getDto().getScaleMin()));
+		panel.addMember(new MetadataLine("Maximum scale", subLayer.getDto().getScaleMax()));
+		panel.addMember(new MetadataLine("Default visible", subLayer.getDto().isVisibleByDefault() ? "yes" : "no"));
 		Window window = new Window();
 		window.setTitle("Layer Metadata");
-		window.addItem(form);
+		window.addItem(panel);
 		window.centerInPage();
 		window.setAutoSize(true);
+		window.setCanDragReposition(true);  
+		window.setCanDragResize(true);
 		window.show();
 	}
 
 	/**
-	 * A form to show the sublayer metadata.
+	 * A line of the sublayer metadata.
 	 * 
 	 * @author Jan De Moerloose
 	 * 
 	 */
-	public class MetadataForm extends VLayout {
+	public class MetadataLine extends HLayout {
 
-		private DynamicForm form;
-
-		/** The name of the layer - used in the GUI. */
-		private TextItem name;
-
-		/**
-		 * The type/category that this layer belongs to. Some types are base layers other types represent value aspects.
-		 */
-		private SelectItem type;
-
-		/** The minimum scale at which this layer is still visible. */
-		//private SliderItem logScaleMin;
-		private IntegerItem scaleMin;
-
-		/** The maximum scale at which this layer is still visible. */
-		//private SliderItem logScaleMax;
-		private IntegerItem scaleMax;
-
-		/** Should this layer be visible by default or not? */
-		private CheckboxItem visibleByDefault;
-		
-
-		public MetadataForm() {
+		public MetadataLine(String name, String value) {
 			setHeight100();
 			setWidth100();
-			name = new TextItem("name", "name");
+			setStyleName("layerBlock");
 
-			type = new SelectItem("type", "Layer type");
-			LinkedHashMap<String, String> types = new LinkedHashMap<String, String>();
-			for (ReferenceLayerTypeDto type : subLayer.getReferenceLayer().getLayerTypes()) {
-				types.put("" + type.getId(), type.getDescription());
-			}
-			type.setValueMap(types);
+			HTMLFlow nameFlow = new HTMLFlow("<div style='line-height:26px;'>" + name + "</div>");
+			nameFlow.setWidth("50%");
+			nameFlow.setLayoutAlign(VerticalAlignment.CENTER);
+			nameFlow.setLayoutAlign(Alignment.LEFT);
+			addMember(nameFlow);
 
-//			logScaleMin = new SliderItem("logScaleMin");
-//			logScaleMin.setTitle("Minimum scale level");
-//			logScaleMin.setWidth(250);
-//			logScaleMin.setHeight(30);
-//			logScaleMin.setMinValue(0);
-//			logScaleMin.setMaxValue(8);
-//			logScaleMin.setNumValues(8);
-			scaleMin = new IntegerItem("scaleMin", "Minimum scale denominator");
-
-//			logScaleMax = new SliderItem("logScaleMax");
-//			logScaleMax.setTitle("Maximum scale level");
-//			logScaleMax.setWidth(250);
-//			logScaleMax.setHeight(30);
-//			logScaleMax.setMinValue(0);
-//			logScaleMax.setMaxValue(8);
-//			logScaleMax.setNumValues(8);
-			scaleMax = new IntegerItem("scaleMax", "Maximum scale denominator");
-
-			visibleByDefault = new CheckboxItem("visibleByDefault", "Default visible");
-			
-			form = new DynamicForm();
-			name.disable();
-			type.disable();
-			scaleMin.disable();
-			scaleMax.disable();
-			visibleByDefault.disable();
-			form.setFields(name, type, scaleMin, scaleMax, visibleByDefault);
-			addMember(form);
+			HTMLFlow valueFlow = new HTMLFlow("<div style='line-height:26px;'>" + value + "</div>");
+			valueFlow.setWidth("50%");
+			valueFlow.setLayoutAlign(VerticalAlignment.CENTER);
+			valueFlow.setLayoutAlign(Alignment.RIGHT);
+			addMember(valueFlow);
 		}
-
-		public void setData() {
-			name.setValue(subLayer.getDto().getName());
-			type.setValue(subLayer.getDto().getId());
-//			logScaleMin.setValue(Math.log10(subLayer.getScaleMinDenominator()));
-//			logScaleMax.setValue(Math.log10(subLayer.getScaleMaxDenominator()));
-			scaleMin.setValue(subLayer.getScaleMinDenominator());
-			scaleMax.setValue(subLayer.getScaleMaxDenominator());
-			visibleByDefault.setValue(subLayer.getDto().isVisibleByDefault());
-		}
-		
 
 	}
 

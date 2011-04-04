@@ -249,9 +249,9 @@
 					</adminDbConnectionSettings>
 					<appDbConnectionSettings>
 						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
-						<jdbcUrl>jdbc:postgresql://${dbHostPort}/ktunaxa</jdbcUrl>
-						<userName>ktunaxa</userName>
-						<password>toenacha</password>
+						<jdbcUrl>jdbc:postgresql://${dbHostPort}/referral</jdbcUrl>
+						<userName>referral</userName>
+						<password>referral</password>
 					</appDbConnectionSettings>
 					<sqlDelimiter>#--;</sqlDelimiter>
 					<dbDataScriptsDirectory>
@@ -264,10 +264,11 @@
 						<param>src/main/sql/update</param>
 					</dbUpdateScriptsDirectory>
 					<dbCreateStatements>
-						create database ktunaxa TEMPLATE=template_postgis; #--;
-						ALTER DATABASE ktunaxa OWNER TO ktunaxa; #--;
+						create database referral TEMPLATE=template_postgis; #--;
+						ALTER DATABASE referral OWNER TO referral_group; #--;
+						grant all on database referral to referral_group; #--;
 					</dbCreateStatements>
-					<dbDropStatements>drop database ktunaxa; #--;</dbDropStatements>
+					<dbDropStatements>drop database referral; #--;</dbDropStatements>
 				</configuration>
 				<dependencies>
 					<dependency>

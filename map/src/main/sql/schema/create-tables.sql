@@ -8,9 +8,8 @@ CREATE TABLE reference_layer_type(
 	CONSTRAINT reference_layer_type_pkey PRIMARY KEY (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE reference_layer_type OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_layer_type TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_layer_type TO postgres; #--;
+ALTER TABLE reference_layer_type OWNER TO referral_group; #--;
+GRANT ALL ON TABLE reference_layer_type TO referral_group; #--;
 
 
 
@@ -31,9 +30,8 @@ CREATE TABLE reference_layer(
 	CONSTRAINT reference_layer_code UNIQUE (code)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE reference_layer OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_layer TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_layer TO postgres; #--;
+ALTER TABLE reference_layer OWNER TO referral_group; #--;
+GRANT ALL ON TABLE reference_layer TO referral_group; #--;
 
 
 
@@ -55,9 +53,8 @@ CREATE TABLE reference_value
   CONSTRAINT enforce_srid_geom CHECK (st_srid(geom) = 26911)
 )
 WITH (OIDS=FALSE); #--;
-ALTER TABLE reference_value OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_value TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_value TO postgres; #--;
+ALTER TABLE reference_value OWNER TO referral_group; #--;
+GRANT ALL ON TABLE reference_value TO referral_group; #--;
 
 -- Index: reference_value_the_geom_gist
 
@@ -80,9 +77,8 @@ CREATE TABLE reference_value_attribute(
 	CONSTRAINT fk_reference_value_attribute_reference FOREIGN KEY (reference_value_id) REFERENCES reference_value (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE reference_value_attribute OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_value_attribute TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_value_attribute TO postgres; #--;
+ALTER TABLE reference_value_attribute OWNER TO referral_group; #--;
+GRANT ALL ON TABLE reference_value_attribute TO referral_group; #--;
 
 
 
@@ -106,9 +102,8 @@ CREATE TABLE reference_base
 WITH (
   OIDS=FALSE
 ); #--;
-ALTER TABLE reference_base OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_base TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_base TO postgres; #--;
+ALTER TABLE reference_base OWNER TO referral_group; #--;
+GRANT ALL ON TABLE reference_base TO referral_group; #--;
 
 -- Index: reference_base_the_geom_gist
 
@@ -132,9 +127,8 @@ CREATE TABLE reference_base_attribute(
 	CONSTRAINT fk_reference_base_attribute_reference FOREIGN KEY (reference_base_id) REFERENCES reference_base (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE reference_base_attribute OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_base_attribute TO ktunaxa; #--;
-GRANT ALL ON TABLE reference_base_attribute TO postgres; #--;
+ALTER TABLE reference_base_attribute OWNER TO referral_group; #--;
+GRANT ALL ON TABLE reference_base_attribute TO referral_group; #--;
 
 
 
@@ -148,9 +142,8 @@ CREATE TABLE referral_status(
 	CONSTRAINT referral_status_pkey PRIMARY KEY (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE referral_status OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE referral_status TO ktunaxa; #--;
-GRANT ALL ON TABLE referral_status TO postgres; #--;
+ALTER TABLE referral_status OWNER TO referral_group; #--;
+GRANT ALL ON TABLE referral_status TO referral_group; #--;
 
 
 
@@ -164,9 +157,8 @@ CREATE TABLE referral_type(
 	CONSTRAINT referral_type_pkey PRIMARY KEY (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE referral_type OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE referral_type TO ktunaxa; #--;
-GRANT ALL ON TABLE referral_type TO postgres; #--;
+ALTER TABLE referral_type OWNER TO referral_group; #--;
+GRANT ALL ON TABLE referral_type TO referral_group; #--;
 
 
 
@@ -180,9 +172,8 @@ CREATE TABLE referral_application_type(
 	CONSTRAINT referral_application_type_pkey PRIMARY KEY (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE referral_application_type OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE referral_application_type TO ktunaxa; #--;
-GRANT ALL ON TABLE referral_application_type TO postgres; #--;
+ALTER TABLE referral_application_type OWNER TO referral_group; #--;
+GRANT ALL ON TABLE referral_application_type TO referral_group; #--;
 
 
 
@@ -235,9 +226,8 @@ CREATE TABLE referral
 WITH (
   OIDS=FALSE
 ); #--;
-ALTER TABLE referral OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE referral TO ktunaxa; #--;
-GRANT ALL ON TABLE referral TO postgres; #--;
+ALTER TABLE referral OWNER TO referral_group; #--;
+GRANT ALL ON TABLE referral TO referral_group; #--;
 
 -- Index: referral_the_geom_gist
 
@@ -261,9 +251,8 @@ CREATE TABLE document_type(
 	CONSTRAINT document_type_pkey PRIMARY KEY (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE document_type OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE document_type TO ktunaxa; #--;
-GRANT ALL ON TABLE document_type TO postgres; #--;
+ALTER TABLE document_type OWNER TO referral_group; #--;
+GRANT ALL ON TABLE document_type TO referral_group; #--;
 
 
 
@@ -287,9 +276,8 @@ CREATE TABLE document(
 	CONSTRAINT fk_document_referral FOREIGN KEY (referral_id) REFERENCES referral (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE document OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE document TO ktunaxa; #--;
-GRANT ALL ON TABLE document TO postgres; #--;
+ALTER TABLE document OWNER TO referral_group; #--;
+GRANT ALL ON TABLE document TO referral_group; #--;
 
 
 
@@ -311,9 +299,8 @@ CREATE TABLE referral_comment(
 	CONSTRAINT fk_referrel_comment_layer_type FOREIGN KEY (reference_layer_type_id) REFERENCES reference_layer_type (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE referral_comment OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE referral_comment TO ktunaxa; #--;
-GRANT ALL ON TABLE referral_comment TO postgres; #--;
+ALTER TABLE referral_comment OWNER TO referral_group; #--;
+GRANT ALL ON TABLE referral_comment TO referral_group; #--;
 
 
 
@@ -335,9 +322,8 @@ CREATE TABLE document_comment(
 	CONSTRAINT fk_document_comment_layer_type FOREIGN KEY (reference_layer_type_id) REFERENCES reference_layer_type (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE document_comment OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE document_comment TO ktunaxa; #--;
-GRANT ALL ON TABLE document_comment TO postgres; #--;
+ALTER TABLE document_comment OWNER TO referral_group; #--;
+GRANT ALL ON TABLE document_comment TO referral_group; #--;
 
 
 
@@ -353,7 +339,6 @@ CREATE TABLE template(
 	CONSTRAINT template_pkey PRIMARY KEY (id)
 ) WITH (OIDS=FALSE); #--;
 
-ALTER TABLE template OWNER TO ktunaxa; #--;
-GRANT ALL ON TABLE template TO ktunaxa; #--;
-GRANT ALL ON TABLE template TO postgres; #--;
+ALTER TABLE template OWNER TO referral_group; #--;
+GRANT ALL ON TABLE template TO referral_group; #--;
 

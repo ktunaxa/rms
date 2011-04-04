@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<!--
+  ~ This file is part of Geomajas, a component framework for building
+  ~ rich Internet applications (RIA) with sophisticated capabilities for the
+  ~ display, analysis and management of geographic information.
+  ~ It is a building block that allows developers to add maps
+  ~ and other geographic data capabilities to their web applications.
+  ~
+  ~ Copyright 2008-2010 Geosparc, http://www.geosparc.com, Belgium
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License, or (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<chapter id="chapter-introduction">
+  <title>Maintenance guide</title>
+
+  <para>After installation of the database, an initial set of reference data
+  should be loaded from shape files. A batch script is supplied to perform
+  layer-by-layer uploads of the base and value reference data.</para>
+
+  <section>
+    <title>Upload script for referral layers (base and value)</title>
+
+    <para>The upload script is released as a zip-file which contains the java
+    application and a batch script for Windows and Unix.</para>
+
+    <para>After unzipping the batch script, the following directory structure
+    should be present:</para>
+
+    <literallayout>--&gt; lib</literallayout>
+
+    <literallayout>--&gt; META-INF</literallayout>
+
+    <literallayout>--&gt; org/ktunaxa/referral/shapereader/applicationContext.xml</literallayout>
+
+    <literallayout>--&gt; org/ktunaxa/referral/shapereader/spring-hibernate.xml</literallayout>
+
+    <para>The <code>spring-hibernate.xml</code> configuration file contains
+    the database connection parameters:</para>
+
+    <para><programlisting>&lt;bean id="postgisDataSource" class="org.apache.commons.dbcp.BasicDataSource"&gt;
+  &lt;property name="driverClassName" value="org.postgresql.Driver" /&gt;
+  &lt;property name="url" value="jdbc:postgresql://localhost:5432/referral" /&gt;
+  &lt;property name="username" value="referral" /&gt;
+  &lt;property name="password" value="referral" /&gt;
+  &lt;property name="maxWait" value="250" /&gt;
+&lt;/bean&gt;
+</programlisting>Change the username and password to the production values and
+    modify the url if necessary.</para>
+
+    <para>The applicationContext.xml file contains the location of the
+    shapefile directory:</para>
+
+    <para><programlisting>&lt;bean name="shapeReaderService" class="org.ktunaxa.referral.shapereader.ShapeReaderServiceImpl"&gt;
+  &lt;property name="basePath" value="../../shapes/Administrative" /&gt;
+  &lt;property name="labelAttributeMap"&gt;
+   &lt;map&gt;
+    &lt;entry key="LandscapeUnits" value="LU_NAME" /&gt;
+   &lt;/map&gt;
+  &lt;/property&gt;
+  &lt;property name="styleAttributeMap"&gt;
+   &lt;map&gt;
+    &lt;entry key="LandscapeUnits" value="BEO" /&gt;
+   &lt;/map&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+</programlisting>Change the <code>basePath</code> value to the relative or
+    absolute path where the shapes are located.</para>
+
+    <para>Add one or more entries to the <code>labelAttributeMap</code> and
+    <code>styleAttributeMap</code> maps if you want to couple the label and
+    style attribute to existing shapefile columns. The name of the shapefile
+    should be used as the entry's <code>key</code> and the shapefile column as
+    its <code>value</code>. If you don't specify these entries, the following
+    columns shuold be present in the shape file (dbf part):</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>RMS_STYLE: column name for the style attribute (String
+        type)</para>
+      </listitem>
+
+      <listitem>
+        <para>RMS_LABEL: column name for the label attribute (String
+        type)</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>Running the script (Windows)</title>
+
+    <para>Open a DOS prompt in the base directory of the script (directory
+    where the script was unzipped) and enter the following command:</para>
+
+    <programlisting>shapeImport</programlisting>
+
+    <para>You will be asked for the number of the shape file and the number of
+    the layer type. After loading the data, the script stops. If there is a
+    problem, the error message should appear on the screen and the database
+    should remain intact.</para>
+  </section>
+
+  <section>
+    <title>Running the script (Linux)</title>
+
+    <para>Open a terminal window in the base directory of the script
+    (directory where the script was unzipped) and enter the following
+    commands:</para>
+
+    <programlisting>chmod +x shapeImport
+./shapeImport</programlisting>
+
+    <para>You will be asked for the number of the shape file and the number of
+    the layer type. After loading the data, the script stops. If there is a
+    problem, the error message should appear on the screen and the database
+    should remain intact.</para>
+  </section>
+</chapter>

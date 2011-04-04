@@ -19,113 +19,89 @@ INSERT INTO reference_layer_type (id, description, base_layer) values (10, 'Trea
 -- Table: REFERENCE LAYER
 -- ----------------------------------------------------------------------------
 
--- Base: Adminitrative
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (1, 'Municipalities', 1, '0', '1:10000000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (2, 'Native Communities', 1, '0', '1:10000000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (3, 'Landscape Units', 1, '1:500000', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (4, 'Registered Traplines', 1, '1:500000', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (5, 'Wildlife Habitat', 1, '0', '1:250000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (6, 'Private Parcels', 1, '0', '1:250000', false); #--;
-
--- Base: Mining
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (7, 'Coal Fields', 2, '0', '1:1000000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (8, 'Coal Tenures', 2, '0', '1:1000000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (9, 'Dominion Coal Blocks', 2, '0', '1:1000000', false); #--;
-
--- Base: Neatlines
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (10, 'NTS 250K', 3, '1:6000000', '1:750000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (11, 'TRIM 20K', 3, '1:750000', '1:125000', false); #--;
-
--- Base: NTS
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (12, 'Cities', 4, '1:500000', '1:100000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (13, 'Contours', 4, '1:300000', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (14, 'Glaciers', 4, '1:500000', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (15, 'Lakes', 4, '1:500000', '1:100000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (16, 'Rivers', 4, '1:500000', '1:100000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (17, 'Streams', 4, '1:500000', '1:100000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (18, 'Transportation', 4, '1:500000', '1:100000', false); #--;
-
--- Base: TRIM
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (19, 'Pipeline', 5, '0', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (20, 'Transmissionline', 5, '0', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (21, 'Contours', 5, '0', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (22, 'Icemass', 5, '0', '1:100000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (23, 'Rivers', 5, '0', '1:100000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (24, 'Transportation', 5, '0', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (25, 'Wetlands', 5, '0', '1:100000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (26, 'Waterbody', 5, '0', '1:100000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (27, 'Waterlines', 5, '0', '1:100000', true); #--;
-
--- Value: Aquatic
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (28, 'Waterlines', 6, '0', '1:100000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (29, 'Fresh Water Obstructions', 6, '0', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (30, 'Designated Flood Plains', 6, '0', '1:150000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (31, 'Fish Distribution Historic', 6, '0', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (32, 'Groundwater wells', 6, '0', '1:500000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (33, 'Water Diversion Points', 6, '0', '1:500000', false); #--;
-
--- Value: Archaelogical
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (34, 'Kootenay West', 7, '0', '1:150000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (35, 'Preferred Model', 7, '0', '1:150000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (36, 'Archaelogical Polygons', 7, '0', '1:50000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (37, 'Archaelogical Sites', 7, '0', '1:150000', false); #--;
-
--- Value: Cultural
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (38, 'Akisqnuk - Campsites', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (39, 'Akisqnuk - Religious', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (40, 'Akisqnuk - Cross Cultural', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (41, 'Akisqnuk - Cultural Lands', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (42, 'Akisqnuk - Tradition', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (43, 'Akisqnuk - Food', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (44, 'Akisqnuk - Habitat', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (45, 'Akisqnuk - Material', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (46, 'Akisqnuk - Medicinal', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (47, 'Akisqnuk - Recreation', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (48, 'Akisqnuk - Supernatural', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (49, 'Akisqnuk - Transport', 8, '1:3000000', '1:15000', false); #--;
-
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (50, 'Flathead - Fish', 8, '1:750000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (51, 'Flathead - Sites', 8, '1:750000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (52, 'Flathead - Transport', 8, '1:750000', '1:15000', false); #--;
-
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (53, 'JS - Campsites', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (54, 'JS - Fishing', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (55, 'JS - Gather', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (56, 'JS - Hunting', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (57, 'JS - Trapping', 8, '1:3000000', '1:15000', false); #--;
-
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (58, 'KNC - Cross Cultural', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (59, 'KNC - Habitat', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (60, 'KNC - Historic', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (61, 'KNC - Hunting', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (62, 'KNC - Material', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (63, 'KNC - Medicinal', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (64, 'KNC - Transportation', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (65, 'KNC - Trapping', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (66, 'KNC - Vegetation', 8, '1:3000000', '1:15000', false); #--;
-
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (67, 'Other - Ktunaxa placenames', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (68, 'Other - Spirit Trail', 8, '1:3000000', '1:15000', false); #--;
-
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (69, 'Wigwam - Ethnosites', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (70, 'Wigwam - Fishing', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (71, 'Wigwam - Habitation', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (72, 'Wigwam - Heritage Route', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (73, 'Wigwam - Hunting', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (74, 'Wigwam - Planning Cell', 8, '1:3000000', '1:15000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (75, 'Wigwam - Vegetation', 8, '1:3000000', '1:15000', false); #--;
-
--- Value: Ecology
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (76, 'Biogeoclimatic', 9, '1:500000', '1:100000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (77, 'Conservation Covenant Land', 9, '0', '1:250000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (78, 'National Parks', 9, '0', '1:10000000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (79, 'Provincial Parks', 9, '0', '1:10000000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (80, 'Ungulate Winter Range', 9, '0', '1:150000', false); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (81, 'Rare Endangered Species', 9, '0', '1:150000', false); #--;
-
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (82, 'Ktunaxa Statement of Intent', 10, '0', '1:10000000', true); #--;
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default) VALUES (83, 'Treaty Identified Lands', 10, '0', '1:1000000', true); #--;
-
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (1, 'Municipalities', 1, '1:10000000', '1:1', true, 1); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (2, 'Native Communities', 1, '1:10000000', '1:1', true, 2); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (3, 'Landscape Units', 1, '1:500000', '1:100000', false, 3); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (4, 'Registered Traplines', 1, '1:500000', '1:100000', false, 4); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (5, 'Wildlife Habitat', 1, '1:250000', '1:1', false, 5); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (6, 'Private Parcels', 1, '1:250000', '1:1', false, 6); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (7, 'Coal Fields', 2, '1:1000000', '1:1', false, 7); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (8, 'Coal Tenures', 2, '1:1000000', '1:1', false, 8); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (9, 'Dominion Coal Blocks', 2, '1:1000000', '1:1', false, 9); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (10, 'NTS 250K', 3, '1:6000000', '1:750000', false, 10); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (11, 'TRIM 20K', 3, '1:750000', '1:125000', false, 11); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (12, 'Cities', 4, '1:500000', '1:100000', true, 12); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (13, 'Contours', 4, '1:300000', '1:100000', false, 13); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (14, 'Glaciers', 4, '1:500000', '1:100000', false, 14); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (15, 'Lakes', 4, '1:500000', '1:100000', true, 15); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (16, 'Rivers', 4, '1:500000', '1:100000', true, 16); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (17, 'Streams', 4, '1:500000', '1:100000', true, 17); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (18, 'Transportation', 4, '1:500000', '1:100000', false, 18); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (19, 'Pipeline', 5, '1:100000', '1:1', false, 19); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (20, 'Transmissionline', 5, '1:100000', '1:1', false, 20); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (21, 'Contours', 5, '1:100000', '1:1', false, 21); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (22, 'Icemass', 5, '1:100000', '1:1', true, 22); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (23, 'Rivers', 5, '1:100000', '1:1', true, 23); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (24, 'Transportation', 5, '1:100000', '1:1', false, 24); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (25, 'Wetlands', 5, '1:100000', '1:1', true, 25); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (26, 'Waterbody', 5, '1:100000', '1:1', true, 26); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (27, 'Waterlines', 5, '1:100000', '1:1', true, 27); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (28, 'Waterlines', 6, '1:100000', '1:1', true, 28); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (29, 'Fresh Water Obstructions', 6, '1:100000', '1:1', false, 29); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (30, 'Designated Flood Plains', 6, '1:150000', '1:1', false, 30); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (31, 'Fish Distribution Historic', 6, '1:100000', '1:1', false, 31); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (32, 'Groundwater wells', 6, '1:500000', '1:1', false, 32); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (33, 'Water Diversion Points', 6, '1:500000', '1:1', false, 33); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (34, 'Kootenay West', 7, '1:150000', '1:1', true, 34); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (35, 'Preferred Model', 7, '1:150000', '1:1', false, 35); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (36, 'Archaelogical Polygons', 7, '1:50000', '1:1', false, 36); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (37, 'Archaelogical Sites', 7, '1:150000', '1:1', false, 37); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (38, 'Akisqnuk - Campsites', 8, '1:3000000', '1:15000', false, 38); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (39, 'Akisqnuk - Religious', 8, '1:3000000', '1:15000', false, 39); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (40, 'Akisqnuk - Cross Cultural', 8, '1:3000000', '1:15000', false, 40); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (41, 'Akisqnuk - Cultural Lands', 8, '1:3000000', '1:15000', false, 41); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (42, 'Akisqnuk - Tradition', 8, '1:3000000', '1:15000', false, 42); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (43, 'Akisqnuk - Food', 8, '1:3000000', '1:15000', false, 43); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (44, 'Akisqnuk - Habitat', 8, '1:3000000', '1:15000', false, 44); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (45, 'Akisqnuk - Material', 8, '1:3000000', '1:15000', false, 45); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (46, 'Akisqnuk - Medicinal', 8, '1:3000000', '1:15000', false, 46); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (47, 'Akisqnuk - Recreation', 8, '1:3000000', '1:15000', false, 47); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (48, 'Akisqnuk - Supernatural', 8, '1:3000000', '1:15000', false, 48); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (49, 'Akisqnuk - Transport', 8, '1:3000000', '1:15000', false, 49); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (50, 'Flathead - Fish', 8, '1:750000', '1:15000', false, 50); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (51, 'Flathead - Sites', 8, '1:750000', '1:15000', false, 51); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (52, 'Flathead - Transport', 8, '1:750000', '1:15000', false, 52); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (53, 'JS - Campsites', 8, '1:3000000', '1:15000', false, 53); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (54, 'JS - Fishing', 8, '1:3000000', '1:15000', false, 54); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (55, 'JS - Gather', 8, '1:3000000', '1:15000', false, 55); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (56, 'JS - Hunting', 8, '1:3000000', '1:15000', false, 56); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (57, 'JS - Trapping', 8, '1:3000000', '1:15000', false, 57); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (58, 'KNC - Cross Cultural', 8, '1:3000000', '1:15000', false, 58); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (59, 'KNC - Habitat', 8, '1:3000000', '1:15000', false, 59); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (60, 'KNC - Historic', 8, '1:3000000', '1:15000', false, 60); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (61, 'KNC - Hunting', 8, '1:3000000', '1:15000', false, 61); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (62, 'KNC - Material', 8, '1:3000000', '1:15000', false, 62); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (63, 'KNC - Medicinal', 8, '1:3000000', '1:15000', false, 63); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (64, 'KNC - Transportation', 8, '1:3000000', '1:15000', false, 64); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (65, 'KNC - Trapping', 8, '1:3000000', '1:15000', false, 65); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (66, 'KNC - Vegetation', 8, '1:3000000', '1:15000', false, 66); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (67, 'Other - Ktunaxa placenames', 8, '1:3000000', '1:15000', false, 67); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (68, 'Other - Spirit Trail', 8, '1:3000000', '1:15000', false, 68); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (69, 'Wigwam - Ethnosites', 8, '1:3000000', '1:15000', false, 69); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (70, 'Wigwam - Fishing', 8, '1:3000000', '1:15000', false, 70); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (71, 'Wigwam - Habitation', 8, '1:3000000', '1:15000', false, 71); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (72, 'Wigwam - Heritage Route', 8, '1:3000000', '1:15000', false, 72); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (73, 'Wigwam - Hunting', 8, '1:3000000', '1:15000', false, 73); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (74, 'Wigwam - Planning Cell', 8, '1:3000000', '1:15000', false, 74); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (75, 'Wigwam - Vegetation', 8, '1:3000000', '1:15000', false, 75); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (76, 'Biogeoclimatic', 9, '1:500000', '1:100000', false, 76); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (77, 'Conservation Covenant Land', 9, '1:250000', '1:1', false, 77); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (78, 'National Parks', 9, '1:10000000', '1:1', true, 78); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (79, 'Provincial Parks', 9, '1:10000000', '1:1', true, 79); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (80, 'Ungulate Winter Range', 9, '1:150000', '1:1', false, 80); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (81, 'Rare Endangered Species', 9, '1:150000', '1:1', false, 81); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (82, 'Ktunaxa Statement of Intent', 10, '1:10000000', '1:1', true, 82); #--;
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (83, 'Treaty Identified Lands', 10, '1:1000000', '1:1', true, 83); #--;
 
 
 -- ----------------------------------------------------------------------------
