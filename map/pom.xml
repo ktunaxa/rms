@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.alfresco</groupId>
             <artifactId>alfresco-opencmis-extension</artifactId>
-            <version>110208</version>
+            <version>0.1</version>
         </dependency>
 
 		<dependency>
