@@ -164,12 +164,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.googlecode</groupId>
-			<artifactId>maven-db-plugin</artifactId>
-			<version>1.2-SNAPSHOT</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -239,7 +233,7 @@
 			<plugin>
 				<groupId>com.googlecode</groupId>
 				<artifactId>maven-db-plugin</artifactId>
-				<version>1.2-SNAPSHOT</version>
+				<version>1.2.m3f</version>
 				<configuration>
 					<adminDbConnectionSettings>
 						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
@@ -453,7 +447,7 @@
 		<repository>
 			<id>Geomajas</id>
 			<name>Geomajas repository</name>
-			<url>http://maven.geomajas.org/</url>
+			<url>http://apps.geomajas.org/nexus/content/groups/released/</url>
 		</repository>
 
 		<!-- uncomment if you want to use Geomajas snapshots, comment for faster builds  -->
