@@ -13,6 +13,10 @@
 /*============================================================
 General
 ============================================================*/
+/*
+419cd0 -> 278ec8
+278ec8 -> 3e74b3
+*/
 
 body {
     color : #333333;
@@ -48,7 +52,7 @@ a:link {
 	background: #8b98a9;
     -moz-linear-gradient(top, #8b98a9, #7e8b9b);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#8b98a9), to(#7e8b9b));
-	border:1px solid #647386;
+	border:1px solid #3e74b3;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;    
 }
@@ -68,13 +72,13 @@ a:link {
     color: #eee;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;    
-    /*background-color: #647386;*/
+    /*background-color: #3e74b3;*/
     border: 1px solid #C0C0CC;
     padding: 5px;
     opacity: 0.95;
-    background: #647386;
-    background-image: -moz-linear-gradient(top, #7c8a9b, #647387);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#7c8a9b), to(#647387));
+    background: #3e74b3;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
 }
 
 /* group label */
@@ -269,7 +273,7 @@ Button (also used as MenuButton base style)
 ============================================================*/
 
 .menuTable {
-    border: 1px solid #647387;
+    border: 1px solid #3e74b3;
 }
 .menu,
 .menuDark,
@@ -289,9 +293,9 @@ Button (also used as MenuButton base style)
 .menuSelectedOver,
 .menuSelectedOverDark {
     color:white;
-    background: #647386;
-    background-image: -moz-linear-gradient(top, #7c8a9b, #647387);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#7c8a9b), to(#647387));
+    background: #3e74b3;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
     border: none;
 }
 .treeMenuSelected {
@@ -313,7 +317,7 @@ Button (also used as MenuButton base style)
 
 .windowBackground,
 .dialogBackground {
-    border: 1px solid #647386;
+    border: 1px solid #3e74b3;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
@@ -330,13 +334,13 @@ Button (also used as MenuButton base style)
 .windowHeaderHilite,
 .dialogHeader,
 .dialogHeaderHilite {
-	border: 1px solid #647386;
+	border: 1px solid #3e74b3;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
-    background: #7c8a9b;
-    background-image: -moz-linear-gradient(top, #7c8a9b, #647387);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#7c8a9b), to(#647387));
+    background: #278ec8;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
 }
 
 .windowHeaderHilite,
@@ -384,7 +388,7 @@ Button (also used as MenuButton base style)
     background-color:#FFFFFF;
 }
 .splitbarDown {
-    background-color:#647386;
+    background-color:#3e74b3;
 }
 
 /*============================================================
@@ -495,13 +499,13 @@ Button (also used as MenuButton base style)
     padding-left:3px;
     border-bottom:1px solid white;
     /*border-top:1px solid #808080;
-    border: 1px solid #647386;*/
+    border: 1px solid #3e74b3;*/
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     color : #ffffff;
-    background: #7c8a9b;
-    background-image: -moz-linear-gradient(top, #7c8a9b, #647387);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#7c8a9b), to(#647387));
+    background: #278ec8;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
     margin-bottom: 1px;
 }
 
@@ -658,7 +662,12 @@ Button (also used as MenuButton base style)
 }
 
 .pickListMenuBody {
-    border:1px solid black;
+    border:1px solid #3e74b3;
+    background: #F0F0F0;
+    background-image: -moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
 }
 
 .pickListCell,
@@ -670,7 +679,9 @@ Button (also used as MenuButton base style)
 .pickListCellSelected,
 .pickListCellSelectedDark {
     color:white;
-    background-color:#316AC5;
+    background: #3e74b3;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
 }
 .tallPickListCellSelected,
 .tallPickListCellSelectedDark {
@@ -1288,7 +1299,7 @@ Button (also used as MenuButton base style)
     text-decoration: underline;
 }
 .toolbarButtonDown {
-    color: #647386;
+    color: #3e74b3;
 }
 
 .toolbarButtonDisabled {
@@ -1298,7 +1309,7 @@ Button (also used as MenuButton base style)
 .toolbarButtonSelectedDown,
 .toolbarButtonSelectedOver,
 .toolbarButtonSelectedDisabled {
-    color: #647386;
+    color: #3e74b3;
 }
 .toolbarButtonSelectedOver {
 }
@@ -1512,9 +1523,9 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
     padding: 2px;
     border: 1px solid #C0C0CC;
     border-bottom:none;
-    background: #7c8a9b;
-    background-image: -moz-linear-gradient(top, #7c8a9b, #647387);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#7c8a9b), to(#647387));
+    background: #278ec8;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
 	-webkit-border-top-left-radius: 3px;
 	-webkit-border-top-right-radius: 3px;
 	-moz-border-radius-topleft: 3px;
@@ -1539,7 +1550,7 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
     background: #FFFFFF;
     background-image: -moz-linear-gradient(top, #F0F0F0, #FFFFFF);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
-    color: #647386;
+    color: #3e74b3;
 }
 
 .tabButtonTopSelected {

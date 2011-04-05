@@ -16,6 +16,17 @@
 BLOCKS
 ============================================================*/
 
+/*
+419cd0 -> 278ec8
+278ec8 -> 3e74b3
+*/
+
+
+.textItem {
+	border: 1px solid #C0C0CC;
+	height: 25px;
+}
+
 .block {
 	background: #f0f0f0;
 	padding: 3px;
@@ -29,24 +40,85 @@ BLOCKS
 }
 .blockTitleText {
 	font-family: Arial,Verdana,sans-serif;
-	/*color: #647386;*/
+	/*color: #3e74b3;*/
 	font-weight:bold;
 	font-size: 14px;
 	line-height:28px;
 	padding-left:10px;
 }
-.blockTitle {
-    border-bottom: 1px solid #C0C0CC;
-}
+
 .blockVerticalTitleText {
 	font-family: Arial,Verdana,sans-serif;
-	color: #647386;
+	color: #3e74b3;
 	font-weight:bold;
 	font-size: 14px;
 	text-align: center;
 	padding-top: 10px;
 }
 
+
+/*============================================================
+WIZARD
+============================================================*/
+
+.wizardLeftLayout {
+	padding: 6px;
+	height: 100%;
+	border-right: 1px solid #C0C0C0;
+	margin-right: 10px;
+}
+
+.wizardButton {
+    background: #FFFFFF;
+    background-image: -moz-linear-gradient(top, #bbc0c3, #a3a7a9);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#bbc0c3), to(#a3a7a9));
+	padding: 5px;
+	border: 1px solid #6699AA;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    font-weight: bold;
+    color: #444444;
+}
+
+.wizardButtonActive {
+    background: #3e74b3;
+    background-image: -moz-linear-gradient(top, #64add7, #3796cc);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#64add7), to(#3796cc));
+	padding: 5px;
+	border: 1px solid #3796cc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.wizardPageBody {
+    background: #F6F6FA;
+    background-image: -moz-linear-gradient(top, #FFFFFF, #F0F0F6);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F6));
+	padding: 6px;
+	border: 1px solid #3796cc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.wizardInnerBody {
+    background: #F6F6FA;
+    background-image: -moz-linear-gradient(top, #F0F0F6, #FFFFFF);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F6), to(#FFFFFF));
+	padding: 5px;
+	border: 1px solid #C0C0C0;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.wizardPageTitle {
+	color: #000000;
+	font-family: Arial,Verdana,sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	line-height:40px;
+}
 
 /*============================================================
 COMMENTS
@@ -57,14 +129,14 @@ COMMENTS
     background-image: -moz-linear-gradient(top, #F0F0F0, #FFFFFF);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
 	padding: 0px;
-	border: 1px solid #647386;
+	border: 1px solid #3e74b3;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
 }
 .commentBlockTitle {
-    background: #647386;
-    background-image: -moz-linear-gradient(top, #7c8a9b, #647386);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#7c8a9b), to(#647386));
+    background: #3e74b3;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
 	color: #FFFFFF;
 }
 .commentBlockTitleText {
@@ -125,7 +197,7 @@ TOOLBAR BUTTONS
 
 .toolStrip .buttonSelected {
     border-color: #999;
-    background: #7c8a9b;
-    background-image: -moz-linear-gradient(top, #7c8a9b, #647387);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#7c8a9b), to(#647387));
+    background: #278ec8;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
 }
