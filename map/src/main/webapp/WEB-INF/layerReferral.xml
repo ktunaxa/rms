@@ -172,7 +172,7 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                 </bean>
 	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 	                <property name="label" value="Referral Type" />
-	                <property name="name" value="referralType" />
+	                <property name="name" value="type" />
 	                <property name="editable" value="true" />
 	                <property name="identifying" value="true" />
 	                <property name="type" value="MANY_TO_ONE" />

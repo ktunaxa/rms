@@ -20,6 +20,7 @@ import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.ktunaxa.referral.client.referral.AddGeometryPage;
 import org.ktunaxa.referral.client.referral.AttachDocumentPage;
+import org.ktunaxa.referral.client.referral.ReferralConfirmPage;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
 import org.ktunaxa.referral.client.referral.ReferralFormFactory;
@@ -68,23 +69,11 @@ public class ReferralLayout extends VLayout {
 			public void onMapModelChange(MapModelEvent event) {
 				VectorLayer layer = (VectorLayer) mapWidget.getMapModel().getLayer("referralLayer");
 				if (layer != null) {
-					final FeatureAttributeEditor editor = new FeatureAttributeEditor(layer, false,
-							new ReferralFormFactory());
-					Feature feature = new Feature(layer);
-					editor.setFeature(feature);
 					WizardPage referralInfoPage = new ReferralInfoPage(layer);
 					wizard.addStep(referralInfoPage);
-
 					wizard.addStep(new AddGeometryPage());
-					
 					wizard.addStep(new AttachDocumentPage());
-
-					// VLayout step3Layout = new VLayout();
-					// wizard.addStep("Add documents", "Attach one or more documents to the referral.", step3Layout);
-					//
-					// VLayout step4Layout = new VLayout();
-					// wizard.addStep("Confirm", "Confirm the referral creation or cancel the creation procedure and go"
-					// + " back to the task board.", step4Layout);
+					wizard.addStep(new ReferralConfirmPage(layer, wizard));
 				}
 			}
 		});

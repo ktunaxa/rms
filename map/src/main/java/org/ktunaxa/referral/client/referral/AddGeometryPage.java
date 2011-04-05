@@ -174,4 +174,9 @@ public class AddGeometryPage implements WizardPage {
 
 		return uploadLayout;
 	}
+	
+	public void clear() {
+		mapWidget.setVisible(false);
+		setFeature(null);
+	}
 }

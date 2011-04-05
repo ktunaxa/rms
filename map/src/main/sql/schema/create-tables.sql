@@ -198,7 +198,7 @@ CREATE TABLE referral
   contact_address character varying,
   type_id bigint NOT NULL,
   application_type_id bigint NOT NULL,
-  target_referral_id bigint NOT NULL,
+  target_referral_id bigint,
   confidential boolean NOT NULL DEFAULT false,
   receive_date timestamp without time zone NOT NULL,
   response_date timestamp without time zone NOT NULL,

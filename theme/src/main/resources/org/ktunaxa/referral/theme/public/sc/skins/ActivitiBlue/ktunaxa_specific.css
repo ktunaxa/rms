@@ -187,7 +187,25 @@ Layer Tree stuff
 	border-bottom: 1px solid #E0E0E0;
 }
 
+/*============================================================
+Wizard stuff
+============================================================*/
 
+.summary {
+	padding: 3px;
+	border: 1px solid #E0E0E0;
+}
+
+.summaryLine {
+	border-bottom: 1px solid;
+	line-height: 26px;
+}
+
+.summaryLineDark {
+	border-bottom: 1px solid;
+	background-color: #E0E0E0;
+	line-height: 26px;
+}
 
 
 

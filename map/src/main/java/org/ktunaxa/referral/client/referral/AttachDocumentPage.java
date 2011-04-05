@@ -136,4 +136,9 @@ public class AttachDocumentPage implements WizardPage {
 
 		return uploadLayout;
 	}
+	
+	public void clear() {
+		busyImg.setVisible(false);
+		setFeature(null);
+	}
 }

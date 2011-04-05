@@ -60,6 +60,8 @@ public class ReferralCreationWizard extends VLayout {
 		Feature getFeature();
 
 		void setFeature(Feature feature);
+		
+		void clear();
 	}
 
 	private HandlerManager handlerManager;
@@ -116,6 +118,13 @@ public class ReferralCreationWizard extends VLayout {
 
 	public final HandlerRegistration addWizardPageAddedHandler(final WizardPageAddedHandler handler) {
 		return handlerManager.addHandler(WizardPageAddedHandler.TYPE, handler);
+	}
+	
+	public void refresh() {
+		for (WizardPage page : pages) {
+			page.clear();		
+		}
+		goToStep(0);
 	}
 
 	public void addStep(WizardPage page) {

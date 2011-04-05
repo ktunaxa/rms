@@ -27,8 +27,11 @@ import com.smartgwt.client.widgets.Canvas;
 public class ReferralInfoPage implements WizardPage {
 
 	private FeatureAttributeEditor editor;
+	
+	private VectorLayer layer;
 
 	public ReferralInfoPage(VectorLayer layer) {
+		this.layer = layer;
 		editor = new FeatureAttributeEditor(layer, false, new ReferralFormFactory());
 		Feature feature = new Feature(layer);
 		editor.setFeature(feature);
@@ -58,4 +61,9 @@ public class ReferralInfoPage implements WizardPage {
 	public void setFeature(Feature feature) {
 		editor.setFeature(feature);
 	}
+	
+	public void clear() {
+		setFeature(new Feature(layer));
+	}
+
 }
