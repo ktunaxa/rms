@@ -1,0 +1,14 @@
+<div>
+	<h1>Result of discussion with province about referral</h1>
+	<table>
+		<tr>
+			<td>
+				<label>
+					<input type="checkbox" name="consistentDecision"/>
+					Provincial decision is consistent with KLRA response
+					<input type="hidden" name="consistentDecision_boolean" value="true"/>
+				</label>
+			</td>
+		</tr>
+	</table>
+</div>

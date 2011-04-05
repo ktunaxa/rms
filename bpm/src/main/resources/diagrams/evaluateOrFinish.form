@@ -1,0 +1,13 @@
+<div>
+	<h1>Should value evaluation start if is the referral finished?</h1>
+	<table>
+		<tr>
+			<td>
+				<label>
+					<input type="checkbox" name="evaluateValues"/>Evaluate values
+					<input type="hidden" name="evaluateValues_boolean" value="true"/>
+				</label>
+			</td>
+		</tr>
+	</table>
+</div>
