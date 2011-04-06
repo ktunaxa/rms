@@ -134,7 +134,7 @@ public class ReferenceSubLayer {
 		String[] scale2 = s.split(":");
 		if (scale2.length == 1) {
 			double denominator = DENOMINATOR_FORMAT.parse(scale2[0].trim());
-			return denominator == 0 ? 0 : 1/denominator;
+			return denominator == 0 ? 0 : 1 / denominator;
 		} else {
 			return DENOMINATOR_FORMAT.parse(scale2[0].trim()) / DENOMINATOR_FORMAT.parse(scale2[1].trim());
 		}

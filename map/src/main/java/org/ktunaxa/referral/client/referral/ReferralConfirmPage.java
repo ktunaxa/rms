@@ -1,3 +1,15 @@
+/*
+ * This is part of the Ktunaxa referral system.
+ *
+ * Copyright 2011 Geosparc nv, http://www.geosparc.com/, Belgium.
+ * Copyright 2011 Ktunaxa Nation Counsil, http://www.ktunaxa.org/, Canada.
+ *
+ * The program is available in open source according to the GNU Affero
+ * General Public License. All contributions in this program are covered
+ * by the Geomajas Contributors License Agreement. For full licensing
+ * details, see LICENSE.txt in the project root.
+ */
+
 package org.ktunaxa.referral.client.referral;
 
 import java.util.Map;
@@ -25,6 +37,11 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
+/**
+ * Page to confirm creation of a new referral.
+ *
+ * @author Jan De Moerloose
+ */
 public class ReferralConfirmPage implements WizardPage {
 
 	private Feature feature;
@@ -76,7 +93,7 @@ public class ReferralConfirmPage implements WizardPage {
 
 	public void setFeature(Feature feature) {
 		this.feature = feature;
-		if(feature != null) {
+		if (feature != null) {
 			boolean even = true;
 			for (Map.Entry<String, Attribute> entry : feature.getAttributes().entrySet()) {
 				Object value =  feature.getAttributeValue(entry.getKey());
@@ -101,6 +118,9 @@ public class ReferralConfirmPage implements WizardPage {
 	// Private methods:
 	// ------------------------------------------------------------------------
 
+	/**
+	 * Confirm handler.
+	 */
 	public class ConfirmHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
@@ -129,6 +149,9 @@ public class ReferralConfirmPage implements WizardPage {
 
 	}
 
+	/**
+	 * Cancel handler.
+	 */
 	public class CancelHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
@@ -137,6 +160,9 @@ public class ReferralConfirmPage implements WizardPage {
 
 	}
 
+	/**
+	 * Summary line.
+	 */
 	public class SummaryLine extends HLayout {
 
 		public SummaryLine(String name, String value) {

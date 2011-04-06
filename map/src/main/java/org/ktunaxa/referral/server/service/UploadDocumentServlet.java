@@ -62,7 +62,7 @@ public class UploadDocumentServlet extends HttpServlet {
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			List<FileItem> items = null;
-			String formId = req.getParameter(KtunaxaConstants.FORM_ID);
+			String formId = req.getParameter(KtunaxaConstant.FORM_ID);
 			try {
 				items = upload.parseRequest(req);
 				for (FileItem item : items) {

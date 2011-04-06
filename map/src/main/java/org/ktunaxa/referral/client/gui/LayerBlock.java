@@ -9,6 +9,7 @@
  * by the Geomajas Contributors License Agreement. For full licensing
  * details, see LICENSE.txt in the project root.
  */
+
 package org.ktunaxa.referral.client.gui;
 
 import org.geomajas.gwt.client.map.event.LayerChangedHandler;
@@ -86,9 +87,9 @@ public class LayerBlock extends HLayout {
 	}
 	
 	private void updateIcons() {
-		if(visibleBtn.isSelected()){
-			if(subLayer.isShowing()){
-				if(subLayer.isLabeled()){
+		if (visibleBtn.isSelected()) {
+			if (subLayer.isShowing()) {
+				if (subLayer.isLabeled()) {
 					visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show-labeled.png");
 				} else {
 					visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show.png");
@@ -101,6 +102,9 @@ public class LayerBlock extends HLayout {
 		}
 	}
 
+	/**
+	 * Status updater.
+	 */
 	public class StatusUpdater implements LayerChangedHandler {
 
 		public void onVisibleChange(LayerShownEvent event) {
@@ -116,6 +120,9 @@ public class LayerBlock extends HLayout {
 
 	}
 
+	/**
+	 * Set visible handler.
+	 */
 	public class SetVisibleHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
@@ -124,8 +131,11 @@ public class LayerBlock extends HLayout {
 		}
 
 	}
-	
-	public class ZoomToLayerHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
+
+	/**
+	 * Zoom to layer handler.
+	 */
+	public static class ZoomToLayerHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
 
 		public void onClick(MenuItemClickEvent event) {
 			

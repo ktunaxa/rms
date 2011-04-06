@@ -14,16 +14,13 @@ package org.ktunaxa.referral.client;
 
 import org.geomajas.gwt.client.map.event.MapModelEvent;
 import org.geomajas.gwt.client.map.event.MapModelHandler;
-import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.ktunaxa.referral.client.referral.AddGeometryPage;
 import org.ktunaxa.referral.client.referral.AttachDocumentPage;
 import org.ktunaxa.referral.client.referral.ReferralConfirmPage;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
-import org.ktunaxa.referral.client.referral.ReferralFormFactory;
 import org.ktunaxa.referral.client.referral.ReferralInfoPage;
 
 import com.smartgwt.client.types.Overflow;

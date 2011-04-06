@@ -41,7 +41,6 @@ import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.referencing.CRS;
-import org.ktunaxa.referral.shapereader.LayerPersistServiceImpl;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -84,7 +83,7 @@ public class UploadGeometryServlet extends HttpServlet {
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			List<FileItem> items = null;
-			String formId = req.getParameter(KtunaxaConstants.FORM_ID);
+			String formId = req.getParameter(KtunaxaConstant.FORM_ID);
 			try {
 				items = upload.parseRequest(req);
 				for (FileItem item : items) {
@@ -103,7 +102,8 @@ public class UploadGeometryServlet extends HttpServlet {
 				out.println("<html>");
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
-				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','" + geometry.toText() + "');");
+				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','" + geometry.toText() +
+						"');");
 				out.println("</script>");
 				cleanup();
 			} catch (FileUploadException e) {
@@ -115,7 +115,7 @@ public class UploadGeometryServlet extends HttpServlet {
 	private void cleanup() {
 		for (String tempFile : tempFiles) {
 			File file = new File(tempFile);
-			if (file != null && file.exists()) {
+			if (file.exists()) {
 				file.delete();
 			}
 		}

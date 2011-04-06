@@ -117,7 +117,7 @@ public class ReferenceLayer {
 	public class LayerShowingHandler implements MapViewChangedHandler {
 
 		public void onMapViewChanged(MapViewChangedEvent event) {
-			if(!event.isPanDragging()){
+			if (!event.isPanDragging()) {
 				updateShowing();
 			}
 		}

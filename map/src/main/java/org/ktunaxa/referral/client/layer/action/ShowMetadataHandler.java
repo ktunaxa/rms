@@ -11,20 +11,12 @@
  */
 package org.ktunaxa.referral.client.layer.action;
 
-import java.util.LinkedHashMap;
-
 import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
-import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Window;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.CheckboxItem;
-import com.smartgwt.client.widgets.form.fields.IntegerItem;
-import com.smartgwt.client.widgets.form.fields.SelectItem;
-import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.menu.events.ClickHandler;
@@ -34,7 +26,6 @@ import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
  * Handler that shows the metadata in a panel.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class ShowMetadataHandler implements ClickHandler {
 

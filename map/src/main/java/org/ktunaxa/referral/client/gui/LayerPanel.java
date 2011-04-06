@@ -21,24 +21,16 @@ import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
 import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
-import org.ktunaxa.referral.client.layer.action.ShowMetadataHandler;
 import org.ktunaxa.referral.server.command.request.GetLayersRequest;
 import org.ktunaxa.referral.server.command.request.GetLayersResponse;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
 
 import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.types.SelectionType;
-import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.types.VisibilityMode;
 import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.IButton;
-import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.menu.IMenuButton;
-import com.smartgwt.client.widgets.menu.Menu;
-import com.smartgwt.client.widgets.menu.MenuItem;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
 
