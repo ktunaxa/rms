@@ -9,7 +9,6 @@
       <serviceTask id="subprocess1mailtask1" name="Level 0 notification" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requester-email}"></activiti:field>
-          <activiti:field name="from" expression="Ktunaxa Nation Council"></activiti:field>
           <activiti:field name="subject" expression="${referralId}: Level 0 notification"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
@@ -26,8 +25,7 @@ Ktunaxa Nation Council]]></activiti:expression>
       </serviceTask>
       <serviceTask id="subprocess1mailtask2" name="Receive/start notification" activiti:type="mail">
         <extensionElements>
-          <activiti:field name="to" expression="${requester-email}"></activiti:field>
-          <activiti:field name="from" expression="Ktunaxa Nation Council"></activiti:field>
+          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
           <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
@@ -44,8 +42,7 @@ Ktunaxa Nation Council]]></activiti:expression>
       </serviceTask>
       <serviceTask id="subprocess1mailtask3" name="Mail Task" activiti:type="mail">
         <extensionElements>
-          <activiti:field name="to" expression="${requester-email}"></activiti:field>
-          <activiti:field name="from" expression="Ktunaxa Nation Council"></activiti:field>
+          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
           <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
@@ -63,9 +60,9 @@ Ktunaxa Nation Council]]></activiti:expression>
       <userTask id="subprocess1usertask4" name="Appointment" activiti:candidateGroups="referralManager">
         <documentation>Make appointment with province to discuss referral</documentation>
       </userTask>
-      <userTask id="subprocess1usertask5" name="Completeness check" activiti:candidateGroups="referralManager">
+      <manualTask id="subprocess1usertask5" name="Completeness check" activiti:candidateGroups="referralManager">
         <documentation>${referralId} Check referral for completeness</documentation>
-      </userTask>
+      </manualTask>
       <userTask id="subprocess1usertask6" name="Review referral" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
         <documentation>${referralId} Review timeline , engagement level etc</documentation>
       </userTask>
@@ -101,8 +98,7 @@ Ktunaxa Nation Council]]></activiti:expression>
       <serviceTask id="subprocess1servicetask1" name="Produce result report" activiti:class="org.ktunaxa.bpm.BuildResultReportTask"></serviceTask>
       <serviceTask id="subprocess1mailtask4" name="Mail Result" activiti:type="mail">
         <extensionElements>
-          <activiti:field name="to" expression="${requester-email}"></activiti:field>
-          <activiti:field name="from" expression="Ktunaxa Nation Council"></activiti:field>
+          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
           <activiti:field name="subject" expression="${referralId}: Referral results"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">

@@ -5,7 +5,7 @@
 			<td>
 				<label>
 					Referral id:<br/>
-					<input type="text" name="referralId" value="" placeholder="REF01" autofocus="true"/>
+					<input type="text" name="referralId" placeholder="REF01" autofocus="true"/>
 					<input type="hidden" name="referralId_required" value="true"/>
 					<input type="hidden" name="referralId_type" value="String"/>
 				</label><br/>
@@ -15,7 +15,7 @@
 			<td>
 				<label>
 					Description:<br/>
-					<textarea name="description" value="" placeholder="description for referral"></textarea>
+					<textarea name="description" placeholder="description for referral"></textarea>
 					<input type="hidden" name="description_required" value="false"/>
 					<input type="hidden" name="description_type" value="String"/>
 				</label><br/>
@@ -25,7 +25,7 @@
 			<td>
 				<label>
 					Referral e-mail:<br/>
-					<input type="email" name="requesterEmail" value="" placeholder="e-mail"/>
+					<input type="email" name="requesterEmail" placeholder="e-mail"/>
 					<input type="hidden" name="requesterEmail_required" value="true"/>
 					<input type="hidden" name="requesterEmail_type" value="String"/>
 				</label><br/>
@@ -39,6 +39,16 @@
 					<input type="hidden" name="engagementLevel_required" value="true"/>
 					<input type="hidden" name="engagementLevel_type" value="Integer"/>
 				</label>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label>
+					Completion deadline:<br/>
+					<input type="date" name="completionDeadline"/>
+					<input type="hidden" name="completionDeadline_required" value="false"/>
+					<input type="hidden" name="completionDeadline_type" value="Date"/>
+				</label><br/>
 			</td>
 		</tr>
 	</table>

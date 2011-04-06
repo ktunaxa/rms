@@ -9,18 +9,32 @@
     <sequenceFlow id="flow53" name="" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
     <sequenceFlow id="flow55" name="" sourceRef="usertask1" targetRef="parallelgateway2"></sequenceFlow>
-    <userTask id="usertask3" name="Evaluate archaeological values" activiti:candidateGroups="archaeologyEvaluator"></userTask>
-    <userTask id="usertask4" name="Evaluate aquatic values" activiti:candidateGroups="aquaticEvaluator"></userTask>
+    <userTask id="usertask3" name="Evaluate archaeological values" activiti:candidateGroups="archaeologyEvaluator">
+      <documentation>${referralId}, ${description}</documentation>
+    </userTask>
+    <userTask id="usertask4" name="Evaluate aquatic values" activiti:candidateGroups="aquaticEvaluator">
+      <documentation>${referralId}, ${description}</documentation>
+    </userTask>
     <manualTask id="manualtask1" name="auto evaluate aquatic values"></manualTask>
     <manualTask id="manualtask2" name="auto evaluate archaeological values"></manualTask>
     <manualTask id="manualtask3" name="auto evaluate cultural values"></manualTask>
     <manualTask id="manualtask4" name="auto evaluate ecological values"></manualTask>
     <manualTask id="manualtask5" name="auto evaluate treaty values"></manualTask>
-    <userTask id="usertask6" name="Notify communities" activiti:candidateGroups="communityManager"></userTask>
-    <userTask id="usertask7" name="Evaluate cultural values" activiti:candidateGroups="culturalEvaluator"></userTask>
-    <userTask id="usertask8" name="Evaluate ecological values" activiti:candidateGroups="ecologyEvaluator"></userTask>
-    <userTask id="usertask9" name="Evaluate treaty values" activiti:candidateGroups="treatyEvaluator"></userTask>
-    <userTask id="usertask10" name="Process community input" activiti:candidateGroups="communityManager"></userTask>
+    <userTask id="usertask6" name="Notify communities" activiti:candidateGroups="communityManager">
+      <documentation>${referralId}, ${description}</documentation>
+    </userTask>
+    <userTask id="usertask7" name="Evaluate cultural values" activiti:candidateGroups="culturalEvaluator">
+      <documentation>${referralId}, ${description}</documentation>
+    </userTask>
+    <userTask id="usertask8" name="Evaluate ecological values" activiti:candidateGroups="ecologyEvaluator">
+      <documentation>${referralId}, ${description}</documentation>
+    </userTask>
+    <userTask id="usertask9" name="Evaluate treaty values" activiti:candidateGroups="treatyEvaluator">
+      <documentation>${referralId}, ${description}</documentation>
+    </userTask>
+    <userTask id="usertask10" name="Process community input" activiti:candidateGroups="communityManager">
+      <documentation>${referralId}, ${description}</documentation>
+    </userTask>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
     <exclusiveGateway id="exclusivegateway3" name="Exclusive Gateway"></exclusiveGateway>

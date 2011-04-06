@@ -16,7 +16,7 @@
 			<td>
 				<label>
 					Completion deadline:<br/>
-					<input type="date" name="completionDeadline"/>
+					<input type="date" name="completionDeadline" value="${completionDeadline}"/>
 					<input type="hidden" name="completionDeadline_required" value="true"/>
 					<input type="hidden" name="completionDeadline_type" value="Date"/>
 				</label><br/>
