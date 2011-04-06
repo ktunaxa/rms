@@ -2,7 +2,7 @@
  * This is part of the Ktunaxa referral system.
  *
  * Copyright 2011 Geosparc nv, http://www.geosparc.com/, Belgium.
- * Copyright 2011 Ktunaxa Nation Counsil, http://www.ktunaxa.org/, Canada.
+ * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
  *
  * The program is available in open source according to the GNU Affero
  * General Public License. All contributions in this program are covered
