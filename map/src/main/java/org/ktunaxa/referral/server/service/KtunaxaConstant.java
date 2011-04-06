@@ -21,4 +21,6 @@ package org.ktunaxa.referral.server.service;
 public interface KtunaxaConstant {
 
 	String FORM_ID = "formId";
+
+	String MAP_CRS = "EPSG:900913";
 }

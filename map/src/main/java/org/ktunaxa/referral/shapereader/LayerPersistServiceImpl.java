@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.ktunaxa.referral.server.domain.ReferenceBase;
 import org.ktunaxa.referral.server.domain.ReferenceBaseAttribute;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
@@ -47,9 +46,9 @@ import com.vividsolutions.jts.operation.valid.TopologyValidationError;
 @Component
 public class LayerPersistServiceImpl implements LayerPersistService {
 
-	private int srid = 26911;
-
 	private final Logger log = LoggerFactory.getLogger(LayerPersistServiceImpl.class);
+
+	private int srid = 26911;
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -74,7 +73,7 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 	 */
 	@SuppressWarnings("unchecked")
 	public void clearLayer(ReferenceLayer layer) {
-		int count = 0;
+		int count;
 		if (layer.getType().isBaseLayer()) {
 			// batch delete
 			Session session = sessionFactory.getCurrentSession();
@@ -99,26 +98,10 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 							+ "reference_value as value where attr.reference_value_id=value.id" +
 									" and value.layer_id=:layerId)")
 					.setLong("layerId", layer.getId()).executeUpdate();
-			count = session
-			.createSQLQuery(
-					"delete from reference_value as value where value.layer_id=:layerId")
-			.setLong("layerId", layer.getId()).executeUpdate();
+			session.createSQLQuery("delete from reference_value as value where value.layer_id=:layerId")
+					.setLong("layerId", layer.getId()).executeUpdate();
 
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private int deleteReferenceBase(ReferenceLayer layer, Class referenceClass) {
-
-		Session session = sessionFactory.getCurrentSession();
-		List features = session.createCriteria(referenceClass).add(Restrictions.eq("layer", layer)).setMaxResults(1000)
-				.list();
-		for (Object feature : features) {
-			session.delete(feature);
-		}
-		session.flush();
-		session.clear();
-		return features.size();
 	}
 
 	/**

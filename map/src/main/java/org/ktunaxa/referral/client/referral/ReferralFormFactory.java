@@ -121,7 +121,7 @@ public class ReferralFormFactory implements FeatureFormFactory {
 				}
 			}
 			getWidget().setDataSource(source);
-			getWidget().setFields(formItems.toArray(new FormItem[] {}));
+			getWidget().setFields(formItems.toArray(new FormItem[formItems.size()]));
 		}
 	}
 }

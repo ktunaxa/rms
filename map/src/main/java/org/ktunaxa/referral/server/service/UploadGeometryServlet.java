@@ -34,6 +34,7 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.geomajas.geometry.Crs;
 import org.geomajas.global.GeomajasException;
 import org.geomajas.layer.LayerException;
 import org.geomajas.service.GeoService;
@@ -66,8 +67,6 @@ public class UploadGeometryServlet extends HttpServlet {
 
 	private WebApplicationContext context;
 
-	private List<String> tempFiles;
-
 	private final Logger log = LoggerFactory.getLogger(UploadGeometryServlet.class);
 
 	public void init() throws ServletException {
@@ -77,13 +76,18 @@ public class UploadGeometryServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (ServletFileUpload.isMultipartContent(req)) {
-			tempFiles = new ArrayList<String>();
+			List<String> tempFiles = new ArrayList<String>();
 			byte[] fileContent = null;
 
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
-			List<FileItem> items = null;
+			List<FileItem> items;
 			String formId = req.getParameter(KtunaxaConstant.FORM_ID);
+			// remove some characters to prevent XSS
+			formId = formId.replace("<", "");
+			formId = formId.replace(">", "");
+			formId = formId.replace("=", "");
+			formId = formId.replace("&", "");
 			try {
 				items = upload.parseRequest(req);
 				for (FileItem item : items) {
@@ -92,7 +96,7 @@ public class UploadGeometryServlet extends HttpServlet {
 						break;
 					}
 				}
-				URL url = unzipShape(fileContent);
+				URL url = unzipShape(tempFiles, fileContent);
 				ShapefileDataStore dataStore = new ShapefileDataStore(url);
 				Geometry geometry = transform(getGeometry(dataStore), dataStore.getFeatureSource().getSchema()
 						.getCoordinateReferenceSystem());
@@ -105,14 +109,14 @@ public class UploadGeometryServlet extends HttpServlet {
 				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','" + geometry.toText() +
 						"');");
 				out.println("</script>");
-				cleanup();
+				cleanup(tempFiles);
 			} catch (FileUploadException e) {
 				resp.setStatus(400);
 			}
 		}
 	}
 
-	private void cleanup() {
+	private void cleanup(List<String> tempFiles) {
 		for (String tempFile : tempFiles) {
 			File file = new File(tempFile);
 			if (file.exists()) {
@@ -127,24 +131,14 @@ public class UploadGeometryServlet extends HttpServlet {
 		try {
 			String sourceCrs = geoService.getCodeFromCrs(crs);
 			try {
-				return geoService.transform(geometry, sourceCrs, "EPSG:900913");
-			} catch (LayerException e) {
-				throw new IOException(e.getMessage());
+				return geoService.transform(geometry, sourceCrs, KtunaxaConstant.MAP_CRS);
 			} catch (GeomajasException e) {
 				throw new IOException(e.getMessage());
 			}
 		} catch (Exception e) {
 			try {
-				CoordinateReferenceSystem targetCrs = geoService.getCrs("EPSG:900913");
-				MathTransform transform = CRS.findMathTransform(crs, targetCrs, true);
-				return JTS.transform(geometry, transform);
+				return geoService.transform(geometry, crs, geoService.getCrs2(KtunaxaConstant.MAP_CRS));
 			} catch (GeomajasException e1) {
-				throw new IOException(e.getMessage());
-			} catch (FactoryException e2) {
-				throw new IOException(e.getMessage());
-			} catch (MismatchedDimensionException e3) {
-				throw new IOException(e.getMessage());
-			} catch (TransformException e4) {
 				throw new IOException(e.getMessage());
 			}
 		}
@@ -163,7 +157,7 @@ public class UploadGeometryServlet extends HttpServlet {
 		return geometry;
 	}
 
-	private URL unzipShape(byte[] fileContent) throws IOException {
+	private URL unzipShape(List<String> tempFiles, byte[] fileContent) throws IOException {
 		String tempDir = System.getProperty("java.io.tmpdir");
 
 		URL url = null;

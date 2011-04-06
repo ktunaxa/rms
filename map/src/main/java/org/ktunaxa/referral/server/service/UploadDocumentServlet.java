@@ -15,7 +15,6 @@ package org.ktunaxa.referral.server.service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -29,6 +28,8 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -41,11 +42,9 @@ public class UploadDocumentServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 100L;
 
-	private static final int BUFFER = 2048;
+	private final Logger log = LoggerFactory.getLogger(UploadDocumentServlet.class);
 
 	private WebApplicationContext context;
-
-	private List<String> tempFiles;
 
 	public void init() throws ServletException {
 		super.init();
@@ -54,16 +53,22 @@ public class UploadDocumentServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (ServletFileUpload.isMultipartContent(req)) {
-			tempFiles = new ArrayList<String>();
 			byte[] fileContent = null;
 			String fileName = null;
 			String mimeType = null;
 
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
-			List<FileItem> items = null;
+			List<FileItem> items;
 			String formId = req.getParameter(KtunaxaConstant.FORM_ID);
+			// remove some characters to prevent XSS
+			formId = formId.replace("<", "");
+			formId = formId.replace(">", "");
+			formId = formId.replace("=", "");
+			formId = formId.replace("&", "");
 			try {
+				PrintWriter out = resp.getWriter();
+
 				items = upload.parseRequest(req);
 				for (FileItem item : items) {
 					if (!item.isFormField()) {
@@ -74,15 +79,17 @@ public class UploadDocumentServlet extends HttpServlet {
 					}
 				}
 				CmisService cmisService = context.getBean(CmisService.class);
-				Document document = null;
+				Document document;
 				try {
 					document = cmisService.create(fileName, mimeType, new ByteArrayInputStream(fileContent));
-				} catch (Throwable t) {
-					System.out.println("Now would be the perfect moment to start panicking.");
+				} catch (IOException ioe) {
+					String msg = "Could not put document " + fileName + " in CMS.";
+					log.error(msg, ioe);
+					out.println(msg);
+					return;
 				}
 
 				resp.setContentType("text/html");
-				PrintWriter out = resp.getWriter();
 				out.println("<html>");
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");

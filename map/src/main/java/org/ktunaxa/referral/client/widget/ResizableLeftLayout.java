@@ -308,11 +308,12 @@ public class ResizableLeftLayout extends VLayout {
 		});
 		layout.addMember(restoreImage);
 
-		String contents = "";
+		StringBuilder contents = new StringBuilder();
 		for (int i = 0; i < title.length(); i++) {
-			contents += title.charAt(i) + "<br/>";
+			contents.append(title.charAt(i));
+			contents.append("<br/>");
 		}
-		HTMLFlow verticalTitle = new HTMLFlow(contents);
+		HTMLFlow verticalTitle = new HTMLFlow(contents.toString());
 		verticalTitle.setSize(CLOSED_WIDTH + "px", "100%");
 		verticalTitle.setStyleName("blockVerticalTitleText");
 		layout.addMember(verticalTitle);
