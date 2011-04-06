@@ -22,7 +22,7 @@ import com.google.gwt.i18n.client.NumberFormat;
  */
 public class ReferenceSubLayer {
 
-	private final NumberFormat DENOMINATOR_FORMAT = NumberFormat.getFormat("###,###");
+	private static final String DENOMINATOR_FORMAT = "###,###";
 
 	private ReferenceLayer referenceLayer;
 
@@ -108,24 +108,26 @@ public class ReferenceSubLayer {
 	}
 
 	protected String scaleToString(double scale) {
+		NumberFormat numberFormat = NumberFormat.getFormat(DENOMINATOR_FORMAT);
 		if (scale > 0 && scale < 1.0) {
 			int denom = (int) Math.round(1. / scale);
-			return "1 : " + DENOMINATOR_FORMAT.format(denom);
+			return "1 : " + numberFormat.format(denom);
 		} else if (scale >= 1.0) {
 			int denom = (int) Math.round(scale);
-			return DENOMINATOR_FORMAT.format(denom) + " : 1";
+			return numberFormat.format(denom) + " : 1";
 		} else {
 			return "negative scale not allowed";
 		}
 	}
 
 	protected Double stringToScale(String s) {
+		NumberFormat numberFormat = NumberFormat.getFormat(DENOMINATOR_FORMAT);
 		String[] scale2 = s.split(":");
 		if (scale2.length == 1) {
-			double denominator = DENOMINATOR_FORMAT.parse(scale2[0].trim());
+			double denominator = numberFormat.parse(scale2[0].trim());
 			return denominator == 0 ? 0 : 1 / denominator;
 		} else {
-			return DENOMINATOR_FORMAT.parse(scale2[0].trim()) / DENOMINATOR_FORMAT.parse(scale2[1].trim());
+			return numberFormat.parse(scale2[0].trim()) / numberFormat.parse(scale2[1].trim());
 		}
 	}
 

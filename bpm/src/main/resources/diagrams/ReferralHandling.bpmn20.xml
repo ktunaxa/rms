@@ -20,7 +20,7 @@ Project description: ${description}
 We consider this a level 0 referral and thus no further action is undertaken.
 
 Kind regards,
-Ktunaxa Nation Counsil]]></activiti:expression>
+Ktunaxa Nation Council]]></activiti:expression>
           </activiti:field>
         </extensionElements>
       </serviceTask>
@@ -38,7 +38,7 @@ Project description: ${description}
 The referral is complete and will be processed by us. We will inform you with the result when it is available.
 
 Kind regards,
-Ktunaxa Nation Counsil]]></activiti:expression>
+Ktunaxa Nation Council]]></activiti:expression>
           </activiti:field>
         </extensionElements>
       </serviceTask>
@@ -56,7 +56,7 @@ Project description: ${description}
 The referral is complete and will be processed by us. We will inform you with the result when it is available.
 
 Kind regards,
-Ktunaxa Nation Counsil]]></activiti:expression>
+Ktunaxa Nation Council]]></activiti:expression>
           </activiti:field>
         </extensionElements>
       </serviceTask>
@@ -110,10 +110,10 @@ Ktunaxa Nation Counsil]]></activiti:expression>
 
 Project description: ${description}
 
-The result of our evaluation is attched to this e-mail.
+The result of our evaluation is attached to this e-mail.
 
 Kind regards,
-Ktunaxa Nation Counsil]]></activiti:expression>
+Ktunaxa Nation Council]]></activiti:expression>
           </activiti:field>
         </extensionElements>
       </serviceTask>
