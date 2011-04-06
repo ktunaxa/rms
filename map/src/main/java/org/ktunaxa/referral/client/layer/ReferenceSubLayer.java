@@ -19,17 +19,14 @@ import com.google.gwt.i18n.client.NumberFormat;
  * A reference sublayer is a layer subset of a single type.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class ReferenceSubLayer {
 
-	private static NumberFormat DENOMINATOR_FORMAT = NumberFormat.getFormat("###,###");
+	private final NumberFormat DENOMINATOR_FORMAT = NumberFormat.getFormat("###,###");
 
 	private ReferenceLayer referenceLayer;
 
 	private ReferenceLayerDto referenceLayerDto;
-
-	private double pixelLength;
 
 	private double minScale;
 
@@ -46,7 +43,7 @@ public class ReferenceSubLayer {
 	public ReferenceSubLayer(ReferenceLayer referenceLayer, ReferenceLayerDto referenceLayerDto) {
 		this.referenceLayer = referenceLayer;
 		this.referenceLayerDto = referenceLayerDto;
-		pixelLength = referenceLayer.getPixelLength();
+		double pixelLength = referenceLayer.getPixelLength();
 		minScale = stringToScale(referenceLayerDto.getScaleMin()) / pixelLength;
 		maxScale = stringToScale(referenceLayerDto.getScaleMax()) / pixelLength;
 		visible = referenceLayerDto.isVisibleByDefault();
@@ -71,15 +68,7 @@ public class ReferenceSubLayer {
 
 	public void updateShowing() {
 		double scale = referenceLayer.getCurrentScale();
-		if (visible) {
-			if (scale >= minScale && scale <= maxScale) {
-				showing = true;
-			} else {
-				showing = false;
-			}
-		} else {
-			showing = false;
-		}
+		showing = visible && scale >= minScale && scale <= maxScale;
 	}
 
 	public boolean isLabeled() {

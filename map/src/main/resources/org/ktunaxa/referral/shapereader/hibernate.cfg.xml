@@ -19,7 +19,7 @@
 		<property name="hibernate.cache.use_query_cache">false</property>
 		<property name="hibernate.cache.use_second_level_cache">false</property>
 		
-		<mapping class="org.ktunaxa.referral.server.domain.Comment" />
+		<mapping class="org.ktunaxa.referral.server.domain.AbstractComment" />
 		<mapping class="org.ktunaxa.referral.server.domain.Template" />
 
 		<mapping class="org.ktunaxa.referral.server.domain.ReferenceLayer" />

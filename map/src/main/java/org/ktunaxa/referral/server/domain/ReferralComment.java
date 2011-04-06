@@ -25,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "referral_comment")
-public class ReferralComment extends Comment {
+public class ReferralComment extends AbstractComment {
 
 	/** The referral to which this comment is associated. */
 	@ManyToOne(fetch = FetchType.EAGER)

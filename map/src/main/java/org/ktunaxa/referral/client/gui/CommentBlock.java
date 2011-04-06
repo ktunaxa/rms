@@ -12,7 +12,7 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import org.ktunaxa.referral.client.widget.CollapsibleListBlock;
+import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.server.dto.CommentDto;
 
 import com.smartgwt.client.types.Cursor;
@@ -32,7 +32,7 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
  * 
  * @author Pieter De Graef
  */
-public class CommentBlock extends CollapsibleListBlock<CommentDto> {
+public class CommentBlock extends AbstractCollapsibleListBlock<CommentDto> {
 
 	private HLayout title;
 

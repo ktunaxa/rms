@@ -25,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "document_comment")
-public class DocumentComment extends Comment {
+public class DocumentComment extends AbstractComment {
 
 	/** The document to which this comment is associated. */
 	@ManyToOne(fetch = FetchType.LAZY)

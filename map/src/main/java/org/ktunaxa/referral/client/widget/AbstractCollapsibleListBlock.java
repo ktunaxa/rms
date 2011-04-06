@@ -18,7 +18,7 @@ import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
- * General definition of a "block" that can be a part of a list (see {@ListView}) in a GUI. In order to be
+ * General definition of a "block" that can be a part of a list (see {@link ListView}) in a GUI. In order to be
  * part of such a list, some required need to be met. It must be collapsible/expandable, so users can change the way the
  * list look like.
  * 
@@ -27,7 +27,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * @param <T>
  *            The main object of interest. These are usually objects of the domain model of the application.
  */
-public abstract class CollapsibleListBlock<T extends Serializable> extends VLayout {
+public abstract class AbstractCollapsibleListBlock<T extends Serializable> extends VLayout {
 
 	private T object;
 
@@ -37,7 +37,7 @@ public abstract class CollapsibleListBlock<T extends Serializable> extends VLayo
 	 * @param object
 	 *            The central object to display in this block.
 	 */
-	protected CollapsibleListBlock(T object) {
+	protected AbstractCollapsibleListBlock(T object) {
 		this.object = object;
 	}
 

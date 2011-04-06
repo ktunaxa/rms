@@ -71,10 +71,10 @@ public class WktParser {
 	private MultiPolygon parseMultiPolygon() {
 		List<Polygon> polygons = new ArrayList<Polygon>();
 		while (!tempWkt.startsWith(")")) {
-			tempWkt = tempWkt.substring(tempWkt.indexOf("(") + 1);
+			tempWkt = tempWkt.substring(tempWkt.indexOf('(') + 1);
 			polygons.add(parsePolygon());
 		}
-		return factory.createMultiPolygon(polygons.toArray(new Polygon[] {}));
+		return factory.createMultiPolygon(polygons.toArray(new Polygon[polygons.size()]));
 	}
 
 	private MultiLineString parseMultiLineString() {
@@ -89,7 +89,7 @@ public class WktParser {
 		LinearRing exteriorRing = null;
 		List<LinearRing> interiorRings = new ArrayList<LinearRing>();
 		while (!tempWkt.startsWith(")")) {
-			tempWkt = tempWkt.substring(tempWkt.indexOf("(") + 1);
+			tempWkt = tempWkt.substring(tempWkt.indexOf('(') + 1);
 			if (exteriorRing == null) {
 				exteriorRing = parseLinearRing();
 			} else {
@@ -97,28 +97,30 @@ public class WktParser {
 			}
 		}
 		tempWkt = tempWkt.substring(1);
-		return factory.createPolygon(exteriorRing, interiorRings.toArray(new LinearRing[] {}));
+		return factory.createPolygon(exteriorRing, interiorRings.toArray(new LinearRing[interiorRings.size()]));
 	}
 
 	private LinearRing parseLinearRing() {
-		String ring = tempWkt.substring(1, tempWkt.indexOf(")"));
-		tempWkt = tempWkt.substring(tempWkt.indexOf(")") + 1);
+		int pos = tempWkt.indexOf(')');
+		String ring = tempWkt.substring(1, pos);
+		tempWkt = tempWkt.substring(pos + 1);
 		String[] tokens = ring.split(",");
 		Coordinate[] coordinates = new Coordinate[tokens.length];
 		for (int i = 0; i < tokens.length; i++) {
-			String[] values = tokens[i].trim().split(" ");
+			String[] values = tokens[i].trim().split("\\s");
 			coordinates[i] = new Coordinate(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
 		}
 		return factory.createLinearRing(coordinates);
 	}
 
 	private LineString parseLineString() {
-		String ring = tempWkt.substring(1, tempWkt.indexOf(")"));
-		tempWkt = tempWkt.substring(tempWkt.indexOf(")") + 1);
+		int pos = tempWkt.indexOf(')');
+		String ring = tempWkt.substring(1, pos);
+		tempWkt = tempWkt.substring(pos + 1);
 		String[] tokens = ring.split(",");
 		Coordinate[] coordinates = new Coordinate[tokens.length];
 		for (int i = 0; i < tokens.length; i++) {
-			String[] values = tokens[i].trim().split(" ");
+			String[] values = tokens[i].trim().split("\\s");
 			coordinates[i] = new Coordinate(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
 		}
 		return factory.createLineString(coordinates);

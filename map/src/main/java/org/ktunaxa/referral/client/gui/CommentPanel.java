@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ktunaxa.referral.client.widget.CollapsibleListBlock;
+import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.client.widget.DetailView;
 import org.ktunaxa.referral.client.widget.ListLayout;
 import org.ktunaxa.referral.client.widget.ListView;
@@ -39,8 +39,8 @@ public class CommentPanel extends VLayout {
 	public CommentPanel() {
 		setSize("100%", "100%");
 
-		Map<String, Comparator<CollapsibleListBlock<CommentDto>>> sortAttributes;
-		sortAttributes = new HashMap<String, Comparator<CollapsibleListBlock<CommentDto>>>();
+		Map<String, Comparator<AbstractCollapsibleListBlock<CommentDto>>> sortAttributes;
+		sortAttributes = new HashMap<String, Comparator<AbstractCollapsibleListBlock<CommentDto>>>();
 		sortAttributes.put("date", new DateComparator());
 		sortAttributes.put("author", new AuthorComparator());
 		sortAttributes.put("title", new TitleComparator());
@@ -56,9 +56,9 @@ public class CommentPanel extends VLayout {
 	 * 
 	 * @author Pieter De Graef
 	 */
-	private class DateComparator implements Comparator<CollapsibleListBlock<CommentDto>> {
+	private class DateComparator implements Comparator<AbstractCollapsibleListBlock<CommentDto>> {
 
-		public int compare(CollapsibleListBlock<CommentDto> one, CollapsibleListBlock<CommentDto> two) {
+		public int compare(AbstractCollapsibleListBlock<CommentDto> one, AbstractCollapsibleListBlock<CommentDto> two) {
 			if (one == null && two == null) {
 				return 0;
 			}
@@ -77,9 +77,9 @@ public class CommentPanel extends VLayout {
 	 * 
 	 * @author Pieter De Graef
 	 */
-	private class AuthorComparator implements Comparator<CollapsibleListBlock<CommentDto>> {
+	private class AuthorComparator implements Comparator<AbstractCollapsibleListBlock<CommentDto>> {
 
-		public int compare(CollapsibleListBlock<CommentDto> one, CollapsibleListBlock<CommentDto> two) {
+		public int compare(AbstractCollapsibleListBlock<CommentDto> one, AbstractCollapsibleListBlock<CommentDto> two) {
 			if (one == null && two == null) {
 				return 0;
 			}
@@ -98,9 +98,9 @@ public class CommentPanel extends VLayout {
 	 * 
 	 * @author Pieter De Graef
 	 */
-	private class TitleComparator implements Comparator<CollapsibleListBlock<CommentDto>> {
+	private class TitleComparator implements Comparator<AbstractCollapsibleListBlock<CommentDto>> {
 
-		public int compare(CollapsibleListBlock<CommentDto> one, CollapsibleListBlock<CommentDto> two) {
+		public int compare(AbstractCollapsibleListBlock<CommentDto> one, AbstractCollapsibleListBlock<CommentDto> two) {
 			if (one == null && two == null) {
 				return 0;
 			}
@@ -114,8 +114,8 @@ public class CommentPanel extends VLayout {
 		}
 	}
 
-	private List<CollapsibleListBlock<CommentDto>> getBlocks() {
-		List<CollapsibleListBlock<CommentDto>> list = new ArrayList<CollapsibleListBlock<CommentDto>>();
+	private List<AbstractCollapsibleListBlock<CommentDto>> getBlocks() {
+		List<AbstractCollapsibleListBlock<CommentDto>> list = new ArrayList<AbstractCollapsibleListBlock<CommentDto>>();
 		for (CommentDto comment : getCommentData()) {
 			list.add(new CommentBlock(comment));
 		}

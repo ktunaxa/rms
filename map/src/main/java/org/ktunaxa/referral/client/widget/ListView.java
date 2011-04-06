@@ -54,13 +54,13 @@ public class ListView<T extends Serializable> extends VLayout {
 
 	private VLayout blockLayout;
 
-	private Map<String, Comparator<CollapsibleListBlock<T>>> sortAttributes;
+	private Map<String, Comparator<AbstractCollapsibleListBlock<T>>> sortAttributes;
 
 	private String sortedBy;
 
 	private boolean sortedInverse;
 
-	private List<CollapsibleListBlock<T>> blocks;
+	private List<AbstractCollapsibleListBlock<T>> blocks;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -73,7 +73,7 @@ public class ListView<T extends Serializable> extends VLayout {
 	 *            A mapping of sort attribute names (used in the GUI) with respective comparators. These comparators
 	 *            should be able to sort the actual collapsible blocks.
 	 */
-	public ListView(Map<String, Comparator<CollapsibleListBlock<T>>> sortAttributes) {
+	public ListView(Map<String, Comparator<AbstractCollapsibleListBlock<T>>> sortAttributes) {
 		super(10);
 		this.sortAttributes = sortAttributes;
 		setSize("100%", "100%");
@@ -90,9 +90,9 @@ public class ListView<T extends Serializable> extends VLayout {
 	 * @param blocks
 	 *            The actual list.
 	 */
-	public void populate(List<CollapsibleListBlock<T>> blocks) {
+	public void populate(List<AbstractCollapsibleListBlock<T>> blocks) {
 		this.blocks = blocks;
-		for (CollapsibleListBlock<?> block : blocks) {
+		for (AbstractCollapsibleListBlock<?> block : blocks) {
 			blockLayout.addMember(block);
 		}
 	}
@@ -100,8 +100,8 @@ public class ListView<T extends Serializable> extends VLayout {
 	/** Expend all blocks within the list. */
 	public void expand() {
 		for (Canvas member : blockLayout.getMembers()) {
-			if (member instanceof CollapsibleListBlock<?>) {
-				((CollapsibleListBlock<?>) member).expand();
+			if (member instanceof AbstractCollapsibleListBlock<?>) {
+				((AbstractCollapsibleListBlock<?>) member).expand();
 			}
 		}
 	}
@@ -109,8 +109,8 @@ public class ListView<T extends Serializable> extends VLayout {
 	/** Collapse all blocks within the list. */
 	public void collapse() {
 		for (Canvas member : blockLayout.getMembers()) {
-			if (member instanceof CollapsibleListBlock<?>) {
-				((CollapsibleListBlock<?>) member).collapse();
+			if (member instanceof AbstractCollapsibleListBlock<?>) {
+				((AbstractCollapsibleListBlock<?>) member).collapse();
 			}
 		}
 	}
@@ -124,8 +124,8 @@ public class ListView<T extends Serializable> extends VLayout {
 	 */
 	public void search(String filter) {
 		for (Canvas member : blockLayout.getMembers()) {
-			if (member instanceof CollapsibleListBlock<?>) {
-				CollapsibleListBlock<?> block = (CollapsibleListBlock<?>) member;
+			if (member instanceof AbstractCollapsibleListBlock<?>) {
+				AbstractCollapsibleListBlock<?> block = (AbstractCollapsibleListBlock<?>) member;
 				if (filter == null) {
 					block.setVisible(true);
 				} else {
@@ -148,7 +148,7 @@ public class ListView<T extends Serializable> extends VLayout {
 	 */
 	public void sort(String attribute) {
 		if (sortAttributes != null && attribute != null) {
-			Comparator<CollapsibleListBlock<T>> comparator = sortAttributes.get(attribute);
+			Comparator<AbstractCollapsibleListBlock<T>> comparator = sortAttributes.get(attribute);
 			if (comparator != null) {
 				// Empty the blockLayout:
 				for (int i = blockLayout.getMembers().length - 1; i >= 0; i--) {
@@ -165,7 +165,7 @@ public class ListView<T extends Serializable> extends VLayout {
 
 				// Execute the sort:
 				Collections.sort(blocks, comparator);
-				for (CollapsibleListBlock<?> block : blocks) {
+				for (AbstractCollapsibleListBlock<?> block : blocks) {
 					blockLayout.addMember(block);
 				}
 				sortedBy = attribute;
@@ -309,15 +309,15 @@ public class ListView<T extends Serializable> extends VLayout {
 	 * 
 	 * @author Pieter De Graef
 	 */
-	private class InverseComparator implements Comparator<CollapsibleListBlock<T>> {
+	private class InverseComparator implements Comparator<AbstractCollapsibleListBlock<T>> {
 
-		private Comparator<CollapsibleListBlock<T>> original;
+		private Comparator<AbstractCollapsibleListBlock<T>> original;
 
-		public InverseComparator(Comparator<CollapsibleListBlock<T>> original) {
+		public InverseComparator(Comparator<AbstractCollapsibleListBlock<T>> original) {
 			this.original = original;
 		}
 
-		public int compare(CollapsibleListBlock<T> o1, CollapsibleListBlock<T> o2) {
+		public int compare(AbstractCollapsibleListBlock<T> o1, AbstractCollapsibleListBlock<T> o2) {
 			return -original.compare(o1, o2);
 		}
 	}

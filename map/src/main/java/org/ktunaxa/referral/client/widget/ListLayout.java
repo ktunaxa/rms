@@ -85,8 +85,8 @@ public class ListLayout<T extends Serializable> extends VLayout {
 	 * @param block
 	 *            The full list of blocks.
 	 */
-	public void populate(List<CollapsibleListBlock<T>> blocks) {
-		for (final CollapsibleListBlock<T> block : blocks) {
+	public void populate(List<AbstractCollapsibleListBlock<T>> blocks) {
+		for (final AbstractCollapsibleListBlock<T> block : blocks) {
 			block.getEditButton().addClickHandler(new ClickHandler() {
 
 				public void onClick(ClickEvent event) {
