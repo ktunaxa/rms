@@ -5,7 +5,7 @@
 			<td>
 				<label>
 					Referral id:<br/>
-					<input type="text" name="referralId" value=""/>
+					<input type="text" name="referralId" value="" placeholder="REF01" autofocus="true"/>
 					<input type="hidden" name="referralId_required" value="true"/>
 					<input type="hidden" name="referralId_type" value="String"/>
 				</label><br/>
@@ -15,7 +15,7 @@
 			<td>
 				<label>
 					Description:<br/>
-					<textarea name="description" value=""></textarea>
+					<textarea name="description" value="" placeholder="description for referral"></textarea>
 					<input type="hidden" name="description_required" value="false"/>
 					<input type="hidden" name="description_type" value="String"/>
 				</label><br/>
@@ -25,7 +25,7 @@
 			<td>
 				<label>
 					Referral e-mail:<br/>
-					<input type="text" name="requesterEmail" value=""/>
+					<input type="email" name="requesterEmail" value="" placeholder="e-mail"/>
 					<input type="hidden" name="requesterEmail_required" value="true"/>
 					<input type="hidden" name="requesterEmail_type" value="String"/>
 				</label><br/>
@@ -35,7 +35,7 @@
 			<td>
 				<label>
 					Engagement level:<br/>
-					<input type="number" name="engagementLevel" value="0" min="3"/>
+					<input type="number" name="engagementLevel" min="0" max="3" placeholder="between 0 and 3"/>
 					<input type="hidden" name="engagementLevel_type" value="Integer"/>
 				</label>
 			</td>
