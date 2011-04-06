@@ -76,7 +76,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 				<property name="fillOpacity" value=".5" />
 			</bean>
 		</property>
-		<property name="crs" value="EPSG:900913" />
+		<property name="crs">
+			<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.MAP_CRS"/>
+		</property>
 		<property name="scaleBarEnabled" value="true" />
 		<property name="panButtonsEnabled" value="true" />
 		<property name="scaleConfiguration">
@@ -204,7 +206,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 				<property name="fillOpacity" value=".5" />
 			</bean>
 		</property>
-		<property name="crs" value="EPSG:900913" />
+		<property name="crs">
+			<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.MAP_CRS"/>
+		</property>
 		<property name="scaleBarEnabled" value="false" />
 		<property name="panButtonsEnabled" value="false" />
 		<property name="maximumScale" value="100000" />
