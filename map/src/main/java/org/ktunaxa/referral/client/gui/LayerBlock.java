@@ -9,7 +9,6 @@
  * by the Geomajas Contributors License Agreement. For full licensing
  * details, see LICENSE.txt in the project root.
  */
-
 package org.ktunaxa.referral.client.gui;
 
 import org.geomajas.gwt.client.map.event.LayerChangedHandler;
@@ -17,7 +16,9 @@ import org.geomajas.gwt.client.map.event.LayerFilteredEvent;
 import org.geomajas.gwt.client.map.event.LayerLabeledEvent;
 import org.geomajas.gwt.client.map.event.LayerShownEvent;
 import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
+import org.ktunaxa.referral.client.layer.action.RefreshLayerHandler;
 import org.ktunaxa.referral.client.layer.action.ShowMetadataHandler;
+import org.ktunaxa.referral.client.layer.action.ZoomToLayerHandler;
 
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.VerticalAlignment;
@@ -29,7 +30,6 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.menu.IMenuButton;
 import com.smartgwt.client.widgets.menu.Menu;
 import com.smartgwt.client.widgets.menu.MenuItem;
-import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 
 /**
  * Widget that represents a layer in the layer tree layout.
@@ -39,9 +39,9 @@ import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 public class LayerBlock extends HLayout {
 
 	private ReferenceSubLayer subLayer;
-	
+
 	private IButton visibleBtn;
-	
+
 	private HTMLFlow title;
 
 	public LayerBlock(ReferenceSubLayer subLayer) {
@@ -54,7 +54,6 @@ public class LayerBlock extends HLayout {
 		title.setWidth100();
 		title.setLayoutAlign(VerticalAlignment.CENTER);
 		addMember(title);
-		
 
 		visibleBtn = new IButton("");
 		visibleBtn.setLayoutAlign(VerticalAlignment.CENTER);
@@ -70,13 +69,13 @@ public class LayerBlock extends HLayout {
 		Menu menu = new Menu();
 		menu.setShowShadow(true);
 		menu.setShadowDepth(10);
-		MenuItem item1 = new MenuItem("Toggle labels", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-		MenuItem item2 = new MenuItem("Refresh layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-		MenuItem item3 = new MenuItem("Zoom to layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-		MenuItem item4 = new MenuItem("Show meta-data", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-		menu.setItems(item1, item2, item3, item4);
-		item3.addClickHandler(new ZoomToLayerHandler());
-		item4.addClickHandler(new ShowMetadataHandler(subLayer));
+		MenuItem item1 = new MenuItem("Refresh layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
+		MenuItem item2 = new MenuItem("Zoom to layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
+		MenuItem item3 = new MenuItem("Show meta-data", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
+		menu.setItems(item1, item2, item3);
+		item1.addClickHandler(new RefreshLayerHandler(subLayer));
+		item2.addClickHandler(new ZoomToLayerHandler(subLayer));
+		item3.addClickHandler(new ShowMetadataHandler(subLayer));
 		IMenuButton menuButton = new IMenuButton("", menu);
 		menuButton.setLayoutAlign(VerticalAlignment.CENTER);
 		menuButton.setShowTitle(false);
@@ -85,7 +84,7 @@ public class LayerBlock extends HLayout {
 		subLayer.getReferenceLayer().addLayerChangedHandler(new StatusUpdater());
 		updateIcons();
 	}
-	
+
 	private void updateIcons() {
 		if (visibleBtn.isSelected()) {
 			if (subLayer.isShowing()) {
@@ -103,7 +102,10 @@ public class LayerBlock extends HLayout {
 	}
 
 	/**
-	 * Status updater.
+	 * Updtes status icons.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
 	 */
 	public class StatusUpdater implements LayerChangedHandler {
 
@@ -121,24 +123,16 @@ public class LayerBlock extends HLayout {
 	}
 
 	/**
-	 * Set visible handler.
+	 * Set the layer to visible/invisible.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
 	 */
 	public class SetVisibleHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
 			subLayer.setVisible(visibleBtn.isSelected());
 			updateIcons();
-		}
-
-	}
-
-	/**
-	 * Zoom to layer handler.
-	 */
-	public static class ZoomToLayerHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
-
-		public void onClick(MenuItemClickEvent event) {
-			
 		}
 
 	}

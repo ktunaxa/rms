@@ -9,14 +9,13 @@
  * by the Geomajas Contributors License Agreement. For full licensing
  * details, see LICENSE.txt in the project root.
  */
-
 package org.ktunaxa.referral.client.referral;
-
-import java.util.Map;
 
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.command.dto.PersistTransactionResponse;
+import org.geomajas.configuration.AttributeInfo;
+import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
@@ -24,7 +23,6 @@ import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.layer.feature.Attribute;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
 
 import com.smartgwt.client.types.Alignment;
@@ -39,8 +37,9 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Page to confirm creation of a new referral.
- *
+ * 
  * @author Jan De Moerloose
+ * 
  */
 public class ReferralConfirmPage implements WizardPage {
 
@@ -54,7 +53,7 @@ public class ReferralConfirmPage implements WizardPage {
 
 	public ReferralConfirmPage(VectorLayer layer, ReferralCreationWizard wizard) {
 		this.wizard = wizard;
-		widget = new VLayout(); 
+		widget = new VLayout();
 		widget.setWidth100();
 		widget.setHeight100();
 
@@ -63,7 +62,7 @@ public class ReferralConfirmPage implements WizardPage {
 		summaryLayout.setHeight100();
 		summaryLayout.setStyleName("summary");
 		widget.addMember(summaryLayout);
-		
+
 		IButton confirmButton = new IButton("Ok");
 		IButton cancelButton = new IButton("Cancel");
 		HLayout buttonLayout = new HLayout();
@@ -95,9 +94,10 @@ public class ReferralConfirmPage implements WizardPage {
 		this.feature = feature;
 		if (feature != null) {
 			boolean even = true;
-			for (Map.Entry<String, Attribute> entry : feature.getAttributes().entrySet()) {
-				Object value =  feature.getAttributeValue(entry.getKey());
-				SummaryLine line = new SummaryLine(entry.getKey(), value == null ? "" : value.toString());
+			FeatureInfo featureInfo = feature.getLayer().getLayerInfo().getFeatureInfo();
+			for (AttributeInfo info : featureInfo.getAttributes()) {
+				Object value = feature.getAttributeValue(info.getName());
+				SummaryLine line = new SummaryLine(info.getName(), value == null ? "" : value.toString());
 				line.setStyleName(even ? "summaryLine" : "summaryLineDark");
 				summaryLayout.addMember(line);
 				even = !even;
@@ -114,12 +114,13 @@ public class ReferralConfirmPage implements WizardPage {
 	public void clear() {
 		setFeature(null);
 	}
+
 	// ------------------------------------------------------------------------
 	// Private methods:
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Confirm handler.
+	 * Applies feature transaction and moves back to first page.
 	 */
 	public class ConfirmHandler implements ClickHandler {
 
@@ -145,12 +146,13 @@ public class ReferralConfirmPage implements WizardPage {
 					}
 				}
 			});
+			wizard.refresh();
 		}
 
 	}
 
 	/**
-	 * Cancel handler.
+	 * Moves back to first page.
 	 */
 	public class CancelHandler implements ClickHandler {
 
@@ -161,7 +163,10 @@ public class ReferralConfirmPage implements WizardPage {
 	}
 
 	/**
-	 * Summary line.
+	 * A line of the form summary.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
 	 */
 	public class SummaryLine extends HLayout {
 
@@ -184,6 +189,5 @@ public class ReferralConfirmPage implements WizardPage {
 		}
 
 	}
-
 
 }

@@ -177,12 +177,13 @@ public class Referral {
 	@Column(nullable = false, name = "geom")
 	private Geometry geometry;
 
-	/** The collection of all documents associated with this referral. */
+	/** The collection of all documents associated with this referral. 
+	 * TODO: 2 bags with eager fetching does not work ! */
 	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private Collection<Document> documents;
 
 	/** The collection of all comments made on this referral. */
-	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "referral", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	private Collection<ReferralComment> comments;
 
 	// ------------------------------------------------------------------------

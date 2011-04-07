@@ -116,6 +116,13 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
 	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Code" />
+	                                    <property name="name" value="code" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="LONG" />
+	                                </bean>
 	                            </list>
 	                        </property>
 	                    </bean>
@@ -165,25 +172,295 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	<bean class="org.geomajas.configuration.NamedStyleInfo" name="referenceBaseStyleInfo">
 		<property name="featureStyles">
             <list>
-            <!-- 
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Municipalities"/>
+                    <property name="formula" value="layer.code = 1"/>
+                    <property name="fillColor" value="#9A9393"/>
+                    <property name="fillOpacity" value="0.70"/>
+                    <property name="strokeColor" value="#494747"/>
+                    <property name="strokeOpacity" value="0.70"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Native Communities"/>
+                    <property name="formula" value="layer.code = 2"/>
+                    <property name="fillColor" value="#F8EF23"/>
+                    <property name="fillOpacity" value="0.70"/>
+                    <property name="strokeColor" value="#E8C603"/>
+                    <property name="strokeOpacity" value="0.70"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
                 <bean class="org.geomajas.configuration.FeatureStyleInfo">
                     <property name="name" value="Landscape Units"/>
-                    <property name="formula" value="(layer.name like '%Landscape%')"/>
-                    <property name="fillColor" value="#9999FF"/>
-                    <property name="fillOpacity" value=".6"/>
-                    <property name="strokeColor" value="#000033"/>
-                    <property name="strokeOpacity" value=".8"/>
+                    <property name="formula" value="layer.code = 3"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#866846"/>
+                    <property name="strokeOpacity" value="0.70"/>
                     <property name="strokeWidth" value="1"/>
                 </bean>
-                 -->
+
                 <bean class="org.geomajas.configuration.FeatureStyleInfo">
-                    <property name="name" value="Everything else"/>
-                    <property name="fillColor" value="#9999FF"/>
-                    <property name="fillOpacity" value="0.5"/>
-                    <property name="strokeColor" value="#000000"/>
-                    <property name="strokeOpacity" value=".8"/>
+                    <property name="name" value="Registered Traplines"/>
+                    <property name="formula" value="layer.code = 4"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#9D8787"/>
+                    <property name="strokeOpacity" value="0.50"/>
                     <property name="strokeWidth" value="1"/>
                 </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Wildlife Habitat"/>
+                    <property name="formula" value="layer.code = 5"/>
+                    <property name="fillColor" value="#7C7B1C"/>
+                    <property name="fillOpacity" value="0.70"/>
+                    <property name="strokeColor" value="#5E5E0E"/>
+                    <property name="strokeOpacity" value="0.70"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Coal Fields"/>
+                    <property name="formula" value="layer.code = 7"/>
+                    <property name="fillColor" value="#E6AB02"/>
+                    <property name="fillOpacity" value="0.50"/>
+                    <property name="strokeColor" value="#E6AB02"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Coal Tenures"/>
+                    <property name="formula" value="layer.code = 8"/>
+                    <property name="fillColor" value="#A6761D"/>
+                    <property name="fillOpacity" value="0.50"/>
+                    <property name="strokeColor" value="#986200"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Dominion Coal Blocks"/>
+                    <property name="formula" value="layer.code = 9"/>
+                    <property name="fillColor" value="#453E3E"/>
+                    <property name="fillOpacity" value="0.70"/>
+                    <property name="strokeColor" value="#413A3A"/>
+                    <property name="strokeOpacity" value="0.70"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="NTS 250K"/>
+                    <property name="formula" value="layer.code = 10"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#283C36"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="TRIM 20K"/>
+                    <property name="formula" value="layer.code = 11"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#209D78"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Cities"/>
+                    <property name="formula" value="layer.code = 12"/>
+                    <property name="fillColor" value="#000000"/>
+                    <property name="fillOpacity" value="1"/>
+                    <property name="strokeColor" value="#000000"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="1"/>
+					<property name="symbol">
+						<bean class="org.geomajas.configuration.SymbolInfo">
+							<property name="rect">
+								<bean class="org.geomajas.configuration.RectInfo">
+									<property name="w" value="5" />
+									<property name="h" value="5" />
+								</bean>
+							</property>
+						</bean>
+					</property>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Contours"/>
+                    <property name="formula" value="layer.code = 13"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#6D3904"/>
+                    <property name="strokeOpacity" value="0.40"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Glaciers"/>
+                    <property name="formula" value="layer.code = 14"/>
+                    <property name="fillColor" value="#AAD3E0"/>
+                    <property name="fillOpacity" value="0.90"/>
+                    <property name="strokeColor" value="#97CBDD"/>
+                    <property name="strokeOpacity" value="0.90"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Lakes"/>
+                    <property name="formula" value="layer.code = 15"/>
+                    <property name="fillColor" value="#5FDAFF"/>
+                    <property name="fillOpacity" value="0.90"/>
+                    <property name="strokeColor" value="#177FE5"/>
+                    <property name="strokeOpacity" value="0.90"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Rivers"/>
+                    <property name="formula" value="layer.code = 16"/>
+                    <property name="fillColor" value="#5FDAFF"/>
+                    <property name="fillOpacity" value="1"/>
+                    <property name="strokeColor" value="#177FE5"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="0"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Streams"/>
+                    <property name="formula" value="layer.code = 17"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#177FE5"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="0"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Transportation"/>
+                    <property name="formula" value="layer.code = 18"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#726868"/>
+                    <property name="strokeOpacity" value="0.90"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Pipeline"/>
+                    <property name="formula" value="layer.code = 19"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#E40C0A"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="2"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Transmissionline"/>
+                    <property name="formula" value="layer.code = 20"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#441B5D"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="2"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Contours"/>
+                    <property name="formula" value="layer.code = 21"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#6D3904"/>
+                    <property name="strokeOpacity" value="0.40"/>
+                    <property name="strokeWidth" value="0"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Icemass"/>
+                    <property name="formula" value="layer.code = 22"/>
+                    <property name="fillColor" value="#AAD3E0"/>
+                    <property name="fillOpacity" value="0.90"/>
+                    <property name="strokeColor" value="#97CBDD"/>
+                    <property name="strokeOpacity" value="0.90"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Rivers"/>
+                    <property name="formula" value="layer.code = 23"/>
+                    <property name="fillColor" value="#5FDAFF"/>
+                    <property name="fillOpacity" value="1"/>
+                    <property name="strokeColor" value="#177FE5"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="0"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Transportation"/>
+                    <property name="formula" value="layer.code = 24"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#726868"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Wetlands"/>
+                    <property name="formula" value="layer.code = 25"/>
+                    <property name="fillColor" value="#51A383"/>
+                    <property name="fillOpacity" value="0.90"/>
+                    <property name="strokeColor" value="#51A383"/>
+                    <property name="strokeOpacity" value="0.70"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Waterbody"/>
+                    <property name="formula" value="layer.code = 26"/>
+                    <property name="fillColor" value="#5FDAFF"/>
+                    <property name="fillOpacity" value="0.90"/>
+                    <property name="strokeColor" value="#177FE5"/>
+                    <property name="strokeOpacity" value="0.90"/>
+                    <property name="strokeWidth" value="1"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Waterlines"/>
+                    <property name="formula" value="layer.code = 27"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#177FE5"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="0"/>
+                </bean>
+
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Default"/>
+                    <property name="fillColor" value="#FFFFFF"/>
+                    <property name="fillOpacity" value="0"/>
+                    <property name="strokeColor" value="#177FE5"/>
+                    <property name="strokeOpacity" value="1"/>
+                    <property name="strokeWidth" value="0"/>
+					<property name="symbol">
+						<bean class="org.geomajas.configuration.SymbolInfo">
+							<property name="rect">
+								<bean class="org.geomajas.configuration.RectInfo">
+									<property name="w" value="5" />
+									<property name="h" value="5" />
+								</bean>
+							</property>
+						</bean>
+					</property>
+                </bean>
+
             </list>
 		</property>
 		<property name="labelStyle">

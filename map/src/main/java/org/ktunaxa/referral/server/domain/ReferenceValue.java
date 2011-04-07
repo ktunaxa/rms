@@ -62,7 +62,7 @@ public class ReferenceValue {
 	private Geometry geometry;
 
 	/** The collection of key-value pairs that make up this reference feature. */
-	@OneToMany(mappedBy = "reference", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "reference", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	private Collection<ReferenceValueAttribute> attributes;
 
 	// ------------------------------------------------------------------------

@@ -23,9 +23,10 @@ import com.smartgwt.client.widgets.menu.events.ClickHandler;
 import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 
 /**
- * Handler that shows the metadata in a panel.
+ * Handler that shows the sublayer metadata in a panel.
  * 
  * @author Jan De Moerloose
+ * 
  */
 public class ShowMetadataHandler implements ClickHandler {
 

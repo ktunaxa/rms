@@ -78,11 +78,21 @@ public class WktParser {
 	}
 
 	private MultiLineString parseMultiLineString() {
-		return null;
+		List<LineString> lineStrings = new ArrayList<LineString>();
+		while (!tempWkt.startsWith(")")) {
+			tempWkt = tempWkt.substring(tempWkt.indexOf("(") + 1);
+			lineStrings.add(parseLineString());
+		}
+		return factory.createMultiLineString(lineStrings.toArray(new LineString[] {}));
 	}
 
 	private MultiPoint parseMultiPoint() {
-		return null;
+		List<Point> points = new ArrayList<Point>();
+		while (!tempWkt.startsWith(")")) {
+			tempWkt = tempWkt.substring(tempWkt.indexOf("(") + 1);
+			points.add(parsePoint());
+		}
+		return factory.createMultiPoint(points.toArray(new Point[] {}));
 	}
 
 	private Polygon parsePolygon() {
@@ -128,6 +138,10 @@ public class WktParser {
 
 	// Receives something like: (((x y, x y, ...)))
 	private Point parsePoint() {
-		return null;
+		String point = tempWkt.substring(1, tempWkt.indexOf(")"));
+		tempWkt = tempWkt.substring(tempWkt.indexOf(")") + 1);
+		String[] values = point.split(" ");
+		Coordinate coordinate = new Coordinate(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
+		return factory.createPoint(coordinate);
 	}
 }

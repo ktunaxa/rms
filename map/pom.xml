@@ -220,62 +220,28 @@
 				<configuration>
 					<disableCastChecking>true</disableCastChecking>
 					<disableClassMetadata>true</disableClassMetadata>
-					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+					<extraJvmArgs>-Xmx1024M -Xss1024k</extraJvmArgs>
+					<module>org.ktunaxa.referral.KtunaxaEntryPoint</module>
+					<runTarget>index.html</runTarget>
+					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+					<copyWebapp>true</copyWebapp>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>clean</goal>
+							<goal>compile</goal>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<version>2.8</version>
-			</plugin>
-
-			<plugin>
-				<groupId>com.googlecode</groupId>
-				<artifactId>maven-db-plugin</artifactId>
-				<version>1.2.m3f</version>
-				<configuration>
-					<adminDbConnectionSettings>
-						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
-						<jdbcUrl>jdbc:postgresql://${dbHostPort}/postgres</jdbcUrl>
-						<userName>${dbAdminUser}</userName>
-						<password>${dbAdminPassword}</password>
-					</adminDbConnectionSettings>
-					<appDbConnectionSettings>
-						<jdbcDriver>org.postgresql.Driver</jdbcDriver>
-						<jdbcUrl>jdbc:postgresql://${dbHostPort}/referral</jdbcUrl>
-						<userName>referral</userName>
-						<password>referral</password>
-					</appDbConnectionSettings>
-					<sqlDelimiter>#--;</sqlDelimiter>
-					<dbDataScriptsDirectory>
-						<param>src/main/sql/data</param>
-					</dbDataScriptsDirectory>
-					<dbSchemaScriptsDirectory>
-						<param>src/main/sql/schema</param>
-					</dbSchemaScriptsDirectory>
-					<dbUpdateScriptsDirectory>
-						<param>src/main/sql/update</param>
-					</dbUpdateScriptsDirectory>
-					<dbCreateStatements>
-						create database referral TEMPLATE=template_postgis; #--;
-						ALTER DATABASE referral OWNER TO referral_group; #--;
-						grant all on database referral to referral_group; #--;
-					</dbCreateStatements>
-					<dbDropStatements>drop database referral; #--;</dbDropStatements>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.postgis</groupId>
-						<artifactId>postgis-jdbc</artifactId>
-						<version>1.1.6</version>
-					</dependency>
-					<dependency>
-						<groupId>postgresql</groupId>
-						<artifactId>postgresql</artifactId>
-						<version>8.4-701.jdbc4</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 
 		</plugins>
@@ -287,29 +253,6 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>gwt-maven-plugin</artifactId>
-						<configuration>
-							<module>org.ktunaxa.referral.KtunaxaEntryPoint</module>
-							<runTarget>index.html</runTarget>
-							<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>clean</goal>
-									<goal>generateAsync</goal>
-									<goal>compile</goal>
-									<goal>test</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
 		</profile>
 		<!-- m2eclipse with embedded jetty -->
 		<profile>
@@ -431,15 +374,93 @@
 				<gwt.compiler.skip>true</gwt.compiler.skip>
 			</properties>
 		</profile>
+		
 		<profile>
-			<id>ktunaxa</id>
-			<properties>
-				<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-				<dbHostPort>localhost:5433</dbHostPort>
-				<dbAdminUser>dbadmin</dbAdminUser>
-				<dbAdminPassword>***</dbAdminPassword>
-			</properties>
-		</profile>
+			<id>db</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<version>1.4</version>
+		
+						<dependencies>
+							<!-- specify the dependent jdbc driver here -->
+							<dependency>
+								<groupId>postgresql</groupId>
+								<artifactId>postgresql</artifactId>
+								<version>8.1-407.jdbc3</version>
+							</dependency>
+						</dependencies>
+		
+						<!-- common configuration shared by all executions -->
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://${dbHostPort}/postgres</url>
+							<username>${dbAdminUser}</username>
+							<password>${dbAdminPassword}</password>
+						</configuration>
+		
+						<executions>
+							<execution>
+								<id>drop and create</id>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+            					<phase>process-resources</phase>
+								<configuration>
+									<!-- need another database to drop/create the targeted one -->
+									<url>jdbc:postgresql://${dbHostPort}/postgres</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>
+										drop database referral;
+										create database referral TEMPLATE=template_postgis;
+										alter database referral OWNER TO referral_group;
+										grant all on database referral to referral_group;
+									</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+		
+							<execution>
+								<id>grant spatial table rights</id>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+            					<phase>process-resources</phase>
+								<configuration>
+									<!-- need to login as postgres to grant table rights -->
+									<url>jdbc:postgresql://${dbHostPort}/referral</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>
+										grant all on spatial_ref_sys to referral_group;
+										grant all on geometry_columns to referral_group;
+									</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>schema and data</id>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+           						<phase>process-resources</phase>
+								<configuration>
+									<url>jdbc:postgresql://${dbHostPort}/referral</url>
+									<username>referral</username>
+									<password>referral</password>
+									<srcFiles>
+										<srcFile>src/main/sql/schema/create-tables.sql</srcFile>
+										<srcFile>src/main/sql/data/fill-tables.sql</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>		
 	</profiles>
 
 	<repositories>
