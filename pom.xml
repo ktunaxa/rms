@@ -123,6 +123,24 @@
 				<artifactId>activiti-engine</artifactId>
 				<version>${activiti.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-spring</artifactId>
+				<version>${activiti.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-rest</artifactId>
+				<version>${activiti.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.extensions.surf</groupId>
+				<artifactId>spring-webscripts</artifactId>
+				<version>1.0.0-RC2</version>
+				<scope>provided</scope>
+			</dependency>
 
 			<dependency>
 				<groupId>com.smartgwt</groupId>
@@ -180,7 +198,7 @@
 	</pluginRepositories>
 
 	<properties>
-		<activiti.version>5.2</activiti.version>
+		<activiti.version>5.4</activiti.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gwt-version>2.1.1</gwt-version>
 	</properties>

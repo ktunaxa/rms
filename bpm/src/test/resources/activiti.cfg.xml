@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+  <!--<bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+    <property name="databaseSchemaUpdate" value="true" />
+    <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/referral" />
+    <property name="jdbcDriver" value="org.postgresql.Driver" />
+    <property name="jdbcUsername" value="referral" />
+    <property name="jdbcPassword" value="referral" />
+
+    <property name="jobExecutorActivate" value="true" />
+
+    <property name="dbCycleUsed" value="true" />
+
+<property name="deploymentResources" value="classpath*:/diagrams/.*.bpmn20.xml" />
+
+<property name="mailServerHost" value="smtp.skynet.be"/>
+<property name="mailServerPort" value="25"/>
+<property name="mailServerDefaultFrom" value="activiti.referral@ktunaxa.org"/>
+<property name="mailServerUsername" value=""/>
+<property name="mailServerPassword" value=""/>
+
+  </bean>
+-->
+
+	<context:component-scan base-package="org.ktunaxa.bpm" />
+
+	<bean id="ktunaxa" class="org.ktunaxa.bpm.KtunaxaConfiguration">
+		<property name="mapDashboardBaseUrl" value="http://localhost:8080/map/"/>
+		<property name="bpmDashboardBaseUrl" value="http://localhost:8080/activiti-explorer/"/>
+	</bean>
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="org.postgresql.Driver"/>
+		<property name="url" value="jdbc:postgresql://localhost:5432/referral"/>
+		<property name="username" value="referral"/>
+		<property name="password" value="referral"/>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+
+		<property name="dataSource" ref="dataSource"/>
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="databaseSchemaUpdate" value="true"/>
+
+		<property name="jobExecutorActivate" value="true"/>
+
+		<property name="dbCycleUsed" value="true"/>
+
+		<property name="deploymentResources" value="classpath*:/diagrams/.*.bpmn20.xml"/>
+
+		<property name="mailServerHost" value="smtp.skynet.be"/>
+		<property name="mailServerPort" value="25"/>
+		<property name="mailServerDefaultFrom" value="activiti.referral@ktunaxa.org"/>
+		<property name="mailServerUsername" value=""/>
+		<property name="mailServerPassword" value=""/>
+
+	</bean>
+
+ 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+    	<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+  	</bean>
+
+
+
+	<bean id="activitiStreamingWebScript"
+		  class="org.ktunaxa.bpm.ActivitiWebScript"
+		  parent="webscript">
+	  <property name="config" ref="config"/>
+		<property name="processEngine" ref="processEngine"/>
+	</bean>
+
+</beans>
