@@ -68,7 +68,7 @@ public class ReferralPanel extends VLayout {
 
 				public void onClick(ClickEvent event) {
 					Feature feature = editor.getFeature();
-					GWT.log(feature + "");
+					GWT.log(feature.toString());
 				}
 			});
 			buttonLayout.addMember(button);

@@ -60,9 +60,9 @@ public class CmisServiceImpl implements CmisService {
 		if (config.getProxyHost() != null && !"".equals(config.getProxyHost())) {
 			System.setProperty("java.net.useSystemProxies", "true");
 			System.setProperty("http.proxyHost", config.getProxyHost());
-			System.setProperty("http.proxyPort", config.getProxyPort() + "");
+			System.setProperty("http.proxyPort", Integer.toString(config.getProxyPort()));
 			System.setProperty("https.proxyHost", config.getProxyHost());
-			System.setProperty("https.proxyPort", config.getProxyPort() + "");
+			System.setProperty("https.proxyPort", Integer.toString(config.getProxyPort()));
 		}
 
 		SessionFactory sessionFactory = SessionFactoryImpl.newInstance();
