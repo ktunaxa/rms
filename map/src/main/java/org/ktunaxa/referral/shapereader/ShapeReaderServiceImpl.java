@@ -24,6 +24,7 @@ import java.util.Map;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
+import org.geotools.feature.FeatureIterator;
 import org.geotools.filter.text.cql2.CQL;
 import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.referencing.CRS;
@@ -118,13 +119,11 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 			throw new IOException("Configured base path is not a directory: "
 					+ basePath + " translated to " + path);
 		}
-		File[] files = folder.listFiles(new FilenameFilter() {
-
+		return folder.listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				return name.endsWith(".shp");
 			}
 		});
-		return files;
 	}
 
 	/**
@@ -182,14 +181,12 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 				throw new IOException("The attribute '" + label
 						+ "' is missing from the shape file definition.");
 			}
-			Integer code = null;
+			Integer code;
 			try {
-				code = CRS.lookupEpsgCode(
-						schema.getCoordinateReferenceSystem(), false);
-			} catch (FactoryException e) {
-				throw new IOException(
-						"Could not look up EPSG code for coordinate reference system: "
-								+ e.getMessage());
+				code = CRS.lookupEpsgCode(schema.getCoordinateReferenceSystem(), false);
+			} catch (FactoryException fe) {
+				throw new IOException("Could not look up EPSG code for coordinate reference system: "
+								+ fe.getMessage(), fe);
 			}
 			if (code == null) {
 				// Backup plan:
@@ -248,7 +245,7 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 		String[] typeNames = dataStore.getTypeNames();
 		FeatureSource<SimpleFeatureType, SimpleFeature> source = dataStore
 				.getFeatureSource(typeNames[0]);
-		Iterator<SimpleFeature> iterator = source.getFeatures().iterator();
+		FeatureIterator<SimpleFeature> iterator = source.getFeatures().features();
 		int i = 0;
 		while (iterator.hasNext()) {
 			SimpleFeature feature = iterator.next();

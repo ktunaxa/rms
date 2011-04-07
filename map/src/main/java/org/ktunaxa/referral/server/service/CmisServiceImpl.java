@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * Implementation of the basic {@link CmisService} that uses a Spring configuration bean to acquire the correct CMIS
@@ -48,7 +49,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CmisServiceImpl implements CmisService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CmisConfig.class);
+	private final Logger log = LoggerFactory.getLogger(CmisConfig.class);
 
 	@Autowired
 	private CmisConfig config;
@@ -57,7 +58,7 @@ public class CmisServiceImpl implements CmisService {
 
 	@PostConstruct
 	public void initialize() {
-		if (config.getProxyHost() != null && !"".equals(config.getProxyHost())) {
+		if (StringUtils.hasText(config.getProxyHost())) {
 			System.setProperty("java.net.useSystemProxies", "true");
 			System.setProperty("http.proxyHost", config.getProxyHost());
 			System.setProperty("http.proxyPort", Integer.toString(config.getProxyPort()));
@@ -89,7 +90,7 @@ public class CmisServiceImpl implements CmisService {
 		try {
 			repository = sessionFactory.getRepositories(parameter).get(0);
 		} catch (Exception e) {
-			LOGGER.error("Error: Initize CmisService failed: " + e.getMessage());
+			log.error("Error: Initialize CmisService failed: " + e.getMessage(), e);
 		}
 	}
 
@@ -113,9 +114,9 @@ public class CmisServiceImpl implements CmisService {
 			}
 			return folder;
 		} catch (CmisConnectionException e) {
-			throw new IOException("The server is unreachable: " + e.getMessage());
+			throw new IOException("The server is unreachable: " + e.getMessage(), e);
 		} catch (CmisRuntimeException e) {
-			throw new IOException("CMIS server error: " + e.getMessage());
+			throw new IOException("CMIS server error: " + e.getMessage(), e);
 		}
 	}
 
@@ -145,7 +146,7 @@ public class CmisServiceImpl implements CmisService {
 		properties.put(PropertyIds.OBJECT_TYPE_ID, "cmis:document");
 		properties.put(PropertyIds.NAME, documentName);
 		properties.put(PropertyIds.CREATED_BY, config.getUserName());
-		properties.put(PropertyIds.CHECKIN_COMMENT, "Aanmaken nieuw document.");
+		properties.put(PropertyIds.CHECKIN_COMMENT, "Create new document.");
 
 		ContentStreamImpl contentStream = new ContentStreamImpl();
 		contentStream.setFileName(documentName);
@@ -169,7 +170,7 @@ public class CmisServiceImpl implements CmisService {
 		}
 
 		// Throw an exception if the document was not found. Don't return null.
-		throw new IOException("Document with name '" + documentName + "' could not be found.");
+		throw new IOException("Document '" + documentName + "' could not be found.");
 	}
 
 	public void update(String documentName, String mimeType, InputStream in) throws IOException {

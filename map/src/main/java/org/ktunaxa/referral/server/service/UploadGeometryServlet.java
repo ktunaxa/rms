@@ -35,17 +35,10 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.geomajas.global.GeomajasException;
-import org.geomajas.layer.LayerException;
 import org.geomajas.service.GeoService;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.geotools.geometry.jts.JTS;
-import org.geotools.referencing.CRS;
-import org.opengis.geometry.MismatchedDimensionException;
-import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.MathTransform;
-import org.opengis.referencing.operation.TransformException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
@@ -82,7 +75,7 @@ public class UploadGeometryServlet extends HttpServlet {
 
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
-			List<FileItem> items = null;
+			List<FileItem> items;
 			String formId = req.getParameter(KtunaxaConstant.FORM_ID);
 			try {
 				items = upload.parseRequest(req);
@@ -115,7 +108,7 @@ public class UploadGeometryServlet extends HttpServlet {
 	private void cleanup() {
 		for (String tempFile : tempFiles) {
 			File file = new File(tempFile);
-			if (file != null && file.exists()) {
+			if (file.exists()) {
 				file.delete();
 			}
 		}
@@ -127,25 +120,15 @@ public class UploadGeometryServlet extends HttpServlet {
 		try {
 			String sourceCrs = geoService.getCodeFromCrs(crs);
 			try {
-				return geoService.transform(geometry, sourceCrs, "EPSG:900913");
-			} catch (LayerException e) {
-				throw new IOException(e.getMessage());
-			} catch (GeomajasException e) {
-				throw new IOException(e.getMessage());
+				return geoService.transform(geometry, sourceCrs, KtunaxaConstant.MAP_CRS);
+			} catch (GeomajasException ge) {
+				throw new IOException(ge.getMessage(), ge);
 			}
 		} catch (Exception e) {
 			try {
-				CoordinateReferenceSystem targetCrs = geoService.getCrs("EPSG:900913");
-				MathTransform transform = CRS.findMathTransform(crs, targetCrs, true);
-				return JTS.transform(geometry, transform);
-			} catch (GeomajasException e1) {
-				throw new IOException(e.getMessage());
-			} catch (FactoryException e2) {
-				throw new IOException(e.getMessage());
-			} catch (MismatchedDimensionException e3) {
-				throw new IOException(e.getMessage());
-			} catch (TransformException e4) {
-				throw new IOException(e.getMessage());
+				return geoService.transform(geometry, crs, geoService.getCrs2(KtunaxaConstant.MAP_CRS));
+			} catch (GeomajasException ge) {
+				throw new IOException(ge.getMessage(), ge);
 			}
 		}
 	}
@@ -193,7 +176,7 @@ public class UploadGeometryServlet extends HttpServlet {
 
 	private void checkLocation(String name) {
 		File file = new File(name);
-		if (file != null && file.exists()) {
+		if (file.exists()) {
 			file.delete();
 		}
 	}

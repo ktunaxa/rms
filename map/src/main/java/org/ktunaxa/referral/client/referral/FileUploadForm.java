@@ -88,6 +88,7 @@ public class FileUploadForm extends DynamicForm {
 	// Private methods:
 	// ------------------------------------------------------------------------
 
+	@SuppressWarnings("all")
 	private native void initComplete(FileUploadForm upload) /*-{
 		$wnd.uploadComplete = function (formId, response) {
 			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadComplete(Ljava/lang/String;Ljava/lang/String;)(
