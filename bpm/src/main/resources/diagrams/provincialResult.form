@@ -1,0 +1,21 @@
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+  -->
+
+<div>
+	<h1>Process decision from province about referral</h1>
+	<p>${ktunaxa.getReferralLink(execution)}</p>
+	<table>
+		<tr>
+			<td>
+				<label>
+					<input type="checkbox" name="decisionConsistent"/>
+					Provincial decision is consistent with KLRA response
+					<input type="hidden" name="decisionConsistent_boolean" value="true"/>
+				</label>
+			</td>
+		</tr>
+	</table>
+</div>

@@ -1207,7 +1207,7 @@
     <flowElements xsi:type="bpmn2:MailTask" id="mailtask4" name="Mail Result" incoming="flow16" outgoing="flow17" to="${requesterEmail}" subject="${ktunaxa.getReferralIdLink(execution)}: Referral results" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The result of our evaluation is attached to this e-mail.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow15" name="" sourceRef="callactivity2" targetRef="servicetask1"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow16" name="" sourceRef="servicetask1" targetRef="mailtask4"/>
-    <flowElements xsi:type="bpmn2:UserTask" id="receivetask2" name="Provincial decision" incoming="flow17" outgoing="flow26" formKey="diagrams/reviewReferral.form"/>
+    <flowElements xsi:type="bpmn2:UserTask" id="receivetask2" name="Provincial decision" incoming="flow17" outgoing="flow26" formKey="diagrams/provincialResult.form"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow17" name="" sourceRef="mailtask4" targetRef="receivetask2"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow18" name="" sourceRef="usertask4" targetRef="usertask7"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow19" name="" sourceRef="usertask7" targetRef="usertask8"/>
@@ -1243,14 +1243,14 @@
     <flowElements xsi:type="bpmn2:ExclusiveGateway" id="exclusivegateway4" name="Exclusive Gateway" incoming="flow30" outgoing="flow31 flow34"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow30" name="" sourceRef="usertask12" targetRef="exclusivegateway4"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow31" name="consistent decision" sourceRef="exclusivegateway4" targetRef="receivetask1">
-      <conditionExpression id="flow31_condition" body="${consistentDecision}"/>
+      <conditionExpression id="flow31_condition" body="${finalDecisionConsistent}"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:UserTask" id="receivetask3" name="Application reports" incoming="flow34" outgoing="flow33" formKey="diagrams/reviewReferral.form"/>
     <flowElements xsi:type="bpmn2:EndEvent" id="endevent3" name="End-sub" incoming="flow32 flow33 flow35"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow32" name="" sourceRef="receivetask1" targetRef="endevent3"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow33" name="" sourceRef="receivetask3" targetRef="endevent3"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow34" name="different" sourceRef="exclusivegateway4" targetRef="receivetask3">
-      <conditionExpression id="flow34_condition" body="${!consistentDecision}"/>
+      <conditionExpression id="flow34_condition" body="${!finalDecisionConsistent}"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow35" name="done" sourceRef="exclusivegateway2" targetRef="endevent3"/>
   </bpmn2:SubProcess>

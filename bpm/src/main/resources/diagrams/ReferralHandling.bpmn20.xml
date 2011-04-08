@@ -117,7 +117,7 @@ Ktunaxa Nation Council]]></activiti:expression>
       </serviceTask>
       <sequenceFlow id="subprocess1flow15" name="" sourceRef="subprocess1callactivity2" targetRef="subprocess1servicetask1"></sequenceFlow>
       <sequenceFlow id="subprocess1flow16" name="" sourceRef="subprocess1servicetask1" targetRef="subprocess1mailtask4"></sequenceFlow>
-      <userTask id="subprocess1receivetask2" name="Provincial decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+      <userTask id="subprocess1receivetask2" name="Provincial decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/provincialResult.form">
 		  <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
       </userTask>
       <sequenceFlow id="subprocess1flow17" name="" sourceRef="subprocess1mailtask4" targetRef="subprocess1receivetask2"></sequenceFlow>
@@ -155,7 +155,7 @@ Ktunaxa Nation Council]]></activiti:expression>
       <exclusiveGateway id="subprocess1exclusivegateway4" name="Exclusive Gateway"></exclusiveGateway>
       <sequenceFlow id="subprocess1flow30" name="" sourceRef="subprocess1usertask12" targetRef="subprocess1exclusivegateway4"></sequenceFlow>
       <sequenceFlow id="subprocess1flow31" name="consistent decision" sourceRef="subprocess1exclusivegateway4" targetRef="subprocess1receivetask1">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${consistentDecision}]]></conditionExpression>
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${finalDecisionConsistent}]]></conditionExpression>
       </sequenceFlow>
       <userTask id="subprocess1receivetask3" name="Application reports" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
 		  <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
@@ -164,7 +164,7 @@ Ktunaxa Nation Council]]></activiti:expression>
       <sequenceFlow id="subprocess1flow32" name="" sourceRef="subprocess1receivetask1" targetRef="subprocess1endevent3"></sequenceFlow>
       <sequenceFlow id="subprocess1flow33" name="" sourceRef="subprocess1receivetask3" targetRef="subprocess1endevent3"></sequenceFlow>
       <sequenceFlow id="subprocess1flow34" name="different" sourceRef="subprocess1exclusivegateway4" targetRef="subprocess1receivetask3">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!consistentDecision}]]></conditionExpression>
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!finalDecisionConsistent}]]></conditionExpression>
       </sequenceFlow>
       <sequenceFlow id="subprocess1flow35" name="done" sourceRef="subprocess1exclusivegateway2" targetRef="subprocess1endevent3"></sequenceFlow>
     </subProcess>
