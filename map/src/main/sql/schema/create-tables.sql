@@ -28,6 +28,18 @@ CREATE TABLE reference_layer(
 	CONSTRAINT reference_layer_code UNIQUE (code)
 ); 
 
+CREATE INDEX reference_layer_type_id_idx
+  ON reference_layer
+  USING btree
+  (type_id);
+
+
+CREATE INDEX reference_layer_code_idx
+  ON reference_layer
+  USING btree
+  (code);
+
+
 ALTER TABLE reference_layer OWNER TO referral_group; 
 GRANT ALL ON TABLE reference_layer TO referral_group; 
 
@@ -45,7 +57,18 @@ CREATE TABLE reference_value
   CONSTRAINT fk_reference_value_layer FOREIGN KEY (layer_id) REFERENCES reference_layer (id)
 ); 
 
+CREATE INDEX reference_value_layer_id_idx
+  ON reference_value
+  USING btree
+  (layer_id);
+
 SELECT AddGeometryColumn('','reference_value','geom','26911','GEOMETRY',2); 
+
+CREATE INDEX reference_value_gist
+  ON reference_value
+  USING gist
+  (geom);
+
 
 ALTER TABLE reference_value OWNER TO referral_group; 
 GRANT ALL ON TABLE reference_value TO referral_group; 
@@ -84,7 +107,17 @@ CREATE TABLE reference_base
   CONSTRAINT fk_reference_base_layer FOREIGN KEY (layer_id) REFERENCES reference_layer (id)
 ); 
 
+CREATE INDEX reference_base_layer_id_idx
+  ON reference_base
+  USING btree
+  (layer_id);
+
 SELECT AddGeometryColumn('','reference_base','geom','26911','GEOMETRY',2);
+
+CREATE INDEX reference_base_gist
+  ON reference_base
+  USING gist
+  (geom);
 
 ALTER TABLE reference_base OWNER TO referral_group; 
 GRANT ALL ON TABLE reference_base TO referral_group; 
@@ -183,7 +216,27 @@ CREATE TABLE referral
   CONSTRAINT fk_referral_type FOREIGN KEY (type_id) REFERENCES referral_type (id)
 ); 
 
+CREATE INDEX referral_application_type_id_idx
+  ON referral
+  USING btree
+  (application_type_id);
+
+CREATE INDEX referral_status_id_idx
+  ON referral
+  USING btree
+  (status_id);
+
+CREATE INDEX referral_type_id_idx
+  ON referral
+  USING btree
+  (type_id);
+
 SELECT AddGeometryColumn('','referral','geom','26911','GEOMETRY',2);
+
+CREATE INDEX referral_gist
+  ON referral
+  USING gist
+  (geom);
 
 ALTER TABLE referral OWNER TO referral_group; 
 GRANT ALL ON TABLE referral TO referral_group; 
@@ -219,6 +272,16 @@ CREATE TABLE document(
 	CONSTRAINT fk_document_referral FOREIGN KEY (referral_id) REFERENCES referral (id)
 ); 
 
+CREATE INDEX document_type_id_idx
+  ON document
+  USING btree
+  (type_id);
+
+CREATE INDEX document_referral_id_idx
+  ON document
+  USING btree
+  (referral_id);
+
 ALTER TABLE document OWNER TO referral_group; 
 GRANT ALL ON TABLE document TO referral_group; 
 
@@ -241,6 +304,16 @@ CREATE TABLE referral_comment(
 	CONSTRAINT fk_referrel_comment_layer_type FOREIGN KEY (reference_layer_type_id) REFERENCES reference_layer_type (id)
 ); 
 
+CREATE INDEX referral_comment_referral_id_idx
+  ON referral_comment
+  USING btree
+  (referral_id);
+
+CREATE INDEX referral_comment_reference_layer_type_id_idx
+  ON referral_comment
+  USING btree
+  (reference_layer_type_id);
+
 ALTER TABLE referral_comment OWNER TO referral_group; 
 GRANT ALL ON TABLE referral_comment TO referral_group; 
 
@@ -262,6 +335,16 @@ CREATE TABLE document_comment(
 	CONSTRAINT fk_document_comment_document FOREIGN KEY (document_id) REFERENCES document (id),
 	CONSTRAINT fk_document_comment_layer_type FOREIGN KEY (reference_layer_type_id) REFERENCES reference_layer_type (id)
 ); 
+
+CREATE INDEX document_comment_document_id_idx
+  ON document_comment
+  USING btree
+  (document_id);
+
+CREATE INDEX document_comment_reference_layer_type_id_idx
+  ON document_comment
+  USING btree
+  (reference_layer_type_id);
 
 ALTER TABLE document_comment OWNER TO referral_group; 
 GRANT ALL ON TABLE document_comment TO referral_group; 

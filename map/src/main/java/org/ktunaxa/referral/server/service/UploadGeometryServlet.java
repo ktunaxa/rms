@@ -38,7 +38,10 @@ import org.geomajas.global.GeomajasException;
 import org.geomajas.service.GeoService;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureIterator;
+import org.geotools.geometry.jts.JTS;
+import org.geotools.referencing.CRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.opengis.referencing.operation.MathTransform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
@@ -95,6 +98,7 @@ public class UploadGeometryServlet extends HttpServlet {
 				out.println("<html>");
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
+				System.out.println(geometry.toText());
 				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','" + geometry.toText()
 						+ "');");
 				out.println("</script>");
@@ -126,9 +130,12 @@ public class UploadGeometryServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			try {
-				return geoService.transform(geometry, crs, geoService.getCrs2(KtunaxaConstant.MAP_CRS));
-			} catch (GeomajasException ge) {
-				throw new IOException(ge.getMessage(), ge);
+				CoordinateReferenceSystem targetCrs = geoService.getCrs2(KtunaxaConstant.MAP_CRS);
+				MathTransform transform = CRS.findMathTransform(crs, targetCrs, true);
+				// have to use JTS transform when EPSG code is missing !
+				return JTS.transform(geometry, transform);
+			} catch (Exception e1) {
+				throw new IOException(e1.getMessage());
 			}
 		}
 	}
@@ -142,6 +149,7 @@ public class UploadGeometryServlet extends HttpServlet {
 			} else {
 				geometry = geometry.union((Geometry) featureIterator.next().getDefaultGeometry());
 			}
+			System.out.println(geometry.getEnvelopeInternal());
 		}
 		return geometry;
 	}
