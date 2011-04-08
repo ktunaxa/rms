@@ -1704,7 +1704,7 @@
   </bpmn2:Process>
   <bpmn2:StartEvent id="startevent1" name="Start" outgoing="flow53" formKey="diagrams/createReferral.form"/>
   <bpmn2:UserTask id="usertask1" name="determine values to investigate" incoming="flow53" outgoing="flow55" candidateGroups="/76" formKey="diagrams/valueSelect.form">
-    <documentation text="determine values to evaluate and/or notify stewardship officer"/>
+    <documentation text="${ktunaxa.getReferralIdLink(execution)} determine values to evaluate and/or notify stewardship officer"/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow53" name="" sourceRef="startevent1" targetRef="usertask1"/>
   <bpmn2:ParallelGateway id="parallelgateway2" name="Parallel Gateway" incoming="flow55" outgoing="flow56 flow57 flow58 flow59 flow60 flow61"/>

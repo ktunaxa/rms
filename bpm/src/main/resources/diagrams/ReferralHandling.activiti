@@ -1168,7 +1168,7 @@
     <flowElements xsi:type="bpmn2:MailTask" id="mailtask2" name="Receive/start notification" incoming="flow10 flow14 flow24" outgoing="flow13" to="${requesterEmail}" subject="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The referral is complete and will be processed by us. We will inform you with the result when it is available.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:MailTask" id="mailtask3" name="Mail Task" incoming="flow11" outgoing="flow21" to="${requesterEmail}" subject="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The referral is complete and will be processed by us. We will inform you with the result when it is available.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:UserTask" id="usertask4" name="Appointment" incoming="flow12" outgoing="flow18" candidateGroups="/11" formKey="diagrams/redirect.form">
-      <documentation text="Make appointment with province to discuss referral"/>
+      <documentation text="${ktunaxa.getReferralIdLink(execution)} Make appointment with province to discuss referral"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:ManualTask" id="usertask5" name="Completeness check" incoming="flow6" outgoing="flow7" candidateGroups="/9" formKey="diagrams/redirect.form">
       <documentation text="${ktunaxa.getReferralIdLink(execution)} Check referral for completeness"/>
@@ -1191,16 +1191,16 @@
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow12" name="level 2" sourceRef="exclusivegateway1" targetRef="usertask4">
       <conditionExpression id="flow12_condition" body="${engagementLevel == 2}"/>
     </flowElements>
-    <flowElements xsi:type="bpmn2:UserTask" id="receivetask1" name="Notification decision" incoming="flow25 flow27 flow31" outgoing="flow32" formKey="diagrams/reviewReferral.form"/>
+    <flowElements xsi:type="bpmn2:UserTask" id="receivetask1" name="Notification decision" incoming="flow25 flow27 flow31" outgoing="flow32" formKey="diagrams/redirect.form"/>
     <flowElements xsi:type="bpmn2:CallActivity" id="callactivity2" name="Call activity" incoming="flow13" outgoing="flow15" calledElement="evaluate-values">
       <inParameters source="referralId" target="referralId"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow13" name="" sourceRef="mailtask2" targetRef="callactivity2"/>
-    <flowElements xsi:type="bpmn2:UserTask" id="usertask7" name="Meet &amp; discuss" incoming="flow18" outgoing="flow19" candidateGroups="/16" formKey="diagrams/reviewReferral.form">
+    <flowElements xsi:type="bpmn2:UserTask" id="usertask7" name="Meet &amp; discuss" incoming="flow18" outgoing="flow19" candidateGroups="/16" formKey="diagrams/redirect.form">
       <documentation text="Meet with province to discuss referral"/>
     </flowElements>
-    <flowElements xsi:type="bpmn2:UserTask" id="usertask8" name="Review timelines" incoming="flow19" outgoing="flow14" candidateGroups="/17" formKey="diagrams/redirect.form">
-      <documentation text="Review referral timelines"/>
+    <flowElements xsi:type="bpmn2:UserTask" id="usertask8" name="Review timelines" incoming="flow19" outgoing="flow14" candidateGroups="/17" formKey="diagrams/reviewReferral.form">
+      <documentation text="${ktunaxa.getReferralIdLink(execution)} Review referral timelines"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow14" name="" sourceRef="usertask8" targetRef="mailtask2"/>
     <flowElements xsi:type="bpmn2:ServiceTask" id="servicetask1" name="Produce result report" incoming="flow15" outgoing="flow16" implementation="org.ktunaxa.bpm.BuildResultReportTask" implementationType="classType" resultVariableName=""/>
@@ -1231,10 +1231,10 @@
       <conditionExpression id="flow27_condition" body="${decisionConsistent}"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:UserTask" id="usertask11" name="Appointment" incoming="flow28" outgoing="flow29" candidateGroups="/12" formKey="diagrams/redirect.form">
-      <documentation text="Make appointment with province to discuss referral"/>
+      <documentation text="${ktunaxa.getReferralIdLink(execution)} Make appointment with province to discuss referral"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:UserTask" id="usertask12" name="Discuss referral" incoming="flow29" outgoing="flow30" candidateGroups="/13" formKey="diagrams/redirect.form">
-      <documentation text="Meet with province to discuss referral"/>
+      <documentation text="${ktunaxa.getReferralIdLink(execution)} Meet with province to discuss referral"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow28" name="" sourceRef="exclusivegateway3" targetRef="usertask11">
       <conditionExpression id="flow28_condition" body="${!decisionConsistent}"/>
@@ -1245,7 +1245,7 @@
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow31" name="consistent decision" sourceRef="exclusivegateway4" targetRef="receivetask1">
       <conditionExpression id="flow31_condition" body="${finalDecisionConsistent}"/>
     </flowElements>
-    <flowElements xsi:type="bpmn2:UserTask" id="receivetask3" name="Application reports" incoming="flow34" outgoing="flow33" formKey="diagrams/reviewReferral.form"/>
+    <flowElements xsi:type="bpmn2:UserTask" id="receivetask3" name="Application reports" incoming="flow34" outgoing="flow33" formKey="diagrams/redirect.form"/>
     <flowElements xsi:type="bpmn2:EndEvent" id="endevent3" name="End-sub" incoming="flow32 flow33 flow35"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow32" name="" sourceRef="receivetask1" targetRef="endevent3"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow33" name="" sourceRef="receivetask3" targetRef="endevent3"/>
