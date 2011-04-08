@@ -1709,31 +1709,31 @@
   <bpmn2:SequenceFlow id="flow53" name="" sourceRef="startevent1" targetRef="usertask1"/>
   <bpmn2:ParallelGateway id="parallelgateway2" name="Parallel Gateway" incoming="flow55" outgoing="flow56 flow57 flow58 flow59 flow60 flow61"/>
   <bpmn2:SequenceFlow id="flow55" name="" sourceRef="usertask1" targetRef="parallelgateway2"/>
-  <bpmn2:UserTask id="usertask3" name="Evaluate archaeological values" incoming="flow81" outgoing="flow75" candidateGroups="/70" formKey="">
-    <documentation text="${referralId}, ${description}"/>
+  <bpmn2:UserTask id="usertask3" name="Evaluate archaeological values" incoming="flow81" outgoing="flow75" candidateGroups="/70" formKey="diagrams/redirect.form">
+    <documentation text="${ktunaxa.getReferralLink(execution)}"/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask4" name="Evaluate aquatic values" incoming="flow80" outgoing="flow74" candidateGroups="/77" formKey="">
-    <documentation text="${referralId}, ${description}"/>
+  <bpmn2:UserTask id="usertask4" name="Evaluate aquatic values" incoming="flow80" outgoing="flow74" candidateGroups="/77" formKey="diagrams/redirect.form">
+    <documentation text="${ktunaxa.getReferralLink(execution)}"/>
   </bpmn2:UserTask>
   <bpmn2:ManualTask id="manualtask1" name="auto evaluate aquatic values" incoming="flow65" outgoing="flow80"/>
   <bpmn2:ManualTask id="manualtask2" name="auto evaluate archaeological values" incoming="flow64" outgoing="flow81"/>
   <bpmn2:ManualTask id="manualtask3" name="auto evaluate cultural values" incoming="flow66" outgoing="flow82"/>
   <bpmn2:ManualTask id="manualtask4" name="auto evaluate ecological values" incoming="flow68" outgoing="flow83"/>
   <bpmn2:ManualTask id="manualtask5" name="auto evaluate treaty values" incoming="flow70" outgoing="flow84"/>
-  <bpmn2:UserTask id="usertask6" name="Notify communities" incoming="flow71" outgoing="flow85" candidateGroups="/74" formKey="">
-    <documentation text="${referralId}, ${description}"/>
+  <bpmn2:UserTask id="usertask6" name="Notify communities" incoming="flow71" outgoing="flow85" candidateGroups="/74" formKey="diagrams/redirect.form">
+    <documentation text="${ktunaxa.getReferralLink(execution)}"/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask7" name="Evaluate cultural values" incoming="flow82" outgoing="flow76" candidateGroups="/71" formKey="">
-    <documentation text="${referralId}, ${description}"/>
+  <bpmn2:UserTask id="usertask7" name="Evaluate cultural values" incoming="flow82" outgoing="flow76" candidateGroups="/71" formKey="diagrams/redirect.form">
+    <documentation text="${ktunaxa.getReferralLink(execution)}"/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask8" name="Evaluate ecological values" incoming="flow83" outgoing="flow77" candidateGroups="/72" formKey="">
-    <documentation text="${referralId}, ${description}"/>
+  <bpmn2:UserTask id="usertask8" name="Evaluate ecological values" incoming="flow83" outgoing="flow77" candidateGroups="/72" formKey="diagrams/redirect.form">
+    <documentation text="${ktunaxa.getReferralLink(execution)}"/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask9" name="Evaluate treaty values" incoming="flow84" outgoing="flow78" candidateGroups="/73" formKey="">
-    <documentation text="${referralId}, ${description}"/>
+  <bpmn2:UserTask id="usertask9" name="Evaluate treaty values" incoming="flow84" outgoing="flow78" candidateGroups="/73" formKey="diagrams/redirect.form">
+    <documentation text="${ktunaxa.getReferralLink(execution)}"/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask10" name="Process community input" incoming="flow85" outgoing="flow79" candidateGroups="/75" formKey="">
-    <documentation text="${referralId}, ${description}"/>
+  <bpmn2:UserTask id="usertask10" name="Process community input" incoming="flow85" outgoing="flow79" candidateGroups="/75" formKey="diagrams/redirect.form">
+    <documentation text="${ktunaxa.getReferralLink(execution)}"/>
   </bpmn2:UserTask>
   <bpmn2:ExclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" incoming="flow56" outgoing="flow62 flow65"/>
   <bpmn2:ExclusiveGateway id="exclusivegateway2" name="Exclusive Gateway" incoming="flow57" outgoing="flow63 flow64"/>

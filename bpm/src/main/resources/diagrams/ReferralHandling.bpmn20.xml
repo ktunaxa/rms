@@ -9,10 +9,10 @@
       <serviceTask id="subprocess1mailtask1" name="Level 0 notification" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requester-email}"></activiti:field>
-          <activiti:field name="subject" expression="${referralId}: Level 0 notification"></activiti:field>
+          <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Level 0 notification"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
+            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
 
 Project description: ${description}
 
@@ -26,10 +26,10 @@ Ktunaxa Nation Council]]></activiti:expression>
       <serviceTask id="subprocess1mailtask2" name="Receive/start notification" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
+          <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
+            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
 
 Project description: ${description}
 
@@ -43,10 +43,10 @@ Ktunaxa Nation Council]]></activiti:expression>
       <serviceTask id="subprocess1mailtask3" name="Mail Task" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
+          <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
+            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
 
 Project description: ${description}
 
@@ -57,14 +57,14 @@ Ktunaxa Nation Council]]></activiti:expression>
           </activiti:field>
         </extensionElements>
       </serviceTask>
-      <userTask id="subprocess1usertask4" name="Appointment" activiti:candidateGroups="referralManager">
+      <userTask id="subprocess1usertask4" name="Appointment" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
         <documentation>Make appointment with province to discuss referral</documentation>
       </userTask>
       <manualTask id="subprocess1usertask5" name="Completeness check" activiti:candidateGroups="referralManager">
-        <documentation>${referralId} Check referral for completeness</documentation>
+        <documentation>${ktunaxa.getReferralIdLink(execution)} Check referral for completeness</documentation>
       </manualTask>
       <userTask id="subprocess1usertask6" name="Review referral" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
-        <documentation>${referralId} Review timeline , engagement level etc</documentation>
+        <documentation>${ktunaxa.getReferralIdLink(execution)} Review timeline , engagement level etc</documentation>
       </userTask>
       <sequenceFlow id="subprocess1flow6" name="" sourceRef="subprocess1startevent6" targetRef="subprocess1usertask5"></sequenceFlow>
       <sequenceFlow id="subprocess1flow7" name="" sourceRef="subprocess1usertask5" targetRef="subprocess1usertask6"></sequenceFlow>
@@ -81,28 +81,30 @@ Ktunaxa Nation Council]]></activiti:expression>
       <sequenceFlow id="subprocess1flow12" name="level 2" sourceRef="subprocess1exclusivegateway1" targetRef="subprocess1usertask4">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 2}]]></conditionExpression>
       </sequenceFlow>
-      <receiveTask id="subprocess1receivetask1" name="Notification decision"></receiveTask>
+      <userTask id="subprocess1receivetask1" name="Notification decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+		  <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      </userTask>
       <callActivity id="subprocess1callactivity2" name="Call activity" calledElement="evaluate-values">
         <extensionElements>
           <activiti:in source="referralId" target="referralId"></activiti:in>
         </extensionElements>
       </callActivity>
       <sequenceFlow id="subprocess1flow13" name="" sourceRef="subprocess1mailtask2" targetRef="subprocess1callactivity2"></sequenceFlow>
-      <userTask id="subprocess1usertask7" name="Meet &amp; discuss" activiti:candidateGroups="referralManager">
-        <documentation>Meet with province to discuss referral</documentation>
+      <userTask id="subprocess1usertask7" name="Meet &amp; discuss" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+        <documentation>${ktunaxa.getReferralIdLink(execution)} Meet with province to discuss referral</documentation>
       </userTask>
-      <userTask id="subprocess1usertask8" name="Review timelines" activiti:candidateGroups="referralManager">
-        <documentation>Review referral timelines</documentation>
+      <userTask id="subprocess1usertask8" name="Review timelines" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+        <documentation>${ktunaxa.getReferralIdLink(execution)} Review referral timelines</documentation>
       </userTask>
       <sequenceFlow id="subprocess1flow14" name="" sourceRef="subprocess1usertask8" targetRef="subprocess1mailtask2"></sequenceFlow>
       <serviceTask id="subprocess1servicetask1" name="Produce result report" activiti:class="org.ktunaxa.bpm.BuildResultReportTask"></serviceTask>
       <serviceTask id="subprocess1mailtask4" name="Mail Result" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${referralId}: Referral results"></activiti:field>
+          <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral results"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
+            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
 
 Project description: ${description}
 
@@ -115,13 +117,17 @@ Ktunaxa Nation Council]]></activiti:expression>
       </serviceTask>
       <sequenceFlow id="subprocess1flow15" name="" sourceRef="subprocess1callactivity2" targetRef="subprocess1servicetask1"></sequenceFlow>
       <sequenceFlow id="subprocess1flow16" name="" sourceRef="subprocess1servicetask1" targetRef="subprocess1mailtask4"></sequenceFlow>
-      <receiveTask id="subprocess1receivetask2" name="Provincial decision"></receiveTask>
+      <userTask id="subprocess1receivetask2" name="Provincial decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+		  <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      </userTask>
       <sequenceFlow id="subprocess1flow17" name="" sourceRef="subprocess1mailtask4" targetRef="subprocess1receivetask2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow18" name="" sourceRef="subprocess1usertask4" targetRef="subprocess1usertask7"></sequenceFlow>
       <sequenceFlow id="subprocess1flow19" name="" sourceRef="subprocess1usertask7" targetRef="subprocess1usertask8"></sequenceFlow>
-      <userTask id="subprocess1usertask9" name="Meeting train" activiti:candidateGroups="referralManager"></userTask>
+      <userTask id="subprocess1usertask9" name="Meeting train" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+		  <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      </userTask>
       <userTask id="subprocess1usertask10" name="Evaluate or finish" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/evaluateOrFinish.form">
-        <documentation>Is the referral handling finished or should the level 1 evaluation of values be started?</documentation>
+        <documentation>${ktunaxa.getReferralIdLink(execution)} Is the referral handling finished or should the level 1 evaluation of values be started?</documentation>
       </userTask>
       <sequenceFlow id="subprocess1flow20" name="" sourceRef="subprocess1usertask9" targetRef="subprocess1usertask10"></sequenceFlow>
       <sequenceFlow id="subprocess1flow21" name="" sourceRef="subprocess1mailtask3" targetRef="subprocess1usertask9"></sequenceFlow>
@@ -136,11 +142,11 @@ Ktunaxa Nation Council]]></activiti:expression>
       <sequenceFlow id="subprocess1flow27" name="" sourceRef="subprocess1exclusivegateway3" targetRef="subprocess1receivetask1">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${decisionConsistent}]]></conditionExpression>
       </sequenceFlow>
-      <userTask id="subprocess1usertask11" name="Appointment" activiti:candidateGroups="referralManager">
-        <documentation>Make appointment with province to discuss referral</documentation>
+      <userTask id="subprocess1usertask11" name="Appointment" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+        <documentation>${ktunaxa.getReferralIdLink(execution)}Make appointment with province to discuss referral</documentation>
       </userTask>
-      <userTask id="subprocess1usertask12" name="Discuss referral" activiti:candidateGroups="referralManager">
-        <documentation>Meet with province to discuss referral</documentation>
+      <userTask id="subprocess1usertask12" name="Discuss referral" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+        <documentation>${ktunaxa.getReferralIdLink(execution)}Meet with province to discuss referral</documentation>
       </userTask>
       <sequenceFlow id="subprocess1flow28" name="" sourceRef="subprocess1exclusivegateway3" targetRef="subprocess1usertask11">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!decisionConsistent}]]></conditionExpression>
@@ -151,7 +157,9 @@ Ktunaxa Nation Council]]></activiti:expression>
       <sequenceFlow id="subprocess1flow31" name="consistent decision" sourceRef="subprocess1exclusivegateway4" targetRef="subprocess1receivetask1">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${consistentDecision}]]></conditionExpression>
       </sequenceFlow>
-      <receiveTask id="subprocess1receivetask3" name="Application reports"></receiveTask>
+      <userTask id="subprocess1receivetask3" name="Application reports" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+		  <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      </userTask>
       <endEvent id="subprocess1endevent3" name="End-sub"></endEvent>
       <sequenceFlow id="subprocess1flow32" name="" sourceRef="subprocess1receivetask1" targetRef="subprocess1endevent3"></sequenceFlow>
       <sequenceFlow id="subprocess1flow33" name="" sourceRef="subprocess1receivetask3" targetRef="subprocess1endevent3"></sequenceFlow>

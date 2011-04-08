@@ -1,14 +1,12 @@
 <div>
 	<h1>Review referral</h1>
-	<p><a href="http://localhost:8080/map/?r=${referralId}">Referral in mapping dashboard</a></p>
+	<p><a href="${ktunaxa.getReferralUrl(execution)}">Referral in mapping dashboard</a></p>
 	<table>
 		<tr>
 			<td>
 				<label>
 					Referral id:<br/>
-					<input type="text" name="referralId" value="${referralId}" placeholder="REF01" autofocus="true"/>
-					<input type="hidden" name="referralId_required" value="true"/>
-					<input type="hidden" name="referralId_type" value="String"/>
+					${ktunaxa.getReferralIdLink(execution)}
 				</label><br/>
 			</td>
 		</tr>
