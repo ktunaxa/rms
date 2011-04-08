@@ -43,24 +43,18 @@ public class WktParser {
 
 	public Geometry parse(String wkt) {
 		if (wkt != null) {
-			tempWkt = wkt.substring(wkt.indexOf('('));
-			if (wkt.startsWith(org.geomajas.geometry.Geometry.MULTI_POLYGON.toUpperCase())
-					|| wkt.startsWith(org.geomajas.geometry.Geometry.MULTI_POLYGON)) {
+			tempWkt = wkt;
+			if (skip(org.geomajas.geometry.Geometry.MULTI_POLYGON.toUpperCase())) {
 				return parseMultiPolygon();
-			} else if (wkt.startsWith(org.geomajas.geometry.Geometry.POLYGON.toUpperCase())
-					|| wkt.startsWith(org.geomajas.geometry.Geometry.POLYGON)) {
+			} else if (skip(org.geomajas.geometry.Geometry.POLYGON.toUpperCase())) {
 				return parsePolygon();
-			} else if (wkt.startsWith(org.geomajas.geometry.Geometry.MULTI_LINE_STRING.toUpperCase())
-					|| wkt.startsWith(org.geomajas.geometry.Geometry.MULTI_LINE_STRING)) {
+			} else if (skip(org.geomajas.geometry.Geometry.MULTI_LINE_STRING.toUpperCase())) {
 				return parseMultiLineString();
-			} else if (wkt.startsWith(org.geomajas.geometry.Geometry.MULTI_POINT.toUpperCase())
-					|| wkt.startsWith(org.geomajas.geometry.Geometry.MULTI_POINT)) {
+			} else if (skip(org.geomajas.geometry.Geometry.MULTI_POINT.toUpperCase())) {
 				return parseMultiPoint();
-			} else if (wkt.startsWith(org.geomajas.geometry.Geometry.LINE_STRING.toUpperCase())
-					|| wkt.startsWith(org.geomajas.geometry.Geometry.LINE_STRING)) {
+			} else if (skip(org.geomajas.geometry.Geometry.LINE_STRING.toUpperCase())) {
 				return parseLineString();
-			} else if (wkt.startsWith(org.geomajas.geometry.Geometry.POINT.toUpperCase())
-					|| wkt.startsWith(org.geomajas.geometry.Geometry.POINT)) {
+			} else if (skip(org.geomajas.geometry.Geometry.POINT.toUpperCase())) {
 				return parsePoint();
 			}
 		}
@@ -69,79 +63,117 @@ public class WktParser {
 
 	// Receives something like: (((x y, x y, ...)))
 	private MultiPolygon parseMultiPolygon() {
+		skip("(");
 		List<Polygon> polygons = new ArrayList<Polygon>();
-		while (!tempWkt.startsWith(")")) {
-			tempWkt = tempWkt.substring(tempWkt.indexOf('(') + 1);
+		while (!isAt(")")) {
 			polygons.add(parsePolygon());
+			skip(",");
 		}
+		skip(")");
 		return factory.createMultiPolygon(polygons.toArray(new Polygon[polygons.size()]));
 	}
 
 	private MultiLineString parseMultiLineString() {
+		skip("(");
 		List<LineString> lineStrings = new ArrayList<LineString>();
-		while (!tempWkt.startsWith(")")) {
-			tempWkt = tempWkt.substring(tempWkt.indexOf("(") + 1);
+		while (!isAt(")")) {
 			lineStrings.add(parseLineString());
+			skip(",");
 		}
+		skip(")");
 		return factory.createMultiLineString(lineStrings.toArray(new LineString[] {}));
 	}
 
 	private MultiPoint parseMultiPoint() {
+		skip("(");
 		List<Point> points = new ArrayList<Point>();
-		while (!tempWkt.startsWith(")")) {
-			tempWkt = tempWkt.substring(tempWkt.indexOf("(") + 1);
+		while (!isAt(")")) {
 			points.add(parsePoint());
+			skip(",");
 		}
+		skip(")");
 		return factory.createMultiPoint(points.toArray(new Point[] {}));
 	}
 
+	// Receives something like: (((x y, x y, ...)))
 	private Polygon parsePolygon() {
+		skip("(");
 		LinearRing exteriorRing = null;
 		List<LinearRing> interiorRings = new ArrayList<LinearRing>();
-		while (!tempWkt.startsWith(")")) {
-			tempWkt = tempWkt.substring(tempWkt.indexOf('(') + 1);
+		while (!isAt(")")) {
 			if (exteriorRing == null) {
 				exteriorRing = parseLinearRing();
 			} else {
 				interiorRings.add(parseLinearRing());
 			}
+			skip(",");
 		}
-		tempWkt = tempWkt.substring(1);
+		skip(")");
 		return factory.createPolygon(exteriorRing, interiorRings.toArray(new LinearRing[interiorRings.size()]));
 	}
 
 	private LinearRing parseLinearRing() {
-		int pos = tempWkt.indexOf(')');
-		String ring = tempWkt.substring(1, pos);
-		tempWkt = tempWkt.substring(pos + 1);
-		String[] tokens = ring.split(",");
-		Coordinate[] coordinates = new Coordinate[tokens.length];
-		for (int i = 0; i < tokens.length; i++) {
-			String[] values = tokens[i].trim().split("\\s");
-			coordinates[i] = new Coordinate(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
-		}
+		skip("(");
+		Coordinate[] coordinates = parseCoordinates();
+		findAndSkip(")");
 		return factory.createLinearRing(coordinates);
 	}
 
 	private LineString parseLineString() {
+		skip("(");
+		Coordinate[] coordinates = parseCoordinates();
+		findAndSkip(")");
+		return factory.createLineString(coordinates);
+	}
+
+	private Point parsePoint() {
+		skip("(");
+		Coordinate coordinate = parseCoordinate();
+		findAndSkip(")");
+		return factory.createPoint(coordinate);
+	}
+
+	private Coordinate parseCoordinate() {
 		int pos = tempWkt.indexOf(')');
-		String ring = tempWkt.substring(1, pos);
-		tempWkt = tempWkt.substring(pos + 1);
+		String point = tempWkt.substring(0, pos);
+		String[] values = point.split(" ");
+		Coordinate coordinate = new Coordinate(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
+		return coordinate;
+	}
+
+	private Coordinate[] parseCoordinates() {
+		int pos = tempWkt.indexOf(')');
+		String ring = tempWkt.substring(0, pos);
 		String[] tokens = ring.split(",");
 		Coordinate[] coordinates = new Coordinate[tokens.length];
 		for (int i = 0; i < tokens.length; i++) {
 			String[] values = tokens[i].trim().split("\\s");
 			coordinates[i] = new Coordinate(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
 		}
-		return factory.createLineString(coordinates);
+		return coordinates;
 	}
 
-	// Receives something like: (((x y, x y, ...)))
-	private Point parsePoint() {
-		String point = tempWkt.substring(1, tempWkt.indexOf(")"));
-		tempWkt = tempWkt.substring(tempWkt.indexOf(")") + 1);
-		String[] values = point.split(" ");
-		Coordinate coordinate = new Coordinate(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
-		return factory.createPoint(coordinate);
+	private boolean isAt(String token) {
+		tempWkt = tempWkt.trim();
+		return tempWkt.startsWith(token);
 	}
+
+	private boolean skip(String token) {
+		tempWkt = tempWkt.trim();
+		if (tempWkt.startsWith(token)) {
+			tempWkt = tempWkt.substring(token.length());
+			return true;
+		}
+		return false;
+	}
+
+	private boolean findAndSkip(String token) {
+		int pos = tempWkt.indexOf(token);
+		if (pos != -1) {
+			tempWkt = tempWkt.substring(pos + 1);
+			return true;
+		}
+		return false;
+	}
+
 }
