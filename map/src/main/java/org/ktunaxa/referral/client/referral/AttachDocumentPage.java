@@ -153,6 +153,7 @@ public class AttachDocumentPage implements WizardPage {
 	
 	public void clear() {
 		busyImg.setVisible(false);
+		grid.setData(new ListGridRecord[] {});
 		setFeature(null);
 	}
 }
