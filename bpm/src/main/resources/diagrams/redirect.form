@@ -4,7 +4,7 @@
 
 <XXXscript type="text/javascript">
 <!--
-window.location = "${ktunaxa.getReferralUrl(execution)}";
+XXXwindow.location = "${ktunaxa.getReferralUrl(execution)}";
 //-->
 </XXXscript>
 </div>

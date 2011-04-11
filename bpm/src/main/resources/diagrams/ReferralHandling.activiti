@@ -1194,6 +1194,7 @@
     <flowElements xsi:type="bpmn2:UserTask" id="receivetask1" name="Notification decision" incoming="flow25 flow27 flow31" outgoing="flow32" formKey="diagrams/redirect.form"/>
     <flowElements xsi:type="bpmn2:CallActivity" id="callactivity2" name="Call activity" incoming="flow13" outgoing="flow15" calledElement="evaluate-values">
       <inParameters source="referralId" target="referralId"/>
+      <inParameters source="description" target="description"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow13" name="" sourceRef="mailtask2" targetRef="callactivity2"/>
     <flowElements xsi:type="bpmn2:UserTask" id="usertask7" name="Meet &amp; discuss" incoming="flow18" outgoing="flow19" candidateGroups="/16" formKey="diagrams/redirect.form">

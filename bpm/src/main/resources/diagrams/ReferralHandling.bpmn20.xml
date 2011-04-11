@@ -87,6 +87,7 @@ Ktunaxa Nation Council]]></activiti:expression>
       <callActivity id="subprocess1callactivity2" name="Call activity" calledElement="evaluate-values">
         <extensionElements>
           <activiti:in source="referralId" target="referralId"></activiti:in>
+			<activiti:in source="description" target="description"></activiti:in>
         </extensionElements>
       </callActivity>
       <sequenceFlow id="subprocess1flow13" name="" sourceRef="subprocess1mailtask2" targetRef="subprocess1callactivity2"></sequenceFlow>
