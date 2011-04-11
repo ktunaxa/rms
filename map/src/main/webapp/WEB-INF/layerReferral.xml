@@ -90,13 +90,32 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
+                                
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Project Name"/>
                     <property name="name" value="projectName"/>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Project Location"/>
@@ -104,6 +123,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Project Description"/>
@@ -112,6 +140,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
                     <property name="formInputType" value="textArea" />
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Project Background"/>
@@ -141,6 +178,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Contact Name"/>
@@ -148,6 +194,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Contact Email"/>
@@ -155,6 +210,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Contact Phone"/>
@@ -162,6 +226,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Contact Address"/>
@@ -317,6 +390,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="INTEGER"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Confidential"/>
@@ -324,6 +406,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="BOOLEAN" />
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
 
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
@@ -332,6 +423,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="DATE"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Reponse Date"/>
@@ -339,6 +439,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="DATE"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Reponse Deadline"/>
@@ -346,6 +455,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="DATE"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Active Retention Period"/>
@@ -353,6 +471,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="INTEGER"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Semi Active Retention Period"/>
@@ -360,6 +487,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="INTEGER"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Final Disposition"/>
@@ -367,6 +503,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="INTEGER"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Record Classification"/>
@@ -374,6 +519,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
                 </bean>
 	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 	                <property name="label" value="Documents" />

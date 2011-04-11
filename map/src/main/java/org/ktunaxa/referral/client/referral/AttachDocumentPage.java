@@ -14,8 +14,9 @@ package org.ktunaxa.referral.client.referral;
 
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
-import org.ktunaxa.referral.client.referral.event.FileUploadDoneEvent;
+import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
+import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Canvas;
@@ -53,7 +54,7 @@ public class AttachDocumentPage implements WizardPage {
 		grid = new ListGrid();
 		grid.setLayoutAlign(Alignment.CENTER);
 		grid.setWidth(500);
-		grid.setAutoHeight();
+		grid.setHeight(300);
 		grid.setShowAllRecords(true);
 
 		ListGridField nameField = new ListGridField("name", "Document");
@@ -120,12 +121,25 @@ public class AttachDocumentPage implements WizardPage {
 		});
 		btnLayout.addMember(uploadbutton);
 		btnLayout.addMember(busyImg);
+		final HTMLFlow errorFlow = new HTMLFlow();
+		errorFlow.setHeight100();
+		errorFlow.setWidth100();
+		errorFlow.setVisible(false);
+		btnLayout.addMember(errorFlow);
 
 		form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
 
-			public void onFileUploadDone(FileUploadDoneEvent event) {
+			public void onFileUploadComplete(FileUploadCompleteEvent event) {
+				errorFlow.setContents("");
+				errorFlow.setVisible(false);
 				addDocument(event.getResponse());
 				busyImg.setVisible(false);
+			}
+
+			public void onFileUploadFailed(FileUploadFailedEvent event) {
+				busyImg.setVisible(false);
+				errorFlow.setContents("<div>" + event.getError() + "</div>");
+				errorFlow.setVisible(true);
 			}
 		});
 

@@ -25,5 +25,7 @@ public interface FileUploadDoneHandler extends EventHandler {
 
 	GwtEvent.Type<FileUploadDoneHandler> TYPE = new GwtEvent.Type<FileUploadDoneHandler>();
 
-	void onFileUploadDone(FileUploadDoneEvent event);
+	void onFileUploadComplete(FileUploadCompleteEvent event);
+
+	void onFileUploadFailed(FileUploadFailedEvent event);
 }

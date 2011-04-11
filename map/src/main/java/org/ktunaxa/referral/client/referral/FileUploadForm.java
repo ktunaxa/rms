@@ -12,8 +12,9 @@
 
 package org.ktunaxa.referral.client.referral;
 
-import org.ktunaxa.referral.client.referral.event.FileUploadDoneEvent;
+import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
+import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.event.shared.HandlerManager;
@@ -81,9 +82,13 @@ public class FileUploadForm extends DynamicForm {
 
 	private static void uploadComplete(String formId, String response) {
 		FileUploadForm form = (FileUploadForm) Canvas.getById(formId);
-		form.handlerManager.fireEvent(new FileUploadDoneEvent(response));
+		form.handlerManager.fireEvent(new FileUploadCompleteEvent(response));
 	}
 
+	private static void uploadFailed(String formId, String error) {
+		FileUploadForm form = (FileUploadForm) Canvas.getById(formId);
+		form.handlerManager.fireEvent(new FileUploadFailedEvent(error));
+	}
 	// ------------------------------------------------------------------------
 	// Private methods:
 	// ------------------------------------------------------------------------
@@ -93,6 +98,10 @@ public class FileUploadForm extends DynamicForm {
 		$wnd.uploadComplete = function (formId, response) {
 			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadComplete(Ljava/lang/String;Ljava/lang/String;)(
 					formId, response);
+		};
+		$wnd.uploadFailed = function (formId, error) {
+			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadFailed(Ljava/lang/String;Ljava/lang/String;)(
+					formId, error);
 		};
 	}-*/;
 }

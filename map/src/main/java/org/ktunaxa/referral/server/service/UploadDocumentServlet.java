@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
@@ -80,31 +79,23 @@ public class UploadDocumentServlet extends HttpServlet {
 				}
 				CmisService cmisService = context.getBean(CmisService.class);
 				Document document;
-				try {
-					document = cmisService.create(fileName, mimeType, new ByteArrayInputStream(fileContent));
-				} catch (IOException ioe) {
-					String msg = "Could not put document " + fileName + " in CMS.";
-					log.error(msg, ioe);
-					out.println(msg);
-					return;
-				}
-
+				document = cmisService.create(fileName, mimeType, new ByteArrayInputStream(fileContent));
 				resp.setContentType("text/html");
 				out.println("<html>");
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
 				// TODO also send the CMIS key back to the client...
-				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','" + fileName + "');");
+				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','" + document.getId()
+						+ "');");
 				out.println("</script>");
-			} catch (FileUploadException e) {
+			} catch (Exception e) {
 				resp.setContentType("text/html");
 				PrintWriter out = resp.getWriter();
-				resp.setStatus(400);
 				out.println("<html>");
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
 				// TODO also send the CMIS key back to the client...
-				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','error');");
+				out.println("if (parent.uploadFailed) parent.uploadFailed('" + formId + "','error');");
 				out.println("</script>");
 			}
 		}

@@ -268,7 +268,9 @@ public class ReferralCreationWizard extends VLayout {
 		}
 
 		public void onClick(ClickEvent event) {
-			goToStep(index + 1);
+			if (pages.get(currentIndex).validate()) {
+				goToStep(index + 1);
+			}
 		}
 
 		public void onWizardPageAdded(WizardPageAddedEvent event) {

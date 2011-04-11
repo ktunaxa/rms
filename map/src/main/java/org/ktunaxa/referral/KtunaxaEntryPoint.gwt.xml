@@ -23,6 +23,9 @@
 	<source path="client" />
     <source path="server/dto" />
     <source path="server/command/request" />
+    <source path="server/service">
+    		<include name="KtunaxaConstant.java"/>
+    </source>
 
 	<!-- add required languages
 	<extend-property name="locale" values="nl"/>

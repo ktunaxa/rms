@@ -35,6 +35,8 @@ public class ReferralInfoPage implements WizardPage {
 		editor = new FeatureAttributeEditor(layer, false, new ReferralFormFactory());
 		Feature feature = new Feature(layer);
 		editor.setFeature(feature);
+		editor.setWidth100();
+		editor.setHeight100();
 	}
 
 	public String getTitle() {
@@ -46,8 +48,7 @@ public class ReferralInfoPage implements WizardPage {
 	}
 
 	public boolean validate() {
-		// TODO Only if the form validates does this page validate.
-		return true;
+		return editor.validate();
 	}
 
 	public Canvas asWidget() {
@@ -59,7 +60,9 @@ public class ReferralInfoPage implements WizardPage {
 	}
 
 	public void setFeature(Feature feature) {
-		editor.setFeature(feature);
+		if (feature != null) {
+			editor.setFeature(feature);
+		}
 	}
 	
 	public void clear() {

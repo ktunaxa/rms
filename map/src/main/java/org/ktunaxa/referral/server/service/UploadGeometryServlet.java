@@ -98,13 +98,17 @@ public class UploadGeometryServlet extends HttpServlet {
 				out.println("<html>");
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
-				System.out.println(geometry.toText());
 				out.println("if (parent.uploadComplete) parent.uploadComplete('" + formId + "','" + geometry.toText()
 						+ "');");
 				out.println("</script>");
 				cleanup();
 			} catch (FileUploadException e) {
-				resp.setStatus(400);
+				PrintWriter out = resp.getWriter();
+				out.println("<html>");
+				out.println("<body>");
+				out.println("<script type=\"text/javascript\">");
+				out.println("if (parent.uploadFailed) parent.uploadFailed('" + formId + "','error');");
+				out.println("</script>");
 			}
 		}
 	}
@@ -149,7 +153,6 @@ public class UploadGeometryServlet extends HttpServlet {
 			} else {
 				geometry = geometry.union((Geometry) featureIterator.next().getDefaultGeometry());
 			}
-			System.out.println(geometry.getEnvelopeInternal());
 		}
 		return geometry;
 	}

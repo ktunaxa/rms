@@ -92,6 +92,7 @@ public class ReferralConfirmPage implements WizardPage {
 
 	public void setFeature(Feature feature) {
 		this.feature = feature;
+		summaryLayout.setMembers();
 		if (feature != null) {
 			boolean even = true;
 			FeatureInfo featureInfo = feature.getLayer().getLayerInfo().getFeatureInfo();
@@ -102,8 +103,6 @@ public class ReferralConfirmPage implements WizardPage {
 				summaryLayout.addMember(line);
 				even = !even;
 			}
-		} else {
-			summaryLayout.clear();
 		}
 	}
 
@@ -131,7 +130,7 @@ public class ReferralConfirmPage implements WizardPage {
 			request.setFeatureTransaction(ft.toDto());
 			final MapModel mapModel = feature.getLayer().getMapModel();
 			// assume layer crs
-			request.setCrs(feature.getLayer().getLayerInfo().getCrs());
+			request.setCrs(feature.getLayer().getMapModel().getCrs());
 
 			GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 			command.setCommandRequest(request);
@@ -144,9 +143,9 @@ public class ReferralConfirmPage implements WizardPage {
 						mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(), ptr
 								.getFeatureTransaction()));
 					}
+					wizard.refresh();
 				}
 			});
-			wizard.refresh();
 		}
 
 	}
