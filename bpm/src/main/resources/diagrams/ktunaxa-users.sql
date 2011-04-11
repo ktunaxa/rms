@@ -1,6 +1,3 @@
-insert into ACT_ID_GROUP values ('admin',       1, 'System administrator', 'security-role');
-insert into ACT_ID_GROUP values ('user',        1, 'User', 'security-role');
-insert into ACT_ID_GROUP values ('manager',     1, 'Manager', 'security-role');
 
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'evaluateEvaluator', 1, 'evaluateEvaluator', 'assignment');
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'treatyEvaluator', 1, 'treatyEvaluator', 'assignment');
