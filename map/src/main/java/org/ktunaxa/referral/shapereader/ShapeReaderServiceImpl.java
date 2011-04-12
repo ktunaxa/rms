@@ -106,11 +106,9 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 			return files;
 		}
 
-		File folder = new File(path); // We don't have to check for
-										// folder==null.
+		File folder = new File(path); // We don't have to check for folder==null.
 		if (!folder.isDirectory()) {
-			throw new IOException("Configured base path is not a directory: "
-					+ basePath + " translated to " + path);
+			throw new IOException("Configured base path is not a directory: " + basePath + " translated to " + path);
 		}
 		return folder.listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
@@ -132,8 +130,7 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 	 */
 	public DataStore read(File file) throws IOException {
 		ShapefileDataStoreFactory factory = new ShapefileDataStoreFactory();
-		DataStore shpStore = factory.createDataStore(new URL("file://"
-				+ file.getAbsolutePath()));
+		DataStore shpStore = factory.createDataStore(new URL("file://" + file.getAbsolutePath()));
 		if (shpStore == null) {
 			throw new IOException("Shape file could not be properly read.");
 		}
@@ -167,12 +164,10 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 				throw new IOException("Can't evaluate label expression");
 			}
 			if (!isValid(style, schema)) {
-				throw new IOException("The attribute '" + style
-						+ "' is missing from the shape file definition.");
+				throw new IOException("The attribute '" + style + "' is missing from the shape file definition.");
 			}
 			if (!isValid(label, schema)) {
-				throw new IOException("The attribute '" + label
-						+ "' is missing from the shape file definition.");
+				throw new IOException("The attribute '" + label + "' is missing from the shape file definition.");
 			}
 			Integer code;
 			try {
@@ -188,8 +183,7 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 				if ("NAD_1983_UTM_Zone_11N".equalsIgnoreCase(crsName)) {
 					code = 26911;
 				} else {
-					throw new IOException(
-							"Unknown coordinate reference system: " + crsName);
+					throw new IOException( "Unknown coordinate reference system: " + crsName);
 				}
 			}
 			if (code != persistService.getSrid()) {
@@ -245,12 +239,10 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 			persistService.validate(feature);
 
 			if (layer.getType().isBaseLayer()) {
-				ReferenceBase reference = persistService.convertToBase(layer,
-						feature);
+				ReferenceBase reference = persistService.convertToBase(layer, feature);
 				persistService.persist(reference);
 			} else {
-				ReferenceValue reference = persistService.convertToValue(layer,
-						feature);
+				ReferenceValue reference = persistService.convertToValue(layer, feature);
 				persistService.persist(reference);
 			}
 			if (++i % 50 == 0) {

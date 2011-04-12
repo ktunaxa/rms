@@ -471,6 +471,8 @@
 		<dbHostPort>localhost:5432</dbHostPort>
 		<dbAdminUser>postgres</dbAdminUser>
 		<dbAdminPassword>postgres</dbAdminPassword>
+
+		<gwt.compiler.skip>false</gwt.compiler.skip>
 	</properties>
 
 </project>
