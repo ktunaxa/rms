@@ -37,7 +37,7 @@ public class ActivitiStreamingWebScript extends AbstractWebScript {
 	private ProcessEngine processEngine;
 
 	/**
-	 * Setter for the activiti config bean
+	 * Setter for the activiti config bean.
 	 *
 	 * @param config The activiti config bean
 	 */
@@ -132,8 +132,10 @@ public class ActivitiStreamingWebScript extends AbstractWebScript {
 		 */
 		try {
 			byte[] buffer = new byte[0xFFFF];
-			for (int len; (len = inputStream.read(buffer)) != -1;) {
+			int len = inputStream.read(buffer);
+			while (len  != -1) {
 				res.getOutputStream().write(buffer, 0, len);
+				len = inputStream.read(buffer);
 			}
 		} catch (SocketException e) {
 			// TODO: client cut the connection, log the message?

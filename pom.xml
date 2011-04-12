@@ -16,14 +16,6 @@
 		<url>https://svn.geomajas.org/geosparc/projects/ktunaxa</url>
 	</scm>
 
-	<licenses>
-		<license>
-			<name>GNU Affero General Public License, Version 3</name>
-			<url>http://www.gnu.org/licenses/agpl-3.0.html</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
 	<developers>
 		<developer>
 			<id>jvda</id>

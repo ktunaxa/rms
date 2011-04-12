@@ -1,3 +1,9 @@
+/*
+ * This is part of the Ktunaxa referral system.
+ *
+ * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+ */
+
 package org.ktunaxa.referral.server.service;
 
 import java.util.List;

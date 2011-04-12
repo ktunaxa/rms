@@ -37,7 +37,7 @@ public class ActivitiWebScript extends DeclarativeWebScript {
 	private ProcessEngine processEngine;
 
 	/**
-	 * Setter for the activiti config bean
+	 * Setter for the activiti config bean.
 	 *
 	 * @param config The activiti config bean
 	 */

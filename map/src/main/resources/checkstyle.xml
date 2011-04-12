@@ -2,13 +2,7 @@
 <!--
   ~ This is part of the Ktunaxa referral system.
   ~
-  ~ Copyright 2011 Geosparc nv, http://www.geosparc.com/, Belgium.
   ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
-  ~
-  ~ The program is available in open source according to the GNU Affero
-  ~ General Public License. All contributions in this program are covered
-  ~ by the Geomajas Contributors License Agreement. For full licensing
-  ~ details, see LICENSE.txt in the project root.
   -->
 
 <!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.1//EN" "http://www.puppycrawl.com/dtds/configuration_1_1.dtd">
@@ -51,7 +45,7 @@
 		<!-- from any directory within a project.                   -->
 		<!--<property name="headerFile" value="config/equanda-header.txt"/>-->
 		<property name="header"
-				  value="/*\n * This is part of the Ktunaxa referral system.\n *\n * Copyright 2011 Geosparc nv, http://www.geosparc.com/, Belgium.\n * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.\n *\n * The program is available in open source according to the GNU Affero\n * General Public License. All contributions in this program are covered\n * by the Geomajas Contributors License Agreement. For full licensing\n * details, see LICENSE.txt in the project root.\n */\n"/>
+				  value="/*\n * This is part of the Ktunaxa referral system.\n *\n * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.\n */\n"/>
 	</module>
 
 	<!--<module name="FileTabCharacter"/>-->
