@@ -78,7 +78,7 @@ public class Document {
 	private Referral referral;
 
 	/** The collection of all comments made on this document. */
-	@OneToMany(mappedBy = "document", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "document", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private Collection<DocumentComment> comments;
 
 	// ------------------------------------------------------------------------
