@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
-    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-   <session-factory>
-      <property name="hibernate.dialect">org.hibernatespatial.postgis.PostgisDialect</property>
-      <property name="cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
-      <property name="show_sql">false</property>
+	<session-factory>
+		<property name="hibernate.dialect">org.hibernatespatial.postgis.PostgisDialect</property>
+		<property name="cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
+		<property name="show_sql">true</property>
 
-      <mapping class="org.ktunaxa.referral.server.domain.AbstractComment" />
-      <mapping class="org.ktunaxa.referral.server.domain.Template" />
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+		<property name="hibernate.cache.region.factory_class">
+			org.hibernate.cache.infinispan.InfinispanRegionFactory
+		</property>
 
-      <mapping class="org.ktunaxa.referral.server.domain.ReferenceLayer" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferenceLayerType" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferenceBase" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferenceBaseAttribute" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferenceValue" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferenceValueAttribute" />
+		<mapping class="org.ktunaxa.referral.server.domain.AbstractComment"/>
+		<mapping class="org.ktunaxa.referral.server.domain.Template"/>
 
-      <mapping class="org.ktunaxa.referral.server.domain.Document" />
-      <mapping class="org.ktunaxa.referral.server.domain.DocumentType" />
-      <mapping class="org.ktunaxa.referral.server.domain.DocumentComment" />
+		<mapping class="org.ktunaxa.referral.server.domain.ReferenceLayer"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferenceLayerType"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferenceBase"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferenceBaseAttribute"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferenceValue"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferenceValueAttribute"/>
 
-      <mapping class="org.ktunaxa.referral.server.domain.Referral" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferralStatus" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferralType" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferralApplicationType" />
-      <mapping class="org.ktunaxa.referral.server.domain.ReferralComment" />
+		<mapping class="org.ktunaxa.referral.server.domain.Document"/>
+		<mapping class="org.ktunaxa.referral.server.domain.DocumentType"/>
+		<mapping class="org.ktunaxa.referral.server.domain.DocumentComment"/>
 
-   </session-factory>
+		<mapping class="org.ktunaxa.referral.server.domain.Referral"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferralStatus"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferralType"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferralApplicationType"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferralComment"/>
+
+	</session-factory>
 </hibernate-configuration>
