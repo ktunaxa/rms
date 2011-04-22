@@ -18,30 +18,22 @@ import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
 import org.ktunaxa.referral.client.referral.ReferralInfoPage;
 
 import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.toolbar.ToolStrip;
 
 /**
  * Layout for creating new referrals. This layout will display a wizard.
  * 
  * @author Pieter De Graef
  */
-public class ReferralLayout extends VLayout {
+public class CreateReferralLayout extends VLayout {
 
 	private MapWidget mapWidget;
 
 	private ReferralCreationWizard wizard;
 
-	public ReferralLayout() {
+	public CreateReferralLayout() {
 		setWidth("100%");
-		// setHeight("100%");
 		setOverflow(Overflow.VISIBLE);
-
-		addMember(createHeader());
 
 		VLayout body = new VLayout();
 		body.setMargin(10);
@@ -68,36 +60,5 @@ public class ReferralLayout extends VLayout {
 				}
 			}
 		});
-	}
-
-	private Canvas createHeader() {
-		HLayout header = new HLayout();
-		header.setSize("100%", "44");
-		header.setStyleName("header");
-
-		HTMLFlow rfaLabel = new HTMLFlow("Ktunaxa - Referral Management System");
-		rfaLabel.setStyleName("headerText");
-		// rfaLabel.setTooltip(RFA_DESCRIPTION);
-		// rfaLabel.setHoverWidth(700);
-		rfaLabel.setWidth100();
-		header.addMember(rfaLabel);
-
-		LayoutSpacer spacer = new LayoutSpacer();
-		header.addMember(spacer);
-
-		ToolStrip headerBar = new ToolStrip();
-		headerBar.setMembersMargin(2);
-		headerBar.setSize("445", "44");
-		headerBar.addFill();
-		headerBar.setStyleName("headerRight");
-
-		// headerBar.addMember(new ToolStripButton("Select"));
-		// headerBar.addMember(new ToolStripButton("Finish"));
-		// headerBar.addMember(new ToolStripButton("Tasks"));
-		// headerBar.addMember(new ToolStripButton("Request"));
-		headerBar.addSpacer(10);
-		header.addMember(headerBar);
-
-		return header;
 	}
 }
