@@ -74,4 +74,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	    <constructor-arg type="java.lang.String" value="dd/MM/yyyy" />
 	</bean>
 
+	<import resource="classpath:org/ktunaxa/referral/bpm/bpm.xml" />
+
 </beans>

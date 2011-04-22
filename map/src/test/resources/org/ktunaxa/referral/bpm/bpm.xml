@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:component-scan base-package="org.ktunaxa.bpm"/>
+
+	<bean id="ktunaxa" class="org.ktunaxa.bpm.KtunaxaConfiguration">
+		<property name="mapDashboardBaseUrl" value="http://127.0.0.1:8888/index.html?gwt.codesvr=127.0.0.1:9997"/>
+		<property name="bpmDashboardBaseUrl" value="http://localhost:8080/activiti-explorer/"/>
+	</bean>
+
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+
+		<property name="dataSource" ref="postgisDataSource"/>
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="databaseSchemaUpdate" value="true"/>
+
+		<property name="jobExecutorActivate" value="true"/>
+
+		<property name="dbCycleUsed" value="true"/>
+
+		<property name="mailServerHost" value="smtp.skynet.be"/>
+		<property name="mailServerPort" value="25"/>
+		<property name="mailServerDefaultFrom" value="activiti.referral@ktunaxa.org"/>
+		<property name="mailServerUsername" value=""/>
+		<property name="mailServerPassword" value=""/>
+
+	</bean>
+
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration"/>
+	</bean>
+
+	<bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
+
+
+</beans>

@@ -40,4 +40,27 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="folder" value="ktunaxa" />
 	</bean>
 
+
+
+	<!-- DataSource Property -->
+	<bean id="postgisDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.postgis.DriverWrapper" />
+		<property name="url" value="jdbc:postgresql://localhost:5432/referral" />
+		<property name="username" value="referral" />
+		<property name="password" value="referral" />
+		<property name="maxWait" value="250" />
+	</bean>
+
+	<!-- Hibernate SessionFactory -->
+	<bean id="postgisSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="postgisDataSource" />
+		<property name="configLocation" value="classpath:/hibernate.cfg.xml" />
+		<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+	</bean>
+
+	<!-- enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<import resource="classpath:org/ktunaxa/referral/bpm/bpm.xml" />
+
 </beans>
