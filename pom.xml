@@ -48,6 +48,33 @@
 		<dependencies>
 
 			<dependency>
+				<groupId>org.ktunaxa.referral</groupId>
+				<artifactId>ktunaxa-bpm</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ktunaxa.referral</groupId>
+				<artifactId>ktunaxa-map</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ktunaxa.referral</groupId>
+				<artifactId>ktunaxa-theme</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.chemistry.opencmis</groupId>
+				<artifactId>chemistry-opencmis-client-impl</artifactId>
+				<version>0.2.0-incubating</version>
+			</dependency>
+			<dependency>
+				<groupId>org.alfresco</groupId>
+				<artifactId>alfresco-opencmis-extension</artifactId>
+				<version>0.1</version>
+			</dependency>
+
+			<dependency>
 				<groupId>org.geotools</groupId>
 				<artifactId>gt-epsg-wkt</artifactId>
 				<version>${geotools.version}</version>
@@ -119,7 +146,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
 
 			<dependency>
 				<groupId>org.activiti</groupId>
