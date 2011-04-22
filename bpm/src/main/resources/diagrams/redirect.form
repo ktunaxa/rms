@@ -2,9 +2,9 @@
 	<p><a href="${ktunaxa.getReferralUrl(execution)}">Referral in mapping dashboard</a></p>
 	<p>${ktunaxa.getReferralLink(execution)}</p>
 
-<XXXscript type="text/javascript">
+<script type="text/javascript">
 <!--
-XXXwindow.location = "${ktunaxa.getReferralUrl(execution)}";
+window.location = "${ktunaxa.getReferralUrl(execution)}";
 //-->
-</XXXscript>
+</script>
 </div>
