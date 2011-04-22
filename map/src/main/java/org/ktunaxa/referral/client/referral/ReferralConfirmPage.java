@@ -28,6 +28,10 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import org.ktunaxa.referral.server.command.request.CreateProcessRequest;
+import org.ktunaxa.referral.server.command.request.UrlResponse;
+
+import java.util.Date;
 
 /**
  * Page to confirm creation of a new referral.
@@ -140,9 +144,36 @@ public class ReferralConfirmPage implements WizardPage {
 					wizard.refresh();
 				}
 			});
+			createProcess();
 		}
 
 	}
+
+	private void createProcess() {
+		CreateProcessRequest request = new CreateProcessRequest();
+		request.setReferralId((String) feature.getAttributeValue("landReferralId"));
+		request.setDescription((String) feature.getAttributeValue("projectName"));
+		request.setEmail((String) feature.getAttributeValue("contactEmail"));
+		request.setEngagementLevel((Integer) feature.getAttributeValue("assessmentLevel"));
+		request.setCompletionDeadline((Date) feature.getAttributeValue("reponseDate"));
+
+		GwtCommand command = new GwtCommand(CreateProcessRequest.COMMAND);
+		command.setCommandRequest(request);
+
+		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
+
+			public void execute(CommandResponse response) {
+				if (response instanceof UrlResponse) {
+					redirect(((UrlResponse) response).getUrl());
+				}
+			}
+		});
+
+	}
+
+	public static native void redirect(String url) /*-{
+		$wnd.location = url;
+	}-*/;
 
 	/**
 	 * Moves back to first page.

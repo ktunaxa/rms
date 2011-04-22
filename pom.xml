@@ -194,8 +194,8 @@
 
 	<modules>
 		<module>theme</module>
-		<module>map</module>
 		<module>bpm</module>
+		<module>map</module>
 	</modules>
 
 	<profiles>

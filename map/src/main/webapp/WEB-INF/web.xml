@@ -13,6 +13,7 @@
 			classpath:org/geomajas/plugin/rasterizing/DefaultCachedAndRasterizedPipelines.xml
 			WEB-INF/applicationContext.xml
 			WEB-INF/spring-hibernate.xml
+			WEB-INF/bpm.xml
 
 			WEB-INF/layer*.xml
 			WEB-INF/map*.xml

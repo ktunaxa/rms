@@ -21,6 +21,13 @@ public class KtunaxaConfiguration {
 	public static final String VAR_REFERRAL_ID = "referralId";
 	public static final String VAR_DESCRIPTION = "description";
 
+	public static final String REFERRAL_PROCESS_ID = "referral-handling";
+	public static final String REFERRAL_CONTEXT_REFERRAL_ID = "referralId";
+	public static final String REFERRAL_CONTEXT_DESCRIPTION = "description";
+	public static final String REFERRAL_CONTEXT_EMAIL = "requesterEmail";
+	public static final String REFERRAL_CONTEXT_ENGAGEMENT_LEVEL = "engagementLevel";
+	public static final String REFERRAL_CONTEXT_COMPLETION_DEADLINE = "completionDeadline";
+
 	private String mapDashboardBaseUrl = "http://localhost:8080/map/";
 	private String bpmDashboardBaseUrl = "http://localhost:8080/activiti-explorer/";
 

@@ -15,6 +15,8 @@ import org.geomajas.command.CommandRequest;
  */
 public class FinishTaskRequest implements CommandRequest {
 
+	public static final String COMMAND = "command.bpm.FinishTask";
+
 	private String taskId;
 
 	/**
