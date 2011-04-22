@@ -138,26 +138,14 @@ public class ReferralFormFactory implements FeatureFormFactory {
 		public class ReferralIdSetter implements ItemChangedHandler {
 
 			public void onItemChanged(ItemChangedEvent event) {
-				String primClassNr = getWidget().getValueAsString("primaryClassificationNumber");
-				String secClassNr = getWidget().getValueAsString("secondaryClassificationNumber");
-				String year = getWidget().getValueAsString("calendarYear");
-				String number = getWidget().getValueAsString("number");
-				String referralId = primClassNr == null ? "XXXX" : pad(primClassNr, 4);
-				referralId += "-" + (secClassNr == null ? "XX" : pad(secClassNr, 2));
-				referralId += "/" + (year == null ? "XX" : pad(year, 2));
-				referralId += "-" + (number == null ? "XXXX" : pad(number, 4));
+				Integer primClassNr = (Integer) getWidget().getValue("primaryClassificationNumber");
+				Integer secClassNr = (Integer) getWidget().getValue("secondaryClassificationNumber");
+				Integer year = (Integer) getWidget().getValue("calendarYear");
+				Integer number = (Integer) getWidget().getValue("number");
+				String referralId = ReferralUtil.createId(primClassNr, secClassNr, year, number);
 				HeaderItem header = (HeaderItem) getWidget().getItem("project-info-header");
 				header.setDefaultValue("General project information [" + referralId + "]");
 			}
-
-			private String pad(String s, int i) {
-				int padLength = i - s.length();
-				while (padLength-- > 0) {
-					s = "0" + s;
-				}
-				return s;
-			}
-
 		}
 	}
 	

@@ -154,21 +154,26 @@ public class ReferralConfirmPage implements WizardPage {
 								ft.getLayer());
 						setFeature(newfeature);
 					}
+					createProcess();
 					// todo : show choice panel : new feature or bpm or map ?
 					// wizard.refresh();
 				}
 			});
-			createProcess();
 		}
 
 	}
 
 	private void createProcess() {
 		CreateProcessRequest request = new CreateProcessRequest();
-		request.setReferralId((String) feature.getAttributeValue("landReferralId"));
+		Integer primary = (Integer) feature.getAttributeValue("primaryClassificationNumber");
+		Integer secondary = (Integer) feature.getAttributeValue("secondaryClassificationNumber");
+		Integer year = (Integer) feature.getAttributeValue("calendarYear");
+		Integer number = (Integer) feature.getAttributeValue("number");
+		String referralId = ReferralUtil.createId(primary, secondary, year, number);
+		request.setReferralId(referralId);
 		request.setDescription((String) feature.getAttributeValue("projectName"));
 		request.setEmail((String) feature.getAttributeValue("contactEmail"));
-		request.setEngagementLevel((Integer) feature.getAttributeValue("assessmentLevel"));
+		request.setEngagementLevel((Integer) feature.getAttributeValue("provincialAssessmentLevel"));
 		request.setCompletionDeadline((Date) feature.getAttributeValue("reponseDate"));
 
 		GwtCommand command = new GwtCommand(CreateProcessRequest.COMMAND);
