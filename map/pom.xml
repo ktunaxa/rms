@@ -392,17 +392,16 @@
 		
 						<executions>
 							<execution>
-								<id>drop and create</id>
+								<id>create database</id>
 								<goals>
 									<goal>execute</goal>
 								</goals>
             					<phase>process-resources</phase>
 								<configuration>
-									<!-- need another database to drop/create the targeted one -->
+									<!-- need another database to create the targeted one -->
 									<url>jdbc:postgresql://${dbHostPort}/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>
-										drop database referral;
 										create database referral TEMPLATE=template_postgis;
 										alter database referral OWNER TO referral_group;
 										grant all on database referral to referral_group;
@@ -411,6 +410,39 @@
 								</configuration>
 							</execution>
 		
+							<execution>
+								<id>drop schema</id>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+            					<phase>process-resources</phase>
+								<configuration>
+									<!-- need to login as postgres to drop schema -->
+									<url>jdbc:postgresql://${dbHostPort}/referral</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>
+										drop table reference_layer_type cascade;
+										drop table reference_layer cascade;
+										drop table reference_value cascade;
+										drop table reference_value_attribute cascade;
+										drop table reference_base cascade;
+										drop table reference_base_attribute cascade;
+										drop table referral_status cascade;
+										drop table referral_type cascade;
+										drop table referral_application_type cascade;
+										drop table referral_disposition_type cascade;
+										drop table referral cascade;
+										drop sequence referral_number_seq cascade;
+										drop table document_type cascade;
+										drop table referral_comment cascade;
+										drop table document cascade;
+										drop table document_comment cascade;
+										drop table template cascade;
+									</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+
 							<execution>
 								<id>grant spatial table rights</id>
 								<goals>
@@ -443,6 +475,7 @@
 										<srcFile>src/main/sql/schema/create-tables.sql</srcFile>
 										<srcFile>src/main/sql/data/fill-tables.sql</srcFile>
 									</srcFiles>
+									<onError>continue</onError>
 								</configuration>
 							</execution>
 						</executions>
