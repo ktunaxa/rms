@@ -23,6 +23,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Type;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -61,6 +63,7 @@ public class Referral {
 
 	/** Lands referral unique number 1 -> 9999 (sequence, resets after each new year). */
 	@Column(name = "number", nullable = true, insertable = false, updatable = false)
+	@Generated(GenerationTime.INSERT)
 	private int number;
 
 	// General project information:
