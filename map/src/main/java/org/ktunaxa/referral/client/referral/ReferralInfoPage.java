@@ -6,9 +6,15 @@
 
 package org.ktunaxa.referral.client.referral;
 
+import java.util.HashMap;
+
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
+import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.geomajas.layer.feature.attribute.IntegerAttribute;
+import org.geomajas.layer.feature.attribute.LongAttribute;
+import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
 
 import com.smartgwt.client.widgets.Canvas;
@@ -27,7 +33,7 @@ public class ReferralInfoPage implements WizardPage {
 	public ReferralInfoPage(VectorLayer layer) {
 		this.layer = layer;
 		editor = new FeatureAttributeEditor(layer, false, new ReferralFormFactory());
-		Feature feature = new Feature(layer);
+		Feature feature = createReferralInstance(layer);
 		editor.setFeature(feature);
 		editor.setWidth100();
 		editor.setHeight100();
@@ -60,7 +66,30 @@ public class ReferralInfoPage implements WizardPage {
 	}
 	
 	public void clear() {
-		setFeature(new Feature(layer));
+		setFeature(createReferralInstance(layer));
+	}
+	
+	private Feature createReferralInstance(VectorLayer layer) {
+		Feature feature = new Feature(layer);
+		// set defaults, TODO: make generic implementation calling FeatureModel.newInstance() on the server
+		feature.setIntegerAttribute("primaryClassificationNumber", 3500);
+		feature.setIntegerAttribute("secondaryClassificationNumber", 10);
+		feature.setIntegerAttribute("calendarYear", 11);
+		feature.setStringAttribute("externalProjectId", "-99");
+		feature.setStringAttribute("externalFileId", "-99");
+		feature.setIntegerAttribute("activeRetentionPeriod", 2);
+		feature.setIntegerAttribute("semiActiveRetentionPeriod", 5);
+		feature.setManyToOneAttribute("type", new AssociationValue(new LongAttribute(1L),
+				new HashMap<String, PrimitiveAttribute<?>>()));
+		feature.setManyToOneAttribute("finalDisposition", new AssociationValue(new IntegerAttribute(1),
+				new HashMap<String, PrimitiveAttribute<?>>()));
+		feature.setManyToOneAttribute("applicationType", new AssociationValue(new LongAttribute(1L),
+				new HashMap<String, PrimitiveAttribute<?>>()));
+		feature.setManyToOneAttribute("status", new AssociationValue(new LongAttribute(1L),
+				new HashMap<String, PrimitiveAttribute<?>>()));
+		feature.setIntegerAttribute("provincialAssessmentLevel", 1);
+		feature.setIntegerAttribute("finalAssessmentLevel", 1);
+		return feature;
 	}
 
 }

@@ -157,6 +157,13 @@ INSERT INTO referral_application_type (id, title, description) values (2, 'Renew
 INSERT INTO referral_application_type (id, title, description) values (3, 'Amendment', 'The referral is an addition to an existing referral.'); 
 INSERT INTO referral_application_type (id, title, description) values (4, 'Replacement', 'The referral should replace an existing referral.'); 
 
+-- ----------------------------------------------------------------------------
+-- Table: REFERRAL APPLICATION TYPE
+-- ----------------------------------------------------------------------------
+
+INSERT INTO referral_disposition_type (id, code, description) values (1, 'D', 'Destruction'); 
+INSERT INTO referral_disposition_type (id, code, description) values (2, 'P', 'Permanent Retention - Archives'); 
+INSERT INTO referral_disposition_type (id, code, description) values (3, 'SR', 'Selective Retention - Archives'); 
 
 
 -- ----------------------------------------------------------------------------

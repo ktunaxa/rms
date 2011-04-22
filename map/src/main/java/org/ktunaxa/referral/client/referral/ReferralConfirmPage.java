@@ -17,6 +17,7 @@ import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
 
 import com.smartgwt.client.types.Alignment;
@@ -96,12 +97,21 @@ public class ReferralConfirmPage implements WizardPage {
 			FeatureInfo featureInfo = feature.getLayer().getLayerInfo().getFeatureInfo();
 			for (AttributeInfo info : featureInfo.getAttributes()) {
 				Object value = feature.getAttributeValue(info.getName());
-				SummaryLine line = new SummaryLine(info.getName(), value == null ? "" : value.toString());
+				SummaryLine line = new SummaryLine(info.getLabel(), value == null ? "" : valueToString(value));
 				line.setStyleName(even ? "summaryLine" : "summaryLineDark");
 				summaryLayout.addMember(line);
 				even = !even;
 			}
 		}
+	}
+
+	private String valueToString(Object value) {
+		if (value instanceof AssociationValue) {
+			AssociationValue asso = (AssociationValue) value;
+			// is there a better way ?
+			return asso.getAttributes().values().iterator().next().getValue().toString();
+		}
+		return value.toString();
 	}
 
 	public Canvas asWidget() {
@@ -140,8 +150,12 @@ public class ReferralConfirmPage implements WizardPage {
 						PersistTransactionResponse ptr = (PersistTransactionResponse) response;
 						mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(), ptr
 								.getFeatureTransaction()));
+						Feature newfeature = new Feature(ptr.getFeatureTransaction().getNewFeatures()[0], 
+								ft.getLayer());
+						setFeature(newfeature);
 					}
-					wizard.refresh();
+					// todo : show choice panel : new feature or bpm or map ?
+					// wizard.refresh();
 				}
 			});
 			createProcess();

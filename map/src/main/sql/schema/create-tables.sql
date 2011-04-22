@@ -180,12 +180,38 @@ ALTER TABLE referral_application_type OWNER TO referral_group;
 GRANT ALL ON TABLE referral_application_type TO referral_group; 
 
 -- ----------------------------------------------------------------------------
+-- Table: REFERRAL DISPOSITION TYPE
+-- ----------------------------------------------------------------------------
+CREATE TABLE referral_disposition_type(
+	id integer PRIMARY KEY,
+	code character varying(32) NOT NULL,
+	description character varying(254) NOT NULL
+); 
+
+ALTER TABLE referral_disposition_type OWNER TO referral_group; 
+GRANT ALL ON TABLE referral_disposition_type TO referral_group; 
+
+-- ----------------------------------------------------------------------------
+-- Table: REFERRAL SEQUENCE FOR NUMBER
+-- ----------------------------------------------------------------------------
+CREATE SEQUENCE referral_number_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9999
+  START 1
+  CACHE 1;
+ALTER TABLE referral_number_seq OWNER TO referral_group;
+
+-- ----------------------------------------------------------------------------
 -- Table: REFERRAL
 -- ----------------------------------------------------------------------------
 CREATE TABLE referral
 (
   id serial PRIMARY KEY,
-  land_referral_id character varying(254),
+  primary_classificiation_nr integer NOT NULL, 
+  secondary_classificiation_nr integer NOT NULL,
+  calendar_year integer NOT NULL,
+  number integer DEFAULT nextval('referral_number_seq'),
   applicant_name character varying(254) NOT NULL,
   project_name character varying(254) NOT NULL,
   project_description character varying(254) NOT NULL,
@@ -202,17 +228,20 @@ CREATE TABLE referral
   application_type_id integer NOT NULL,
   target_referral_id integer,
   confidential boolean NOT NULL DEFAULT false,
+  create_date timestamp NOT NULL DEFAULT CURRENT_DATE,
+  create_user character varying(254) NOT NULL DEFAULT CURRENT_USER,
   receive_date timestamp without time zone NOT NULL,
   response_date timestamp without time zone NOT NULL,
   response_deadline timestamp without time zone NOT NULL,
   active_retention_period integer NOT NULL,
   semi_active_retention_period integer NOT NULL,
-  final_disposition integer NOT NULL,
-  assessment_level integer,
-  record_classification character varying(254) NOT NULL,
+  final_disposition_id integer NOT NULL,
+  provincial_assessment_level integer,
+  final_assessment_level integer,
   status_id integer NOT NULL,
   CONSTRAINT fk_referral_application_type FOREIGN KEY (application_type_id) REFERENCES referral_application_type (id),
   CONSTRAINT fk_referral_status FOREIGN KEY (status_id) REFERENCES referral_status (id),
+  CONSTRAINT fk_referral_disposition FOREIGN KEY (final_disposition_id) REFERENCES referral_disposition_type (id),
   CONSTRAINT fk_referral_type FOREIGN KEY (type_id) REFERENCES referral_type (id)
 ); 
 
@@ -230,6 +259,11 @@ CREATE INDEX referral_type_id_idx
   ON referral
   USING btree
   (type_id);
+  
+CREATE INDEX referral_final_disposition_id_idx
+  ON referral
+  USING btree
+  (final_disposition_id);
 
 SELECT AddGeometryColumn('','referral','geom','26911','GEOMETRY',2);
 

@@ -12,7 +12,6 @@ import org.ktunaxa.referral.client.gui.CommentPanel;
 import org.ktunaxa.referral.client.gui.DocumentPanel;
 import org.ktunaxa.referral.client.gui.LayerPanel;
 import org.ktunaxa.referral.client.gui.MainGui;
-import org.ktunaxa.referral.client.gui.ReferralPanel;
 import org.ktunaxa.referral.client.gui.SearchPanel;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 
@@ -212,20 +211,6 @@ public class KtunaxaLayout extends VLayout {
 		helpButton.setActionType(SelectionType.RADIO);
 		helpButton.setRadioGroup("the-only-one");
 		menuBar.addMember(helpButton);
-
-		// Referral button:
-		menuBar.addMember(new ToolStripSeparator());
-		ToolStripButton referralButton = new ToolStripButton("REFERRAL - TEST");
-		referralButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				mainGui.showLeftLayout(new ReferralPanel(mainGui.getMapWidget()), "Referral form test");
-				mainGui.hideBottomLayout();
-			}
-		});
-		referralButton.setActionType(SelectionType.RADIO);
-		referralButton.setRadioGroup("the-only-one");
-		menuBar.addMember(referralButton);
 		return menuBar;
 	}
 	

@@ -72,11 +72,62 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
         <property name="attributes">
             <list>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-                    <property name="label" value="Land Referral ID"/>
-                    <property name="name" value="landReferralId"/>
+                    <property name="label" value="Primary Classification nr"/>
+                    <property name="name" value="primaryClassificationNumber"/>
+                    <property name="editable" value="false"/>
+                    <property name="identifying" value="true"/>
+                    <property name="type" value="INTEGER"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+									<bean class="org.geomajas.configuration.validation.MinConstraintInfo">
+										<property name="value" value="1" />
+									</bean>
+									<bean class="org.geomajas.configuration.validation.MaxConstraintInfo">
+										<property name="value" value="9999" />
+									</bean>
+								</list>
+							</property>
+						</bean>
+					</property>
+                </bean>
+               <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="Secondary Classification nr"/>
+                    <property name="name" value="secondaryClassificationNumber"/>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
-                    <property name="type" value="STRING"/>
+                    <property name="type" value="INTEGER"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+									<bean class="org.geomajas.configuration.validation.MinConstraintInfo">
+										<property name="value" value="1" />
+									</bean>
+									<bean class="org.geomajas.configuration.validation.MaxConstraintInfo">
+										<property name="value" value="99" />
+									</bean>
+								</list>
+							</property>
+						</bean>
+					</property>
+                </bean>
+                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="Year"/>
+                    <property name="name" value="calendarYear"/>
+                    <property name="editable" value="true"/>
+                    <property name="identifying" value="true"/>
+                    <property name="type" value="INTEGER"/>
+                </bean>
+                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="Nr"/>
+                    <property name="name" value="number"/>
+                    <property name="editable" value="false"/>
+                    <property name="identifying" value="true"/>
+                    <property name="type" value="INTEGER"/>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Applicant Name"/>
@@ -273,6 +324,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	                        </property>
 	                    </bean>
 	                </property>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
 	            </bean>
 	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 	                <property name="label" value="Referral Status" />
@@ -310,6 +370,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	                        </property>
 	                    </bean>
 	                </property>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
 	            </bean>
 	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 	                <property name="label" value="Application Type" />
@@ -347,6 +416,15 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	                        </property>
 	                    </bean>
 	                </property>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
 	            </bean>
 	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 	                <property name="label" value="Target Referral" />
@@ -379,8 +457,8 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	                </property>
 	            </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-                    <property name="label" value="Assessment Level"/>
-                    <property name="name" value="assessmentLevel"/>
+                    <property name="label" value="Provincial Assessment Level"/>
+                    <property name="name" value="provincialAssessmentLevel"/>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="INTEGER"/>
@@ -389,6 +467,34 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 							<property name="constraints">
 								<list>
 									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+									<bean class="org.geomajas.configuration.validation.MinConstraintInfo">
+										<property name="value" value="0" />
+									</bean>
+									<bean class="org.geomajas.configuration.validation.MaxConstraintInfo">
+										<property name="value" value="3" />
+									</bean>
+								</list>
+							</property>
+						</bean>
+					</property>
+                </bean>
+                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="Final Assessment Level"/>
+                    <property name="name" value="finalAssessmentLevel"/>
+                    <property name="editable" value="true"/>
+                    <property name="identifying" value="true"/>
+                    <property name="type" value="INTEGER"/>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+									<bean class="org.geomajas.configuration.validation.MinConstraintInfo">
+										<property name="value" value="0" />
+									</bean>
+									<bean class="org.geomajas.configuration.validation.MaxConstraintInfo">
+										<property name="value" value="3" />
+									</bean>
 								</list>
 							</property>
 						</bean>
@@ -491,38 +597,43 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 						</bean>
 					</property>
                 </bean>
-                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
                     <property name="label" value="Final Disposition"/>
                     <property name="name" value="finalDisposition"/>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
-                    <property name="type" value="INTEGER"/>
-					<property name="validator">
-						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
-							<property name="constraints">
-								<list>
-									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
-								</list>
-							</property>
-						</bean>
-					</property>
-                </bean>
-                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-                    <property name="label" value="Record Classification"/>
-                    <property name="name" value="recordClassification"/>
-                    <property name="editable" value="true"/>
-                    <property name="identifying" value="true"/>
-                    <property name="type" value="STRING"/>
-					<property name="validator">
-						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
-							<property name="constraints">
-								<list>
-									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
-								</list>
-							</property>
-						</bean>
-					</property>
-                </bean>
+	                <property name="type" value="MANY_TO_ONE" />
+	                <property name="feature">
+	                    <bean class="org.geomajas.configuration.FeatureInfo">
+	                        <property name="dataSourceName" value="org.ktunaxa.referral.server.domain.ReferralDispositionType" />
+	                        <property name="identifier">
+	                            <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                <property name="label" value="Id" />
+	                                <property name="name" value="id" />
+	                                <property name="type" value="LONG" />
+	                            </bean>
+	                        </property>
+	                        <property name="attributes">
+	                            <list>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Code" />
+	                                    <property name="name" value="code" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="STRING" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Description" />
+	                                    <property name="name" value="description" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="false" />
+	                                    <property name="type" value="STRING" />
+	                                </bean>
+	                            </list>
+	                        </property>
+	                    </bean>
+	                </property>
+	            </bean>
 	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 	                <property name="label" value="Documents" />
 	                <property name="name" value="documents" />

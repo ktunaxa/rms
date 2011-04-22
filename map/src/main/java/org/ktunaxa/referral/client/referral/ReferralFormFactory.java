@@ -18,6 +18,8 @@ import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
 
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.widgets.form.events.ItemChangedEvent;
+import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.HeaderItem;
 import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
@@ -58,11 +60,12 @@ public class ReferralFormFactory implements FeatureFormFactory {
 			List<FormItem> formItems = new ArrayList<FormItem>();
 			for (AttributeInfo info : layer.getLayerInfo().getFeatureInfo().getAttributes()) {
 				if (info.isIncludedInForm()) {
-					if ("landReferralId".equals(info.getName())) {
+					if ("primaryClassificationNumber".equals(info.getName())) {
 						HeaderItem header = new HeaderItem("project-info-header");
 						header.setDefaultValue("General project information");
 						header.setColSpan(4);
 						formItems.add(header);
+						
 					} else if ("externalProjectId".equals(info.getName())) {
 						RowSpacerItem rowSpacer = new RowSpacerItem("external-info-spacer");
 						formItems.add(rowSpacer);
@@ -91,6 +94,13 @@ public class ReferralFormFactory implements FeatureFormFactory {
 						header.setDefaultValue("Project deadline information");
 						header.setColSpan(4);
 						formItems.add(header);
+					} else if ("activeRetentionPeriod".equals(info.getName())) {
+						RowSpacerItem rowSpacer = new RowSpacerItem("date-info-spacer");
+						formItems.add(rowSpacer);
+						HeaderItem header = new HeaderItem("date-info-header");
+						header.setDefaultValue("Document management classificiation");
+						header.setColSpan(4);
+						formItems.add(header);
 					}
 
 					DataSourceField field = AttributeFormFieldRegistry.createDataSourceField(layer, info);
@@ -99,14 +109,14 @@ public class ReferralFormFactory implements FeatureFormFactory {
 
 					FormItem formItem = AttributeFormFieldRegistry.createFormItem(layer, info);
 					formItems.add(formItem);
-
+					
+					ReferralIdSetter refIdSetter = new ReferralIdSetter();
 					if ("externalAgencyName".equals(info.getName())) {
 						formItem.setColSpan(4);
 					} else if ("projectDescription".equals(info.getName())) {
 						formItem.setColSpan(4);
 						formItem.setHeight(50);
-					}
-					if ("projectBackground".equals(info.getName())) {
+					} else if ("projectBackground".equals(info.getName())) {
 						formItem.setColSpan(4);
 						formItem.setHeight(50);
 					} else if ("reponseDeadline".equals(info.getName())) {
@@ -116,6 +126,42 @@ public class ReferralFormFactory implements FeatureFormFactory {
 			}
 			getWidget().setDataSource(source);
 			getWidget().setFields(formItems.toArray(new FormItem[formItems.size()]));
+			addItemChangedHandler(new ReferralIdSetter());
+		}
+		
+		/**
+		 * Re(sets) the referral Id when a component changes.
+		 * 
+		 * @author Jan De Moerloose
+		 * 
+		 */
+		public class ReferralIdSetter implements ItemChangedHandler {
+
+			public void onItemChanged(ItemChangedEvent event) {
+				String primClassNr = getWidget().getValueAsString("primaryClassificationNumber");
+				String secClassNr = getWidget().getValueAsString("secondaryClassificationNumber");
+				String year = getWidget().getValueAsString("calendarYear");
+				String number = getWidget().getValueAsString("number");
+				String referralId = primClassNr == null ? "XXXX" : pad(primClassNr, 4);
+				referralId += "-" + (secClassNr == null ? "XX" : pad(secClassNr, 2));
+				referralId += "/" + (year == null ? "XX" : pad(year, 2));
+				referralId += "-" + (number == null ? "XXXX" : pad(number, 4));
+				HeaderItem header = (HeaderItem) getWidget().getItem("project-info-header");
+				header.setDefaultValue("General project information [" + referralId + "]");
+			}
+
+			private String pad(String s, int i) {
+				int padLength = i - s.length();
+				while (padLength-- > 0) {
+					s = "0" + s;
+				}
+				return s;
+			}
+
 		}
 	}
+	
+	
+
+
 }

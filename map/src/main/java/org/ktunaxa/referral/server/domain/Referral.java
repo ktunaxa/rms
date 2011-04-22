@@ -6,8 +6,9 @@
 
 package org.ktunaxa.referral.server.domain;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -39,9 +41,27 @@ public class Referral {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	/** Lands referral unique number (11-0001, YY-0000, resets after each new year). */
-	@Column(name = "land_referral_id")
-	private String landReferralId;
+	/**
+	 * Lands Referral ID: 3500-10/11-0001
+	 * - 3500: Primary Classification Number (3500 = Referrals)
+	 * - 10: Secondary Classification Number (10 = Specific Referrals).  Can be any digit from 01 to 99
+	 * - 11: Current calendar year when referral record was created
+	 * - 0001: Unique Referral Number.  Each year they will start back at one (1)
+	 * Transient field, all parts are stored separately in the database
+	 */
+	
+	@Column(name = "primary_classificiation_nr", nullable = false, updatable = false)
+	private int primaryClassificationNumber = 3500;
+
+	@Column(name = "secondary_classificiation_nr", nullable = false, updatable = false)
+	private int secondaryClassificationNumber = 10;
+
+	@Column(name = "calendar_year", nullable = true, updatable = false)
+	private int calendarYear = 11;
+
+	/** Lands referral unique number 1 -> 9999 (sequence, resets after each new year). */
+	@Column(name = "number", nullable = true, insertable = false, updatable = false)
+	private int number;
 
 	// General project information:
 
@@ -69,12 +89,12 @@ public class Referral {
 	private String projectBackground;
 
 	/** Where an activity will require the input of other provincial agencies. This common number will link them all. */
-	@Column(name = "external_project_id")
-	private String externalProjectId;
+	@Column(nullable = false, name = "external_project_id")
+	private String externalProjectId = "-99";
 
 	/** Document file id which tracks project/activity in provincial agency. */
-	@Column(name = "external_file_id")
-	private String externalFileId;
+	@Column(nullable = false, name = "external_file_id")
+	private String externalFileId = "-99";
 
 	/** Name of provincial or external client agency who submitted referral. */
 	@Column(name = "external_agency_name")
@@ -129,7 +149,15 @@ public class Referral {
 
 	/** Date when initial referral package was received. */
 	@Column(nullable = false, name = "receive_date")
-	private Date receiveDate;
+	private Date receiveDate = new Date();
+
+	/** Date when initial referral package was received. */
+	@Column(nullable = true, name = "create_date", insertable = false, updatable = false)
+	private Date createDate;
+
+	/** Date when initial referral package was received. */
+	@Column(nullable = true, name = "create_user", insertable = false, updatable = false)
+	private String createUser;
 
 	/** The date when the official response is sent to the contact. */
 	@Column(nullable = false, name = "response_date")
@@ -141,25 +169,26 @@ public class Referral {
 
 	/** Active retention of record - in Years (2Y). */
 	@Column(nullable = false, name = "active_retention_period")
-	private int activeRetentionPeriod;
+	private int activeRetentionPeriod = 2;
 
 	/** Semi-active retention of record - in Years (5Y). */
 	@Column(nullable = false, name = "semi_active_retention_period")
-	private int semiActiveRetentionPeriod;
+	private int semiActiveRetentionPeriod = 5;
 
 	/** Destruction (D), Permanent Retention - Archives (P), Selective Retention - Archives (SR). */
-	@Column(nullable = false, name = "final_disposition")
-	private int finalDisposition;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "final_disposition_id", nullable = false)
+	private ReferralDispositionType finalDisposition = ReferralDispositionType.DEFAULT;
 
 	// Other information:
 
 	/** Provincial Agency's assessment or the appropriate engagement level. */
-	@Column(name = "assessment_level")
-	private int assessmentLevel;
+	@Column(name = "provincial_assessment_level")
+	private int provincialAssessmentLevel = 1;
 
-	/** Using developed record classification annotation - 3500-10. */
-	@Column(nullable = false, name = "record_classification")
-	private String recordClassification;
+	/** Provincial Agency's assessment or the appropriate engagement level. */
+	@Column(name = "final_assessment_level")
+	private int finalAssessmentLevel = 1;
 
 	/** What is the current status of this referral? (new, in progress, approved, denied) */
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -173,11 +202,12 @@ public class Referral {
 
 	/** The collection of all documents associated with this referral. */
 	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-	private Collection<Document> documents;
+	@OrderBy("title asc")
+	private List<Document> documents = new ArrayList<Document>();
 
 	/** The collection of all comments made on this referral. */
 	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-	private Collection<ReferralComment> comments;
+	private List<ReferralComment> comments = new ArrayList<ReferralComment>();
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -290,60 +320,89 @@ public class Referral {
 	}
 
 	/**
-	 * Get the collection of all documents associated with this referral.
+	 * Get the list of all documents associated with this referral.
 	 * 
-	 * @return The collection of all documents associated with this referral.
+	 * @return The list of all documents associated with this referral.
 	 */
-	public Collection<Document> getDocuments() {
+	public List<Document> getDocuments() {
 		return documents;
 	}
 
 	/**
-	 * Set the collection of all documents associated with this referral.
+	 * Set the list of all documents associated with this referral.
 	 * 
 	 * @param documents
-	 *            The new collection of associated documents.
+	 *            The new list of associated documents.
 	 */
-	public void setDocuments(Collection<Document> documents) {
+	public void setDocuments(List<Document> documents) {
 		this.documents = documents;
 	}
 
 	/**
-	 * Get the collection of all comments made on this referral.
+	 * Get the list of all comments made on this referral.
 	 * 
-	 * @return The collection of all comments made on this referral.
+	 * @return The list of all comments made on this referral.
 	 */
-	public Collection<ReferralComment> getComments() {
+	public List<ReferralComment> getComments() {
 		return comments;
 	}
 
 	/**
-	 * Set the collection of all comments made on this referral.
+	 * Set the list of all comments made on this referral.
 	 * 
 	 * @param comments
-	 *            The new collection of comments.
+	 *            The new list of comments.
 	 */
-	public void setComments(Collection<ReferralComment> comments) {
+	public void setComments(List<ReferralComment> comments) {
 		this.comments = comments;
 	}
+	
+	public int getPrimaryClassificationNumber() {
+		return primaryClassificationNumber;
+	}
 
-	/**
-	 * Get lands referral unique number (11-0001, YY-0000, resets after each new year).
-	 * 
-	 * @return Lands referral unique number (11-0001, YY-0000, resets after each new year).
-	 */
-	public String getLandReferralId() {
-		return landReferralId;
+	
+	public void setPrimaryClassificationNumber(int primaryClassificationNumber) {
+		this.primaryClassificationNumber = primaryClassificationNumber;
+	}
+
+	
+	public int getSecondaryClassificationNumber() {
+		return secondaryClassificationNumber;
+	}
+
+	
+	public void setSecondaryClassificationNumber(int secondaryClassificationNumber) {
+		this.secondaryClassificationNumber = secondaryClassificationNumber;
+	}
+
+	
+	public int getCalendarYear() {
+		return calendarYear;
+	}
+
+	
+	public void setCalendarYear(int calendarYear) {
+		this.calendarYear = calendarYear;
 	}
 
 	/**
-	 * Set the lands referral unique number (11-0001, YY-0000, resets after each new year).
+	 * Get unique number (resets after each new year).
 	 * 
-	 * @param landReferralId
+	 * @return number referral unique number.
+	 */
+	public int getNumber() {
+		return number;
+	}
+
+	/**
+	 * Set unique number (resets after each new year).
+	 * 
+	 * @param number
 	 *            The new value.
 	 */
-	public void setLandReferralId(String landReferralId) {
-		this.landReferralId = landReferralId;
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 	/**
@@ -640,6 +699,26 @@ public class Referral {
 		this.receiveDate = receiveDate;
 	}
 
+	
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
+	}
+
 	/**
 	 * Get the date when the official response is sent to the contact.
 	 * 
@@ -722,7 +801,7 @@ public class Referral {
 	 * 
 	 * @return Destruction (D), Permanent Retention - Archives (P), Selective Retention - Archives (SR).
 	 */
-	public int getFinalDisposition() {
+	public ReferralDispositionType getFinalDisposition() {
 		return finalDisposition;
 	}
 
@@ -733,7 +812,7 @@ public class Referral {
 	 * @param finalDisposition
 	 *            The new value.
 	 */
-	public void setFinalDisposition(int finalDisposition) {
+	public void setFinalDisposition(ReferralDispositionType finalDisposition) {
 		this.finalDisposition = finalDisposition;
 	}
 
@@ -742,36 +821,65 @@ public class Referral {
 	 * 
 	 * @return Provincial Agency's assessment or the appropriate engagement level.
 	 */
-	public int getAssessmentLevel() {
-		return assessmentLevel;
+	public int getProvincialAssessmentLevel() {
+		return provincialAssessmentLevel;
 	}
 
 	/**
 	 * Set the provincial Agency's assessment or the appropriate engagement level.
 	 * 
-	 * @param assessmentLevel
+	 * @param provincialAssessmentLevel
 	 *            The new value.
 	 */
-	public void setAssessmentLevel(int assessmentLevel) {
-		this.assessmentLevel = assessmentLevel;
+	public void setProvincialAssessmentLevel(int provincialAssessmentLevel) {
+		this.provincialAssessmentLevel = provincialAssessmentLevel;
 	}
 
 	/**
-	 * Get the record classification annotation.
+	 * Get the final assessment or the appropriate engagement level.
 	 * 
-	 * @return Using developed record classification annotation - 3500-10.
+	 * @return final assessment or the appropriate engagement level.
 	 */
-	public String getRecordClassification() {
-		return recordClassification;
+	public int getFinalAssessmentLevel() {
+		return finalAssessmentLevel;
 	}
 
 	/**
-	 * Set the record classification annotation.
+	 * Set the final assessment or the appropriate engagement level.
 	 * 
-	 * @param recordClassification
+	 * @param finalAssessmentLevel
 	 *            The new value.
 	 */
-	public void setRecordClassification(String recordClassification) {
-		this.recordClassification = recordClassification;
+	public void setFinalAssessmentLevel(int finalAssessmentLevel) {
+		this.finalAssessmentLevel = finalAssessmentLevel;
 	}
+	
+	/**
+	 * Splits the referral id to store the first part in the database
+	 */
+//	private void splitReferralId() {
+//		if (landReferralId != null && landReferralId.length() == 15) {
+//			setPrimaryClassificationNumber(Integer.parseInt(landReferralId.substring(0, 4)));
+//			setSecondaryClassificationNumber(Integer.parseInt(landReferralId.substring(5, 7)));
+//			setCalendarYear(Integer.parseInt(landReferralId.substring(8, 10)));
+//		}
+//	}
+//
+//	/**
+//	 * Joins the first part of the referral id with the unique number 
+//	 */
+//	private void joinReferralId() {
+//		if(getNumber() > 0) {
+//			StringBuilder builder = new StringBuilder();
+//			builder.append(String.format("%04d", getPrimaryClassificationNumber()));
+//			builder.append("-");
+//			builder.append(String.format("%02d", getSecondaryClassificationNumber()));
+//			builder.append("/");
+//			builder.append(String.format("%02d", getCalendarYear()));
+//			builder.append("-");
+//			builder.append(String.format("%04d", getNumber()));
+//	    	setLandReferralId(builder.toString());
+//		}
+//    }
+
 }
