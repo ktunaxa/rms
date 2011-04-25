@@ -55,6 +55,7 @@
 			<dependency>
 				<groupId>org.ktunaxa.referral</groupId>
 				<artifactId>ktunaxa-map</artifactId>
+				<type>war</type>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -196,6 +197,7 @@
 		<module>theme</module>
 		<module>bpm</module>
 		<module>map</module>
+		<module>map-test</module>
 	</modules>
 
 	<profiles>
