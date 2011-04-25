@@ -163,7 +163,10 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		return header;
 	}
 
-	private class MapClickHandler implements ClickHandler {
+	/**
+	 * Map click handler.
+	 */
+	private static class MapClickHandler implements ClickHandler {
 
 		private String mapDashboardBaseUrl;
 
@@ -176,7 +179,10 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 	}
 
-	private class TasksClickHandler implements ClickHandler {
+	/**
+	 * Task click handler.
+	 */
+	private static class TasksClickHandler implements ClickHandler {
 
 		private String bpmDashboardBaseUrl;
 
@@ -189,7 +195,10 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 	}
 
-	private class CreateReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
+	/**
+	 * Create referral handler.
+	 */
+	private static class CreateReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
 
 		private String mapDashboardBaseUrl;
 
@@ -206,7 +215,10 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 	}
 
-	private class OpenReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
+	/**
+	 * Open referral handler.
+	 */
+	private static class OpenReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
 
 		private String mapDashboardBaseUrl;
 
