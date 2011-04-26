@@ -54,6 +54,12 @@
 			</dependency>
 			<dependency>
 				<groupId>org.ktunaxa.referral</groupId>
+				<artifactId>ktunaxa-bpm</artifactId>
+				<classifier>sources</classifier>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ktunaxa.referral</groupId>
 				<artifactId>ktunaxa-map</artifactId>
 				<type>war</type>
 				<version>${project.version}</version>

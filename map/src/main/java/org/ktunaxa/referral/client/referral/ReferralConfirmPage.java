@@ -5,6 +5,7 @@
  */
 package org.ktunaxa.referral.client.referral;
 
+import com.google.gwt.user.client.Window;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.command.dto.PersistTransactionResponse;
@@ -16,7 +17,6 @@ import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
-import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
 
@@ -50,7 +50,7 @@ public class ReferralConfirmPage implements WizardPage {
 
 	private VLayout summaryLayout;
 
-	public ReferralConfirmPage(VectorLayer layer, ReferralCreationWizard wizard) {
+	public ReferralConfirmPage(ReferralCreationWizard wizard) {
 		this.wizard = wizard;
 		widget = new VLayout();
 		widget.setWidth100();
@@ -183,16 +183,12 @@ public class ReferralConfirmPage implements WizardPage {
 
 			public void execute(CommandResponse response) {
 				if (response instanceof UrlResponse) {
-					redirect(((UrlResponse) response).getUrl());
+					Window.Location.assign(((UrlResponse) response).getUrl());
 				}
 			}
 		});
 
 	}
-
-	public static native void redirect(String url) /*-{
-		$wnd.location = url;
-	}-*/;
 
 	/**
 	 * Moves back to first page.

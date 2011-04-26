@@ -44,6 +44,11 @@
 			<groupId>org.ktunaxa.referral</groupId>
 			<artifactId>ktunaxa-bpm</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.ktunaxa.referral</groupId>
+			<artifactId>ktunaxa-bpm</artifactId>
+			<classifier>sources</classifier>
+		</dependency>
 
 		<dependency>
 			<groupId>commons-fileupload</groupId>

@@ -15,19 +15,6 @@ import org.activiti.engine.delegate.DelegateExecution;
  */
 public class KtunaxaConfiguration {
 
-	public static final String QUERY_REFERRAL_ID = "r";
-	public static final String QUERY_TASK_ID = "bpm";
-
-	public static final String VAR_REFERRAL_ID = "referralId";
-	public static final String VAR_DESCRIPTION = "description";
-
-	public static final String REFERRAL_PROCESS_ID = "referral-handling";
-	public static final String REFERRAL_CONTEXT_REFERRAL_ID = "referralId";
-	public static final String REFERRAL_CONTEXT_DESCRIPTION = "description";
-	public static final String REFERRAL_CONTEXT_EMAIL = "requesterEmail";
-	public static final String REFERRAL_CONTEXT_ENGAGEMENT_LEVEL = "engagementLevel";
-	public static final String REFERRAL_CONTEXT_COMPLETION_DEADLINE = "completionDeadline";
-
 	private String mapDashboardBaseUrl = "http://localhost:8080/map/";
 	private String bpmDashboardBaseUrl = "http://localhost:8080/activiti-explorer/";
 
@@ -74,9 +61,9 @@ public class KtunaxaConfiguration {
 	 * @return URL for referral in mapping dashboard
 	 */
 	public String getReferralUrl(DelegateExecution execution) {
-		String referralId = (String) execution.getVariable(VAR_REFERRAL_ID);
-		return mapDashboardBaseUrl + "?" + QUERY_REFERRAL_ID + "=" + referralId + "&" +
-				QUERY_TASK_ID + "=" + execution.getId();
+		String referralId = (String) execution.getVariable(KtunaxaBpmConstant.VAR_REFERRAL_ID);
+		return mapDashboardBaseUrl + "?" + KtunaxaBpmConstant.QUERY_REFERRAL_ID + "=" + referralId + "&" +
+				KtunaxaBpmConstant.QUERY_TASK_ID + "=" + execution.getId();
 	}
 
 	/**
@@ -86,7 +73,7 @@ public class KtunaxaConfiguration {
 	 * @return HTML link
 	 */
 	public String getReferralIdLink(DelegateExecution execution) {
-		String referralId = (String) execution.getVariable(VAR_REFERRAL_ID);
+		String referralId = (String) execution.getVariable(KtunaxaBpmConstant.VAR_REFERRAL_ID);
 		return "<A HREF=\"" + getReferralUrl(execution) + "\">" + referralId + "</A>";
 	}
 
@@ -97,8 +84,8 @@ public class KtunaxaConfiguration {
 	 * @return HTML link
 	 */
 	public String getReferralLink(DelegateExecution execution) {
-		String referralId = (String) execution.getVariable(VAR_REFERRAL_ID);
-		String description = (String) execution.getVariable(VAR_DESCRIPTION);
+		String referralId = (String) execution.getVariable(KtunaxaBpmConstant.VAR_REFERRAL_ID);
+		String description = (String) execution.getVariable(KtunaxaBpmConstant.VAR_DESCRIPTION);
 		return "<A HREF=\"" + getReferralUrl(execution) + "\">" + referralId + ", " + description + "</A>";
 	}
 }

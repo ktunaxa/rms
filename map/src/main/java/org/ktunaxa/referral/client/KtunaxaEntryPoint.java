@@ -14,8 +14,10 @@ import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.server.command.request.GetUrlsResponse;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -44,8 +46,6 @@ import com.smartgwt.client.widgets.toolbar.ToolStripMenuButton;
  * @author Pieter De Graef
  */
 public class KtunaxaEntryPoint implements EntryPoint {
-
-	private static final String RFA_ID = "MIN001";
 
 	private static final String RFA_TITLE = "Mining SoilDigger";
 
@@ -82,23 +82,24 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		layout.setSize("100%", "100%");
 
 		// Determine the layout:
-		String createReferralParam = Window.Location.getParameter("createReferral");
-		String searchReferralParam = Window.Location.getParameter("searchReferral");
-		String referralParam = Window.Location.getParameter("r");
-		String bpmParam = Window.Location.getParameter("bpm");
+		String createReferralParam = Window.Location.getParameter(KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER);
+		String searchReferralParam = Window.Location.getParameter(KtunaxaConstant.SEARCH_REFERRAL_URL_PARAMETER);
+		String referralParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_REFERRAL_ID);
+		String bpmParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_TASK_ID);
 
 		if (createReferralParam != null) {
-			layout.addMember(createHeader("Referral Management System - Create referral", null));
+			layout.addMember(createHeader(KtunaxaConstant.TITLE_CREATE_REFERRAL, null));
 			layout.addMember(new CreateReferralLayout());
 		} else if (searchReferralParam != null) {
-			layout.addMember(createHeader("Referral Management System - Search referral", null));
+			layout.addMember(createHeader(KtunaxaConstant.TITLE_SEARCH_REFERRAL, null));
 			layout.addMember(new SearchReferralLayout());
-		} else if (referralParam != null) {
-			layout.addMember(createHeader(messages.applicationTitle(RFA_ID, RFA_TITLE), RFA_DESCRIPTION));
-			layout.addMember(new MapLayout(referralParam, bpmParam));
 		} else {
-			layout.addMember(createHeader("Referral Management System - Mapping Dashboard", null));
-			layout.addMember(new MapLayout(null, null));
+			if (referralParam != null) {
+				layout.addMember(createHeader(messages.applicationTitle(referralParam, RFA_TITLE), RFA_DESCRIPTION));
+			} else {
+				layout.addMember(createHeader(KtunaxaConstant.TITLE_GENERAL, null));
+			}
+			layout.addMember(new MapLayout(referralParam, bpmParam));
 		}
 		layout.draw();
 
@@ -198,7 +199,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	/**
 	 * Create referral handler.
 	 */
-	private static class CreateReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
+	private class CreateReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
 
 		private String mapDashboardBaseUrl;
 
@@ -207,18 +208,14 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 
 		public void onClick(MenuItemClickEvent event) {
-			if (mapDashboardBaseUrl.indexOf('?') > 0) {
-				Window.Location.assign(mapDashboardBaseUrl + "&createReferral");
-			} else {
-				Window.Location.assign(mapDashboardBaseUrl + "?createReferral");
-			}
+			Window.Location.assign(addUrlParam(mapDashboardBaseUrl, KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER));
 		}
 	}
 
 	/**
 	 * Open referral handler.
 	 */
-	private static class OpenReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
+	private class OpenReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
 
 		private String mapDashboardBaseUrl;
 
@@ -227,11 +224,15 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 
 		public void onClick(MenuItemClickEvent event) {
-			if (mapDashboardBaseUrl.indexOf('?') > 0) {
-				Window.Location.assign(mapDashboardBaseUrl + "&searchReferral");
-			} else {
-				Window.Location.assign(mapDashboardBaseUrl + "?searchReferral");
-			}
+			Window.Location.assign(addUrlParam(mapDashboardBaseUrl, KtunaxaConstant.SEARCH_REFERRAL_URL_PARAMETER));
+		}
+	}
+
+	private String addUrlParam(String baseUrl, String param) {
+		if (baseUrl.indexOf('?') > 0) {
+			return baseUrl + "&" + param;
+		} else {
+			return baseUrl + "?" + param;
 		}
 	}
 }

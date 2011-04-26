@@ -56,7 +56,7 @@ public class CreateReferralLayout extends VLayout {
 					wizard.addStep(referralInfoPage);
 					wizard.addStep(new AddGeometryPage());
 					wizard.addStep(new AttachDocumentPage());
-					wizard.addStep(new ReferralConfirmPage(layer, wizard));
+					wizard.addStep(new ReferralConfirmPage(wizard));
 				}
 			}
 		});

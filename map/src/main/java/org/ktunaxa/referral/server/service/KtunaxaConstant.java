@@ -17,4 +17,17 @@ public interface KtunaxaConstant {
 	String FORM_ID = "formId";
 
 	String MAP_CRS = "EPSG:900913";
+
+	String CREATE_REFERRAL_URL_PARAMETER = "createReferral";
+
+	String SEARCH_REFERRAL_URL_PARAMETER = "searchReferral";
+
+	String TITLE_BASE = "Referral Management System";
+
+	String TITLE_SEPARATOR = " - ";
+
+	String TITLE_GENERAL = TITLE_BASE + TITLE_SEPARATOR + "Mapping Dashboard";
+	String TITLE_CREATE_REFERRAL = TITLE_BASE + TITLE_SEPARATOR + "Create referral";
+	String TITLE_SEARCH_REFERRAL = TITLE_BASE + TITLE_SEPARATOR + "Search referral";
+
 }
