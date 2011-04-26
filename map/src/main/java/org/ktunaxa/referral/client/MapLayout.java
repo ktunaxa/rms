@@ -8,19 +8,15 @@ package org.ktunaxa.referral.client;
 
 import com.google.gwt.user.client.Window;
 import org.geomajas.command.CommandResponse;
-import org.geomajas.command.dto.PersistTransactionRequest;
-import org.geomajas.command.dto.PersistTransactionResponse;
 import org.geomajas.command.dto.SearchFeatureRequest;
 import org.geomajas.command.dto.SearchFeatureResponse;
 import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
-import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.event.MapModelEvent;
 import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
-import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.ktunaxa.referral.client.gui.CommentPanel;
 import org.ktunaxa.referral.client.gui.DocumentPanel;
@@ -40,11 +36,8 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
-import org.ktunaxa.referral.server.command.request.CreateProcessRequest;
 import org.ktunaxa.referral.server.command.request.FinishTaskRequest;
 import org.ktunaxa.referral.server.command.request.UrlResponse;
-
-import java.util.Date;
 
 /**
  * Default Ktunaxa layout.
@@ -203,7 +196,6 @@ public class MapLayout extends VLayout {
 			finishButton.addClickHandler(new ClickHandler() {
 
 				public void onClick(ClickEvent event) {
-					SC.say("Finish reviewing this referral - Not implemented yet.");
 					FinishTaskRequest request = new FinishTaskRequest();
 					request.setTaskId(bpmId);
 					GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
