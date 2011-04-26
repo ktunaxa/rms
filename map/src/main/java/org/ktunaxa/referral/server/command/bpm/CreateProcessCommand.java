@@ -10,6 +10,7 @@ import org.activiti.engine.RuntimeService;
 import org.geomajas.command.Command;
 import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.bpm.KtunaxaConfiguration;
 import org.ktunaxa.referral.server.command.request.CreateProcessRequest;
 import org.ktunaxa.referral.server.command.request.UrlResponse;
@@ -47,16 +48,16 @@ public class CreateProcessCommand implements Command<CreateProcessRequest, UrlRe
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "email");
 		}
 		Map<String, Object> context = new HashMap<String, Object>();
-		context.put(KtunaxaConfiguration.REFERRAL_CONTEXT_REFERRAL_ID, referralId);
+		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_REFERRAL_ID, referralId);
 		String description = request.getDescription();
 		if (null == description) {
 			description = "";
 		}
-		context.put(KtunaxaConfiguration.REFERRAL_CONTEXT_DESCRIPTION, description);
-		context.put(KtunaxaConfiguration.REFERRAL_CONTEXT_EMAIL, email);
-		context.put(KtunaxaConfiguration.REFERRAL_CONTEXT_ENGAGEMENT_LEVEL, request.getEngagementLevel());
-		context.put(KtunaxaConfiguration.REFERRAL_CONTEXT_COMPLETION_DEADLINE, request.getCompletionDeadline());
-		runtimeService.startProcessInstanceByKey(KtunaxaConfiguration.REFERRAL_PROCESS_ID, context);
+		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_DESCRIPTION, description);
+		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_EMAIL, email);
+		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_ENGAGEMENT_LEVEL, request.getEngagementLevel());
+		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_COMPLETION_DEADLINE, request.getCompletionDeadline());
+		runtimeService.startProcessInstanceByKey(KtunaxaBpmConstant.REFERRAL_PROCESS_ID, context);
 		response.setUrl(ktunaxaConfiguration.getBpmDashboardBaseUrl());
 	}
 }
