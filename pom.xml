@@ -145,6 +145,11 @@
 				<artifactId>hibernate-infinispan</artifactId>
 				<version>3.5.2-Final</version>
 			</dependency>
+			<dependency>
+				<groupId>com.jolbox</groupId>
+				<artifactId>bonecp</artifactId>
+				<version>0.7.1-rc3</version>
+			</dependency>
 
 			<dependency>
 				<groupId>org.geomajas</groupId>

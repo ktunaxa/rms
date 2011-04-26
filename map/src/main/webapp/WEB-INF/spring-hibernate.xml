@@ -20,12 +20,30 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<!-- Hibernate configuration -->
 
 	<!-- DataSource Property -->
+	<!--
 	<bean id="postgisDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url" value="jdbc:postgresql://localhost:5432/referral" />
 		<property name="username" value="referral" />
 		<property name="password" value="referral" />
 		<property name="maxWait" value="250" />
+	</bean>
+	-->
+
+	<!-- BoneCP configuration -->
+	<bean id="postgisDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+	   <property name="driverClass" value="org.postgresql.Driver" />
+	   <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/referral" />
+	   <property name="username" value="referral"/>
+	   <property name="password" value="referral"/>
+	   <property name="idleConnectionTestPeriod" value="60"/>
+	   <property name="idleMaxAge" value="240"/>
+	   <property name="maxConnectionsPerPartition" value="30"/>
+	   <property name="minConnectionsPerPartition" value="10"/>
+	   <property name="partitionCount" value="3"/>
+	   <property name="acquireIncrement" value="5"/>
+	   <property name="statementsCacheSize" value="100"/>
+	   <property name="releaseHelperThreads" value="3"/>
 	</bean>
 
 	<!-- Hibernate SessionFactory -->
