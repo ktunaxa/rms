@@ -1,0 +1,33 @@
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+  -->
+
+<configuration debug="true">
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/var/log/ktunaxa/log.txt</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>/var/log/ktunaxa/log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern> <!-- zipped! -->
+			<maxHistory>60</maxHistory> <!-- keep logs two months -->
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 20MB -->
+				<maxFileSize>20MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.geomajas" level="DEBUG"/>
+	<logger name="org.ktunaxa" level="DEBUG"/>
+
+	<root level="INFO">
+		<appender-ref ref="FILE"/>
+	</root>
+
+</configuration>
