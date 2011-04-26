@@ -27,7 +27,6 @@ import org.ktunaxa.referral.client.referral.ReferralUtil;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.SelectionType;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
