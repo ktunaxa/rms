@@ -5,7 +5,8 @@
  */
 package org.ktunaxa.referral.client.referral;
 
-import com.google.gwt.user.client.Window;
+import java.util.Date;
+
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.command.dto.PersistTransactionResponse;
@@ -19,20 +20,19 @@ import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
+import org.ktunaxa.referral.server.command.request.CreateProcessRequest;
+import org.ktunaxa.referral.server.command.request.UrlResponse;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.ktunaxa.referral.server.command.request.CreateProcessRequest;
-import org.ktunaxa.referral.server.command.request.UrlResponse;
-
-import java.util.Date;
 
 /**
  * Page to confirm creation of a new referral.
@@ -48,11 +48,18 @@ public class ReferralConfirmPage implements WizardPage {
 
 	private VLayout widget;
 
+	private HLayout okCancelLayout;
+
+	private HLayout nextLayout;
+
 	private VLayout summaryLayout;
+	
+	private Img busyImg;
 
 	public ReferralConfirmPage(ReferralCreationWizard wizard) {
 		this.wizard = wizard;
 		widget = new VLayout();
+		widget.setMembersMargin(10);
 		widget.setWidth100();
 		widget.setHeight100();
 
@@ -60,17 +67,31 @@ public class ReferralConfirmPage implements WizardPage {
 		summaryLayout.setWidth100();
 		summaryLayout.setHeight100();
 		summaryLayout.setStyleName("summary");
-		widget.addMember(summaryLayout);
 
 		IButton confirmButton = new IButton("Ok");
 		IButton cancelButton = new IButton("Cancel");
-		HLayout buttonLayout = new HLayout();
-		buttonLayout.addMember(confirmButton);
-		buttonLayout.addMember(cancelButton);
-		buttonLayout.setAlign(Alignment.CENTER);
+		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
+		busyImg.setVisible(false);
+		okCancelLayout = new HLayout();
+		okCancelLayout.setMembersMargin(20);
+		okCancelLayout.addMember(confirmButton);
+		okCancelLayout.addMember(cancelButton);
+		okCancelLayout.addMember(busyImg);
+		okCancelLayout.setAlign(Alignment.CENTER);
 		confirmButton.addClickHandler(new ConfirmHandler());
 		cancelButton.addClickHandler(new CancelHandler());
-		widget.addMember(buttonLayout);
+		
+		nextLayout = new HLayout();
+		IButton nextButton = new IButton("Create another");
+		nextLayout.addMember(nextButton);
+		nextButton.addClickHandler(new CancelHandler());
+		nextLayout.addMember(nextButton);
+		nextLayout.setAlign(Alignment.CENTER);
+		nextLayout.setVisible(false);
+		
+		widget.addMember(okCancelLayout);
+		widget.addMember(nextLayout);
+		widget.addMember(summaryLayout);
 	}
 
 	public String getTitle() {
@@ -93,6 +114,7 @@ public class ReferralConfirmPage implements WizardPage {
 		this.feature = feature;
 		summaryLayout.setMembers();
 		if (feature != null) {
+			okCancelLayout.setVisible(true);
 			boolean even = true;
 			FeatureInfo featureInfo = feature.getLayer().getLayerInfo().getFeatureInfo();
 			for (AttributeInfo info : featureInfo.getAttributes()) {
@@ -120,6 +142,9 @@ public class ReferralConfirmPage implements WizardPage {
 
 	public void clear() {
 		setFeature(null);
+		okCancelLayout.setVisible(false);
+		nextLayout.setVisible(false);
+		busyImg.setVisible(false);
 	}
 
 	// ------------------------------------------------------------------------
@@ -142,6 +167,7 @@ public class ReferralConfirmPage implements WizardPage {
 
 			GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 			command.setCommandRequest(request);
+			busyImg.setVisible(true);
 
 			GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
 
@@ -155,8 +181,6 @@ public class ReferralConfirmPage implements WizardPage {
 						setFeature(newfeature);
 					}
 					createProcess();
-					// todo : show choice panel : new feature or bpm or map ?
-					// wizard.refresh();
 				}
 			});
 		}
@@ -174,7 +198,7 @@ public class ReferralConfirmPage implements WizardPage {
 		request.setDescription((String) feature.getAttributeValue("projectName"));
 		request.setEmail((String) feature.getAttributeValue("contactEmail"));
 		request.setEngagementLevel((Integer) feature.getAttributeValue("provincialAssessmentLevel"));
-		request.setCompletionDeadline((Date) feature.getAttributeValue("reponseDate"));
+		request.setCompletionDeadline((Date) feature.getAttributeValue("responseDeadline"));
 
 		GwtCommand command = new GwtCommand(CreateProcessRequest.COMMAND);
 		command.setCommandRequest(request);
@@ -183,7 +207,9 @@ public class ReferralConfirmPage implements WizardPage {
 
 			public void execute(CommandResponse response) {
 				if (response instanceof UrlResponse) {
-					Window.Location.assign(((UrlResponse) response).getUrl());
+					okCancelLayout.setVisible(false);
+					nextLayout.setVisible(true);
+					busyImg.setVisible(false);
 				}
 			}
 		});
@@ -196,7 +222,7 @@ public class ReferralConfirmPage implements WizardPage {
 	public class CancelHandler implements ClickHandler {
 
 		public void onClick(ClickEvent event) {
-			wizard.refresh();
+			wizard.refresh();			
 		}
 
 	}

@@ -153,7 +153,7 @@ public class AddGeometryPage implements WizardPage {
 		HLayout btnLayout = new HLayout(10);
 		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
 		busyImg.setVisible(false);
-		IButton uploadbutton = new IButton("Apply ShapeFile");
+		IButton uploadbutton = new IButton("Upload ShapeFile");
 		uploadbutton.setAutoFit(true);
 		uploadbutton.addClickHandler(new ClickHandler() {
 

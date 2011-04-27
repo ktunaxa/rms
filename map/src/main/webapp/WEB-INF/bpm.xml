@@ -16,8 +16,8 @@
 	<context:component-scan base-package="org.ktunaxa.bpm"/>
 
 	<bean id="ktunaxa" class="org.ktunaxa.bpm.KtunaxaConfiguration">
-		<property name="mapDashboardBaseUrl" value="http://127.0.0.1:8888/index.html?gwt.codesvr=127.0.0.1:9997"/>
-		<property name="bpmDashboardBaseUrl" value="http://localhost:8080/activiti-explorer/"/>
+		<property name="mapDashboardBaseUrl" value="../map/index.html"/>
+		<property name="bpmDashboardBaseUrl" value="../bpm/"/>
 	</bean>
 
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">

@@ -164,11 +164,11 @@ public class Referral {
 
 	/** The date when the official response is sent to the contact. */
 	@Column(nullable = false, name = "response_date")
-	private Date reponseDate;
+	private Date responseDate;
 
 	/** Deadline date for response. */
 	@Column(nullable = false, name = "response_deadline")
-	private Date reponseDeadline;
+	private Date responseDeadline;
 
 	/** Active retention of record - in Years (2Y). */
 	@Column(nullable = false, name = "active_retention_period")
@@ -727,18 +727,18 @@ public class Referral {
 	 * 
 	 * @return The date when the official response is sent to the contact.
 	 */
-	public Date getReponseDate() {
-		return reponseDate;
+	public Date getResponseDate() {
+		return responseDate;
 	}
 
 	/**
 	 * Set the date when the official response is sent to the contact.
 	 * 
-	 * @param reponseDate
+	 * @param responseDate
 	 *            The date when the response is given.
 	 */
-	public void setReponseDate(Date reponseDate) {
-		this.reponseDate = reponseDate;
+	public void setResponseDate(Date responseDate) {
+		this.responseDate = responseDate;
 	}
 
 	/**
@@ -746,18 +746,18 @@ public class Referral {
 	 * 
 	 * @return Deadline date for response.
 	 */
-	public Date getReponseDeadline() {
-		return reponseDeadline;
+	public Date getResponseDeadline() {
+		return responseDeadline;
 	}
 
 	/**
 	 * Set the deadline date for response.
 	 * 
-	 * @param reponseDeadline
+	 * @param responseDeadline
 	 *            The new deadline for the response.
 	 */
-	public void setReponseDeadline(Date reponseDeadline) {
-		this.reponseDeadline = reponseDeadline;
+	public void setResponseDeadline(Date responseDeadline) {
+		this.responseDeadline = responseDeadline;
 	}
 
 	/**

@@ -95,10 +95,10 @@ public class ReferralDto implements Serializable {
 	private Date receiveDate;
 
 	/** The date when the official response is sent to the contact. */
-	private Date reponseDate;
+	private Date responseDate;
 
 	/** Deadline date for response. */
-	private Date reponseDeadline;
+	private Date responseDeadline;
 
 	/** Active retention of record - in Years (2Y). */
 	private int activeRetentionPeriod;
@@ -594,18 +594,18 @@ public class ReferralDto implements Serializable {
 	 * 
 	 * @return The date when the official response is sent to the contact.
 	 */
-	public Date getReponseDate() {
-		return reponseDate;
+	public Date getResponseDate() {
+		return responseDate;
 	}
 
 	/**
 	 * Set the date when the official response is sent to the contact.
 	 * 
-	 * @param reponseDate
+	 * @param responseDate
 	 *            The date when the response is given.
 	 */
-	public void setReponseDate(Date reponseDate) {
-		this.reponseDate = reponseDate;
+	public void setResponseDate(Date responseDate) {
+		this.responseDate = responseDate;
 	}
 
 	/**
@@ -613,18 +613,18 @@ public class ReferralDto implements Serializable {
 	 * 
 	 * @return Deadline date for response.
 	 */
-	public Date getReponseDeadline() {
-		return reponseDeadline;
+	public Date getResponseDeadline() {
+		return responseDeadline;
 	}
 
 	/**
 	 * Set the deadline date for response.
 	 * 
-	 * @param reponseDeadline
+	 * @param responseDeadline
 	 *            The new deadline for the response.
 	 */
-	public void setReponseDeadline(Date reponseDeadline) {
-		this.reponseDeadline = reponseDeadline;
+	public void setResponseDeadline(Date responseDeadline) {
+		this.responseDeadline = responseDeadline;
 	}
 
 	/**

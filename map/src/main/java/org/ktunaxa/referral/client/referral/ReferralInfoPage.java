@@ -6,6 +6,7 @@
 
 package org.ktunaxa.referral.client.referral;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import org.geomajas.gwt.client.map.feature.Feature;
@@ -17,6 +18,7 @@ import org.geomajas.layer.feature.attribute.LongAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
 
+import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.smartgwt.client.widgets.Canvas;
 
 /**
@@ -79,6 +81,9 @@ public class ReferralInfoPage implements WizardPage {
 		feature.setStringAttribute("externalFileId", "-99");
 		feature.setIntegerAttribute("activeRetentionPeriod", 2);
 		feature.setIntegerAttribute("semiActiveRetentionPeriod", 5);
+		Date nextMonth = new Date();
+		CalendarUtil.addMonthsToDate(nextMonth, 1);
+		feature.setDateAttribute("responseDeadline", nextMonth);
 		feature.setManyToOneAttribute("type", new AssociationValue(new LongAttribute(1L),
 				new HashMap<String, PrimitiveAttribute<?>>()));
 		feature.setManyToOneAttribute("finalDisposition", new AssociationValue(new IntegerAttribute(1),

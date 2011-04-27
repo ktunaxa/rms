@@ -29,6 +29,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="folder" value="ktunaxa" />
 	</bean>
 	
+	<bean id="service.DispatcherUrlService" class="org.geomajas.service.impl.StaticDispatcherUrlService">
+		<property name="dispatcherUrl" value="./d/" />
+	</bean>
+
 	<bean name="security.securityInfo" class="org.geomajas.security.SecurityInfo">
 		<property name="loopAllServices" value="false" />
 		<property name="securityServices">

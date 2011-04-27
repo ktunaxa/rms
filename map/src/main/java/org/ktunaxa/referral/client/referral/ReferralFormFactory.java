@@ -119,7 +119,7 @@ public class ReferralFormFactory implements FeatureFormFactory {
 					} else if ("projectBackground".equals(info.getName())) {
 						formItem.setColSpan(4);
 						formItem.setHeight(50);
-					} else if ("reponseDeadline".equals(info.getName())) {
+					} else if ("responseDeadline".equals(info.getName())) {
 						formItem.setColSpan(4);
 					}
 				}
