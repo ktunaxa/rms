@@ -6,13 +6,7 @@
 
 package org.ktunaxa.bpm;
 
-import org.activiti.engine.TaskService;
 import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.task.Task;
-import org.activiti.spring.ProcessEngineFactoryBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Configuration settings for the Ktunaxa business flows.
@@ -20,11 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Joachim Van der Auwera
  */
 public class KtunaxaConfiguration {
-
-	private final Logger log = LoggerFactory.getLogger(KtunaxaConfiguration.class);
-
-	@Autowired
-	private ProcessEngineFactoryBean processEngineFactoryBean;
 
 	private String mapDashboardBaseUrl = "http://localhost:8080/map/";
 	private String bpmDashboardBaseUrl = "http://localhost:8080/activiti-explorer/";
@@ -74,7 +63,7 @@ public class KtunaxaConfiguration {
 	public String getReferralUrl(DelegateExecution execution) {
 		String referralId = (String) execution.getVariable(KtunaxaBpmConstant.VAR_REFERRAL_ID);
 		return mapDashboardBaseUrl + "?" + KtunaxaBpmConstant.QUERY_REFERRAL_ID + "=" + referralId + "&" +
-				KtunaxaBpmConstant.QUERY_TASK_ID + "=" + getTaskId(execution);
+				KtunaxaBpmConstant.QUERY_TASK_ID + "=" + execution.getId();
 	}
 
 	/**
@@ -98,16 +87,5 @@ public class KtunaxaConfiguration {
 		String referralId = (String) execution.getVariable(KtunaxaBpmConstant.VAR_REFERRAL_ID);
 		String description = (String) execution.getVariable(KtunaxaBpmConstant.VAR_DESCRIPTION);
 		return "<A HREF=\"" + getReferralUrl(execution) + "\">" + referralId + ", " + description + "</A>";
-	}
-
-	private String getTaskId(DelegateExecution execution) {
-		try {
-			TaskService taskService = processEngineFactoryBean.getObject().getTaskService();
-			Task task = taskService.createTaskQuery().executionId(execution.getId()).singleResult();
-			return task.getId();
-		} catch (Exception exception) {
-			log.error("Could not create task service, so no task id", exception);
-			return "???";
-		}
 	}
 }

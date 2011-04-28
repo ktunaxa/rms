@@ -14,6 +14,7 @@ import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.map.MapView.ZoomOption;
 import org.geomajas.gwt.client.map.event.MapModelEvent;
 import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
@@ -249,6 +250,8 @@ public class MapLayout extends VLayout {
 							Feature feature = new Feature(features[0], layer);
 							GWT.log("Feature found: " + feature.getId());
 							// Now display feature on this page!
+							mainGui.getMapWidget().getMapModel().getMapView()
+									.applyBounds(feature.getGeometry().getBounds(), ZoomOption.LEVEL_FIT);
 						}
 					}
 				});

@@ -44,6 +44,8 @@ public class ReferenceLayer {
 	public ReferenceLayer(VectorLayer layer, List<ReferenceLayerDto> subLayerDtos,
 			List<ReferenceLayerTypeDto> layerTypes) {
 		this.layer = layer;
+		// we only need the name for the style !
+		layer.getLayerInfo().getNamedStyleInfo().getFeatureStyles().clear();
 		this.layerTypes = layerTypes;
 		handlerManager = new HandlerManager(this);
 		// forward layer changed events
