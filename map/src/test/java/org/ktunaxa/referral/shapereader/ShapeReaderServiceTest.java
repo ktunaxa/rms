@@ -61,24 +61,33 @@ public class ShapeReaderServiceTest {
 		Assert.assertNotNull(files);
 		Assert.assertTrue(files.length == NR_SHAPES);
 		try {
-			service.validateFormat(service.read(files[0]));
+			service.validateFormat(service.read(getFile(files, "OK.shp")));
 			Assert.assertTrue(true);
 		} catch (IOException e) {
 			Assert.fail(); // should never get here.
 		}
 		try {
-			service.validateFormat(service.read(files[1]));
+			service.validateFormat(service.read(getFile(files, "NoStyle.shp")));
 			Assert.fail(); // should never get here.
 		} catch (IOException e) {
 			System.err.println(e.getMessage() + " ..... as expected.");
 			Assert.assertTrue(true);
 		}
 		try {
-			service.validateFormat(service.read(files[2]));
+			service.validateFormat(service.read(getFile(files, "Invalid.shp")));
 			Assert.assertTrue(true);
 		} catch (IOException e) {
 			Assert.fail(); // should never get here.
 		}
+	}
+
+	private File getFile(File[] files, String nameSuffix) {
+		for (File file : files) {
+			if (file.getAbsolutePath().endsWith(nameSuffix)) {
+				return file;
+			}
+		}
+		return null;
 	}
 
 	@Test
@@ -96,14 +105,14 @@ public class ShapeReaderServiceTest {
 		File[] files = service.getAllFiles();
 
 		try {
-			service.persist(layer, service.read(files[0]));
+			service.persist(layer, service.read(getFile(files, "Invalid.shp")));
 			Assert.fail(); // should never get here.
 		} catch (IOException e) {
 			System.err.println(e.getMessage() + " ..... as expected.");
 			Assert.assertTrue(true);
 		}
 		try {
-			service.persist(layer, service.read(files[2]));
+			service.persist(layer, service.read(getFile(files, "OK.shp")));
 			Assert.assertTrue(true);
 		} catch (IOException e) {
 			Assert.fail(); // should never get here.

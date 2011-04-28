@@ -46,7 +46,7 @@ public interface ShapeReaderService {
 	 * @param file
 	 *            The chosen shape file to read. Must be a .shp file - no compressed file!
 	 * @return Returns the GeoTools DataStore representation of that shape file. This DataStore can read the contents.
-	 * @throws IOException
+	 * @throws IOException problem reading or converting shape file
 	 */
 	DataStore read(File file) throws IOException;
 
@@ -88,12 +88,16 @@ public interface ShapeReaderService {
 	
 	/**
 	 * Returns the expression to evaluate to obtain the label attribute of a feature.
+	 *
+	 * @param typeName type name
 	 * @return the expression
 	 */
 	Expression getLabelAttributeExpression(String typeName);
 	
 	/**
 	 * Returns the expression to evaluate to obtain the style attribute of a feature.
+	 *
+	 * @param typeName type name
 	 * @return the expression
 	 */
 	Expression getStyleAttributeExpression(String typeName);
