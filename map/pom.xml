@@ -400,16 +400,17 @@
 		
 						<executions>
 							<execution>
-								<id>create database</id>
+								<id>drop and create</id>
 								<goals>
 									<goal>execute</goal>
 								</goals>
             					<phase>process-resources</phase>
 								<configuration>
-									<!-- need another database to create the targeted one -->
+									<!-- need another database to drop/create the targeted one -->
 									<url>jdbc:postgresql://${dbHostPort}/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>
+										drop database referral;
 										create database referral TEMPLATE=template_postgis;
 										alter database referral OWNER TO referral_group;
 										grant all on database referral to referral_group;
@@ -417,7 +418,8 @@
 									<onError>continue</onError>
 								</configuration>
 							</execution>
-		
+
+							<!--
 							<execution>
 								<id>drop schema</id>
 								<goals>
@@ -425,7 +427,7 @@
 								</goals>
             					<phase>process-resources</phase>
 								<configuration>
-									<!-- need to login as postgres to drop schema -->
+									<!++ need to login as postgres to drop schema ++>
 									<url>jdbc:postgresql://${dbHostPort}/referral</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>
@@ -450,7 +452,7 @@
 									<onError>continue</onError>
 								</configuration>
 							</execution>
-
+					        -->
 							<execution>
 								<id>grant spatial table rights</id>
 								<goals>
@@ -481,9 +483,10 @@
 									<password>referral</password>
 									<srcFiles>
 										<srcFile>src/main/sql/schema/create-tables.sql</srcFile>
+										<srcFile>src/main/sql/schema/create-activiti-tables.sql</srcFile>
 										<srcFile>src/main/sql/data/fill-tables.sql</srcFile>
+										<srcFile>src/main/sql/data/fill-activiti-tables.sql</srcFile>
 									</srcFiles>
-									<onError>continue</onError>
 								</configuration>
 							</execution>
 						</executions>
