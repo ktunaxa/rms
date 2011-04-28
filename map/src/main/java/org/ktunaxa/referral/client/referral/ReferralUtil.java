@@ -67,10 +67,10 @@ public final class ReferralUtil {
 	public static SearchCriterion[] createCriteria(String referralId) {
 		String[] values = parse(referralId);
 		SearchCriterion[] criteria = new SearchCriterion[4];
-		criteria[0] = new SearchCriterion(ATTRIBUTE_PRIMARY, "==", values[0]);
-		criteria[1] = new SearchCriterion(ATTRIBUTE_SECONDARY, "==", values[1]);
-		criteria[2] = new SearchCriterion(ATTRIBUTE_YEAR, "==", values[2]);
-		criteria[3] = new SearchCriterion(ATTRIBUTE_NUMBER, "==", values[3]);
+		criteria[0] = new SearchCriterion(ATTRIBUTE_PRIMARY, "=", values[0]);
+		criteria[1] = new SearchCriterion(ATTRIBUTE_SECONDARY, "=", values[1]);
+		criteria[2] = new SearchCriterion(ATTRIBUTE_YEAR, "=", values[2]);
+		criteria[3] = new SearchCriterion(ATTRIBUTE_NUMBER, "=", values[3]);
 		return criteria;
 	}
 
