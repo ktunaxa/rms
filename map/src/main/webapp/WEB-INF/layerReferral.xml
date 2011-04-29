@@ -17,7 +17,7 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	<bean id="referralLayer" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
 		<property name="serverLayerId" value="referral" />
 		<property name="label" value="Referral - project" />
-		<property name="visible" value="true" />
+		<property name="visible" value="false" />
 		<property name="viewScaleMax" value="1000000000" />
 		<property name="viewScaleMin" value="0" />
 		<property name="namedStyleInfo" ref="referralStyleInfo" />
