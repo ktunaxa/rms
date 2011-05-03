@@ -6,22 +6,22 @@
 
 <configuration debug="true">
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-		<charset>UTF-8</charset>
-    </appender>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
 
 	<!--
     <logger name="org.geomajas">
         <level value="DEBUG"/>
     </logger>
 	-->
-	
-    <root>
-        <level value="INFO"/>
-        <appender-ref ref="CONSOLE"/>
-    </root>
+
+	<root>
+		<level value="INFO"/>
+		<appender-ref ref="CONSOLE"/>
+	</root>
 
 </configuration>

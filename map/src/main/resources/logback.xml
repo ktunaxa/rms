@@ -1,17 +1,17 @@
 <configuration debug="true">
 
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-		<charset>UTF-8</charset>
-    </appender>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
 
-    <logger name="org.geomajas" level="DEBUG" />
-    <logger name="org.ktunaxa" level="DEBUG" />
+	<logger name="org.geomajas" level="DEBUG"/>
+	<logger name="org.ktunaxa" level="DEBUG"/>
 
-    <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
-    </root>
+	<root level="INFO">
+		<appender-ref ref="CONSOLE"/>
+	</root>
 
 </configuration>
