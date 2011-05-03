@@ -30,18 +30,24 @@ public class RunSingleTileTest {
 	private CommandDispatcher commandDispatcher;
 
 	@Test
-	public void testTile() throws ClientProtocolException, IOException {
+	public void testTile() throws Exception {
 		GetVectorTileRequest request = createRequest();
+		long time = System.currentTimeMillis();
 		for (int i = 0; i < 1; i++) {
+			long time2 = System.currentTimeMillis();
 			GetVectorTileResponse response = (GetVectorTileResponse) commandDispatcher.execute(
 					GetVectorTileRequest.COMMAND, request, null, null);
+			System.out.println("---------- time " + (System.currentTimeMillis() - time2) + "ms");
+			time2 = System.currentTimeMillis();
 			consumeTile(response);
+			System.out.println("---------- time " + (System.currentTimeMillis() - time2) + "ms");
 		}
-		
+		System.out.println("+++++ time " + (System.currentTimeMillis() - time) + "ms");
 	}
 
-	private void consumeTile(GetVectorTileResponse response) throws IOException, ClientProtocolException {
+	private void consumeTile(GetVectorTileResponse response) throws Exception {
 		String url = response.getTile().getFeatureContent();
+		System.out.println("---------- " + url);
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpGet httpget = new HttpGet(url);
 		HttpResponse r = httpclient.execute(httpget);
