@@ -49,9 +49,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<!-- DataSource Property -->
 	<bean id="postgisDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url" value="jdbc:postgresql://localhost:5432/ktunaxa" />
-		<property name="username" value="ktunaxa" />
-		<property name="password" value="toenacha" />
+		<property name="url" value="jdbc:postgresql://localhost:5432/referral" />
+		<property name="username" value="referral" />
+		<property name="password" value="referral" />
 		<property name="maxWait" value="250" />
 	</bean>
 
