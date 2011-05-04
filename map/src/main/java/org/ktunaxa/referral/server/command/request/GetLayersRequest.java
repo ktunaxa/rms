@@ -16,6 +16,8 @@ import org.geomajas.command.CommandRequest;
 public class GetLayersRequest implements CommandRequest {
 
 	private static final long serialVersionUID = 100L;
+	
+	public static final String COMMAND = "command.GetLayers";
 
 	private String layerType;
 

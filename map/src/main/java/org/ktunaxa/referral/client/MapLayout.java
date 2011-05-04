@@ -6,7 +6,6 @@
 
 package org.ktunaxa.referral.client;
 
-import com.google.gwt.user.client.Window;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.SearchFeatureRequest;
 import org.geomajas.command.dto.SearchFeatureResponse;
@@ -19,12 +18,15 @@ import org.geomajas.gwt.client.map.event.MapModelEvent;
 import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.util.WindowUtil;
 import org.ktunaxa.referral.client.gui.CommentPanel;
 import org.ktunaxa.referral.client.gui.DocumentPanel;
 import org.ktunaxa.referral.client.gui.LayerPanel;
 import org.ktunaxa.referral.client.gui.MainGui;
 import org.ktunaxa.referral.client.gui.SearchPanel;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
+import org.ktunaxa.referral.server.command.request.FinishTaskRequest;
+import org.ktunaxa.referral.server.command.request.UrlResponse;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.SelectionType;
@@ -36,8 +38,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
-import org.ktunaxa.referral.server.command.request.FinishTaskRequest;
-import org.ktunaxa.referral.server.command.request.UrlResponse;
 
 /**
  * Default Ktunaxa layout.
@@ -47,6 +47,8 @@ import org.ktunaxa.referral.server.command.request.UrlResponse;
 public class MapLayout extends VLayout {
 
 	private MainGui mainGui;
+
+	private ToolStrip menuBar;
 
 	private LayerPanel layerPanel;
 
@@ -83,7 +85,7 @@ public class MapLayout extends VLayout {
 	}
 
 	private Canvas createMenuBar() {
-		ToolStrip menuBar = new ToolStrip();
+		menuBar = new ToolStrip();
 		menuBar.setMembersMargin(5);
 		menuBar.setSize("100%", "36");
 		menuBar.addSpacer(6);
@@ -189,30 +191,31 @@ public class MapLayout extends VLayout {
 			commentButton.setRadioGroup("the-only-one");
 			menuBar.addMember(commentButton);
 		}
-		if (bpmId != null) {
-			menuBar.addMember(new ToolStripSeparator());
-			// Finish button:
-			ToolStripButton finishButton = new ToolStripButton("FINISH");
-			finishButton.addClickHandler(new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					FinishTaskRequest request = new FinishTaskRequest();
-					request.setTaskId(bpmId);
-					GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
-					command.setCommandRequest(request);
-					GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
-
-						public void execute(CommandResponse response) {
-							if (response instanceof UrlResponse) {
-								Window.Location.assign(((UrlResponse) response).getUrl());
-							}
-						}
-					});
-				}
-			});
-			menuBar.addMember(finishButton);
-		}
 		return menuBar;
+	}
+
+	public void addFinishButton() {
+		menuBar.addMember(new ToolStripSeparator());
+		// Finish button:
+		ToolStripButton finishButton = new ToolStripButton("FINISH");
+		finishButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				FinishTaskRequest request = new FinishTaskRequest();
+				request.setTaskId(bpmId);
+				GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
+				command.setCommandRequest(request);
+				GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
+
+					public void execute(CommandResponse response) {
+						if (response instanceof UrlResponse) {
+							WindowUtil.setLocation(((UrlResponse) response).getUrl());
+						}
+					}
+				});
+			}
+		});
+		menuBar.addMember(finishButton);
 	}
 
 	/**

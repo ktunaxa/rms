@@ -11,12 +11,16 @@ import org.geomajas.command.EmptyCommandRequest;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
+import org.ktunaxa.referral.server.command.request.GetTaskRequest;
+import org.ktunaxa.referral.server.command.request.GetTaskResponse;
 import org.ktunaxa.referral.server.command.request.GetUrlsResponse;
+import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -63,6 +67,10 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	private MenuItem newItem;
 
 	private MenuItem openItem;
+	
+	private HTMLFlow rfaLabel;
+	
+	private MapLayout map;
 
 	public void onModuleLoad() {
 		// Register a custom form item for text area's:
@@ -95,11 +103,12 @@ public class KtunaxaEntryPoint implements EntryPoint {
 			layout.addMember(new SearchReferralLayout());
 		} else {
 			if (referralParam != null) {
-				layout.addMember(createHeader(messages.applicationTitle(referralParam, RFA_TITLE), RFA_DESCRIPTION));
+				layout.addMember(createHeader(messages.applicationTitle(referralParam, "View"), null));
 			} else {
 				layout.addMember(createHeader(KtunaxaConstant.TITLE_GENERAL, null));
 			}
-			layout.addMember(new MapLayout(referralParam, bpmParam));
+			map = new MapLayout(referralParam, bpmParam);
+			layout.addMember(map);
 		}
 		layout.draw();
 
@@ -118,6 +127,31 @@ public class KtunaxaEntryPoint implements EntryPoint {
 				}
 			}
 		});
+		
+		// Fetch the task
+		if (bpmParam != null) {
+			GwtCommand taskCommand = new GwtCommand(GetTaskRequest.COMMAND);
+			GetTaskRequest request = new GetTaskRequest();
+			request.setTaskId(bpmParam);
+			taskCommand.setCommandRequest(request);
+			final String refParam = referralParam;
+			GwtCommandDispatcher.getInstance().execute(taskCommand, new CommandCallback() {
+
+				public void execute(CommandResponse response) {
+					if (response instanceof GetTaskResponse) {
+						GetTaskResponse ftr = (GetTaskResponse) response;
+						TaskDto task = ftr.getTask();
+						if (task != null) {
+							String title = messages.applicationTitle(refParam, task.getName());
+							rfaLabel.setContents(title);
+							rfaLabel.redraw();
+							map.addFinishButton();
+						}
+					}
+				}
+			});
+		}
+		
 	}
 
 	private Canvas createHeader(String title, String tooltip) {
@@ -125,7 +159,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		header.setSize("100%", "44");
 		header.setStyleName("header");
 
-		HTMLFlow rfaLabel = new HTMLFlow(title);
+		rfaLabel = new HTMLFlow(title);
 		rfaLabel.setStyleName("headerText");
 		if (tooltip != null) {
 			rfaLabel.setTooltip(tooltip);
@@ -176,7 +210,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 
 		public void onClick(ClickEvent event) {
-			Window.Location.assign(mapDashboardBaseUrl);
+			WindowUtil.setLocation(mapDashboardBaseUrl);
 		}
 	}
 
@@ -192,7 +226,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 
 		public void onClick(ClickEvent event) {
-			Window.Location.assign(bpmDashboardBaseUrl);
+			WindowUtil.setLocation(bpmDashboardBaseUrl);
 		}
 	}
 
@@ -208,7 +242,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 
 		public void onClick(MenuItemClickEvent event) {
-			Window.Location.assign(addUrlParam(mapDashboardBaseUrl, KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER));
+			WindowUtil.setLocation(addUrlParam(mapDashboardBaseUrl, KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER));
 		}
 	}
 
@@ -224,7 +258,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 
 		public void onClick(MenuItemClickEvent event) {
-			Window.Location.assign(addUrlParam(mapDashboardBaseUrl, KtunaxaConstant.SEARCH_REFERRAL_URL_PARAMETER));
+			WindowUtil.setLocation(addUrlParam(mapDashboardBaseUrl, KtunaxaConstant.SEARCH_REFERRAL_URL_PARAMETER));
 		}
 	}
 

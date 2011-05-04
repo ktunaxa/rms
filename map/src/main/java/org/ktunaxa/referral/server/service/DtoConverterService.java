@@ -6,10 +6,12 @@
 
 package org.ktunaxa.referral.server.service;
 
+import org.activiti.engine.task.Task;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceLayerType;
 import org.ktunaxa.referral.server.dto.ReferenceLayerDto;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
+import org.ktunaxa.referral.server.dto.TaskDto;
 
 /**
  * General interface for converting domain objects to their DTO counterparts and vice versa.
@@ -35,4 +37,13 @@ public interface DtoConverterService {
 	 * @return Returns the DTO version of the reference layer.
 	 */
 	ReferenceLayerDto toDto(ReferenceLayer layer);
+
+	/**
+	 * Convert a task to a DTO.
+	 * 
+	 * @param task
+	 *            The task to convert.
+	 * @return Returns the DTO version of the task.
+	 */
+	TaskDto toDto(Task task);
 }
