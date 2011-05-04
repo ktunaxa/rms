@@ -35,8 +35,6 @@ public class CreateProcessCommand implements Command<CreateProcessRequest, UrlRe
 
 	@Autowired
 	private KtunaxaConfiguration ktunaxaConfiguration;
-	
-	private static DateFormat YYYYMMDD = new SimpleDateFormat("yyyy-MM-dd");
 
 	public UrlResponse getEmptyCommandResponse() {
 		return new UrlResponse();
@@ -57,11 +55,12 @@ public class CreateProcessCommand implements Command<CreateProcessRequest, UrlRe
 		if (null == description) {
 			description = "";
 		}
+		DateFormat yyyymmdd = new SimpleDateFormat("yyyy-MM-dd");
 		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_DESCRIPTION, description);
 		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_EMAIL, email);
 		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_ENGAGEMENT_LEVEL, request.getEngagementLevel());
 		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_COMPLETION_DEADLINE,
-				YYYYMMDD.format(request.getCompletionDeadline()));
+				yyyymmdd.format(request.getCompletionDeadline()));
 		runtimeService.startProcessInstanceByKey(KtunaxaBpmConstant.REFERRAL_PROCESS_ID, context);
 		response.setUrl(ktunaxaConfiguration.getBpmDashboardBaseUrl());
 	}
