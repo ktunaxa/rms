@@ -17,6 +17,8 @@ import org.ktunaxa.referral.server.command.request.UrlResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +35,8 @@ public class CreateProcessCommand implements Command<CreateProcessRequest, UrlRe
 
 	@Autowired
 	private KtunaxaConfiguration ktunaxaConfiguration;
+	
+	private static DateFormat YYYYMMDD = new SimpleDateFormat("yyyy-MM-dd");
 
 	public UrlResponse getEmptyCommandResponse() {
 		return new UrlResponse();
@@ -56,7 +60,8 @@ public class CreateProcessCommand implements Command<CreateProcessRequest, UrlRe
 		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_DESCRIPTION, description);
 		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_EMAIL, email);
 		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_ENGAGEMENT_LEVEL, request.getEngagementLevel());
-		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_COMPLETION_DEADLINE, request.getCompletionDeadline());
+		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_COMPLETION_DEADLINE,
+				YYYYMMDD.format(request.getCompletionDeadline()));
 		runtimeService.startProcessInstanceByKey(KtunaxaBpmConstant.REFERRAL_PROCESS_ID, context);
 		response.setUrl(ktunaxaConfiguration.getBpmDashboardBaseUrl());
 	}
