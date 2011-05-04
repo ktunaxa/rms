@@ -89,6 +89,7 @@ public class UploadDocumentServlet extends HttpServlet {
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
 				// TODO also send the CMIS key back to the client...
+				log.error("CMIS upload failed", e);
 				out.println("if (parent.uploadFailed) parent.uploadFailed('" + formId + "','error');");
 				out.println("</script>");
 			}
