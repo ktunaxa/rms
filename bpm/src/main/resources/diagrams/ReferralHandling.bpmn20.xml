@@ -29,14 +29,18 @@ Ktunaxa Nation Council]]></activiti:expression>
           <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
-
-Project description: ${description}
-
-The referral is complete and will be processed by us. We will inform you with the result when it is available.
-
-Kind regards,
-Ktunaxa Nation Council]]></activiti:expression>
+            <activiti:expression>
+            <![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
+				<p>
+				Project description: ${description}
+				<p>
+				The referral is complete and will be processed by us. 
+				<p>
+				We will inform you with the result when it is available.
+				<p>
+				Kind regards,<br>
+				Ktunaxa Nation Council]]>
+			</activiti:expression>
           </activiti:field>
         </extensionElements>
       </serviceTask>
@@ -46,14 +50,18 @@ Ktunaxa Nation Council]]></activiti:expression>
           <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
-
-Project description: ${description}
-
-The referral is complete and will be processed by us. We will inform you with the result when it is available.
-
-Kind regards,
-Ktunaxa Nation Council]]></activiti:expression>
+            <activiti:expression>
+            <![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
+				<p>
+				Project description: ${description}
+				<p>
+				The referral is complete and will be processed by us. 
+				<p>
+				We will inform you with the result when it is available.
+				<p>
+				Kind regards,<br>
+				Ktunaxa Nation Council]]>
+			</activiti:expression>
           </activiti:field>
         </extensionElements>
       </serviceTask>
@@ -105,14 +113,16 @@ Ktunaxa Nation Council]]></activiti:expression>
           <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral results"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
-
-Project description: ${description}
-
-The result of our evaluation is attached to this e-mail.
-
-Kind regards,
-Ktunaxa Nation Council]]></activiti:expression>
+            <activiti:expression>
+            <![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
+				<p>
+				Project description: ${description}
+				<p>
+				The result of our evaluation is attached to this e-mail.
+				<p>
+				Kind regards,<br>
+				Ktunaxa Nation Council]]>
+			</activiti:expression>
           </activiti:field>
         </extensionElements>
       </serviceTask>
