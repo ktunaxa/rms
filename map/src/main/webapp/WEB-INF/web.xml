@@ -14,7 +14,8 @@
 			WEB-INF/applicationContext.xml
 			WEB-INF/spring-hibernate.xml
 			WEB-INF/bpm.xml
-
+			WEB-INF/cmis.xml
+			WEB-INF/security.xml
 			WEB-INF/layer*.xml
 			WEB-INF/map*.xml
         </param-value>
