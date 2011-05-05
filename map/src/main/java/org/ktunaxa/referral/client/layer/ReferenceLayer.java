@@ -55,6 +55,7 @@ public class ReferenceLayer {
 		for (ReferenceLayerDto referenceLayerDto : subLayerDtos) {
 			subLayers.add(new ReferenceSubLayer(this, referenceLayerDto));
 		}
+		updateScaleBounds(layer);
 		updateShowing();
 	}
 
@@ -95,13 +96,28 @@ public class ReferenceLayer {
 				builder.append("layer.code = " + id);
 			}
 		}
-		String filter = (builder == null ? null : builder.toString());
+		String filter = (builder == null ? "EXCLUDE" : builder.toString());
 		layer.setFilter(filter);
 		if (!layer.isVisible()) {
 			layer.setVisible(true);
 		}
 		// indicates show status has changed for one or more sublayers
 		handlerManager.fireEvent(new LayerShownEvent(layer));
+	}
+
+	private void updateScaleBounds(VectorLayer layer) {
+		double minScale = Double.MAX_VALUE;
+		double maxScale = 0;
+		for (ReferenceSubLayer subLayer : subLayers) {
+			if (subLayer.getMinScale() < minScale) {
+				minScale = subLayer.getMinScale();
+			}
+			if (subLayer.getMaxScale() > maxScale) {
+				maxScale = subLayer.getMaxScale();
+			}
+		}
+		layer.getLayerInfo().getMinimumScale().setPixelPerUnit(minScale);
+		layer.getLayerInfo().getMaximumScale().setPixelPerUnit(maxScale);
 	}
 
 	/**

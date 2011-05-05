@@ -100,6 +100,15 @@ public class ReferenceSubLayer {
 	public ReferenceLayer getReferenceLayer() {
 		return referenceLayer;
 	}
+	
+	public double getMinScale() {
+		return minScale;
+	}
+
+	
+	public double getMaxScale() {
+		return maxScale;
+	}
 
 	protected String scaleToString(double scale) {
 		NumberFormat numberFormat = NumberFormat.getFormat(DENOMINATOR_FORMAT);
