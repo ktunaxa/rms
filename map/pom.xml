@@ -168,6 +168,13 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.geomajas</groupId>
+			<artifactId>geomajas-jetty-runner</artifactId>
+			<version>1.0.0</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
