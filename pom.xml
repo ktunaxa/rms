@@ -209,7 +209,7 @@
 		<module>bpm</module>
 		<module>map</module>
 		<module>map-test</module>
-		<module>map-deploy</module>
+		<module>deploy</module>
 	</modules>
 
 	<profiles>
