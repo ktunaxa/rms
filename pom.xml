@@ -27,6 +27,11 @@
 			<name>Pieter De Graef</name>
 			<email>pieter.degraef@geosparc.com</email>
 		</developer>
+		<developer>
+			<id>jandm</id>
+			<name>Jan De Moerloose</name>
+			<email>jan.demoerloose@geosparc.com</email>
+		</developer>
 	</developers>
 
 	<build>
@@ -208,8 +213,6 @@
 		<module>theme</module>
 		<module>bpm</module>
 		<module>map</module>
-		<module>map-test</module>
-		<module>deploy</module>
 	</modules>
 
 	<profiles>
