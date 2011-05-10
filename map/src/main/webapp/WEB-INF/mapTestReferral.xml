@@ -83,6 +83,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="layers">
 			<list>
 				<ref bean="osmLayer" />
+				<ref bean="referralLayer" />
 			</list>
 		</property>
 	</bean>

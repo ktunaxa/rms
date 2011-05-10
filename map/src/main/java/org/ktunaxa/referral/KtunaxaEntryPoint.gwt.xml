@@ -17,10 +17,14 @@
 
 	<!-- Source -->    
 	<source path="client" />
+		<source path="client/wkt">
+		<exclude name="*Test*.java"/>
+	</source>
     <source path="server/dto" />
     <source path="server/command/request" />
     <source path="server/service">
     		<include name="KtunaxaConstant.java"/>
+			<exclude name="*Test*.java"/>
     </source>
 
 	<!-- add required languages

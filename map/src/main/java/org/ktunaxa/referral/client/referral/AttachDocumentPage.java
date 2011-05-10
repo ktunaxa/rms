@@ -6,8 +6,8 @@
 
 package org.ktunaxa.referral.client.referral;
 
-import org.geomajas.gwt.client.map.feature.Feature;
-import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
+import org.geomajas.gwt.client.widget.wizard.WizardPage;
+import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralData;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
 import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
@@ -31,9 +31,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  * @author Pieter De Graef
  */
-public class AttachDocumentPage implements WizardPage {
-
-	private Feature feature;
+public class AttachDocumentPage extends WizardPage<ReferralData> {
 
 	private VLayout layout;
 
@@ -65,20 +63,12 @@ public class AttachDocumentPage implements WizardPage {
 		return "Attach documents to the referral.";
 	}
 
-	public boolean validate() {
+	public boolean doValidate() {
 		return true;
 	}
 
 	public Canvas asWidget() {
 		return layout;
-	}
-
-	public Feature getFeature() {
-		return feature;
-	}
-
-	public void setFeature(Feature feature) {
-		this.feature = feature;
 	}
 
 	// ------------------------------------------------------------------------
@@ -148,6 +138,11 @@ public class AttachDocumentPage implements WizardPage {
 	public void clear() {
 		busyImg.setVisible(false);
 		grid.setData(new ListGridRecord[] {});
-		setFeature(null);
 	}
+
+	@Override
+	protected void show() {
+		clear();
+	}
+
 }

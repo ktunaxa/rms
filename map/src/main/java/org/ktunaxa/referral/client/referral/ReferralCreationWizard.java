@@ -3,305 +3,228 @@
  *
  * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
  */
-
 package org.ktunaxa.referral.client.referral;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.HashMap;
 
+import org.geomajas.command.CommandResponse;
+import org.geomajas.command.dto.PersistTransactionRequest;
+import org.geomajas.command.dto.PersistTransactionResponse;
+import org.geomajas.gwt.client.command.CommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.map.MapModel;
+import org.geomajas.gwt.client.map.event.MapModelEvent;
+import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
-import org.ktunaxa.referral.client.referral.event.WizardPageAddedEvent;
-import org.ktunaxa.referral.client.referral.event.WizardPageAddedHandler;
-import org.ktunaxa.referral.client.referral.event.WizardPageChangedEvent;
-import org.ktunaxa.referral.client.referral.event.WizardPageChangedHandler;
+import org.geomajas.gwt.client.map.feature.FeatureTransaction;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.util.WindowUtil;
+import org.geomajas.gwt.client.widget.MapWidget;
+import org.geomajas.gwt.client.widget.wizard.Wizard;
+import org.geomajas.gwt.client.widget.wizard.WizardWidget;
+import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.geomajas.layer.feature.attribute.IntegerAttribute;
+import org.geomajas.layer.feature.attribute.LongAttribute;
+import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
+import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralData;
+import org.ktunaxa.referral.server.command.request.CreateProcessRequest;
+import org.ktunaxa.referral.server.command.request.UrlResponse;
 
-import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.Cursor;
-import com.smartgwt.client.types.VerticalAlignment;
-import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.IButton;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
-import com.smartgwt.client.widgets.layout.VLayout;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
 
 /**
- * Definition of the referral creation wizard.
+ * Wizard to create a new referral.
  * 
- * @author Pieter De Graef
+ * @author Jan De Moerloose
+ * 
  */
-public class ReferralCreationWizard extends VLayout {
+public class ReferralCreationWizard extends Wizard<ReferralData> {
 
-	/**
-	 * Definition of an individual page within this wizard.
-	 * 
-	 * @author Pieter De Graef
-	 */
-	public interface WizardPage {
+	private MapWidget mapWidget;
 
-		String getTitle();
+	private ReferralData data;
 
-		String getExplanation();
+	private VectorLayer layer;
 
-		boolean validate();
-
-		Canvas asWidget();
-
-		Feature getFeature();
-
-		void setFeature(Feature feature);
-		
-		void clear();
+	public ReferralCreationWizard() {
+		super(new ReferralWizardView());
 	}
 
-	private HandlerManager handlerManager;
+	public void init() {
+		// need layer instance to start editing
+		mapWidget = new MapWidget("mapTestReferral", "app");
+		mapWidget.setVisible(false);
+		mapWidget.init();
+		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
 
-	private String title;
-
-	private VLayout leftLayout;
-
-	private VLayout pageBody;
-
-	private HTMLFlow pageTitleDiv;
-
-	private List<WizardPage> pages;
-
-	private List<String> pageTitles;
-
-	private int currentIndex;
-
-	public ReferralCreationWizard(String title, String helpText) {
-		this.title = title;
-		handlerManager = new HandlerManager(this);
-		// setWidth(1000);
-		setLayoutAlign(Alignment.CENTER);
-		setStyleName("block");
-
-		pages = new ArrayList<WizardPage>();
-		pageTitles = new ArrayList<String>();
-		addMember(createTitle());
-
-		HLayout body = new HLayout();
-		leftLayout = new VLayout(10);
-		leftLayout.setStyleName("wizardLeftLayout");
-		leftLayout.setSize("220", "100%");
-		leftLayout.setLayoutRightMargin(10);
-
-		HTMLFlow explanation = new HTMLFlow("<div style='font-size:12px;'>" + helpText + "</div>");
-		leftLayout.addMember(explanation);
-		body.addMember(leftLayout);
-
-		VLayout rightLayout = new VLayout();
-		rightLayout.setLayoutRightMargin(5);
-		rightLayout.addMember(createPageTop());
-		pageBody = new VLayout();
-		rightLayout.addMember(pageBody);
-		rightLayout.addMember(createPageBottom());
-		body.addMember(rightLayout);
-
-		addMember(body);
-	}
-
-	public final HandlerRegistration addWizardPageChangedHandler(final WizardPageChangedHandler handler) {
-		return handlerManager.addHandler(WizardPageChangedHandler.TYPE, handler);
-	}
-
-	public final HandlerRegistration addWizardPageAddedHandler(final WizardPageAddedHandler handler) {
-		return handlerManager.addHandler(WizardPageAddedHandler.TYPE, handler);
-	}
-	
-	public void refresh() {
-		for (WizardPage page : pages) {
-			page.clear();		
-		}
-		goToStep(0);
-	}
-
-	public void addStep(WizardPage page) {
-		final int index = leftLayout.getChildren().length;
-		HTMLFlow stepButton = new HTMLFlow(index + ". " + page.getTitle());
-		stepButton.setSize("100%", "30px");
-		stepButton.setStyleName("wizardButton");
-		stepButton.setCursor(Cursor.HAND);
-		stepButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				goToStep(index - 1);
+			public void onMapModelChange(MapModelEvent event) {
+				layer = (VectorLayer) mapWidget.getMapModel().getLayer("referralLayer");
+				if (layer != null) {
+					addPage(new ReferralInfoPage());
+					addPage(new AddGeometryPage(mapWidget));
+					addPage(new AttachDocumentPage());
+					addPage(new ReferralConfirmPage());
+					start();
+				}
 			}
 		});
-		leftLayout.addMember(stepButton);
 
-		page.asWidget().setStyleName("wizardPageBody");
-		page.asWidget().setSize("100%", "100%");
-		pages.add(page);
-		pageTitles.add(page.getExplanation());
-		pageBody.addMember(page.asWidget());
-		handlerManager.fireEvent(new WizardPageAddedEvent(index));
-		if (index > 1) {
-			page.asWidget().setVisible(false);
-		} else {
-			goToStep(0);
-		}
 	}
 
-	public void goToStep(int index) {
-		if (index < 0 || index >= pages.size()) {
-			return;
-		}
+	@Override
+	protected void onCancel() {
+		start();
+	}
 
-		// Copy the feature from the current page to the next:
-		Feature feature = null;
-		WizardPage currentPage = pages.get(currentIndex);
-		if (currentPage != null) {
-			feature = currentPage.getFeature();
-		}
-		WizardPage newPage = pages.get(index);
-		if (newPage != null) {
-			newPage.setFeature(feature);
-		}
+	@Override
+	protected void onFinish() {
+		SC.confirm("Are you sure you want to create the referral ?", new BooleanCallback() {
 
-		// Highlight correct step button:
-		for (int i = 1; i < leftLayout.getChildren().length; i++) {
-			Canvas canvas = leftLayout.getChildren()[i];
-			if ((i - 1) == index) {
-				canvas.setStyleName("wizardButtonActive");
-			} else {
-				canvas.setStyleName("wizardButton");
+			public void execute(Boolean value) {
+				if (value != null && value) {
+					getView().setLoading(true);
+					final FeatureTransaction ft = new FeatureTransaction(layer, new Feature[0], new Feature[] { data
+							.getFeature() });
+					PersistTransactionRequest request = new PersistTransactionRequest();
+					request.setFeatureTransaction(ft.toDto());
+					final MapModel mapModel = layer.getMapModel();
+					// assume layer crs
+					request.setCrs(layer.getMapModel().getCrs());
+
+					GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
+					command.setCommandRequest(request);
+
+					GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
+
+						public void execute(CommandResponse response) {
+							if (response instanceof PersistTransactionResponse) {
+								PersistTransactionResponse ptr = (PersistTransactionResponse) response;
+								mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(), ptr
+										.getFeatureTransaction()));
+								Feature newfeature = new Feature(ptr.getFeatureTransaction().getNewFeatures()[0], ft
+										.getLayer());
+								createProcess(newfeature);
+							}
+						}
+					});
+				}
 			}
-		}
+		});
+	}
 
-		// Display correct page:
-		for (int i = 0; i < pageBody.getChildren().length; i++) {
-			Canvas canvas = pageBody.getChildren()[i];
-			if (i == index) {
-				canvas.setVisible(true);
-			} else {
-				canvas.setVisible(false);
+	private void start() {
+		data = new ReferralData(layer);
+		start(data);
+	}
+
+	private void createProcess(Feature feature) {
+		CreateProcessRequest request = new CreateProcessRequest();
+		Integer primary = (Integer) feature.getAttributeValue("primaryClassificationNumber");
+		Integer secondary = (Integer) feature.getAttributeValue("secondaryClassificationNumber");
+		Integer year = (Integer) feature.getAttributeValue("calendarYear");
+		Integer number = (Integer) feature.getAttributeValue("number");
+		final String referralId = ReferralUtil.createId(primary, secondary, year, number);
+		request.setReferralId(referralId);
+		request.setDescription((String) feature.getAttributeValue("projectName"));
+		request.setEmail((String) feature.getAttributeValue("contactEmail"));
+		request.setEngagementLevel((Integer) feature.getAttributeValue("provincialAssessmentLevel"));
+		request.setCompletionDeadline((Date) feature.getAttributeValue("responseDeadline"));
+
+		GwtCommand command = new GwtCommand(CreateProcessRequest.COMMAND);
+		command.setCommandRequest(request);
+
+		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
+
+			public void execute(CommandResponse response) {
+				final UrlResponse urlResponse = (UrlResponse) response;
+				if (response instanceof UrlResponse) {
+					getView().setLoading(false);
+					SC.confirm("Referral " + referralId + " successfully created. Create another ?",
+							new BooleanCallback() {
+
+								public void execute(Boolean value) {
+									if (value != null && value) {
+										start();
+									} else {
+										WindowUtil.setLocation(urlResponse.getUrl());
+									}
+								}
+							});
+				}
 			}
-		}
+		});
 
-		// Display correct title:
-		pageTitleDiv.setContents(pageTitles.get(index));
-		handlerManager.fireEvent(new WizardPageChangedEvent(index, pages.size() - 1));
-
-		currentIndex = index;
-	}
-
-	// ------------------------------------------------------------------------
-	// Private methods:
-	// ------------------------------------------------------------------------
-
-	private HLayout createTitle() {
-		HLayout titleCanvas = new HLayout(5);
-		titleCanvas.setSize("100%", "24px");
-		titleCanvas.setStyleName("blockTitle");
-
-		HTMLFlow titleDiv = new HTMLFlow(title);
-		titleDiv.setSize("100%", "24px");
-		titleDiv.setStyleName("blockTitleText");
-
-		titleCanvas.addMember(titleDiv);
-		return titleCanvas;
-	}
-
-	private HLayout createPageTop() {
-		HLayout layout = new HLayout(10);
-		layout.setAlign(VerticalAlignment.CENTER);
-		layout.setHeight(40);
-		pageTitleDiv = new HTMLFlow();
-		pageTitleDiv.setSize("100%", "40px");
-		pageTitleDiv.setStyleName("wizardPageTitle");
-
-		layout.addMember(pageTitleDiv);
-		layout.addMember(new PreviousButton());
-		layout.addMember(new NextButton());
-
-		return layout;
-	}
-
-	private HLayout createPageBottom() {
-		HLayout layout = new HLayout(10);
-		layout.setAlign(VerticalAlignment.CENTER);
-		layout.setHeight(40);
-		layout.addMember(new LayoutSpacer());
-		layout.addMember(new PreviousButton());
-		layout.addMember(new NextButton());
-
-		return layout;
 	}
 
 	/**
-	 * Button that allows the user to go to the next page within the wizard.
+	 * View part of the wizard.
 	 * 
-	 * @author Pieter De Graef
+	 * @author Jan De Moerloose
+	 * 
 	 */
-	private class NextButton extends IButton implements WizardPageChangedHandler, WizardPageAddedHandler, ClickHandler {
+	public static class ReferralWizardView extends WizardWidget<ReferralData> {
 
-		private int index;
-
-		public NextButton() {
-			super("Next");
-			addClickHandler(this);
-			addWizardPageChangedHandler(this);
-			addWizardPageAddedHandler(this);
-			setLayoutAlign(VerticalAlignment.CENTER);
-			setDisabled(true);
+		public ReferralWizardView() {
+			super("Referral Creation Wizard", "Follow the steps below to create a "
+					+ "new referral and add it to the system:");
 		}
 
-		public void onWizardPageChanged(WizardPageChangedEvent event) {
-			index = event.getIndex();
-			if (index == event.getMaximum()) {
-				setDisabled(true);
-			} else {
-				setDisabled(false);
-			}
-		}
-
-		public void onClick(ClickEvent event) {
-			if (pages.get(currentIndex).validate()) {
-				goToStep(index + 1);
-			}
-		}
-
-		public void onWizardPageAdded(WizardPageAddedEvent event) {
-			if (event.getIndex() > 1) {
-				setDisabled(false);
-			}
-		}
 	}
 
 	/**
-	 * Button the allows the user to go to the previous page within the wizard.
+	 * Wizard data holding feature under construction.
 	 * 
-	 * @author Pieter De Graef
+	 * @author Jan De Moerloose
+	 * 
 	 */
-	private class PreviousButton extends IButton implements WizardPageChangedHandler, ClickHandler {
+	public static class ReferralData {
 
-		private int index;
+		private Feature feature;
 
-		public PreviousButton() {
-			super("Previous");
-			addClickHandler(this);
-			addWizardPageChangedHandler(this);
-			setLayoutAlign(VerticalAlignment.CENTER);
-			setDisabled(true);
+		private VectorLayer layer;
+
+		public ReferralData(VectorLayer layer) {
+			this.layer = layer;
+			feature = new Feature(layer);
+			// set defaults, TODO: make generic implementation calling FeatureModel.newInstance() on the server
+			feature.setIntegerAttribute("primaryClassificationNumber", 3500);
+			feature.setIntegerAttribute("secondaryClassificationNumber", 10);
+			feature.setIntegerAttribute("calendarYear", 11);
+			feature.setStringAttribute("externalProjectId", "-99");
+			feature.setStringAttribute("externalFileId", "-99");
+			feature.setIntegerAttribute("activeRetentionPeriod", 2);
+			feature.setIntegerAttribute("semiActiveRetentionPeriod", 5);
+			Date nextMonth = new Date();
+			CalendarUtil.addMonthsToDate(nextMonth, 1);
+			feature.setDateAttribute("responseDeadline", nextMonth);
+			feature.setManyToOneAttribute("type", new AssociationValue(new LongAttribute(1L),
+					new HashMap<String, PrimitiveAttribute<?>>()));
+			feature.setManyToOneAttribute("finalDisposition", new AssociationValue(new IntegerAttribute(1),
+					new HashMap<String, PrimitiveAttribute<?>>()));
+			feature.setManyToOneAttribute("applicationType", new AssociationValue(new LongAttribute(1L),
+					new HashMap<String, PrimitiveAttribute<?>>()));
+			feature.setManyToOneAttribute("status", new AssociationValue(new LongAttribute(1L),
+					new HashMap<String, PrimitiveAttribute<?>>()));
+			feature.setIntegerAttribute("provincialAssessmentLevel", 1);
+			feature.setIntegerAttribute("finalAssessmentLevel", 1);
 		}
 
-		public void onWizardPageChanged(WizardPageChangedEvent event) {
-			index = event.getIndex();
-			if (index == 0) {
-				setDisabled(true);
-			} else {
-				setDisabled(false);
-			}
+		public void setFeature(Feature feature) {
+			this.feature = feature;
 		}
 
-		public void onClick(ClickEvent event) {
-			goToStep(index - 1);
+		public Feature getFeature() {
+			return feature;
 		}
+
+		public VectorLayer getLayer() {
+			return layer;
+		}
+
 	}
+
 }

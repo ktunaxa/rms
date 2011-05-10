@@ -11,10 +11,10 @@ import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView.ZoomOption;
 import org.geomajas.gwt.client.map.event.MapModelEvent;
 import org.geomajas.gwt.client.map.event.MapModelHandler;
-import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.widget.MapWidget;
-import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
+import org.geomajas.gwt.client.widget.wizard.WizardPage;
+import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralData;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
 import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
@@ -37,11 +37,9 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  * @author Pieter De Graef
  */
-public class AddGeometryPage implements WizardPage {
+public class AddGeometryPage extends WizardPage<ReferralData> {
 
 	private static final String WORLD_PAINTABLE_ID = "referral-geometry";
-
-	private Feature feature;
 
 	private VLayout layout;
 
@@ -50,20 +48,18 @@ public class AddGeometryPage implements WizardPage {
 	private GfxGeometry gfxGeometry;
 
 	private Img busyImg;
-	
+
 	private HTMLFlow errorFlow;
 
-	public AddGeometryPage() {
+	public AddGeometryPage(MapWidget mapWidget) {
 		layout = new VLayout(10);
 		layout.addMember(createUploadLayout());
-
-		mapWidget = new MapWidget("mapTestReferral", "app");
 		mapWidget.setZoomOnScrollEnabled(false);
 		mapWidget.setBorder("1px solid #C0C0CC");
 		mapWidget.setSize("600px", "400px");
-		mapWidget.setLayoutAlign(Alignment.CENTER);
-		mapWidget.setVisible(false);
+		mapWidget.setVisible(true);
 		layout.addMember(mapWidget);
+		this.mapWidget = mapWidget;
 	}
 
 	public String getTitle() {
@@ -74,66 +70,49 @@ public class AddGeometryPage implements WizardPage {
 		return "Add a geometry to the referral by uploading a shape file.";
 	}
 
-	public boolean validate() {
-		if (feature != null) {
-			try {
-				feature.getGeometry();
-				errorFlow.setVisible(false);
-				return true;
-			} catch (IllegalStateException ise) {
-				errorFlow.setContents("<div style='color: #AA0000'>Please attach a geometry to the referral !</div>");
-				errorFlow.setVisible(true);
-				return false;
-			}
+	public boolean doValidate() {
+		if (getWizardData().getFeature().isGeometryLoaded()) {
+			errorFlow.setVisible(false);
+			return true;
+		} else {
+			errorFlow.setContents("<div style='color: #AA0000'>Please attach a geometry to the referral !</div>");
+			errorFlow.setVisible(true);
+			return false;
 		}
-		errorFlow.setVisible(false);
-		return false;
 	}
 
 	public Canvas asWidget() {
 		return layout;
 	}
 
-	public Feature getFeature() {
-		return feature;
+	public void clear() {
+		if (gfxGeometry != null) {
+			mapWidget.unregisterWorldPaintable(gfxGeometry);
+		}
 	}
 
-	public void setFeature(Feature feature) {
-		this.feature = feature;
-		renderFeature();
-	}
-
-	// ------------------------------------------------------------------------
-	// Private methods:
-	// ------------------------------------------------------------------------
-
-	private void renderFeature() {
-		try {
-			if (gfxGeometry != null) {
-				mapWidget.unregisterWorldPaintable(gfxGeometry);
-			}
-			if (feature == null) {
-				mapWidget.setVisible(false);
+	@Override
+	protected void show() {
+		if (gfxGeometry != null) {
+			mapWidget.unregisterWorldPaintable(gfxGeometry);
+		}
+		if (getWizardData().getFeature().isGeometryLoaded()) {
+			final Geometry geometry = getWizardData().getFeature().getGeometry();
+			ShapeStyle style = new ShapeStyle("#3e74b3", 0.75f, "#278ec8", 1.0f, 2);
+			gfxGeometry = new GfxGeometry(WORLD_PAINTABLE_ID, geometry, style);
+			mapWidget.setVisible(true);
+			mapWidget.registerWorldPaintable(gfxGeometry);
+			if (mapWidget.getMapModel().isInitialized()) {
+				mapWidget.getMapModel().getMapView().applyBounds(geometry.getBounds(), ZoomOption.LEVEL_FIT);
 			} else {
-				ShapeStyle style = new ShapeStyle("#3e74b3", 0.75f, "#278ec8", 1.0f, 2);
-				gfxGeometry = new GfxGeometry(WORLD_PAINTABLE_ID, (Geometry) feature.getGeometry().clone(), style);
-				mapWidget.setVisible(true);
-				mapWidget.registerWorldPaintable(gfxGeometry);
-				if (mapWidget.getMapModel().isInitialized()) {
-					mapWidget.getMapModel().getMapView()
-							.applyBounds(feature.getGeometry().getBounds(), ZoomOption.LEVEL_FIT);
-				} else {
-					mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
+				mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
 
-						public void onMapModelChange(MapModelEvent event) {
-							mapWidget.getMapModel().getMapView()
-									.applyBounds(feature.getGeometry().getBounds(), ZoomOption.LEVEL_FIT);
-						}
-					});
-				}
+					public void onMapModelChange(MapModelEvent event) {
+						mapWidget.getMapModel().getMapView().applyBounds(geometry.getBounds(), ZoomOption.LEVEL_FIT);
+					}
+				});
 			}
-		} catch (IllegalStateException e) {
-			// No geometry available. Let it go....
+
 		}
 	}
 
@@ -178,8 +157,8 @@ public class AddGeometryPage implements WizardPage {
 				busyImg.setVisible(false);
 				WktParser wktParser = new WktParser(29611);
 				Geometry geometry = wktParser.parse(event.getResponse());
-				feature.setGeometry(geometry);
-				renderFeature();
+				getWizardData().getFeature().setGeometry(geometry);
+				show();
 			}
 
 			public void onFileUploadFailed(FileUploadFailedEvent event) {
@@ -196,9 +175,5 @@ public class AddGeometryPage implements WizardPage {
 
 		return uploadLayout;
 	}
-	
-	public void clear() {
-		mapWidget.setVisible(false);
-		setFeature(null);
-	}
+
 }

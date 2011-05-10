@@ -6,39 +6,40 @@
 
 package org.ktunaxa.referral.client.referral;
 
-import java.util.Date;
-import java.util.HashMap;
-
-import org.geomajas.gwt.client.map.feature.Feature;
-import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
-import org.geomajas.layer.feature.attribute.AssociationValue;
-import org.geomajas.layer.feature.attribute.IntegerAttribute;
-import org.geomajas.layer.feature.attribute.LongAttribute;
-import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
-import org.ktunaxa.referral.client.referral.ReferralCreationWizard.WizardPage;
+import org.geomajas.gwt.client.widget.wizard.WizardPage;
+import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralData;
 
-import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * First page in the referral creation wizard: fill in the general referral meta-data.
  * 
  * @author Pieter De Graef
  */
-public class ReferralInfoPage implements WizardPage {
+public class ReferralInfoPage extends WizardPage<ReferralData> {
+
+	private VLayout mainLayout;
 
 	private FeatureAttributeEditor editor;
 	
-	private VectorLayer layer;
+	private HTMLFlow invalidTop;
 
-	public ReferralInfoPage(VectorLayer layer) {
-		this.layer = layer;
-		editor = new FeatureAttributeEditor(layer, false, new ReferralFormFactory());
-		Feature feature = createReferralInstance(layer);
-		editor.setFeature(feature);
-		editor.setWidth100();
-		editor.setHeight100();
+	private HTMLFlow invalidBottom;
+	
+	public ReferralInfoPage() {
+		mainLayout = new VLayout();
+		mainLayout.setWidth100();
+		mainLayout.setHeight100();
+	}
+
+	private HTMLFlow createInvalid() {
+		HTMLFlow flow = new HTMLFlow("<div style='color: #AA0000'>Some required fields are missing !</div>");
+		flow.setWidth100();
+		flow.setVisible(false);
+		return flow;
 	}
 
 	public String getTitle() {
@@ -49,52 +50,43 @@ public class ReferralInfoPage implements WizardPage {
 		return "Fill in all referral related meta-data.";
 	}
 
-	public boolean validate() {
-		return editor.validate();
+	public boolean doValidate() {
+		boolean validate = editor.validate();
+		if (!validate) {
+			invalidTop.setVisible(true);
+			invalidBottom.setVisible(true);
+		} else {
+			invalidTop.setVisible(false);
+			invalidBottom.setVisible(false);
+			// must copy feature back !
+			getWizardData().setFeature(editor.getFeature());
+		}
+		return validate;
 	}
 
 	public Canvas asWidget() {
-		return editor;
-	}
-
-	public Feature getFeature() {
-		return editor.getFeature();
-	}
-
-	public void setFeature(Feature feature) {
-		if (feature != null) {
-			editor.setFeature(feature);
-		}
+		return mainLayout;
 	}
 	
 	public void clear() {
-		setFeature(createReferralInstance(layer));
+		if (editor != null) {
+			editor.setFeature(null);
+		}
 	}
 	
-	private Feature createReferralInstance(VectorLayer layer) {
-		Feature feature = new Feature(layer);
-		// set defaults, TODO: make generic implementation calling FeatureModel.newInstance() on the server
-		feature.setIntegerAttribute("primaryClassificationNumber", 3500);
-		feature.setIntegerAttribute("secondaryClassificationNumber", 10);
-		feature.setIntegerAttribute("calendarYear", 11);
-		feature.setStringAttribute("externalProjectId", "-99");
-		feature.setStringAttribute("externalFileId", "-99");
-		feature.setIntegerAttribute("activeRetentionPeriod", 2);
-		feature.setIntegerAttribute("semiActiveRetentionPeriod", 5);
-		Date nextMonth = new Date();
-		CalendarUtil.addMonthsToDate(nextMonth, 1);
-		feature.setDateAttribute("responseDeadline", nextMonth);
-		feature.setManyToOneAttribute("type", new AssociationValue(new LongAttribute(1L),
-				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute("finalDisposition", new AssociationValue(new IntegerAttribute(1),
-				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute("applicationType", new AssociationValue(new LongAttribute(1L),
-				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute("status", new AssociationValue(new LongAttribute(1L),
-				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setIntegerAttribute("provincialAssessmentLevel", 1);
-		feature.setIntegerAttribute("finalAssessmentLevel", 1);
-		return feature;
+	@Override
+	protected void show() {
+		if (editor == null) {
+			editor = new FeatureAttributeEditor(getWizardData().getLayer(), false, new ReferralFormFactory());
+			editor.setWidth100();
+			editor.setHeight100();
+			invalidTop = createInvalid();
+			invalidBottom = createInvalid();
+			mainLayout.addMember(invalidTop);
+			mainLayout.addMember(editor);
+			mainLayout.addMember(invalidBottom);
+		}
+		editor.setFeature(getWizardData().getFeature());
 	}
 
 }
