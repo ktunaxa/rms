@@ -31,5 +31,10 @@ public interface KtunaxaConstant {
 	String TITLE_GENERAL = TITLE_BASE + TITLE_SEPARATOR + "Mapping Dashboard";
 	String TITLE_CREATE_REFERRAL = TITLE_BASE + TITLE_SEPARATOR + "Create referral";
 	String TITLE_SEARCH_REFERRAL = TITLE_BASE + TITLE_SEPARATOR + "Search referral";
+	
+	String LAYER_ID = "referralLayer";
+
+	String TARGET_REFERRAL_ATTRIBUTE_NAME = "targetReferral";
+
 
 }

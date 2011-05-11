@@ -8,6 +8,8 @@ package org.ktunaxa.referral.client.referral;
 
 import org.geomajas.layer.feature.SearchCriterion;
 
+import com.smartgwt.client.data.Record;
+
 /**
  * Utility for referral id.
  * 
@@ -94,5 +96,10 @@ public final class ReferralUtil {
 			s = "0" + s;
 		}
 		return s;
+	}
+
+	public static String createId(Record record) {
+		return createId(record.getAttributeAsInt(ATTRIBUTE_PRIMARY), record.getAttributeAsInt(ATTRIBUTE_SECONDARY),
+				record.getAttributeAsInt(ATTRIBUTE_YEAR), record.getAttributeAsInt(ATTRIBUTE_NUMBER));
 	}
 }

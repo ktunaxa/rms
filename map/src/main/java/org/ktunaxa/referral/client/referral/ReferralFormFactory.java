@@ -9,20 +9,28 @@ package org.ktunaxa.referral.client.referral;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.geomajas.configuration.AssociationAttributeInfo;
 import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureFormFactory;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
+import org.geomajas.gwt.client.widget.attribute.ManyToOneDataSource;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.smartgwt.client.data.DSRequest;
+import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.Record;
+import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.form.events.ItemChangedEvent;
 import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.HeaderItem;
 import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
+import com.smartgwt.client.widgets.form.fields.SelectItem;
 
 /**
  * Attribute form factory that create a specific form for features of the Referral layer, or delegates to the default
@@ -32,12 +40,12 @@ import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
  */
 public class ReferralFormFactory implements FeatureFormFactory {
 
-	private static final String LAYER_ID = "referralLayer";
+	private static final String LAND_REFERRAL_ID_FIELD = "land_referral_id";
 
 	private FeatureFormFactory delegate = new DefaultFeatureFormFactory();
 
 	public FeatureForm createFeatureForm(VectorLayer layer) {
-		if (LAYER_ID.equals(layer.getId())) {
+		if (KtunaxaConstant.LAYER_ID.equals(layer.getId())) {
 			return new ReferralFeatureForm(layer);
 		}
 		return delegate.createFeatureForm(layer);
@@ -65,7 +73,7 @@ public class ReferralFormFactory implements FeatureFormFactory {
 						header.setDefaultValue("General project information");
 						header.setColSpan(4);
 						formItems.add(header);
-						
+
 					} else if ("externalProjectId".equals(info.getName())) {
 						RowSpacerItem rowSpacer = new RowSpacerItem("external-info-spacer");
 						formItems.add(rowSpacer);
@@ -109,8 +117,12 @@ public class ReferralFormFactory implements FeatureFormFactory {
 
 					FormItem formItem = AttributeFormFieldRegistry.createFormItem(layer, info);
 					formItems.add(formItem);
-					
-					ReferralIdSetter refIdSetter = new ReferralIdSetter();
+					if (KtunaxaConstant.TARGET_REFERRAL_ATTRIBUTE_NAME.equals(info.getName())) {
+						SelectItem targetItem = (SelectItem) formItem;
+						targetItem.setOptionDataSource(new TargetReferralOptionDataSource(layer, info));
+						targetItem.setDisplayField(LAND_REFERRAL_ID_FIELD);
+					}
+
 					if ("externalAgencyName".equals(info.getName())) {
 						formItem.setColSpan(4);
 					} else if ("projectDescription".equals(info.getName())) {
@@ -128,7 +140,7 @@ public class ReferralFormFactory implements FeatureFormFactory {
 			getWidget().setFields(formItems.toArray(new FormItem[formItems.size()]));
 			addItemChangedHandler(new ReferralIdSetter());
 		}
-		
+
 		/**
 		 * Re(sets) the referral Id when a component changes.
 		 * 
@@ -148,8 +160,28 @@ public class ReferralFormFactory implements FeatureFormFactory {
 			}
 		}
 	}
-	
-	
 
+	/**
+	 * Slightly adapted option data source to show the complete referral id in the drop-down box.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	public class TargetReferralOptionDataSource extends ManyToOneDataSource {
+
+		public TargetReferralOptionDataSource(VectorLayer layer, AttributeInfo associationInfo) {
+			super(layer.getLayerInfo().getServerLayerId(), (AssociationAttributeInfo) associationInfo);
+			DataSourceTextField field = new DataSourceTextField(LAND_REFERRAL_ID_FIELD, "Land Referral Id");
+			addField(field);
+		}
+
+		protected void transformResponse(DSResponse response, DSRequest request, Object data) {
+			super.transformResponse(response, request, data);
+			for (Record record : response.getData()) {
+				String referralId = ReferralUtil.createId(record);
+				record.setAttribute(LAND_REFERRAL_ID_FIELD, referralId);
+			}
+		}
+	}
 
 }
