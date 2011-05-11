@@ -21,6 +21,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
@@ -83,6 +84,7 @@ public class UploadDocumentServlet extends HttpServlet {
 						+ "');");
 				out.println("</script>");
 			} catch (Exception e) {
+				log.error("Upload document failed", e);
 				resp.setContentType("text/html");
 				PrintWriter out = resp.getWriter();
 				out.println("<html>");
@@ -90,7 +92,8 @@ public class UploadDocumentServlet extends HttpServlet {
 				out.println("<script type=\"text/javascript\">");
 				// TODO also send the CMIS key back to the client...
 				log.error("CMIS upload failed", e);
-				out.println("if (parent.uploadFailed) parent.uploadFailed('" + formId + "','error');");
+				out.println("if (parent.uploadFailed) parent.uploadFailed('" + formId + "','"
+						+ StringEscapeUtils.escapeJavaScript(e.getMessage()) + "');");
 				out.println("</script>");
 			}
 		}

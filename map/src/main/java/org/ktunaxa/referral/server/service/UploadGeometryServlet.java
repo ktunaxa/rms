@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.geomajas.global.GeomajasException;
 import org.geomajas.service.GeoService;
 import org.geotools.data.shapefile.ShapefileDataStore;
@@ -96,12 +96,14 @@ public class UploadGeometryServlet extends HttpServlet {
 						+ "');");
 				out.println("</script>");
 				cleanup();
-			} catch (FileUploadException e) {
+			} catch (Exception e) {
+				log.error("Upload geometry failed", e);
 				PrintWriter out = resp.getWriter();
 				out.println("<html>");
 				out.println("<body>");
 				out.println("<script type=\"text/javascript\">");
-				out.println("if (parent.uploadFailed) parent.uploadFailed('" + formId + "','error');");
+				out.println("if (parent.uploadFailed) parent.uploadFailed('" + formId + "','"
+						+ StringEscapeUtils.escapeJavaScript(e.getMessage()) + "');");
 				out.println("</script>");
 			}
 		}
@@ -122,16 +124,19 @@ public class UploadGeometryServlet extends HttpServlet {
 		try {
 			String sourceCrs = geoService.getCodeFromCrs(crs);
 			try {
-				return geoService.transform(geometry, sourceCrs, KtunaxaConstant.MAP_CRS);
+				// transform to layer CRS first
+				Geometry layerGeom = geoService.transform(geometry, sourceCrs, KtunaxaConstant.LAYER_CRS);
+				return geoService.transform(layerGeom, KtunaxaConstant.LAYER_CRS, KtunaxaConstant.MAP_CRS);
 			} catch (GeomajasException ge) {
 				throw new IOException(ge.getMessage(), ge);
 			}
 		} catch (Exception e) {
 			try {
-				CoordinateReferenceSystem targetCrs = geoService.getCrs2(KtunaxaConstant.MAP_CRS);
+				CoordinateReferenceSystem targetCrs = geoService.getCrs2(KtunaxaConstant.LAYER_CRS);
 				MathTransform transform = CRS.findMathTransform(crs, targetCrs, true);
 				// have to use JTS transform when EPSG code is missing !
-				return JTS.transform(geometry, transform);
+				Geometry layerGeom = JTS.transform(geometry, transform);
+				return geoService.transform(layerGeom, KtunaxaConstant.LAYER_CRS, KtunaxaConstant.MAP_CRS);
 			} catch (Exception e1) {
 				throw new IOException(e1.getMessage());
 			}
@@ -176,7 +181,10 @@ public class UploadGeometryServlet extends HttpServlet {
 			dest.flush();
 			dest.close();
 		}
-		return url;
+		if (url == null) {
+			throw new IllegalArgumentException("Missing .shp file");
+		}
+ 		return url;
 	}
 
 	private void checkLocation(String name) {

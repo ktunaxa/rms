@@ -6,6 +6,8 @@
 
 package org.ktunaxa.referral.client.referral;
 
+import org.geomajas.configuration.CircleInfo;
+import org.geomajas.configuration.SymbolInfo;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView.ZoomOption;
@@ -100,6 +102,11 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 			final Geometry geometry = getWizardData().getFeature().getGeometry();
 			ShapeStyle style = new ShapeStyle("#3e74b3", 0.75f, "#278ec8", 1.0f, 2);
 			gfxGeometry = new GfxGeometry(WORLD_PAINTABLE_ID, geometry, style);
+			SymbolInfo symbol = new SymbolInfo();
+			CircleInfo circle = new CircleInfo();
+			circle.setR(5);
+			symbol.setCircle(circle);
+			gfxGeometry.setSymbolInfo(symbol);
 			mapWidget.setVisible(true);
 			mapWidget.registerWorldPaintable(gfxGeometry);
 			if (mapWidget.getMapModel().isInitialized()) {
@@ -152,13 +159,19 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
 
 			public void onFileUploadComplete(FileUploadCompleteEvent event) {
-				errorFlow.setContents("");
-				errorFlow.setVisible(false);
 				busyImg.setVisible(false);
 				WktParser wktParser = new WktParser(29611);
 				Geometry geometry = wktParser.parse(event.getResponse());
-				getWizardData().getFeature().setGeometry(geometry);
-				show();
+				if (geometry != null) {
+					errorFlow.setContents("");
+					errorFlow.setVisible(false);
+					getWizardData().getFeature().setGeometry(geometry);
+					show();
+				} else {
+					errorFlow.setContents("<div style='color: #AA0000'>Geometry not in this UTM zone, "
+							+ "did you pick the wrong shape file ?</div>");
+					errorFlow.setVisible(true);
+				}
 			}
 
 			public void onFileUploadFailed(FileUploadFailedEvent event) {

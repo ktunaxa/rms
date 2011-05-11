@@ -80,6 +80,14 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 				<property name="maxY" value="6449826.5" />
 			</bean>
 		</property>
+		<property name="maxBounds">
+			<bean class="org.geomajas.geometry.Bbox">
+				<property name="x" value="-25000000" />
+				<property name="y" value="-25000000" />
+				<property name="maxX" value="25000000" />
+				<property name="maxY" value="25000000" />
+			</bean>
+		</property>
 		<property name="layers">
 			<list>
 				<ref bean="osmLayer" />
