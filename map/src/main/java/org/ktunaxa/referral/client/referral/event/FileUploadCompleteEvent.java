@@ -7,6 +7,8 @@
 package org.ktunaxa.referral.client.referral.event;
 
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 
 /**
  * Event that marks the moment when a file has been uploaded successfully to the server and a response has been
@@ -16,9 +18,9 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class FileUploadCompleteEvent extends GwtEvent<FileUploadDoneHandler> {
 
-	private String response;
+	private JSONObject response;
 
-	public FileUploadCompleteEvent(String response) {
+	public FileUploadCompleteEvent(JSONObject response) {
 		this.response = response;
 	}
 
@@ -30,7 +32,11 @@ public class FileUploadCompleteEvent extends GwtEvent<FileUploadDoneHandler> {
 		handler.onFileUploadComplete(this);
 	}
 
-	public String getResponse() {
+	public JSONObject getResponse() {
 		return response;
+	}
+
+	public String getString(String name) {
+		return ((JSONString) response.get(name)).stringValue();
 	}
 }

@@ -28,5 +28,15 @@
 	    <property name="service" ref="command.CommandDispatcher"/>
 	    <property name="serviceInterface" value="org.geomajas.command.CommandDispatcher"/>
 	</bean>
+	
+	<bean id="multipartResolver"
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	
+	    <!-- one of the properties available; the maximum file size in bytes -->
+	    <!-- <property name="maxUploadSize" value="100000000"/> -->
+	</bean>	
+	
+	<context:component-scan base-package="org.ktunaxa.referral.server.mvc" />
+	
 
 </beans>

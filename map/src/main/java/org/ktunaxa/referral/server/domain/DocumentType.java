@@ -21,6 +21,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "document_type")
 public class DocumentType {
+	public static final DocumentType DEFAULT;
+	static {
+		DEFAULT = new DocumentType(2, "KLRA General Communication",
+				"A general communication document. Can be anything.");
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +50,11 @@ public class DocumentType {
 		this.id = id;
 	};
 
+	public DocumentType(long id, String title, String description) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+	};
 	// ------------------------------------------------------------------------
 	// Getters and setters:
 	// ------------------------------------------------------------------------

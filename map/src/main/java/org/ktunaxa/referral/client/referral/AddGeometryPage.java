@@ -16,12 +16,13 @@ import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.wizard.WizardPage;
-import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralData;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
 import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
 import org.ktunaxa.referral.client.wkt.WktParser;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
@@ -133,7 +134,8 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 				+ "</div>");
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight(20);
-		final FileUploadForm form = new FileUploadForm("Select a file (.zip)", "uploadGeometry");
+		final FileUploadForm form = new FileUploadForm("Select a file (.zip)", GWT.getModuleBaseURL()
+				+ "../d/upload/referral/geometry/");
 		form.setHeight(40);
 
 		HLayout btnLayout = new HLayout(10);
@@ -161,7 +163,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 			public void onFileUploadComplete(FileUploadCompleteEvent event) {
 				busyImg.setVisible(false);
 				WktParser wktParser = new WktParser(29611);
-				Geometry geometry = wktParser.parse(event.getResponse());
+				Geometry geometry = wktParser.parse(event.getString(KtunaxaConstant.FORM_GEOMETRY));
 				if (geometry != null) {
 					errorFlow.setContents("");
 					errorFlow.setVisible(false);
@@ -176,7 +178,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 
 			public void onFileUploadFailed(FileUploadFailedEvent event) {
 				busyImg.setVisible(false);
-				errorFlow.setContents("<div style='color: #AA0000'>" + event.getError() + "</div>");
+				errorFlow.setContents("<div style='color: #AA0000'>" + event.getErrorMessage() + "</div>");
 				errorFlow.setVisible(true);
 			}
 		});

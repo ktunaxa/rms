@@ -6,12 +6,20 @@
 
 package org.ktunaxa.referral.client.referral;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.geomajas.gwt.client.widget.wizard.WizardPage;
-import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralData;
+import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
+import org.geomajas.layer.feature.attribute.StringAttribute;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
 import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
@@ -45,12 +53,13 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 
 		grid = new ListGrid();
 		grid.setLayoutAlign(Alignment.CENTER);
-		grid.setWidth(500);
-		grid.setHeight(300);
+		grid.setWidth100();
+		grid.setHeight100();
 		grid.setShowAllRecords(true);
 
-		ListGridField nameField = new ListGridField("name", "Document");
-		grid.setFields(nameField);
+		ListGridField titleField = new ListGridField("title", "Title");
+		ListGridField documentIdField = new ListGridField("documentId", "Alfresco ID");
+		grid.setFields(titleField, documentIdField);
 		grid.setData(new ListGridRecord[] {});
 		layout.addMember(grid);
 	}
@@ -75,20 +84,23 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 	// Private methods:
 	// ------------------------------------------------------------------------
 
-	private void addDocument(String name) {
+	private void addDocument(String title, String documentId) {
 		ListGridRecord record = new ListGridRecord();
-		record.setAttribute("name", name);
+		record.setAttribute("title", title);
+		record.setAttribute("documentId", documentId);
 		grid.addData(record);
 	}
 
 	private VLayout createUploadLayout() {
 		VLayout uploadLayout = new VLayout();
 		uploadLayout.setLayoutAlign(Alignment.CENTER);
+		uploadLayout.setMembersMargin(10);
 		HTMLFlow explanation = new HTMLFlow("<h3>Upload a new document</h3><div><p>Please note that it may take a"
 				+ " while to upload the document to the document management system.</p></div>");
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight(20);
-		final FileUploadForm form = new FileUploadForm("Select a file", "uploadDocument");
+		final FileUploadForm form = new FileUploadForm("Select a file", GWT.getModuleBaseURL()
+				+ "../d/upload/referral/document");
 		form.setHeight(40);
 
 		HLayout btnLayout = new HLayout(10);
@@ -113,16 +125,26 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 
 		form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
 
+			@SuppressWarnings("unchecked")
 			public void onFileUploadComplete(FileUploadCompleteEvent event) {
 				errorFlow.setContents("");
 				errorFlow.setVisible(false);
-				addDocument(event.getResponse());
+				String title = event.getString(KtunaxaConstant.FORM_DOCUMENT_TITLE);
+				String documentId = event.getString(KtunaxaConstant.FORM_DOCUMENT_ID);
+				AssociationValue document = new AssociationValue();
+				Map<String, PrimitiveAttribute<?>> attribs = new HashMap<String, PrimitiveAttribute<?>>();
+				attribs.put("title", new StringAttribute(title));
+				attribs.put("description", new StringAttribute(title));
+				attribs.put("documentId", new StringAttribute(documentId));
+				document.setAttributes(attribs);
+				getWizardData().getFeature().addOneToManyValue("documents", document);
 				busyImg.setVisible(false);
+				show();
 			}
 
 			public void onFileUploadFailed(FileUploadFailedEvent event) {
 				busyImg.setVisible(false);
-				errorFlow.setContents("<div>" + event.getError() + "</div>");
+				errorFlow.setContents("<div style='color: #AA0000'>" + event.getErrorMessage() + "</div>");
 				errorFlow.setVisible(true);
 			}
 		});
@@ -134,15 +156,25 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 
 		return uploadLayout;
 	}
-	
+
 	public void clear() {
 		busyImg.setVisible(false);
 		grid.setData(new ListGridRecord[] {});
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void show() {
 		clear();
+		List<AssociationValue> documents = (List<AssociationValue>) getWizardData().getFeature().getAttributeValue(
+				"documents");
+		if (documents != null) {
+			for (AssociationValue associationValue : documents) {
+				String title = (String) associationValue.getAttributes().get("title").getValue();
+				String documentId = (String) associationValue.getAttributes().get("documentId").getValue();
+				addDocument(title, documentId);
+			}
+		}
 	}
 
 }

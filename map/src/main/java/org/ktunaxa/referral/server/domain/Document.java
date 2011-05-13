@@ -50,7 +50,7 @@ public class Document {
 	/** What type of document being stored in system - Internal response, external response, etc... */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "type_id", nullable = false)
-	private DocumentType type;
+	private DocumentType type = DocumentType.DEFAULT;
 
 	/** The unique identifier for the document within the CMS. */
 	@Column(nullable = false, name = "document_id")
@@ -58,7 +58,7 @@ public class Document {
 
 	/** The date at which this document was added to the associated referral. */
 	@Column(nullable = false, name = "addition_date")
-	private Date additionDate;
+	private Date additionDate = new Date();
 
 	/** The user who added this document to the associated referral. */
 	@Column(name = "added_by")

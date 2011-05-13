@@ -9,7 +9,6 @@ import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.widget.wizard.WizardPage;
 import org.geomajas.layer.feature.attribute.AssociationValue;
-import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralData;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;

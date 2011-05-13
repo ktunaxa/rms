@@ -11,8 +11,11 @@ import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
 import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.ui.NamedFrame;
 import com.smartgwt.client.types.Encoding;
 import com.smartgwt.client.widgets.Canvas;
@@ -47,11 +50,12 @@ public class FileUploadForm extends DynamicForm {
 		setAction(targetUrl);
 		setWidth100();
 
-		fileItem = new UploadItem("file");
+		fileItem = new UploadItem(KtunaxaConstant.FORM_FILE);
 		fileItem.setTitle(title);
 		fileItem.setWrapTitle(false);
 		fileItem.setWidth("*");
-		fileItem.setHeight(25);
+		fileItem.setHeight(24);
+		fileItem.setCellHeight(24);
 		fileItem.addChangeHandler(new ChangeHandler() {
 
 			public void onChange(ChangeEvent event) {
@@ -74,14 +78,18 @@ public class FileUploadForm extends DynamicForm {
 		return handlerManager.addHandler(FileUploadDoneHandler.TYPE, handler);
 	}
 
-	private static void uploadComplete(String formId, String response) {
+	private static void uploadComplete(JavaScriptObject result) {
+		JSONObject json = new JSONObject(result);
+		String formId = ((JSONString) json.get(KtunaxaConstant.FORM_ID)).stringValue();
 		FileUploadForm form = (FileUploadForm) Canvas.getById(formId);
-		form.handlerManager.fireEvent(new FileUploadCompleteEvent(response));
+		form.handlerManager.fireEvent(new FileUploadCompleteEvent(json));
 	}
 
-	private static void uploadFailed(String formId, String error) {
+	private static void uploadFailed(JavaScriptObject result) {
+		JSONObject json = new JSONObject(result);
+		String formId = ((JSONString) json.get(KtunaxaConstant.FORM_ID)).stringValue();
 		FileUploadForm form = (FileUploadForm) Canvas.getById(formId);
-		form.handlerManager.fireEvent(new FileUploadFailedEvent(error));
+		form.handlerManager.fireEvent(new FileUploadFailedEvent(json));
 	}
 	// ------------------------------------------------------------------------
 	// Private methods:
@@ -89,13 +97,11 @@ public class FileUploadForm extends DynamicForm {
 
 	@SuppressWarnings("all")
 	private native void initComplete(FileUploadForm upload) /*-{
-		$wnd.uploadComplete = function (formId, response) {
-			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadComplete(Ljava/lang/String;Ljava/lang/String;)(
-					formId, response);
+		$wnd.uploadComplete = function (response) {
+			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadComplete(Lcom/google/gwt/core/client/JavaScriptObject;)(response);
 		};
-		$wnd.uploadFailed = function (formId, error) {
-			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadFailed(Ljava/lang/String;Ljava/lang/String;)(
-					formId, error);
+		$wnd.uploadFailed = function (error) {
+			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadFailed(Lcom/google/gwt/core/client/JavaScriptObject;)(error);
 		};
 	}-*/;
 }

@@ -15,6 +15,16 @@ package org.ktunaxa.referral.server.service;
 public interface KtunaxaConstant {
 
 	String FORM_ID = "formId";
+	
+	String FORM_FILE = "file";
+	
+	String FORM_GEOMETRY = "geometry";
+
+	String FORM_ERROR_MESSAGE = "errorMessage";
+
+	String FORM_DOCUMENT_TITLE = "title";
+	
+	String FORM_DOCUMENT_ID = "documentId";
 
 	String LAYER_CRS = "EPSG:26911";
 

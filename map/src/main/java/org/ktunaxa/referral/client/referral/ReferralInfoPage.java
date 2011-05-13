@@ -8,7 +8,6 @@ package org.ktunaxa.referral.client.referral;
 
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.wizard.WizardPage;
-import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralData;
 
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;

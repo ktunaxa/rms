@@ -6,7 +6,6 @@
 package org.ktunaxa.referral.client.referral;
 
 import java.util.Date;
-import java.util.HashMap;
 
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
@@ -24,15 +23,9 @@ import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.wizard.Wizard;
 import org.geomajas.gwt.client.widget.wizard.WizardWidget;
-import org.geomajas.layer.feature.attribute.AssociationValue;
-import org.geomajas.layer.feature.attribute.IntegerAttribute;
-import org.geomajas.layer.feature.attribute.LongAttribute;
-import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
-import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralData;
 import org.ktunaxa.referral.server.command.request.CreateProcessRequest;
 import org.ktunaxa.referral.server.command.request.UrlResponse;
 
-import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 
@@ -171,58 +164,6 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 		public ReferralWizardView() {
 			super("Referral Creation Wizard", "Follow the steps below to create a "
 					+ "new referral and add it to the system:");
-		}
-
-	}
-
-	/**
-	 * Wizard data holding feature under construction.
-	 * 
-	 * @author Jan De Moerloose
-	 * 
-	 */
-	public static class ReferralData {
-
-		private Feature feature;
-
-		private VectorLayer layer;
-
-		public ReferralData(VectorLayer layer) {
-			this.layer = layer;
-			feature = new Feature(layer);
-			// set defaults, TODO: make generic implementation calling FeatureModel.newInstance() on the server
-			feature.setIntegerAttribute("primaryClassificationNumber", 3500);
-			feature.setIntegerAttribute("secondaryClassificationNumber", 10);
-			feature.setIntegerAttribute("calendarYear", 11);
-			feature.setStringAttribute("externalProjectId", "-99");
-			feature.setStringAttribute("externalFileId", "-99");
-			feature.setIntegerAttribute("activeRetentionPeriod", 2);
-			feature.setIntegerAttribute("semiActiveRetentionPeriod", 5);
-			Date nextMonth = new Date();
-			CalendarUtil.addMonthsToDate(nextMonth, 1);
-			feature.setDateAttribute("responseDeadline", nextMonth);
-			feature.setManyToOneAttribute("type", new AssociationValue(new LongAttribute(1L),
-					new HashMap<String, PrimitiveAttribute<?>>()));
-			feature.setManyToOneAttribute("finalDisposition", new AssociationValue(new IntegerAttribute(1),
-					new HashMap<String, PrimitiveAttribute<?>>()));
-			feature.setManyToOneAttribute("applicationType", new AssociationValue(new LongAttribute(1L),
-					new HashMap<String, PrimitiveAttribute<?>>()));
-			feature.setManyToOneAttribute("status", new AssociationValue(new LongAttribute(1L),
-					new HashMap<String, PrimitiveAttribute<?>>()));
-			feature.setIntegerAttribute("provincialAssessmentLevel", 1);
-			feature.setIntegerAttribute("finalAssessmentLevel", 1);
-		}
-
-		public void setFeature(Feature feature) {
-			this.feature = feature;
-		}
-
-		public Feature getFeature() {
-			return feature;
-		}
-
-		public VectorLayer getLayer() {
-			return layer;
 		}
 
 	}

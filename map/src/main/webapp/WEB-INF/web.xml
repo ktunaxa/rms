@@ -22,26 +22,6 @@
         </param-value>
 	</context-param>
 
-	<servlet>
-		<servlet-name>UploadGeometryServlet</servlet-name>
-		<servlet-class>org.ktunaxa.referral.server.service.UploadGeometryServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>UploadGeometryServlet</servlet-name>
-		<url-pattern>/uploadGeometry</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>UploadDocumentServlet</servlet-name>
-		<servlet-class>org.ktunaxa.referral.server.service.UploadDocumentServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>UploadDocumentServlet</servlet-name>
-		<url-pattern>/uploadDocument</url-pattern>
-	</servlet-mapping>
-
 	<listener>
  		<listener-class>org.geomajas.servlet.PrepareScanningContextListener</listener-class>
 	</listener>
