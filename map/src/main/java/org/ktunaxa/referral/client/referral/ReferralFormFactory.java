@@ -31,6 +31,7 @@ import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.HeaderItem;
 import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
+import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 
 /**
  * Attribute form factory that create a specific form for features of the Referral layer, or delegates to the default
@@ -73,8 +74,15 @@ public class ReferralFormFactory implements FeatureFormFactory {
 						header.setDefaultValue("General project information");
 						header.setColSpan(4);
 						formItems.add(header);
-
+					} else if ("number".equals(info.getName())) {
+						// insert fake number item + make real one invisible (see further)
+						StaticTextItem number = new StaticTextItem();
+						number.setName("dummy");
+						number.setTitle(info.getLabel());
+						number.setValue("XXXX");
+						formItems.add(number);
 					} else if ("externalProjectId".equals(info.getName())) {
+						// new group
 						RowSpacerItem rowSpacer = new RowSpacerItem("external-info-spacer");
 						formItems.add(rowSpacer);
 						HeaderItem header = new HeaderItem("external-info-header");
@@ -114,15 +122,16 @@ public class ReferralFormFactory implements FeatureFormFactory {
 					DataSourceField field = AttributeFormFieldRegistry.createDataSourceField(layer, info);
 					field.setCanEdit(info.isEditable());
 					source.addField(field);
-
 					FormItem formItem = AttributeFormFieldRegistry.createFormItem(layer, info);
+					if ("number".equals(info.getName())) {
+						formItem.setVisible(false);
+					} 
 					formItems.add(formItem);
 					if (KtunaxaConstant.TARGET_REFERRAL_ATTRIBUTE_NAME.equals(info.getName())) {
 						SelectItem targetItem = (SelectItem) formItem;
 						targetItem.setOptionDataSource(new TargetReferralOptionDataSource(layer, info));
 						targetItem.setDisplayField(LAND_REFERRAL_ID_FIELD);
-					}
-
+					} 
 					if ("externalAgencyName".equals(info.getName())) {
 						formItem.setColSpan(4);
 					} else if ("projectDescription".equals(info.getName())) {
@@ -153,8 +162,7 @@ public class ReferralFormFactory implements FeatureFormFactory {
 				Integer primClassNr = (Integer) getWidget().getValue("primaryClassificationNumber");
 				Integer secClassNr = (Integer) getWidget().getValue("secondaryClassificationNumber");
 				Integer year = (Integer) getWidget().getValue("calendarYear");
-				Integer number = (Integer) getWidget().getValue("number");
-				String referralId = ReferralUtil.createId(primClassNr, secClassNr, year, number);
+				String referralId = ReferralUtil.createId(primClassNr, secClassNr, year, null);
 				HeaderItem header = (HeaderItem) getWidget().getItem("project-info-header");
 				header.setDefaultValue("General project information [" + referralId + "]");
 			}
