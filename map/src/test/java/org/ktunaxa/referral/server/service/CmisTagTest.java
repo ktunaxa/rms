@@ -32,7 +32,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Pieter De Graef
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/org/ktunaxa/referral/server/service/TestContext.xml" })
+@ContextConfiguration(locations = { "/org/geomajas/spring/geomajasContext.xml","/org/ktunaxa/referral/server/service/TestContext.xml" })
 public class CmisTagTest {
 
 	@Test
