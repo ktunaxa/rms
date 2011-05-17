@@ -49,8 +49,8 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	private MapLayout mapLayout;
 
 	public void onModuleLoad() {
+		// Register custom textarea item
 		registerTextAreaFormItem();
-		VLayout layout;
 
 		// Determine the layout:
 		String createReferralParam = Window.Location.getParameter(KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER);
@@ -58,6 +58,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		String referralParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_REFERRAL_ID);
 		String bpmParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_TASK_ID);
 
+		VLayout layout;
 		if (createReferralParam != null) {
 			layout = new CreateReferralLayout();
 		} else if (searchReferralParam != null) {
