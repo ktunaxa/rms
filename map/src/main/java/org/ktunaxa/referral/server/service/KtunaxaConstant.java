@@ -42,7 +42,10 @@ public interface KtunaxaConstant {
 	String TITLE_CREATE_REFERRAL = TITLE_BASE + TITLE_SEPARATOR + "Create referral";
 	String TITLE_SEARCH_REFERRAL = TITLE_BASE + TITLE_SEPARATOR + "Search referral";
 	
-	String LAYER_ID = "referralLayer";
+	String REFERRAL_LAYER_ID = "referralLayer";
+	String REFERRAL_SERVER_LAYER_ID = "referral";
+
+	String REFERENCE_BASE_LAYER_ID = "referenceBaseLayer";
 
 	String TARGET_REFERRAL_ATTRIBUTE_NAME = "targetReferral";
 	String NUMBER_ATTRIBUTE_NAME = "number";

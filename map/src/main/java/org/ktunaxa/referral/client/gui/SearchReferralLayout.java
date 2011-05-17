@@ -4,7 +4,7 @@
  * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
  */
 
-package org.ktunaxa.referral.client;
+package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;

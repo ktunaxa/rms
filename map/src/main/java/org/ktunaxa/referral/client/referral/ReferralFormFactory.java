@@ -46,7 +46,7 @@ public class ReferralFormFactory implements FeatureFormFactory {
 	private FeatureFormFactory delegate = new DefaultFeatureFormFactory();
 
 	public FeatureForm createFeatureForm(VectorLayer layer) {
-		if (KtunaxaConstant.LAYER_ID.equals(layer.getId())) {
+		if (KtunaxaConstant.REFERRAL_LAYER_ID.equals(layer.getId())) {
 			return new ReferralFeatureForm(layer);
 		}
 		return delegate.createFeatureForm(layer);

@@ -6,7 +6,12 @@
 
 package org.ktunaxa.referral.client.widget;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
@@ -16,6 +21,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 
 /**
  * <p>
@@ -31,6 +37,18 @@ import com.smartgwt.client.widgets.layout.VLayout;
  */
 public class ResizableLeftLayout extends VLayout {
 
+	/**
+	 * The view state of the layout.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	public enum ViewState {
+		MINIMIZED, RESTORED, MAXIMIZED
+	}
+
+	private static final String BUTTONGROUP = "the-only-one";
+
 	private static final int CLOSED_WIDTH = 24;
 
 	private HLayout titleCanvas;
@@ -41,11 +59,17 @@ public class ResizableLeftLayout extends VLayout {
 
 	private Canvas closedCanvas;
 
-	private String title;
-
 	private ViewState viewState = ViewState.RESTORED;
 
 	private int restoredWidth = 550;
+
+	private HashMap<String, Card> cards = new HashMap<String, Card>();
+
+	private Card currentCard;
+
+	private List<ToolStripButton> buttons = new ArrayList<ToolStripButton>();
+
+	private HTMLFlow verticalTitle;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -54,11 +78,9 @@ public class ResizableLeftLayout extends VLayout {
 	/**
 	 * This constructors immediately require a title to be set. It will build all necessary GUI.
 	 * 
-	 * @param title
-	 *            The title for this layout.
+	 * @param title The title for this layout.
 	 */
-	public ResizableLeftLayout(String title) {
-		this.title = title;
+	public ResizableLeftLayout() {
 		setSize(restoredWidth + "px", "100%");
 
 		addMember(createTitle());
@@ -68,25 +90,77 @@ public class ResizableLeftLayout extends VLayout {
 		addMember(contentsCanvas);
 
 		closedCanvas = createClosedCanvas();
+
+		restore();
 	}
 
-	// ------------------------------------------------------------------------
-	// Getters and setters:
-	// ------------------------------------------------------------------------
+	/**
+	 * Add a card to this layout. The last card added will become the current card.
+	 * 
+	 * @param key key for the card, used to show it later
+	 * @param card the card canvas
+	 */
+	public void addCard(String name, String title, Canvas canvas) {
+		canvas.setWidth100();
+		canvas.setHeight100();
+		canvas.setStyleName("closeableLayoutPanel");
+		canvas.setLeft(0);
+		canvas.setTop(0);
+		canvas.hide();
+		contentsCanvas.addChild(canvas);
+		final Card card = new Card(name, title, canvas);
+		cards.put(name, card);
+
+		ToolStripButton button = new ToolStripButton(name);
+		button.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				showCard(card.getName());
+			}
+		});
+		button.setActionType(SelectionType.RADIO);
+		button.setRadioGroup(BUTTONGROUP);
+		buttons.add(button);
+	}
 
 	/**
-	 * Set the content canvas for this layout. Note that only 1 canvas is allowed as content.
+	 * Show the specified card.
 	 * 
-	 * @param pane
-	 *            The new canvas to apply as content.
+	 * @param key the key that was used to add the card
 	 */
-	public void setPane(Canvas pane) {
-		for (int i = contentsCanvas.getChildren().length - 1; i >= 0; i--) {
-			contentsCanvas.removeChild(contentsCanvas.getChildren()[i]);
+	public void showCard(String name) {
+		restore();
+		if (cards.containsKey(name)) {
+			Card old = currentCard;
+			currentCard = cards.get(name);
+			currentCard.getCanvas().show();
+			titleDiv.setContents(name);
+			StringBuilder contents = new StringBuilder();
+			for (int i = 0; i < currentCard.getName().length(); i++) {
+				contents.append(name.charAt(i));
+				contents.append("<br/>");
+			}
+			verticalTitle.setContents(currentCard.getTitle().toString());
+			if (old != null) {
+				old.getCanvas().hide();
+			}
+			for (ToolStripButton button : buttons) {
+				if (button.getTitle().equals(name)) {
+					button.setSelected(true);
+				} else {
+					button.setSelected(false);
+				}
+			}
 		}
-		pane.setSize("100%", "100%");
-		pane.setStyleName("closeableLayoutPanel");
-		contentsCanvas.addChild(pane);
+	}
+
+	/**
+	 * Gets the list of buttons to show the individual cards.
+	 * 
+	 * @return list of buttons
+	 */
+	public List<ToolStripButton> getButtons() {
+		return buttons;
 	}
 
 	/**
@@ -99,9 +173,7 @@ public class ResizableLeftLayout extends VLayout {
 			} else if (viewState == ViewState.MAXIMIZED) {
 				showSiblings();
 			}
-			for (int i = getChildren().length - 1; i >= 0; i--) {
-				removeChild(getChildren()[i]);
-			}
+			setMembers();
 			setWidth(24);
 			addMember(closedCanvas);
 		}
@@ -115,9 +187,7 @@ public class ResizableLeftLayout extends VLayout {
 	 */
 	public void maximize() {
 		if (viewState == ViewState.MINIMIZED) {
-			for (int i = getChildren().length - 1; i >= 0; i--) {
-				removeChild(getChildren()[i]);
-			}
+			setMembers();
 			hideSiblings();
 			setWidth100();
 			addMember(titleCanvas);
@@ -136,9 +206,7 @@ public class ResizableLeftLayout extends VLayout {
 	 */
 	public void restore() {
 		if (viewState == ViewState.MINIMIZED) {
-			for (int i = getChildren().length - 1; i >= 0; i--) {
-				removeChild(getChildren()[i]);
-			}
+			setMembers();
 			setWidth(restoredWidth);
 			addMember(titleCanvas);
 			addMember(contentsCanvas);
@@ -148,28 +216,6 @@ public class ResizableLeftLayout extends VLayout {
 		}
 		viewState = ViewState.RESTORED;
 		enableResizeBar();
-	}
-
-	/**
-	 * Get the current title of this layout.
-	 * 
-	 * @return The current title.
-	 */
-	public String getTitle() {
-		return title;
-	}
-
-	/**
-	 * Apply a new title for this layout.
-	 * 
-	 * @param title
-	 *            The new title value.
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-		if (titleDiv != null) {
-			titleDiv.setContents(title);
-		}
 	}
 
 	/**
@@ -234,7 +280,7 @@ public class ResizableLeftLayout extends VLayout {
 		titleCanvas.setSize("100%", CLOSED_WIDTH + "px");
 		titleCanvas.setStyleName("blockTitle");
 
-		titleDiv = new HTMLFlow(title);
+		titleDiv = new HTMLFlow();
 		titleDiv.setSize("100%", CLOSED_WIDTH + "px");
 		titleDiv.setStyleName("blockTitleText");
 
@@ -272,7 +318,9 @@ public class ResizableLeftLayout extends VLayout {
 		return titleCanvas;
 	}
 
-	/** Build the GUI when minimized. Has a vertical title and other differences... */
+	/**
+	 * Build the GUI when minimized. Has a vertical title and other differences...
+	 */
 	private Canvas createClosedCanvas() {
 		VLayout layout = new VLayout();
 		layout.setStyleName("blockTitle");
@@ -302,16 +350,46 @@ public class ResizableLeftLayout extends VLayout {
 		});
 		layout.addMember(restoreImage);
 
-		StringBuilder contents = new StringBuilder();
-		for (int i = 0; i < title.length(); i++) {
-			contents.append(title.charAt(i));
-			contents.append("<br/>");
-		}
-		HTMLFlow verticalTitle = new HTMLFlow(contents.toString());
+		verticalTitle = new HTMLFlow("");
 		verticalTitle.setSize(CLOSED_WIDTH + "px", "100%");
 		verticalTitle.setStyleName("blockVerticalTitleText");
 		layout.addMember(verticalTitle);
 
 		return layout;
 	}
+
+	/**
+	 * A holder for each "card" in the card layout.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	private class Card {
+
+		private String name;
+
+		private String title;
+
+		private Canvas canvas;
+
+		public Card(String name, String title, Canvas canvas) {
+			this.name = name;
+			this.title = title;
+			this.canvas = canvas;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
+		public Canvas getCanvas() {
+			return canvas;
+		}
+
+	}
+
 }

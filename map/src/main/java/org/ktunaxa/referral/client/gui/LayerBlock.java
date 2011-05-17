@@ -38,6 +38,11 @@ public class LayerBlock extends HLayout {
 
 	private HTMLFlow title;
 
+	/**
+	 * Testing it all.
+	 * 
+	 * @param subLayer the layer that you call sublayer
+	 */
 	public LayerBlock(ReferenceSubLayer subLayer) {
 		this.subLayer = subLayer;
 		setSize("100%", "26px");

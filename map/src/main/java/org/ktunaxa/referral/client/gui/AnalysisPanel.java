@@ -16,13 +16,17 @@ import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
 
 /**
- * Panel that displays 2 tabs: a FeatureSearch and a FeatureListGrid.
+ * Panel that displays analysis tools: geographical search and spatial
+ * operations.
  * 
  * @author Pieter De Graef
+ * @author Jan De Moerloose
  */
-public class SearchPanel extends VLayout {
+public class AnalysisPanel extends VLayout {
 
-	public SearchPanel(MapWidget mapWidget) {
+	private static final String NAME = "ANALYSIS";
+
+	public AnalysisPanel(MapWidget mapWidget) {
 		setSize("100%", "100%");
 
 		final TabSet tabs = new TabSet();
@@ -44,5 +48,9 @@ public class SearchPanel extends VLayout {
 		tab2.setPane(grid);
 		tabs.setTabs(tab1, tab2);
 		addMember(tabs);
+	}
+
+	public String getName() {
+		return NAME;
 	}
 }

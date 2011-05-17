@@ -17,7 +17,11 @@ import com.google.gwt.i18n.client.Messages;
  */
 public interface LocalizedMessages extends Messages {
 
-	String applicationTitle(String id, String title);
+	String mapTitle();
+	
+	String referralTitle(String referralId, String description);
+
+	String referralAndTaskTitle(String referralId, String description, String task);
 
 	String loadingNotice();
 }

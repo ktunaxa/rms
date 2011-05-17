@@ -6,77 +6,52 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import org.geomajas.gwt.client.map.MapModel;
-import org.geomajas.gwt.client.map.event.MapModelEvent;
-import org.geomajas.gwt.client.map.event.MapModelHandler;
-import org.geomajas.gwt.client.map.feature.Feature;
-import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.MapWidget;
-import org.ktunaxa.referral.client.referral.ReferralFormFactory;
 
-import com.google.gwt.core.client.GWT;
-import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.widgets.IButton;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tab.Tab;
+import com.smartgwt.client.widgets.tab.TabSet;
 
 /**
- * Temporary class for displaying documents...
+ * Panel that displays the referral information (details, comments, documents).
  * 
  * @author Pieter De Graef
+ * @author Jan De Moerloose
  */
 public class ReferralPanel extends VLayout {
 
-	public ReferralPanel(final MapWidget mapWidget) {
-		super(10);
+	/**
+	 * Name of the panel in navigation link.
+	 */
+	public static final String NAME = "REFERRAL";
+
+	/**
+	 * Constructs a new referral panel for the specified map.
+	 * 
+	 * @param mapWidget the map
+	 */
+	public ReferralPanel(MapWidget mapWidget) {
 		setSize("100%", "100%");
-		setPadding(10);
-		setOverflow(Overflow.AUTO);
 
-		if (mapWidget.getMapModel().isInitialized()) {
-			addEditor(mapWidget.getMapModel());
-		} else {
-			mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
+		TabSet tabs = new TabSet();
+		tabs.setSize("100%", "100%");
+		Tab tabDetails = new Tab("Details");
+		Tab tabDouments = new Tab("Documents");
+		Tab tabComments = new Tab("Comments");
 
-				public void onMapModelChange(MapModelEvent event) {
-					addEditor(mapWidget.getMapModel());
-				}
-			});
-		}
+		DetailPanel panelDetail = new DetailPanel(mapWidget);
+		CommentPanel panelComments = new CommentPanel();
+		DocumentPanel panelDocuments = new DocumentPanel();
+		tabDetails.setPane(panelDetail);
+		tabDouments.setPane(panelDocuments);
+		tabComments.setPane(panelComments);
+		tabs.setTabs(tabDetails, tabDouments, tabComments);
+		addMember(tabs);
 	}
 
-	private void addEditor(MapModel mapModel) {
-		VectorLayer layer = (VectorLayer) mapModel.getLayer("referralLayer");
-		if (layer != null) {
-			final FeatureAttributeEditor editor = new FeatureAttributeEditor(layer, false, new ReferralFormFactory());
-			Feature feature = new Feature(layer);
-			editor.setFeature(feature);
-
-			HLayout buttonLayout = new HLayout(5);
-			buttonLayout.setHeight(30);
-			IButton button = new IButton("GetValue");
-			button.addClickHandler(new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					Feature feature = editor.getFeature();
-					GWT.log(feature.toString());
-				}
-			});
-			buttonLayout.addMember(button);
-			IButton disabledBtn = new IButton("Toggle editing");
-			disabledBtn.addClickHandler(new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					editor.setDisabled(!editor.isDisabled());
-				}
-			});
-			buttonLayout.addMember(disabledBtn);
-
-			addMember(buttonLayout);
-			addMember(editor);
-		}
+	
+	public String getName() {
+		return NAME;
 	}
+
 }

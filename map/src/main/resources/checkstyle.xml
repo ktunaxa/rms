@@ -64,7 +64,7 @@
 
 	<module name="TreeWalker">
 
-		<property name="cacheFile" value="${checkstyle.cache.file}"/>
+		<property name="cacheFile" value="/tmp/cache"/>
 		<property name="tabWidth" value="4"/>
 
 		<module name="MissingDeprecated"/>

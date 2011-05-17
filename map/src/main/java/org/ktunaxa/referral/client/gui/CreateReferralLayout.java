@@ -4,7 +4,7 @@
  * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
  */
 
-package org.ktunaxa.referral.client;
+package org.ktunaxa.referral.client.gui;
 
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard.ReferralWizardView;
@@ -22,7 +22,8 @@ public class CreateReferralLayout extends VLayout {
 	private ReferralCreationWizard wizard;
 
 	public CreateReferralLayout() {
-		setWidth("100%");
+		setWidth100();
+		setHeight100();
 		setOverflow(Overflow.VISIBLE);
 
 		VLayout body = new VLayout();

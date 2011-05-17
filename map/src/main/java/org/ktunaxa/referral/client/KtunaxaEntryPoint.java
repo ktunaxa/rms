@@ -6,21 +6,24 @@
 
 package org.ktunaxa.referral.client;
 
-import org.geomajas.command.CommandResponse;
-import org.geomajas.command.EmptyCommandRequest;
-import org.geomajas.gwt.client.command.CommandCallback;
-import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.map.MapView.ZoomOption;
+import org.geomajas.gwt.client.map.feature.Feature;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
+import org.ktunaxa.referral.client.gui.CreateReferralLayout;
+import org.ktunaxa.referral.client.gui.LayersPanel;
+import org.ktunaxa.referral.client.gui.MapLayout;
+import org.ktunaxa.referral.client.gui.ReferralPanel;
+import org.ktunaxa.referral.client.gui.SearchReferralLayout;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
-import org.ktunaxa.referral.server.command.request.GetTaskRequest;
-import org.ktunaxa.referral.server.command.request.GetTaskResponse;
-import org.ktunaxa.referral.server.command.request.GetUrlsResponse;
-import org.ktunaxa.referral.server.dto.TaskDto;
+import org.ktunaxa.referral.client.layer.ReferenceLayer;
+import org.ktunaxa.referral.client.widget.ReferralMapWidget;
+import org.ktunaxa.referral.client.widget.ReferralMapWidget.MapCallback;
+import org.ktunaxa.referral.server.command.request.GetReferralMapResponse;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -28,21 +31,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
-import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
-import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.menu.Menu;
-import com.smartgwt.client.widgets.menu.MenuItem;
-import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
-import com.smartgwt.client.widgets.toolbar.ToolStrip;
-import com.smartgwt.client.widgets.toolbar.ToolStripButton;
-import com.smartgwt.client.widgets.toolbar.ToolStripMenuButton;
 
 /**
  * Entry point and main class for GWT application. This class defines the layout and functionality of this application.
@@ -51,28 +44,48 @@ import com.smartgwt.client.widgets.toolbar.ToolStripMenuButton;
  */
 public class KtunaxaEntryPoint implements EntryPoint {
 
-	private static final String RFA_TITLE = "Mining SoilDigger";
-
-	private static final String RFA_DESCRIPTION = "SoilDigger wants to create a copper mine. "
-			+ "It will provide work for 12 permanent and sometimes up to 20 people. "
-			+ "Twenty tons will be excavated daily. And I need more text because I want to see it being truncated. "
-			+ "Even when the screen is large and the display font for this description is small.";
-
 	private LocalizedMessages messages = GWT.create(LocalizedMessages.class);
 
-	private ToolStripButton mapButton;
-
-	private ToolStripButton bpmButton;
-
-	private MenuItem newItem;
-
-	private MenuItem openItem;
-	
-	private HTMLFlow rfaLabel;
-	
-	private MapLayout map;
+	private MapLayout mapLayout;
 
 	public void onModuleLoad() {
+		registerTextAreaFormItem();
+		VLayout layout;
+
+		// Determine the layout:
+		String createReferralParam = Window.Location.getParameter(KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER);
+		String searchReferralParam = Window.Location.getParameter(KtunaxaConstant.SEARCH_REFERRAL_URL_PARAMETER);
+		String referralParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_REFERRAL_ID);
+		String bpmParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_TASK_ID);
+
+		if (createReferralParam != null) {
+			layout = new CreateReferralLayout();
+		} else if (searchReferralParam != null) {
+			layout = new SearchReferralLayout();
+		} else {
+			mapLayout = new MapLayout(referralParam, bpmParam);
+			layout = mapLayout;
+			ReferralMapWidget map = mapLayout.getMap();
+			// initialize referral on callback
+			map.addMapCallback(new ReferralInitializer());
+			// initialize links on callback
+			map.addMapCallback(new LinkInitializer());
+			// initialize layers on callback
+			map.addMapCallback(new LayerInitializer());
+			// set default state
+			if (referralParam != null) {
+				// open the referral tab
+				mapLayout.getInfoPane().showCard(ReferralPanel.NAME);
+			} else {
+				// open the referral tab
+				mapLayout.getInfoPane().showCard(LayersPanel.NAME);
+			}
+		}
+		layout.draw();
+
+	}
+
+	private void registerTextAreaFormItem() {
 		// Register a custom form item for text area's:
 		AttributeFormFieldRegistry.registerCustomFormItem("textArea", new DataSourceFieldFactory() {
 
@@ -85,181 +98,83 @@ public class KtunaxaEntryPoint implements EntryPoint {
 				return new TextAreaItem();
 			}
 		}, null);
+	}
 
-		VLayout layout = new VLayout();
-		layout.setSize("100%", "100%");
+	/**
+	 * Initializes the links to other pages.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	private class LinkInitializer implements MapCallback {
 
-		// Determine the layout:
-		String createReferralParam = Window.Location.getParameter(KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER);
-		String searchReferralParam = Window.Location.getParameter(KtunaxaConstant.SEARCH_REFERRAL_URL_PARAMETER);
-		String referralParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_REFERRAL_ID);
-		String bpmParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_TASK_ID);
+		public void onResponse(final GetReferralMapResponse response) {
+			mapLayout.getNewButton().addClickHandler(new ClickHandler() {
 
-		if (createReferralParam != null) {
-			layout.addMember(createHeader(KtunaxaConstant.TITLE_CREATE_REFERRAL, null));
-			layout.addMember(new CreateReferralLayout());
-		} else if (searchReferralParam != null) {
-			layout.addMember(createHeader(KtunaxaConstant.TITLE_SEARCH_REFERRAL, null));
-			layout.addMember(new SearchReferralLayout());
-		} else {
-			if (referralParam != null) {
-				layout.addMember(createHeader(messages.applicationTitle(referralParam, "View"), null));
-			} else {
-				layout.addMember(createHeader(KtunaxaConstant.TITLE_GENERAL, null));
-			}
-			map = new MapLayout(referralParam, bpmParam);
-			layout.addMember(map);
-		}
-		layout.draw();
-
-		// Fetch correct URLs and attach them to the header menu buttons:
-		GwtCommand command = new GwtCommand("command.GetUrls");
-		command.setCommandRequest(new EmptyCommandRequest());
-		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
-
-			public void execute(CommandResponse response) {
-				if (response instanceof GetUrlsResponse) {
-					GetUrlsResponse gur = (GetUrlsResponse) response;
-					mapButton.addClickHandler(new MapClickHandler(gur.getMapDashboardBaseUrl()));
-					bpmButton.addClickHandler(new TasksClickHandler(gur.getBpmDashboardBaseUrl()));
-					newItem.addClickHandler(new CreateReferralClickHandler(gur.getMapDashboardBaseUrl()));
-					openItem.addClickHandler(new OpenReferralClickHandler(gur.getMapDashboardBaseUrl()));
+				public void onClick(ClickEvent event) {
+					WindowUtil.setLocation(addUrlParam(response.getMapDashboardBaseUrl(),
+							KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER));
 				}
-			}
-		});
-		
-		// Fetch the task
-		if (bpmParam != null) {
-			GwtCommand taskCommand = new GwtCommand(GetTaskRequest.COMMAND);
-			GetTaskRequest request = new GetTaskRequest();
-			request.setTaskId(bpmParam);
-			taskCommand.setCommandRequest(request);
-			final String refParam = referralParam;
-			GwtCommandDispatcher.getInstance().execute(taskCommand, new CommandCallback() {
+			});
+			mapLayout.getTopBar().getTasksButton().addClickHandler(new ClickHandler() {
 
-				public void execute(CommandResponse response) {
-					if (response instanceof GetTaskResponse) {
-						GetTaskResponse ftr = (GetTaskResponse) response;
-						TaskDto task = ftr.getTask();
-						if (task != null) {
-							String title = messages.applicationTitle(refParam, task.getName());
-							rfaLabel.setContents(title);
-							rfaLabel.redraw();
-							map.addFinishButton();
-						}
-					}
+				public void onClick(ClickEvent event) {
+					WindowUtil.setLocation(response.getBpmDashboardBaseUrl());
 				}
 			});
 		}
-		
-	}
 
-	private Canvas createHeader(String title, String tooltip) {
-		HLayout header = new HLayout();
-		header.setSize("100%", "44");
-		header.setStyleName("header");
-
-		rfaLabel = new HTMLFlow(title);
-		rfaLabel.setStyleName("headerText");
-		if (tooltip != null) {
-			rfaLabel.setTooltip(tooltip);
-			rfaLabel.setHoverWidth(700);
-		}
-		rfaLabel.setWidth100();
-		header.addMember(rfaLabel);
-
-		LayoutSpacer spacer = new LayoutSpacer();
-		header.addMember(spacer);
-
-		ToolStrip headerBar = new ToolStrip();
-		headerBar.setMembersMargin(2);
-		headerBar.setSize("445", "44");
-		headerBar.addFill();
-		headerBar.setStyleName("headerRight");
-
-		mapButton = new ToolStripButton("Map");
-		bpmButton = new ToolStripButton("Tasks");
-
-		Menu menu = new Menu();
-		menu.setShowShadow(true);
-		menu.setShadowDepth(3);
-		newItem = new MenuItem("New", "[ISOMORPHIC]/images/document_plain_new.png");
-		openItem = new MenuItem("Open", "[ISOMORPHIC]/images/folder_out.png");
-		menu.setItems(newItem, openItem);
-		ToolStripMenuButton referralButton = new ToolStripMenuButton("Referral", menu);
-
-		headerBar.addMember(mapButton);
-		headerBar.addMember(referralButton);
-		headerBar.addMember(bpmButton);
-		headerBar.addMember(new ToolStripButton("Logout"));
-		headerBar.addSpacer(10);
-		header.addMember(headerBar);
-
-		return header;
 	}
 
 	/**
-	 * Map click handler.
+	 * Initializes the referral state: map navigation + title.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
 	 */
-	private static class MapClickHandler implements ClickHandler {
+	private class ReferralInitializer implements MapCallback {
 
-		private String mapDashboardBaseUrl;
-
-		public MapClickHandler(String mapDashboardBaseUrl) {
-			this.mapDashboardBaseUrl = mapDashboardBaseUrl;
+		public void onResponse(GetReferralMapResponse response) {
+			String title = null;
+			if (response.getReferral() != null) {
+				VectorLayer layer = (VectorLayer) mapLayout.getMap().getMapModel()
+						.getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
+				Feature feature = new Feature(response.getReferral(), layer);
+				GWT.log("Feature found: " + feature.getId());
+				// Now display feature on this page!
+				mapLayout.getMap().getMapModel().getMapView()
+						.applyBounds(feature.getGeometry().getBounds(), ZoomOption.LEVEL_FIT);
+				String referralDescription = feature.getAttributeValue("projectName").toString();
+				if (response.getTask() != null) {
+					String taskDescription = response.getTask().getDescription();
+					title = messages.referralAndTaskTitle(mapLayout.getMap().getReferralId(), referralDescription,
+							taskDescription);
+				} else {
+					title = messages.referralTitle(mapLayout.getMap().getReferralId(), referralDescription);
+				}
+			} else {
+				title = messages.mapTitle();
+			}
+			mapLayout.getTopBar().setLeftTitle(title);
 		}
 
-		public void onClick(ClickEvent event) {
-			WindowUtil.setLocation(mapDashboardBaseUrl);
-		}
 	}
 
 	/**
-	 * Task click handler.
+	 * Initializes the layer tree.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
 	 */
-	private static class TasksClickHandler implements ClickHandler {
+	private class LayerInitializer implements MapCallback {
 
-		private String bpmDashboardBaseUrl;
-
-		public TasksClickHandler(String bpmDashboardBaseUrl) {
-			this.bpmDashboardBaseUrl = bpmDashboardBaseUrl;
+		public void onResponse(GetReferralMapResponse response) {
+			VectorLayer layer = (VectorLayer) mapLayout.getMap().getMapModel()
+					.getLayer(KtunaxaConstant.REFERENCE_BASE_LAYER_ID);
+			ReferenceLayer referenceLayer = new ReferenceLayer(layer, response.getLayers(), response.getLayerTypes());
+			mapLayout.getLayerPanel().setReferenceLayer(referenceLayer);
 		}
 
-		public void onClick(ClickEvent event) {
-			WindowUtil.setLocation(bpmDashboardBaseUrl);
-		}
-	}
-
-	/**
-	 * Create referral handler.
-	 */
-	private class CreateReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
-
-		private String mapDashboardBaseUrl;
-
-		public CreateReferralClickHandler(String mapDashboardBaseUrl) {
-			this.mapDashboardBaseUrl = mapDashboardBaseUrl;
-		}
-
-		public void onClick(MenuItemClickEvent event) {
-			WindowUtil.setLocation(addUrlParam(mapDashboardBaseUrl, KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER));
-		}
-	}
-
-	/**
-	 * Open referral handler.
-	 */
-	private class OpenReferralClickHandler implements com.smartgwt.client.widgets.menu.events.ClickHandler {
-
-		private String mapDashboardBaseUrl;
-
-		public OpenReferralClickHandler(String mapDashboardBaseUrl) {
-			this.mapDashboardBaseUrl = mapDashboardBaseUrl;
-		}
-
-		public void onClick(MenuItemClickEvent event) {
-			WindowUtil.setLocation(addUrlParam(mapDashboardBaseUrl, KtunaxaConstant.SEARCH_REFERRAL_URL_PARAMETER));
-		}
 	}
 
 	private String addUrlParam(String baseUrl, String param) {
