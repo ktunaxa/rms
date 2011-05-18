@@ -47,7 +47,7 @@ public class ReferenceLayer {
 		// we only need the name for the style !
 		layer.getLayerInfo().getNamedStyleInfo().getFeatureStyles().clear();
 		for (ReferenceLayerTypeDto layerType : layerTypeDtos) {
-			if(isBase == layerType.isBaseLayer()){
+			if (isBase == layerType.isBaseLayer()) {
 				layerTypes.add(layerType);
 			}
 		}
@@ -57,7 +57,7 @@ public class ReferenceLayer {
 		mapModel = layer.getMapModel();
 		mapModel.getMapView().addMapViewChangedHandler(new LayerShowingHandler());
 		for (ReferenceLayerDto referenceLayerDto : subLayerDtos) {
-			if(isBase == referenceLayerDto.getType().isBaseLayer()){
+			if (isBase == referenceLayerDto.getType().isBaseLayer()) {
 				subLayers.add(new ReferenceSubLayer(this, referenceLayerDto));
 			}
 		}

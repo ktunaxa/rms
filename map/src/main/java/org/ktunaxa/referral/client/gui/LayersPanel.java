@@ -13,7 +13,6 @@ import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
 
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.VisibilityMode;
-import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -92,12 +91,12 @@ public class LayersPanel extends VLayout {
 			SectionStackSection section = new SectionStackSection(type.getDescription());
 			section.setExpanded(false);
 			section.addItem(new VLayout());
-			section.setID(type.getId()+"");
+			section.setID(type.getId() + "");
 			stack.addSection(section);
 		}
 		for (ReferenceSubLayer subLayer : layer.getSubLayers()) {
 			ReferenceLayerTypeDto type = subLayer.getDto().getType();
-			((VLayout) stack.getSection(type.getId()+"").getItems()[0]).addMember(new LayerBlock(subLayer));
+			((VLayout) stack.getSection(type.getId() + "").getItems()[0]).addMember(new LayerBlock(subLayer));
 		}
 	}
 
