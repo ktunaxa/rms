@@ -46,6 +46,7 @@ public interface KtunaxaConstant {
 	String REFERRAL_SERVER_LAYER_ID = "referral";
 
 	String REFERENCE_BASE_LAYER_ID = "referenceBaseLayer";
+	String REFERENCE_VALUE_LAYER_ID = "referenceValueLayer";
 
 	String TARGET_REFERRAL_ATTRIBUTE_NAME = "targetReferral";
 	String NUMBER_ATTRIBUTE_NAME = "number";

@@ -48,7 +48,7 @@ public class ReferralMapWidget extends MapWidget {
 	@Override
 	public void init() {
 		GwtCommand commandRequest = new GwtCommand(GetReferralMapRequest.COMMAND);
-		commandRequest.setCommandRequest(new GetReferralMapRequest(id, applicationId, taskId, referralId));
+		commandRequest.setCommandRequest(new GetReferralMapRequest(id, applicationId, referralId, taskId));
 		GwtCommandDispatcher.getInstance().execute(commandRequest, new CommandCallback() {
 
 			public void execute(CommandResponse response) {

@@ -28,11 +28,13 @@ import com.smartgwt.client.widgets.tab.TabSet;
  */
 public class LayersPanel extends VLayout {
 
-	private VLayout panelValue;
+	private ReferenceLayer baseLayer;
 
-	private ReferenceLayer referenceLayer;
+	private ReferenceLayer valueLayer;
 
 	private SectionStack baseStack;
+
+	private SectionStack valueStack;
 
 	public static final String NAME = "LAYERS";
 
@@ -43,11 +45,13 @@ public class LayersPanel extends VLayout {
 		tabs.setSize("100%", "100%");
 		Tab tabBase = new Tab("Base layers");
 		Tab tabValue = new Tab("Ktunaxa Values");
-		panelValue = new VLayout();
-		panelValue.setOverflow(Overflow.AUTO);
-		tabValue.setPane(panelValue);
-		tabs.setTabs(tabBase, tabValue);
-		addMember(tabs);
+		
+		valueStack = new SectionStack();
+		valueStack.setSize("100%", "100%");
+		valueStack.setOverflow(Overflow.AUTO);
+		valueStack.setVisibilityMode(VisibilityMode.MULTIPLE);
+		valueStack.setPadding(5);
+		tabValue.setPane(valueStack);
 
 		baseStack = new SectionStack();
 		baseStack.setSize("100%", "100%");
@@ -55,38 +59,47 @@ public class LayersPanel extends VLayout {
 		baseStack.setVisibilityMode(VisibilityMode.MULTIPLE);
 		baseStack.setPadding(5);
 		tabBase.setPane(baseStack);
+		
+		tabs.setTabs(tabBase, tabValue);
+		addMember(tabs);
 	}
 
-	public void setReferenceLayer(ReferenceLayer referenceLayer) {
-		this.referenceLayer = referenceLayer;
-		for (ReferenceLayerTypeDto type : referenceLayer.getLayerTypes()) {
-			if (type.isBaseLayer()) {
-				// Create section in stack:
-				SectionStackSection section = new SectionStackSection(
-						type.getDescription());
-				section.setExpanded(true);
-				section.addItem(new VLayout());
-				baseStack.addSection(section);
-			}
-		}
-
-		for (ReferenceSubLayer subLayer : referenceLayer.getSubLayers()) {
-			ReferenceLayerTypeDto type = subLayer.getDto().getType();
-			if (type.isBaseLayer()) {
-				((VLayout) baseStack.getSection((int) type.getId() - 1)
-						.getItems()[0]).addMember(new LayerBlock(subLayer));
-			} else {
-				panelValue.addMember(new HTMLFlow(subLayer.getDto().getName()));
-			}
-		}
+	public void setBaseLayer(ReferenceLayer baseLayer) {
+		this.baseLayer = baseLayer;
+		copyToStack(baseLayer, baseStack);
 	}
 
-	public ReferenceLayer getReferenceLayer() {
-		return referenceLayer;
+	public void setValueLayer(ReferenceLayer valueLayer) {
+		this.valueLayer = valueLayer;
+		copyToStack(valueLayer, valueStack);
+	}
+
+	public ReferenceLayer getBaseLayer() {
+		return baseLayer;
+	}
+
+	public ReferenceLayer getValueLayer() {
+		return valueLayer;
 	}
 
 	public String getName() {
 		return NAME;
 	}
+
+	private void copyToStack(ReferenceLayer layer, SectionStack stack) {
+		for (ReferenceLayerTypeDto type : layer.getLayerTypes()) {
+			// Create section in stack:
+			SectionStackSection section = new SectionStackSection(type.getDescription());
+			section.setExpanded(false);
+			section.addItem(new VLayout());
+			section.setID(type.getId()+"");
+			stack.addSection(section);
+		}
+		for (ReferenceSubLayer subLayer : layer.getSubLayers()) {
+			ReferenceLayerTypeDto type = subLayer.getDto().getType();
+			((VLayout) stack.getSection(type.getId()+"").getItems()[0]).addMember(new LayerBlock(subLayer));
+		}
+	}
+
 
 }

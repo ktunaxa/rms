@@ -37,23 +37,29 @@ public class ReferenceLayer {
 
 	private List<ReferenceSubLayer> subLayers = new ArrayList<ReferenceSubLayer>();
 
-	private List<ReferenceLayerTypeDto> layerTypes;
+	private List<ReferenceLayerTypeDto> layerTypes = new ArrayList<ReferenceLayerTypeDto>();
 
 	private HandlerManager handlerManager;
 
 	public ReferenceLayer(VectorLayer layer, List<ReferenceLayerDto> subLayerDtos,
-			List<ReferenceLayerTypeDto> layerTypes) {
+			List<ReferenceLayerTypeDto> layerTypeDtos, boolean isBase) {
 		this.layer = layer;
 		// we only need the name for the style !
 		layer.getLayerInfo().getNamedStyleInfo().getFeatureStyles().clear();
-		this.layerTypes = layerTypes;
+		for (ReferenceLayerTypeDto layerType : layerTypeDtos) {
+			if(isBase == layerType.isBaseLayer()){
+				layerTypes.add(layerType);
+			}
+		}
 		handlerManager = new HandlerManager(this);
 		// forward layer changed events
 		this.layer.addLayerChangedHandler(new LayerChangedForwarder());
 		mapModel = layer.getMapModel();
 		mapModel.getMapView().addMapViewChangedHandler(new LayerShowingHandler());
 		for (ReferenceLayerDto referenceLayerDto : subLayerDtos) {
-			subLayers.add(new ReferenceSubLayer(this, referenceLayerDto));
+			if(isBase == referenceLayerDto.getType().isBaseLayer()){
+				subLayers.add(new ReferenceSubLayer(this, referenceLayerDto));
+			}
 		}
 		updateScaleBounds(layer);
 		updateShowing();

@@ -6,9 +6,15 @@
 
 package org.ktunaxa.referral.client;
 
+import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
+import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView.ZoomOption;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.spatial.Bbox;
+import org.geomajas.gwt.client.spatial.geometry.Geometry;
+import org.geomajas.gwt.client.spatial.geometry.MultiPoint;
+import org.geomajas.gwt.client.spatial.geometry.Point;
 import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
@@ -142,9 +148,19 @@ public class KtunaxaEntryPoint implements EntryPoint {
 						.getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
 				Feature feature = new Feature(response.getReferral(), layer);
 				GWT.log("Feature found: " + feature.getId());
+				Geometry geometry = feature.getGeometry();
+				Bbox bounds = new Bbox(geometry.getBounds());
+				if (geometry instanceof MultiPoint || geometry instanceof Point) {
+					bounds = new Bbox(0, 0, 500, 500);
+					bounds.setCenterPoint(geometry.getBounds().getCenterPoint());
+				}
 				// Now display feature on this page!
 				mapLayout.getMap().getMapModel().getMapView()
-						.applyBounds(feature.getGeometry().getBounds(), ZoomOption.LEVEL_FIT);
+						.applyBounds(bounds, ZoomOption.LEVEL_FIT);
+				// highlight the feature
+				GfxGeometry highlight = new GfxGeometry("referral-highlight", geometry, new ShapeStyle("#FF00FF", 0.5f,
+						"#FF00FF", 0.8f, 1));
+				mapLayout.getMap().registerWorldPaintable(highlight);
 				String referralDescription = feature.getAttributeValue("projectName").toString();
 				if (response.getTask() != null) {
 					String taskDescription = response.getTask().getDescription();
@@ -170,10 +186,14 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	private class LayerInitializer implements MapCallback {
 
 		public void onResponse(GetReferralMapResponse response) {
-			VectorLayer layer = (VectorLayer) mapLayout.getMap().getMapModel()
+			VectorLayer base = (VectorLayer) mapLayout.getMap().getMapModel()
 					.getLayer(KtunaxaConstant.REFERENCE_BASE_LAYER_ID);
-			ReferenceLayer referenceLayer = new ReferenceLayer(layer, response.getLayers(), response.getLayerTypes());
-			mapLayout.getLayerPanel().setReferenceLayer(referenceLayer);
+			VectorLayer value = (VectorLayer) mapLayout.getMap().getMapModel()
+			.getLayer(KtunaxaConstant.REFERENCE_VALUE_LAYER_ID);
+			ReferenceLayer baseLayer = new ReferenceLayer(base, response.getLayers(), response.getLayerTypes(), true);
+			ReferenceLayer valueLayer = new ReferenceLayer(value, response.getLayers(), response.getLayerTypes(), false);
+			mapLayout.getLayerPanel().setBaseLayer(baseLayer);
+			mapLayout.getLayerPanel().setValueLayer(valueLayer);
 		}
 
 	}
