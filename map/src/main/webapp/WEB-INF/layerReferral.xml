@@ -3,21 +3,23 @@
   ~
   ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
   -->
-<beans
-		xmlns="http://www.springframework.org/schema/beans"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:context="http://www.springframework.org/schema/context"
-		xsi:schemaLocation="
-http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-2.5.xsd"
-		>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	<bean id="referralLayer" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
 		<property name="serverLayerId" value="referral" />
 		<property name="label" value="Referral - project" />
-		<property name="visible" value="false" />
+		<property name="visible" value="true" />
 		<property name="viewScaleMax" value="1000000000" />
 		<property name="viewScaleMin" value="0" />
 		<property name="namedStyleInfo" ref="referralStyleInfo" />
@@ -656,8 +658,12 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	                <property name="name" value="documents" />
 	                <property name="editable" value="true" />
 	                <property name="identifying" value="false" />
-	                <property name="includedInForm" value="false" />
+	                <property name="includedInForm" value="true" />
 	                <property name="type" value="ONE_TO_MANY" />
+					<property name="formInputType">
+						<util:constant
+							static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.REFERRAL_DOCUMENTS_FORM_TYPE" />
+					</property>
 	                <property name="feature">
 	                    <bean class="org.geomajas.configuration.FeatureInfo">
 	                        <property name="dataSourceName" value="org.ktunaxa.referral.server.domain.Document" />
@@ -678,11 +684,84 @@ http://www.springframework.org/schema/context/spring-context-2.5.xsd"
 	                                    <property name="type" value="STRING" />
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Description" />
+	                                    <property name="name" value="description" />
+	                                    <property name="editable" value="true" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="STRING" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Alfresco ID" />
 	                                    <property name="name" value="documentId" />
 	                                    <property name="editable" value="false" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
+	                                </bean>
+						            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
+						                <property name="label" value="type" />
+						                <property name="name" value="type" />
+						                <property name="editable" value="true" />
+						                <property name="identifying" value="true" />
+						                <property name="includedInForm" value="true" />
+						                <property name="type" value="MANY_TO_ONE" />
+						                <property name="feature">
+						                    <bean class="org.geomajas.configuration.FeatureInfo">
+						                        <property name="dataSourceName" value="org.ktunaxa.referral.server.domain.DocumentType" />
+						                        <property name="identifier">
+						                            <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+						                                <property name="label" value="Id" />
+						                                <property name="name" value="id" />
+						                                <property name="type" value="LONG" />
+						                            </bean>
+						                        </property>
+						                        <property name="attributes">
+						                            <list>
+						                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+						                                    <property name="label" value="Title" />
+						                                    <property name="name" value="title" />
+						                                    <property name="editable" value="false" />
+						                                    <property name="identifying" value="true" />
+						                                    <property name="type" value="STRING" />
+						                                </bean>
+						                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+						                                    <property name="label" value="Description" />
+						                                    <property name="name" value="description" />
+						                                    <property name="editable" value="false" />
+						                                    <property name="identifying" value="true" />
+						                                    <property name="type" value="STRING" />
+						                                </bean>
+						                            </list>
+						                        </property>
+						                    </bean>
+						                </property>
+						            </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Added by" />
+	                                    <property name="name" value="addedBy" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="STRING" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Addition date" />
+	                                    <property name="name" value="additionDate" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="DATE" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Confidential" />
+	                                    <property name="name" value="confidential" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="BOOLEAN" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Include in report" />
+	                                    <property name="name" value="includeInReport" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="BOOLEAN" />
 	                                </bean>
 	                            </list>
 	                        </property>

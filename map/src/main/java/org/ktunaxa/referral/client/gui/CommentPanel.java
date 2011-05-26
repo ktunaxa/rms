@@ -31,8 +31,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class CommentPanel extends VLayout {
 
 	public CommentPanel() {
-		setSize("100%", "100%");
-
+		setWidth100();
 		Map<String, Comparator<AbstractCollapsibleListBlock<CommentDto>>> sortAttributes;
 		sortAttributes = new HashMap<String, Comparator<AbstractCollapsibleListBlock<CommentDto>>>();
 		sortAttributes.put("date", new DateComparator());

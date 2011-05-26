@@ -147,7 +147,8 @@ public class KtunaxaEntryPoint implements EntryPoint {
 				VectorLayer layer = (VectorLayer) mapLayout.getMap().getMapModel()
 						.getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
 				Feature feature = new Feature(response.getReferral(), layer);
-				GWT.log("Feature found: " + feature.getId());
+				GWT.log("Referral found: " + feature.getId());
+				mapLayout.getReferralPanel().init(layer, feature);
 				Geometry geometry = feature.getGeometry();
 				Bbox bounds = new Bbox(geometry.getBounds());
 				if (geometry instanceof MultiPoint || geometry instanceof Point) {

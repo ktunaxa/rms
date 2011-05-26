@@ -6,11 +6,15 @@
 
 package org.ktunaxa.referral.client.referral;
 
+import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
+import org.geomajas.gwt.client.widget.attribute.FeatureForm;
+import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
 import org.geomajas.gwt.client.widget.wizard.WizardPage;
 
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -23,11 +27,11 @@ public class ReferralInfoPage extends WizardPage<ReferralData> {
 	private VLayout mainLayout;
 
 	private FeatureAttributeEditor editor;
-	
+
 	private HTMLFlow invalidTop;
 
 	private HTMLFlow invalidBottom;
-	
+
 	public ReferralInfoPage() {
 		mainLayout = new VLayout();
 		mainLayout.setWidth100();
@@ -66,17 +70,17 @@ public class ReferralInfoPage extends WizardPage<ReferralData> {
 	public Canvas asWidget() {
 		return mainLayout;
 	}
-	
+
 	public void clear() {
 		if (editor != null) {
 			editor.setFeature(null);
 		}
 	}
-	
+
 	@Override
 	protected void show() {
 		if (editor == null) {
-			editor = new FeatureAttributeEditor(getWizardData().getLayer(), false, new ReferralFormFactory());
+			editor = new FeatureAttributeEditor(getWizardData().getLayer(), false, new ReferralInfoFormFactory());
 			editor.setWidth100();
 			editor.setHeight100();
 			invalidTop = createInvalid();
@@ -86,6 +90,20 @@ public class ReferralInfoPage extends WizardPage<ReferralData> {
 			mainLayout.addMember(invalidBottom);
 		}
 		editor.setFeature(getWizardData().getFeature());
+	}
+
+	/**
+	 * Factory for {@link ReferralInfoForm}.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	class ReferralInfoFormFactory implements FeatureFormFactory<DynamicForm> {
+
+		public FeatureForm<DynamicForm> createFeatureForm(VectorLayer layer) {
+			return new ReferralInfoForm(layer);
+		}
+
 	}
 
 }

@@ -47,9 +47,9 @@ public class ListLayout<T extends Serializable> extends VLayout {
 		super(10);
 		this.listView = listView;
 		this.detailView = detailView;
-		setSize("100%", "100%");
+		setWidth100();
 		setPadding(10);
-		setOverflow(Overflow.SCROLL);
+		setOverflow(Overflow.AUTO);
 
 		detailView.setVisible(false);
 		addMember(listView);

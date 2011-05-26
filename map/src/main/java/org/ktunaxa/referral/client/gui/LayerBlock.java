@@ -54,7 +54,7 @@ public class LayerBlock extends HLayout {
 		title.setLayoutAlign(VerticalAlignment.CENTER);
 		addMember(title);
 
-		visibleBtn = new IButton("");
+		visibleBtn = new IButton("visible");
 		visibleBtn.setLayoutAlign(VerticalAlignment.CENTER);
 		visibleBtn.setShowTitle(false);
 		visibleBtn.setSize("24", "22");
@@ -88,14 +88,18 @@ public class LayerBlock extends HLayout {
 		if (visibleBtn.isSelected()) {
 			if (subLayer.isShowing()) {
 				if (subLayer.isLabeled()) {
+					visibleBtn.setIcon(null);
 					visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show-labeled.png");
 				} else {
+					visibleBtn.setIcon(null);
 					visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show.png");
 				}
 			} else {
+				visibleBtn.setIcon(null);
 				visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-hide.png");
 			}
 		} else {
+			visibleBtn.setIcon(null);
 			visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-invisible.png");
 		}
 	}

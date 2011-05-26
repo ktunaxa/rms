@@ -58,7 +58,7 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 		if (value instanceof AssociationValue) {
 			AssociationValue asso = (AssociationValue) value;
 			// is there a better way ?
-			return asso.getAttributes().values().iterator().next().getValue().toString();
+			return asso.getAllAttributes().values().iterator().next().getValue().toString();
 		}
 		return value.toString();
 	}

@@ -90,7 +90,7 @@ public final class ReferralUtil {
 		return result;
 	}
 
-	private static String pad(String s, int i) {
+	public static String pad(String s, int i) {
 		int padLength = i - s.length();
 		while (padLength-- > 0) {
 			s = "0" + s;

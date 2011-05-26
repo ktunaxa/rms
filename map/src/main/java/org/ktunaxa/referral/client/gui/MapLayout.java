@@ -116,6 +116,10 @@ public class MapLayout extends VLayout {
 	public LayersPanel getLayerPanel() {
 		return layerPanel;
 	}
+	
+	public ReferralPanel getReferralPanel() {
+		return referralPanel;
+	}
 
 	public ToolStripButton getNewButton() {
 		return newButton;

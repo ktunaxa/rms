@@ -50,6 +50,6 @@ public interface KtunaxaConstant {
 
 	String TARGET_REFERRAL_ATTRIBUTE_NAME = "targetReferral";
 	String NUMBER_ATTRIBUTE_NAME = "number";
-
+	String DOCUMENTS_ATTRIBUTE_NAME = "documents";
 
 }

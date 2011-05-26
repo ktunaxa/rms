@@ -6,6 +6,8 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import org.geomajas.gwt.client.map.feature.Feature;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.MapWidget;
 
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -25,6 +27,12 @@ public class ReferralPanel extends VLayout {
 	 */
 	public static final String NAME = "REFERRAL";
 
+	private DetailPanel panelDetail;
+
+	private CommentPanel panelComments;
+
+	private DocumentPanel panelDocuments;
+
 	/**
 	 * Constructs a new referral panel for the specified map.
 	 * 
@@ -39,9 +47,9 @@ public class ReferralPanel extends VLayout {
 		Tab tabDouments = new Tab("Documents");
 		Tab tabComments = new Tab("Comments");
 
-		DetailPanel panelDetail = new DetailPanel(mapWidget);
-		CommentPanel panelComments = new CommentPanel();
-		DocumentPanel panelDocuments = new DocumentPanel();
+		panelDetail = new DetailPanel();
+		panelComments = new CommentPanel();
+		panelDocuments = new DocumentPanel();
 		tabDetails.setPane(panelDetail);
 		tabDouments.setPane(panelDocuments);
 		tabComments.setPane(panelComments);
@@ -49,7 +57,11 @@ public class ReferralPanel extends VLayout {
 		addMember(tabs);
 	}
 
-	
+	public void init(VectorLayer referralLayer, Feature referral) {
+		panelDetail.init(referralLayer, referral);
+		panelDocuments.init(referralLayer, referral);
+	}
+
 	public String getName() {
 		return NAME;
 	}

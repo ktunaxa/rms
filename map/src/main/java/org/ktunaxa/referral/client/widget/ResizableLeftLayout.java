@@ -61,7 +61,7 @@ public class ResizableLeftLayout extends VLayout {
 
 	private ViewState viewState = ViewState.RESTORED;
 
-	private int restoredWidth = 550;
+	private int restoredWidth = 600;
 
 	private HashMap<String, Card> cards = new HashMap<String, Card>();
 

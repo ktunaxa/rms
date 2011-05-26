@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.geomajas.gwt.client.widget.wizard.WizardPage;
+import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
-import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.geomajas.layer.feature.attribute.StringAttribute;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
@@ -132,11 +132,11 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 				String title = event.getString(KtunaxaConstant.FORM_DOCUMENT_TITLE);
 				String documentId = event.getString(KtunaxaConstant.FORM_DOCUMENT_ID);
 				AssociationValue document = new AssociationValue();
-				Map<String, PrimitiveAttribute<?>> attribs = new HashMap<String, PrimitiveAttribute<?>>();
+				Map<String, Attribute<?>> attribs = new HashMap<String, Attribute<?>>();
 				attribs.put("title", new StringAttribute(title));
 				attribs.put("description", new StringAttribute(title));
 				attribs.put("documentId", new StringAttribute(documentId));
-				document.setAttributes(attribs);
+				document.setAllAttributes(attribs);
 				getWizardData().getFeature().addOneToManyValue("documents", document);
 				busyImg.setVisible(false);
 				show();
@@ -170,8 +170,8 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 				"documents");
 		if (documents != null) {
 			for (AssociationValue associationValue : documents) {
-				String title = (String) associationValue.getAttributes().get("title").getValue();
-				String documentId = (String) associationValue.getAttributes().get("documentId").getValue();
+				String title = (String) associationValue.getAllAttributes().get("title").getValue();
+				String documentId = (String) associationValue.getAllAttributes().get("documentId").getValue();
 				addDocument(title, documentId);
 			}
 		}
