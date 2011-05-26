@@ -660,10 +660,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                <property name="identifying" value="false" />
 	                <property name="includedInForm" value="true" />
 	                <property name="type" value="ONE_TO_MANY" />
-					<property name="formInputType">
-						<util:constant
-							static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.REFERRAL_DOCUMENTS_FORM_TYPE" />
-					</property>
 	                <property name="feature">
 	                    <bean class="org.geomajas.configuration.FeatureInfo">
 	                        <property name="dataSourceName" value="org.ktunaxa.referral.server.domain.Document" />
