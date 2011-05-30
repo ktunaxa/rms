@@ -16,7 +16,6 @@ import java.util.Map;
 
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.client.widget.DetailView;
 import org.ktunaxa.referral.client.widget.ListLayout;

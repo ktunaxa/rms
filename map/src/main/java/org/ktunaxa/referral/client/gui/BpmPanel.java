@@ -1,8 +1,16 @@
+/*
+ * This is part of the Ktunaxa referral system.
+ *
+ * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+ */
+
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
+import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
+import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 
@@ -13,17 +21,13 @@ import org.geomajas.gwt.client.map.layer.VectorLayer;
  */
 public class BpmPanel extends VLayout {
 
-	/**
-	 * Name of the panel in navigation link.
-	 */
+	/** Name of the panel in navigation link. */
 	public static final String NAME = "BPM";
 
 	private MyTasksPanel panelMyTasks;
 	private UnassignedTasksPanel panelUnassigned;
 
-	/**
-	 * Constructs a new referral panel.
-	 */
+	/** Constructs a new referral panel. */
 	public BpmPanel() {
 		setSize("100%", "100%");
 
@@ -38,6 +42,12 @@ public class BpmPanel extends VLayout {
 		tabUnassigned.setPane(panelUnassigned);
 		tabs.setTabs(tabMyTasks, tabUnassigned);
 		addMember(tabs);
+		tabs.addTabSelectedHandler(new TabSelectedHandler() {
+			public void onTabSelected(TabSelectedEvent tabSelectedEvent) {
+				// ensure the latest information is displayed in the pane
+				tabSelectedEvent.getTab().getPane().show();
+			}
+		});
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
@@ -48,6 +58,5 @@ public class BpmPanel extends VLayout {
 	public String getName() {
 		return NAME;
 	}
-
 
 }

@@ -1,5 +1,15 @@
+/*
+ * This is part of the Ktunaxa referral system.
+ *
+ * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+ */
+
 package org.ktunaxa.referral.client.gui;
 
+import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.types.VisibilityMode;
+import com.smartgwt.client.widgets.layout.SectionStack;
+import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
@@ -11,11 +21,31 @@ import org.geomajas.gwt.client.map.layer.VectorLayer;
  */
 public class UnassignedTasksPanel extends VLayout {
 
+	private SectionStack groups;
+
 	public UnassignedTasksPanel() {
 		setWidth100();
+
+		groups = new SectionStack();
+		groups.setSize("100%", "100%");
+		groups.setOverflow(Overflow.AUTO);
+		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
+		groups.setPadding(5);
+		addChild(groups);
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
 		// nothing to do for now
+	}
+
+	@Override
+	public void show() {
+		super.show();
+
+		groups.clear();
+		SectionStackSection aquatic = new SectionStackSection("Aquatic");
+		groups.addSection(aquatic);
+		SectionStackSection cultural = new SectionStackSection("Cultural");
+		groups.addSection(cultural);
 	}
 }

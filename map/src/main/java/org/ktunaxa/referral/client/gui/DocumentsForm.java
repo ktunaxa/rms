@@ -34,7 +34,6 @@ import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
  * Form for editing documents in mapping dashboard.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class DocumentsForm implements FeatureForm<Canvas> {
 
