@@ -5,8 +5,6 @@
 .settings
 .metadata
 *.iml
-*.ipr
-*.iws
 target/
 classes/
 *~
