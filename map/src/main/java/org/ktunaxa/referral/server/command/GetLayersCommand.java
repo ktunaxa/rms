@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.geomajas.command.Command;
-import org.ktunaxa.referral.server.command.request.GetLayersRequest;
-import org.ktunaxa.referral.server.command.request.GetLayersResponse;
+import org.ktunaxa.referral.server.command.dto.GetLayersRequest;
+import org.ktunaxa.referral.server.command.dto.GetLayersResponse;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceLayerType;
 import org.ktunaxa.referral.server.dto.ReferenceLayerDto;

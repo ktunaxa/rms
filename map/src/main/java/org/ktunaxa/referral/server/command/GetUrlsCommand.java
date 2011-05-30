@@ -9,7 +9,7 @@ package org.ktunaxa.referral.server.command;
 import org.geomajas.command.Command;
 import org.geomajas.command.EmptyCommandRequest;
 import org.ktunaxa.bpm.KtunaxaConfiguration;
-import org.ktunaxa.referral.server.command.request.GetUrlsResponse;
+import org.ktunaxa.referral.server.command.dto.GetUrlsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

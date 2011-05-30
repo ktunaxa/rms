@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public class GetTaskCommand implements Command<GetTaskRequest, GetTaskResponse> {
+public class GetTasksCommand implements Command<GetTaskRequest, GetTaskResponse> {
 
 	@Autowired
 	private TaskService taskService;

@@ -23,8 +23,8 @@ import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.wizard.Wizard;
 import org.geomajas.gwt.client.widget.wizard.WizardWidget;
-import org.ktunaxa.referral.server.command.request.CreateProcessRequest;
-import org.ktunaxa.referral.server.command.request.UrlResponse;
+import org.ktunaxa.referral.server.command.dto.CreateProcessRequest;
+import org.ktunaxa.referral.server.command.dto.UrlResponse;
 
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;

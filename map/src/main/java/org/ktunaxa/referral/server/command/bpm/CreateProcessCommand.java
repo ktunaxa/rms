@@ -12,8 +12,8 @@ import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.bpm.KtunaxaConfiguration;
-import org.ktunaxa.referral.server.command.request.CreateProcessRequest;
-import org.ktunaxa.referral.server.command.request.UrlResponse;
+import org.ktunaxa.referral.server.command.dto.CreateProcessRequest;
+import org.ktunaxa.referral.server.command.dto.UrlResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

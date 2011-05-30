@@ -13,8 +13,8 @@ import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.widget.MapWidget;
-import org.ktunaxa.referral.server.command.request.GetReferralMapRequest;
-import org.ktunaxa.referral.server.command.request.GetReferralMapResponse;
+import org.ktunaxa.referral.server.command.dto.GetReferralMapRequest;
+import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
 
 /**
  * Map widget that overrides initialization to use a custom command for getting the configuration. The command response

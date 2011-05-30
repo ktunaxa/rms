@@ -29,7 +29,7 @@ import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
 import org.ktunaxa.referral.client.widget.ReferralMapWidget;
 import org.ktunaxa.referral.client.widget.ReferralMapWidget.MapCallback;
-import org.ktunaxa.referral.server.command.request.GetReferralMapResponse;
+import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.EntryPoint;

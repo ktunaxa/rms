@@ -39,7 +39,7 @@ public interface DtoConverterService {
 	ReferenceLayerDto toDto(ReferenceLayer layer);
 
 	/**
-	 * Convert a task to a DTO.
+	 * Convert an Activiti task to a DTO.
 	 * 
 	 * @param task
 	 *            The task to convert.

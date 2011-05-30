@@ -62,6 +62,8 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 				case RESOLVED:
 					taskDto.setDelegationState(TaskDto.DelegationState.RESOLVED);
 					break;
+				default:
+					throw new IllegalStateException("Unknown DelegationState " + task.getDelegationState());
 			}
 		}
 		return taskDto;

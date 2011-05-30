@@ -4,7 +4,7 @@
  * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
  */
 
-package org.ktunaxa.referral.server.command.request;
+package org.ktunaxa.referral.server.command.dto;
 
 import java.util.List;
 

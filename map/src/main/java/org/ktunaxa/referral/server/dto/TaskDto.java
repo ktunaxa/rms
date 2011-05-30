@@ -10,10 +10,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Taks DTO object.
+ * Tasks DTO object.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class TaskDto implements Serializable {
 
@@ -21,7 +20,6 @@ public class TaskDto implements Serializable {
 	 * Copy of task enum for delegation state.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public enum DelegationState {
 
