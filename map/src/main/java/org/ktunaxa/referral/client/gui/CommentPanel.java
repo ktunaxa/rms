@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.geomajas.gwt.client.map.feature.Feature;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.client.widget.DetailView;
 import org.ktunaxa.referral.client.widget.ListLayout;
@@ -42,6 +45,10 @@ public class CommentPanel extends VLayout {
 		ListLayout<CommentDto> layout = new ListLayout<CommentDto>(listView, detailView);
 		layout.populate(getBlocks());
 		addMember(layout);
+	}
+
+	public void init(VectorLayer referralLayer, Feature referral) {
+		// nothing to do for now
 	}
 
 	/**

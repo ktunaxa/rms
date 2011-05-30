@@ -23,6 +23,8 @@ import com.smartgwt.client.widgets.toolbar.ToolStripButton;
  */
 public class MapLayout extends VLayout {
 
+	private static final String STYLE_BLOCK = "block";
+
 	private TopBar topBar;
 
 	private MenuBar menuBar;
@@ -35,8 +37,6 @@ public class MapLayout extends VLayout {
 
 	private ReferralPanel referralPanel;
 
-	private AnalysisPanel analysisPanel;
-
 	private ToolStripButton newButton;
 
 	// ------------------------------------------------------------------------
@@ -48,18 +48,20 @@ public class MapLayout extends VLayout {
 		setHeight100();
 		// the info pane
 		infoPane = new ResizableLeftLayout();
-		infoPane.setStyleName("block");
+		infoPane.setStyleName(STYLE_BLOCK);
 		
 		// the map
 		mapWidget = new ReferralMapWidget("mainMap", "app", referralId, taskId);
 
 		// add layers, referral, GIS panel
 		layerPanel = new LayersPanel(mapWidget);
-		infoPane.addCard("LAYERS", "Manage layers", layerPanel);
-		referralPanel = new ReferralPanel(mapWidget);
-		infoPane.addCard("REFERRAL", "Manage referral", referralPanel);
-		analysisPanel = new AnalysisPanel(mapWidget);
-		infoPane.addCard("ANALYSIS", "GIS Analysis", analysisPanel);
+		infoPane.addCard(layerPanel.getName(), "Manage layers", layerPanel);
+		referralPanel = new ReferralPanel();
+		infoPane.addCard(referralPanel.getName(), "Manage referral", referralPanel);
+		AnalysisPanel analysisPanel = new AnalysisPanel(mapWidget);
+		infoPane.addCard(analysisPanel.getName(), "GIS Analysis", analysisPanel);
+		BpmPanel bpmPanel = new BpmPanel();
+		infoPane.addCard(bpmPanel.getName(), "Manage referral", bpmPanel);
 		// top bar
 		topBar = new TopBar();
 		// menu bar
@@ -73,7 +75,7 @@ public class MapLayout extends VLayout {
 		// add all
 		VLayout mapLayout = new VLayout();
 		mapLayout.setSize("100%", "100%");
-		mapLayout.setStyleName("block");
+		mapLayout.setStyleName(STYLE_BLOCK);
 		Toolbar toolbar = new Toolbar(mapWidget);
 		toolbar.setButtonSize(Toolbar.BUTTON_SIZE_BIG);
 		toolbar.setBorder("none");
@@ -124,7 +126,5 @@ public class MapLayout extends VLayout {
 	public ToolStripButton getNewButton() {
 		return newButton;
 	}
-	
-	
 
 }

@@ -8,7 +8,6 @@ package org.ktunaxa.referral.client.gui;
 
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.widget.MapWidget;
 
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
@@ -33,33 +32,38 @@ public class ReferralPanel extends VLayout {
 
 	private DocumentPanel panelDocuments;
 
+	private ReferralTasksPanel panelTasks;
+
 	/**
-	 * Constructs a new referral panel for the specified map.
-	 * 
-	 * @param mapWidget the map
+	 * Constructs a new referral panel.
 	 */
-	public ReferralPanel(MapWidget mapWidget) {
+	public ReferralPanel() {
 		setSize("100%", "100%");
 
 		TabSet tabs = new TabSet();
 		tabs.setSize("100%", "100%");
 		Tab tabDetails = new Tab("Details");
-		Tab tabDouments = new Tab("Documents");
+		Tab tabDocuments = new Tab("Documents");
 		Tab tabComments = new Tab("Comments");
+		Tab tabTasks = new Tab("Tasks");
 
 		panelDetail = new DetailPanel();
 		panelComments = new CommentPanel();
 		panelDocuments = new DocumentPanel();
+		panelTasks = new ReferralTasksPanel();
 		tabDetails.setPane(panelDetail);
-		tabDouments.setPane(panelDocuments);
+		tabDocuments.setPane(panelDocuments);
 		tabComments.setPane(panelComments);
-		tabs.setTabs(tabDetails, tabDouments, tabComments);
+		tabTasks.setPane(panelTasks);
+		tabs.setTabs(tabDetails, tabDocuments, tabComments, tabTasks);
 		addMember(tabs);
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
 		panelDetail.init(referralLayer, referral);
 		panelDocuments.init(referralLayer, referral);
+		panelComments.init(referralLayer, referral);
+		panelTasks.init(referralLayer, referral);
 	}
 
 	public String getName() {
