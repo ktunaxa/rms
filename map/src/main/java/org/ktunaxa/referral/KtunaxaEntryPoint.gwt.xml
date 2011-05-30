@@ -21,7 +21,7 @@
 		<exclude name="*Test*.java"/>
 	</source>
     <source path="server/dto" />
-    <source path="server/command/request" />
+    <source path="server/command/dto" />
     <source path="server/service">
     		<include name="KtunaxaConstant.java"/>
 			<exclude name="*Test*.java"/>
