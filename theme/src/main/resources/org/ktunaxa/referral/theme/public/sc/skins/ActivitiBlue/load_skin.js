@@ -10,7 +10,6 @@ isc.loadSkin = function (theWindow) {
 
         isc.Page.setSkinDir("[ISOMORPHIC]/skins/ActivitiBlue/");
         isc.Page.loadStyleSheet("[SKIN]/skin_styles.css", theWindow);
-        isc.Page.loadStyleSheet("[SKIN]/ktunaxa_specific.css", theWindow);
 
         isc.Canvas.setProperties({
             // this skin uses custom scrollbars

@@ -115,3 +115,268 @@
 	font-size: 10px;
 	color: #FFFFFF;
 }
+
+
+/*============================================================
+BLOCKS
+============================================================*/
+
+/*
+419cd0 -> 278ec8
+278ec8 -> 3e74b3
+*/
+
+
+.textItem {
+	border: 1px solid #C0C0CC;
+	height: 25px;
+}
+
+.block {
+	background: #f0f0f0;
+	padding: 3px;
+	border: 1px solid #C0C0CC;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.blockTitle {
+    border-bottom: 1px solid #C0C0CC;
+    margin-bottom: 5px;
+}
+.blockTitleText {
+	font-family: Arial,Verdana,sans-serif;
+	/*color: #3e74b3;*/
+	font-weight:bold;
+	font-size: 14px;
+	line-height:28px;
+	padding-left:10px;
+}
+
+.blockVerticalTitleText {
+	font-family: Arial,Verdana,sans-serif;
+	color: #3e74b3;
+	font-weight:bold;
+	font-size: 14px;
+	text-align: center;
+	padding-top: 10px;
+}
+
+
+/*============================================================
+WIZARD
+============================================================*/
+
+.wizardLeftLayout {
+	padding: 6px;
+	height: 100%;
+	border-right: 1px solid #C0C0C0;
+	margin-right: 10px;
+}
+
+.wizardButton {
+    background: #FFFFFF;
+    background-image: -moz-linear-gradient(top, #bbc0c3, #a3a7a9);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#bbc0c3), to(#a3a7a9));
+	padding: 5px;
+	border: 1px solid #6699AA;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    font-weight: bold;
+    color: #444444;
+}
+
+.wizardButtonActive {
+    background: #3e74b3;
+    background-image: -moz-linear-gradient(top, #64add7, #3796cc);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#64add7), to(#3796cc));
+	padding: 5px;
+	border: 1px solid #3796cc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.wizardPageBody {
+    background: #F6F6FA;
+    background-image: -moz-linear-gradient(top, #FFFFFF, #F0F0F6);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F6));
+	padding: 6px;
+	border: 1px solid #3796cc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.wizardInnerBody {
+    background: #F6F6FA;
+    background-image: -moz-linear-gradient(top, #F0F0F6, #FFFFFF);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F6), to(#FFFFFF));
+	padding: 5px;
+	border: 1px solid #C0C0C0;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.wizardPageTitle {
+	color: #000000;
+	font-family: Arial,Verdana,sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	line-height:40px;
+}
+
+/*============================================================
+COMMENTS
+============================================================*/
+
+.commentBlock {
+    background: #FFFFFF;
+    background-image: -moz-linear-gradient(top, #F0F0F0, #FFFFFF);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
+	padding: 0px;
+	border: 1px solid #3e74b3;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.commentBlockTitle {
+    background: #3e74b3;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
+	color: #FFFFFF;
+}
+.commentBlockTitleText {
+	font-family: Arial,Verdana,sans-serif;
+	font-weight:bold;
+	font-size: 13px;
+	line-height:18px;
+}
+.commentBlockInfo {
+	font-size: 12px;
+	padding: 5px;
+}
+.commentBlockContent {
+	font-size: 12px;
+	padding: 3px 5px;
+	margin: 5px;
+	background: #FFFFFF;
+	border: 1px solid #E0E0E0;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+
+.commentBlockCollapsed {
+    background: #FFFFFF;
+    background-image: -moz-linear-gradient(top, #F0F0F0, #FFFFFF);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
+	padding: 1px;
+	border: 1px solid #C0C0CC;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.commentBlockTitleCollapsed {
+    background: #F6F6F6;
+    background-image: -moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+	color: #000000;
+}
+
+
+/*============================================================
+DOCUMENTS
+============================================================*/
+
+.documentBlock {
+    background: #FFFFFF;
+    background-image: -moz-linear-gradient(top, #F0F0F0, #FFFFFF);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
+	padding: 0px;
+	border: 1px solid #3e74b3;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.documentBlockTitle {
+    background: #3e74b3;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
+	color: #FFFFFF;
+}
+.documentBlockTitleText {
+	font-family: Arial,Verdana,sans-serif;
+	font-weight:bold;
+	font-size: 13px;
+	line-height:18px;
+}
+.documentBlockInfo {
+	font-size: 12px;
+	padding: 5px;
+}
+.documentBlockContent {
+	font-size: 12px;
+	padding: 3px 5px;
+	margin: 5px;
+	background: #FFFFFF;
+	border: 1px solid #E0E0E0;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+
+.documentBlockCollapsed {
+    background: #FFFFFF;
+    background-image: -moz-linear-gradient(top, #F0F0F0, #FFFFFF);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
+	padding: 1px;
+	border: 1px solid #C0C0CC;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.documentBlockTitleCollapsed {
+    background: #F6F6F6;
+    background-image: -moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#F0F0F0));
+	color: #000000;
+}
+
+
+
+/*============================================================
+Layer Tree stuff
+============================================================*/
+
+.layerBlock {
+	border-bottom: 1px solid #E0E0E0;
+}
+
+/*============================================================
+Wizard stuff
+============================================================*/
+
+.summary {
+	padding: 3px;
+	border: 1px solid #E0E0E0;
+}
+
+.summaryLine {
+	border-bottom: 1px solid;
+	line-height: 26px;
+}
+
+.summaryLineDark {
+	border-bottom: 1px solid;
+	background-color: #E0E0E0;
+	line-height: 26px;
+}
+
+
+
+/*============================================================
+TOOLBAR BUTTONS
+============================================================*/
+
+.toolStrip .buttonSelected {
+    border-color: #999;
+    background: #278ec8;
+    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
+}
