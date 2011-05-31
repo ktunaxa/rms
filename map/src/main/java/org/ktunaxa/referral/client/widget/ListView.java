@@ -44,6 +44,9 @@ import com.smartgwt.client.widgets.toolbar.ToolStripButton;
  */
 public class ListView<T extends Serializable> extends VLayout {
 
+	private boolean canCreate;
+	private boolean canSearch;
+
 	private Button createNewButton;
 
 	private VLayout blockLayout;
@@ -62,14 +65,30 @@ public class ListView<T extends Serializable> extends VLayout {
 
 	/**
 	 * Create a new list view instance with the given sort parameters.
+	 * The ListView will have a create button and search option.
 	 * 
 	 * @param sortAttributes
 	 *            A mapping of sort attribute names (used in the GUI) with respective comparators. These comparators
 	 *            should be able to sort the actual collapsible blocks.
 	 */
 	public ListView(Map<String, Comparator<AbstractCollapsibleListBlock<T>>> sortAttributes) {
+		this(true, true, sortAttributes);
+	}
+
+	/**
+	 * Create a new list view instance with the given sort parameters.
+	 * The ListView will have a create button and search option.
+	 *
+	 * @param sortAttributes
+	 *            A mapping of sort attribute names (used in the GUI) with respective comparators. These comparators
+	 *            should be able to sort the actual collapsible blocks.
+	 */
+	public ListView(boolean canCreate, boolean canSearch,
+			Map<String, Comparator<AbstractCollapsibleListBlock<T>>> sortAttributes) {
 		super(10);
 		this.sortAttributes = sortAttributes;
+		this.canCreate = canCreate;
+		this.canSearch = canSearch;
 		setSize("100%", "100%");
 		buildGui();
 	}
@@ -184,10 +203,12 @@ public class ListView<T extends Serializable> extends VLayout {
 		HLayout header = new HLayout(5);
 		header.setStyleName("listViewHeader");
 		header.setSize("100%", "32");
-		createNewButton = new Button("Create new");
-		createNewButton.setAutoFit(true);
-		header.addMember(createNewButton);
-		header.addMember(new LayoutSpacer());
+		if (canCreate) {
+			createNewButton = new Button("Create new");
+			createNewButton.setAutoFit(true);
+			header.addMember(createNewButton);
+			header.addMember(new LayoutSpacer());
+		}
 
 		ToolStrip toolStrip = new ToolStrip();
 		toolStrip.setMembersMargin(2);
@@ -245,14 +266,17 @@ public class ListView<T extends Serializable> extends VLayout {
 			}
 		});
 		toolStrip.addMember(collapseBtn);
-		toolStrip.addSeparator();
 
 		// Searching:
-		DynamicForm form = createSearchForm();
-		form.setPadding(0);
-		form.setStyleName("button");
-		form.setLayoutAlign(VerticalAlignment.CENTER);
-		toolStrip.addMember(form);
+		if (canSearch) {
+			toolStrip.addSeparator();
+
+			DynamicForm form = createSearchForm();
+			form.setPadding(0);
+			form.setStyleName("button");
+			form.setLayoutAlign(VerticalAlignment.CENTER);
+			toolStrip.addMember(form);
+		}
 
 		header.addMember(toolStrip);
 		addMember(header);

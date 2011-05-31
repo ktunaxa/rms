@@ -94,7 +94,7 @@ public class UnassignedTasksPanel extends VLayout {
 
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
 			sections[i] = new SectionStackSection(CANDIDATE_TITLES[i]);
-			views[i] = new ListView<TaskDto>(sortAttributes);
+			views[i] = new ListView<TaskDto>(false, false, sortAttributes);
 			lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
 			sections[i].addItem(views[i]);
 			groups.addSection(sections[i]); // @todo @sec only add when the role is assigned to the user
