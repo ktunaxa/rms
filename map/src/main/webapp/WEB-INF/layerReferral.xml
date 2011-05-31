@@ -675,7 +675,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Title" />
 	                                    <property name="name" value="title" />
-	                                    <property name="editable" value="false" />
+	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
 	                                </bean>
@@ -689,7 +689,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Alfresco ID" />
 	                                    <property name="name" value="documentId" />
-	                                    <property name="editable" value="false" />
+	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
 	                                </bean>
@@ -734,28 +734,28 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Added by" />
 	                                    <property name="name" value="addedBy" />
-	                                    <property name="editable" value="false" />
+	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Addition date" />
 	                                    <property name="name" value="additionDate" />
-	                                    <property name="editable" value="false" />
+	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="DATE" />
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Confidential" />
 	                                    <property name="name" value="confidential" />
-	                                    <property name="editable" value="false" />
+	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="BOOLEAN" />
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Include in report" />
 	                                    <property name="name" value="includeInReport" />
-	                                    <property name="editable" value="false" />
+	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="BOOLEAN" />
 	                                </bean>

@@ -27,7 +27,7 @@ public class ReferralManyToOneDataSource extends ManyToOneDataSource {
 	public static final String LAND_REFERRAL_ID_FIELD = "land_referral_id";
 
 	public ReferralManyToOneDataSource(AttributeInfo info, String serverLayerId) {
-		super((AssociationAttributeInfo) info, new DefaultAttributeProvider(serverLayerId));
+		super((AssociationAttributeInfo) info, new DefaultAttributeProvider(serverLayerId, info.getName()));
 		DataSourceTextField field = new DataSourceTextField(LAND_REFERRAL_ID_FIELD, "Land Referral Id");
 		addField(field);
 	}

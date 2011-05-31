@@ -13,7 +13,6 @@ import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
 import org.ktunaxa.referral.client.referral.ReferralDetailForm;
 
-import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -31,7 +30,6 @@ public class DetailPanel extends VLayout {
 		super(10);
 		setSize("100%", "100%");
 		setPadding(10);
-		setOverflow(Overflow.AUTO);
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
