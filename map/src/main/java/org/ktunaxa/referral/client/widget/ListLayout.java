@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -81,12 +82,14 @@ public class ListLayout<T extends Serializable> extends VLayout {
 	 */
 	public void populate(List<AbstractCollapsibleListBlock<T>> blocks) {
 		for (final AbstractCollapsibleListBlock<T> block : blocks) {
-			block.getEditButton().addClickHandler(new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					showDetails(block.getObject());
-				}
-			});
+			Button button = block.getEditButton();
+			if (null != button) {
+				button.addClickHandler(new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						showDetails(block.getObject());
+					}
+				});
+			}
 		}
 		listView.populate(blocks);
 	}

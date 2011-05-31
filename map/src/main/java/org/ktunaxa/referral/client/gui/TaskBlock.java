@@ -7,7 +7,9 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.types.Cursor;
+import com.smartgwt.client.types.State;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Img;
@@ -33,8 +35,6 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	private HLayout infoLayout;
 
 	private HTMLFlow content;
-
-	private Button editButton;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -90,7 +90,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	}
 
 	public Button getEditButton() {
-		return editButton;
+		return null;
 	}
 
 	// ------------------------------------------------------------------------
@@ -135,10 +135,34 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 				+ task.getCreateTime() + " due " + task.getDueDate() + "</div>");
 		info.setSize("100%", "24");
 		infoLayout.addMember(info);
-		editButton = new Button("Do something");
-		editButton.setLayoutAlign(VerticalAlignment.CENTER);
 		infoLayout.addMember(new LayoutSpacer());
-		infoLayout.addMember(editButton);
+
+		Button startButton = new Button("Start");
+		startButton.setLayoutAlign(VerticalAlignment.CENTER);
+		startButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent clickEvent) {
+				SC.say("start task " + getObject().getId());
+			}
+		});
+		infoLayout.addMember(startButton);
+		Button assignButton = new Button("Assign");
+		assignButton.setLayoutAlign(VerticalAlignment.CENTER);
+		assignButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent clickEvent) {
+				SC.say("assign task " + getObject().getId());
+			}
+		});
+		infoLayout.addMember(assignButton);
+		Button claimButton = new Button("Claim");
+		claimButton.setLayoutAlign(VerticalAlignment.CENTER);
+		claimButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent clickEvent) {
+				SC.say("claim task " + getObject().getId());
+				claimButton.setState(State.STATE_DOWN);
+			}
+		});
+		infoLayout.addMember(claimButton);
+
 		addMember(infoLayout);
 
 		content = new HTMLFlow("<div class='taskBlockContent'>" + task.getDescription() + "</div>");
