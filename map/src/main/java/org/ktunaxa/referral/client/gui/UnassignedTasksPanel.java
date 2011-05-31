@@ -16,9 +16,17 @@ import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
+import org.ktunaxa.referral.client.widget.ListView;
 import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Panel to display unassigned tasks.
@@ -26,6 +34,33 @@ import org.ktunaxa.referral.server.dto.TaskDto;
  * @author Joachim Van der Auwera
  */
 public class UnassignedTasksPanel extends VLayout {
+
+	// Candidate group titles, positions need to match {@link #CANDIDATE_CHECKS}
+	private static final String[] CANDIDATE_TITLES = {
+			"Aquatic evaluator",
+			"Archaeology evaluator",
+			"Community manager",
+			"Cultural evaluator",
+			"Ecology evaluator",
+			"Evaluate evaluator",
+			"Referral manager",
+			"Treaty evaluator"
+	};
+
+	// Candidate group string to test, positions need to match {@link #CANDIDATE_TITLES}
+	private static final String[] CANDIDATE_CHECKS = {
+			"aquatic",
+			"archaeology",
+			"community",
+			"cultural",
+			"ecology",
+			"evaluate",
+			"referral",
+			"treaty"
+	};
+
+	// index of the referralManager role in the candidate lists
+	private static final int MANAGER = 6;
 
 	private SectionStack groups;
 
@@ -49,10 +84,21 @@ public class UnassignedTasksPanel extends VLayout {
 		super.show();
 
 		groups.clear();
-		final SectionStackSection aquatic = new SectionStackSection("Aquatic");
-		groups.addSection(aquatic);
-		final SectionStackSection cultural = new SectionStackSection("Cultural");
-		groups.addSection(cultural);
+		Map<String, Comparator<AbstractCollapsibleListBlock<TaskDto>>> sortAttributes;
+		sortAttributes = new HashMap<String, Comparator<AbstractCollapsibleListBlock<TaskDto>>>();
+		//sortAttributes.put("date", new DateComparator());
+
+		final SectionStackSection[] sections = new SectionStackSection[CANDIDATE_CHECKS.length];
+		final ListView<TaskDto>[] views = new ListView[CANDIDATE_CHECKS.length];
+		final List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[CANDIDATE_CHECKS.length];
+
+		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
+			sections[i] = new SectionStackSection(CANDIDATE_TITLES[i]);
+			views[i] = new ListView<TaskDto>(sortAttributes);
+			lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
+			sections[i].addItem(views[i]);
+			groups.addSection(sections[i]); // @todo @sec only add when the role is assigned to the user
+		}
 
 		GetTasksRequest request = new GetTasksRequest();
 		request.setIncludeUnassignedTasks(true);
@@ -62,7 +108,26 @@ public class UnassignedTasksPanel extends VLayout {
 			public void execute(GetTasksResponse response) {
 				for (TaskDto task : response.getTasks()) {
 					TaskBlock block = new TaskBlock(task);
-					aquatic.addItem(block);
+					String candidates = task.getCandidates().toString();
+					boolean added = false;
+					for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
+						if (candidates.contains(CANDIDATE_CHECKS[i])) {
+							lists[i].add(block);
+							added = true;
+						}
+					}
+					if (!added) {
+						lists[MANAGER].add(block);
+					}
+				}
+				for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
+					int count = lists[i].size();
+					if (count > 0) {
+						sections[i].setTitle(CANDIDATE_TITLES[i] +
+								"  (<span style=\"font-weight:bold;\">" + count + "</span>)");
+						sections[i].setExpanded(true);
+					}
+					views[i].populate(lists[i]); // @todo @sec only add when the role is assigned to the user
 				}
 			}
 		});

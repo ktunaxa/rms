@@ -6,21 +6,32 @@
 
 package org.ktunaxa.referral.server.service;
 
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.IdentityLink;
+import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceLayerType;
 import org.ktunaxa.referral.server.dto.ReferenceLayerDto;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
 import org.ktunaxa.referral.server.dto.TaskDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Spring bean implementation of the DTO converter service interface.
  * 
  * @author Pieter De Graef
+ * @author Joachim Van der Auwera
  */
 @Component
 public class DtoConverterServiceImpl implements DtoConverterService {
+
+	@Autowired
+	private TaskService taskService;
 
 	public ReferenceLayerTypeDto toDto(ReferenceLayerType layerType) {
 		ReferenceLayerTypeDto dto = new ReferenceLayerTypeDto(layerType.getId());
@@ -66,6 +77,29 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 					throw new IllegalStateException("Unknown DelegationState " + task.getDelegationState());
 			}
 		}
+		List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(task.getId());
+		for (IdentityLink link : identityLinks) {
+			String type = link.getType();
+			if (IdentityLinkType.CANDIDATE.equals(type)) {
+				if (null != link.getGroupId()) {
+					taskDto.addCandidate(link.getGroupId());
+				}
+				if (null != link.getUserId()) {
+					taskDto.addCandidate(link.getUserId());
+				}
+			}
+		}
+		Map<String, Object> variables = taskService.getVariables(task.getId());
+		for (Map.Entry<String, Object> variable : variables.entrySet()) {
+			taskDto.addVariable(variable.getKey(), toString(variable.getValue()));
+		}
 		return taskDto;
+	}
+
+	private String toString(Object obj) {
+		if (null == obj) {
+			return null;
+		}
+		return obj.toString();
 	}
 }

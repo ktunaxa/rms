@@ -76,7 +76,7 @@ public class ListLayout<T extends Serializable> extends VLayout {
 	/**
 	 * Populate the list with block that each display a single instance of type T.
 	 * 
-	 * @param block
+	 * @param blocks
 	 *            The full list of blocks.
 	 */
 	public void populate(List<AbstractCollapsibleListBlock<T>> blocks) {
