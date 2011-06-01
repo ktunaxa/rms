@@ -7,7 +7,6 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.types.Cursor;
-import com.smartgwt.client.types.State;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;

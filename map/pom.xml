@@ -239,7 +239,7 @@
 				<configuration>
 					<disableCastChecking>true</disableCastChecking>
 					<disableClassMetadata>true</disableClassMetadata>
-					<extraJvmArgs>-Xmx1500M -Xms1024k</extraJvmArgs>
+					<extraJvmArgs>-Xmx1500M -Xss1024k</extraJvmArgs>
 					<module>org.ktunaxa.referral.KtunaxaEntryPoint</module>
 					<runTarget>index.html</runTarget>
 					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
