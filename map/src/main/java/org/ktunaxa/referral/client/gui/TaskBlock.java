@@ -139,6 +139,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		Button startButton = new Button("Start");
 		startButton.setLayoutAlign(VerticalAlignment.CENTER);
+		startButton.setShowRollOver(false);
 		startButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
 				SC.say("start task " + getObject().getId());
@@ -147,6 +148,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		infoLayout.addMember(startButton);
 		Button assignButton = new Button("Assign");
 		assignButton.setLayoutAlign(VerticalAlignment.CENTER);
+		assignButton.setShowRollOver(false);
 		assignButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
 				SC.say("assign task " + getObject().getId());
@@ -155,10 +157,10 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		infoLayout.addMember(assignButton);
 		Button claimButton = new Button("Claim");
 		claimButton.setLayoutAlign(VerticalAlignment.CENTER);
+		claimButton.setShowRollOver(false);
 		claimButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
 				SC.say("claim task " + getObject().getId());
-				claimButton.setState(State.STATE_DOWN);
 			}
 		});
 		infoLayout.addMember(claimButton);
