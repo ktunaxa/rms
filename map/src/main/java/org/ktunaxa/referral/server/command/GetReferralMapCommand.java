@@ -17,6 +17,7 @@ import org.geomajas.command.dto.GetMapConfigurationResponse;
 import org.geomajas.command.dto.SearchFeatureRequest;
 import org.geomajas.command.dto.SearchFeatureResponse;
 import org.geomajas.global.GeomajasConstant;
+import org.geomajas.layer.feature.Feature;
 import org.geomajas.layer.feature.SearchCriterion;
 import org.geomajas.security.SecurityContext;
 import org.ktunaxa.bpm.KtunaxaConfiguration;
@@ -97,20 +98,7 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 		response.setLayers(dtos);
 
 		// Add the referral to the response:
-		if (request.getReferralId() != null) {
-			SearchFeatureRequest searchFeatureRequest = new SearchFeatureRequest();
-			searchFeatureRequest.setBooleanOperator("AND");
-			searchFeatureRequest.setCriteria(createCriteria(request.getReferralId()));
-			searchFeatureRequest.setCrs(KtunaxaConstant.MAP_CRS);
-			searchFeatureRequest.setLayerId(KtunaxaConstant.REFERRAL_SERVER_LAYER_ID);
-			searchFeatureRequest.setMax(1);
-			searchFeatureRequest.setFeatureIncludes(GeomajasConstant.FEATURE_INCLUDE_ALL);
-			SearchFeatureResponse searchFeatureResponse = (SearchFeatureResponse) commandDispatcher.execute(
-					SearchFeatureRequest.COMMAND, searchFeatureRequest, securityContext.getToken(), null);
-			if (searchFeatureResponse.getFeatures().length > 0) {
-				response.setReferral(searchFeatureResponse.getFeatures()[0]);
-			}
-		}
+		response.setReferral(getReferral(request.getReferralId()));
 		// Add the task to the response:
 		if (request.getTaskId() != null) {
 			Task task = taskService.createTaskQuery().executionId(request.getTaskId()).singleResult();
@@ -118,6 +106,30 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 				response.setTask(converterService.toDto(task));
 			}
 		}
+	}
+
+	/**
+	 * Get the referral feature object for a feature id.
+	 *
+	 * @param referralId referral id
+	 * @return referral feature
+	 */
+	public Feature getReferral(String referralId) {
+		if (null != referralId) {
+			SearchFeatureRequest searchFeatureRequest = new SearchFeatureRequest();
+			searchFeatureRequest.setBooleanOperator("AND");
+			searchFeatureRequest.setCriteria(createCriteria(referralId));
+			searchFeatureRequest.setCrs(KtunaxaConstant.MAP_CRS);
+			searchFeatureRequest.setLayerId(KtunaxaConstant.REFERRAL_SERVER_LAYER_ID);
+			searchFeatureRequest.setMax(1);
+			searchFeatureRequest.setFeatureIncludes(GeomajasConstant.FEATURE_INCLUDE_ALL);
+			SearchFeatureResponse searchFeatureResponse = (SearchFeatureResponse) commandDispatcher.execute(
+					SearchFeatureRequest.COMMAND, searchFeatureRequest, securityContext.getToken(), null);
+			if (searchFeatureResponse.getFeatures().length > 0) {
+				return searchFeatureResponse.getFeatures()[0];
+			}
+		}
+		return null;
 	}
 
 	private SearchCriterion[] createCriteria(String referralId) {

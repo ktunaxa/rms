@@ -13,27 +13,8 @@ import org.geomajas.command.CommandRequest;
  *
  * @author Joachim Van der Auwera
  */
-public class FinishTaskRequest implements CommandRequest {
+public class FinishTaskRequest extends TaskRequest {
 
 	public static final String COMMAND = "command.bpm.FinishTask";
 
-	private String taskId;
-
-	/**
-	 * Get id of task which needs to be finished.
-	 *
-	 * @return task id
-	 */
-	public String getTaskId() {
-		return taskId;
-	}
-
-	/**
-	 * Set id of task which needs to be finished.
-	 *
-	 * @param taskId task id
-	 */
-	public void setTaskId(String taskId) {
-		this.taskId = taskId;
-	}
 }

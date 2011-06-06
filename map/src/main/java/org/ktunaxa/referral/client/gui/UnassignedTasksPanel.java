@@ -64,6 +64,10 @@ public class UnassignedTasksPanel extends VLayout {
 
 	private SectionStack groups;
 
+	private SectionStackSection[] sections = new SectionStackSection[CANDIDATE_CHECKS.length];
+	private ListView<TaskDto>[] views = new ListView[CANDIDATE_CHECKS.length];
+	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[CANDIDATE_CHECKS.length];
+
 	public UnassignedTasksPanel() {
 		setWidth100();
 
@@ -73,24 +77,10 @@ public class UnassignedTasksPanel extends VLayout {
 		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
 		groups.setPadding(5);
 		addChild(groups);
-	}
 
-	public void init(VectorLayer referralLayer, Feature referral) {
-		// nothing to do for now
-	}
-
-	@Override
-	public void show() {
-		super.show();
-
-		groups.clear();
 		Map<String, Comparator<AbstractCollapsibleListBlock<TaskDto>>> sortAttributes;
 		sortAttributes = new HashMap<String, Comparator<AbstractCollapsibleListBlock<TaskDto>>>();
 		//sortAttributes.put("date", new DateComparator());
-
-		final SectionStackSection[] sections = new SectionStackSection[CANDIDATE_CHECKS.length];
-		final ListView<TaskDto>[] views = new ListView[CANDIDATE_CHECKS.length];
-		final List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[CANDIDATE_CHECKS.length];
 
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
 			sections[i] = new SectionStackSection(CANDIDATE_TITLES[i]);
@@ -98,6 +88,20 @@ public class UnassignedTasksPanel extends VLayout {
 			lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
 			sections[i].addItem(views[i]);
 			groups.addSection(sections[i]); // @todo @sec only add when the role is assigned to the user
+		}
+	}
+
+	public void init(VectorLayer referralLayer, Feature referral) {
+	}
+
+	@Override
+	public void show() {
+		super.show();
+
+		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
+			lists[i].clear();
+			views[i].populate(lists[i]);
+			sections[i].setExpanded(false);
 		}
 
 		GetTasksRequest request = new GetTasksRequest();

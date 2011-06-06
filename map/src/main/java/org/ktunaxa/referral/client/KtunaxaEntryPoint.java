@@ -6,15 +6,7 @@
 
 package org.ktunaxa.referral.client;
 
-import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
-import org.geomajas.gwt.client.gfx.style.ShapeStyle;
-import org.geomajas.gwt.client.map.MapView.ZoomOption;
-import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.spatial.Bbox;
-import org.geomajas.gwt.client.spatial.geometry.Geometry;
-import org.geomajas.gwt.client.spatial.geometry.MultiPoint;
-import org.geomajas.gwt.client.spatial.geometry.Point;
 import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
@@ -111,7 +103,6 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	 * Initializes the links to other pages.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	private class LinkInitializer implements MapCallback {
 
@@ -137,52 +128,18 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	 * Initializes the referral state: map navigation + title.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	private class ReferralInitializer implements MapCallback {
 
 		public void onResponse(GetReferralMapResponse response) {
-			String title = null;
-			if (response.getReferral() != null) {
-				VectorLayer layer = (VectorLayer) mapLayout.getMap().getMapModel()
-						.getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
-				Feature feature = new Feature(response.getReferral(), layer);
-				GWT.log("Referral found: " + feature.getId());
-				mapLayout.getReferralPanel().init(layer, feature);
-				Geometry geometry = feature.getGeometry();
-				Bbox bounds = new Bbox(geometry.getBounds());
-				if (geometry instanceof MultiPoint || geometry instanceof Point) {
-					bounds = new Bbox(0, 0, 500, 500);
-					bounds.setCenterPoint(geometry.getBounds().getCenterPoint());
-				}
-				// Now display feature on this page!
-				mapLayout.getMap().getMapModel().getMapView()
-						.applyBounds(bounds, ZoomOption.LEVEL_FIT);
-				// highlight the feature
-				GfxGeometry highlight = new GfxGeometry("referral-highlight", geometry, new ShapeStyle("#FF00FF", 0.5f,
-						"#FF00FF", 0.8f, 1));
-				mapLayout.getMap().registerWorldPaintable(highlight);
-				String referralDescription = feature.getAttributeValue("projectName").toString();
-				if (response.getTask() != null) {
-					String taskDescription = response.getTask().getDescription();
-					title = messages.referralAndTaskTitle(mapLayout.getMap().getReferralId(), referralDescription,
-							taskDescription);
-				} else {
-					title = messages.referralTitle(mapLayout.getMap().getReferralId(), referralDescription);
-				}
-			} else {
-				title = messages.mapTitle();
-			}
-			mapLayout.getTopBar().setLeftTitle(title);
+			mapLayout.setReferralAndTask(response.getReferral(), response.getTask());
 		}
-
 	}
 
 	/**
 	 * Initializes the layer tree.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	private class LayerInitializer implements MapCallback {
 
@@ -197,7 +154,6 @@ public class KtunaxaEntryPoint implements EntryPoint {
 			mapLayout.getLayerPanel().setBaseLayer(baseLayer);
 			mapLayout.getLayerPanel().setValueLayer(valueLayer);
 		}
-
 	}
 
 	private String addUrlParam(String baseUrl, String param) {

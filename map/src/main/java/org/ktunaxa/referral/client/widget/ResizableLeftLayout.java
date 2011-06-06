@@ -77,8 +77,6 @@ public class ResizableLeftLayout extends VLayout {
 
 	/**
 	 * This constructors immediately require a title to be set. It will build all necessary GUI.
-	 * 
-	 * @param title The title for this layout.
 	 */
 	public ResizableLeftLayout() {
 		setSize(restoredWidth + "px", "100%");
@@ -97,8 +95,9 @@ public class ResizableLeftLayout extends VLayout {
 	/**
 	 * Add a card to this layout. The last card added will become the current card.
 	 * 
-	 * @param key key for the card, used to show it later
-	 * @param card the card canvas
+	 * @param name name for the card, used to show it later
+	 * @param title card title
+	 * @param canvas the card canvas
 	 */
 	public void addCard(String name, String title, Canvas canvas) {
 		canvas.setWidth100();
@@ -126,7 +125,7 @@ public class ResizableLeftLayout extends VLayout {
 	/**
 	 * Show the specified card.
 	 * 
-	 * @param key the key that was used to add the card
+	 * @param name the key that was used to add the card
 	 */
 	public void showCard(String name) {
 		restore();

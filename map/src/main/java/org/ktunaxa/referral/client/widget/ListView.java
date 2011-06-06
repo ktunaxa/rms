@@ -104,6 +104,7 @@ public class ListView<T extends Serializable> extends VLayout {
 	 *            The actual list.
 	 */
 	public void populate(List<AbstractCollapsibleListBlock<T>> blocks) {
+		removeBlocksFromLayout();
 		this.blocks = blocks;
 		for (AbstractCollapsibleListBlock<?> block : blocks) {
 			blockLayout.addMember(block);
@@ -163,10 +164,7 @@ public class ListView<T extends Serializable> extends VLayout {
 		if (sortAttributes != null && attribute != null) {
 			Comparator<AbstractCollapsibleListBlock<T>> comparator = sortAttributes.get(attribute);
 			if (comparator != null) {
-				// Empty the blockLayout:
-				for (int i = blockLayout.getMembers().length - 1; i >= 0; i--) {
-					blockLayout.removeMember(blockLayout.getMembers()[i]);
-				}
+				removeBlocksFromLayout();
 
 				// See if we need to inverse the sort:
 				if (attribute.equals(sortedBy) && !sortedInverse) {
@@ -183,6 +181,13 @@ public class ListView<T extends Serializable> extends VLayout {
 				}
 				sortedBy = attribute;
 			}
+		}
+	}
+
+	private void removeBlocksFromLayout() {
+		// Empty the blockLayout:
+		for (int i = blockLayout.getMembers().length - 1; i >= 0; i--) {
+			blockLayout.removeMember(blockLayout.getMembers()[i]);
 		}
 	}
 

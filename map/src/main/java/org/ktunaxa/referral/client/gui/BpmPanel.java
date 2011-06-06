@@ -26,12 +26,13 @@ public class BpmPanel extends VLayout {
 
 	private MyTasksPanel panelMyTasks;
 	private UnassignedTasksPanel panelUnassigned;
+	private TabSet tabs;
 
 	/** Constructs a new referral panel. */
 	public BpmPanel() {
 		setSize("100%", "100%");
 
-		TabSet tabs = new TabSet();
+		tabs = new TabSet();
 		tabs.setSize("100%", "100%");
 		Tab tabMyTasks = new Tab("My Tasks");
 		Tab tabUnassigned = new Tab("Unassigned");
@@ -59,4 +60,9 @@ public class BpmPanel extends VLayout {
 		return NAME;
 	}
 
+	@Override
+	public void show() {
+		super.show();
+		tabs.getSelectedTab().getPane().show(); // assure selected tab is refreshed
+	}
 }

@@ -10,13 +10,21 @@ import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.layer.feature.Feature;
+import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
+import org.ktunaxa.referral.server.command.dto.AssignTaskRequest;
+import org.ktunaxa.referral.server.command.dto.ReferralResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
 /**
@@ -28,6 +36,11 @@ import org.ktunaxa.referral.server.dto.TaskDto;
  * @author Joachim Van der Auwera
  */
 public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
+
+	private static final String BLOK_STYLE = "taskBlock";
+	private static final String TITLE_STYLE = "taskBlockTitle";
+	private static final String BLOK_STYLE_COLLAPSED = "taskBlockCollapsed";
+	private static final String TITLE_STYLE_COLLAPSED = "taskBlockTitleCollapsed";
 
 	private HLayout title;
 
@@ -50,16 +63,16 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 	/** Expand the task block, displaying (almost) everything. */
 	public void expand() {
-		setStyleName("taskBlock");
-		title.setStyleName("taskBlockTitle");
+		setStyleName(BLOK_STYLE);
+		title.setStyleName(TITLE_STYLE);
 		infoLayout.setVisible(true);
 		content.setVisible(true);
 	}
 
 	/** Collapse the task block, leaving only the title visible. */
 	public void collapse() {
-		setStyleName("taskBlockCollapsed");
-		title.setStyleName("taskBlockTitleCollapsed");
+		setStyleName(BLOK_STYLE_COLLAPSED);
+		title.setStyleName(TITLE_STYLE_COLLAPSED);
 		infoLayout.setVisible(false);
 		content.setVisible(false);
 	}
@@ -97,12 +110,12 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	// ------------------------------------------------------------------------
 
 	private void buildGui(TaskDto task) {
-		setStyleName("taskBlock");
+		setStyleName(BLOK_STYLE);
 
 		title = new HLayout(10);
 		title.setSize("100%", "22");
 		title.setLayoutLeftMargin(10);
-		title.setStyleName("taskBlockTitle");
+		title.setStyleName(TITLE_STYLE);
 		title.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
@@ -141,7 +154,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		startButton.setShowRollOver(false);
 		startButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
-				SC.say("start task " + getObject().getId());
+				assign(getObject(), UserContext.getInstance().getUser(), true);
 			}
 		});
 		infoLayout.addMember(startButton);
@@ -150,7 +163,9 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		assignButton.setShowRollOver(false);
 		assignButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
-				SC.say("assign task " + getObject().getId());
+				SC.say("assign task, temp to KtBpmAdmin " + getObject().getId());
+				// @todo select user
+				assign(getObject(), UserContext.getInstance().getUser(), false);
 			}
 		});
 		infoLayout.addMember(assignButton);
@@ -159,7 +174,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		claimButton.setShowRollOver(false);
 		claimButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
-				SC.say("claim task " + getObject().getId());
+				assign(getObject(), UserContext.getInstance().getUser(), false);
 			}
 		});
 		infoLayout.addMember(claimButton);
@@ -169,5 +184,41 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		content = new HTMLFlow("<div class='taskBlockContent'>" + task.getDescription() + "</div>");
 		content.setWidth100();
 		addMember(content);
+	}
+
+	private void assign(final TaskDto task, final String assignee, final boolean start) {
+		AssignTaskRequest request = new AssignTaskRequest();
+		request.setTaskId(task.getId());
+		request.setAssignee(assignee);
+		GwtCommand command = new GwtCommand(AssignTaskRequest.COMMAND);
+		command.setCommandRequest(request);
+		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<ReferralResponse>() {
+			public void execute(ReferralResponse response) {
+				// @todo do I need to modify the state of the task in the list, possibly remove, refresh, whatever?
+				if (start) {
+					start(task, response.getReferral());
+				}
+			}
+		});
+	}
+
+	private void start(TaskDto task, Feature referral) {
+		Canvas top = this.getParentElement();
+		boolean topIsTop = false;
+		while (!topIsTop) {
+			Canvas canvas = top.getParentElement();
+			if (null == canvas) {
+				topIsTop = true;
+			} else {
+				top = canvas;
+			}
+		}
+		if (top instanceof MapLayout) {
+			MapLayout mapLayout = (MapLayout) top;
+			mapLayout.setReferralAndTask(referral, task);
+			mapLayout.focusCurrentTask();
+		} else {
+			throw new IllegalStateException("MapLayout is no longer at the top of the tree...");
+		}
 	}
 }

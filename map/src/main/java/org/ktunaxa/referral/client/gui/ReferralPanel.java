@@ -34,18 +34,22 @@ public class ReferralPanel extends VLayout {
 
 	private ReferralTasksPanel panelTasks;
 
+	private TabSet tabs;
+
+	private Tab tabTasks;
+
 	/**
 	 * Constructs a new referral panel.
 	 */
 	public ReferralPanel() {
 		setSize("100%", "100%");
 
-		TabSet tabs = new TabSet();
+		tabs = new TabSet();
 		tabs.setSize("100%", "100%");
 		Tab tabDetails = new Tab("Details");
 		Tab tabDocuments = new Tab("Documents");
 		Tab tabComments = new Tab("Comments");
-		Tab tabTasks = new Tab("Tasks");
+		tabTasks = new Tab("Tasks");
 
 		panelDetail = new DetailPanel();
 		panelComments = new CommentPanel();
@@ -68,6 +72,14 @@ public class ReferralPanel extends VLayout {
 
 	public String getName() {
 		return NAME;
+	}
+
+	/**
+	 * Set the focus to the current task on this pane.
+	 */
+	public void focusCurrentTask() {
+		tabs.selectTab(tabTasks); // assure tabs pane is displayed
+		panelTasks.show(); // refresh view
 	}
 
 }

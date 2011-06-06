@@ -10,6 +10,7 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+import org.ktunaxa.referral.client.security.UserContext;
 
 /**
  * Top menu bar of the general layout. The top bar has a user section (login/logout,status) on the right and a list of
@@ -30,10 +31,6 @@ public class TopBar extends HLayout {
 
 	private ToolStripButton userButton;
 
-	private ToolStripButton logoutButton;
-
-	private ToolStrip headerBar;
-
 	/**
 	 * Constructs a top bar.
 	 */
@@ -53,7 +50,7 @@ public class TopBar extends HLayout {
 		LayoutSpacer spacer = new LayoutSpacer();
 		addMember(spacer);
 
-		headerBar = new ToolStrip();
+		ToolStrip headerBar = new ToolStrip();
 		headerBar.setMembersMargin(2);
 		headerBar.setSize("445", "44");
 		headerBar.addFill();
@@ -61,11 +58,11 @@ public class TopBar extends HLayout {
 
 		tasksButton = new ToolStripButton("Tasks");
 		headerBar.addMember(tasksButton);
-		userButton = new ToolStripButton("KtBpmAdmin");
+		userButton = new ToolStripButton(UserContext.getInstance().getName()); // @todo update after login
 		userButton.setIcon("[ISOMORPHIC]/images/user-icon.png");
 		headerBar.addMember(userButton);
 		headerBar.addSeparator();
-		logoutButton = new ToolStripButton("Logout");
+		ToolStripButton logoutButton = new ToolStripButton("Logout");
 		headerBar.addMember(logoutButton);
 		headerBar.addSpacer(10);
 		addMember(headerBar);
