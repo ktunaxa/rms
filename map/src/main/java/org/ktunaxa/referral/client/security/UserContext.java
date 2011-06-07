@@ -11,7 +11,7 @@ package org.ktunaxa.referral.client.security;
  *
  * @author Joachim Van der Auwera
  */
-public class UserContext {
+public final class UserContext {
 
 	private static final UserContext INSTANCE = new UserContext();
 	private String user = "KtBpmAdmin";
