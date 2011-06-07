@@ -79,6 +79,7 @@ public class AttributeBlockList extends VLayout {
 	 */
 	public void populate(List<AbstractAttributeBlock> blocks) {
 		this.blocks = blocks;
+		blockLayout.removeMembers(blockLayout.getMembers());
 		for (AbstractAttributeBlock block : blocks) {
 			blockLayout.addMember(block);
 		}

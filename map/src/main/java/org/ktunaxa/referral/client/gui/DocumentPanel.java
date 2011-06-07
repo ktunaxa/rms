@@ -6,9 +6,15 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import java.util.List;
+
+import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.action.menu.SaveEditingAction;
 import org.geomajas.gwt.client.map.MapModel;
+import org.geomajas.gwt.client.map.event.FeatureTransactionEvent;
+import org.geomajas.gwt.client.map.event.FeatureTransactionHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
+import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
@@ -31,6 +37,8 @@ public class DocumentPanel extends VLayout {
 	private FeatureAttributeEditor editor;
 
 	private VectorLayer referralLayer;
+	
+	private String referralId;
 
 	public DocumentPanel() {
 		setWidth100();
@@ -38,10 +46,12 @@ public class DocumentPanel extends VLayout {
 
 	public void init(VectorLayer referralLayer, Feature referral) {
 		this.referralLayer = referralLayer;
+		this.referralId = referral.getId();
 		editor = new FeatureAttributeEditor(referralLayer, false, new DocumentsFormFactory());
 		editor.setFeature(referral);
+		MapModel mapModel = referralLayer.getMapModel();
+		mapModel.addFeatureTransactionHandler(new EditingCallBack());
 		addMember(editor);
-		// add a push-up spacer
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight("*");
 		addMember(spacer);
@@ -69,6 +79,24 @@ public class DocumentPanel extends VLayout {
 				}
 			});
 			return form;
+		}
+
+	}
+	
+	/**
+	 * callback to show the edited feature.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	public class EditingCallBack implements LazyLoadCallback, FeatureTransactionHandler {
+
+		public void execute(List<Feature> response) {
+			editor.setFeature(response.iterator().next());
+		}
+
+		public void onTransactionSuccess(FeatureTransactionEvent event) {
+			referralLayer.getFeatureStore().getFeature(referralId, GeomajasConstant.FEATURE_INCLUDE_ALL, this);
 		}
 
 	}

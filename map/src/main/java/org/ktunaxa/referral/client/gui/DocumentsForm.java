@@ -139,6 +139,8 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 		@Override
 		public AssociationValue newInstance() {
 			AssociationValue document = AttributeUtil.createEmptyAssociationValue(attributeInfo);
+			document.setBooleanAttribute("includeInReport", false);
+			document.setBooleanAttribute("confidential", false);
 			return document;
 		}
 
