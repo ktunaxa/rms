@@ -21,11 +21,14 @@ import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.layer.feature.Feature;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.server.command.dto.AssignTaskRequest;
 import org.ktunaxa.referral.server.command.dto.ReferralResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
+
+import java.util.Map;
 
 /**
  * Implementation of the CollapsableBlock abstraction that handles {@link TaskDto} type objects. Instances of this
@@ -65,7 +68,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	public void expand() {
 		setStyleName(BLOK_STYLE);
 		title.setStyleName(TITLE_STYLE);
-		infoLayout.setVisible(true);
+		//infoLayout.setVisible(true);
 		content.setVisible(true);
 	}
 
@@ -73,7 +76,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	public void collapse() {
 		setStyleName(BLOK_STYLE_COLLAPSED);
 		title.setStyleName(TITLE_STYLE_COLLAPSED);
-		infoLayout.setVisible(false);
+		//infoLayout.setVisible(false);
 		content.setVisible(false);
 	}
 
@@ -143,45 +146,67 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		infoLayout = new HLayout(5);
 		infoLayout.setLayoutRightMargin(5);
 		infoLayout.setLayoutTopMargin(5);
-		HTMLFlow info = new HTMLFlow("<div class='taskBlockInfo'>Assignee " + task.getAssignee() + " created "
-				+ task.getCreateTime() + " due " + task.getDueDate() + "</div>");
+		HTMLFlow info = new HTMLFlow("<div class='taskBlockInfo'>" + task.getDescription() + "</div>");
 		info.setSize("100%", "24");
 		infoLayout.addMember(info);
 		infoLayout.addMember(new LayoutSpacer());
 
+		final String me = UserContext.getInstance().getUser();
+
 		Button startButton = new Button("Start");
 		startButton.setLayoutAlign(VerticalAlignment.CENTER);
 		startButton.setShowRollOver(false);
+		if (null != task.getAssignee() && !me.equals(task.getAssignee())) {
+			// disable when assigned to someone else
+			startButton.setDisabled(true);
+		}
 		startButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
-				assign(getObject(), UserContext.getInstance().getUser(), true);
+				assign(getObject(), me, true);
 			}
 		});
 		infoLayout.addMember(startButton);
 		Button assignButton = new Button("Assign");
 		assignButton.setLayoutAlign(VerticalAlignment.CENTER);
 		assignButton.setShowRollOver(false);
+		if (!UserContext.getInstance().isReferralAdmin()) {
+			// disable when already assigned
+			assignButton.setDisabled(true);
+		}
 		assignButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
 				SC.say("assign task, temp to KtBpmAdmin " + getObject().getId());
 				// @todo select user
-				assign(getObject(), UserContext.getInstance().getUser(), false);
+				assign(getObject(), me, false); // @todo assign selected user
 			}
 		});
 		infoLayout.addMember(assignButton);
 		Button claimButton = new Button("Claim");
 		claimButton.setLayoutAlign(VerticalAlignment.CENTER);
 		claimButton.setShowRollOver(false);
+		if (null != task.getAssignee()) {
+			// disable when already assigned
+			claimButton.setDisabled(true);
+		}
 		claimButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
-				assign(getObject(), UserContext.getInstance().getUser(), false);
+				assign(getObject(), me, false);
 			}
 		});
 		infoLayout.addMember(claimButton);
 
 		addMember(infoLayout);
 
-		content = new HTMLFlow("<div class='taskBlockContent'>" + task.getDescription() + "</div>");
+		Map<String, String> variables = task.getVariables();
+		content = new HTMLFlow("<div class='taskBlockContent'>Assignee " + task.getAssignee()
+				+ "<br />Created " + task.getCreateTime()
+				+ "<br />Due " + task.getDueDate()
+				+ "<br />Completion deadline" + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_COMPLETION_DEADLINE)
+				+ "<br />Referral " + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_REFERRAL_ID)
+				+ "<br />Description " + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_DESCRIPTION)
+				+ "<br />E-mail " + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_EMAIL)
+				+ "<br />Engagement level " + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_ENGAGEMENT_LEVEL)
+				+ "</div>");
 		content.setWidth100();
 		addMember(content);
 	}
