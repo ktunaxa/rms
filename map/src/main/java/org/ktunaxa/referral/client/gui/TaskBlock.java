@@ -45,11 +45,14 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	private static final String BLOK_STYLE_COLLAPSED = "taskBlockCollapsed";
 	private static final String TITLE_STYLE_COLLAPSED = "taskBlockTitleCollapsed";
 
+	private static final String IMAGE_MINIMIZE = "[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/minimize.gif";
+	private static final String IMAGE_MAXIMIZE = "[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/maximize.gif";
+
 	private HLayout title;
 
-	private HLayout infoLayout;
-
 	private HTMLFlow content;
+
+	private Img titleImage = new Img(IMAGE_MINIMIZE, 16, 16);
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -64,10 +67,11 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	// CollapsableBlock implementation:
 	// ------------------------------------------------------------------------
 
-	/** Expand the task block, displaying (almost) everything. */
+	/** Expand the task block, displaying everything. */
 	public void expand() {
 		setStyleName(BLOK_STYLE);
 		title.setStyleName(TITLE_STYLE);
+		titleImage.setSrc(IMAGE_MINIMIZE);
 		//infoLayout.setVisible(true);
 		content.setVisible(true);
 	}
@@ -76,6 +80,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	public void collapse() {
 		setStyleName(BLOK_STYLE_COLLAPSED);
 		title.setStyleName(TITLE_STYLE_COLLAPSED);
+		titleImage.setSrc(IMAGE_MAXIMIZE);
 		//infoLayout.setVisible(false);
 		content.setVisible(false);
 	}
@@ -130,20 +135,14 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 			}
 		});
 		title.setCursor(Cursor.HAND);
-		Img checked = new Img("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png", 16, 16);
-		/*
-		if (task.isIncludeInReport()) {
-			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png");
-		}
-		*/
-		checked.setLayoutAlign(VerticalAlignment.CENTER);
-		title.addMember(checked);
+		titleImage.setLayoutAlign(VerticalAlignment.CENTER);
+		title.addMember(titleImage);
 		HTMLFlow titleText = new HTMLFlow("<div class='taskBlockTitleText'>" + task.getName() + "</div>");
 		titleText.setSize("100%", "22");
 		title.addMember(titleText);
 		addMember(title);
 
-		infoLayout = new HLayout(5);
+		HLayout infoLayout = new HLayout(5);
 		infoLayout.setLayoutRightMargin(5);
 		infoLayout.setLayoutTopMargin(5);
 		HTMLFlow info = new HTMLFlow("<div class='taskBlockInfo'>" + task.getDescription() + "</div>");
