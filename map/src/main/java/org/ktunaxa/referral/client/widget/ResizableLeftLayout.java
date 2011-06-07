@@ -37,11 +37,17 @@ import com.smartgwt.client.widgets.toolbar.ToolStripButton;
  */
 public class ResizableLeftLayout extends VLayout {
 
+	public static final String STYLE_CLOSEABLE_LAYOUT_PANEL = "closeableLayoutPanel";
+	public static final String STYLE_BLOCK_TITLE = "blockTitle";
+	public static final String STYLE_BLOCK_TITLE_TEXT = "blockTitleText";
+	public static final String STYLE_BLOCK_VERTICAL_TITLE_TEXT = "blockVerticalTitleText";
+	public static final String ICON_MAXIMIZE = "[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/maximize.gif";
+	public static final String ICON_CASCADE = "[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/cascade.gif";
+
 	/**
 	 * The view state of the layout.
-	 * 
+	 *
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public enum ViewState {
 		MINIMIZED, RESTORED, MAXIMIZED
@@ -102,7 +108,7 @@ public class ResizableLeftLayout extends VLayout {
 	public void addCard(String name, String title, Canvas canvas) {
 		canvas.setWidth100();
 		canvas.setHeight100();
-		canvas.setStyleName("closeableLayoutPanel");
+		canvas.setStyleName(STYLE_CLOSEABLE_LAYOUT_PANEL);
 		canvas.setLeft(0);
 		canvas.setTop(0);
 		canvas.hide();
@@ -134,12 +140,7 @@ public class ResizableLeftLayout extends VLayout {
 			currentCard = cards.get(name);
 			currentCard.getCanvas().show();
 			titleDiv.setContents(name);
-			StringBuilder contents = new StringBuilder();
-			for (int i = 0; i < currentCard.getName().length(); i++) {
-				contents.append(name.charAt(i));
-				contents.append("<br/>");
-			}
-			verticalTitle.setContents(currentCard.getTitle().toString());
+			verticalTitle.setContents(currentCard.getTitle());
 			if (old != null) {
 				old.getCanvas().hide();
 			}
@@ -273,15 +274,19 @@ public class ResizableLeftLayout extends VLayout {
 		}
 	}
 
-	/** Build the title canvas for the normal view. */
+	/**
+	 * Build the title canvas for the normal view.
+	 *
+	 * @return title layout
+	 */
 	private HLayout createTitle() {
 		titleCanvas = new HLayout(5);
 		titleCanvas.setSize("100%", CLOSED_WIDTH + "px");
-		titleCanvas.setStyleName("blockTitle");
+		titleCanvas.setStyleName(STYLE_BLOCK_TITLE);
 
 		titleDiv = new HTMLFlow();
 		titleDiv.setSize("100%", CLOSED_WIDTH + "px");
-		titleDiv.setStyleName("blockTitleText");
+		titleDiv.setStyleName(STYLE_BLOCK_TITLE_TEXT);
 
 		ImgButton minimizeImage = new ImgButton();
 		minimizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/minimize.gif");
@@ -302,10 +307,10 @@ public class ResizableLeftLayout extends VLayout {
 
 			public void onClick(ClickEvent event) {
 				if (viewState == ViewState.MAXIMIZED) {
-					maximizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/maximize.gif");
+					maximizeImage.setSrc(ICON_MAXIMIZE);
 					restore();
 				} else if (viewState == ViewState.RESTORED) {
-					maximizeImage.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/cascade.gif");
+					maximizeImage.setSrc(ICON_CASCADE);
 					maximize();
 				}
 			}
@@ -319,10 +324,12 @@ public class ResizableLeftLayout extends VLayout {
 
 	/**
 	 * Build the GUI when minimized. Has a vertical title and other differences...
+	 *
+	 * @return layout
 	 */
 	private Canvas createClosedCanvas() {
 		VLayout layout = new VLayout();
-		layout.setStyleName("blockTitle");
+		layout.setStyleName(STYLE_BLOCK_TITLE);
 		layout.setSize(CLOSED_WIDTH + "px", "100%");
 
 		ImgButton maximizeImage = new ImgButton();
@@ -351,7 +358,7 @@ public class ResizableLeftLayout extends VLayout {
 
 		verticalTitle = new HTMLFlow("");
 		verticalTitle.setSize(CLOSED_WIDTH + "px", "100%");
-		verticalTitle.setStyleName("blockVerticalTitleText");
+		verticalTitle.setStyleName(STYLE_BLOCK_VERTICAL_TITLE_TEXT);
 		layout.addMember(verticalTitle);
 
 		return layout;
@@ -361,7 +368,6 @@ public class ResizableLeftLayout extends VLayout {
 	 * A holder for each "card" in the card layout.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	private class Card {
 

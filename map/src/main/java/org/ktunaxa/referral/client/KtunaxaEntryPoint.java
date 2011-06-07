@@ -11,13 +11,9 @@ import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
-import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.gui.CreateReferralLayout;
-import org.ktunaxa.referral.client.gui.LayersPanel;
 import org.ktunaxa.referral.client.gui.MapLayout;
-import org.ktunaxa.referral.client.gui.ReferralPanel;
 import org.ktunaxa.referral.client.gui.SearchReferralLayout;
-import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
 import org.ktunaxa.referral.client.widget.ReferralMapWidget;
 import org.ktunaxa.referral.client.widget.ReferralMapWidget.MapCallback;
@@ -25,7 +21,6 @@ import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
@@ -42,10 +37,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
  */
 public class KtunaxaEntryPoint implements EntryPoint {
 
-	private LocalizedMessages messages = GWT.create(LocalizedMessages.class);
-
-	private MapLayout mapLayout;
-
 	public void onModuleLoad() {
 		// Register custom textarea item
 		registerTextAreaFormItem();
@@ -53,8 +44,6 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		// Determine the layout:
 		String createReferralParam = Window.Location.getParameter(KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER);
 		String searchReferralParam = Window.Location.getParameter(KtunaxaConstant.SEARCH_REFERRAL_URL_PARAMETER);
-		String referralParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_REFERRAL_ID);
-		String bpmParam = Window.Location.getParameter(KtunaxaBpmConstant.QUERY_TASK_ID);
 
 		VLayout layout;
 		if (createReferralParam != null) {
@@ -62,7 +51,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		} else if (searchReferralParam != null) {
 			layout = new SearchReferralLayout();
 		} else {
-			mapLayout = new MapLayout(referralParam, bpmParam);
+			MapLayout mapLayout = MapLayout.getInstance();
 			layout = mapLayout;
 			ReferralMapWidget map = mapLayout.getMap();
 			// initialize referral on callback
@@ -72,13 +61,6 @@ public class KtunaxaEntryPoint implements EntryPoint {
 			// initialize layers on callback
 			map.addMapCallback(new LayerInitializer());
 			// set default state
-			if (referralParam != null) {
-				// open the referral tab
-				mapLayout.getInfoPane().showCard(ReferralPanel.NAME);
-			} else {
-				// open the referral tab
-				mapLayout.getInfoPane().showCard(LayersPanel.NAME);
-			}
 		}
 		layout.draw();
 
@@ -107,6 +89,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	private class LinkInitializer implements MapCallback {
 
 		public void onResponse(final GetReferralMapResponse response) {
+			MapLayout mapLayout = MapLayout.getInstance();
 			mapLayout.getNewButton().addClickHandler(new ClickHandler() {
 
 				public void onClick(ClickEvent event) {
@@ -132,6 +115,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	private class ReferralInitializer implements MapCallback {
 
 		public void onResponse(GetReferralMapResponse response) {
+			MapLayout mapLayout = MapLayout.getInstance();
 			mapLayout.setReferralAndTask(response.getReferral(), response.getTask());
 		}
 	}
@@ -144,6 +128,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	private class LayerInitializer implements MapCallback {
 
 		public void onResponse(GetReferralMapResponse response) {
+			MapLayout mapLayout = MapLayout.getInstance();
 			VectorLayer base = (VectorLayer) mapLayout.getMap().getMapModel()
 					.getLayer(KtunaxaConstant.REFERENCE_BASE_LAYER_ID);
 			VectorLayer value = (VectorLayer) mapLayout.getMap().getMapModel()

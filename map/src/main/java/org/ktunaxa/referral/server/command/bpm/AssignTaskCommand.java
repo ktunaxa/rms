@@ -11,9 +11,9 @@ import org.geomajas.command.Command;
 import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
-import org.ktunaxa.referral.server.command.GetReferralMapCommand;
+import org.ktunaxa.referral.server.command.GetReferralCommand;
 import org.ktunaxa.referral.server.command.dto.AssignTaskRequest;
-import org.ktunaxa.referral.server.command.dto.ReferralResponse;
+import org.ktunaxa.referral.server.command.dto.GetReferralResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,19 +23,19 @@ import org.springframework.stereotype.Component;
  * @author Joachim Van der Auwera
  */
 @Component
-public class AssignTaskCommand implements Command<AssignTaskRequest, ReferralResponse> {
+public class AssignTaskCommand implements Command<AssignTaskRequest, GetReferralResponse> {
 
 	@Autowired
-	private GetReferralMapCommand referralMapCommand;
+	private GetReferralCommand getReferralCommand;
 
 	@Autowired
 	private TaskService taskService;
 
-	public ReferralResponse getEmptyCommandResponse() {
-		return new ReferralResponse();
+	public GetReferralResponse getEmptyCommandResponse() {
+		return new GetReferralResponse();
 	}
 
-	public void execute(AssignTaskRequest request, ReferralResponse response) throws Exception {
+	public void execute(AssignTaskRequest request, GetReferralResponse response) throws Exception {
 		String taskId = request.getTaskId();
 		if (null == taskId) {
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "taskId");
@@ -43,7 +43,7 @@ public class AssignTaskCommand implements Command<AssignTaskRequest, ReferralRes
 		taskService.setAssignee(taskId, request.getAssignee());
 		Object variable = taskService.getVariable(taskId, KtunaxaBpmConstant.REFERRAL_CONTEXT_REFERRAL_ID);
 		if (null != variable) {
-			response.setReferral(referralMapCommand.getReferral(variable.toString()));
+			response.setReferral(getReferralCommand.getReferral(variable.toString()));
 		}
 	}
 }

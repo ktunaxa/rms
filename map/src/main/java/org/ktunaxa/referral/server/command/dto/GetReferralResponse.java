@@ -14,7 +14,7 @@ import org.geomajas.layer.feature.Feature;
  *
  * @author Joachim Van der Auwera
  */
-public class ReferralResponse extends CommandResponse {
+public class GetReferralResponse extends CommandResponse {
 
 	private Feature referral;
 

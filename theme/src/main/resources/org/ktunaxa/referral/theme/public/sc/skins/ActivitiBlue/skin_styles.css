@@ -1282,30 +1282,24 @@ Button (also used as MenuButton base style)
     font-family:Verdana,Bitstream Vera Sans,sans-serif;
     font-size:12px;
     padding:5px;
-    color:#000000;
+    color:#3e74b3;
     font-weight: bold;
-}
-
-.toolbarButton {
 }
 
 .toolbarButtonOver {
     text-decoration: underline;
 }
-.toolbarButtonDown {
-    color: #3e74b3;
-}
 
 .toolbarButtonDisabled {
     color:#CCCCCC;
 }
+
+.toolbarButtonDown,
 .toolbarButtonSelected,
 .toolbarButtonSelectedDown,
 .toolbarButtonSelectedOver,
 .toolbarButtonSelectedDisabled {
-    color: #3e74b3;
-}
-.toolbarButtonSelectedOver {
+    color:#000000;
 }
 .toolbarButtonSelectedDisabled {
     color:#666666;
@@ -1517,9 +1511,9 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
     padding: 2px;
     border: 1px solid #C0C0CC;
     border-bottom:none;
-    background: #278ec8;
-    background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
+    background: #FFFFFF;
+    background-image: -moz-linear-gradient(top, #F0F0F0, #FFFFFF);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
 	-webkit-border-top-left-radius: 3px;
 	-webkit-border-top-right-radius: 3px;
 	-moz-border-radius-topleft: 3px;
@@ -1530,24 +1524,16 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
     vertical-align: middle;
     cursor: pointer;
     overflow: visible;
-    color: #FFFFFF;
+    color:#3e74b3;
 }
 
 .tabButtonTopOver {
-    background: #8b98a9;
-    background-image: -moz-linear-gradient(top, #8b98a9, #7e8b9b);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#8b98a9), to(#7e8b9b));
+    text-decoration: underline;
 }
 
 .tabButtonTopSelected,
 .tabButtonTopSelectedOver {
-    background: #FFFFFF;
-    background-image: -moz-linear-gradient(top, #F0F0F0, #FFFFFF);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
-    color: #3e74b3;
-}
-
-.tabButtonTopSelected {
+    color:black;
     border-bottom:none;
 }
 
@@ -1560,9 +1546,7 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 
 .tabButtonTopSelectedDisabled,
 .tabButtonTopDisabled {
-    background: #DDD;
-    background-image: -moz-linear-gradient(top, #DDD, #EEE);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#EEE));
+    color:#CCCCCC;
 }
 
 /* bottom */                        
