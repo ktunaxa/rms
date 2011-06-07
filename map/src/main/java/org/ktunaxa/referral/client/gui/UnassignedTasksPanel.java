@@ -101,6 +101,7 @@ public class UnassignedTasksPanel extends VLayout {
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
 			lists[i].clear();
 			views[i].populate(lists[i]);
+			sections[i].setTitle(CANDIDATE_TITLES[i]);
 			sections[i].setExpanded(false);
 		}
 
