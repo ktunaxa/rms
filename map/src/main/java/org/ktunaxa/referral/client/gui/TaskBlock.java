@@ -10,7 +10,6 @@ import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
-import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -25,7 +24,7 @@ import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.server.command.dto.AssignTaskRequest;
-import org.ktunaxa.referral.server.command.dto.ReferralResponse;
+import org.ktunaxa.referral.server.command.dto.GetReferralResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
 import java.util.Map;
@@ -72,7 +71,6 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		setStyleName(BLOK_STYLE);
 		title.setStyleName(TITLE_STYLE);
 		titleImage.setSrc(IMAGE_MINIMIZE);
-		//infoLayout.setVisible(true);
 		content.setVisible(true);
 	}
 
@@ -81,7 +79,6 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		setStyleName(BLOK_STYLE_COLLAPSED);
 		title.setStyleName(TITLE_STYLE_COLLAPSED);
 		titleImage.setSrc(IMAGE_MAXIMIZE);
-		//infoLayout.setVisible(false);
 		content.setVisible(false);
 	}
 
@@ -216,8 +213,8 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		request.setAssignee(assignee);
 		GwtCommand command = new GwtCommand(AssignTaskRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<ReferralResponse>() {
-			public void execute(ReferralResponse response) {
+		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetReferralResponse>() {
+			public void execute(GetReferralResponse response) {
 				// @todo do I need to modify the state of the task in the list, possibly remove, refresh, whatever?
 				if (start) {
 					start(task, response.getReferral());
@@ -227,22 +224,8 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	}
 
 	private void start(TaskDto task, Feature referral) {
-		Canvas top = this.getParentElement();
-		boolean topIsTop = false;
-		while (!topIsTop) {
-			Canvas canvas = top.getParentElement();
-			if (null == canvas) {
-				topIsTop = true;
-			} else {
-				top = canvas;
-			}
-		}
-		if (top instanceof MapLayout) {
-			MapLayout mapLayout = (MapLayout) top;
-			mapLayout.setReferralAndTask(referral, task);
-			mapLayout.focusCurrentTask();
-		} else {
-			throw new IllegalStateException("MapLayout is no longer at the top of the tree...");
-		}
+		MapLayout mapLayout = MapLayout.getInstance();
+		mapLayout.setReferralAndTask(referral, task);
+		mapLayout.focusCurrentTask();
 	}
 }

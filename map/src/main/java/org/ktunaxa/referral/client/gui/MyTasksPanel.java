@@ -14,16 +14,12 @@ import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
-import org.ktunaxa.referral.client.widget.ListView;
 import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Panel to display tasks which are assigned to me.
@@ -32,17 +28,12 @@ import java.util.Map;
  */
 public class MyTasksPanel extends VLayout {
 
-	private ListView<TaskDto> view;
+	private TaskListView view;
 	private List<AbstractCollapsibleListBlock<TaskDto>> list = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
 
 	public MyTasksPanel() {
 		setWidth100();
-
-		Map<String, Comparator<AbstractCollapsibleListBlock<TaskDto>>> sortAttributes;
-		sortAttributes = new HashMap<String, Comparator<AbstractCollapsibleListBlock<TaskDto>>>();
-		//sortAttributes.put("date", new DateComparator());
-
-		view = new ListView<TaskDto>(false, true, sortAttributes);
+		view = new TaskListView();
 		addChild(view);
 	}
 
