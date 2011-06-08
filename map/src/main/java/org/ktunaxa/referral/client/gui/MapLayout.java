@@ -180,7 +180,7 @@ public final class MapLayout extends VLayout {
 			GfxGeometry highlight = new GfxGeometry("referral-highlight", geometry, new ShapeStyle("#FF00FF", 0.5f,
 					"#FF00FF", 0.8f, 1));
 			getMap().registerWorldPaintable(highlight);
-			String referralDescription = feature.getAttributeValue("projectName").toString();
+			String referralDescription = feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_PROJECT).toString();
 			if (null != task) {
 				String taskDescription = task.getDescription();
 				title = messages.referralAndTaskTitle(referral.getId(), referralDescription,
@@ -189,7 +189,6 @@ public final class MapLayout extends VLayout {
 				title = messages.referralTitle(referral.getId(), referralDescription);
 			}
 			referralButton.setDisabled(false);
-			referralPanel.focusCurrentTask();
 		} else {
 			title = messages.mapTitle();
 			referralButton.setDisabled(true);
@@ -200,10 +199,9 @@ public final class MapLayout extends VLayout {
 			// open the referral tab
 			infoPane.showCard(ReferralPanel.NAME);
 		} else {
-			// open the referral tab
+			// open the layers tab
 			infoPane.showCard(LayersPanel.NAME);
 		}
-
 	}
 
 	/**

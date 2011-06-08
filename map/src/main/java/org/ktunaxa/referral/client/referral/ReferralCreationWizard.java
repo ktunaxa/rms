@@ -28,6 +28,7 @@ import org.ktunaxa.referral.server.command.dto.UrlResponse;
 
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
  * Wizard to create a new referral.
@@ -116,16 +117,13 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 
 	private void createProcess(Feature feature) {
 		CreateProcessRequest request = new CreateProcessRequest();
-		Integer primary = (Integer) feature.getAttributeValue("primaryClassificationNumber");
-		Integer secondary = (Integer) feature.getAttributeValue("secondaryClassificationNumber");
-		Integer year = (Integer) feature.getAttributeValue("calendarYear");
-		Integer number = (Integer) feature.getAttributeValue("number");
-		final String referralId = ReferralUtil.createId(primary, secondary, year, number);
+		final String referralId = ReferralUtil.createId(feature);
 		request.setReferralId(referralId);
-		request.setDescription((String) feature.getAttributeValue("projectName"));
-		request.setEmail((String) feature.getAttributeValue("contactEmail"));
-		request.setEngagementLevel((Integer) feature.getAttributeValue("provincialAssessmentLevel"));
-		request.setCompletionDeadline((Date) feature.getAttributeValue("responseDeadline"));
+		request.setDescription((String) feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_PROJECT));
+		request.setEmail((String) feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_EMAIL));
+		request.setEngagementLevel((Integer) feature.getAttributeValue(
+				KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE));
+		request.setCompletionDeadline((Date) feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE));
 
 		GwtCommand command = new GwtCommand(CreateProcessRequest.COMMAND);
 		command.setCommandRequest(request);

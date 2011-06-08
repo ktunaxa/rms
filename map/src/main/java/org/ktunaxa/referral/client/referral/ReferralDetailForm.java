@@ -25,15 +25,15 @@ import com.smartgwt.client.widgets.form.fields.SelectItem;
  * 
  */
 public class ReferralDetailForm extends DefaultFeatureForm {
-	
-	private static final String[] SKIPPED_NAMES = new String[] { 
-			"primaryClassificationNumber",
-			"secondaryClassificationNumber",
-			"number",
-			"calendarYear",
+
+	private static final String[] SKIPPED_NAMES = new String[] {
+			KtunaxaConstant.ATTRIBUTE_PRIMARY,
+			KtunaxaConstant.ATTRIBUTE_SECONDARY,
+			KtunaxaConstant.ATTRIBUTE_NUMBER,
+			KtunaxaConstant.ATTRIBUTE_YEAR,
 			"activeRetentionPeriod",
 			"semiActiveRetentionPeriod",
-			"finalDisposition" 
+			"finalDisposition"
 		};
 
 	public ReferralDetailForm(VectorLayer layer) {
@@ -43,21 +43,21 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 	@Override
 	protected FormItem createItem(AttributeInfo info) {
 		FormItem formItem = super.createItem(info);
-		if (KtunaxaConstant.TARGET_REFERRAL_ATTRIBUTE_NAME.equals(info.getName())) {
+		if (KtunaxaConstant.ATTRIBUTE_TARGET_REFERRAL.equals(info.getName())) {
 			SelectItem targetItem = (SelectItem) formItem;
 			targetItem.setOptionDataSource(new ReferralManyToOneDataSource(info,
 					KtunaxaConstant.REFERRAL_SERVER_LAYER_ID));
 			targetItem.setDisplayField(ReferralManyToOneDataSource.LAND_REFERRAL_ID_FIELD);
 		}
-		if ("externalAgencyName".equals(info.getName())) {
+		if (KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY.equals(info.getName())) {
 			formItem.setColSpan(4);
-		} else if ("projectDescription".equals(info.getName())) {
-			formItem.setColSpan(4);
-			formItem.setHeight(50);
-		} else if ("projectBackground".equals(info.getName())) {
+		} else if (KtunaxaConstant.ATTRIBUTE_PROJECT_DESCRIPTION.equals(info.getName())) {
 			formItem.setColSpan(4);
 			formItem.setHeight(50);
-		} else if ("responseDeadline".equals(info.getName())) {
+		} else if (KtunaxaConstant.ATTRIBUTE_PROJECT_BACKGROUND.equals(info.getName())) {
+			formItem.setColSpan(4);
+			formItem.setHeight(50);
+		} else if (KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE.equals(info.getName())) {
 			formItem.setColSpan(4);
 		}
 		return formItem;
@@ -111,6 +111,12 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 		dateHeader.setDefaultValue("Project deadline information");
 		dateHeader.setColSpan(4);
 		formItems.insertBefore("receiveDate", dateSpacer, dateHeader);
+
+		RowSpacerItem documentSpacer = new RowSpacerItem("document-info-spacer");
+		HeaderItem documentHeader = new HeaderItem("document-info-header");
+		documentHeader.setDefaultValue("Document management classificiation");
+		documentHeader.setColSpan(4);
+		formItems.insertBefore("activeRetentionPeriod", documentSpacer, documentHeader);
 
 		getWidget().setWidth("100%");
 		getWidget().setNumCols(2);

@@ -6,7 +6,9 @@
 
 package org.ktunaxa.referral.server.service;
 
+import org.activiti.engine.FormService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
@@ -32,6 +34,9 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 
 	@Autowired
 	private TaskService taskService;
+
+	@Autowired
+	private FormService formService;
 
 	public ReferenceLayerTypeDto toDto(ReferenceLayerType layerType) {
 		ReferenceLayerTypeDto dto = new ReferenceLayerTypeDto(layerType.getId());
@@ -93,6 +98,10 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 		for (Map.Entry<String, Object> variable : variables.entrySet()) {
 			taskDto.addVariable(variable.getKey(), toString(variable.getValue()));
 		}
+
+		TaskFormData data = formService.getTaskFormData(task.getId());
+		taskDto.setFormKey(data.getFormKey());
+
 		return taskDto;
 	}
 

@@ -21,7 +21,7 @@ import org.ktunaxa.referral.server.service.KtunaxaConstant;
 public class DocumentForm extends DefaultFeatureForm {
 
 	public DocumentForm(FeatureInfo documentsInfo, VectorLayer referralLayer) {
-		super(documentsInfo, new DefaultAttributeProvider(referralLayer, KtunaxaConstant.DOCUMENTS_ATTRIBUTE_NAME));
+		super(documentsInfo, new DefaultAttributeProvider(referralLayer, KtunaxaConstant.ATTRIBUTE_DOCUMENTS));
 	}
 
 }

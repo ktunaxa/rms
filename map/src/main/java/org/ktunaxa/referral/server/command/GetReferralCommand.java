@@ -14,8 +14,8 @@ import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasConstant;
 import org.geomajas.global.GeomajasException;
 import org.geomajas.layer.feature.Feature;
-import org.geomajas.layer.feature.SearchCriterion;
 import org.geomajas.security.SecurityContext;
+import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.command.dto.GetReferralRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralResponse;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -29,14 +29,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class GetReferralCommand implements Command<GetReferralRequest, GetReferralResponse> {
-
-	public static final String ATTRIBUTE_PRIMARY = "primaryClassificationNumber";
-
-	public static final String ATTRIBUTE_SECONDARY = "secondaryClassificationNumber";
-
-	public static final String ATTRIBUTE_YEAR = "calendarYear";
-
-	public static final String ATTRIBUTE_NUMBER = "number";
 
 	@Autowired
 	private CommandDispatcher commandDispatcher;
@@ -68,7 +60,7 @@ public class GetReferralCommand implements Command<GetReferralRequest, GetReferr
 		if (null != referralId) {
 			SearchFeatureRequest searchFeatureRequest = new SearchFeatureRequest();
 			searchFeatureRequest.setBooleanOperator("AND");
-			searchFeatureRequest.setCriteria(createCriteria(referralId));
+			searchFeatureRequest.setCriteria(ReferralUtil.createCriteria(referralId));
 			searchFeatureRequest.setCrs(KtunaxaConstant.MAP_CRS);
 			searchFeatureRequest.setLayerId(KtunaxaConstant.REFERRAL_SERVER_LAYER_ID);
 			searchFeatureRequest.setMax(1);
@@ -80,30 +72,6 @@ public class GetReferralCommand implements Command<GetReferralRequest, GetReferr
 			}
 		}
 		return null;
-	}
-
-	private SearchCriterion[] createCriteria(String referralId) {
-		String[] values = parse(referralId);
-		SearchCriterion[] criteria = new SearchCriterion[4];
-		criteria[0] = new SearchCriterion(ATTRIBUTE_PRIMARY, "=", values[0]);
-		criteria[1] = new SearchCriterion(ATTRIBUTE_SECONDARY, "=", values[1]);
-		criteria[2] = new SearchCriterion(ATTRIBUTE_YEAR, "=", values[2]);
-		criteria[3] = new SearchCriterion(ATTRIBUTE_NUMBER, "=", values[3]);
-		return criteria;
-	}
-
-	private String[] parse(String referralId) {
-		String[] result = new String[4];
-		int position = referralId.indexOf('-');
-		result[0] = referralId.substring(0, position);
-		String temp = referralId.substring(position + 1);
-		position = temp.indexOf('/');
-		result[1] = temp.substring(0, position);
-		temp = temp.substring(position + 1);
-		position = temp.indexOf('-');
-		result[2] = temp.substring(0, position);
-		result[3] = temp.substring(position + 1);
-		return result;
 	}
 
 }

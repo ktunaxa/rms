@@ -6,35 +6,62 @@
 
 package org.ktunaxa.referral.client.referral;
 
+import org.geomajas.layer.feature.Attribute;
+import org.geomajas.layer.feature.Feature;
 import org.geomajas.layer.feature.SearchCriterion;
 
 import com.smartgwt.client.data.Record;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
+
+import java.util.Map;
 
 /**
  * Utility for referral id.
  * 
  * @author Jan De Moerloose
- * 
  */
 public final class ReferralUtil {
 
-	public static final String ATTRIBUTE_PRIMARY = "primaryClassificationNumber";
-
-	public static final String ATTRIBUTE_SECONDARY = "secondaryClassificationNumber";
-
-	public static final String ATTRIBUTE_YEAR = "calendarYear";
-
-	public static final String ATTRIBUTE_NUMBER = "number";
-
 	private ReferralUtil() {
-
+		// hide constructor
 	}
 
 	/**
 	 * Creates the id of the specified referral.
 	 * 
-	 * @param referral
-	 *            the referral
+	 * @param referral for which to calculate the referral number
+	 * @return the land referral id
+	 */
+	public static String createId(Feature referral) {
+		Map<String, Attribute> attributes = referral.getAttributes();
+		Integer primary = (Integer) attributes.get(KtunaxaConstant.ATTRIBUTE_PRIMARY).getValue();
+		Integer secondary = (Integer) attributes.get(KtunaxaConstant.ATTRIBUTE_SECONDARY).getValue();
+		Integer year = (Integer) attributes.get(KtunaxaConstant.ATTRIBUTE_YEAR).getValue();
+		Integer number = (Integer) attributes.get(KtunaxaConstant.ATTRIBUTE_NUMBER).getValue();
+		return createId(primary, secondary, year, number);
+	}
+
+	/**
+	 * Creates the id of the specified referral.
+	 *
+	 * @param referral for which to calculate the referral number
+	 * @return the land referral id
+	 */
+	public static String createId(org.geomajas.gwt.client.map.feature.Feature referral) {
+		Integer primary = (Integer) referral.getAttributeValue(KtunaxaConstant.ATTRIBUTE_PRIMARY);
+		Integer secondary = (Integer) referral.getAttributeValue(KtunaxaConstant.ATTRIBUTE_SECONDARY);
+		Integer year = (Integer) referral.getAttributeValue(KtunaxaConstant.ATTRIBUTE_YEAR);
+		Integer number = (Integer) referral.getAttributeValue(KtunaxaConstant.ATTRIBUTE_NUMBER);
+		return createId(primary, secondary, year, number);
+	}
+
+	/**
+	 * Creates the id of the specified referral.
+	 *
+	 * @param primary primary
+	 * @param secondary secondary
+	 * @param year year
+	 * @param number sequence number
 	 * @return the land referral id
 	 */
 	public static String createId(Integer primary, Integer secondary, Integer year, Integer number) {
@@ -54,9 +81,9 @@ public final class ReferralUtil {
 	 */
 	public static String createFilter(String referralId) {
 		String[] values = parse(referralId);
-		return "((" + ATTRIBUTE_PRIMARY + " = " + values[0] + ") AND (" + ATTRIBUTE_SECONDARY + " = " + values[1]
-				+ ") AND (" + ATTRIBUTE_YEAR + " = " + values[2] + ") AND (" + ATTRIBUTE_NUMBER + " = " + values[3]
-				+ "))";
+		return "((" + KtunaxaConstant.ATTRIBUTE_PRIMARY + " = " + values[0] + ") AND (" +
+				KtunaxaConstant.ATTRIBUTE_SECONDARY + " = " + values[1] + ") AND (" + KtunaxaConstant.ATTRIBUTE_YEAR +
+				" = " + values[2] + ") AND (" + KtunaxaConstant.ATTRIBUTE_NUMBER + " = " + values[3] + "))";
 	}
 
 	/**
@@ -69,10 +96,10 @@ public final class ReferralUtil {
 	public static SearchCriterion[] createCriteria(String referralId) {
 		String[] values = parse(referralId);
 		SearchCriterion[] criteria = new SearchCriterion[4];
-		criteria[0] = new SearchCriterion(ATTRIBUTE_PRIMARY, "=", values[0]);
-		criteria[1] = new SearchCriterion(ATTRIBUTE_SECONDARY, "=", values[1]);
-		criteria[2] = new SearchCriterion(ATTRIBUTE_YEAR, "=", values[2]);
-		criteria[3] = new SearchCriterion(ATTRIBUTE_NUMBER, "=", values[3]);
+		criteria[0] = new SearchCriterion(KtunaxaConstant.ATTRIBUTE_PRIMARY, "=", values[0]);
+		criteria[1] = new SearchCriterion(KtunaxaConstant.ATTRIBUTE_SECONDARY, "=", values[1]);
+		criteria[2] = new SearchCriterion(KtunaxaConstant.ATTRIBUTE_YEAR, "=", values[2]);
+		criteria[3] = new SearchCriterion(KtunaxaConstant.ATTRIBUTE_NUMBER, "=", values[3]);
 		return criteria;
 	}
 
@@ -99,7 +126,23 @@ public final class ReferralUtil {
 	}
 
 	public static String createId(Record record) {
-		return createId(record.getAttributeAsInt(ATTRIBUTE_PRIMARY), record.getAttributeAsInt(ATTRIBUTE_SECONDARY),
-				record.getAttributeAsInt(ATTRIBUTE_YEAR), record.getAttributeAsInt(ATTRIBUTE_NUMBER));
+		return createId(record.getAttributeAsInt(KtunaxaConstant.ATTRIBUTE_PRIMARY),
+				record.getAttributeAsInt(KtunaxaConstant.ATTRIBUTE_SECONDARY),
+				record.getAttributeAsInt(KtunaxaConstant.ATTRIBUTE_YEAR),
+				record.getAttributeAsInt(KtunaxaConstant.ATTRIBUTE_NUMBER));
+	}
+
+	public static String getDbId(String id) {
+		if (id.contains("-") && id.contains("/")) {
+			String[] values = parse(id);
+			String result = values[3];
+			// remove padding
+			while (result.length() > 1 && result.charAt(0) == '0') {
+				result = result.substring(1);
+			}
+			return result;
+		} else {
+			return id;
+		}
 	}
 }

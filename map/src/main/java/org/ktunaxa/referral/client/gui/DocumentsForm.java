@@ -59,7 +59,7 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 		sortAttributes.put("type", new AttributeComparator("type"));
 		AttributeBlockList listView = new AttributeBlockList(sortAttributes);
 		for (AttributeInfo info : referralLayer.getLayerInfo().getFeatureInfo().getAttributes()) {
-			if (info.getName().equals(KtunaxaConstant.DOCUMENTS_ATTRIBUTE_NAME)) {
+			if (info.getName().equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS)) {
 				attributeInfo = ((AssociationAttributeInfo) info);
 				documentForm = new DocumentForm(attributeInfo.getFeature(), referralLayer);
 			}
@@ -99,13 +99,13 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	}
 
 	public void toForm(String name, Attribute<?> attribute) {
-		if (name.equals(KtunaxaConstant.DOCUMENTS_ATTRIBUTE_NAME)) {
+		if (name.equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS)) {
 			documentsLayout.toLayout((OneToManyAttribute) attribute);
 		}
 	}
 
 	public void fromForm(String name, Attribute<?> attribute) {
-		if (name.equals(KtunaxaConstant.DOCUMENTS_ATTRIBUTE_NAME)) {
+		if (name.equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS)) {
 			documentsLayout.fromLayout((OneToManyAttribute) attribute);
 		}
 	}
@@ -115,13 +115,13 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	}
 
 	public void toForm(AssociationValue value) {
-		toForm(KtunaxaConstant.DOCUMENTS_ATTRIBUTE_NAME,
-				value.getAllAttributes().get(KtunaxaConstant.DOCUMENTS_ATTRIBUTE_NAME));
+		toForm(KtunaxaConstant.ATTRIBUTE_DOCUMENTS,
+				value.getAllAttributes().get(KtunaxaConstant.ATTRIBUTE_DOCUMENTS));
 	}
 
 	public void fromForm(AssociationValue value) {
-		fromForm(KtunaxaConstant.DOCUMENTS_ATTRIBUTE_NAME,
-				value.getAllAttributes().get(KtunaxaConstant.DOCUMENTS_ATTRIBUTE_NAME));
+		fromForm(KtunaxaConstant.ATTRIBUTE_DOCUMENTS,
+				value.getAllAttributes().get(KtunaxaConstant.ATTRIBUTE_DOCUMENTS));
 	}
 
 	/**

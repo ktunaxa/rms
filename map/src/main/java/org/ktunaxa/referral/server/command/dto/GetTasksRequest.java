@@ -19,7 +19,7 @@ public class GetTasksRequest implements CommandRequest {
 
 	private boolean includeUnassignedTasks;
 	private String assignee;
-	private String processInstanceId;
+	private String referralId;
 
 	/**
 	 * Get whether unassigned tasks should be included.
@@ -62,16 +62,16 @@ public class GetTasksRequest implements CommandRequest {
 	 *
 	 * @return process instance id
 	 */
-	public String getProcessInstanceId() {
-		return processInstanceId;
+	public String getReferralId() {
+		return referralId;
 	}
 
 	/**
 	 * Set the process instance if which which to include tasks.
 	 *
-	 * @param processInstanceId process instance id
+	 * @param referralId process instance id
 	 */
-	public void setProcessInstanceId(String processInstanceId) {
-		this.processInstanceId = processInstanceId;
+	public void setReferralId(String referralId) {
+		this.referralId = referralId;
 	}
 }

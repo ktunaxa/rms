@@ -16,12 +16,12 @@ import org.geomajas.layer.feature.attribute.LongAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 
 import com.google.gwt.user.datepicker.client.CalendarUtil;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
  * Wizard data holding feature under construction.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class ReferralData {
 
@@ -33,9 +33,9 @@ public class ReferralData {
 		this.layer = layer;
 		feature = new Feature(layer);
 		// set defaults, TODO: make generic implementation calling FeatureModel.newInstance() on the server
-		feature.setIntegerAttribute("primaryClassificationNumber", 3500);
-		feature.setIntegerAttribute("secondaryClassificationNumber", 10);
-		feature.setIntegerAttribute("calendarYear", 11);
+		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_PRIMARY, 3500);
+		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_SECONDARY, 10);
+		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_YEAR, 11);
 		feature.setStringAttribute("externalProjectId", "-99");
 		feature.setStringAttribute("externalFileId", "-99");
 		feature.setIntegerAttribute("activeRetentionPeriod", 2);
@@ -43,7 +43,7 @@ public class ReferralData {
 		feature.setBooleanAttribute("confidential", false);
 		Date nextMonth = new Date();
 		CalendarUtil.addMonthsToDate(nextMonth, 1);
-		feature.setDateAttribute("responseDeadline", nextMonth);
+		feature.setDateAttribute(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE, nextMonth);
 		feature.setManyToOneAttribute("type", new AssociationValue(new LongAttribute(1L),
 				new HashMap<String, PrimitiveAttribute<?>>()));
 		feature.setManyToOneAttribute("finalDisposition", new AssociationValue(new IntegerAttribute(1),
@@ -52,8 +52,8 @@ public class ReferralData {
 				new HashMap<String, PrimitiveAttribute<?>>()));
 		feature.setManyToOneAttribute("status", new AssociationValue(new LongAttribute(1L),
 				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setIntegerAttribute("provincialAssessmentLevel", 1);
-		feature.setIntegerAttribute("finalAssessmentLevel", 1);
+		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE, 1);
+		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL, 1);
 	}
 
 	public void setFeature(Feature feature) {

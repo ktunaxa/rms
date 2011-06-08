@@ -20,6 +20,8 @@ import com.smartgwt.client.widgets.form.fields.HeaderItem;
 import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 
+import javax.security.auth.kerberos.KerberosTicket;
+
 /**
  * Custom form for the referral layer.
  * 
@@ -35,23 +37,23 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 	@Override
 	protected FormItem createItem(AttributeInfo info) {
 		FormItem formItem = super.createItem(info);
-		if ("number".equals(info.getName())) {
+		if (KtunaxaConstant.ATTRIBUTE_NUMBER.equals(info.getName())) {
 			formItem.setVisible(false);
-		} else if (KtunaxaConstant.TARGET_REFERRAL_ATTRIBUTE_NAME.equals(info.getName())) {
+		} else if (KtunaxaConstant.ATTRIBUTE_TARGET_REFERRAL.equals(info.getName())) {
 			SelectItem targetItem = (SelectItem) formItem;
 			targetItem.setOptionDataSource(new ReferralManyToOneDataSource(info,
 					KtunaxaConstant.REFERRAL_SERVER_LAYER_ID));
 			targetItem.setDisplayField(ReferralManyToOneDataSource.LAND_REFERRAL_ID_FIELD);
 		}
-		if ("externalAgencyName".equals(info.getName())) {
+		if (KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY.equals(info.getName())) {
 			formItem.setColSpan(4);
-		} else if ("projectDescription".equals(info.getName())) {
-			formItem.setColSpan(4);
-			formItem.setHeight(50);
-		} else if ("projectBackground".equals(info.getName())) {
+		} else if (KtunaxaConstant.ATTRIBUTE_PROJECT_DESCRIPTION.equals(info.getName())) {
 			formItem.setColSpan(4);
 			formItem.setHeight(50);
-		} else if ("responseDeadline".equals(info.getName())) {
+		} else if (KtunaxaConstant.ATTRIBUTE_PROJECT_BACKGROUND.equals(info.getName())) {
+			formItem.setColSpan(4);
+			formItem.setHeight(50);
+		} else if (KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE.equals(info.getName())) {
 			formItem.setColSpan(4);
 		}
 		return formItem;
@@ -75,7 +77,7 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 	protected void prepareForm(FormItemList formItems, DataSource source) {
 		HeaderItem projectHeader = new HeaderItem("project-info-header");
 		projectHeader.setDefaultValue("General project information");
-		formItems.insertBefore("primaryClassificationNumber", projectHeader);
+		formItems.insertBefore(KtunaxaConstant.ATTRIBUTE_PRIMARY, projectHeader);
 
 		RowSpacerItem externalSpacer = new RowSpacerItem("external-info-spacer");
 		HeaderItem externalHeader = new HeaderItem("external-info-header");
@@ -116,15 +118,14 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 	 * Re(sets) the referral Id when a component changes.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public class ReferralIdSetter implements ItemChangedHandler {
 
 		public void onItemChanged(ItemChangedEvent event) {
-			Integer primClassNr = (Integer) getWidget().getValue("primaryClassificationNumber");
-			Integer secClassNr = (Integer) getWidget().getValue("secondaryClassificationNumber");
-			Integer year = (Integer) getWidget().getValue("calendarYear");
-			Integer number = (Integer) getWidget().getValue("number");
+			Integer primClassNr = (Integer) getWidget().getValue(KtunaxaConstant.ATTRIBUTE_PRIMARY);
+			Integer secClassNr = (Integer) getWidget().getValue(KtunaxaConstant.ATTRIBUTE_SECONDARY);
+			Integer year = (Integer) getWidget().getValue(KtunaxaConstant.ATTRIBUTE_YEAR);
+			Integer number = (Integer) getWidget().getValue(KtunaxaConstant.ATTRIBUTE_NUMBER);
 			String referralId = ReferralUtil.createId(primClassNr, secClassNr, year, number);
 			HeaderItem header = (HeaderItem) getWidget().getItem("project-info-header");
 			header.setDefaultValue("General project information [" + referralId + "]");

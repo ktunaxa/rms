@@ -137,7 +137,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 				attribs.put("description", new StringAttribute(title));
 				attribs.put("documentId", new StringAttribute(documentId));
 				document.setAllAttributes(attribs);
-				getWizardData().getFeature().addOneToManyValue("documents", document);
+				getWizardData().getFeature().addOneToManyValue(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, document);
 				busyImg.setVisible(false);
 				show();
 			}
@@ -167,7 +167,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 	protected void show() {
 		clear();
 		List<AssociationValue> documents = (List<AssociationValue>) getWizardData().getFeature().getAttributeValue(
-				"documents");
+				KtunaxaConstant.ATTRIBUTE_DOCUMENTS);
 		if (documents != null) {
 			for (AssociationValue associationValue : documents) {
 				String title = (String) associationValue.getAllAttributes().get("title").getValue();

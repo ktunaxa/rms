@@ -68,6 +68,7 @@ public class TaskDto implements Serializable {
 
 	private List<String> candidates = new ArrayList<String>();
 	private Map<String, String> variables = new HashMap<String, String>();
+	private String formKey;
 
 	/**
 	 * Get the task id.
@@ -344,6 +345,24 @@ public class TaskDto implements Serializable {
 	 */
 	public Map<String, String> getVariables() {
 		return variables;
+	}
+
+	/**
+	 * Get the form key.
+	 *
+	 * @return form key
+	 */
+	public String getFormKey() {
+		return formKey;
+	}
+
+	/**
+	 * Set the form key.
+	 *
+	 * @param formKey form key
+	 */
+	public void setFormKey(String formKey) {
+		this.formKey = formKey;
 	}
 
 	/**

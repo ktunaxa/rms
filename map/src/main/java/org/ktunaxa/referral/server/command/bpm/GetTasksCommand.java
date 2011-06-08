@@ -10,6 +10,7 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.geomajas.command.Command;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -46,18 +47,16 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 
 		if (request.isIncludeUnassignedTasks()) {
 			TaskQuery taskQuery = taskService.createTaskQuery();
-			taskQuery.taskUnnassigned();
-			add(taskDtos, taskService.createTaskQuery().taskUnnassigned().list());
+			add(taskDtos, taskQuery.taskUnnassigned().list());
 		}
 		if (null != request.getAssignee()) {
 			TaskQuery taskQuery = taskService.createTaskQuery();
-			taskQuery.taskUnnassigned();
-			add(taskDtos, taskService.createTaskQuery().taskAssignee(request.getAssignee()).list());
+			add(taskDtos, taskQuery.taskAssignee(request.getAssignee()).list());
 		}
-		if (null != request.getProcessInstanceId()) {
+		if (null != request.getReferralId()) {
 			TaskQuery taskQuery = taskService.createTaskQuery();
-			taskQuery.taskUnnassigned();
-			add(taskDtos, taskService.createTaskQuery().processInstanceId(request.getProcessInstanceId()).list());
+			add(taskDtos, taskQuery.processVariableValueEquals(KtunaxaBpmConstant.REFERRAL_CONTEXT_REFERRAL_ID,
+					request.getReferralId()).list());
 		}
 	}
 

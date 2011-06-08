@@ -34,22 +34,25 @@ public interface KtunaxaConstant {
 
 	String SEARCH_REFERRAL_URL_PARAMETER = "searchReferral";
 
-	String TITLE_BASE = "Referral Management System";
-
-	String TITLE_SEPARATOR = " - ";
-
-	String TITLE_GENERAL = TITLE_BASE + TITLE_SEPARATOR + "Mapping Dashboard";
-	String TITLE_CREATE_REFERRAL = TITLE_BASE + TITLE_SEPARATOR + "Create referral";
-	String TITLE_SEARCH_REFERRAL = TITLE_BASE + TITLE_SEPARATOR + "Search referral";
-	
 	String REFERRAL_LAYER_ID = "referralLayer";
 	String REFERRAL_SERVER_LAYER_ID = "referral";
 
 	String REFERENCE_BASE_LAYER_ID = "referenceBaseLayer";
 	String REFERENCE_VALUE_LAYER_ID = "referenceValueLayer";
 
-	String TARGET_REFERRAL_ATTRIBUTE_NAME = "targetReferral";
-	String NUMBER_ATTRIBUTE_NAME = "number";
-	String DOCUMENTS_ATTRIBUTE_NAME = "documents";
+	String ATTRIBUTE_PRIMARY = "primaryClassificationNumber";
+	String ATTRIBUTE_SECONDARY = "secondaryClassificationNumber";
+	String ATTRIBUTE_YEAR = "calendarYear";
+	String ATTRIBUTE_NUMBER = "number";
+	String ATTRIBUTE_PROJECT = "projectName";
+	String ATTRIBUTE_EMAIL = "contactEmail";
+	String ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE = "provincialAssessmentLevel";
+	String ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL = "finalAssessmentLevel";
+	String ATTRIBUTE_RESPONSE_DEADLINE = "responseDeadline";
+	String ATTRIBUTE_TARGET_REFERRAL = "targetReferral";
+	String ATTRIBUTE_DOCUMENTS = "documents";
+	String ATTRIBUTE_EXTERNAL_AGENCY = "externalAgencyName";
+	String ATTRIBUTE_PROJECT_DESCRIPTION = "projectDescription";
+	String ATTRIBUTE_PROJECT_BACKGROUND = "projectBackground";
 
 }
