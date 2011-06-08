@@ -189,6 +189,7 @@ public final class MapLayout extends VLayout {
 				title = messages.referralTitle(referral.getId(), referralDescription);
 			}
 			referralButton.setDisabled(false);
+			referralPanel.focusCurrentTask();
 		} else {
 			title = messages.mapTitle();
 			referralButton.setDisabled(true);

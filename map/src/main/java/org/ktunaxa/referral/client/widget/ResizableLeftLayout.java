@@ -136,13 +136,15 @@ public class ResizableLeftLayout extends VLayout {
 	public void showCard(String name) {
 		restore();
 		if (cards.containsKey(name)) {
-			Card old = currentCard;
 			currentCard = cards.get(name);
-			currentCard.getCanvas().show();
 			titleDiv.setContents(name);
 			verticalTitle.setContents(currentCard.getTitle());
-			if (old != null) {
-				old.getCanvas().hide();
+			for (Card card : cards.values()) {
+				if (card != currentCard) {
+					card.getCanvas().hide();
+				} else {
+					card.getCanvas().show();
+				}
 			}
 			for (ToolStripButton button : buttons) {
 				if (button.getTitle().equals(name)) {

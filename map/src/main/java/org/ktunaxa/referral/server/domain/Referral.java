@@ -204,12 +204,12 @@ public class Referral {
 	private Geometry geometry;
 
 	/** The collection of all documents associated with this referral. */
-	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true)
 	@OrderBy("title asc")
 	private List<Document> documents = new ArrayList<Document>();
 
 	/** The collection of all comments made on this referral. */
-	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<ReferralComment> comments = new ArrayList<ReferralComment>();
 
 	// ------------------------------------------------------------------------

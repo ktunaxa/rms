@@ -40,6 +40,8 @@ public class DocumentBlock extends AbstractAttributeBlock {
 
 	private Button editButton;
 	
+	private Button deleteButton;
+
 	private Img checked;
 
 	public DocumentBlock(AssociationValue value) {
@@ -63,6 +65,20 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		content.setVisible(false);
 	}
 	
+	@Override
+	protected boolean valueEquals(AbstractAttributeBlock other) {
+		AssociationValue otherValue = other.getValue();
+		AssociationValue value = getValue();
+		if (otherValue == null || value == null) {
+			return false;
+		} else if (otherValue.getId().isEmpty() || value.getId().isEmpty()) {
+			return value.getAttributeValue("documentId").equals(otherValue.getAttributeValue("documentId"));
+		} else {
+			return otherValue.getId().getValue().equals(value.getId().getValue());
+		}
+	}
+
+	@Override
 	public void redrawValue() {
 		titleText.setContents("<div class='documentBlockTitleText'>" + getDocumentTitle() + "</div>");
 		info.setContents("<div class='documentBlockInfo'>Posted by " + getAddedBy() + " @ " + getAdditionDate()
@@ -113,11 +129,13 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		info.setSize("*", "24");
 		infoLayout.addMember(info);
 
-		editButton = new Button("Edit document");
+		editButton = new Button("Edit");
 		LayoutSpacer space = new LayoutSpacer();
 		space.setWidth(20);
 		infoLayout.addMember(space);
 		infoLayout.addMember(editButton);
+		deleteButton = new Button("Delete");
+		infoLayout.addMember(deleteButton);
 		addMember(infoLayout);
 
 		content = new HTMLFlow("<div class='documentBlockType'>" + getTypeTitle() + "</div>");
@@ -182,5 +200,11 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	public void addEditHandler(ClickHandler clickHandler) {
 		editButton.addClickHandler(clickHandler);
 	}
+
+	@Override
+	public void addDeleteHandler(ClickHandler clickHandler) {
+		deleteButton.addClickHandler(clickHandler);
+	}
+
 
 }

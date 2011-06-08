@@ -51,6 +51,8 @@ public abstract class AttributeBlockLayout<W extends Widget> extends VLayout {
 	private CardLayout cardLayout;
 
 	private HandlerManager manager = new HandlerManager(this);
+	
+	private AbstractAttributeBlock currentBlock;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -83,31 +85,27 @@ public abstract class AttributeBlockLayout<W extends Widget> extends VLayout {
 		listView.getCreateNewButton().addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
+				currentBlock = null;
 				showDetails(newInstance());
 			}
 		});
 		detailView.getBackButton().addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
+				currentBlock = null;
 				showList();
 			}
 		});
 		detailView.getSaveButton().addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				AssociationValue value = detailView.getValue();
-				// if the value is new add it to the list
-				if (value.getId().isEmpty()) {
-					final AbstractAttributeBlock block = newBlock(detailView.getValue());
-					block.addEditHandler(new ClickHandler() {
-
-						public void onClick(ClickEvent event) {
-							showDetails(block.getValue());
-						}
-					});
-					listView.addBlock(block);
+				// if the block is new add it to the list
+				if (currentBlock == null) {
+					currentBlock = newBlock(detailView.getValue());
+					initBlock(currentBlock);
+					listView.addBlock(currentBlock);
 				}
-				// refresh the blocks
+				// the association value has changed, refresh the blocks
 				listView.updateBlocks();
 				// we've changed, let the handlers know
 				manager.fireEvent(new ChangedEvent(null));
@@ -123,15 +121,14 @@ public abstract class AttributeBlockLayout<W extends Widget> extends VLayout {
 		List<AbstractAttributeBlock> list = new ArrayList<AbstractAttributeBlock>();
 		for (final AssociationValue value : attribute.getValue()) {
 			AbstractAttributeBlock block = newBlock(value);
-			block.addEditHandler(new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					detailView.showDetails(value);
-				}
-			});
+			initBlock(block);
 			list.add(block);
+			if (currentBlock != null && currentBlock.valueEquals(block)) {
+				currentBlock = block;
+				showDetails(block.getValue());
+			}
 		}
-		populate(list);
+		listView.populate(list);
 	}
 
 	public void fromLayout(OneToManyAttribute attribute) {
@@ -160,21 +157,23 @@ public abstract class AttributeBlockLayout<W extends Widget> extends VLayout {
 	// Public methods:
 	// ------------------------------------------------------------------------
 
-	/**
-	 * Populate the list with block that each display a single instance of type T.
-	 * 
-	 * @param block The full list of blocks.
-	 */
-	private void populate(List<AbstractAttributeBlock> blocks) {
-		for (final AbstractAttributeBlock block : blocks) {
-			block.addEditHandler(new ClickHandler() {
 
-				public void onClick(ClickEvent event) {
-					showDetails(block.getValue());
-				}
-			});
-		}
-		listView.populate(blocks);
+	private void initBlock(final AbstractAttributeBlock block) {
+		block.addEditHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				currentBlock = block;
+				showDetails(block.getValue());
+			}
+		});
+		block.addDeleteHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				listView.removeBlock(block);
+				// we've changed, let the handlers know
+				manager.fireEvent(new ChangedEvent(null));
+			}
+		});
 	}
 
 	public void showList() {

@@ -30,14 +30,19 @@ public abstract class AbstractAttributeBlock extends VLayout {
 
 	protected abstract void collapse();
 
+	protected abstract boolean valueEquals(AbstractAttributeBlock other);
+
 	protected abstract boolean evaluate(String filter);
 
 	public abstract void addEditHandler(ClickHandler clickHandler);
 
+	public abstract void addDeleteHandler(ClickHandler clickHandler);
+	
 	public AssociationValue getValue() {
 		return value;
 	}
 
 	public abstract void redrawValue();
+
 
 }

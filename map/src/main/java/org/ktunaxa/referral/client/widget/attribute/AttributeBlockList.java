@@ -90,6 +90,11 @@ public class AttributeBlockList extends VLayout {
 		blockLayout.addMember(block);
 	}
 
+	public void removeBlock(AbstractAttributeBlock block) {
+		blocks.remove(block);
+		blockLayout.removeMember(block);
+	}
+
 	public List<AbstractAttributeBlock> getBlocks() {
 		return blocks;
 	}
@@ -342,5 +347,6 @@ public class AttributeBlockList extends VLayout {
 			return -original.compare(o1, o2);
 		}
 	}
+
 
 }
