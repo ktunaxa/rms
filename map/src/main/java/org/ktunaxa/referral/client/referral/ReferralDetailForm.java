@@ -25,6 +25,16 @@ import com.smartgwt.client.widgets.form.fields.SelectItem;
  * 
  */
 public class ReferralDetailForm extends DefaultFeatureForm {
+	
+	private static final String[] SKIPPED_NAMES = new String[] { 
+			"primaryClassificationNumber",
+			"secondaryClassificationNumber",
+			"number",
+			"calendarYear",
+			"activeRetentionPeriod",
+			"semiActiveRetentionPeriod",
+			"finalDisposition" 
+		};
 
 	public ReferralDetailForm(VectorLayer layer) {
 		super(layer);
@@ -33,9 +43,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 	@Override
 	protected FormItem createItem(AttributeInfo info) {
 		FormItem formItem = super.createItem(info);
-		if ("number".equals(info.getName())) {
-			formItem.setVisible(false);
-		} else if (KtunaxaConstant.TARGET_REFERRAL_ATTRIBUTE_NAME.equals(info.getName())) {
+		if (KtunaxaConstant.TARGET_REFERRAL_ATTRIBUTE_NAME.equals(info.getName())) {
 			SelectItem targetItem = (SelectItem) formItem;
 			targetItem.setOptionDataSource(new ReferralManyToOneDataSource(info,
 					KtunaxaConstant.REFERRAL_SERVER_LAYER_ID));
@@ -57,6 +65,11 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 
 	@Override
 	protected boolean isIncluded(AttributeInfo info) {
+		for (String name : SKIPPED_NAMES) {
+			if (info.getName().equals(name)) {
+				return false;
+			}
+		}
 		if (info.isIncludedInForm()) {
 			if (info instanceof AssociationAttributeInfo) {
 				AssociationAttributeInfo associationAttributeInfo = (AssociationAttributeInfo) info;
@@ -73,7 +86,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 	protected void prepareForm(FormItemList formItems, DataSource source) {
 		HeaderItem projectHeader = new HeaderItem("project-info-header");
 		projectHeader.setDefaultValue("General project information");
-		formItems.insertBefore("primaryClassificationNumber", projectHeader);
+		formItems.insertBefore("applicantName", projectHeader);
 
 		RowSpacerItem externalSpacer = new RowSpacerItem("external-info-spacer");
 		HeaderItem externalHeader = new HeaderItem("external-info-header");
@@ -98,12 +111,6 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 		dateHeader.setDefaultValue("Project deadline information");
 		dateHeader.setColSpan(4);
 		formItems.insertBefore("receiveDate", dateSpacer, dateHeader);
-
-		RowSpacerItem documentSpacer = new RowSpacerItem("document-info-spacer");
-		HeaderItem documentHeader = new HeaderItem("document-info-header");
-		documentHeader.setDefaultValue("Document management classificiation");
-		documentHeader.setColSpan(4);
-		formItems.insertBefore("activeRetentionPeriod", documentSpacer, documentHeader);
 
 		getWidget().setWidth("100%");
 		getWidget().setNumCols(2);

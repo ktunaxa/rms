@@ -537,7 +537,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 </bean>
 
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-                    <property name="label" value="Receive Date"/>
+                    <property name="label" value="Received Date"/>
                     <property name="name" value="receiveDate"/>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
@@ -553,7 +553,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-                    <property name="label" value="Response Date"/>
+                    <property name="label" value="Initial Review Date"/>
                     <property name="name" value="responseDate"/>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
@@ -569,7 +569,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 					</property>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-                    <property name="label" value="Reponse Deadline"/>
+                    <property name="label" value="Final Reponse Deadline"/>
                     <property name="name" value="responseDeadline"/>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
