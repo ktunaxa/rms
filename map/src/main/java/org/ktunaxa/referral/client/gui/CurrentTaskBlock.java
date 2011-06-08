@@ -9,7 +9,6 @@ package org.ktunaxa.referral.client.gui;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
@@ -83,7 +82,7 @@ public class CurrentTaskBlock extends CardLayout {
 			showCard(KEY_NO);
 		} else {
 			String formKey = FORM_EMPTY;
-			for (int i = TASKS_WITH_FORM.length -1 ; i >= 0 ; i--) {
+			for (int i = TASKS_WITH_FORM.length - 1 ; i >= 0 ; i--) {
 				if (null != task.getFormKey() && task.getFormKey().endsWith(TASKS_WITH_FORM[i])) {
 					formKey = TASKS_WITH_FORM[i];
 				}

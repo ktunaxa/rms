@@ -20,8 +20,6 @@ import com.smartgwt.client.widgets.form.fields.HeaderItem;
 import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 
-import javax.security.auth.kerberos.KerberosTicket;
-
 /**
  * Custom form for the referral layer.
  * 
