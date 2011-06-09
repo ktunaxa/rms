@@ -15,6 +15,8 @@ import org.geomajas.command.CommandRequest;
  */
 public class GetReferralRequest implements CommandRequest {
 
+	private static final long serialVersionUID = 100L;
+
 	private String referralId;
 
 	/**

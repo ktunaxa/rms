@@ -78,10 +78,7 @@ public class UploadGeometryController {
 	
 	private void cleanup() {
 		for (String tempFile : tempFiles) {
-			File file = new File(tempFile);
-			if (file.exists()) {
-				file.delete();
-			}
+			deleteFileIfExists(tempFile);
 		}
 		tempFiles.clear();
 	}
@@ -89,13 +86,11 @@ public class UploadGeometryController {
 	private Geometry transform(Geometry geometry, CoordinateReferenceSystem crs) throws IOException {
 		try {
 			String sourceCrs = geoService.getCodeFromCrs(crs);
-			try {
-				// transform to layer CRS first
-				Geometry layerGeom = geoService.transform(geometry, sourceCrs, KtunaxaConstant.LAYER_CRS);
-				return geoService.transform(layerGeom, KtunaxaConstant.LAYER_CRS, KtunaxaConstant.MAP_CRS);
-			} catch (GeomajasException ge) {
-				throw new IOException(ge.getMessage(), ge);
-			}
+			// transform to layer CRS first
+			Geometry layerGeom = geoService.transform(geometry, sourceCrs, KtunaxaConstant.LAYER_CRS);
+			return geoService.transform(layerGeom, KtunaxaConstant.LAYER_CRS, KtunaxaConstant.MAP_CRS);
+		} catch (GeomajasException ge) {
+			throw new IOException(ge.getMessage(), ge);
 		} catch (Exception e) {
 			try {
 				CoordinateReferenceSystem targetCrs = geoService.getCrs2(KtunaxaConstant.LAYER_CRS);
@@ -138,14 +133,14 @@ public class UploadGeometryController {
 			int count;
 			byte[] data = new byte[BUFFER];
 			// write the files to the disk
-			checkLocation(name);
+			deleteFileIfExists(name);
 			FileOutputStream fos = new FileOutputStream(name);
-			BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER);
+			BufferedOutputStream destination = new BufferedOutputStream(fos, BUFFER);
 			while ((count = zin.read(data, 0, BUFFER)) != -1) {
-				dest.write(data, 0, count);
+				destination.write(data, 0, count);
 			}
-			dest.flush();
-			dest.close();
+			destination.flush();
+			destination.close();
 		}
 		if (url == null) {
 			throw new IllegalArgumentException("Missing .shp file");
@@ -153,7 +148,7 @@ public class UploadGeometryController {
  		return url;
 	}
 
-	private void checkLocation(String name) {
+	private void deleteFileIfExists(String name) {
 		File file = new File(name);
 		if (file.exists()) {
 			file.delete();

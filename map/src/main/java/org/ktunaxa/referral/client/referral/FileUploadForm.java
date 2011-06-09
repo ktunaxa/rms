@@ -21,8 +21,6 @@ import com.smartgwt.client.types.Encoding;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.UploadItem;
-import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
-import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 
 /**
  * Simple form definition for uploading files, and getting some response in the form of a string.
@@ -33,8 +31,6 @@ public class FileUploadForm extends DynamicForm {
 
 	private HandlerManager handlerManager;
 
-	private UploadItem fileItem;
-	
 	public FileUploadForm(String title, String targetUrl) {
 		if (!targetUrl.contains("?")) {
 			targetUrl += "?" + KtunaxaConstant.FORM_ID + "=" + getID();
@@ -50,22 +46,23 @@ public class FileUploadForm extends DynamicForm {
 		setAction(targetUrl);
 		setWidth100();
 
-		fileItem = new UploadItem(KtunaxaConstant.FORM_FILE);
+		UploadItem fileItem = new UploadItem(KtunaxaConstant.FORM_FILE);
 		fileItem.setTitle(title);
 		fileItem.setWrapTitle(false);
 		fileItem.setWidth("*");
 		fileItem.setHeight(24);
 		fileItem.setCellHeight(24);
+		/*
 		fileItem.addChangeHandler(new ChangeHandler() {
-
 			public void onChange(ChangeEvent event) {
 				if (fileItem.getEnteredValue().endsWith(".zip")) {
-					// uploadButton.enable();
+					uploadButton.enable();
 				} else {
-					// uploadButton.disable();
+					uploadButton.disable();
 				}
 			}
 		});
+		*/
 		setFields(fileItem);
 
 		NamedFrame frame = new NamedFrame(targetUrl);

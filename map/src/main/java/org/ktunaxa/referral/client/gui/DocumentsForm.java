@@ -3,11 +3,6 @@
  *
  * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
  */
-/*
- * This is part of the Ktunaxa referral system.
- *
- * Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
- */
 package org.ktunaxa.referral.client.gui;
 
 import java.util.Comparator;
@@ -23,7 +18,7 @@ import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.OneToManyAttribute;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
-import org.ktunaxa.referral.client.widget.attribute.AttributeBlockLayout;
+import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlockLayout;
 import org.ktunaxa.referral.client.widget.attribute.AttributeBlockList;
 import org.ktunaxa.referral.client.widget.attribute.AttributeBlockList.AttributeComparator;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -41,7 +36,6 @@ import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
  * Form for editing documents in mapping dashboard.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class DocumentsForm implements FeatureForm<Canvas> {
 
@@ -81,7 +75,7 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	}
 
 	public boolean validate() {
-		return true;
+		return false;
 	}
 
 	public HandlerRegistration addItemChangedHandler(ItemChangedHandler handler) {
@@ -99,13 +93,13 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	}
 
 	public void toForm(String name, Attribute<?> attribute) {
-		if (name.equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS)) {
+		if (name.equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS) && attribute instanceof OneToManyAttribute) {
 			documentsLayout.toLayout((OneToManyAttribute) attribute);
 		}
 	}
 
 	public void fromForm(String name, Attribute<?> attribute) {
-		if (name.equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS)) {
+		if (name.equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS) && attribute instanceof OneToManyAttribute) {
 			documentsLayout.fromLayout((OneToManyAttribute) attribute);
 		}
 	}
@@ -130,7 +124,7 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	 * @author Jan De Moerloose
 	 * 
 	 */
-	class DocumentsLayout extends AttributeBlockLayout<DynamicForm> {
+	class DocumentsLayout extends AbstractAttributeBlockLayout<DynamicForm> {
 
 		public DocumentsLayout(AttributeBlockList listView, DocumentForm documentForm) {
 			super(listView, documentForm);
@@ -153,5 +147,4 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	public boolean silentValidate() {
 		return true;
 	}
-
 }

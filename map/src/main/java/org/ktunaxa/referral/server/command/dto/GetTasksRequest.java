@@ -15,6 +15,8 @@ import org.geomajas.command.CommandRequest;
  */
 public class GetTasksRequest implements CommandRequest {
 
+	private static final long serialVersionUID = 100L;
+
 	public static final String COMMAND = "command.bpm.GetTasks";
 
 	private boolean includeUnassignedTasks;

@@ -14,7 +14,6 @@ import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
  * Handler that zooms to the extent of the sublayer.
  *
  * @author Jan De Moerloose
- *
  */
 public class ZoomToLayerHandler implements ClickHandler {
 
@@ -25,7 +24,7 @@ public class ZoomToLayerHandler implements ClickHandler {
 	}
 
 	public void onClick(MenuItemClickEvent event) {
-		
+		// @todo
 	}
 
 }

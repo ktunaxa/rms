@@ -13,6 +13,9 @@ import org.geomajas.command.dto.GetMapConfigurationRequest;
  * @author Jan De Moerloose
  */
 public class GetReferralMapRequest extends GetMapConfigurationRequest {
+
+	private static final long serialVersionUID = 100L;
+
 	public static final String COMMAND = "command.GetReferralMap";
 
 	public GetReferralMapRequest(String mapId, String applicationId) {

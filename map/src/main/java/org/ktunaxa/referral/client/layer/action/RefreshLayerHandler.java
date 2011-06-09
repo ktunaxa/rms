@@ -14,7 +14,6 @@ import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
  * Handler that refreshes the sublayer.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class RefreshLayerHandler implements ClickHandler {
 
@@ -25,7 +24,7 @@ public class RefreshLayerHandler implements ClickHandler {
 	}
 
 	public void onClick(MenuItemClickEvent event) {
+		// @todo
 	}
-
 
 }

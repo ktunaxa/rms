@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class GetTasksResponse extends CommandResponse {
 
+	private static final long serialVersionUID = 100L;
+
 	private List<TaskDto> tasks;
 
 	/**

@@ -20,6 +20,8 @@ import org.ktunaxa.referral.server.dto.TaskDto;
  */
 public class GetReferralMapResponse extends GetMapConfigurationResponse {
 
+	private static final long serialVersionUID = 100L;
+
 	private String mapDashboardBaseUrl;
 
 	private String bpmDashboardBaseUrl;

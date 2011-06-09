@@ -16,6 +16,8 @@ import org.geomajas.layer.feature.Feature;
  */
 public class GetReferralResponse extends CommandResponse {
 
+	private static final long serialVersionUID = 100L;
+
 	private Feature referral;
 
 	/**

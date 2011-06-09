@@ -13,7 +13,9 @@ import org.geomajas.command.CommandRequest;
  *
  * @author Joachim Van der Auwera
  */
-public abstract class TaskRequest implements CommandRequest {
+public abstract class AbstractTaskRequest implements CommandRequest {
+
+	private static final long serialVersionUID = 100L;
 
 	private String taskId;
 

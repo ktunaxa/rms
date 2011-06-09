@@ -15,6 +15,8 @@ import org.geomajas.command.CommandResponse;
  */
 public class UrlResponse extends CommandResponse {
 
+	private static final long serialVersionUID = 100L;
+
 	private String url;
 
 	/**

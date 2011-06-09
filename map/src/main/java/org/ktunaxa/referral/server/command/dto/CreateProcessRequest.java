@@ -17,6 +17,8 @@ import java.util.Date;
  */
 public class CreateProcessRequest implements CommandRequest {
 
+	private static final long serialVersionUID = 100L;
+
 	public static final String COMMAND = "command.bpm.CreateProcess";
 
 	private String referralId;

@@ -40,46 +40,54 @@ public final class ShapeImportRunner {
 	 *            no arguments used.
 	 */
 	public static void main(String[] args) {
-		ShapeImportRunner reader = new ShapeImportRunner();
 		try {
-			File[] files = reader.service.getAllFiles();
-			if (files != null && files.length > 0) {
-				File choice = selectFile(files);
-				System.out.println("Your choice: " + choice.getName());
-				DataStore dataStore = reader.service.read(choice);
-				reader.service.validateFormat(dataStore);
-				System.out.println("");
-				List<ReferenceLayer> layers = reader.service.getAllLayers();
-				ReferenceLayer layer = selectLayer(layers);
-				System.out.println("");
-				System.out.println("You have selected shape file '" + choice.getName()
-						+ "' to replace the current contents of data type '" + layer.getName() + "' in the database.");
-				System.out.println("Are you sure you want to continue? (y / n)");
-				boolean letsGo = readYesNo();
-				if (letsGo) {
-					System.out.println("Busy loading the new contents into the database...");
-					reader.service.persist(layer, dataStore);
-				} else {
-					System.out.println("Aborting upload proces. Hope to see you later.");
-				}
-			} else {
-				throw new IOException("No shape files could be found.");
-			}
+			new ShapeImportRunner().importShape();
 		} catch (Exception e) {
 			System.err.println("ERROR: " + e.getMessage());
 			System.err.println("Aborting...");
 			System.exit(1);
 		}
 		System.out.println("Done!");
-		System.exit(0);
+	}
+
+	public void importShape() throws IOException {
+		ShapeImportRunner reader = new ShapeImportRunner();
+		File[] files = reader.service.getAllFiles();
+		if (files != null && files.length > 0) {
+			File choice = selectFile(files);
+			System.out.println("Your choice: " + choice.getName());
+			DataStore dataStore = reader.service.read(choice);
+			reader.service.validateFormat(dataStore);
+			System.out.println("");
+			List<ReferenceLayer> layers = reader.service.getAllLayers();
+			ReferenceLayer layer = selectLayer(layers);
+			System.out.println("");
+			System.out.println("You have selected shape file '" + choice.getName()
+					+ "' to replace the current contents of data type '" + layer.getName() + "' in the database.");
+			System.out.println("Are you sure you want to continue? (y / n)");
+			boolean letsGo = readYesNo();
+			if (letsGo) {
+				System.out.println("Busy loading the new contents into the database...");
+				reader.service.persist(layer, dataStore);
+			} else {
+				System.out.println("Aborting upload process. Hope to see you later.");
+			}
+		} else {
+			throw new IOException("No shape files could be found.");
+		}
 	}
 
 	// ------------------------------------------------------------------------
 	// Private methods:
 	// ------------------------------------------------------------------------
 
-	/** Given a list of reference layers, let the user choose one. */
-	private static ReferenceLayer selectLayer(List<ReferenceLayer> layers) {
+	/**
+	 * Given a list of reference layers, let the user choose one.
+	 *
+	 * @param layers layers to choose from
+	 * @return chosen layer
+	 */
+	private ReferenceLayer selectLayer(List<ReferenceLayer> layers) {
 		System.out.println("Choose one of the following data types:");
 		for (int i = 0; i < layers.size(); i++) {
 			System.out.println((i + 1) + ": " + layers.get(i).getType().getDescription() + " - "
@@ -95,8 +103,12 @@ public final class ShapeImportRunner {
 		return layers.get(choice - 1);
 	}
 
-	/** Read 'y' or 'n' from the command prompt (system.in) and return it as a boolean value. */
-	private static boolean readYesNo() {
+	/**
+	 * Read 'y' or 'n' from the command prompt (system.in) and return it as a boolean value.
+	 *
+	 * @return input value
+	 */
+	private boolean readYesNo() {
 		String answer = readLine();
 		if ("y".equalsIgnoreCase(answer)) {
 			return true;
@@ -107,8 +119,13 @@ public final class ShapeImportRunner {
 		return readYesNo();
 	}
 
-	/** Given a list of files, let the user select one. */
-	private static File selectFile(File[] files) {
+	/**
+	 * Given a list of files, let the user select one.
+	 *
+	 * @param files files to choose from
+	 * @return chosen file
+	 */
+	private File selectFile(File[] files) {
 		System.out.println("Choose one of the following shape files:");
 		for (int i = 0; i < files.length; i++) {
 			System.out.println((i + 1) + ": " + files[i].getName());
@@ -123,8 +140,12 @@ public final class ShapeImportRunner {
 		return files[choice - 1];
 	}
 
-	/** Read a line of text from the command prompt (system.in). */
-	private static String readLine() {
+	/**
+	 * Read a line of text from the command prompt (system.in).
+	 *
+	 * @return input text
+	 */
+	private String readLine() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String line = null;
 		try {
@@ -136,13 +157,16 @@ public final class ShapeImportRunner {
 		return line;
 	}
 
-	/** Read a line of text from the command prompt (system.in) and return it as an integer. */
-	private static int readIntegerLine() {
+	/**
+	 * Read a line of text from the command prompt (system.in) and return it as an integer.
+	 *
+	 * @return input value
+	 */
+	private int readIntegerLine() {
 		String line = readLine();
 		try {
-			int result = Integer.parseInt(line);
-			return result;
-		} catch (Exception e) {
+			return Integer.parseInt(line);
+		} catch (NumberFormatException e) {
 			System.out.println("Error while parsing the input as an integer. Please try again:");
 			return readIntegerLine();
 		}

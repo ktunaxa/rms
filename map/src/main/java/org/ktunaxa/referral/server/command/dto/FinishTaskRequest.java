@@ -11,7 +11,9 @@ package org.ktunaxa.referral.server.command.dto;
  *
  * @author Joachim Van der Auwera
  */
-public class FinishTaskRequest extends TaskRequest {
+public class FinishTaskRequest extends AbstractTaskRequest {
+
+	private static final long serialVersionUID = 100L;
 
 	public static final String COMMAND = "command.bpm.FinishTask";
 
