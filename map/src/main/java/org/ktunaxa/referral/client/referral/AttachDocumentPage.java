@@ -131,11 +131,15 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 				errorFlow.setVisible(false);
 				String title = event.getString(KtunaxaConstant.FORM_DOCUMENT_TITLE);
 				String documentId = event.getString(KtunaxaConstant.FORM_DOCUMENT_ID);
+				String displayUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL);
+				String downloadUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DOWNLOAD_URL);
 				AssociationValue document = new AssociationValue();
 				Map<String, Attribute<?>> attribs = new HashMap<String, Attribute<?>>();
 				attribs.put("title", new StringAttribute(title));
 				attribs.put("description", new StringAttribute(title));
 				attribs.put("documentId", new StringAttribute(documentId));
+				attribs.put("displayUrl", new StringAttribute(displayUrl));
+				attribs.put("downloadUrl", new StringAttribute(downloadUrl));
 				document.setAllAttributes(attribs);
 				getWizardData().getFeature().addOneToManyValue(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, document);
 				busyImg.setVisible(false);

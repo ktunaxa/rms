@@ -81,7 +81,7 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	}
 
 	public boolean validate() {
-		return false;
+		return true;
 	}
 
 	public HandlerRegistration addItemChangedHandler(ItemChangedHandler handler) {
@@ -148,6 +148,10 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 		protected AbstractAttributeBlock newBlock(AssociationValue value) {
 			return new DocumentBlock(value);
 		}
+	}
+
+	public boolean silentValidate() {
+		return true;
 	}
 
 }

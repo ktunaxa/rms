@@ -6,10 +6,15 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+
+import org.geomajas.gwt.client.util.WindowUtil;
+import org.ktunaxa.referral.client.KtunaxaUrls;
 import org.ktunaxa.referral.client.security.UserContext;
 
 /**
@@ -57,6 +62,12 @@ public class TopBar extends HLayout {
 		headerBar.setStyleName("headerRight");
 
 		tasksButton = new ToolStripButton("Tasks");
+		tasksButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				WindowUtil.setLocation(KtunaxaUrls.getInstance().getBpmDashboardBaseUrl());
+			}
+		});
 		headerBar.addMember(tasksButton);
 		userButton = new ToolStripButton(UserContext.getInstance().getName()); // @todo update after login
 		userButton.setIcon("[ISOMORPHIC]/images/user-icon.png");

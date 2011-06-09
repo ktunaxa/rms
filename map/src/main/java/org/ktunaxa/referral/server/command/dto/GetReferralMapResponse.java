@@ -24,6 +24,8 @@ public class GetReferralMapResponse extends GetMapConfigurationResponse {
 
 	private String bpmDashboardBaseUrl;
 
+	private String cmisBaseUrl;
+
 	private List<ReferenceLayerTypeDto> layerTypes;
 
 	private List<ReferenceLayerDto> layers;
@@ -46,6 +48,14 @@ public class GetReferralMapResponse extends GetMapConfigurationResponse {
 
 	public void setBpmDashboardBaseUrl(String bpmDashboardBaseUrl) {
 		this.bpmDashboardBaseUrl = bpmDashboardBaseUrl;
+	}
+	
+	public String getCmisBaseUrl() {
+		return cmisBaseUrl;
+	}
+	
+	public void setCmisBaseUrl(String cmisBaseUrl) {
+		this.cmisBaseUrl = cmisBaseUrl;
 	}
 
 	public List<ReferenceLayerTypeDto> getLayerTypes() {

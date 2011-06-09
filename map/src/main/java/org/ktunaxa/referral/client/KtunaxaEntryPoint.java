@@ -7,11 +7,11 @@
 package org.ktunaxa.referral.client;
 
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
 import org.ktunaxa.referral.client.gui.CreateReferralLayout;
+import org.ktunaxa.referral.client.gui.DocumentItem;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.gui.SearchReferralLayout;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
@@ -24,8 +24,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -40,6 +38,8 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	public void onModuleLoad() {
 		// Register custom textarea item
 		registerTextAreaFormItem();
+		// Register custom item for uploading documents
+		registerDocumentIdFormItem();
 
 		// Determine the layout:
 		String createReferralParam = Window.Location.getParameter(KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER);
@@ -80,6 +80,22 @@ public class KtunaxaEntryPoint implements EntryPoint {
 			}
 		}, null);
 	}
+	
+	private void registerDocumentIdFormItem() {
+		// Register a custom form item for text area's:
+		AttributeFormFieldRegistry.registerCustomFormItem("DOCUMENT_ID_TYPE", new DataSourceFieldFactory() {
+
+			public DataSourceField create() {
+				return new DataSourceTextField();
+			}
+		}, new FormItemFactory() {
+
+			public FormItem create() {
+				return new DocumentItem();
+			}
+		}, null);
+	}
+	
 
 	/**
 	 * Initializes the links to other pages.
@@ -90,19 +106,9 @@ public class KtunaxaEntryPoint implements EntryPoint {
 
 		public void onResponse(final GetReferralMapResponse response) {
 			MapLayout mapLayout = MapLayout.getInstance();
-			mapLayout.getNewButton().addClickHandler(new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					WindowUtil.setLocation(addUrlParam(response.getMapDashboardBaseUrl(),
-							KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER));
-				}
-			});
-			mapLayout.getTopBar().getTasksButton().addClickHandler(new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					WindowUtil.setLocation(response.getBpmDashboardBaseUrl());
-				}
-			});
+			KtunaxaUrls.getInstance().setBpmDashboardBaseUrl(response.getBpmDashboardBaseUrl());
+			KtunaxaUrls.getInstance().setMapDashboardBaseUrl(response.getMapDashboardBaseUrl());
+			KtunaxaUrls.getInstance().setCmisBaseUrl(response.getCmisBaseUrl());
 		}
 
 	}
@@ -141,11 +147,4 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		}
 	}
 
-	private String addUrlParam(String baseUrl, String param) {
-		if (baseUrl.indexOf('?') > 0) {
-			return baseUrl + "&" + param;
-		} else {
-			return baseUrl + "?" + param;
-		}
-	}
 }

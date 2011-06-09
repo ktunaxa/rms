@@ -27,8 +27,9 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.events.ItemChangedEvent;
 import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
-import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.toolbar.ToolStrip;
 
 /**
  * Panel showing detail view of referral. Allows limited updates.
@@ -71,17 +72,23 @@ public class DetailPanel extends VLayout {
 			}
 
 		});
-		HLayout buttonLayout = new HLayout(5);
-		buttonLayout.setHeight(30);
+		ToolStrip toolStrip = new ToolStrip();
+		toolStrip.setWidth100();
+		toolStrip.setPadding(2);
+		toolStrip.setMembersMargin(5);
+		toolStrip.setHeight(30);
 		editButton = new EditButton();
 		saveButton = new SaveButton();
 		resetButton = new ResetButton();
 		cancelButton = new CancelButton();
-		buttonLayout.addMember(editButton);
-		buttonLayout.addMember(saveButton);
-		buttonLayout.addMember(resetButton);
-		buttonLayout.addMember(cancelButton);
-		addMember(buttonLayout);
+		LayoutSpacer spacer = new LayoutSpacer();
+		spacer.setWidth("*");
+		toolStrip.addMember(spacer);
+		toolStrip.addMember(editButton);
+		toolStrip.addMember(saveButton);
+		toolStrip.addMember(resetButton);
+		toolStrip.addMember(cancelButton);
+		addMember(toolStrip);
 		addMember(editor);
 		updateButtonState(false);
 	}
@@ -93,7 +100,11 @@ public class DetailPanel extends VLayout {
 			cancelButton.setDisabled(true);
 			editButton.setDisabled(false);
 		} else if (formChanged) {
-			saveButton.setDisabled(false);
+			if (editor.validate()) {
+				saveButton.setDisabled(false);
+			} else {
+				saveButton.setDisabled(true);
+			}
 			resetButton.setDisabled(false);
 			cancelButton.setDisabled(false);
 			editButton.setDisabled(true);

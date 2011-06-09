@@ -99,16 +99,18 @@ public abstract class AttributeBlockLayout<W extends Widget> extends VLayout {
 		detailView.getSaveButton().addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				// if the block is new add it to the list
-				if (currentBlock == null) {
-					currentBlock = newBlock(detailView.getValue());
-					initBlock(currentBlock);
-					listView.addBlock(currentBlock);
+				if (detailView.validate()) {
+					// if the block is new add it to the list
+					if (currentBlock == null) {
+						currentBlock = newBlock(detailView.getValue());
+						initBlock(currentBlock);
+						listView.addBlock(currentBlock);
+					}
+					// the association value has changed, refresh the blocks
+					listView.updateBlocks();
+					// we've changed, let the handlers know
+					manager.fireEvent(new ChangedEvent(null));
 				}
-				// the association value has changed, refresh the blocks
-				listView.updateBlocks();
-				// we've changed, let the handlers know
-				manager.fireEvent(new ChangedEvent(null));
 			}
 		});
 	}

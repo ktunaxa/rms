@@ -16,11 +16,15 @@ import org.geomajas.gwt.client.spatial.Bbox;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.spatial.geometry.MultiPoint;
 import org.geomajas.gwt.client.spatial.geometry.Point;
+import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.Toolbar;
+import org.ktunaxa.referral.client.KtunaxaUrls;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.client.widget.ReferralMapWidget;
 import org.ktunaxa.referral.client.widget.ResizableLeftLayout;
 
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
@@ -95,6 +99,14 @@ public final class MapLayout extends VLayout {
 			menuBar.addNavigationButton(button);
 		}
 		newButton = new ToolStripButton("NEW");
+		newButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				WindowUtil.setLocation(addUrlParam(KtunaxaUrls.getInstance().getMapDashboardBaseUrl(),
+						KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER));
+			}
+		});
+		
 		menuBar.addActionButton(newButton);
 
 		// add all
@@ -221,4 +233,14 @@ public final class MapLayout extends VLayout {
 		List<ToolStripButton> buttons = infoPane.getButtons();
 		return buttons.get(buttons.size() - 1);
 	}
+	
+	private String addUrlParam(String baseUrl, String param) {
+		if (baseUrl.indexOf('?') > 0) {
+			return baseUrl + "&" + param;
+		} else {
+			return baseUrl + "?" + param;
+		}
+	}
+
+
 }

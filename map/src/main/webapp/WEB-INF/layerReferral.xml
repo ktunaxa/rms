@@ -685,6 +685,47 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="URL to open" />
+	                                    <property name="name" value="displayUrl" />
+	                                    <property name="editable" value="true" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="URL" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="URL to save" />
+	                                    <property name="name" value="downloadUrl" />
+	                                    <property name="editable" value="true" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="URL" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Alfresco ID" />
@@ -692,6 +733,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
+	                                    <property name="formInputType" value="DOCUMENT_ID_TYPE" />
 	                                </bean>
 						            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 						                <property name="label" value="type" />
@@ -730,6 +772,15 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 						                        </property>
 						                    </bean>
 						                </property>
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
 						            </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Added by" />
@@ -737,6 +788,15 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Addition date" />
@@ -744,6 +804,15 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="DATE" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Confidential" />

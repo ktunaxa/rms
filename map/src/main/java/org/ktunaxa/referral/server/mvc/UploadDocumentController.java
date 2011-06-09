@@ -44,6 +44,8 @@ public class UploadDocumentController {
 					file.getInputStream());
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_TITLE, file.getOriginalFilename());
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_ID, document.getId());
+			response.addObject(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL, cmisService.getDisplayUrl(document));
+			response.addObject(KtunaxaConstant.FORM_DOCUMENT_DOWNLOAD_URL, cmisService.getDownloadUrl(document));
 			model.addAttribute(UploadView.RESPONSE, response);
 		} catch (Exception e) {
 			log.error("Could not upload document", e);

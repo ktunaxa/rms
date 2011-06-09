@@ -26,6 +26,10 @@ public interface KtunaxaConstant {
 	
 	String FORM_DOCUMENT_ID = "documentId";
 
+	String FORM_DOCUMENT_DISPLAY_URL = "displayUrl";
+
+	String FORM_DOCUMENT_DOWNLOAD_URL = "downloadUrl";
+
 	String LAYER_CRS = "EPSG:26911";
 
 	String MAP_CRS = "EPSG:900913";
@@ -54,5 +58,9 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_EXTERNAL_AGENCY = "externalAgencyName";
 	String ATTRIBUTE_PROJECT_DESCRIPTION = "projectDescription";
 	String ATTRIBUTE_PROJECT_BACKGROUND = "projectBackground";
+	String ATTRIBUTE_DOCUMENT_ID = "documentId";
+	String ATTRIBUTE_DOCUMENT_TITLE = "title";
+	String ATTRIBUTE_DOCUMENT_DOWNLOAD_URL = "downloadUrl";
+	String ATTRIBUTE_DOCUMENT_DISPLAY_URL = "displayUrl";
 
 }

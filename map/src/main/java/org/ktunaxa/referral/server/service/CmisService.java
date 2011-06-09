@@ -51,7 +51,17 @@ public interface CmisService {
 	 * @return The URL at which the document can be downloaded. Note that credentials will probably be required to
 	 *         access the URL.
 	 */
-	String getDocumentUrl(Document document);
+	String getDownloadUrl(Document document);
+
+	/**
+	 * Return the URL that points to a display link for the document.
+	 * 
+	 * @param document
+	 *            The document object to get the display link for.
+	 * @return The URL at which the document can be displayed. Note that credentials will probably be required to
+	 *         access the URL.
+	 */
+	String getDisplayUrl(Document document);
 
 	/**
 	 * Create a new document within the working folder.

@@ -43,9 +43,13 @@ public class Document {
 	@Column(nullable = false, name = "description")
 	private String description;
 
-//	/** Content keywords as a comma separated list. */
-//	@Column(name = "keywords")
-//	private String keywords;
+	/** Document display URL in the CMIS */
+	@Column(nullable = false, name = "display_url")
+	private String displayUrl;
+
+	/** Document download URL in the CMIS */
+	@Column(nullable = false, name = "download_url")
+	private String downloadUrl;
 
 	/** What type of document being stored in system - Internal response, external response, etc... */
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -151,6 +155,42 @@ public class Document {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * Returns the document download URL in the CMS.
+	 * 
+	 * @return document download URL
+	 */
+	public String getDownloadUrl() {
+		return downloadUrl;
+	}
+	
+	/**
+	 * Sets the document download URL in the CMS.
+	 * 
+	 * @param document download URL
+	 */
+	public void setDownloadUrl(String downloadUrl) {
+		this.downloadUrl = downloadUrl;
+	}
+
+	/**
+	 * Returns the document display URL in the CMS.
+	 * 
+	 * @return document display URL
+	 */
+	public String getDisplayUrl() {
+		return displayUrl;
+	}
+	
+	/**
+	 * Sets the document display URL in the CMS.
+	 * 
+	 * @param document display URL
+	 */
+	public void setDisplayUrl(String displayUrl) {
+		this.displayUrl = displayUrl;
 	}
 
 	/**

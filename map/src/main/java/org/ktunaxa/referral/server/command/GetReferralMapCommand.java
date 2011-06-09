@@ -20,6 +20,7 @@ import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceLayerType;
 import org.ktunaxa.referral.server.dto.ReferenceLayerDto;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
+import org.ktunaxa.referral.server.service.CmisService;
 import org.ktunaxa.referral.server.service.DtoConverterService;
 import org.ktunaxa.referral.server.service.ReferenceLayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,9 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 	@Autowired
 	private DtoConverterService converterService;
 
+	@Autowired
+	private CmisService cmisService;
+
 	public GetReferralMapResponse getEmptyCommandResponse() {
 		return new GetReferralMapResponse();
 	}
@@ -61,6 +65,7 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 		// Add the urls to the response:
 		response.setBpmDashboardBaseUrl(ktunaxaConfiguration.getBpmDashboardBaseUrl());
 		response.setMapDashboardBaseUrl(ktunaxaConfiguration.getMapDashboardBaseUrl());
+		response.setCmisBaseUrl(cmisService.getBaseUrl());
 
 		// Add the layer types to the response:
 		List<ReferenceLayerType> layerTypes = referenceLayerService.findLayerTypes();

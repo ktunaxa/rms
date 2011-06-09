@@ -33,13 +33,13 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	private HLayout infoLayout;
 
 	private HTMLFlow content;
-	
+
 	private HTMLFlow titleText;
-	
+
 	private HTMLFlow info;
 
 	private Button editButton;
-	
+
 	private Button deleteButton;
 
 	private Img checked;
@@ -64,7 +64,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		infoLayout.setVisible(false);
 		content.setVisible(false);
 	}
-	
+
 	@Override
 	protected boolean valueEquals(AbstractAttributeBlock other) {
 		AssociationValue otherValue = other.getValue();
@@ -81,9 +81,13 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	@Override
 	public void redrawValue() {
 		titleText.setContents("<div class='documentBlockTitleText'>" + getDocumentTitle() + "</div>");
-		info.setContents("<div class='documentBlockInfo'>Posted by " + getAddedBy() + " @ " + getAdditionDate()
+		info.setContents("<div class='documentBlockInfo'>Added by " + getAddedBy() + " @ " + getAdditionDate()
 				+ "</div>");
-		content.setContents("<div class='documentBlockType'>" + getTypeTitle() + "</div>");
+		content.setContents("<div class='documentBlockType'>" + "Description : " + getDocumentDescription()
+				+ "<br>Type : " + getDocumentTypeTitle() + "<br>" 
+				+ "<a target='_ktunaxa_doc' href='" + getDocumentDisplayUrl() + "'>Open</a>  " 
+				+ "<a href='" + getDocumentDownloadUrl() + "'>Save</a>"
+				+ "</div>");
 		if (isIncludeInReport()) {
 			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png");
 		} else {
@@ -115,7 +119,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		}
 		checked.setLayoutAlign(VerticalAlignment.CENTER);
 		title.addMember(checked);
-		titleText = new HTMLFlow("<div class='documentBlockTitleText'>" + getDocumentTitle() + "</div>");
+		titleText = new HTMLFlow();
 		titleText.setSize("100%", "22");
 		title.addMember(titleText);
 		addMember(title);
@@ -124,8 +128,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		infoLayout.setHeight(24);
 		infoLayout.setLayoutRightMargin(5);
 		infoLayout.setLayoutTopMargin(5);
-		info = new HTMLFlow("<div class='documentBlockInfo'>Posted by " + getAddedBy() + " @ "
-				+ getAdditionDate() + "</div>");
+		info = new HTMLFlow();
 		info.setSize("*", "24");
 		infoLayout.addMember(info);
 
@@ -138,13 +141,14 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		infoLayout.addMember(deleteButton);
 		addMember(infoLayout);
 
-		content = new HTMLFlow("<div class='documentBlockType'>" + getTypeTitle() + "</div>");
+		content = new HTMLFlow();
 		content.setHeight(20);
 		content.setWidth100();
+		redrawValue();
 		addMember(content);
 	}
 
-	private String getTypeTitle() {
+	private String getDocumentTypeTitle() {
 		AssociationValue type = (AssociationValue) getValue().getAttributeValue("type");
 		if (type != null) {
 			return (String) type.getAttributeValue("title");
@@ -156,8 +160,16 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		return (String) getValue().getAttributeValue("title");
 	}
 
-	private String getDescription() {
+	private String getDocumentDescription() {
 		return (String) getValue().getAttributeValue("description");
+	}
+
+	private String getDocumentDisplayUrl() {
+		return (String) getValue().getAttributeValue("displayUrl");
+	}
+
+	private String getDocumentDownloadUrl() {
+		return (String) getValue().getAttributeValue("downloadUrl");
 	}
 
 	private Date getAdditionDate() {
@@ -180,7 +192,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
-			compare = getDescription();
+			compare = getDocumentDescription();
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
@@ -188,7 +200,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
-			compare = getTypeTitle();
+			compare = getDocumentTypeTitle();
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
@@ -205,6 +217,5 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	public void addDeleteHandler(ClickHandler clickHandler) {
 		deleteButton.addClickHandler(clickHandler);
 	}
-
 
 }

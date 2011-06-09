@@ -11,14 +11,10 @@ import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 
 import com.google.gwt.user.client.ui.Widget;
-import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.DrawEvent;
-import com.smartgwt.client.widgets.events.DrawHandler;
 import com.smartgwt.client.widgets.form.events.ItemChangedEvent;
 import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
-import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
@@ -44,16 +40,19 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	private IButton saveButton;
 
 	private IButton resetButton;
-
-	private IButton cancelButton;
-
-	private HLayout savePanel;
-
+	
 	private AssociationValue value;
 
 	public AttributeBlockDetail(FeatureForm<W> form) {
 		this.form = form;
 		form.setDisabled(false);
+		form.addItemChangedHandler(new ItemChangedHandler() {
+
+			public void onItemChanged(ItemChangedEvent event) {
+				updateButtonState(true);
+			}
+
+		});
 		buildGui();
 	}
 
@@ -68,6 +67,10 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	public AssociationValue getValue() {
 		return value;
 	}
+	
+	public boolean validate() {
+		return form.validate();
+	}
 
 	private void buildGui() {
 		setSize("100%", "100%");
@@ -75,37 +78,36 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 		toolStrip = new ToolStrip();
 		toolStrip.setWidth100();
 		toolStrip.setPadding(2);
+		toolStrip.setMembersMargin(5);
 		backButton = new BackButton();
+		saveButton = new SaveButton();
+		resetButton = new ResetButton();
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setWidth("*");
 		toolStrip.addMember(spacer);
+		toolStrip.addMember(saveButton);
+		toolStrip.addMember(resetButton);
 		toolStrip.addMember(backButton);
-
-		savePanel = new HLayout(10);
-		saveButton = new SaveButton();
-		resetButton = new ResetButton();
-		cancelButton = new CancelButton();
-		savePanel.addMember(saveButton);
-		savePanel.addMember(resetButton);
-		savePanel.addMember(cancelButton);
-		savePanel.setAlign(Alignment.CENTER);
-		savePanel.setPadding(10);
 
 		VLayout layout = new VLayout();
 		layout.setWidth100();
 		layout.addMember(toolStrip);
 		layout.addMember(form.getWidget());
-		layout.addMember(savePanel);
 		addMember(layout);
-
-		// Set the save button as disabled at startup:
-		addDrawHandler(new DrawHandler() {
-
-			public void onDraw(DrawEvent event) {
-				saveButton.setDisabled(true);
-			}
-		});
-
+		updateButtonState(false);
+	}
+	
+	private void updateButtonState(boolean formChanged) {
+		if (formChanged) {
+			saveButton.setDisabled(false);
+		} else {
+			saveButton.setDisabled(true);
+		}
+		if (formChanged) {
+			resetButton.setDisabled(false);
+		} else {
+			resetButton.setDisabled(true);
+		}
 	}
 
 	/** Definition of the Save button. */
@@ -116,21 +118,12 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 			setShowDisabledIcon(false);
 			setTitle(I18nProvider.getAttribute().btnSaveTitle());
 			setTooltip(I18nProvider.getAttribute().btnSaveTooltip());
-			form.addItemChangedHandler(new ItemChangedHandler() {
-
-				public void onItemChanged(ItemChangedEvent event) {
-					if (form.validate()) {
-						setDisabled(false);
-					} else {
-						setDisabled(true);
-					}
-				}
-			});
 			addClickHandler(this);
 		}
 
 		public void onClick(ClickEvent event) {
 			form.fromForm(value);
+			updateButtonState(false);
 		}
 	}
 
@@ -150,6 +143,7 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 
 		public void onClick(ClickEvent event) {
 			form.toForm(value);
+			updateButtonState(false);
 		}
 	}
 
@@ -170,6 +164,7 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 
 		public void onClick(ClickEvent event) {
 			form.toForm(value);
+			updateButtonState(false);
 		}
 	}
 
@@ -177,26 +172,12 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	// Private class CancelButton:
 	// -------------------------------------------------------------------------
 
-	/** Definition of the cancel button that cancels editing (editingEnabled=false). */
-	private class CancelButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
-
-		public CancelButton() {
-			setIcon("[ISOMORPHIC]/geomajas/osgeo/quit.png");
-			setShowDisabledIcon(false);
-			setTitle(I18nProvider.getAttribute().btnCancelTitle());
-			setTooltip(I18nProvider.getAttribute().btnCancelTooltip());
-			addClickHandler(this);
-		}
-
-		public void onClick(ClickEvent event) {
-			form.toForm(value);
-		}
-	}
 
 	public void showDetails(AssociationValue value) {
 		this.value = value;
 		form.clear();
 		form.toForm(value);
+		updateButtonState(false);
 	}
 
 }

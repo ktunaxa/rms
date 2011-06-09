@@ -38,6 +38,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 
 	public ReferralDetailForm(VectorLayer layer) {
 		super(layer);
+		getWidget().setStyleName("attributeForm");
 	}
 
 	@Override
