@@ -102,10 +102,9 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	 * 
 	 * @author Jan De Moerloose
 	 */
-	private class LinkInitializer implements MapCallback {
+	private static class LinkInitializer implements MapCallback {
 
 		public void onResponse(final GetReferralMapResponse response) {
-			MapLayout mapLayout = MapLayout.getInstance();
 			KtunaxaUrls.getInstance().setBpmDashboardBaseUrl(response.getBpmDashboardBaseUrl());
 			KtunaxaUrls.getInstance().setMapDashboardBaseUrl(response.getMapDashboardBaseUrl());
 			KtunaxaUrls.getInstance().setCmisBaseUrl(response.getCmisBaseUrl());
@@ -118,7 +117,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	 * 
 	 * @author Jan De Moerloose
 	 */
-	private class ReferralInitializer implements MapCallback {
+	private static class ReferralInitializer implements MapCallback {
 
 		public void onResponse(GetReferralMapResponse response) {
 			MapLayout mapLayout = MapLayout.getInstance();
@@ -131,7 +130,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	 * 
 	 * @author Jan De Moerloose
 	 */
-	private class LayerInitializer implements MapCallback {
+	private static class LayerInitializer implements MapCallback {
 
 		public void onResponse(GetReferralMapResponse response) {
 			MapLayout mapLayout = MapLayout.getInstance();
