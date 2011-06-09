@@ -8,6 +8,7 @@ package org.ktunaxa.referral.server.command;
 
 import org.geomajas.command.Command;
 import org.geomajas.command.CommandDispatcher;
+import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.SearchFeatureRequest;
 import org.geomajas.command.dto.SearchFeatureResponse;
 import org.geomajas.global.ExceptionCode;
@@ -19,6 +20,8 @@ import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.command.dto.GetReferralRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralResponse;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +32,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class GetReferralCommand implements Command<GetReferralRequest, GetReferralResponse> {
+
+	private final Logger log = LoggerFactory.getLogger(GetReferralCommand.class);
 
 	@Autowired
 	private CommandDispatcher commandDispatcher;
@@ -41,13 +46,13 @@ public class GetReferralCommand implements Command<GetReferralRequest, GetReferr
 	}
 
 	public void execute(GetReferralRequest request, GetReferralResponse response) throws Exception {
-		String taskId = request.getReferralId();
-		if (null == taskId) {
-			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "taskId");
+		String referralId = request.getReferralId();
+		if (null == referralId) {
+			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "referralId");
 		}
 
 		// Add the referral to the response:
-		response.setReferral(getReferral(request.getReferralId()));
+		response.setReferral(getReferral(referralId));
 	}
 
 	/**
@@ -65,10 +70,15 @@ public class GetReferralCommand implements Command<GetReferralRequest, GetReferr
 			searchFeatureRequest.setLayerId(KtunaxaConstant.REFERRAL_SERVER_LAYER_ID);
 			searchFeatureRequest.setMax(1);
 			searchFeatureRequest.setFeatureIncludes(GeomajasConstant.FEATURE_INCLUDE_ALL);
-			SearchFeatureResponse searchFeatureResponse = (SearchFeatureResponse) commandDispatcher.execute(
+			CommandResponse commandResponse = commandDispatcher.execute(
 					SearchFeatureRequest.COMMAND, searchFeatureRequest, securityContext.getToken(), null);
-			if (searchFeatureResponse.getFeatures().length > 0) {
-				return searchFeatureResponse.getFeatures()[0];
+			if (commandResponse instanceof SearchFeatureResponse) {
+				SearchFeatureResponse searchFeatureResponse = (SearchFeatureResponse) commandResponse;
+				if (searchFeatureResponse.getFeatures().length > 0) {
+					return searchFeatureResponse.getFeatures()[0];
+				}
+			} else {
+				log.error("Search referral failed {} {}", commandResponse.isError(), commandResponse.getExceptions());
 			}
 		}
 		return null;
