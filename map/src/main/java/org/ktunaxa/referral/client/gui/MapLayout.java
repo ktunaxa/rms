@@ -71,6 +71,8 @@ public final class MapLayout extends VLayout {
 	}
 
 	private MapLayout() {
+		super();
+
 		setWidth100();
 		setHeight100();
 		// the info pane

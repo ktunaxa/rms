@@ -33,6 +33,7 @@ public class ReferralInfoPage extends WizardPage<ReferralData> {
 	private HTMLFlow invalidBottom;
 
 	public ReferralInfoPage() {
+		super();
 		mainLayout = new VLayout();
 		mainLayout.setWidth100();
 		mainLayout.setHeight100();

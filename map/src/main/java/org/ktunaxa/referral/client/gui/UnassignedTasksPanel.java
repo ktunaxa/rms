@@ -63,6 +63,7 @@ public class UnassignedTasksPanel extends VLayout {
 	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[CANDIDATE_CHECKS.length];
 
 	public UnassignedTasksPanel() {
+		super();
 		setWidth100();
 
 		SectionStack groups = new SectionStack();

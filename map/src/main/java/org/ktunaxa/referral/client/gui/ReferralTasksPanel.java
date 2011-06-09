@@ -50,6 +50,7 @@ public class ReferralTasksPanel extends VLayout {
 	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[GROUP_TITLES.length];
 
 	public ReferralTasksPanel() {
+		super();
 		setWidth100();
 
 		SectionStack groups = new SectionStack();

@@ -33,6 +33,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class CommentPanel extends VLayout {
 
 	public CommentPanel() {
+		super();
 		setWidth100();
 		Map<String, Comparator<AbstractCollapsibleListBlock<CommentDto>>> sortAttributes;
 		sortAttributes = new HashMap<String, Comparator<AbstractCollapsibleListBlock<CommentDto>>>();

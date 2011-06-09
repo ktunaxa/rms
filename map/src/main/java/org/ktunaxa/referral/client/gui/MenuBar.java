@@ -27,6 +27,8 @@ public class MenuBar extends ToolStrip {
 	 * Construct a default menu bar.
 	 */
 	public MenuBar() {
+		super();
+
 		setMembersMargin(5);
 		setSize("100%", "36");
 		setBorder("none");

@@ -42,6 +42,7 @@ public class ReferralPanel extends VLayout {
 	 * Constructs a new referral panel.
 	 */
 	public ReferralPanel() {
+		super();
 		setSize("100%", "100%");
 
 		tabs = new TabSet();

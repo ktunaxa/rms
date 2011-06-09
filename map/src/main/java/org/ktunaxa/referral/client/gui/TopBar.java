@@ -40,6 +40,7 @@ public class TopBar extends HLayout {
 	 * Constructs a top bar.
 	 */
 	public TopBar() {
+		super();
 		setSize("100%", "44");
 		setStyleName("header");
 

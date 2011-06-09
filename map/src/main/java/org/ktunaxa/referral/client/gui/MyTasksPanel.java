@@ -32,6 +32,8 @@ public class MyTasksPanel extends VLayout {
 	private List<AbstractCollapsibleListBlock<TaskDto>> list = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
 
 	public MyTasksPanel() {
+		super();
+
 		setWidth100();
 		view = new TaskListView();
 		addChild(view);

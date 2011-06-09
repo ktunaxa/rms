@@ -30,6 +30,7 @@ public class BpmPanel extends VLayout {
 
 	/** Constructs a new referral panel. */
 	public BpmPanel() {
+		super();
 		setSize("100%", "100%");
 
 		tabs = new TabSet();

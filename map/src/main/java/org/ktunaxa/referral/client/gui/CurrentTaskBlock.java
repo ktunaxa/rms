@@ -51,6 +51,8 @@ public class CurrentTaskBlock extends CardLayout {
 	private final CardLayout taskForms = new CardLayout();
 
 	public CurrentTaskBlock() {
+		super();
+
 		VLayout noTask = new VLayout();
 		HTMLFlow noTaskText = new HTMLFlow("No current task, please select one.");
 		noTaskText.setWidth100();

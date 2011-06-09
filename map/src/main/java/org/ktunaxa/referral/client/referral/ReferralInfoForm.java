@@ -27,6 +27,8 @@ import com.smartgwt.client.widgets.form.fields.SelectItem;
  */
 public class ReferralInfoForm extends DefaultFeatureForm {
 
+	private static final int COLUMN_COUNT = 4;
+
 	public ReferralInfoForm(VectorLayer layer) {
 		super(layer);
 		addItemChangedHandler(new ReferralIdSetter());
@@ -44,12 +46,12 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 			targetItem.setDisplayField(ReferralManyToOneDataSource.LAND_REFERRAL_ID_FIELD);
 		}
 		if (KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY.equals(info.getName())) {
-			formItem.setColSpan(4);
+			formItem.setColSpan(COLUMN_COUNT);
 		} else if (KtunaxaConstant.ATTRIBUTE_PROJECT_DESCRIPTION.equals(info.getName())) {
-			formItem.setColSpan(4);
+			formItem.setColSpan(COLUMN_COUNT);
 			formItem.setHeight(50);
 		} else if (KtunaxaConstant.ATTRIBUTE_PROJECT_BACKGROUND.equals(info.getName())) {
-			formItem.setColSpan(4);
+			formItem.setColSpan(COLUMN_COUNT);
 			formItem.setHeight(50);
 		} else if (KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE.equals(info.getName())) {
 			formItem.setColSpan(4);
@@ -80,35 +82,35 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 		RowSpacerItem externalSpacer = new RowSpacerItem("external-info-spacer");
 		HeaderItem externalHeader = new HeaderItem("external-info-header");
 		externalHeader.setDefaultValue("External project information");
-		externalHeader.setColSpan(4);
+		externalHeader.setColSpan(COLUMN_COUNT);
 		formItems.insertBefore("externalProjectId", externalSpacer, externalHeader);
 
 		RowSpacerItem contactSpacer = new RowSpacerItem("contact-info-spacer");
 		HeaderItem contactHeader = new HeaderItem("contact-info-header");
 		contactHeader.setDefaultValue("Referral contact information");
-		contactHeader.setColSpan(4);
+		contactHeader.setColSpan(COLUMN_COUNT);
 		formItems.insertBefore("contactName", contactSpacer, contactHeader);
 
 		RowSpacerItem typeSpacer = new RowSpacerItem("type-info-spacer");
 		HeaderItem typeHeader = new HeaderItem("type-info-header");
 		typeHeader.setDefaultValue("General information regarding the referral");
-		typeHeader.setColSpan(4);
+		typeHeader.setColSpan(COLUMN_COUNT);
 		formItems.insertBefore("referralType", typeSpacer, typeHeader);
 
 		RowSpacerItem dateSpacer = new RowSpacerItem("date-info-spacer");
 		HeaderItem dateHeader = new HeaderItem("date-info-header");
 		dateHeader.setDefaultValue("Project deadline information");
-		dateHeader.setColSpan(4);
+		dateHeader.setColSpan(COLUMN_COUNT);
 		formItems.insertBefore("receiveDate", dateSpacer, dateHeader);
 
 		RowSpacerItem documentSpacer = new RowSpacerItem("document-info-spacer");
 		HeaderItem documentHeader = new HeaderItem("document-info-header");
 		documentHeader.setDefaultValue("Document management classificiation");
-		documentHeader.setColSpan(4);
+		documentHeader.setColSpan(COLUMN_COUNT);
 		formItems.insertBefore("activeRetentionPeriod", documentSpacer, documentHeader);
 
 		getWidget().setWidth("100%");
-		getWidget().setNumCols(4);
+		getWidget().setNumCols(COLUMN_COUNT);
 		getWidget().setColWidths(175, "50%", 225, "50%");
 	}
 

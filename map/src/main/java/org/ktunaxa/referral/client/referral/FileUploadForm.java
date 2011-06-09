@@ -32,6 +32,7 @@ public class FileUploadForm extends DynamicForm {
 	private HandlerManager handlerManager;
 
 	public FileUploadForm(String title, String targetUrl) {
+		super();
 		if (!targetUrl.contains("?")) {
 			targetUrl += "?" + KtunaxaConstant.FORM_ID + "=" + getID();
 		} else {

@@ -55,6 +55,8 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	private HTMLFlow errorFlow;
 
 	public AddGeometryPage(MapWidget mapWidget) {
+		super();
+
 		layout = new VLayout(10);
 		layout.addMember(createUploadLayout());
 		mapWidget.setZoomOnScrollEnabled(false);

@@ -22,6 +22,8 @@ public class CreateReferralLayout extends VLayout {
 	private ReferralCreationWizard wizard;
 
 	public CreateReferralLayout() {
+		super();
+
 		setWidth100();
 		setHeight100();
 		setOverflow(Overflow.VISIBLE);

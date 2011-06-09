@@ -44,6 +44,8 @@ public class LayerBlock extends HLayout {
 	 * @param subLayer the layer that you call sublayer
 	 */
 	public LayerBlock(ReferenceSubLayer subLayer) {
+		super();
+
 		this.subLayer = subLayer;
 		setSize("100%", "26px");
 		setStyleName("layerBlock");

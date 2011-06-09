@@ -30,6 +30,8 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 	private VLayout summaryLayout;
 
 	public ReferralConfirmPage() {
+		super();
+
 		widget = new VLayout();
 		widget.setMembersMargin(10);
 		widget.setWidth100();

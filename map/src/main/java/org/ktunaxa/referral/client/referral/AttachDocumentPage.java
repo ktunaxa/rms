@@ -48,6 +48,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 	private Img busyImg;
 
 	public AttachDocumentPage() {
+		super();
 		layout = new VLayout();
 		layout.addMember(createUploadLayout());
 

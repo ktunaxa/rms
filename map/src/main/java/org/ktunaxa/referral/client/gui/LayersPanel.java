@@ -38,6 +38,8 @@ public class LayersPanel extends VLayout {
 	public static final String NAME = "LAYERS";
 
 	public LayersPanel(MapWidget mapWidget) {
+		super();
+
 		setSize("100%", "100%");
 
 		TabSet tabs = new TabSet();

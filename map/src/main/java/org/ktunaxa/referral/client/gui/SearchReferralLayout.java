@@ -18,6 +18,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class SearchReferralLayout extends VLayout {
 
 	public SearchReferralLayout() {
+		super();
 		setWidth("100%");
 		setOverflow(Overflow.VISIBLE);
 
