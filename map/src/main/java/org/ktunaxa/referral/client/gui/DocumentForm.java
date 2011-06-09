@@ -77,7 +77,8 @@ public class DocumentForm extends DefaultFeatureForm {
 						new UrlAttribute(documentItem.getDocumentDisplayUrl()));
 				setValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL,
 						new UrlAttribute(documentItem.getDocumentDownLoadUrl()));
-				setValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, new StringAttribute(documentItem.getDocumentTitle()));
+				setValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, 
+						new StringAttribute(documentItem.getDocumentTitle()));
 			}
 		}
 	}
