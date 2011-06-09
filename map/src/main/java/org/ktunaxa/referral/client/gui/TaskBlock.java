@@ -52,6 +52,8 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	private HTMLFlow content;
 
 	private Img titleImage = new Img(IMAGE_MINIMIZE, 16, 16);
+	private Button startButton = new Button("Start");
+	private Button claimButton = new Button("Claim");
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -149,19 +151,16 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		final String me = UserContext.getInstance().getUser();
 
-		Button startButton = new Button("Start");
 		startButton.setLayoutAlign(VerticalAlignment.CENTER);
 		startButton.setShowRollOver(false);
-		if (null != task.getAssignee() && !me.equals(task.getAssignee())) {
-			// disable when assigned to someone else
-			startButton.setDisabled(true);
-		}
+		setStartButtonStatus(task);
 		startButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
 				assign(getObject(), me, true);
 			}
 		});
 		infoLayout.addMember(startButton);
+
 		Button assignButton = new Button("Assign");
 		assignButton.setLayoutAlign(VerticalAlignment.CENTER);
 		assignButton.setShowRollOver(false);
@@ -177,13 +176,10 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 			}
 		});
 		infoLayout.addMember(assignButton);
-		Button claimButton = new Button("Claim");
+
 		claimButton.setLayoutAlign(VerticalAlignment.CENTER);
 		claimButton.setShowRollOver(false);
-		if (null != task.getAssignee()) {
-			// disable when already assigned
-			claimButton.setDisabled(true);
-		}
+		setClaimButtonStatus(task);
 		claimButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
 				assign(getObject(), me, false);
@@ -207,6 +203,21 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		addMember(content);
 	}
 
+	private void setClaimButtonStatus(TaskDto task) {
+		if (null != task.getAssignee()) {
+			// disable when already assigned
+			claimButton.setDisabled(true);
+		}
+	}
+
+	private void setStartButtonStatus(TaskDto task) {
+		String me = UserContext.getInstance().getUser();
+		if (null != task.getAssignee() && !me.equals(task.getAssignee())) {
+			// disable when assigned to someone else
+			startButton.setDisabled(true);
+		}
+	}
+
 	private void assign(final TaskDto task, final String assignee, final boolean start) {
 		AssignTaskRequest request = new AssignTaskRequest();
 		request.setTaskId(task.getId());
@@ -215,6 +226,8 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		command.setCommandRequest(request);
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetReferralResponse>() {
 			public void execute(GetReferralResponse response) {
+				setStartButtonStatus(task);
+				setClaimButtonStatus(task);
 				// @todo do I need to modify the state of the task in the list, possibly remove, refresh, whatever?
 				if (start) {
 					start(task, response.getReferral());
