@@ -25,4 +25,8 @@ public interface KtunaxaBpmConstant {
 	String REFERRAL_CONTEXT_EMAIL = "requesterEmail";
 	String REFERRAL_CONTEXT_ENGAGEMENT_LEVEL = "engagementLevel";
 	String REFERRAL_CONTEXT_COMPLETION_DEADLINE = "completionDeadline";
+	String REFERRAL_CONTEXT_FINAL_DECISION_CONSISTENT = "finalDecisionConsistent";
+	String REFERRAL_CONTEXT_EVALUATE_VALUES = "evaluateValues";
+	String REFERRAL_CONTEXT_DECISION_CONSISTENT = "decisionConsistent";
+	String REFERRAL_CONTEXT_EVALUATE_AQUATIC = "evalAquatic";
 }

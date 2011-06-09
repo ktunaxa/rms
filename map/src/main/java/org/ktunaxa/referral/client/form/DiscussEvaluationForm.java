@@ -6,6 +6,13 @@
 
 package org.ktunaxa.referral.client.form;
 
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
+import org.ktunaxa.referral.server.dto.TaskDto;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Empty task form, not requiring input of any values.
  *
@@ -13,4 +20,29 @@ package org.ktunaxa.referral.client.form;
  */
 public class DiscussEvaluationForm extends AbstractTaskForm {
 
+	private CheckboxItem finalDecisionConsistent = new CheckboxItem();
+
+	public DiscussEvaluationForm() {
+		super();
+
+		finalDecisionConsistent.setName("finalDecisionConsistent");
+		finalDecisionConsistent.setHint("Provincial decision is consistent with KLRA response");
+
+		setFields(finalDecisionConsistent);
+	}
+
+	@Override
+	public void refresh(TaskDto task) {
+		super.refresh(task);
+		finalDecisionConsistent.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.REFERRAL_CONTEXT_FINAL_DECISION_CONSISTENT));
+	}
+
+	@Override
+	public Map<String, String> getVariables() {
+		Map<String, String> result = new HashMap<String, String>();
+		result.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_FINAL_DECISION_CONSISTENT,
+				nullSafeToString(finalDecisionConsistent.getValue()));
+		return result;
+	}
 }
