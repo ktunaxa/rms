@@ -50,8 +50,6 @@ public class DetailPanel extends VLayout {
 
 	private CancelButton cancelButton;
 
-	private ResetButton resetButton;
-
 	public DetailPanel() {
 		super(10);
 		setSize("100%", "100%");
@@ -79,14 +77,12 @@ public class DetailPanel extends VLayout {
 		toolStrip.setHeight(30);
 		editButton = new EditButton();
 		saveButton = new SaveButton();
-		resetButton = new ResetButton();
 		cancelButton = new CancelButton();
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setWidth("*");
 		toolStrip.addMember(spacer);
 		toolStrip.addMember(editButton);
 		toolStrip.addMember(saveButton);
-		toolStrip.addMember(resetButton);
 		toolStrip.addMember(cancelButton);
 		addMember(toolStrip);
 		addMember(editor);
@@ -96,7 +92,6 @@ public class DetailPanel extends VLayout {
 	private void updateButtonState(boolean formChanged) {
 		if (editor.isDisabled()) {
 			saveButton.setDisabled(true);
-			resetButton.setDisabled(true);
 			cancelButton.setDisabled(true);
 			editButton.setDisabled(false);
 		} else if (formChanged) {
@@ -105,12 +100,10 @@ public class DetailPanel extends VLayout {
 			} else {
 				saveButton.setDisabled(true);
 			}
-			resetButton.setDisabled(false);
 			cancelButton.setDisabled(false);
 			editButton.setDisabled(true);
 		} else {
 			saveButton.setDisabled(true);
-			resetButton.setDisabled(true);
 			cancelButton.setDisabled(false);
 			editButton.setDisabled(true);
 		}
@@ -178,28 +171,7 @@ public class DetailPanel extends VLayout {
 					new Feature[] { editor.getFeature() });
 			SaveEditingAction action = new SaveEditingAction(mapModel);
 			action.onClick(null);
-			updateButtonState(false);
-		}
-	}
-
-	/**
-	 * Button that resets unsaved form changes.
-	 * 
-	 * @author Jan De Moerloose
-	 * 
-	 */
-	private class ResetButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
-
-		public ResetButton() {
-			setIcon("[ISOMORPHIC]/geomajas/osgeo/undo.png");
-			setShowDisabledIcon(false);
-			setTitle(I18nProvider.getAttribute().btnResetTitle());
-			setTooltip(I18nProvider.getAttribute().btnResetTooltip());
-			addClickHandler(this);
-		}
-
-		public void onClick(ClickEvent event) {
-			editor.reset();
+			editor.setDisabled(true);
 			updateButtonState(false);
 		}
 	}
