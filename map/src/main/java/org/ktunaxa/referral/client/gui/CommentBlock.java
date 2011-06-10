@@ -6,8 +6,11 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
-import org.ktunaxa.referral.server.dto.CommentDto;
+import java.util.Date;
+
+import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
@@ -26,7 +29,7 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
  * 
  * @author Pieter De Graef
  */
-public class CommentBlock extends AbstractCollapsibleListBlock<CommentDto> {
+public class CommentBlock extends AbstractAttributeBlock {
 
 	private HLayout title;
 
@@ -34,15 +37,23 @@ public class CommentBlock extends AbstractCollapsibleListBlock<CommentDto> {
 
 	private HTMLFlow content;
 
+	private HTMLFlow titleText;
+
+	private HTMLFlow info;
+
+	private Img checked;
+
 	private Button editButton;
+
+	private Button deleteButton;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
 	// ------------------------------------------------------------------------
 
-	public CommentBlock(CommentDto comment) {
-		super(comment);
-		buildGui(comment);
+	public CommentBlock(AssociationValue value) {
+		super(value);
+		buildGui();
 	}
 
 	// ------------------------------------------------------------------------
@@ -65,30 +76,23 @@ public class CommentBlock extends AbstractCollapsibleListBlock<CommentDto> {
 		content.setVisible(false);
 	}
 
-	/**
-	 * Search the comment for a given text string. This method will search through the title, content, checkedContent
-	 * and name of the user.
-	 * 
-	 * @param text
-	 *            The text to search for
-	 * @return Returns true if the text has been found somewhere.
-	 */
-	public boolean containsText(String text) {
-		if (text != null) {
-			String lcText = text.toLowerCase();
-			String compare = getObject().getTitle();
+	@Override
+	protected boolean evaluate(String filter) {
+		if (filter != null) {
+			String lcText = filter.toLowerCase();
+			String compare = getCommentTitle();
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
-			compare = getObject().getContent();
+			compare = getCommentContent();
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
-			compare = getObject().getReportContent();
+			compare = getCommentReportContent();
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
-			compare = getObject().getCreatedBy();
+			compare = getCommentCreatedBy();
 			if (compare != null && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
@@ -104,7 +108,7 @@ public class CommentBlock extends AbstractCollapsibleListBlock<CommentDto> {
 	// Private methods:
 	// ------------------------------------------------------------------------
 
-	private void buildGui(CommentDto comment) {
+	private void buildGui() {
 		setStyleName("commentBlock");
 
 		title = new HLayout(10);
@@ -122,13 +126,13 @@ public class CommentBlock extends AbstractCollapsibleListBlock<CommentDto> {
 			}
 		});
 		title.setCursor(Cursor.HAND);
-		Img checked = new Img("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png", 16, 16);
-		if (comment.isIncludeInReport()) {
+		checked = new Img("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png", 16, 16);
+		if (isCommentIncludeInReport()) {
 			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png");
 		}
 		checked.setLayoutAlign(VerticalAlignment.CENTER);
 		title.addMember(checked);
-		HTMLFlow titleText = new HTMLFlow("<div class='commentBlockTitleText'>" + comment.getTitle() + "</div>");
+		titleText = new HTMLFlow("<div class='commentBlockTitleText'>" + getCommentTitle() + "</div>");
 		titleText.setSize("100%", "22");
 		title.addMember(titleText);
 		addMember(title);
@@ -136,18 +140,83 @@ public class CommentBlock extends AbstractCollapsibleListBlock<CommentDto> {
 		infoLayout = new HLayout(5);
 		infoLayout.setLayoutRightMargin(5);
 		infoLayout.setLayoutTopMargin(5);
-		HTMLFlow info = new HTMLFlow("<div class='commentBlockInfo'>Posted by " + comment.getCreatedBy() + " @ "
-				+ comment.getCreationDate() + "</div>");
+		info = new HTMLFlow("<div class='commentBlockInfo'>Posted by " + getCommentCreatedBy() + " @ "
+				+ getCommentCreationDate().toString() + "</div>");
 		info.setSize("100%", "24");
 		infoLayout.addMember(info);
-		editButton = new Button("Edit comment");
-		editButton.setLayoutAlign(VerticalAlignment.CENTER);
-		infoLayout.addMember(new LayoutSpacer());
+		editButton = new Button("Edit");
+		LayoutSpacer space = new LayoutSpacer();
+		space.setWidth(20);
+		infoLayout.addMember(space);
 		infoLayout.addMember(editButton);
+		deleteButton = new Button("Delete");
+		infoLayout.addMember(deleteButton);
 		addMember(infoLayout);
 
-		content = new HTMLFlow("<div class='commentBlockContent'>" + comment.getContent() + "</div>");
+		content = new HTMLFlow("<div class='commentBlockContent'>" + getCommentContent() + "</div>");
 		content.setWidth100();
 		addMember(content);
+	}
+	
+	private String getCommentTitle() {
+		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_TITLE);
+	}
+
+	private String getCommentCreatedBy() {
+		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY);
+	}
+
+	private Date getCommentCreationDate() {
+		return (Date) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_CREATION_DATE);
+	}
+
+	private String getCommentContent() {
+		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_CONTENT);
+	}
+
+	private String getCommentReportContent() {
+		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_REPORT_CONTENT);
+	}
+
+	private Boolean isCommentIncludeInReport() {
+		return (Boolean) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_INCLUDE_IN_REPORT);
+	}
+
+	@Override
+	protected boolean valueEquals(AbstractAttributeBlock other) {
+		AssociationValue otherValue = other.getValue();
+		AssociationValue value = getValue();
+		if (otherValue == null || value == null) {
+			return false;
+		} else if (otherValue.getId().isEmpty() || value.getId().isEmpty()) {
+			return value.getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_TITLE).equals(
+					otherValue.getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_TITLE));
+		} else {
+			return otherValue.getId().getValue().equals(value.getId().getValue());
+		}
+	}
+
+
+	@Override
+	public void addEditHandler(ClickHandler clickHandler) {
+		editButton.addClickHandler(clickHandler);
+	}
+
+	@Override
+	public void addDeleteHandler(ClickHandler clickHandler) {
+		deleteButton.addClickHandler(clickHandler);
+	}
+
+	@Override
+	public void redrawValue() {
+		titleText.setContents("<div class='commentBlockTitleText'>" + getCommentTitle() + "</div>");
+		info.setContents("<div class='commentBlockInfo'>Posted by " + getCommentCreatedBy() + " @ "
+				+ getCommentCreationDate().toString() + "</div>");
+		content.setContents("<div class='commentBlockContent'>" + getCommentContent() + "</div>");
+		if (isCommentIncludeInReport()) {
+			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png");
+		} else {
+			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png");
+		}
 	}
 }

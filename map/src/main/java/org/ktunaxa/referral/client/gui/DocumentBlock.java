@@ -9,6 +9,7 @@ import java.util.Date;
 
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
@@ -72,7 +73,8 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		if (otherValue == null || value == null) {
 			return false;
 		} else if (otherValue.getId().isEmpty() || value.getId().isEmpty()) {
-			return value.getAttributeValue("documentId").equals(otherValue.getAttributeValue("documentId"));
+			return value.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID).equals(
+					otherValue.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID));
 		} else {
 			return otherValue.getId().getValue().equals(value.getId().getValue());
 		}

@@ -855,16 +855,82 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Title" />
 	                                    <property name="name" value="title" />
-	                                    <property name="editable" value="false" />
+	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Content" />
 	                                    <property name="name" value="content" />
-	                                    <property name="editable" value="false" />
+	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
+                   						<property name="formInputType" value="textArea" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Report Content" />
+	                                    <property name="name" value="reportContent" />
+	                                    <property name="editable" value="true" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="STRING" />
+                   						<property name="formInputType" value="textArea" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Include in report" />
+	                                    <property name="name" value="includeInReport" />
+	                                    <property name="editable" value="true" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="BOOLEAN" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Created by" />
+	                                    <property name="name" value="createdBy" />
+	                                    <property name="editable" value="true" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="STRING" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Creation date" />
+	                                    <property name="name" value="creationDate" />
+	                                    <property name="editable" value="true" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="DATE" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
 	                                </bean>
 	                            </list>
 	                        </property>

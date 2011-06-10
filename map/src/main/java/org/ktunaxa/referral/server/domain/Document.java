@@ -6,10 +6,8 @@
 
 package org.ktunaxa.referral.server.domain;
 
-import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -80,10 +77,6 @@ public class Document {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "referral_id", nullable = false)
 	private Referral referral;
-
-	/** The collection of all comments made on this document. */
-	@OneToMany(mappedBy = "document", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-	private Collection<DocumentComment> comments;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -306,44 +299,6 @@ public class Document {
 	public void setReferral(Referral referral) {
 		this.referral = referral;
 	}
-
-	/**
-	 * Get the collection of all comments made on this document.
-	 * 
-	 * @return The collection of all comments made on this document.
-	 */
-	public Collection<DocumentComment> getComments() {
-		return comments;
-	}
-
-	/**
-	 * Set the collection of all comments made on this document.
-	 * 
-	 * @param comments
-	 *            The new collection of comments.
-	 */
-	public void setComments(Collection<DocumentComment> comments) {
-		this.comments = comments;
-	}
-
-//	/**
-//	 * Get content keywords as a comma separated list.
-//	 * 
-//	 * @return Content keywords as a comma separated list.
-//	 */
-//	public String getKeywords() {
-//		return keywords;
-//	}
-//
-//	/**
-//	 * Set the content keywords as a comma separated list.
-//	 * 
-//	 * @param keywords
-//	 *            The new keywords.
-//	 */
-//	public void setKeywords(String keywords) {
-//		this.keywords = keywords;
-//	}
 
 	/**
 	 * Get the type of document being stored in system - Internal response, external response, etc...

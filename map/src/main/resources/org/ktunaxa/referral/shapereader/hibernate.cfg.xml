@@ -25,7 +25,6 @@
 		<property name="hibernate.cache.use_query_cache">false</property>
 		<property name="hibernate.cache.use_second_level_cache">false</property>
 		
-		<mapping class="org.ktunaxa.referral.server.domain.AbstractComment" />
 		<mapping class="org.ktunaxa.referral.server.domain.Template" />
 
 		<mapping class="org.ktunaxa.referral.server.domain.ReferenceLayer" />
@@ -37,7 +36,6 @@
 
 		<mapping class="org.ktunaxa.referral.server.domain.Document" />
 		<mapping class="org.ktunaxa.referral.server.domain.DocumentType" />
-		<mapping class="org.ktunaxa.referral.server.domain.DocumentComment" />
 
 		<mapping class="org.ktunaxa.referral.server.domain.Referral" />
 		<mapping class="org.ktunaxa.referral.server.domain.ReferralStatus" />

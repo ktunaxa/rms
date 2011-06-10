@@ -6,7 +6,7 @@
 package org.ktunaxa.referral.client.gui;
 
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.geomajas.configuration.AssociationAttributeInfo;
@@ -33,40 +33,41 @@ import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 
 /**
- * Form for editing documents in mapping dashboard.
+ * Form for editing comments in mapping dashboard.
  * 
  * @author Jan De Moerloose
  */
-public class DocumentsForm implements FeatureForm<Canvas> {
 
-	private DocumentsLayout documentsLayout;
+public class CommentsForm implements FeatureForm<Canvas> {
 
-	private DocumentForm documentForm;
+	private CommentsLayout commentsLayout;
+
+	private CommentForm commentForm;
 
 	private AssociationAttributeInfo attributeInfo;
 
-	public DocumentsForm(VectorLayer referralLayer) {
+	public CommentsForm(VectorLayer referralLayer) {
 		Map<String, Comparator<AbstractAttributeBlock>> sortAttributes;
-		sortAttributes = new HashMap<String, Comparator<AbstractAttributeBlock>>();
-		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, new AttributeComparator(
-				KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE));
-		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, new AttributeComparator(
-				KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION));
-		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE, new AttributeComparator(
-				KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE));
+		sortAttributes = new LinkedHashMap<String, Comparator<AbstractAttributeBlock>>();
+		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_COMMENT_TITLE, new AttributeComparator(
+				KtunaxaConstant.ATTRIBUTE_COMMENT_TITLE));
+		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_COMMENT_CREATION_DATE, new AttributeComparator(
+				KtunaxaConstant.ATTRIBUTE_COMMENT_CREATION_DATE));
+		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY, new AttributeComparator(
+				KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY));
 		AttributeBlockList listView = new AttributeBlockList(sortAttributes);
 		for (AttributeInfo info : referralLayer.getLayerInfo().getFeatureInfo().getAttributes()) {
-			if (info.getName().equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS)) {
+			if (info.getName().equals(KtunaxaConstant.ATTRIBUTE_COMMENTS)) {
 				attributeInfo = ((AssociationAttributeInfo) info);
-				documentForm = new DocumentForm(attributeInfo.getFeature(), referralLayer);
+				commentForm = new CommentForm(attributeInfo.getFeature(), referralLayer);
 			}
 		}
-		documentsLayout = new DocumentsLayout(listView, documentForm);
-		documentsLayout.setWidth100();
+		commentsLayout = new CommentsLayout(listView, commentForm);
+		commentsLayout.setWidth100();
 	}
 
 	public Canvas getWidget() {
-		return documentsLayout;
+		return commentsLayout;
 	}
 
 	public void setDisabled(boolean disabled) {
@@ -83,7 +84,7 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 
 	public HandlerRegistration addItemChangedHandler(ItemChangedHandler handler) {
 		final ItemChangedHandler h = handler;
-		return documentsLayout.addChangedHandler(new ChangedHandler() {
+		return commentsLayout.addChangedHandler(new ChangedHandler() {
 
 			public void onChanged(ChangedEvent event) {
 				h.onItemChanged(new ItemChangedEvent(null));
@@ -92,18 +93,18 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	}
 
 	public void fireEvent(GwtEvent<?> event) {
-		documentsLayout.fireEvent(event);
+		commentsLayout.fireEvent(event);
 	}
 
 	public void toForm(String name, Attribute<?> attribute) {
-		if (name.equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS) && attribute instanceof OneToManyAttribute) {
-			documentsLayout.toLayout((OneToManyAttribute) attribute);
+		if (name.equals(KtunaxaConstant.ATTRIBUTE_COMMENTS) && attribute instanceof OneToManyAttribute) {
+			commentsLayout.toLayout((OneToManyAttribute) attribute);
 		}
 	}
 
 	public void fromForm(String name, Attribute<?> attribute) {
-		if (name.equals(KtunaxaConstant.ATTRIBUTE_DOCUMENTS) && attribute instanceof OneToManyAttribute) {
-			documentsLayout.fromLayout((OneToManyAttribute) attribute);
+		if (name.equals(KtunaxaConstant.ATTRIBUTE_COMMENTS) && attribute instanceof OneToManyAttribute) {
+			commentsLayout.fromLayout((OneToManyAttribute) attribute);
 		}
 	}
 
@@ -112,37 +113,37 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	}
 
 	public void toForm(AssociationValue value) {
-		toForm(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, value.getAllAttributes().get(KtunaxaConstant.ATTRIBUTE_DOCUMENTS));
+		toForm(KtunaxaConstant.ATTRIBUTE_COMMENTS,
+				value.getAllAttributes().get(KtunaxaConstant.ATTRIBUTE_COMMENTS));
 	}
 
 	public void fromForm(AssociationValue value) {
-		fromForm(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, 
-				value.getAllAttributes().get(KtunaxaConstant.ATTRIBUTE_DOCUMENTS));
+		fromForm(KtunaxaConstant.ATTRIBUTE_COMMENTS,
+				value.getAllAttributes().get(KtunaxaConstant.ATTRIBUTE_COMMENTS));
 	}
 
 	/**
-	 * Block layout for documents.
+	 * Block layout for comments.
 	 * 
 	 * @author Jan De Moerloose
 	 * 
 	 */
-	class DocumentsLayout extends AbstractAttributeBlockLayout<DynamicForm> {
+	class CommentsLayout extends AbstractAttributeBlockLayout<DynamicForm> {
 
-		public DocumentsLayout(AttributeBlockList listView, DocumentForm documentForm) {
-			super(listView, documentForm);
+		public CommentsLayout(AttributeBlockList listView, CommentForm commentForm) {
+			super(listView, commentForm);
 		}
 
 		@Override
 		public AssociationValue newInstance() {
-			AssociationValue document = AttributeUtil.createEmptyAssociationValue(attributeInfo);
-			document.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT, false);
-			document.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL, false);
-			return document;
+			AssociationValue comment = AttributeUtil.createEmptyAssociationValue(attributeInfo);
+			comment.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_COMMENT_INCLUDE_IN_REPORT, false);
+			return comment;
 		}
 
 		@Override
 		protected AbstractAttributeBlock newBlock(AssociationValue value) {
-			return new DocumentBlock(value);
+			return new CommentBlock(value);
 		}
 	}
 
