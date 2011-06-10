@@ -52,6 +52,11 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 	private HandlerManager manager = new HandlerManager(this);
 	
 	private AbstractAttributeBlock currentBlock;
+	
+	private HandlerRegistration saveRegistration;
+	
+	private HandlerRegistration cancelRegistration;
+	
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -87,30 +92,9 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 				showDetails(newInstance());
 			}
 		});
-		detailView.getBackButton().addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				currentBlock = null;
-				showList();
-			}
-		});
-		detailView.getSaveButton().addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				if (detailView.validate()) {
-					// if the block is new add it to the list
-					if (currentBlock == null) {
-						currentBlock = newBlock(detailView.getValue());
-						initBlock(currentBlock);
-						listView.addBlock(currentBlock);
-					}
-					// the association value has changed, refresh the blocks
-					listView.updateBlocks();
-					// we've changed, let the handlers know
-					manager.fireEvent(new ChangedEvent(null));
-				}
-			}
-		});
+		
+		setCancelAction(new CancelAction());
+		setSaveAction(new SaveAction());
 	}
 
 	public HandlerRegistration addChangedHandler(ChangedHandler handler) {
@@ -137,6 +121,43 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 			list.add(block.getValue());
 		}
 		attribute.setValue(list);
+	}
+	
+	
+	public void setSaveAction(ClickHandler saveAction) {
+		if (saveRegistration != null) {
+			saveRegistration.removeHandler();
+		}
+		saveRegistration = detailView.getSaveButton().addClickHandler(saveAction);
+	}
+
+	public void setCancelAction(ClickHandler cancelAction) {
+		if (cancelRegistration != null) {
+			cancelRegistration.removeHandler();
+		}
+		cancelRegistration = detailView.getBackButton().addClickHandler(cancelAction);
+	}
+	
+	public boolean isNewBlock() {
+		return currentBlock == null;
+	}
+	
+	public void addToList() {
+		if (detailView.validate()) {
+			detailView.fromForm();
+			// if the block is new add it to the list
+			if (isNewBlock()) {
+				currentBlock = newBlock(detailView.getValue());
+				initBlock(currentBlock);
+				listView.addBlock(currentBlock);
+			}
+			// the association value has changed, refresh the blocks
+			listView.updateBlocks();
+			// we've changed, let the handlers know
+			manager.fireEvent(new ChangedEvent(null));
+			// go back to list
+			showList();			
+		}
 	}
 
 	/**
@@ -178,6 +199,7 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 	}
 
 	public void showList() {
+		currentBlock = null;
 		cardLayout.showCard(Card.LIST);
 	}
 
@@ -185,4 +207,33 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 		detailView.showDetails(value);
 		cardLayout.showCard(Card.DETAIL);
 	}
+	
+	/**
+	 * Default save action.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	public class SaveAction implements ClickHandler {
+
+		public void onClick(ClickEvent event) {
+			addToList();
+		}
+
+	}
+
+	/**
+	 * Default cancel action.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
+	public class CancelAction implements ClickHandler {
+
+		public void onClick(ClickEvent event) {
+			showList();
+		}
+
+	}
+
 }

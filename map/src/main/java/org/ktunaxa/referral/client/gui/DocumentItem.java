@@ -12,20 +12,12 @@ import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
-import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Img;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CanvasItem;
-import com.smartgwt.client.widgets.form.fields.LinkItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -47,8 +39,8 @@ public class DocumentItem extends CanvasItem {
 	private String documentDisplayUrl;
 
 	private String documentDownLoadUrl;
-
-	private LinkItem linkItem;
+	
+	private boolean uploadSuccess;
 
 	@Override
 	protected Canvas createCanvas() {
@@ -59,7 +51,6 @@ public class DocumentItem extends CanvasItem {
 	@Override
 	public void clearValue() {
 		form.clearValues();
-		linkItem.clearValue();
 		documentId = null;
 		documentTitle = null;
 		documentDisplayUrl = null;
@@ -101,43 +92,39 @@ public class DocumentItem extends CanvasItem {
 	@Override
 	public void setValue(String value) {
 		if (value == null) {
+			uploadSuccess = false;
 			clearValue();
-		} else {
-			linkItem.clearValue();
-			linkItem.setLinkTitle("Upload document first");
-		}
+		} 
+		documentId = value;
 		super.setValue(value);
+	}
+
+	@Override
+	public Boolean validate() {
+		// validate if we have a file ready for upload !
+		if (documentId == null) {
+			return form.validate();
+		} else {
+			return true;
+		}
 	}
 
 	private VLayout createUploadLayout() {
 		VLayout uploadLayout = new VLayout();
-		uploadLayout.setLayoutAlign(Alignment.CENTER);
 		uploadLayout.setMembersMargin(10);
-		HTMLFlow explanation = new HTMLFlow("<p>Please note that it may take a"
-				+ " while to upload the document to the document management system.</p>");
-		LayoutSpacer spacer = new LayoutSpacer();
-		spacer.setHeight(20);
+		uploadLayout.setWidth("*");
+		uploadLayout.setHeight(16);
 		form = new FileUploadForm("Select a file", GWT.getModuleBaseURL() + "../d/upload/referral/document");
 
-		HLayout btnLayout = new HLayout(10);
+		HLayout messageLayout = new HLayout(10);
 		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
 		busyImg.setVisible(false);
-		IButton uploadbutton = new IButton("Upload");
-		uploadbutton.setAutoFit(true);
-		uploadbutton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				form.submit();
-				busyImg.setVisible(true);
-			}
-		});
-		btnLayout.addMember(uploadbutton);
-		btnLayout.addMember(busyImg);
+		messageLayout.addMember(busyImg);
 		final HTMLFlow errorFlow = new HTMLFlow();
-		errorFlow.setHeight100();
+		errorFlow.setHeight(16);
 		errorFlow.setWidth100();
 		errorFlow.setVisible(false);
-		btnLayout.addMember(errorFlow);
+		messageLayout.addMember(errorFlow);
 
 		form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
 
@@ -147,41 +134,36 @@ public class DocumentItem extends CanvasItem {
 				documentTitle = event.getString(KtunaxaConstant.FORM_DOCUMENT_TITLE);
 				documentDisplayUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL);
 				documentDownLoadUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DOWNLOAD_URL);
-				linkItem.setLinkTitle(documentTitle);
-				linkItem.setDisabled(false);
 				setValue(documentId);
-				fireEvent(new ChangedEvent(jsObj));
 				busyImg.setVisible(false);
+				uploadSuccess = true;
+				fireEvent(new ChangedEvent(jsObj));
 			}
 
 			public void onFileUploadFailed(FileUploadFailedEvent event) {
 				busyImg.setVisible(false);
 				errorFlow.setContents("<div style='color: #AA0000'>" + event.getErrorMessage() + "</div>");
 				errorFlow.setVisible(true);
+				uploadSuccess = false;
+				fireEvent(new ChangedEvent(jsObj));
 			}
 		});
 
-		uploadLayout.addMember(explanation);
-		DynamicForm linkForm = new DynamicForm();
-
-		linkItem = new LinkItem("link");
-		linkItem.setTitle("Test link");
-		linkItem.setDisabled(true);
-		linkItem.setLinkTitle("Upload document first");
-		linkItem.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
-
-			public void onClick(com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
-				Window.open(documentDisplayUrl, "_ktunaxa_document", null);
-			}
-		});
-		linkForm.setFields(linkItem);
-
-		uploadLayout.addMember(linkForm);
-		uploadLayout.addMember(spacer);
 		uploadLayout.addMember(form);
-		uploadLayout.addMember(btnLayout);
+		uploadLayout.addMember(messageLayout);
 
 		return uploadLayout;
+	}
+	
+	
+	
+	public void upload() {
+		form.submit();
+		busyImg.setVisible(true);
+	}
+
+	public boolean isUploadSuccess() {
+		return uploadSuccess;
 	}
 
 }

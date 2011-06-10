@@ -12,12 +12,11 @@ import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultAttributeProvider;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
 import org.geomajas.layer.feature.Attribute;
+import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.StringAttribute;
 import org.geomajas.layer.feature.attribute.UrlAttribute;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
-import com.smartgwt.client.widgets.form.events.ItemChangedEvent;
-import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 
 /**
@@ -32,7 +31,10 @@ public class DocumentForm extends DefaultFeatureForm {
 
 	public DocumentForm(FeatureInfo documentsInfo, VectorLayer referralLayer) {
 		super(documentsInfo, new DefaultAttributeProvider(referralLayer, KtunaxaConstant.ATTRIBUTE_DOCUMENTS));
-		addItemChangedHandler(new SetDocumentTitleAndUrl());
+	}
+
+	public void uploadDocument() {
+		documentItem.upload();
 	}
 
 	@Override
@@ -63,24 +65,42 @@ public class DocumentForm extends DefaultFeatureForm {
 		}
 	}
 
-	/**
-	 * Sets a couple of derived values.
-	 * 
-	 * @author Jan De Moerloose
-	 * 
-	 */
-	public class SetDocumentTitleAndUrl implements ItemChangedHandler {
-
-		public void onItemChanged(ItemChangedEvent event) {
-			if (documentItem != null) {
-				setValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL,
-						new UrlAttribute(documentItem.getDocumentDisplayUrl()));
-				setValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL,
-						new UrlAttribute(documentItem.getDocumentDownLoadUrl()));
-				setValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, 
-						new StringAttribute(documentItem.getDocumentTitle()));
-			}
+	@Override
+	public void fromForm(String name, Attribute<?> attribute) {
+		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE.equals(name)) {
+			((StringAttribute) attribute).setValue(documentItem.getDocumentTitle());
+		} else if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL.equals(name)) {
+			((UrlAttribute) attribute).setValue(documentItem.getDocumentDisplayUrl());
+		} else if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL.equals(name)) {
+			((UrlAttribute) attribute).setValue(documentItem.getDocumentDownLoadUrl());
+		} else {
+			super.fromForm(name, attribute);
 		}
+	}	
+	
+
+	@Override
+	public void fromForm(AssociationValue value) {
+		super.fromForm(value);
+	}
+
+	@Override
+	protected boolean isIncluded(AttributeInfo info) {
+		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE.equals(info.getName())
+				|| KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL.equals(info.getName())
+				|| KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL.equals(info.getName())) {
+			return false;
+		}
+		return super.isIncluded(info);
+	}
+
+
+	public void setUploadVisible(boolean visible) {
+		documentItem.setVisible(visible);
+	}
+
+	public boolean isUploadSuccess() {
+		return documentItem.isUploadSuccess();
 	}
 
 }

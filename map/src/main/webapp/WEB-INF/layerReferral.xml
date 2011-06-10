@@ -734,6 +734,15 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
 	                                    <property name="formInputType" value="DOCUMENT_ID_TYPE" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
 	                                </bean>
 						            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 						                <property name="label" value="type" />

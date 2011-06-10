@@ -6,7 +6,6 @@
 
 package org.ktunaxa.referral.client.widget.attribute;
 
-import org.geomajas.gwt.client.i18n.I18nProvider;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 
@@ -35,11 +34,9 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	 */
 	private ToolStrip toolStrip;
 
-	private IButton backButton;
+	private IButton cancelButton;
 
 	private IButton saveButton;
-
-	private IButton resetButton;
 	
 	private AssociationValue value;
 
@@ -57,7 +54,7 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	}
 
 	public IButton getBackButton() {
-		return backButton;
+		return cancelButton;
 	}
 
 	public IButton getSaveButton() {
@@ -79,17 +76,15 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 		toolStrip.setWidth100();
 		toolStrip.setPadding(2);
 		toolStrip.setMembersMargin(5);
-		backButton = new BackButton();
+		cancelButton = new CancelButton();
 		saveButton = new SaveButton();
-		resetButton = new ResetButton();
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setWidth("*");
 		toolStrip.addMember(spacer);
 		toolStrip.addMember(saveButton);
-		toolStrip.addMember(resetButton);
-		toolStrip.addMember(backButton);
+		toolStrip.addMember(cancelButton);
 
-		VLayout layout = new VLayout();
+		VLayout layout = new VLayout(5);
 		layout.setWidth100();
 		layout.addMember(toolStrip);
 		layout.addMember(form.getWidget());
@@ -98,16 +93,12 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	}
 	
 	private void updateButtonState(boolean formChanged) {
-		if (formChanged) {
-			saveButton.setDisabled(false);
-		} else {
-			saveButton.setDisabled(true);
-		}
-		if (formChanged) {
-			resetButton.setDisabled(false);
-		} else {
-			resetButton.setDisabled(true);
-		}
+		// TODO: itemchangedevent does not work for selectitem !!!!
+//		if (formChanged) {
+//			saveButton.setDisabled(false);
+//		} else {
+//			saveButton.setDisabled(true);
+//		}
 	}
 
 	/** Definition of the Save button. */
@@ -116,8 +107,8 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 		public SaveButton() {
 			setIcon("[ISOMORPHIC]/geomajas/osgeo/save1.png");
 			setShowDisabledIcon(false);
-			setTitle(I18nProvider.getAttribute().btnSaveTitle());
-			setTooltip(I18nProvider.getAttribute().btnSaveTooltip());
+			setTitle("Save");
+			setTooltip("Upload the document");
 			addClickHandler(this);
 		}
 
@@ -132,13 +123,13 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	// -------------------------------------------------------------------------
 
 	/** Definition of the Back button to go back to the list. */
-	private class BackButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
+	private class CancelButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
-		public BackButton() {
+		public CancelButton() {
 			setIcon("[ISOMORPHIC]/geomajas/osgeo/undo.png");
 			setShowDisabledIcon(false);
-			setTitle("Back");
-			setTooltip("Go back to the list");
+			setTitle("Cancel");
+			setTooltip("Cancel editing and return to the list");
 		}
 
 		public void onClick(ClickEvent event) {
@@ -151,23 +142,6 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	// Private class ResetButton:
 	// -------------------------------------------------------------------------
 
-	/** Definition of the Reset button that resets the features original attribute values. */
-	private class ResetButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
-
-		public ResetButton() {
-			setIcon("[ISOMORPHIC]/geomajas/osgeo/undo.png");
-			setShowDisabledIcon(false);
-			setTitle(I18nProvider.getAttribute().btnResetTitle());
-			setTooltip(I18nProvider.getAttribute().btnResetTooltip());
-			addClickHandler(this);
-		}
-
-		public void onClick(ClickEvent event) {
-			form.toForm(value);
-			updateButtonState(false);
-		}
-	}
-
 	// -------------------------------------------------------------------------
 	// Private class CancelButton:
 	// -------------------------------------------------------------------------
@@ -178,6 +152,10 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 		form.clear();
 		form.toForm(value);
 		updateButtonState(false);
+	}
+
+	public void fromForm() {
+		form.fromForm(value);
 	}
 
 }

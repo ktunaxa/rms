@@ -79,7 +79,7 @@ public class CommentsForm implements FeatureForm<Canvas> {
 	}
 
 	public boolean validate() {
-		return false;
+		return true;
 	}
 
 	public HandlerRegistration addItemChangedHandler(ItemChangedHandler handler) {

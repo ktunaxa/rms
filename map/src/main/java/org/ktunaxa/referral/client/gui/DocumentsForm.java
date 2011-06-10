@@ -12,13 +12,11 @@ import java.util.Map;
 import org.geomajas.configuration.AssociationAttributeInfo;
 import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.util.AttributeUtil;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.OneToManyAttribute;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
-import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlockLayout;
 import org.ktunaxa.referral.client.widget.attribute.AttributeBlockList;
 import org.ktunaxa.referral.client.widget.attribute.AttributeBlockList.AttributeComparator;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -26,7 +24,6 @@ import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.events.ItemChangedEvent;
 import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
@@ -61,7 +58,7 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 				documentForm = new DocumentForm(attributeInfo.getFeature(), referralLayer);
 			}
 		}
-		documentsLayout = new DocumentsLayout(listView, documentForm);
+		documentsLayout = new DocumentsLayout(listView, documentForm, attributeInfo);
 		documentsLayout.setWidth100();
 	}
 
@@ -78,7 +75,7 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	}
 
 	public boolean validate() {
-		return false;
+		return true;
 	}
 
 	public HandlerRegistration addItemChangedHandler(ItemChangedHandler handler) {
@@ -118,32 +115,6 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	public void fromForm(AssociationValue value) {
 		fromForm(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, 
 				value.getAllAttributes().get(KtunaxaConstant.ATTRIBUTE_DOCUMENTS));
-	}
-
-	/**
-	 * Block layout for documents.
-	 * 
-	 * @author Jan De Moerloose
-	 * 
-	 */
-	class DocumentsLayout extends AbstractAttributeBlockLayout<DynamicForm> {
-
-		public DocumentsLayout(AttributeBlockList listView, DocumentForm documentForm) {
-			super(listView, documentForm);
-		}
-
-		@Override
-		public AssociationValue newInstance() {
-			AssociationValue document = AttributeUtil.createEmptyAssociationValue(attributeInfo);
-			document.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT, false);
-			document.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL, false);
-			return document;
-		}
-
-		@Override
-		protected AbstractAttributeBlock newBlock(AssociationValue value) {
-			return new DocumentBlock(value);
-		}
 	}
 
 	public boolean silentValidate() {

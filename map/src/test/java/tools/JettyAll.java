@@ -43,9 +43,9 @@ public class JettyAll {
 		explorer.setWar("src/main/activiti/activiti-explorer");
 
 		contexts.addHandler(map);
-		contexts.addHandler(probe);
+//		contexts.addHandler(probe);
 		contexts.addHandler(rest);
-		contexts.addHandler(explorer);
+//		contexts.addHandler(explorer);
 		
 		server.setHandler(contexts);
 		server.start();

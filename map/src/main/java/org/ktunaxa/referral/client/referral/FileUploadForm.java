@@ -30,6 +30,8 @@ import com.smartgwt.client.widgets.form.fields.UploadItem;
 public class FileUploadForm extends DynamicForm {
 
 	private HandlerManager handlerManager;
+	
+	private UploadItem fileItem;
 
 	public FileUploadForm(String title, String targetUrl) {
 		super();
@@ -42,12 +44,11 @@ public class FileUploadForm extends DynamicForm {
 		initComplete(this);
 		setEncoding(Encoding.MULTIPART);
 		setTarget(targetUrl);
-		setColWidths(250, "*");
 		setCanSubmit(true);
 		setAction(targetUrl);
 		setWidth100();
 
-		UploadItem fileItem = new UploadItem(KtunaxaConstant.FORM_FILE);
+		fileItem = new UploadItem(KtunaxaConstant.FORM_FILE);
 		fileItem.setTitle(title);
 		fileItem.setWrapTitle(false);
 		fileItem.setWidth("*");
@@ -74,6 +75,14 @@ public class FileUploadForm extends DynamicForm {
 
 	public final HandlerRegistration addFileUploadDoneHandler(final FileUploadDoneHandler handler) {
 		return handlerManager.addHandler(FileUploadDoneHandler.TYPE, handler);
+	}
+	
+	
+
+	@Override
+	public boolean validate() {
+		// true if a file has been chosen
+		return fileItem.getValue() != null; 
 	}
 
 	private static void uploadComplete(JavaScriptObject result) {
