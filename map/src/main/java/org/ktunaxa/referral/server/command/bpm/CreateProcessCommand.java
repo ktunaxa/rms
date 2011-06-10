@@ -50,16 +50,16 @@ public class CreateProcessCommand implements Command<CreateProcessRequest, UrlRe
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "email");
 		}
 		Map<String, Object> context = new HashMap<String, Object>();
-		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_REFERRAL_ID, referralId);
+		context.put(KtunaxaBpmConstant.VAR_REFERRAL_ID, referralId);
 		String description = request.getDescription();
 		if (null == description) {
 			description = "";
 		}
 		DateFormat yyyymmdd = new SimpleDateFormat("yyyy-MM-dd");
-		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_DESCRIPTION, description);
-		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_EMAIL, email);
-		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_ENGAGEMENT_LEVEL, request.getEngagementLevel());
-		context.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_COMPLETION_DEADLINE,
+		context.put(KtunaxaBpmConstant.VAR_DESCRIPTION, description);
+		context.put(KtunaxaBpmConstant.VAR_EMAIL, email);
+		context.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL, request.getEngagementLevel());
+		context.put(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE,
 				yyyymmdd.format(request.getCompletionDeadline()));
 		runtimeService.startProcessInstanceByKey(KtunaxaBpmConstant.REFERRAL_PROCESS_ID, context);
 		response.setUrl(ktunaxaConfiguration.getBpmDashboardBaseUrl());

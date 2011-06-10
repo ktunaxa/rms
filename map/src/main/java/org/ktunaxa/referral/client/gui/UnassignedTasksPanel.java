@@ -71,7 +71,7 @@ public class UnassignedTasksPanel extends VLayout {
 		groups.setOverflow(Overflow.AUTO);
 		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
 		groups.setPadding(5);
-		addChild(groups);
+		addMember(groups);
 
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
 			sections[i] = new SectionStackSection(CANDIDATE_TITLES[i]);

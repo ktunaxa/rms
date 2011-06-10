@@ -58,7 +58,7 @@ public class ReferralTasksPanel extends VLayout {
 		groups.setOverflow(Overflow.AUTO);
 		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
 		groups.setPadding(5);
-		addChild(groups);
+		addMember(groups);
 
 		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
 			sections[i] = new SectionStackSection(GROUP_TITLES[i]);

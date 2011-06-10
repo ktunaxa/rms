@@ -6,9 +6,12 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
@@ -22,6 +25,8 @@ import org.ktunaxa.referral.client.form.ProvincialResultForm;
 import org.ktunaxa.referral.client.form.ReviewReferralForm;
 import org.ktunaxa.referral.client.form.ValueSelectForm;
 import org.ktunaxa.referral.server.dto.TaskDto;
+
+import java.util.Map;
 
 /**
  * Block which displays the current task with the ability to set variables and finish the task.
@@ -49,30 +54,42 @@ public class CurrentTaskBlock extends CardLayout {
 	};
 
 	private final CardLayout taskForms = new CardLayout();
+	private final Button finishButton = new Button("Finish task");
 
 	public CurrentTaskBlock() {
 		super();
+		setWidth100();
+		setHeight100();
 
 		VLayout noTask = new VLayout();
 		HTMLFlow noTaskText = new HTMLFlow("No current task, please select one.");
 		noTaskText.setWidth100();
-		noTask.addChild(noTaskText);
+		noTaskText.setHeight100();
+		noTask.addMember(noTaskText);
+		noTask.setWidth100();
+		noTask.setHeight100();
 
+		finishButton.setShowRollOver(false);
+		finishButton.addClickHandler(new FinishTaskClickHandler());
 		VLayout currentTask = new VLayout();
+		currentTask.setMembersMargin(5);
+		currentTask.setWidth100();
+		currentTask.setHeight100();
 		taskForms.addCard(FORM_EMPTY, new EmptyForm());
 		taskForms.addCard(FORM_DISCUSS_EVALUATION, new DiscussEvaluationForm());
 		taskForms.addCard(FORM_EVALUATE_OR_FINISH, new EvaluateOrFinishForm());
 		taskForms.addCard(FORM_PROVINCIAL_RESULT, new ProvincialResultForm());
 		taskForms.addCard(FORM_REVIEW_REFERRAL, new ReviewReferralForm());
 		taskForms.addCard(FORM_VALUE_SELECT, new ValueSelectForm());
-		taskForms.setHeight100();
 		taskForms.setWidth100();
-		currentTask.addChild(taskForms);
+		//taskForms.setHeight("*");
+		currentTask.addMember(taskForms);
 		HLayout finishLayout = new HLayout();
-		finishLayout.setHeight(20);
-		finishLayout.addChild(new LayoutSpacer());
-		finishLayout.addChild(new Button("Finish task"));
-		currentTask.addChild(finishLayout);
+		finishLayout.setWidth100();
+		//finishLayout.setHeight(30);
+		finishLayout.addMember(new LayoutSpacer());
+		finishLayout.addMember(finishButton);
+		currentTask.addMember(finishLayout);
 
 		addCard(KEY_NO, noTask);
 		addCard(KEY_CURRENT, currentTask);
@@ -92,10 +109,41 @@ public class CurrentTaskBlock extends CardLayout {
 			taskForms.showCard(formKey);
 			((AbstractTaskForm) taskForms.getCurrentCard()).refresh(task);
 			showCard(KEY_CURRENT);
+
+			finishButton.enable();
 		}
 		Canvas canvas = getCurrentCard();
 		if (canvas instanceof Layout) {
 			((Layout) canvas).reflow();
+		}
+	}
+
+	/**
+	 * Click handler for the "Finish task" button.
+	 *
+	 * @author Joachim Van der Auwera
+	 */
+	private class FinishTaskClickHandler implements ClickHandler {
+		public void onClick(ClickEvent event) {
+			finishButton.disable();
+			Canvas card = taskForms.getCurrentCard();
+			if (card instanceof AbstractTaskForm) {
+				AbstractTaskForm taskForm = (AbstractTaskForm) card;
+				boolean valid = taskForm.validate();
+				TaskDto currentTask = MapLayout.getInstance().getCurrentTask();
+				if (valid && null != currentTask) {
+					Map<String, String> variables = taskForm.getVariables();
+					SC.say("finish using " + variables);
+					//FinishTaskRequest request = new FinishTaskRequest();
+					//request.setTaskId(currentTask.getId());
+					//request.setVariables(variables);
+					//GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
+					//command.setCommandRequest(request);
+					//GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<UrlResponse>() {})
+				} else {
+					finishButton.enable();
+				}
+			}
 		}
 	}
 }

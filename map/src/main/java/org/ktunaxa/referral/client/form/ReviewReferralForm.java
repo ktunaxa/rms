@@ -7,8 +7,13 @@
 package org.ktunaxa.referral.client.form;
 
 import com.smartgwt.client.widgets.form.fields.DateItem;
+import com.smartgwt.client.widgets.form.fields.SpinnerItem;
+import com.smartgwt.client.widgets.form.fields.TextAreaItem;
+import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.dto.TaskDto;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,28 +26,58 @@ import java.util.Map;
 public class ReviewReferralForm extends AbstractTaskForm {
 
 	private DateItem completionDeadline = new DateItem();
+	private TextAreaItem description = new TextAreaItem();
+	private TextItem email = new TextItem();
+	private SpinnerItem engagementLevel = new SpinnerItem();
 
 	public ReviewReferralForm() {
 		super();
 
-		completionDeadline.setName("finalDecisionConsistent");
-		completionDeadline.setHint("Completion deadline");
+		RegExpValidator mailValidator = new RegExpValidator();
+		mailValidator.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
 
-		setFields(completionDeadline);
+		completionDeadline.setName("completionDeadline");
+		completionDeadline.setTitle("Completion deadline");
+
+		description.setName("description");
+		description.setTitle("Description");
+
+		email.setName("email");
+		email.setTitle("Referral e-mail");
+		email.setValidators(mailValidator);
+
+		engagementLevel.setName("engagementLevel");
+		engagementLevel.setTitle("Engagement level");
+		engagementLevel.setMin(0);
+		engagementLevel.setMax(3);
+
+		setFields(completionDeadline, description, email, engagementLevel);
 	}
 
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
 		completionDeadline.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.REFERRAL_CONTEXT_COMPLETION_DEADLINE));
+				get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE));
+		description.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_DESCRIPTION));
+		email.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_EMAIL));
+		engagementLevel.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL));
 	}
 
 	@Override
 	public Map<String, String> getVariables() {
 		Map<String, String> result = new HashMap<String, String>();
-		result.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_COMPLETION_DEADLINE,
+		result.put(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE,
 				nullSafeToString(completionDeadline.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_DESCRIPTION,
+				nullSafeToString(description.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_EMAIL,
+				nullSafeToString(email.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL,
+				nullSafeToString(engagementLevel.getValue()));
 		return result;
 	}
 

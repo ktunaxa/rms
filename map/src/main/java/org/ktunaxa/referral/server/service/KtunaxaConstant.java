@@ -58,12 +58,13 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_DOCUMENT_TYPE = "type";
 	String ATTRIBUTE_DOCUMENT_DOWNLOAD_URL = "downloadUrl";
 	String ATTRIBUTE_DOCUMENT_DISPLAY_URL = "displayUrl";
-
 	String ATTRIBUTE_COMMENT_TITLE = "title";
 	String ATTRIBUTE_COMMENT_CONTENT = "content";
 	String ATTRIBUTE_COMMENT_CREATION_DATE = "creationDate";
 	String ATTRIBUTE_COMMENT_CREATED_BY = "createdBy";
 	String ATTRIBUTE_COMMENT_INCLUDE_IN_REPORT = "includeInReport";
 	String ATTRIBUTE_COMMENT_REPORT_CONTENT = "reportContent";
+
+	String MAIL_VALIDATOR_REGEX = "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z]{2,4}$";
 
 }

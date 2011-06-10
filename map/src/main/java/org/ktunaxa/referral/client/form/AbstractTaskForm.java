@@ -9,7 +9,7 @@ package org.ktunaxa.referral.client.form;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.FormItem;
-import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
 import java.util.Map;
@@ -19,20 +19,18 @@ import java.util.Map;
  *
  * @author Joachim Van der Auwera
  */
-public abstract class AbstractTaskForm extends HLayout {
+public abstract class AbstractTaskForm extends VLayout {
 
 	private HTMLFlow taskTitle = new HTMLFlow();
-	private DynamicForm form = new DynamicForm();
+	private DynamicForm[] forms;
 
 	public AbstractTaskForm() {
 		super();
 
 		setWidth100();
+		setHeight100();
 		taskTitle.setWidth100();
-		addChild(taskTitle);
-
-		form.setWidth100();
-		addChild(form);
+		addMember(taskTitle);
 	}
 
 	public void refresh(TaskDto task) {
@@ -46,7 +44,42 @@ public abstract class AbstractTaskForm extends HLayout {
 	 * @param formItems form field items
 	 */
 	public void setFields(FormItem... formItems) {
+		DynamicForm form = new DynamicForm();
+		form.setWidth100();
+		form.setIsGroup(true);
 		form.setFields(formItems);
+		setForms(form);
+	}
+
+	/**
+	 * Set the forms for this task form. This method should only be called once!
+	 *
+	 * @param forms forms to add
+	 */
+	public void setForms(DynamicForm... forms) {
+		if (null != this.forms) {
+			throw new IllegalStateException("setForms should only be called once with a non-null value");
+		}
+		this.forms = forms;
+		if (null != forms) {
+			for (DynamicForm form : forms) {
+				addMember(form);
+			}
+		}
+	}
+
+	/**
+	 * Validate the form value and return whether validation succeeded.
+	 * This will display validation markers if needed.
+	 *
+	 * @return true when validation succeeded
+	 */
+	public boolean validate() {
+		boolean valid = true;
+		for (DynamicForm form : forms) {
+			valid &= form.validate();
+		}
+		return valid;
 	}
 
 	/**

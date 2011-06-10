@@ -35,7 +35,7 @@ import java.util.List;
 
 /**
  * General definition of the main layout for the Ktunaxa mapping component. It
- * defines a left infopane and a map.
+ * defines a left info pane and a map.
  * 
  * @author Jan De Moerloose
  * @author Pieter De Graef
@@ -57,8 +57,6 @@ public final class MapLayout extends VLayout {
 	private LayersPanel layerPanel;
 
 	private ReferralPanel referralPanel;
-
-	private ToolStripButton newButton;
 
 	private TaskDto currentTask;
 
@@ -100,7 +98,7 @@ public final class MapLayout extends VLayout {
 		for (ToolStripButton button : infoPane.getButtons()) {
 			menuBar.addNavigationButton(button);
 		}
-		newButton = new ToolStripButton("NEW");
+		ToolStripButton newButton = new ToolStripButton("NEW");
 		newButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
@@ -152,10 +150,6 @@ public final class MapLayout extends VLayout {
 	
 	public ReferralPanel getReferralPanel() {
 		return referralPanel;
-	}
-
-	public ToolStripButton getNewButton() {
-		return newButton;
 	}
 
 	public TaskDto getCurrentTask() {

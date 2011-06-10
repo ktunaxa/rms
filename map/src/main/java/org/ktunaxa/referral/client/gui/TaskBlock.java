@@ -193,11 +193,11 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		content = new HTMLFlow("<div class='taskBlockContent'>Assignee " + task.getAssignee()
 				+ "<br />Created " + task.getCreateTime()
 				+ "<br />Due " + task.getDueDate()
-				+ "<br />Completion deadline" + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_COMPLETION_DEADLINE)
-				+ "<br />Referral " + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_REFERRAL_ID)
-				+ "<br />Description " + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_DESCRIPTION)
-				+ "<br />E-mail " + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_EMAIL)
-				+ "<br />Engagement level " + variables.get(KtunaxaBpmConstant.REFERRAL_CONTEXT_ENGAGEMENT_LEVEL)
+				+ "<br />Completion deadline" + variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE)
+				+ "<br />Referral " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID)
+				+ "<br />Description " + variables.get(KtunaxaBpmConstant.VAR_DESCRIPTION)
+				+ "<br />E-mail " + variables.get(KtunaxaBpmConstant.VAR_EMAIL)
+				+ "<br />Engagement level " + variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL)
 				+ "</div>");
 		content.setWidth100();
 		addMember(content);

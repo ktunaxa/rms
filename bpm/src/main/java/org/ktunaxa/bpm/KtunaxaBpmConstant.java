@@ -16,17 +16,20 @@ public interface KtunaxaBpmConstant {
 	String QUERY_REFERRAL_ID = "r";
 	String QUERY_TASK_ID = "bpm";
 
+	String REFERRAL_PROCESS_ID = "referral-handling";
+
 	String VAR_REFERRAL_ID = "referralId";
 	String VAR_DESCRIPTION = "description";
-
-	String REFERRAL_PROCESS_ID = "referral-handling";
-	String REFERRAL_CONTEXT_REFERRAL_ID = "referralId";
-	String REFERRAL_CONTEXT_DESCRIPTION = "description";
-	String REFERRAL_CONTEXT_EMAIL = "requesterEmail";
-	String REFERRAL_CONTEXT_ENGAGEMENT_LEVEL = "engagementLevel";
-	String REFERRAL_CONTEXT_COMPLETION_DEADLINE = "completionDeadline";
-	String REFERRAL_CONTEXT_FINAL_DECISION_CONSISTENT = "finalDecisionConsistent";
-	String REFERRAL_CONTEXT_EVALUATE_VALUES = "evaluateValues";
-	String REFERRAL_CONTEXT_DECISION_CONSISTENT = "decisionConsistent";
-	String REFERRAL_CONTEXT_EVALUATE_AQUATIC = "evalAquatic";
+	String VAR_EMAIL = "requesterEmail";
+	String VAR_ENGAGEMENT_LEVEL = "engagementLevel";
+	String VAR_COMPLETION_DEADLINE = "completionDeadline";
+	String VAR_FINAL_DECISION_CONSISTENT = "finalDecisionConsistent";
+	String VAR_EVALUATE_VALUES = "evaluateValues";
+	String VAR_DECISION_CONSISTENT = "decisionConsistent";
+	String VAR_EVALUATE_AQUATIC = "evalAquatic";
+	String VAR_EVALUATE_ARCHAEOLOGICAL = "evalArchaeological";
+	String VAR_EVALUATE_CULTURAL = "evalCultural";
+	String VAR_EVALUATE_ECOLOGICAL = "evalEcological";
+	String VAR_EVALUATE_TREATY = "evalTreaty";
+	String VAR_COMMUNITY_INPUT ="communityInput";
 }

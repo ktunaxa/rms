@@ -26,7 +26,7 @@ public class EvaluateOrFinishForm extends AbstractTaskForm {
 		super();
 
 		evaluateValues.setName("evaluateValues");
-		evaluateValues.setHint("Evaluate values");
+		evaluateValues.setTitle("Evaluate values");
 
 		setFields(evaluateValues);
 	}
@@ -35,13 +35,13 @@ public class EvaluateOrFinishForm extends AbstractTaskForm {
 	public void refresh(TaskDto task) {
 		super.refresh(task);
 		evaluateValues.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.REFERRAL_CONTEXT_EVALUATE_VALUES));
+				get(KtunaxaBpmConstant.VAR_EVALUATE_VALUES));
 	}
 
 	@Override
 	public Map<String, String> getVariables() {
 		Map<String, String> result = new HashMap<String, String>();
-		result.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_EVALUATE_VALUES,
+		result.put(KtunaxaBpmConstant.VAR_EVALUATE_VALUES,
 				nullSafeToString(evaluateValues.getValue()));
 		return result;
 	}

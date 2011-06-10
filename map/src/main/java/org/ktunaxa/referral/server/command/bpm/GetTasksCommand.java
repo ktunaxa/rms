@@ -55,7 +55,7 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 		}
 		if (null != request.getReferralId()) {
 			TaskQuery taskQuery = taskService.createTaskQuery();
-			add(taskDtos, taskQuery.processVariableValueEquals(KtunaxaBpmConstant.REFERRAL_CONTEXT_REFERRAL_ID,
+			add(taskDtos, taskQuery.processVariableValueEquals(KtunaxaBpmConstant.VAR_REFERRAL_ID,
 					request.getReferralId()).list());
 		}
 	}

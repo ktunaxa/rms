@@ -26,7 +26,8 @@ public class ProvincialResultForm extends AbstractTaskForm {
 		super();
 
 		decisionConsistent.setName("decisionConsistent");
-		decisionConsistent.setHint("Provincial decision is consistent with KLRA response");
+		decisionConsistent.setTitle("Consistent decision");
+		decisionConsistent.setPrompt("Provincial decision is consistent with KLRA response");
 
 		setFields(decisionConsistent);
 	}
@@ -35,13 +36,13 @@ public class ProvincialResultForm extends AbstractTaskForm {
 	public void refresh(TaskDto task) {
 		super.refresh(task);
 		decisionConsistent.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.REFERRAL_CONTEXT_DECISION_CONSISTENT));
+				get(KtunaxaBpmConstant.VAR_DECISION_CONSISTENT));
 	}
 
 	@Override
 	public Map<String, String> getVariables() {
 		Map<String, String> result = new HashMap<String, String>();
-		result.put(KtunaxaBpmConstant.REFERRAL_CONTEXT_DECISION_CONSISTENT,
+		result.put(KtunaxaBpmConstant.VAR_DECISION_CONSISTENT,
 				nullSafeToString(decisionConsistent.getValue()));
 		return result;
 	}

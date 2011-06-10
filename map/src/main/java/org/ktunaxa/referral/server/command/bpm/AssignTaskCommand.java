@@ -41,7 +41,7 @@ public class AssignTaskCommand implements Command<AssignTaskRequest, GetReferral
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "taskId");
 		}
 		taskService.setAssignee(taskId, request.getAssignee());
-		Object variable = taskService.getVariable(taskId, KtunaxaBpmConstant.REFERRAL_CONTEXT_REFERRAL_ID);
+		Object variable = taskService.getVariable(taskId, KtunaxaBpmConstant.VAR_REFERRAL_ID);
 		if (null != variable) {
 			response.setReferral(getReferralCommand.getReferral(variable.toString()));
 		}

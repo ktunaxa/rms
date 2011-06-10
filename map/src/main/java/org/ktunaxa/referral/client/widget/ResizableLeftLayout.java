@@ -71,8 +71,6 @@ public class ResizableLeftLayout extends VLayout {
 
 	private HashMap<String, Card> cards = new HashMap<String, Card>();
 
-	private Card currentCard;
-
 	private List<ToolStripButton> buttons = new ArrayList<ToolStripButton>();
 
 	private HTMLFlow verticalTitle;
@@ -112,7 +110,7 @@ public class ResizableLeftLayout extends VLayout {
 		canvas.setLeft(0);
 		canvas.setTop(0);
 		canvas.hide();
-		contentsCanvas.addChild(canvas);
+		contentsCanvas.addMember(canvas);
 		final Card card = new Card(name, title, canvas);
 		cards.put(name, card);
 
@@ -136,7 +134,7 @@ public class ResizableLeftLayout extends VLayout {
 	public void showCard(String name) {
 		restore();
 		if (cards.containsKey(name)) {
-			currentCard = cards.get(name);
+			Card currentCard = cards.get(name);
 			titleDiv.setContents(name);
 			verticalTitle.setContents(currentCard.getTitle());
 			for (Card card : cards.values()) {

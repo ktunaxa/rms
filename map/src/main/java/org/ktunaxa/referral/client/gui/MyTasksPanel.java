@@ -38,7 +38,7 @@ public class MyTasksPanel extends VLayout {
 
 		setWidth100();
 		view = new TaskListView();
-		addChild(view);
+		addMember(view);
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
