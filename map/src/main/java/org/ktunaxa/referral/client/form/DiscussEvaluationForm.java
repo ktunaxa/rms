@@ -42,7 +42,7 @@ public class DiscussEvaluationForm extends AbstractTaskForm {
 	@Override
 	public Map<String, String> getVariables() {
 		Map<String, String> result = new HashMap<String, String>();
-		result.put(KtunaxaBpmConstant.VAR_FINAL_DECISION_CONSISTENT,
+		result.put(KtunaxaBpmConstant.VAR_FINAL_DECISION_CONSISTENT + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(finalDecisionConsistent.getValue()));
 		return result;
 	}

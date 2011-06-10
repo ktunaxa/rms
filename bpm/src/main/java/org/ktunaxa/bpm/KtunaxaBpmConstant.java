@@ -32,4 +32,7 @@ public interface KtunaxaBpmConstant {
 	String VAR_EVALUATE_ECOLOGICAL = "evalEcological";
 	String VAR_EVALUATE_TREATY = "evalTreaty";
 	String VAR_COMMUNITY_INPUT ="communityInput";
+
+	String DATE_FORMAT = "yyyy-MM-dd";
+	String SET_BOOLEAN = "_Boolean";
 }

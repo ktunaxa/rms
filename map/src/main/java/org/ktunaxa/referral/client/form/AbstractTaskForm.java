@@ -76,8 +76,10 @@ public abstract class AbstractTaskForm extends VLayout {
 	 */
 	public boolean validate() {
 		boolean valid = true;
-		for (DynamicForm form : forms) {
-			valid &= form.validate();
+		if (null != forms) {
+			for (DynamicForm form : forms) {
+				valid &= form.validate();
+			}
 		}
 		return valid;
 	}

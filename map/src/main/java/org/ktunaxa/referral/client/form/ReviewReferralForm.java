@@ -6,6 +6,7 @@
 
 package org.ktunaxa.referral.client.form;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.SpinnerItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
@@ -70,8 +71,10 @@ public class ReviewReferralForm extends AbstractTaskForm {
 	@Override
 	public Map<String, String> getVariables() {
 		Map<String, String> result = new HashMap<String, String>();
+		DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
+
 		result.put(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE,
-				nullSafeToString(completionDeadline.getValue()));
+				formatter.format(completionDeadline.getValueAsDate()));
 		result.put(KtunaxaBpmConstant.VAR_DESCRIPTION,
 				nullSafeToString(description.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_EMAIL,

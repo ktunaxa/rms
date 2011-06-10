@@ -41,7 +41,7 @@ public class EvaluateOrFinishForm extends AbstractTaskForm {
 	@Override
 	public Map<String, String> getVariables() {
 		Map<String, String> result = new HashMap<String, String>();
-		result.put(KtunaxaBpmConstant.VAR_EVALUATE_VALUES,
+		result.put(KtunaxaBpmConstant.VAR_EVALUATE_VALUES + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(evaluateValues.getValue()));
 		return result;
 	}

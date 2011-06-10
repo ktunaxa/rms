@@ -17,7 +17,7 @@
 
 	<bean id="ktunaxa" class="org.ktunaxa.bpm.KtunaxaConfiguration">
 		<property name="mapDashboardBaseUrl" value="http://localhost:8888/map/"/>
-		<property name="bpmDashboardBaseUrl" value="http://localhost:8888/bpm/"/>
+		<property name="bpmDashboardBaseUrl" value="http://localhost:8888/map/"/>
 	</bean>
 
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
@@ -30,7 +30,7 @@
 
 		<property name="dbCycleUsed" value="true"/>
 
-		<property name="mailServerHost" value="smtp.ibbt.be"/>
+		<property name="mailServerHost" value="smtp.skynet.be"/>  <!-- at office smtp.ibbt.be should work -->
 		<property name="mailServerPort" value="25"/>
 		<property name="mailServerDefaultFrom" value="activiti.referral@ktunaxa.org"/>
 		<property name="mailServerUsername" value=""/>

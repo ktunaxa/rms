@@ -9,13 +9,17 @@ package org.ktunaxa.referral.server.command.bpm;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.geomajas.command.Command;
+import org.geomajas.command.CommandResponse;
 import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
-import org.ktunaxa.bpm.KtunaxaConfiguration;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
 import org.ktunaxa.referral.server.command.dto.UrlResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Finish a task and return the BPM dashboard URL (which should be redirected to.
@@ -23,26 +27,43 @@ import org.springframework.stereotype.Component;
  * @author Joachim Van der Auwera
  */
 @Component
-public class FinishTaskCommand implements Command<FinishTaskRequest, UrlResponse> {
+public class FinishTaskCommand implements Command<FinishTaskRequest, CommandResponse> {
 
 	@Autowired
 	private TaskService taskService;
-
-	@Autowired
-	private KtunaxaConfiguration ktunaxaConfiguration;
 
 	public UrlResponse getEmptyCommandResponse() {
 		return new UrlResponse();
 	}
 
-	public void execute(FinishTaskRequest request, UrlResponse response) throws Exception {
-		if (null == request.getTaskId()) {
+	public void execute(FinishTaskRequest request, CommandResponse response) throws Exception {
+		String taskId = request.getTaskId();
+		if (null == taskId) {
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "taskId");
 		}
-		Task task = taskService.createTaskQuery().executionId(request.getTaskId()).singleResult();
-		if (task != null) {
-			taskService.complete(task.getId());
-			response.setUrl(ktunaxaConfiguration.getBpmDashboardBaseUrl());
+		Map<String, String> variables = request.getVariables();
+		if (null == variables) {
+			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "variables");
 		}
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		if (null != task) {
+			taskService.complete(task.getId(), convertToObjects(variables));
+		} else {
+			throw new GeomajasException(ExceptionCode.UNEXPECTED_PROBLEM, "task " + taskId + " not found");
+		}
+	}
+
+	private Map<String, Object> convertToObjects(Map<String, String> variables) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		for (Map.Entry<String, String> entry : variables.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			if (key.endsWith(KtunaxaBpmConstant.SET_BOOLEAN)) {
+				key = key.substring(0, key.length() - KtunaxaBpmConstant.SET_BOOLEAN.length());
+				value = "true".equalsIgnoreCase(entry.getValue());
+			}
+			result.put(key, value);
+		}
+		return result;
 	}
 }

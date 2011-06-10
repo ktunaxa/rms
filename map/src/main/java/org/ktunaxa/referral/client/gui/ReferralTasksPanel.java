@@ -77,7 +77,11 @@ public class ReferralTasksPanel extends VLayout {
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
-		// nothing to do for now
+		if (null != referral) {
+			show();
+		} else {
+			currentTaskBlock.refresh(MapLayout.getInstance().getCurrentTask());
+		}
 	}
 
 	@Override
@@ -111,6 +115,11 @@ public class ReferralTasksPanel extends VLayout {
 			command.setCommandRequest(request);
 			GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
 				public void execute(GetTasksResponse response) {
+					for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
+						if (GROUP_CURRENT != i) {
+							lists[i].clear(); // clear again to avoid double AJAX calls causing duplicates
+						}
+					}
 					for (TaskDto task : response.getTasks()) {
 						// @todo @sec only when allowed to see this task
 						TaskBlock block = new TaskBlock(task);

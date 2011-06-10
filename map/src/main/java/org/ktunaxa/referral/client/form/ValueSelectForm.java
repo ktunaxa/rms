@@ -84,17 +84,17 @@ public class ValueSelectForm extends AbstractTaskForm {
 	@Override
 	public Map<String, String> getVariables() {
 		Map<String, String> result = new HashMap<String, String>();
-		result.put(KtunaxaBpmConstant.VAR_EVALUATE_AQUATIC,
+		result.put(KtunaxaBpmConstant.VAR_EVALUATE_AQUATIC + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(evalAquatic.getValue()));
-		result.put(KtunaxaBpmConstant.VAR_EVALUATE_ARCHAEOLOGICAL,
+		result.put(KtunaxaBpmConstant.VAR_EVALUATE_ARCHAEOLOGICAL + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(evalArchaeological.getValue()));
-		result.put(KtunaxaBpmConstant.VAR_EVALUATE_CULTURAL,
+		result.put(KtunaxaBpmConstant.VAR_EVALUATE_CULTURAL + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(evalCultural.getValue()));
-		result.put(KtunaxaBpmConstant.VAR_EVALUATE_ECOLOGICAL,
+		result.put(KtunaxaBpmConstant.VAR_EVALUATE_ECOLOGICAL + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(evalEcological.getValue()));
-		result.put(KtunaxaBpmConstant.VAR_EVALUATE_TREATY,
+		result.put(KtunaxaBpmConstant.VAR_EVALUATE_TREATY + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(evalTreaty.getValue()));
-		result.put(KtunaxaBpmConstant.VAR_COMMUNITY_INPUT,
+		result.put(KtunaxaBpmConstant.VAR_COMMUNITY_INPUT + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(communityInput.getValue()));
 		return result;
 	}

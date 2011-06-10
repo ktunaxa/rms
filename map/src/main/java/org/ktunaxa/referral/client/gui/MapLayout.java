@@ -7,6 +7,7 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.google.gwt.core.client.GWT;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
@@ -58,6 +59,8 @@ public final class MapLayout extends VLayout {
 
 	private ReferralPanel referralPanel;
 
+	private BpmPanel bpmPanel;
+
 	private TaskDto currentTask;
 
 	private ToolStripButton referralButton;
@@ -89,7 +92,7 @@ public final class MapLayout extends VLayout {
 		referralButton.setDisabled(true); // no referral at start
 		AnalysisPanel analysisPanel = new AnalysisPanel(mapWidget);
 		infoPane.addCard(analysisPanel.getName(), "GIS Analysis", analysisPanel);
-		BpmPanel bpmPanel = new BpmPanel();
+		bpmPanel = new BpmPanel();
 		infoPane.addCard(bpmPanel.getName(), "Referral process", bpmPanel);
 		// top bar
 		topBar = new TopBar();
@@ -166,7 +169,7 @@ public final class MapLayout extends VLayout {
 	 * @param referral referral to select
 	 * @param task task to select
 	 */
-	public void setReferralAndTask(org.geomajas.layer.feature.Feature referral, TaskDto task) {
+	public void setReferralAndTask(@Nullable org.geomajas.layer.feature.Feature referral, @Nullable TaskDto task) {
 		currentReferral = referral;
 		currentTask = task;
 		String title;
@@ -218,6 +221,13 @@ public final class MapLayout extends VLayout {
 	public void focusCurrentTask() {
 		infoPane.showCard(referralPanel.getName());
 		referralPanel.focusCurrentTask();
+	}
+
+	/**
+	 * Put the focus on the current task.
+	 */
+	public void focusBpm() {
+		infoPane.showCard(bpmPanel.getName());
 	}
 
 	/**

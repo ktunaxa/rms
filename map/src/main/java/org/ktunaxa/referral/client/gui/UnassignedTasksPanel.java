@@ -97,12 +97,15 @@ public class UnassignedTasksPanel extends VLayout {
 			sections[i].setExpanded(false);
 		}
 
-		GetTasksRequest request = new GetTasksRequest();
+ 		GetTasksRequest request = new GetTasksRequest();
 		request.setIncludeUnassignedTasks(true);
 		GwtCommand command = new GwtCommand(GetTasksRequest.COMMAND);
 		command.setCommandRequest(request);
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
 			public void execute(GetTasksResponse response) {
+				for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
+					lists[i].clear(); // clear again to avoid double AJAX calls causing duplicates
+				}
 				for (TaskDto task : response.getTasks()) {
 					TaskBlock block = new TaskBlock(task);
 					String candidates = task.getCandidates().toString();

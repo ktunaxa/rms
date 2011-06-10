@@ -55,7 +55,7 @@ public class CreateProcessCommand implements Command<CreateProcessRequest, UrlRe
 		if (null == description) {
 			description = "";
 		}
-		DateFormat yyyymmdd = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat yyyymmdd = new SimpleDateFormat(KtunaxaBpmConstant.DATE_FORMAT);
 		context.put(KtunaxaBpmConstant.VAR_DESCRIPTION, description);
 		context.put(KtunaxaBpmConstant.VAR_EMAIL, email);
 		context.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL, request.getEngagementLevel());

@@ -58,6 +58,7 @@ public class MyTasksPanel extends VLayout {
 		command.setCommandRequest(request);
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
 			public void execute(GetTasksResponse response) {
+				list.clear(); // clear again to avoid double AJAX calls causing duplicates
 				for (TaskDto task : response.getTasks()) {
 					TaskBlock block = new TaskBlock(task);
 					list.add(block);

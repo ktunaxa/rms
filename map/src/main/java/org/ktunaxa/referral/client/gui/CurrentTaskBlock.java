@@ -6,7 +6,6 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
@@ -16,6 +15,10 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
+import org.geomajas.command.CommandResponse;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.widget.CardLayout;
 import org.ktunaxa.referral.client.form.AbstractTaskForm;
 import org.ktunaxa.referral.client.form.DiscussEvaluationForm;
@@ -24,6 +27,7 @@ import org.ktunaxa.referral.client.form.EvaluateOrFinishForm;
 import org.ktunaxa.referral.client.form.ProvincialResultForm;
 import org.ktunaxa.referral.client.form.ReviewReferralForm;
 import org.ktunaxa.referral.client.form.ValueSelectForm;
+import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
 import java.util.Map;
@@ -133,13 +137,18 @@ public class CurrentTaskBlock extends CardLayout {
 				TaskDto currentTask = MapLayout.getInstance().getCurrentTask();
 				if (valid && null != currentTask) {
 					Map<String, String> variables = taskForm.getVariables();
-					SC.say("finish using " + variables);
-					//FinishTaskRequest request = new FinishTaskRequest();
-					//request.setTaskId(currentTask.getId());
-					//request.setVariables(variables);
-					//GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
-					//command.setCommandRequest(request);
-					//GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<UrlResponse>() {})
+					FinishTaskRequest request = new FinishTaskRequest();
+					request.setTaskId(currentTask.getId());
+					request.setVariables(variables);
+					GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
+					command.setCommandRequest(request);
+					GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<CommandResponse>() {
+						public void execute(CommandResponse response) {
+							MapLayout mapLayout = MapLayout.getInstance();
+							mapLayout.setReferralAndTask(mapLayout.getCurrentReferral(), null); // clear task
+							mapLayout.focusBpm();
+						}
+					});
 				} else {
 					finishButton.enable();
 				}
