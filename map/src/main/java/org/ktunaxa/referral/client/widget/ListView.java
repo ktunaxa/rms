@@ -27,8 +27,6 @@ import com.smartgwt.client.widgets.form.fields.events.FormItemClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.FormItemIconClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
-import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
@@ -45,6 +43,7 @@ import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 public class ListView<T extends Serializable> extends VLayout {
 
 	private boolean canCreate;
+
 	private boolean canSearch;
 
 	private Button createNewButton;
@@ -64,8 +63,8 @@ public class ListView<T extends Serializable> extends VLayout {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Create a new list view instance with the given sort parameters.
-	 * The ListView will have a create button and search option.
+	 * Create a new list view instance with the given sort parameters. The ListView will have a create button and search
+	 * option.
 	 * 
 	 * @param sortAttributes
 	 *            A mapping of sort attribute names (used in the GUI) with respective comparators. These comparators
@@ -76,9 +75,9 @@ public class ListView<T extends Serializable> extends VLayout {
 	}
 
 	/**
-	 * Create a new list view instance with the given sort parameters.
-	 * The ListView will have a create button and search option.
-	 *
+	 * Create a new list view instance with the given sort parameters. The ListView will have a create button and search
+	 * option.
+	 * 
 	 * @param sortAttributes
 	 *            A mapping of sort attribute names (used in the GUI) with respective comparators. These comparators
 	 *            should be able to sort the actual collapsible blocks.
@@ -122,6 +121,7 @@ public class ListView<T extends Serializable> extends VLayout {
 
 	/** Collapse all blocks within the list. */
 	public void collapse() {
+		blockLayout.setHeight(10); // to make it redraw....
 		for (Canvas member : blockLayout.getMembers()) {
 			if (member instanceof AbstractCollapsibleListBlock<?>) {
 				((AbstractCollapsibleListBlock<?>) member).collapse();
@@ -205,72 +205,63 @@ public class ListView<T extends Serializable> extends VLayout {
 	// ------------------------------------------------------------------------
 
 	private void buildGui() {
-		HLayout header = new HLayout(5);
-		header.setStyleName("listViewHeader");
-		header.setSize("100%", "32");
-		if (canCreate) {
-			createNewButton = new Button("Create new");
-			createNewButton.setAutoFit(true);
-			header.addMember(createNewButton);
-			header.addMember(new LayoutSpacer());
-		}
-
 		ToolStrip toolStrip = new ToolStrip();
 		toolStrip.setMembersMargin(2);
-		toolStrip.setSize("450", "32");
+		toolStrip.setSize("100%", "32");
 		toolStrip.setBackgroundImage("");
 		toolStrip.setBorder("none");
 
-		// Sorting:
-		HTMLFlow sortText = new HTMLFlow(
-				"<div style='text-align:right; line-height:32px; font-size:12px;'>Sort by:</div>");
-		sortText.setSize("50px", "32");
-		toolStrip.addMember(sortText);
-		for (final String sortKey : sortAttributes.keySet()) {
-			ToolStripButton sortBtn = new ToolStripButton(sortKey);
-			sortBtn.setActionType(SelectionType.RADIO);
-			sortBtn.setRadioGroup("sort-group");
-			sortBtn.addClickHandler(new ClickHandler() {
-
-				public void onClick(ClickEvent event) {
-					sort(sortKey);
-				}
-			});
-			toolStrip.addMember(sortBtn);
+		if (canCreate) {
+			createNewButton = new Button("Create new");
+			createNewButton.setAutoFit(true);
+			toolStrip.addMember(createNewButton);
 		}
-		toolStrip.addSeparator();
+		toolStrip.addFill();
 
-		// Expand button;
-		IButton expandBtn = new IButton();
-		expandBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/expanded_list.png");
-		expandBtn.setIconSize(16);
-		expandBtn.setSize("27", "30");
-		expandBtn.setTooltip("Expand list");
-		expandBtn.setActionType(SelectionType.RADIO);
-		expandBtn.setRadioGroup("view-group");
-		expandBtn.addClickHandler(new ClickHandler() {
+		// Sorting:
+		if (sortAttributes.size() > 0) {
+			HTMLFlow sortText = new HTMLFlow(
+					"<div style='text-align:right; line-height:32px; font-size:12px;'>Sort by:</div>");
+			sortText.setSize("50px", "32");
+			toolStrip.addMember(sortText);
+			for (final String sortKey : sortAttributes.keySet()) {
+				ToolStripButton sortBtn = new ToolStripButton(sortKey);
+				sortBtn.setActionType(SelectionType.RADIO);
+				sortBtn.setRadioGroup("sort-group");
+				sortBtn.addClickHandler(new ClickHandler() {
+
+					public void onClick(ClickEvent event) {
+						sort(sortKey);
+					}
+				});
+				toolStrip.addMember(sortBtn);
+			}
+			toolStrip.addSeparator();
+		}
+
+		// Expand/collapse toggle button:
+		final IButton expcolBtn = new IButton();
+		expcolBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/collapsed_list.png");
+		expcolBtn.setIconSize(16);
+		expcolBtn.setSize("27", "30");
+		expcolBtn.setTooltip("Collapse list");
+		expcolBtn.setActionType(SelectionType.CHECKBOX);
+		expcolBtn.setRadioGroup("view-group");
+		expcolBtn.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				expand();
+				if (expcolBtn.isSelected()) {
+					collapse();
+					expcolBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/expanded_list.png");
+					expcolBtn.setTooltip("Expand list");
+				} else {
+					expcolBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/collapsed_list.png");
+					expcolBtn.setTooltip("Collapse list");
+					expand();
+				}
 			}
 		});
-		toolStrip.addMember(expandBtn);
-
-		// Collapse button:
-		IButton collapseBtn = new IButton();
-		collapseBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/collapsed_list.png");
-		collapseBtn.setIconSize(16);
-		collapseBtn.setSize("27", "30");
-		collapseBtn.setTooltip("Collapse list");
-		collapseBtn.setActionType(SelectionType.RADIO);
-		collapseBtn.setRadioGroup("view-group");
-		collapseBtn.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				collapse();
-			}
-		});
-		toolStrip.addMember(collapseBtn);
+		toolStrip.addMember(expcolBtn);
 
 		// Searching:
 		if (canSearch) {
@@ -283,11 +274,10 @@ public class ListView<T extends Serializable> extends VLayout {
 			toolStrip.addMember(form);
 		}
 
-		header.addMember(toolStrip);
-		addMember(header);
+		addMember(toolStrip);
 
 		blockLayout = new VLayout(10);
-		blockLayout.setSize("100%", "100%");
+		blockLayout.setWidth100();
 		addMember(blockLayout);
 	}
 

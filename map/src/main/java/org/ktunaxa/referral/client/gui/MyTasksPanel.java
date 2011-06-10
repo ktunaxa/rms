@@ -6,7 +6,9 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.widgets.layout.VLayout;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
@@ -18,8 +20,8 @@ import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.smartgwt.client.widgets.layout.LayoutSpacer;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Panel to display tasks which are assigned to me.
