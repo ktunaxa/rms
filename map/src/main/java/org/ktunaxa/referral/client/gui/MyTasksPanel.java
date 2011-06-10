@@ -20,7 +20,6 @@ import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
