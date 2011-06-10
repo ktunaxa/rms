@@ -11,6 +11,7 @@ import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -47,13 +48,17 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	private static final String IMAGE_MINIMIZE = "[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/minimize.gif";
 	private static final String IMAGE_MAXIMIZE = "[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/maximize.gif";
 
+	private static final String IMAGE_CLAIM = "[ISOMORPHIC]/images/task/claim.png";
+	private static final String IMAGE_START = "[ISOMORPHIC]/images/task/start.png";
+	private static final String IMAGE_ASSIGN = "[ISOMORPHIC]/images/task/assign.png";
+
 	private HLayout title;
 
 	private HTMLFlow content;
 
 	private Img titleImage = new Img(IMAGE_MINIMIZE, 16, 16);
-	private Button startButton = new Button("Start");
-	private Button claimButton = new Button("Claim");
+	private IButton startButton = new IButton();
+	private IButton claimButton = new IButton();
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -151,6 +156,13 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		final String me = UserContext.getInstance().getUser();
 
+		startButton.setIcon(IMAGE_START);
+		startButton.setShowDisabledIcon(false);
+		startButton.setIconWidth(28);
+		startButton.setIconHeight(26);
+		startButton.setWidth(38);
+		startButton.setHeight(34);
+		startButton.setPrompt("Start");
 		startButton.setLayoutAlign(VerticalAlignment.CENTER);
 		startButton.setShowRollOver(false);
 		setStartButtonStatus(task);
@@ -161,7 +173,14 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		});
 		infoLayout.addMember(startButton);
 
-		Button assignButton = new Button("Assign");
+		IButton assignButton = new IButton();
+		assignButton.setIcon(IMAGE_ASSIGN);
+		assignButton.setShowDisabledIcon(false);
+		assignButton.setIconWidth(29);
+		assignButton.setIconHeight(26);
+		assignButton.setWidth(39);
+		assignButton.setHeight(34);
+		assignButton.setPrompt("Assign");
 		assignButton.setLayoutAlign(VerticalAlignment.CENTER);
 		assignButton.setShowRollOver(false);
 		if (!UserContext.getInstance().isReferralAdmin()) {
@@ -177,6 +196,13 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		});
 		infoLayout.addMember(assignButton);
 
+		claimButton.setIcon(IMAGE_CLAIM);
+		claimButton.setShowDisabledIcon(false);
+		claimButton.setIconWidth(28);
+		claimButton.setIconHeight(26);
+		claimButton.setWidth(38);
+		claimButton.setHeight(34);
+		claimButton.setPrompt("Claim");
 		claimButton.setLayoutAlign(VerticalAlignment.CENTER);
 		claimButton.setShowRollOver(false);
 		setClaimButtonStatus(task);
