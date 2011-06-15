@@ -50,6 +50,8 @@ public class CmisServiceImpl implements CmisService {
 
 	private Repository repository;
 
+	private Map<String, String> parameter = new HashMap<String, String>();
+	
 	@PostConstruct
 	public void initialize() {
 		if (StringUtils.hasText(config.getProxyHost())) {
@@ -59,10 +61,6 @@ public class CmisServiceImpl implements CmisService {
 			System.setProperty("https.proxyHost", config.getProxyHost());
 			System.setProperty("https.proxyPort", Integer.toString(config.getProxyPort()));
 		}
-
-		SessionFactory sessionFactory = SessionFactoryImpl.newInstance();
-		Map<String, String> parameter = new HashMap<String, String>();
-
 		parameter.put(SessionParameter.USER, config.getUserName());
 		parameter.put(SessionParameter.PASSWORD, config.getPassword());
 		if (config.getUrl().endsWith("/")) {
@@ -81,15 +79,22 @@ public class CmisServiceImpl implements CmisService {
 		// parameter.put(SessionParameter.REPOSITORY_ID, "Main Repository");
 
 		// This supposes only one repository is available at the URL.
-		try {
-			repository = sessionFactory.getRepositories(parameter).get(0);
-		} catch (Exception e) {
-			log.error("Error: Initialize CmisService failed: " + e.getMessage(), e);
-		}
 	}
 
 	public Session createSession() {
+		checkRepository();
 		return repository.createSession();
+	}
+
+	private void checkRepository() {
+		if (repository == null) {
+			SessionFactory sessionFactory = SessionFactoryImpl.newInstance();
+			try {
+				repository = sessionFactory.getRepositories(parameter).get(0);
+			} catch (Exception e) {
+				log.error("Error: Initialize CmisService failed: " + e.getMessage(), e);
+			}
+		}
 	}
 
 	public String getBaseUrl() {
