@@ -17,6 +17,8 @@ import org.geomajas.layer.feature.attribute.OneToManyAttribute;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
@@ -191,9 +193,18 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 		block.addDeleteHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				listView.removeBlock(block);
-				// we've changed, let the handlers know
-				manager.fireEvent(new ChangedEvent(null));
+				SC.confirm(block.getDeleteMessage(), new BooleanCallback() {
+					
+					public void execute(Boolean yes) {
+						if (yes) {
+							listView.removeBlock(block);
+							// we've changed, let the handlers know
+							manager.fireEvent(new ChangedEvent(null));
+						} else {
+							// nothing
+						}
+					}
+				});
 			}
 		});
 	}

@@ -56,6 +56,10 @@ public class CommentBlock extends AbstractAttributeBlock {
 		buildGui();
 	}
 
+	public String getDeleteMessage() {
+		return "Are you sure you want to delete this comment ?";
+	}
+	
 	// ------------------------------------------------------------------------
 	// CollapsableBlock implementation:
 	// ------------------------------------------------------------------------

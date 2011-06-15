@@ -57,6 +57,8 @@ public class DetailPanel extends VLayout {
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
+		// clean up (TODO update code)
+		removeMembers(getMembers());
 		this.referralLayer = referralLayer;
 		this.referralId = referral.getId();
 		MapModel mapModel = referralLayer.getMapModel();

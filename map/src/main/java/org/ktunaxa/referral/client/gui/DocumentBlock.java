@@ -96,6 +96,13 @@ public class DocumentBlock extends AbstractAttributeBlock {
 			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png");
 		}
 	}
+	
+	
+
+	@Override
+	public String getDeleteMessage() {
+		return "Are you sure you want to delete this document ?";
+	}
 
 	private void buildGui() {
 		setStyleName("documentBlock");

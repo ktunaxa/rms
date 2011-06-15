@@ -43,6 +43,8 @@ public abstract class AbstractAttributeBlock extends VLayout {
 	}
 
 	public abstract void redrawValue();
+	
+	public abstract String getDeleteMessage();
 
 
 }

@@ -45,8 +45,11 @@ public class DocumentPanel extends VLayout {
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
+		// clean up (TODO update code)
+		removeMembers(getMembers());
 		this.referralLayer = referralLayer;
 		this.referralId = referral.getId();
+		
 		editor = new FeatureAttributeEditor(referralLayer, false, new DocumentsFormFactory());
 		editor.setFeature(referral);
 		MapModel mapModel = referralLayer.getMapModel();
