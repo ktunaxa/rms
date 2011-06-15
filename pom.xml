@@ -76,6 +76,14 @@
 			</dependency>
 
 			<dependency>
+				<groupId>org.alfresco</groupId>
+				<artifactId>alfresco</artifactId>
+				<type>war</type>
+				<version>${alfresco.version}</version>
+				<classifier>community</classifier>
+			</dependency>
+
+			<dependency>
 				<groupId>org.apache.chemistry.opencmis</groupId>
 				<artifactId>chemistry-opencmis-client-impl</artifactId>
 				<version>0.2.0-incubating</version>
@@ -265,6 +273,7 @@
 		<geotools.version>2.7.0.1</geotools.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gwt-version>2.1.1</gwt-version>
+		<alfresco.version>3.4.a</alfresco.version>
 	</properties>
 
 </project>
