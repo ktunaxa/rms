@@ -28,7 +28,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
 	<bean id="cmisConfig" class="org.ktunaxa.referral.server.service.CmisConfig">
 		<property name="userName" value="admin" />
-		<property name="password" value="sp@rklingH2O" />
+		<property name="password" value="Sp@rklingH2O" />
 		<property name="url" value="http://apps.geomajas.org/alfresco/" />
 		<property name="repository" value="Main Repository" />
 		<property name="folder" value="ktunaxa" />
