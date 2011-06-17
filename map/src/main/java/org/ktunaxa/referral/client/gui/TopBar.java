@@ -6,16 +6,14 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 
-import org.geomajas.gwt.client.util.WindowUtil;
-import org.ktunaxa.referral.client.KtunaxaUrls;
 import org.ktunaxa.referral.client.security.UserContext;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Top menu bar of the general layout. The top bar has a user section (login/logout,status) on the right and a list of
@@ -28,12 +26,6 @@ public class TopBar extends HLayout {
 
 	private HTMLFlow leftLabel;
 
-	private String title;
-
-	private String tooltip;
-
-	private ToolStripButton tasksButton;
-
 	private ToolStripButton userButton;
 
 	/**
@@ -44,12 +36,8 @@ public class TopBar extends HLayout {
 		setSize("100%", "44");
 		setStyleName("header");
 
-		leftLabel = new HTMLFlow(title);
+		leftLabel = new HTMLFlow(" ");
 		leftLabel.setStyleName("headerText");
-		if (tooltip != null) {
-			leftLabel.setTooltip(tooltip);
-			leftLabel.setHoverWidth(700);
-		}
 		leftLabel.setWidth100();
 		addMember(leftLabel);
 
@@ -62,15 +50,7 @@ public class TopBar extends HLayout {
 		headerBar.addFill();
 		headerBar.setStyleName("headerRight");
 
-		tasksButton = new ToolStripButton("Tasks");
-		tasksButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				WindowUtil.setLocation(KtunaxaUrls.getInstance().getBpmDashboardBaseUrl());
-			}
-		});
-		headerBar.addMember(tasksButton);
-		userButton = new ToolStripButton(UserContext.getInstance().getName()); // @todo update after login
+		userButton = new ToolStripButton(UserContext.getInstance().getName()); // @todo @sec update after login
 		userButton.setIcon("[ISOMORPHIC]/images/user-icon.png");
 		headerBar.addMember(userButton);
 		headerBar.addSeparator();
@@ -85,17 +65,18 @@ public class TopBar extends HLayout {
 	 * 
 	 * @param title the new title
 	 */
-	public void setLeftTitle(String title) {
+	public void setLeftTitle(@NotNull String title) {
 		leftLabel.setContents(title);
 	}
 
 	/**
-	 * Gets the button to navigate to the BPM dashboard.
-	 * 
-	 * @return the tasks button
+	 * Sets the tooltip of the top bar.
+	 *
+	 * @param tooltip the new title
 	 */
-	public ToolStripButton getTasksButton() {
-		return tasksButton;
+	public void setLeftTooltip(@NotNull String tooltip) {
+		leftLabel.setTooltip(tooltip);
+		leftLabel.setHoverWidth(700);
 	}
 
 	/**

@@ -19,12 +19,10 @@ import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.wizard.Wizard;
 import org.geomajas.gwt.client.widget.wizard.WizardWidget;
 import org.ktunaxa.referral.server.command.dto.CreateProcessRequest;
-import org.ktunaxa.referral.server.command.dto.UrlResponse;
 
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
@@ -34,7 +32,6 @@ import org.ktunaxa.referral.server.service.KtunaxaConstant;
  * Wizard to create a new referral.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class ReferralCreationWizard extends Wizard<ReferralData> {
 
@@ -44,8 +41,11 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 
 	private VectorLayer layer;
 
-	public ReferralCreationWizard() {
+	private Runnable finishAction;
+
+	public ReferralCreationWizard(Runnable finishAction) {
 		super(new ReferralWizardView());
+		this.finishAction = finishAction;
 	}
 
 	public void init() {
@@ -71,7 +71,8 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 
 	@Override
 	protected void onCancel() {
-		start();
+		// start();
+		finishAction.run();
 	}
 
 	@Override
@@ -131,21 +132,18 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
 
 			public void execute(CommandResponse response) {
-				final UrlResponse urlResponse = (UrlResponse) response;
-				if (response instanceof UrlResponse) {
-					getView().setLoading(false);
-					SC.confirm("Referral " + referralId + " successfully created. Create another ?",
-							new BooleanCallback() {
+				getView().setLoading(false);
+				SC.confirm("Referral " + referralId + " successfully created. Create another ?",
+						new BooleanCallback() {
 
-								public void execute(Boolean value) {
-									if (value != null && value) {
-										start();
-									} else {
-										WindowUtil.setLocation(urlResponse.getUrl());
-									}
+							public void execute(Boolean value) {
+								if (value != null && value) {
+									start();
+								} else {
+									finishAction.run();
 								}
-							});
-				}
+							}
+						});
 			}
 		});
 
@@ -155,7 +153,6 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 	 * View part of the wizard.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public static class ReferralWizardView extends WizardWidget<ReferralData> {
 

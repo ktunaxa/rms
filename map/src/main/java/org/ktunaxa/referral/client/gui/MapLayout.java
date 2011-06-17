@@ -7,6 +7,8 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.widgets.Window;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
@@ -17,10 +19,9 @@ import org.geomajas.gwt.client.spatial.Bbox;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.spatial.geometry.MultiPoint;
 import org.geomajas.gwt.client.spatial.geometry.Point;
-import org.geomajas.gwt.client.util.WindowUtil;
 import org.geomajas.gwt.client.widget.Toolbar;
-import org.ktunaxa.referral.client.KtunaxaUrls;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
+import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
 import org.ktunaxa.referral.client.widget.ReferralMapWidget;
 import org.ktunaxa.referral.client.widget.ResizableLeftLayout;
 
@@ -105,8 +106,7 @@ public final class MapLayout extends VLayout {
 		newButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				WindowUtil.setLocation(addUrlParam(KtunaxaUrls.getInstance().getMapDashboardBaseUrl(),
-						KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER));
+				createReferral();
 			}
 		});
 		
@@ -240,13 +240,28 @@ public final class MapLayout extends VLayout {
 		return buttons.get(buttons.size() - 1);
 	}
 	
-	private String addUrlParam(String baseUrl, String param) {
-		if (baseUrl.indexOf('?') > 0) {
-			return baseUrl + "&" + param;
-		} else {
-			return baseUrl + "?" + param;
-		}
+	/**
+	 * Create a new referral.
+	 */
+	public void createReferral() {
+		final Window window = new Window();
+		window.setIsModal(true);
+		window.maximize();
+		window.setShowHeader(false);
+		VLayout body = new VLayout();
+		body.setWidth100();
+		body.setHeight100();
+		body.setOverflow(Overflow.SCROLL);
+		body.setMargin(10);
+		ReferralCreationWizard wizard = new ReferralCreationWizard(new Runnable() {
+			public void run() {
+				window.destroy();
+			}
+		});
+		body.addMember((ReferralCreationWizard.ReferralWizardView) wizard.getView());
+		addMember(body);
+		wizard.init();
+		window.addMember(body);
+		window.draw();
 	}
-
-
 }

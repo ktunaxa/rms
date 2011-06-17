@@ -14,7 +14,6 @@ import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
-import org.ktunaxa.referral.server.command.dto.UrlResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +31,8 @@ public class FinishTaskCommand implements Command<FinishTaskRequest, CommandResp
 	@Autowired
 	private TaskService taskService;
 
-	public UrlResponse getEmptyCommandResponse() {
-		return new UrlResponse();
+	public CommandResponse getEmptyCommandResponse() {
+		return new CommandResponse();
 	}
 
 	public void execute(FinishTaskRequest request, CommandResponse response) throws Exception {

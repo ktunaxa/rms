@@ -8,12 +8,11 @@ package org.ktunaxa.referral.server.command.bpm;
 
 import org.activiti.engine.RuntimeService;
 import org.geomajas.command.Command;
+import org.geomajas.command.CommandResponse;
 import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
-import org.ktunaxa.bpm.KtunaxaConfiguration;
 import org.ktunaxa.referral.server.command.dto.CreateProcessRequest;
-import org.ktunaxa.referral.server.command.dto.UrlResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,19 +27,16 @@ import java.util.Map;
  * @author Joachim Van der Auwera
  */
 @Component
-public class CreateProcessCommand implements Command<CreateProcessRequest, UrlResponse> {
+public class CreateProcessCommand implements Command<CreateProcessRequest, CommandResponse> {
 
 	@Autowired
 	private RuntimeService runtimeService;
 
-	@Autowired
-	private KtunaxaConfiguration ktunaxaConfiguration;
-
-	public UrlResponse getEmptyCommandResponse() {
-		return new UrlResponse();
+	public CommandResponse getEmptyCommandResponse() {
+		return new CommandResponse();
 	}
 
-	public void execute(CreateProcessRequest request, UrlResponse response) throws Exception {
+	public void execute(CreateProcessRequest request, CommandResponse response) throws Exception {
 		String referralId = request.getReferralId();
 		if (null == referralId) {
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "referralId");
@@ -62,6 +58,5 @@ public class CreateProcessCommand implements Command<CreateProcessRequest, UrlRe
 		context.put(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE,
 				yyyymmdd.format(request.getCompletionDeadline()));
 		runtimeService.startProcessInstanceByKey(KtunaxaBpmConstant.REFERRAL_PROCESS_ID, context);
-		response.setUrl(ktunaxaConfiguration.getBpmDashboardBaseUrl());
 	}
 }

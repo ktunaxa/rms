@@ -36,22 +36,6 @@ public class GetReferralMapResponse extends GetMapConfigurationResponse {
 
 	private Feature referral;
 
-	public String getMapDashboardBaseUrl() {
-		return mapDashboardBaseUrl;
-	}
-
-	public void setMapDashboardBaseUrl(String mapDashboardBaseUrl) {
-		this.mapDashboardBaseUrl = mapDashboardBaseUrl;
-	}
-
-	public String getBpmDashboardBaseUrl() {
-		return bpmDashboardBaseUrl;
-	}
-
-	public void setBpmDashboardBaseUrl(String bpmDashboardBaseUrl) {
-		this.bpmDashboardBaseUrl = bpmDashboardBaseUrl;
-	}
-	
 	public String getCmisBaseUrl() {
 		return cmisBaseUrl;
 	}

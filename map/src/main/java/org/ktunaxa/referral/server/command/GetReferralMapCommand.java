@@ -13,7 +13,6 @@ import org.geomajas.command.CommandDispatcher;
 import org.geomajas.command.dto.GetMapConfigurationRequest;
 import org.geomajas.command.dto.GetMapConfigurationResponse;
 import org.geomajas.security.SecurityContext;
-import org.ktunaxa.bpm.KtunaxaConfiguration;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
@@ -42,9 +41,6 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 	private SecurityContext securityContext;
 
 	@Autowired
-	private KtunaxaConfiguration ktunaxaConfiguration;
-
-	@Autowired
 	private ReferenceLayerService referenceLayerService;
 
 	@Autowired
@@ -63,8 +59,6 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 		response.setMapInfo(original.getMapInfo());
 
 		// Add the urls to the response:
-		response.setBpmDashboardBaseUrl(ktunaxaConfiguration.getBpmDashboardBaseUrl());
-		response.setMapDashboardBaseUrl(ktunaxaConfiguration.getMapDashboardBaseUrl());
 		response.setCmisBaseUrl(cmisService.getBaseUrl());
 
 		// Add the layer types to the response:
