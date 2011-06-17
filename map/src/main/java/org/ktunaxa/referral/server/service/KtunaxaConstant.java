@@ -25,6 +25,7 @@ public interface KtunaxaConstant {
 	
 	String LAYER_CRS = "EPSG:26911";
 	String MAP_CRS = "EPSG:900913";
+	int LAYER_SRID = 26911;
 
 	String CREATE_REFERRAL_URL_PARAMETER = "createReferral";
 	String SEARCH_REFERRAL_URL_PARAMETER = "searchReferral";
