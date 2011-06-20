@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
@@ -17,7 +16,6 @@ import org.geomajas.command.Command;
 import org.geomajas.service.DtoConverterService;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureIterator;
-import org.ktunaxa.bpm.KtunaxaConfiguration;
 import org.ktunaxa.referral.server.FileUtil;
 import org.ktunaxa.referral.server.command.dto.GetGeomarkRequest;
 import org.ktunaxa.referral.server.command.dto.GetGeomarkResponse;
@@ -42,7 +40,7 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 	@Autowired
 	private DtoConverterService converterService;
 
-	private String geomMarkBaseUrl = "http://delivery.apps.gov.bc.ca/pub/geomark/geomarks/";
+	private String geomarkBaseUrl = "http://delivery.apps.gov.bc.ca/pub/geomark/geomarks/";
 
 	private static final String GM_PREFIX = "gm-";
 
@@ -54,7 +52,7 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 		String geomarkUrl = request.getGeomark();
 		String geomarkId = null;
 		if (geomarkUrl.startsWith(GM_PREFIX)) {
-			geomarkUrl = geomMarkBaseUrl + request.getGeomark();
+			geomarkUrl = geomarkBaseUrl + request.getGeomark();
 		}
 		if (geomarkUrl.contains(GM_PREFIX)) {
 			int last = geomarkUrl.indexOf("/", geomarkUrl.lastIndexOf(GM_PREFIX));
@@ -65,11 +63,11 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 				geomarkId = geomarkUrl.substring(geomarkUrl.lastIndexOf(GM_PREFIX) + 3);
 			}
 		}
-		Geometry geometry = null;
+		Geometry geometry;
 		try {
 			geometry = loadZippedShape(geomarkId, geomarkUrl + "/asPolygon.shpz?srid=26911");
 		} catch (Exception e) {
-			geometry = loadWkt(geomarkId, geomarkUrl + "/asPolygon.wkt?srid=26911");
+			geometry = loadWkt(geomarkUrl + "/asPolygon.wkt?srid=26911");
 		}
 		response.setGeometry(converterService.toDto(geometry));
 	}
@@ -80,7 +78,7 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 	 * @return base URL
 	 */
 	public String getGeomMarkBaseUrl() {
-		return geomMarkBaseUrl;
+		return geomarkBaseUrl;
 	}
 
 	/**
@@ -89,10 +87,10 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 	 * @param geomMarkBaseUrl base URL
 	 */
 	public void setGeomMarkBaseUrl(String geomMarkBaseUrl) {
-		this.geomMarkBaseUrl = geomMarkBaseUrl;
+		this.geomarkBaseUrl = geomMarkBaseUrl;
 	}
 
-	private Geometry loadWkt(String geomarkId, String url) throws MalformedURLException, IOException, ParseException {
+	private Geometry loadWkt(String url) throws IOException, ParseException {
 		StringWriter writer = new StringWriter();
 		InputStream wktStream = new URL(url).openStream();
 		try {
@@ -116,8 +114,7 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 		for (String name : names) {
 			if (name.endsWith(".shp")) {
 				ShapefileDataStore dataStore = new ShapefileDataStore(new File(shpDir, name).toURI().toURL());
-				Geometry geometry = getGeometry(dataStore);
-				return geometry;
+				return getGeometry(dataStore);
 			}
 		}
 		throw new IOException("Missing .shp file in zip");
