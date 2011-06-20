@@ -40,9 +40,6 @@ import com.vividsolutions.jts.io.WKTReader;
 public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkResponse> {
 
 	@Autowired
-	private KtunaxaConfiguration configuration;
-
-	@Autowired
 	private DtoConverterService converterService;
 
 	private String geomMarkBaseUrl = "http://delivery.apps.gov.bc.ca/pub/geomark/geomarks/";
