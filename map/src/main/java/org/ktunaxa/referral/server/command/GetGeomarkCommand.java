@@ -45,6 +45,8 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 	@Autowired
 	private DtoConverterService converterService;
 
+	private String geomMarkBaseUrl = "http://delivery.apps.gov.bc.ca/pub/geomark/geomarks/";
+
 	private static final String GM_PREFIX = "gm-";
 
 	public GetGeomarkResponse getEmptyCommandResponse() {
@@ -55,7 +57,7 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 		String geomarkUrl = request.getGeomark();
 		String geomarkId = null;
 		if (geomarkUrl.startsWith(GM_PREFIX)) {
-			geomarkUrl = configuration.getGeomMarkBaseUrl() + request.getGeomark();
+			geomarkUrl = geomMarkBaseUrl + request.getGeomark();
 		}
 		if (geomarkUrl.contains(GM_PREFIX)) {
 			int last = geomarkUrl.indexOf("/", geomarkUrl.lastIndexOf(GM_PREFIX));
@@ -73,6 +75,24 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 			geometry = loadWkt(geomarkId, geomarkUrl + "/asPolygon.wkt?srid=26911");
 		}
 		response.setGeometry(converterService.toDto(geometry));
+	}
+	
+	/**
+	 * Get the Geomark base URL.
+	 *
+	 * @return base URL
+	 */
+	public String getGeomMarkBaseUrl() {
+		return geomMarkBaseUrl;
+	}
+
+	/**
+	 * Set the Geomark base URL (up till but not including gm-xxx).
+	 *
+	 * @param geomMarkBaseUrl base URL
+	 */
+	public void setGeomMarkBaseUrl(String geomMarkBaseUrl) {
+		this.geomMarkBaseUrl = geomMarkBaseUrl;
 	}
 
 	private Geometry loadWkt(String geomarkId, String url) throws MalformedURLException, IOException, ParseException {
