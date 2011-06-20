@@ -12,7 +12,9 @@ import org.activiti.engine.delegate.DelegateExecution;
  * Configuration settings for the Ktunaxa business flows.
  *
  * @author Joachim Van der Auwera
+ * @deprecated will be killen but is now still referred in the BPM definition and config files
  */
+@Deprecated
 public class KtunaxaConfiguration {
 
 	private String mapDashboardBaseUrl = "http://localhost:8080/map/";
