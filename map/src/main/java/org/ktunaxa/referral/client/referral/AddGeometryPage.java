@@ -23,12 +23,14 @@ import org.geomajas.gwt.client.widget.wizard.WizardPage;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
 
+import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.widgets.Canvas;
-import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.toolbar.ToolStrip;
+import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 
 /**
  * Second step in the referral creation wizard: Attach a geometry to the referral (by means of uploading a compressed
@@ -61,7 +63,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	}
 
 	public String getExplanation() {
-		return "Add a geometry to the referral by one of 3 methods";
+		return "Add a geometry to the referral by one of 3 methods.";
 	}
 
 	public Canvas asWidget() {
@@ -108,7 +110,6 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 					}
 				});
 			}
-
 		}
 	}
 
@@ -126,13 +127,32 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		}
 		uploadLayout.showCard(UploadShapePanel.NAME);
 
-		HLayout buttonLayout = new HLayout(5);
-		IButton shapeButton = new IButton("Shape");
-		IButton geoMarkButton = new IButton("Geomark");
-		IButton xyButton = new IButton("X:Y");
-		buttonLayout.addMember(shapeButton);
-		buttonLayout.addMember(geoMarkButton);
-		buttonLayout.addMember(xyButton);
+		ToolStrip toolStrip = new ToolStrip();
+		toolStrip.setBackgroundImage("");
+		toolStrip.setBorder("none");
+		toolStrip.setSize("100%", "32");
+		toolStrip.setMembersMargin(5);
+
+		ToolStripButton shapeButton = new ToolStripButton("Shape");
+		shapeButton.setActionType(SelectionType.RADIO);
+		shapeButton.setRadioGroup("geometry");
+		shapeButton.setSelected(true);
+
+		ToolStripButton geoMarkButton = new ToolStripButton("Geomark");
+		geoMarkButton.setActionType(SelectionType.RADIO);
+		geoMarkButton.setRadioGroup("geometry");
+
+		ToolStripButton xyButton = new ToolStripButton("X:Y");
+		xyButton.setActionType(SelectionType.RADIO);
+		xyButton.setRadioGroup("geometry");
+
+		HTMLFlow cmd = new HTMLFlow(
+				"<div style='text-align:right; line-height:32px; font-size:12px;'>Choose a method:</div>");
+		cmd.setSize("120px", "32px");
+		toolStrip.addMember(cmd);
+		toolStrip.addMember(shapeButton);
+		toolStrip.addMember(geoMarkButton);
+		toolStrip.addMember(xyButton);
 
 		shapeButton.addClickHandler(new ClickHandler() {
 
@@ -155,7 +175,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 			}
 		});
 
-		layout.addMember(buttonLayout);
+		layout.addMember(toolStrip);
 		layout.addMember(uploadLayout);
 		mapWidget.setZoomOnScrollEnabled(true);
 		mapWidget.setBorder("1px solid #C0C0CC");
@@ -177,12 +197,10 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 				show();
 			}
 		}
-
 	}
 
 	@Override
 	protected boolean doValidate() {
 		return getWizardData().getFeature().isGeometryLoaded();
 	}
-
 }

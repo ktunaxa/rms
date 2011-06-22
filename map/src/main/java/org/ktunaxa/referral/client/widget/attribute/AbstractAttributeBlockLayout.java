@@ -73,14 +73,12 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 	 */
 	public AbstractAttributeBlockLayout(AttributeBlockList list, FeatureForm<W> form) {
 		super(10);
+		setWidth100();
 		listView = list;
 		detailView = new AttributeBlockDetail<W>(form);
-		setWidth100();
-		setPadding(10);
 		detailView.setVisible(false);
 		cardLayout = new CardLayout();
 		cardLayout.setWidth100();
-		// default of 100
 		cardLayout.setHeight(1);
 		cardLayout.addCard(Card.LIST, listView);
 		cardLayout.addCard(Card.DETAIL, detailView);

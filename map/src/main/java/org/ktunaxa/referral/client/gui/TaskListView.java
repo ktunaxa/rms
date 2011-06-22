@@ -31,5 +31,4 @@ public class TaskListView extends ListView<TaskDto> {
 	public TaskListView() {
 		super(false, true, SORT_ATTRIBUTES);
 	}
-
 }

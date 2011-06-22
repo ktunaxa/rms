@@ -184,13 +184,6 @@ public class ListView<T extends Serializable> extends VLayout {
 		}
 	}
 
-	private void removeBlocksFromLayout() {
-		// Empty the blockLayout:
-		for (int i = blockLayout.getMembers().length - 1; i >= 0; i--) {
-			blockLayout.removeMember(blockLayout.getMembers()[i]);
-		}
-	}
-
 	/**
 	 * Get the button for creating a new object in the list.
 	 * 
@@ -203,6 +196,13 @@ public class ListView<T extends Serializable> extends VLayout {
 	// ------------------------------------------------------------------------
 	// Private methods concerning GUI:
 	// ------------------------------------------------------------------------
+
+	private void removeBlocksFromLayout() {
+		// Empty the blockLayout:
+		for (int i = blockLayout.getMembers().length - 1; i >= 0; i--) {
+			blockLayout.removeMember(blockLayout.getMembers()[i]);
+		}
+	}
 
 	private void buildGui() {
 		ToolStrip toolStrip = new ToolStrip();
@@ -278,6 +278,7 @@ public class ListView<T extends Serializable> extends VLayout {
 
 		blockLayout = new VLayout(10);
 		blockLayout.setWidth100();
+		blockLayout.setHeight(10);
 		addMember(blockLayout);
 	}
 

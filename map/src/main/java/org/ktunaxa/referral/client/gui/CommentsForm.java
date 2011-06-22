@@ -56,6 +56,7 @@ public class CommentsForm implements FeatureForm<Canvas> {
 		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY, new AttributeComparator(
 				KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY));
 		AttributeBlockList listView = new AttributeBlockList(sortAttributes);
+		listView.setDefaultCollapsed(true);
 		for (AttributeInfo info : referralLayer.getLayerInfo().getFeatureInfo().getAttributes()) {
 			if (info.getName().equals(KtunaxaConstant.ATTRIBUTE_COMMENTS)) {
 				attributeInfo = ((AssociationAttributeInfo) info);

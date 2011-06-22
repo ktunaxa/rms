@@ -37,7 +37,7 @@ public class DocumentPanel extends VLayout {
 	private FeatureAttributeEditor editor;
 
 	private VectorLayer referralLayer;
-	
+
 	private String referralId;
 
 	public DocumentPanel() {
@@ -49,7 +49,7 @@ public class DocumentPanel extends VLayout {
 		removeMembers(getMembers());
 		this.referralLayer = referralLayer;
 		this.referralId = referral.getId();
-		
+
 		editor = new FeatureAttributeEditor(referralLayer, false, new DocumentsFormFactory());
 		editor.setFeature(referral);
 		MapModel mapModel = referralLayer.getMapModel();
@@ -83,9 +83,8 @@ public class DocumentPanel extends VLayout {
 			});
 			return form;
 		}
-
 	}
-	
+
 	/**
 	 * callback to show the edited feature.
 	 * 
@@ -101,7 +100,5 @@ public class DocumentPanel extends VLayout {
 		public void onTransactionSuccess(FeatureTransactionEvent event) {
 			referralLayer.getFeatureStore().getFeature(referralId, GeomajasConstant.FEATURE_INCLUDE_ALL, this);
 		}
-
 	}
-
 }

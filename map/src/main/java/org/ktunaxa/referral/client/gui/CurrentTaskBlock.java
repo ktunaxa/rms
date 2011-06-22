@@ -6,6 +6,7 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
@@ -73,12 +74,11 @@ public class CurrentTaskBlock extends CardLayout {
 		noTask.setWidth100();
 		noTask.setHeight100();
 
+		finishButton.setLayoutAlign(Alignment.RIGHT);
 		finishButton.setShowRollOver(false);
 		finishButton.addClickHandler(new FinishTaskClickHandler());
 		VLayout currentTask = new VLayout();
 		currentTask.setMembersMargin(5);
-		currentTask.setWidth100();
-		currentTask.setHeight100();
 		taskForms.addCard(FORM_EMPTY, new EmptyForm());
 		taskForms.addCard(FORM_DISCUSS_EVALUATION, new DiscussEvaluationForm());
 		taskForms.addCard(FORM_EVALUATE_OR_FINISH, new EvaluateOrFinishForm());
@@ -86,14 +86,14 @@ public class CurrentTaskBlock extends CardLayout {
 		taskForms.addCard(FORM_REVIEW_REFERRAL, new ReviewReferralForm());
 		taskForms.addCard(FORM_VALUE_SELECT, new ValueSelectForm());
 		taskForms.setWidth100();
-		//taskForms.setHeight("*");
 		currentTask.addMember(taskForms);
-		HLayout finishLayout = new HLayout();
-		finishLayout.setWidth100();
-		//finishLayout.setHeight(30);
-		finishLayout.addMember(new LayoutSpacer());
-		finishLayout.addMember(finishButton);
-		currentTask.addMember(finishLayout);
+		currentTask.addMember(finishButton);
+		currentTask.addMember(new LayoutSpacer());
+//		HLayout finishLayout = new HLayout();
+//		finishLayout.setWidth100();
+//		finishLayout.addMember(new LayoutSpacer());
+//		finishLayout.addMember(finishButton);
+//		currentTask.addMember(finishLayout);
 
 		addCard(KEY_NO, noTask);
 		addCard(KEY_CURRENT, currentTask);

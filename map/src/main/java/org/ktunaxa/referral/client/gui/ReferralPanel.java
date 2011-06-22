@@ -9,6 +9,7 @@ package org.ktunaxa.referral.client.gui;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 
+import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
@@ -47,6 +48,7 @@ public class ReferralPanel extends VLayout {
 
 		tabs = new TabSet();
 		tabs.setSize("100%", "100%");
+		tabs.setOverflow(Overflow.CLIP_V);
 		Tab tabDetails = new Tab("Details");
 		Tab tabDocuments = new Tab("Documents");
 		Tab tabComments = new Tab("Comments");
@@ -82,5 +84,4 @@ public class ReferralPanel extends VLayout {
 		tabs.selectTab(tabTasks); // assure tabs pane is displayed
 		panelTasks.show(); // refresh view
 	}
-
 }

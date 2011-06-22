@@ -48,7 +48,6 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 			public void onItemChanged(ItemChangedEvent event) {
 				updateButtonState(true);
 			}
-
 		});
 		buildGui();
 	}
@@ -69,6 +68,17 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 		return form.validate();
 	}
 
+	public void showDetails(AssociationValue value) {
+		this.value = value;
+		form.clear();
+		form.toForm(value);
+		updateButtonState(false);
+	}
+
+	public void fromForm() {
+		form.fromForm(value);
+	}
+
 	private void buildGui() {
 		setSize("100%", "100%");
 
@@ -76,6 +86,9 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 		toolStrip.setWidth100();
 		toolStrip.setPadding(2);
 		toolStrip.setMembersMargin(5);
+		toolStrip.setBackgroundImage("");
+		toolStrip.setBorder("none");
+		toolStrip.setSize("100%", "32");
 		cancelButton = new CancelButton();
 		saveButton = new SaveButton();
 		LayoutSpacer spacer = new LayoutSpacer();
@@ -106,9 +119,12 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 
 		public SaveButton() {
 			setIcon("[ISOMORPHIC]/geomajas/osgeo/save1.png");
-			setShowDisabledIcon(false);
-			setTitle("Save");
-			setTooltip("Upload the document");
+			setIconWidth(24);
+			setIconHeight(24);
+			setWidth(32);
+			setHeight(32);
+			setTooltip("Save");
+			setHoverWidth(50);
 			addClickHandler(this);
 		}
 
@@ -119,17 +135,20 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	}
 
 	// -------------------------------------------------------------------------
-	// Private class BackButton:
+	// Private class CancelButton:
 	// -------------------------------------------------------------------------
 
 	/** Definition of the Back button to go back to the list. */
 	private class CancelButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
 		public CancelButton() {
-			setIcon("[ISOMORPHIC]/geomajas/osgeo/undo.png");
-			setShowDisabledIcon(false);
-			setTitle("Cancel");
-			setTooltip("Cancel editing and return to the list");
+			setIcon("[ISOMORPHIC]/geomajas/silk/cancel.png");
+			setIconWidth(24);
+			setIconHeight(24);
+			setWidth(32);
+			setHeight(32);
+			setHoverWidth(55);
+			setTooltip("Cancel");
 		}
 
 		public void onClick(ClickEvent event) {
@@ -137,25 +156,4 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 			updateButtonState(false);
 		}
 	}
-
-	// -------------------------------------------------------------------------
-	// Private class ResetButton:
-	// -------------------------------------------------------------------------
-
-	// -------------------------------------------------------------------------
-	// Private class CancelButton:
-	// -------------------------------------------------------------------------
-
-
-	public void showDetails(AssociationValue value) {
-		this.value = value;
-		form.clear();
-		form.toForm(value);
-		updateButtonState(false);
-	}
-
-	public void fromForm() {
-		form.fromForm(value);
-	}
-
 }

@@ -50,6 +50,7 @@ public class MyTasksPanel extends VLayout {
 
 		list.clear();
 		view.populate(list);
+		view.collapse();
 
 		GetTasksRequest request = new GetTasksRequest();
 		request.setAssignee(UserContext.getInstance().getUser());

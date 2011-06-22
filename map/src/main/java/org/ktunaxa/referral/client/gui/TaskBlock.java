@@ -157,7 +157,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		final String me = UserContext.getInstance().getUser();
 
 		startButton.setIcon(IMAGE_START);
-		startButton.setShowDisabledIcon(false);
+		startButton.setShowDisabledIcon(true);
 		startButton.setIconWidth(28);
 		startButton.setIconHeight(26);
 		startButton.setWidth(38);
@@ -175,7 +175,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		IButton assignButton = new IButton();
 		assignButton.setIcon(IMAGE_ASSIGN);
-		assignButton.setShowDisabledIcon(false);
+		assignButton.setShowDisabledIcon(true);
 		assignButton.setIconWidth(29);
 		assignButton.setIconHeight(26);
 		assignButton.setWidth(39);
@@ -197,7 +197,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		infoLayout.addMember(assignButton);
 
 		claimButton.setIcon(IMAGE_CLAIM);
-		claimButton.setShowDisabledIcon(false);
+		claimButton.setShowDisabledIcon(true);
 		claimButton.setIconWidth(28);
 		claimButton.setIconHeight(26);
 		claimButton.setWidth(38);

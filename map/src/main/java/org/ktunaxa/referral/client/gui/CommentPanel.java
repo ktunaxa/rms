@@ -63,7 +63,6 @@ public class CommentPanel extends VLayout {
 	 * Factory for {@link DocumentsForm}.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	class CommentsFormFactory implements FeatureFormFactory<Canvas> {
 
@@ -82,14 +81,12 @@ public class CommentPanel extends VLayout {
 			});
 			return form;
 		}
-
 	}
 
 	/**
 	 * callback to show the edited feature.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public class EditingCallBack implements LazyLoadCallback, FeatureTransactionHandler {
 
@@ -100,6 +97,5 @@ public class CommentPanel extends VLayout {
 		public void onTransactionSuccess(FeatureTransactionEvent event) {
 			referralLayer.getFeatureStore().getFeature(referralId, GeomajasConstant.FEATURE_INCLUDE_ALL, this);
 		}
-
 	}
 }

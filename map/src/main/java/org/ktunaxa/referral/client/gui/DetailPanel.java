@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.action.menu.SaveEditingAction;
-import org.geomajas.gwt.client.i18n.I18nProvider;
 import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.event.FeatureTransactionEvent;
 import org.geomajas.gwt.client.map.event.FeatureTransactionHandler;
@@ -53,7 +52,6 @@ public class DetailPanel extends VLayout {
 	public DetailPanel() {
 		super(10);
 		setSize("100%", "100%");
-		setPadding(10);
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
@@ -76,7 +74,9 @@ public class DetailPanel extends VLayout {
 		toolStrip.setWidth100();
 		toolStrip.setPadding(2);
 		toolStrip.setMembersMargin(5);
-		toolStrip.setHeight(30);
+		toolStrip.setHeight(32);
+		toolStrip.setBackgroundImage("");
+		toolStrip.setBorder("none");
 		editButton = new EditButton();
 		saveButton = new SaveButton();
 		cancelButton = new CancelButton();
@@ -122,24 +122,24 @@ public class DetailPanel extends VLayout {
 		public FeatureForm<DynamicForm> createFeatureForm(VectorLayer layer) {
 			return new ReferralDetailForm(layer);
 		}
-
 	}
 
 	/**
 	 * Button that enables editing.
 	 * 
 	 * @author Jan De Moerloose
-	 *
+	 * 
 	 */
 	private class EditButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
 		public EditButton() {
 			setIcon("[ISOMORPHIC]/geomajas/osgeo/edit.png");
-			setShowDisabledIcon(false);
-			setTitle(I18nProvider.getAttribute().btnEditTitle());
-			setTooltip(I18nProvider.getAttribute().btnEditTooltip());
+			setIconWidth(24);
+			setIconHeight(24);
+			setWidth(32);
+			setHeight(32);
+			setTooltip("Edit referral");
 			addClickHandler(this);
-			setWidth(80);
 		}
 
 		public void onClick(ClickEvent event) {
@@ -148,7 +148,6 @@ public class DetailPanel extends VLayout {
 			}
 			updateButtonState(false);
 		}
-
 	}
 
 	/**
@@ -161,9 +160,11 @@ public class DetailPanel extends VLayout {
 
 		public SaveButton() {
 			setIcon("[ISOMORPHIC]/geomajas/osgeo/save1.png");
-			setShowDisabledIcon(false);
-			setTitle(I18nProvider.getAttribute().btnSaveTitle());
-			setTooltip(I18nProvider.getAttribute().btnSaveTooltip());
+			setIconWidth(24);
+			setIconHeight(24);
+			setWidth(32);
+			setHeight(32);
+			setTooltip("Save referral");
 			addClickHandler(this);
 		}
 
@@ -182,15 +183,17 @@ public class DetailPanel extends VLayout {
 	 * Button that resets the form and disables editing.
 	 * 
 	 * @author Jan De Moerloose
-	 *
+	 * 
 	 */
 	private class CancelButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
 		public CancelButton() {
-			setIcon("[ISOMORPHIC]/geomajas/osgeo/quit.png");
-			setShowDisabledIcon(false);
-			setTitle(I18nProvider.getAttribute().btnCancelTitle());
-			setTooltip(I18nProvider.getAttribute().btnCancelTooltip());
+			setIcon("[ISOMORPHIC]/geomajas/silk/cancel.png");
+			setIconWidth(24);
+			setIconHeight(24);
+			setWidth(32);
+			setHeight(32);
+			setTooltip("Cancel");
 			addClickHandler(this);
 		}
 
@@ -217,7 +220,5 @@ public class DetailPanel extends VLayout {
 		public void onTransactionSuccess(FeatureTransactionEvent event) {
 			referralLayer.getFeatureStore().getFeature(referralId, GeomajasConstant.FEATURE_INCLUDE_ALL, this);
 		}
-
 	}
-
 }

@@ -25,8 +25,6 @@ import com.smartgwt.client.widgets.form.fields.events.FormItemClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.FormItemIconClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
-import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
@@ -50,6 +48,10 @@ public class AttributeBlockList extends VLayout {
 	private boolean sortedInverse;
 
 	private List<AbstractAttributeBlock> blocks;
+	
+	private IButton expcolBtn;
+	
+	private boolean defaultCollapsed;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -81,6 +83,11 @@ public class AttributeBlockList extends VLayout {
 		this.blocks = blocks;
 		blockLayout.removeMembers(blockLayout.getMembers());
 		for (AbstractAttributeBlock block : blocks) {
+			if (defaultCollapsed) {
+				block.collapse();
+			} else {
+				block.expand();
+			}
 			blockLayout.addMember(block);
 		}
 	}
@@ -88,6 +95,11 @@ public class AttributeBlockList extends VLayout {
 	public void addBlock(AbstractAttributeBlock block) {
 		blocks.add(block);
 		blockLayout.addMember(block);
+		if (defaultCollapsed) {
+			block.collapse();
+		} else {
+			block.expand();
+		}
 	}
 
 	public void removeBlock(AbstractAttributeBlock block) {
@@ -175,25 +187,42 @@ public class AttributeBlockList extends VLayout {
 		return createNewButton;
 	}
 
+	/**
+	 * Should all elements in the list be collapsed by default?
+	 * 
+	 * @return Returns whether or not all elements in the list should be collapsed by default.
+	 */
+	public boolean isDefaultCollapsed() {
+		return defaultCollapsed;
+	}
+
+	/**
+	 * Determine whether or not all elements in the list should be collapsed by default. Default value is false.
+	 * 
+	 * @param defaultCollapsed
+	 *            The new value. From this point on, new elements will be collapsed or expanded according to the value
+	 *            set here.
+	 */
+	public void setDefaultCollapsed(boolean defaultCollapsed) {
+		this.defaultCollapsed = defaultCollapsed;
+		expcolBtn.setSelected(defaultCollapsed);
+	}
+
 	// ------------------------------------------------------------------------
 	// Private methods concerning GUI:
 	// ------------------------------------------------------------------------
 
 	private void buildGui() {
-		setMargin(10);
-		HLayout header = new HLayout(5);
-		header.setStyleName("listViewHeader");
-		header.setSize("100%", "32");
-		createNewButton = new Button("Create new");
-		createNewButton.setAutoFit(true);
-		header.addMember(createNewButton);
-		header.addMember(new LayoutSpacer());
-
 		ToolStrip toolStrip = new ToolStrip();
 		toolStrip.setMembersMargin(2);
-		toolStrip.setSize("450", "32");
+		toolStrip.setSize("100%", "32");
 		toolStrip.setBackgroundImage("");
 		toolStrip.setBorder("none");
+
+		createNewButton = new Button("Create new");
+		createNewButton.setAutoFit(true);
+		toolStrip.addMember(createNewButton);
+		toolStrip.addFill();
 
 		// Sorting:
 		HTMLFlow sortText = new HTMLFlow(
@@ -214,37 +243,29 @@ public class AttributeBlockList extends VLayout {
 		}
 		toolStrip.addSeparator();
 
-		// Expand button;
-		IButton expandBtn = new IButton();
-		expandBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/expanded_list.png");
-		expandBtn.setIconSize(16);
-		expandBtn.setSize("27", "30");
-		expandBtn.setTooltip("Expand list");
-		expandBtn.setActionType(SelectionType.RADIO);
-		expandBtn.setRadioGroup("view-group");
-		expandBtn.addClickHandler(new ClickHandler() {
+		// Expand/collapse toggle button:
+		expcolBtn = new IButton();
+		expcolBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/collapsed_list.png");
+		expcolBtn.setIconSize(16);
+		expcolBtn.setSize("27", "30");
+		expcolBtn.setTooltip("Collapse list");
+		expcolBtn.setActionType(SelectionType.CHECKBOX);
+		expcolBtn.setRadioGroup("view-group");
+		expcolBtn.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				expand();
+				if (expcolBtn.isSelected()) {
+					collapse();
+					expcolBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/expanded_list.png");
+					expcolBtn.setTooltip("Expand list");
+				} else {
+					expcolBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/collapsed_list.png");
+					expcolBtn.setTooltip("Collapse list");
+					expand();
+				}
 			}
 		});
-		toolStrip.addMember(expandBtn);
-
-		// Collapse button:
-		IButton collapseBtn = new IButton();
-		collapseBtn.setIcon("[ISOMORPHIC]/skins/ActivitiBlue/images/ktunaxa/collapsed_list.png");
-		collapseBtn.setIconSize(16);
-		collapseBtn.setSize("27", "30");
-		collapseBtn.setTooltip("Collapse list");
-		collapseBtn.setActionType(SelectionType.RADIO);
-		collapseBtn.setRadioGroup("view-group");
-		collapseBtn.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				collapse();
-			}
-		});
-		toolStrip.addMember(collapseBtn);
+		toolStrip.addMember(expcolBtn);
 		toolStrip.addSeparator();
 
 		// Searching:
@@ -254,8 +275,7 @@ public class AttributeBlockList extends VLayout {
 		form.setLayoutAlign(VerticalAlignment.CENTER);
 		toolStrip.addMember(form);
 
-		header.addMember(toolStrip);
-		addMember(header);
+		addMember(toolStrip);
 
 		blockLayout = new VLayout(10);
 		blockLayout.setWidth100();
@@ -315,6 +335,7 @@ public class AttributeBlockList extends VLayout {
 			this.attributeName = attributeName;
 		}
 
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		public int compare(AbstractAttributeBlock a1, AbstractAttributeBlock a2) {
 			Object attr1 = a1.getValue().getAttributeValue(attributeName);
 			Object attr2 = a2.getValue().getAttributeValue(attributeName);
@@ -327,7 +348,6 @@ public class AttributeBlockList extends VLayout {
 			}
 			return 0;
 		}
-
 	}
 
 	/**
@@ -347,6 +367,4 @@ public class AttributeBlockList extends VLayout {
 			return -original.compare(o1, o2);
 		}
 	}
-
-
 }

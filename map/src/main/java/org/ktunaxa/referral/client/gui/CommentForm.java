@@ -21,6 +21,6 @@ public class CommentForm extends DefaultFeatureForm {
 
 	public CommentForm(FeatureInfo commentsInfo, VectorLayer referralLayer) {
 		super(commentsInfo, new DefaultAttributeProvider(referralLayer, KtunaxaConstant.ATTRIBUTE_COMMENTS));
+		getWidget().setColWidths("120", "*");
 	}
-
 }

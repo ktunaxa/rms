@@ -31,6 +31,7 @@ public class DocumentForm extends DefaultFeatureForm {
 
 	public DocumentForm(FeatureInfo documentsInfo, VectorLayer referralLayer) {
 		super(documentsInfo, new DefaultAttributeProvider(referralLayer, KtunaxaConstant.ATTRIBUTE_DOCUMENTS));
+		getWidget().setColWidths("120", "*");
 	}
 
 	public void uploadDocument() {

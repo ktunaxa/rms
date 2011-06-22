@@ -23,10 +23,10 @@ import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.wizard.Wizard;
 import org.geomajas.gwt.client.widget.wizard.WizardWidget;
 import org.ktunaxa.referral.server.command.dto.CreateProcessRequest;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
-import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
  * Wizard to create a new referral.
@@ -58,15 +58,14 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 			public void onMapModelChange(MapModelEvent event) {
 				layer = (VectorLayer) mapWidget.getMapModel().getLayer("referralLayer");
 				if (layer != null) {
-					addPage(new ReferralInfoPage());
 					addPage(new AddGeometryPage(mapWidget));
+					addPage(new ReferralInfoPage());
 					addPage(new AttachDocumentPage());
 					addPage(new ReferralConfirmPage());
 					start();
 				}
 			}
 		});
-
 	}
 
 	@Override
@@ -93,7 +92,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 					GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 					command.setCommandRequest(request);
 
-					GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
+					GwtCommandDispatcher.getInstance().execute(command, new CommandCallback<CommandResponse>() {
 
 						public void execute(CommandResponse response) {
 							if (response instanceof PersistTransactionResponse) {
@@ -122,31 +121,29 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 		request.setReferralId(referralId);
 		request.setDescription((String) feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_PROJECT));
 		request.setEmail((String) feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_EMAIL));
-		request.setEngagementLevel((Integer) feature.getAttributeValue(
-				KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE));
+		request.setEngagementLevel((Integer) feature
+				.getAttributeValue(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE));
 		request.setCompletionDeadline((Date) feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE));
 
 		GwtCommand command = new GwtCommand(CreateProcessRequest.COMMAND);
 		command.setCommandRequest(request);
 
-		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback() {
+		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback<CommandResponse>() {
 
 			public void execute(CommandResponse response) {
 				getView().setLoading(false);
-				SC.confirm("Referral " + referralId + " successfully created. Create another ?",
-						new BooleanCallback() {
+				SC.confirm("Referral " + referralId + " successfully created. Create another ?", new BooleanCallback() {
 
-							public void execute(Boolean value) {
-								if (value != null && value) {
-									start();
-								} else {
-									finishAction.run();
-								}
-							}
-						});
+					public void execute(Boolean value) {
+						if (value != null && value) {
+							start();
+						} else {
+							finishAction.run();
+						}
+					}
+				});
 			}
 		});
-
 	}
 
 	/**
@@ -162,5 +159,4 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 		}
 
 	}
-
 }

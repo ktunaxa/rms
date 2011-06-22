@@ -42,10 +42,12 @@ public class ReviewReferralForm extends AbstractTaskForm {
 
 		description.setName("description");
 		description.setTitle("Description");
+		description.setWidth("*");
 
 		email.setName("email");
 		email.setTitle("Referral e-mail");
 		email.setValidators(mailValidator);
+		email.setWidth("*");
 
 		engagementLevel.setName("engagementLevel");
 		engagementLevel.setTitle("Engagement level");
@@ -83,5 +85,4 @@ public class ReviewReferralForm extends AbstractTaskForm {
 				nullSafeToString(engagementLevel.getValue()));
 		return result;
 	}
-
 }

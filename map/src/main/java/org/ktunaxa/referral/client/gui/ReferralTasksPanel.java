@@ -52,17 +52,20 @@ public class ReferralTasksPanel extends VLayout {
 	public ReferralTasksPanel() {
 		super();
 		setWidth100();
+		currentTaskBlock.setStyleName("sectionList");
 
 		SectionStack groups = new SectionStack();
-		groups.setSize("100%", "100%");
+		//groups.setSize("100%", "10");
+		groups.setWidth100();
 		groups.setOverflow(Overflow.AUTO);
-		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
-		groups.setPadding(5);
+		groups.setVisibilityMode(VisibilityMode.MUTEX);
+		//groups.setPadding(5);
 		addMember(groups);
 
 		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
 			sections[i] = new SectionStackSection(GROUP_TITLES[i]);
 			views[i] = new TaskListView();
+			views[i].setStyleName("sectionList");
 			lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
 			if (GROUP_CURRENT == i) {
 				sections[i].addItem(currentTaskBlock);

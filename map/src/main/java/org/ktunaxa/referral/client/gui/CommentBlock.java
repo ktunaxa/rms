@@ -14,8 +14,8 @@ import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
-import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -43,9 +43,9 @@ public class CommentBlock extends AbstractAttributeBlock {
 
 	private Img checked;
 
-	private Button editButton;
+	private IButton editButton;
 
-	private Button deleteButton;
+	private IButton deleteButton;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -68,7 +68,7 @@ public class CommentBlock extends AbstractAttributeBlock {
 	public void expand() {
 		setStyleName("commentBlock");
 		title.setStyleName("commentBlockTitle");
-		infoLayout.setVisible(true);
+		//infoLayout.setVisible(true);
 		content.setVisible(true);
 	}
 
@@ -76,7 +76,7 @@ public class CommentBlock extends AbstractAttributeBlock {
 	public void collapse() {
 		setStyleName("commentBlockCollapsed");
 		title.setStyleName("commentBlockTitleCollapsed");
-		infoLayout.setVisible(false);
+		//infoLayout.setVisible(false);
 		content.setVisible(false);
 	}
 
@@ -104,7 +104,7 @@ public class CommentBlock extends AbstractAttributeBlock {
 		return false;
 	}
 
-	public Button getEditButton() {
+	public IButton getEditButton() {
 		return editButton;
 	}
 
@@ -148,12 +148,27 @@ public class CommentBlock extends AbstractAttributeBlock {
 				+ getCommentCreationDate().toString() + "</div>");
 		info.setSize("100%", "24");
 		infoLayout.addMember(info);
-		editButton = new Button("Edit");
 		LayoutSpacer space = new LayoutSpacer();
 		space.setWidth(20);
 		infoLayout.addMember(space);
+
+		editButton = new IButton();
+		editButton.setIcon("[ISOMORPHIC]/geomajas/osgeo/edit.png");
+		editButton.setIconWidth(16);
+		editButton.setIconHeight(16);
+		editButton.setWidth(24);
+		editButton.setHeight(24);
+		editButton.setTooltip("Edit comment");
 		infoLayout.addMember(editButton);
-		deleteButton = new Button("Delete");
+		
+		deleteButton = new IButton();
+		deleteButton.setIcon("[ISOMORPHIC]/geomajas/silk/remove.png");
+		deleteButton.setIconWidth(16);
+		deleteButton.setIconHeight(16);
+		deleteButton.setWidth(24);
+		deleteButton.setHeight(24);
+		deleteButton.setTooltip("Delete comment");
+		deleteButton.setHoverWrap(false);
 		infoLayout.addMember(deleteButton);
 		addMember(infoLayout);
 

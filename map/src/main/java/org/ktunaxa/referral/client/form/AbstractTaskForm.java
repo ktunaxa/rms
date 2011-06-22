@@ -29,12 +29,13 @@ public abstract class AbstractTaskForm extends VLayout {
 
 		setWidth100();
 		setHeight100();
+		setMembersMargin(5);
 		taskTitle.setWidth100();
 		addMember(taskTitle);
 	}
 
 	public void refresh(TaskDto task) {
-		taskTitle.setContents("<div style=\"font-weight:bold;\">" + task.getName() + "</div>" +
+		taskTitle.setContents("<h3>" + task.getName() + "</h3>" +
 				"<div>" + task.getDescription() + "</div>");
 	}
 
@@ -46,8 +47,9 @@ public abstract class AbstractTaskForm extends VLayout {
 	public void setFields(FormItem... formItems) {
 		DynamicForm form = new DynamicForm();
 		form.setWidth100();
-		form.setIsGroup(true);
 		form.setFields(formItems);
+		form.setColWidths("160", "100%");
+		form.setStyleName("taskBlockContent");
 		setForms(form);
 	}
 
@@ -103,5 +105,4 @@ public abstract class AbstractTaskForm extends VLayout {
 		}
 		return object.toString();
 	}
-
 }
