@@ -232,7 +232,6 @@ COMMENTS, TASKS, DOCUMENTS
     background: #FFFFFF;
     background-image: -moz-linear-gradient(top, #F0F0F0, #FFFFFF);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0F0), to(#FFFFFF));
-	padding: 0;
 	border: 1px solid #3e74b3;
     border-radius: 3px;
     -moz-border-radius: 3px;
@@ -321,4 +320,18 @@ TOOLBAR BUTTONS
     background: #278ec8;
     background-image: -moz-linear-gradient(top, #278ec8, #3e74b3);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#278ec8), to(#3e74b3));
+}
+
+
+/*============================================================
+SECTIONSTACK WITH LISTS
+============================================================*/
+
+.sectionList {
+	padding: 4px 7px;
+    border-left: 1px solid #D9D9E0;
+    border-right: 1px solid #D9D9E0;
+    background: #F0F0FF;
+    background-image: -moz-linear-gradient(top, #F0F0FF, #FAFAFF);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0FF), to(#FAFAFF));
 }
