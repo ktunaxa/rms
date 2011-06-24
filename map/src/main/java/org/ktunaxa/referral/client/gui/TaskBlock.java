@@ -158,11 +158,12 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		startButton.setIcon(IMAGE_START);
 		startButton.setShowDisabledIcon(true);
-		startButton.setIconWidth(28);
-		startButton.setIconHeight(26);
-		startButton.setWidth(38);
-		startButton.setHeight(34);
+		startButton.setIconWidth(24);
+		startButton.setIconHeight(24);
+		startButton.setWidth(32);
+		startButton.setHeight(32);
 		startButton.setPrompt("Start");
+		startButton.setHoverWidth(40);
 		startButton.setLayoutAlign(VerticalAlignment.CENTER);
 		startButton.setShowRollOver(false);
 		setStartButtonStatus(task);
@@ -176,11 +177,12 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		IButton assignButton = new IButton();
 		assignButton.setIcon(IMAGE_ASSIGN);
 		assignButton.setShowDisabledIcon(true);
-		assignButton.setIconWidth(29);
-		assignButton.setIconHeight(26);
-		assignButton.setWidth(39);
-		assignButton.setHeight(34);
+		assignButton.setIconWidth(24);
+		assignButton.setIconHeight(24);
+		assignButton.setWidth(32);
+		assignButton.setHeight(32);
 		assignButton.setPrompt("Assign");
+		assignButton.setHoverWidth(40);
 		assignButton.setLayoutAlign(VerticalAlignment.CENTER);
 		assignButton.setShowRollOver(false);
 		if (!UserContext.getInstance().isReferralAdmin()) {
@@ -198,11 +200,12 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		claimButton.setIcon(IMAGE_CLAIM);
 		claimButton.setShowDisabledIcon(true);
-		claimButton.setIconWidth(28);
-		claimButton.setIconHeight(26);
-		claimButton.setWidth(38);
-		claimButton.setHeight(34);
+		claimButton.setIconWidth(24);
+		claimButton.setIconHeight(24);
+		claimButton.setWidth(32);
+		claimButton.setHeight(32);
 		claimButton.setPrompt("Claim");
+		claimButton.setHoverWidth(40);
 		claimButton.setLayoutAlign(VerticalAlignment.CENTER);
 		claimButton.setShowRollOver(false);
 		setClaimButtonStatus(task);
