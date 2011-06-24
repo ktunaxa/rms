@@ -8,6 +8,7 @@ package org.ktunaxa.referral.client.referral;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.TransformGeometryRequest;
 import org.geomajas.command.dto.TransformGeometryResponse;
+import org.geomajas.geometry.Bbox;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.CommandExceptionCallback;
@@ -33,6 +34,7 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.FloatItem;
+import com.smartgwt.client.widgets.form.validator.FloatRangeValidator;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -64,7 +66,7 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 
 	private HandlerManager handlerManager = new HandlerManager(this);
 
-	public UploadXyCoordinatePanel() {
+	public UploadXyCoordinatePanel(Bbox bbox) {
 		setLayoutAlign(Alignment.CENTER);
 		form = new DynamicForm();
 
@@ -78,7 +80,17 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 
 		DataSource dataSource = new DataSource();
 		DataSourceFloatField xField = new DataSourceFloatField("x");
+		FloatRangeValidator xValidator = new FloatRangeValidator();
+		xValidator.setMin((float)bbox.getX());
+		xValidator.setMax((float)bbox.getMaxX());
+		xField.setValidators(xValidator);
+
 		DataSourceFloatField yField = new DataSourceFloatField("y");
+		FloatRangeValidator yValidator = new FloatRangeValidator();
+		yValidator.setMin((float)bbox.getY());
+		yValidator.setMax((float)bbox.getMaxY());
+		yField.setValidators(yValidator);
+
 		dataSource.addField(xField);
 		dataSource.addField(yField);
 		form.setDataSource(dataSource);

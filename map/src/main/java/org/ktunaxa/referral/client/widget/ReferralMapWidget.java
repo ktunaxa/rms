@@ -8,7 +8,6 @@ package org.ktunaxa.referral.client.widget;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geomajas.command.CommandResponse;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
@@ -41,17 +40,16 @@ public class ReferralMapWidget extends MapWidget {
 	public void init() {
 		GwtCommand commandRequest = new GwtCommand(GetReferralMapRequest.COMMAND);
 		commandRequest.setCommandRequest(new GetReferralMapRequest(id, applicationId));
-		GwtCommandDispatcher.getInstance().execute(commandRequest, new CommandCallback() {
+		GwtCommandDispatcher.getInstance().execute(commandRequest, new CommandCallback<GetReferralMapResponse>() {
 
-			public void execute(CommandResponse response) {
-				if (response instanceof GetReferralMapResponse) {
+			public void execute(GetReferralMapResponse response) {
 					GetReferralMapResponse r = (GetReferralMapResponse) response;
 					initializationCallback(r);
 					for (MapCallback callback : callbacks) {
 						callback.onResponse(r);
 					}
 				}
-			}
+			
 		});
 	}
 

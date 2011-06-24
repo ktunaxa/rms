@@ -11,6 +11,8 @@ import java.util.Map;
 
 import org.geomajas.configuration.CircleInfo;
 import org.geomajas.configuration.SymbolInfo;
+import org.geomajas.configuration.VectorLayerInfo;
+import org.geomajas.configuration.client.ClientVectorLayerInfo;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView.ZoomOption;
@@ -22,6 +24,7 @@ import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.wizard.WizardPage;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.widgets.Canvas;
@@ -119,7 +122,10 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		panelMap = new LinkedHashMap<String, UploadGeometryPanel>();
 		panelMap.put(UploadShapePanel.NAME, new UploadShapePanel());
 		panelMap.put(UploadGeoMarkUrlPanel.NAME, new UploadGeoMarkUrlPanel());
-		panelMap.put(UploadXyCoordinatePanel.NAME, new UploadXyCoordinatePanel());
+		ClientVectorLayerInfo clientInfo = (ClientVectorLayerInfo) mapWidget.getMapModel()
+				.getLayer(KtunaxaConstant.REFERRAL_LAYER_ID).getLayerInfo();
+		VectorLayerInfo serverInfo = (VectorLayerInfo)clientInfo.getLayerInfo();
+		panelMap.put(UploadXyCoordinatePanel.NAME, new UploadXyCoordinatePanel(serverInfo.getMaxExtent()));
 		ShowGeometryOnMapHandler handler = new ShowGeometryOnMapHandler();
 		for (Map.Entry<String, UploadGeometryPanel> entry : panelMap.entrySet()) {
 			entry.getValue().addGeometryUploadHandler(handler);

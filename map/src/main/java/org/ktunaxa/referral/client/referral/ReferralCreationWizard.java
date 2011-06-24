@@ -58,8 +58,8 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 			public void onMapModelChange(MapModelEvent event) {
 				layer = (VectorLayer) mapWidget.getMapModel().getLayer("referralLayer");
 				if (layer != null) {
-					addPage(new AddGeometryPage(mapWidget));
 					addPage(new ReferralInfoPage());
+					addPage(new AddGeometryPage(mapWidget));
 					addPage(new AttachDocumentPage());
 					addPage(new ReferralConfirmPage());
 					start();
