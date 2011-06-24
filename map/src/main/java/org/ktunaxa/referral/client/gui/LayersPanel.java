@@ -6,6 +6,9 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import org.geomajas.gwt.client.map.event.MapModelEvent;
+import org.geomajas.gwt.client.map.event.MapModelHandler;
+import org.geomajas.gwt.client.map.layer.Layer;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
 import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
@@ -37,7 +40,7 @@ public class LayersPanel extends VLayout {
 
 	public static final String NAME = "LAYERS";
 
-	public LayersPanel(MapWidget mapWidget) {
+	public LayersPanel(final MapWidget mapWidget) {
 		super();
 
 		setSize("100%", "100%");
@@ -46,7 +49,8 @@ public class LayersPanel extends VLayout {
 		tabs.setSize("100%", "100%");
 		Tab tabBase = new Tab("Base layers");
 		Tab tabValue = new Tab("Ktunaxa Values");
-		
+		Tab tabBackGround = new Tab("Background");
+
 		valueStack = new SectionStack();
 		valueStack.setSize("100%", "100%");
 		valueStack.setOverflow(Overflow.AUTO);
@@ -60,9 +64,32 @@ public class LayersPanel extends VLayout {
 		baseStack.setVisibilityMode(VisibilityMode.MULTIPLE);
 		baseStack.setPadding(5);
 		tabBase.setPane(baseStack);
-		
-		tabs.setTabs(tabBase, tabValue);
+
+		final SectionStack bgStack = new SectionStack();
+		bgStack.setSize("100%", "100%");
+		bgStack.setOverflow(Overflow.AUTO);
+		bgStack.setVisibilityMode(VisibilityMode.MUTEX);
+		bgStack.setPadding(5);
+		tabBackGround.setPane(bgStack);
+
+		tabs.setTabs(tabBase, tabValue, tabBackGround);
 		addMember(tabs);
+
+		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
+
+			public void onMapModelChange(MapModelEvent event) {
+				Layer<?> layer = mapWidget.getMapModel().getLayer("osmLayer");
+				LayerBlock osmBlock = new LayerBlock(layer);
+				VLayout sectionStackLayout = new VLayout();
+				sectionStackLayout.addMember(osmBlock);
+
+				SectionStackSection section = new SectionStackSection("Background rasters");
+				section.setExpanded(true);
+				section.setCanCollapse(false);
+				section.addItem(sectionStackLayout);
+				bgStack.addSection(section);
+			}
+		});
 	}
 
 	public void setBaseLayer(ReferenceLayer baseLayer) {
@@ -98,9 +125,7 @@ public class LayersPanel extends VLayout {
 		}
 		for (ReferenceSubLayer subLayer : layer.getSubLayers()) {
 			ReferenceLayerTypeDto type = subLayer.getDto().getType();
-			((VLayout) stack.getSection(type.getId() + "").getItems()[0]).addMember(new LayerBlock(subLayer));
+			((VLayout) stack.getSection(type.getId() + "").getItems()[0]).addMember(new ReferenceLayerBlock(subLayer));
 		}
 	}
-
-
 }
