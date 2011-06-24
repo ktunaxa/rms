@@ -124,7 +124,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		panelMap.put(UploadGeoMarkUrlPanel.NAME, new UploadGeoMarkUrlPanel());
 		ClientVectorLayerInfo clientInfo = (ClientVectorLayerInfo) mapWidget.getMapModel()
 				.getLayer(KtunaxaConstant.REFERRAL_LAYER_ID).getLayerInfo();
-		VectorLayerInfo serverInfo = (VectorLayerInfo)clientInfo.getLayerInfo();
+		VectorLayerInfo serverInfo = (VectorLayerInfo) clientInfo.getLayerInfo();
 		panelMap.put(UploadXyCoordinatePanel.NAME, new UploadXyCoordinatePanel(serverInfo.getMaxExtent()));
 		ShowGeometryOnMapHandler handler = new ShowGeometryOnMapHandler();
 		for (Map.Entry<String, UploadGeometryPanel> entry : panelMap.entrySet()) {

@@ -81,14 +81,14 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 		DataSource dataSource = new DataSource();
 		DataSourceFloatField xField = new DataSourceFloatField("x");
 		FloatRangeValidator xValidator = new FloatRangeValidator();
-		xValidator.setMin((float)bbox.getX());
-		xValidator.setMax((float)bbox.getMaxX());
+		xValidator.setMin((float) bbox.getX());
+		xValidator.setMax((float) bbox.getMaxX());
 		xField.setValidators(xValidator);
 
 		DataSourceFloatField yField = new DataSourceFloatField("y");
 		FloatRangeValidator yValidator = new FloatRangeValidator();
-		yValidator.setMin((float)bbox.getY());
-		yValidator.setMax((float)bbox.getMaxY());
+		yValidator.setMin((float) bbox.getY());
+		yValidator.setMax((float) bbox.getMaxY());
 		yField.setValidators(yValidator);
 
 		dataSource.addField(xField);
