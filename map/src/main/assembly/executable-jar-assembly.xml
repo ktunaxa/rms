@@ -25,6 +25,7 @@
       <directory>src/main/assembly</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
+        <include>logback.xml</include>
         <include>README.TXT</include>
         <include>shapeImport</include>
         <include>shapeImport.bat</include>
