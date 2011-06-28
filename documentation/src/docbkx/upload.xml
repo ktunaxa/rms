@@ -108,5 +108,11 @@
     the shape file and the number of the layer type. After loading the data,
     the script stops. If there is a problem, the error message should appear
     on the screen and the database should remain intact.</para>
+
+    <para>After uploading data, it is advisable to run a VACUUM on the
+    <code>reference_base</code> and <code>reference_value</code> tables. To
+    invalidate the cache, the following script must be run:</para>
+
+    <para><programlisting>/home/geosparc/clearCache.sh</programlisting></para>
   </section>
 </chapter>
