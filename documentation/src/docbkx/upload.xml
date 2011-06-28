@@ -42,7 +42,7 @@
     shapefile directory:</para>
 
     <para><programlisting>&lt;bean name="shapeReaderService" class="org.ktunaxa.referral.shapereader.ShapeReaderServiceImpl"&gt;
-  &lt;property name="basePath" value="../../shapes/Administrative" /&gt;
+  &lt;property name="basePath" value="shapes" /&gt;
   &lt;property name="labelAttributeMap"&gt;
    &lt;map&gt;
     &lt;entry key="LandscapeUnits" value="LU_NAME" /&gt;
@@ -83,12 +83,14 @@
     <para>Open a DOS prompt in the base directory of the script (directory
     where the script was unzipped) and enter the following command:</para>
 
-    <programlisting>shapeImport</programlisting>
+    <programlisting>shapeImport &lt;subdirectory&gt;</programlisting>
 
-    <para>You will be asked for the number of the shape file and the number of
-    the layer type. After loading the data, the script stops. If there is a
-    problem, the error message should appear on the screen and the database
-    should remain intact.</para>
+    <para>The optional parameter <code>subdirectory</code> is the name of the
+    subdirectory inside the base path where the shapefiles are located (to
+    allow organisation by subdirectory). You will be asked for the number of
+    the shape file and the number of the layer type. After loading the data,
+    the script stops. If there is a problem, the error message should appear
+    on the screen and the database should remain intact.</para>
   </section>
 
   <section>
@@ -98,12 +100,13 @@
     (directory where the script was unzipped) and enter the following
     commands:</para>
 
-    <programlisting>chmod +x shapeImport
-./shapeImport</programlisting>
+    <programlisting>./shapeImport &lt;subdirectory&gt;</programlisting>
 
-    <para>You will be asked for the number of the shape file and the number of
-    the layer type. After loading the data, the script stops. If there is a
-    problem, the error message should appear on the screen and the database
-    should remain intact.</para>
+    <para>The optional parameter <code>subdirectory</code> is the name of the
+    subdirectory inside the base path where the shapefiles are located (to
+    allow organisation by subdirectory). You will be asked for the number of
+    the shape file and the number of the layer type. After loading the data,
+    the script stops. If there is a problem, the error message should appear
+    on the screen and the database should remain intact.</para>
   </section>
 </chapter>
