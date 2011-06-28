@@ -19,9 +19,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<context:component-scan base-package="org.ktunaxa.referral.shapereader"
 		name-generator="org.geomajas.spring.GeomajasBeanNameGenerator" />
 
-	<context:component-scan base-package="org.ktunaxa.referral.server"
-		name-generator="org.geomajas.spring.GeomajasBeanNameGenerator" />
-
 	<context:annotation-config />
 
 	<bean id="cmisConfig" class="org.ktunaxa.referral.server.service.CmisConfig">

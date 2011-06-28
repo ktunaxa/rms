@@ -28,10 +28,8 @@ public final class ShapeImportRunner {
 	/** Initialize the object, by preparing a Spring context. */
 	private ShapeImportRunner() {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-				"classpath:org/geomajas/spring/geomajasContext.xml",
 				"classpath:org/ktunaxa/referral/shapereader/spring-hibernate.xml",
-				"classpath:org/ktunaxa/referral/shapereader/applicationContext.xml",
-				"classpath:org/ktunaxa/referral/shapereader/bpm.xml");
+				"classpath:org/ktunaxa/referral/shapereader/applicationContext.xml");
 		service = ctx.getBean(ShapeReaderService.class);
 	}
 
