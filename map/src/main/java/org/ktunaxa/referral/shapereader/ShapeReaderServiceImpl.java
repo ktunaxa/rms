@@ -86,35 +86,45 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 	 * files.
 	 * </p>
 	 * 
+	 * @param subDirectory extra path element to indicate sub-package/directory
 	 * @return Returns the full list of available shape files available on the
 	 *         configured base path.
 	 * @throws IOException
 	 *             Thrown if something goes wrong while retrieving available
 	 *             shape files.
 	 */
-	public File[] getAllFiles() throws IOException {
-		String path = basePath;
+	public File[] getAllFiles(String subDirectory) throws IOException {
 		if (basePath.startsWith("classpath:")) {
+			String fullPath = basePath.substring(10);
+			if (subDirectory != null && subDirectory.trim().length() > 0) {
+				fullPath = fullPath + "/" + subDirectory;
+			}
 			PathMatchingResourcePatternResolver pmrpr = new PathMatchingResourcePatternResolver();
-			Resource[] resources = pmrpr.getResources(basePath.substring(10)
-					+ File.separator + "*.shp");
+			Resource[] resources = pmrpr.getResources(fullPath + File.separator + "*.shp");
 			int length = resources.length;
 			File[] files = new File[length];
 			for (int i = 0; i < length; i++) {
 				files[i] = resources[i].getFile();
 			}
 			return files;
+		} else {
+			String fullPath = basePath;
+			if (subDirectory != null && subDirectory.trim().length() > 0) {
+				fullPath = fullPath + File.separator + subDirectory;
+			}
+			File folder = new File(fullPath); // We don't have to check for folder==null.
+			if (!folder.isDirectory()) {
+				throw new IOException("Configured base path is not a directory: " + basePath + " translated to "
+						+ fullPath);
+			}
+			return folder.listFiles(new FilenameFilter() {
+
+				public boolean accept(File dir, String name) {
+					return name.endsWith(".shp");
+				}
+			});
 		}
 
-		File folder = new File(path); // We don't have to check for folder==null.
-		if (!folder.isDirectory()) {
-			throw new IOException("Configured base path is not a directory: " + basePath + " translated to " + path);
-		}
-		return folder.listFiles(new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".shp");
-			}
-		});
 	}
 
 	/**

@@ -38,15 +38,23 @@ public class ShapeReaderServiceTest {
 	@Test
 	public void testGetAllFiles() throws IOException {
 		Assert.assertNotNull(service);
-		File[] files = service.getAllFiles();
+		File[] files = service.getAllFiles(null);
 		Assert.assertNotNull(files);
 		Assert.assertTrue(files.length == NR_SHAPES);
 	}
 
 	@Test
+	public void testsubDirectory() throws IOException {
+		Assert.assertNotNull(service);
+		File[] files = service.getAllFiles("sub");
+		Assert.assertNotNull(files);
+		Assert.assertTrue(files.length == 1);
+	}
+
+	@Test
 	public void testRead() throws IOException {
 		Assert.assertNotNull(service);
-		File[] files = service.getAllFiles();
+		File[] files = service.getAllFiles(null);
 		Assert.assertNotNull(files);
 		Assert.assertTrue(files.length == NR_SHAPES);
 		DataStore ds = service.read(files[0]);
@@ -57,7 +65,7 @@ public class ShapeReaderServiceTest {
 	@Test
 	public void testValidateFormat() throws IOException {
 		Assert.assertNotNull(service);
-		File[] files = service.getAllFiles();
+		File[] files = service.getAllFiles(null);
 		Assert.assertNotNull(files);
 		Assert.assertTrue(files.length == NR_SHAPES);
 		try {
@@ -102,7 +110,7 @@ public class ShapeReaderServiceTest {
 	public void testPersist() throws IOException {
 		Assert.assertNotNull(service);
 		ReferenceLayer layer = service.getAllLayers().get(0);
-		File[] files = service.getAllFiles();
+		File[] files = service.getAllFiles(null);
 
 		try {
 			service.persist(layer, service.read(getFile(files, "Invalid.shp")));

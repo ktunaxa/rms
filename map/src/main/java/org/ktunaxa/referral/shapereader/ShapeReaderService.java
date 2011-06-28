@@ -33,12 +33,13 @@ public interface ShapeReaderService {
 	 * can be retrieved, of which we want to upload one. Where these shape files come from, is up to the implementations
 	 * of this service.
 	 * 
+	 * @param subDirectory extra path element to indicate sub-package/directory
 	 * @return Returns the full list of available shape files. The idea is that some GUI is presented to the user, so he
 	 *         can choose one.
 	 * @throws IOException
 	 *             Thrown if something goes wrong while retrieving available shape files.
 	 */
-	File[] getAllFiles() throws IOException;
+	File[] getAllFiles(String subDirectory) throws IOException;
 
 	/**
 	 * Actually read a shape file (.shp) and return it in the form of a GeoTools DataStore.

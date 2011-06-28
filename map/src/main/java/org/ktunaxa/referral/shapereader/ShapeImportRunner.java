@@ -41,7 +41,7 @@ public final class ShapeImportRunner {
 	 */
 	public static void main(String[] args) {
 		try {
-			new ShapeImportRunner().importShape();
+			new ShapeImportRunner().importShape(args.length > 0 ? args[0] : null);
 		} catch (Exception e) {
 			System.err.println("ERROR: " + e.getMessage());
 			System.err.println("Aborting...");
@@ -50,9 +50,9 @@ public final class ShapeImportRunner {
 		System.out.println("Done!");
 	}
 
-	public void importShape() throws IOException {
+	public void importShape(String subDirectory) throws IOException {
 		ShapeImportRunner reader = new ShapeImportRunner();
-		File[] files = reader.service.getAllFiles();
+		File[] files = reader.service.getAllFiles(subDirectory);
 		if (files != null && files.length > 0) {
 			File choice = selectFile(files);
 			System.out.println("Your choice: " + choice.getName());
