@@ -32,10 +32,17 @@
 		<fileSet>
 			<directory>src/main/assembly</directory>
 			<outputDirectory>/</outputDirectory>
+           	<fileMode>0755</fileMode>
+			<includes>
+				<include>shapeImport</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/assembly</directory>
+			<outputDirectory>/</outputDirectory>
 			<includes>
 				<include>logback.xml</include>
 				<include>README.TXT</include>
-				<include>shapeImport</include>
 				<include>shapeImport.bat</include>
 			</includes>
 		</fileSet>
