@@ -1,1 +1,1 @@
-java -cp .;ktunaxa.jar;lib/* org.ktunaxa.referral.shapereader.ShapeImportRunner
+java -cp .;ktunaxa.jar;lib/* org.ktunaxa.referral.shapereader.ShapeImportRunner %1
