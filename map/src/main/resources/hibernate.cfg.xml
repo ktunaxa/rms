@@ -8,11 +8,13 @@
 		<property name="cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
 		<!--<property name="show_sql">true</property>-->
 
+		<!--
 		<property name="hibernate.cache.use_second_level_cache">true</property>
 		<property name="hibernate.cache.use_query_cache">true</property>
 		<property name="hibernate.cache.region.factory_class">
 			org.hibernate.cache.infinispan.InfinispanRegionFactory
 		</property>
+		-->
 
 		<mapping class="org.ktunaxa.referral.server.domain.Template"/>
 
