@@ -337,7 +337,7 @@ SECTIONSTACK WITH LISTS
 ============================================================*/
 
 .sectionList {
-	padding: 4px 7px;
+    padding: 4px 7px 4px 44px;
     border-left: 1px solid #D9D9E0;
     border-right: 1px solid #D9D9E0;
     background: #F0F0FF;
