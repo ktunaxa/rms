@@ -98,7 +98,7 @@
           <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" width="105" height="55" style="/0/@styles.1" cornerHeight="20" cornerWidth="20"/>
         </graphicsAlgorithm>
         <link businessObjects="mailtask2"/>
-        <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.31" incomingConnections="/0/@connections.29"/>
+        <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.31" incomingConnections="/0/@connections.36 /0/@connections.35"/>
         <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="/0/@children.1/@children.4/@graphicsAlgorithm/@graphicsAlgorithmChildren.0" relativeWidth="1.0" relativeHeight="0.51">
           <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
         </anchors>
@@ -572,7 +572,7 @@
         </children>
       </children>
       <children xsi:type="pi:ContainerShape" visible="true" active="true">
-        <graphicsAlgorithm xsi:type="al:Polygon" filled="false" lineVisible="false" width="40" height="40" x="290" y="234">
+        <graphicsAlgorithm xsi:type="al:Polygon" filled="false" lineVisible="false" width="40" height="40" x="130" y="234">
           <graphicsAlgorithmChildren xsi:type="al:Polygon" width="40" height="40" style="/0/@styles.0">
             <points y="20"/>
             <points x="20"/>
@@ -587,7 +587,7 @@
           <points y="20"/>
         </graphicsAlgorithm>
         <link businessObjects="parallelgateway1"/>
-        <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.29 /0/@connections.30" incomingConnections="/0/@connections.35 /0/@connections.36"/>
+        <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.29 /0/@connections.30" incomingConnections="/0/@connections.28"/>
         <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="/0/@children.1/@children.26/@graphicsAlgorithm/@graphicsAlgorithmChildren.0" relativeWidth="0.51" relativeHeight="0.1">
           <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
         </anchors>
@@ -646,7 +646,7 @@
         </children>
       </children>
       <children xsi:type="pi:ContainerShape" visible="true" active="true">
-        <graphicsAlgorithm xsi:type="al:Polygon" filled="false" lineVisible="false" width="40" height="40" x="182" y="234">
+        <graphicsAlgorithm xsi:type="al:Polygon" filled="false" lineVisible="false" width="40" height="40" x="232" y="293">
           <graphicsAlgorithmChildren xsi:type="al:Polygon" width="40" height="40" style="/0/@styles.0">
             <points y="20"/>
             <points x="20"/>
@@ -661,7 +661,7 @@
           <points y="20"/>
         </graphicsAlgorithm>
         <link businessObjects="exclusivegateway6"/>
-        <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.33 /0/@connections.36" incomingConnections="/0/@connections.28"/>
+        <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.33 /0/@connections.36" incomingConnections="/0/@connections.29"/>
         <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="/0/@children.1/@children.28/@graphicsAlgorithm/@graphicsAlgorithmChildren.0" relativeWidth="0.51" relativeHeight="0.1">
           <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
         </anchors>
@@ -683,7 +683,7 @@
         </children>
       </children>
       <children xsi:type="pi:ContainerShape" visible="true" active="true">
-        <graphicsAlgorithm xsi:type="al:Rectangle" filled="false" lineVisible="false" width="105" height="55" x="150" y="76">
+        <graphicsAlgorithm xsi:type="al:Rectangle" filled="false" lineVisible="false" width="105" height="55" x="200" y="130">
           <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" width="105" height="55" style="/0/@styles.1" cornerHeight="20" cornerWidth="20"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask13"/>
@@ -702,7 +702,7 @@
         </children>
       </children>
       <children xsi:type="pi:ContainerShape" visible="true" active="true">
-        <graphicsAlgorithm xsi:type="al:Rectangle" filled="false" lineVisible="false" width="105" height="55" x="150" y="156">
+        <graphicsAlgorithm xsi:type="al:Rectangle" filled="false" lineVisible="false" width="105" height="55" x="200" y="210">
           <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" width="105" height="55" style="/0/@styles.1" cornerHeight="20" cornerWidth="20"/>
         </graphicsAlgorithm>
         <link businessObjects="mailtask5"/>
@@ -1283,7 +1283,7 @@
       </connectionDecorators>
       <bendpoints x="1390" y="338"/>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.25/@anchors.0" end="/0/@children.1/@children.28/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.25/@anchors.0" end="/0/@children.1/@children.26/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" filled="false"/>
       <link businessObjects="flow36"/>
       <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
@@ -1300,7 +1300,7 @@
         </graphicsAlgorithm>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.26/@anchors.0" end="/0/@children.1/@children.4/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.26/@anchors.0" end="/0/@children.1/@children.28/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" filled="false"/>
       <link businessObjects="flow37"/>
       <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
@@ -1316,7 +1316,7 @@
           <points x="-8" before="3" after="3"/>
         </graphicsAlgorithm>
       </connectionDecorators>
-      <bendpoints x="379" y="334"/>
+      <bendpoints x="220" y="334"/>
     </connections>
     <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.26/@anchors.0" end="/0/@children.1/@children.10/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" filled="false"/>
@@ -1334,7 +1334,7 @@
           <points x="-8" before="3" after="3"/>
         </graphicsAlgorithm>
       </connectionDecorators>
-      <bendpoints x="380" y="69"/>
+      <bendpoints x="220" y="68"/>
     </connections>
     <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.4/@anchors.0" end="/0/@children.1/@children.2/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" filled="false"/>
@@ -1405,7 +1405,7 @@
         </graphicsAlgorithm>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.29/@anchors.0" end="/0/@children.1/@children.26/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.29/@anchors.0" end="/0/@children.1/@children.4/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" filled="false"/>
       <link businessObjects="flow43"/>
       <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
@@ -1421,10 +1421,9 @@
           <points x="-8" before="3" after="3"/>
         </graphicsAlgorithm>
       </connectionDecorators>
-      <bendpoints x="343" y="124"/>
-      <bendpoints x="343" y="272"/>
+      <bendpoints x="463" y="178"/>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.28/@anchors.0" end="/0/@children.1/@children.26/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@children.28/@anchors.0" end="/0/@children.1/@children.4/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" filled="false"/>
       <link businessObjects="flow44"/>
       <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
@@ -1489,7 +1488,7 @@
     <flowElements xsi:type="bpmn2:StartEvent" id="startevent6" name="Start-sub" outgoing="flow6" formKey=""/>
     <flowElements xsi:type="bpmn2:ExclusiveGateway" id="exclusivegateway1" name="engagement level?" incoming="flow39" outgoing="flow10 flow11 flow12"/>
     <flowElements xsi:type="bpmn2:MailTask" id="mailtask1" name="Level 0 notification" incoming="flow9" outgoing="flow25" to="${requesterEmail}" subject="${ktunaxa.getReferralIdLink(execution)}: Level 0 notification" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;We consider this a level 0 referral and thus no further action is undertaken.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
-    <flowElements xsi:type="bpmn2:MailTask" id="mailtask2" name="Receive/start notification" incoming="flow37" outgoing="flow39" to="${requesterEmail}" subject="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The referral is complete and will be processed by us. We will inform you with the result when it is available.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
+    <flowElements xsi:type="bpmn2:MailTask" id="mailtask2" name="Receive/start notification" incoming="flow43 flow44" outgoing="flow39" to="${requesterEmail}" subject="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The referral is complete and will be processed by us. We will inform you with the result when it is available.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:MailTask" id="mailtask3" name="Mail Task" incoming="flow11" outgoing="flow21" to="${requesterEmail}" subject="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The referral is complete and will be processed by us. We will inform you with the result when it is available.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:UserTask" id="usertask4" name="Appointment" incoming="flow12" outgoing="flow18" candidateGroups="/10" formKey="diagrams/redirect.form">
       <documentation text="Make appointment with province to discuss referral."/>
@@ -1515,7 +1514,7 @@
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow12" name="level 2" sourceRef="exclusivegateway1" targetRef="usertask4">
       <conditionExpression id="flow12_condition" body="${engagementLevel == 2}"/>
     </flowElements>
-    <flowElements xsi:type="bpmn2:UserTask" id="receivetask1" name="Notification decision" incoming="flow25 flow27 flow31" outgoing="flow32" candidateGroups="/10" formKey="diagrams/redirect.form"/>
+    <flowElements xsi:type="bpmn2:UserTask" id="receivetask1" name="Notification decision" incoming="flow25 flow27 flow31" outgoing="flow32" formKey="diagrams/redirect.form"/>
     <flowElements xsi:type="bpmn2:CallActivity" id="callactivity2" name="Call activity" incoming="flow38" outgoing="flow40" calledElement="evaluate-values">
       <inParameters source="referralId" target="referralId"/>
       <inParameters source="description" target="description"/>
@@ -1530,7 +1529,7 @@
     <flowElements xsi:type="bpmn2:ServiceTask" id="servicetask1" name="Produce result report" incoming="flow45" outgoing="flow16" implementation="org.ktunaxa.bpm.BuildResultReportTask" implementationType="classType" resultVariableName=""/>
     <flowElements xsi:type="bpmn2:MailTask" id="mailtask4" name="Mail Result" incoming="flow16" outgoing="flow17" to="${requesterEmail}" subject="${ktunaxa.getReferralIdLink(execution)}: Referral results" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The result of our evaluation is attached to this e-mail.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow16" name="" sourceRef="servicetask1" targetRef="mailtask4"/>
-    <flowElements xsi:type="bpmn2:UserTask" id="receivetask2" name="Provincial decision" incoming="flow17" outgoing="flow26" candidateGroups="/10" formKey="diagrams/redirect.form"/>
+    <flowElements xsi:type="bpmn2:UserTask" id="receivetask2" name="Provincial decision" incoming="flow17" outgoing="flow26" formKey="diagrams/provincialResult.form"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow17" name="" sourceRef="mailtask4" targetRef="receivetask2"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow18" name="" sourceRef="usertask4" targetRef="usertask7"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow19" name="" sourceRef="usertask7" targetRef="usertask8"/>
@@ -1568,7 +1567,7 @@
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow31" name="consistent decision" sourceRef="exclusivegateway4" targetRef="receivetask1">
       <conditionExpression id="flow31_condition" body="${finalDecisionConsistent}"/>
     </flowElements>
-    <flowElements xsi:type="bpmn2:UserTask" id="receivetask3" name="Application reports" incoming="flow34" outgoing="flow33" candidateGroups="/10" formKey="diagrams/redirect.form"/>
+    <flowElements xsi:type="bpmn2:UserTask" id="receivetask3" name="Application reports" incoming="flow34" outgoing="flow33" formKey="diagrams/redirect.form"/>
     <flowElements xsi:type="bpmn2:EndEvent" id="endevent3" name="End-sub" incoming="flow32 flow33 flow35"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow32" name="" sourceRef="receivetask1" targetRef="endevent3"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow33" name="" sourceRef="receivetask3" targetRef="endevent3"/>
@@ -1579,26 +1578,26 @@
       <conditionExpression id="flow35_condition" body="${!reportValues}"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:ExclusiveGateway" id="exclusivegateway5" name="Needs work?" incoming="flow8" outgoing="flow36 flow9"/>
-    <flowElements xsi:type="bpmn2:ParallelGateway" id="parallelgateway1" name="Parallel Gateway" incoming="flow43 flow44" outgoing="flow37 flow38"/>
-    <flowElements xsi:type="bpmn2:SequenceFlow" id="flow36" name="level != 0" sourceRef="exclusivegateway5" targetRef="exclusivegateway6">
+    <flowElements xsi:type="bpmn2:ParallelGateway" id="parallelgateway1" name="Parallel Gateway" incoming="flow36" outgoing="flow37 flow38"/>
+    <flowElements xsi:type="bpmn2:SequenceFlow" id="flow36" name="level != 0" sourceRef="exclusivegateway5" targetRef="parallelgateway1">
       <conditionExpression id="flow36_condition" body="${engagementLevel != 0}"/>
     </flowElements>
-    <flowElements xsi:type="bpmn2:SequenceFlow" id="flow37" name="" sourceRef="parallelgateway1" targetRef="mailtask2"/>
+    <flowElements xsi:type="bpmn2:SequenceFlow" id="flow37" name="" sourceRef="parallelgateway1" targetRef="exclusivegateway6"/>
     <flowElements xsi:type="bpmn2:ParallelGateway" id="parallelgateway2" name="Parallel Gateway" incoming="flow40 flow10 flow14 flow24" outgoing="flow45"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow38" name="" sourceRef="parallelgateway1" targetRef="callactivity2"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow39" name="" sourceRef="mailtask2" targetRef="exclusivegateway1"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow40" name="" sourceRef="callactivity2" targetRef="parallelgateway2"/>
-    <flowElements xsi:type="bpmn2:ExclusiveGateway" id="exclusivegateway6" name="Exclusive Gateway" incoming="flow36" outgoing="flow41 flow44"/>
+    <flowElements xsi:type="bpmn2:ExclusiveGateway" id="exclusivegateway6" name="Exclusive Gateway" incoming="flow37" outgoing="flow41 flow44"/>
     <flowElements xsi:type="bpmn2:UserTask" id="usertask13" name="Get approval from province" incoming="flow42" outgoing="flow43" candidateGroups="/18" formKey="diagrams/reviewReferral.form">
-      <documentation text="Process feedback from province about the changed engagement level."/>
+      <documentation text="Process feedback from province about changed engagement level."/>
     </flowElements>
     <flowElements xsi:type="bpmn2:MailTask" id="mailtask5" name="Send change notification" incoming="flow41" outgoing="flow42" to="${requesterEmail}" subject="${ktunaxa.getReferralIdLink(execution)}: Referral received, want to change engagement level" cc="" html="We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;You had assigned a engagement level of ${provinceEngagementLevel}, but we feel this should be ${engagementLevel}.&#xA;&#xA;Please let us know whether you agree with this.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow41" name="diff engagement level" sourceRef="exclusivegateway6" targetRef="mailtask5">
       <conditionExpression id="flow41_condition" body="${provinceEngagementLevel != engagementLevel}"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow42" name="" sourceRef="mailtask5" targetRef="usertask13"/>
-    <flowElements xsi:type="bpmn2:SequenceFlow" id="flow43" name="" sourceRef="usertask13" targetRef="parallelgateway1"/>
-    <flowElements xsi:type="bpmn2:SequenceFlow" id="flow44" name="same engagement level" sourceRef="exclusivegateway6" targetRef="parallelgateway1"/>
+    <flowElements xsi:type="bpmn2:SequenceFlow" id="flow43" name="" sourceRef="usertask13" targetRef="mailtask2"/>
+    <flowElements xsi:type="bpmn2:SequenceFlow" id="flow44" name="same engagement level" sourceRef="exclusivegateway6" targetRef="mailtask2"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow45" name="" sourceRef="parallelgateway2" targetRef="servicetask1"/>
   </bpmn2:SubProcess>
   <bpmn2:EndEvent id="endevent1" name="End" incoming="flow1"/>

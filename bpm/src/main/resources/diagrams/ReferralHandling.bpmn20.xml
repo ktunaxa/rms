@@ -168,17 +168,17 @@ Ktunaxa Nation Council]]></activiti:expression>
       </sequenceFlow>
       <exclusiveGateway id="subprocess1exclusivegateway5" name="Needs work?"></exclusiveGateway>
       <parallelGateway id="subprocess1parallelgateway1" name="Parallel Gateway"></parallelGateway>
-      <sequenceFlow id="subprocess1flow36" name="level != 0" sourceRef="subprocess1exclusivegateway5" targetRef="subprocess1exclusivegateway6">
+      <sequenceFlow id="subprocess1flow36" name="level != 0" sourceRef="subprocess1exclusivegateway5" targetRef="subprocess1parallelgateway1">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel != 0}]]></conditionExpression>
       </sequenceFlow>
-      <sequenceFlow id="subprocess1flow37" name="" sourceRef="subprocess1parallelgateway1" targetRef="subprocess1mailtask2"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow37" name="" sourceRef="subprocess1parallelgateway1" targetRef="subprocess1exclusivegateway6"></sequenceFlow>
       <parallelGateway id="subprocess1parallelgateway2" name="Parallel Gateway"></parallelGateway>
       <sequenceFlow id="subprocess1flow38" name="" sourceRef="subprocess1parallelgateway1" targetRef="subprocess1callactivity2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow39" name="" sourceRef="subprocess1mailtask2" targetRef="subprocess1exclusivegateway1"></sequenceFlow>
       <sequenceFlow id="subprocess1flow40" name="" sourceRef="subprocess1callactivity2" targetRef="subprocess1parallelgateway2"></sequenceFlow>
       <exclusiveGateway id="subprocess1exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
       <userTask id="subprocess1usertask13" name="Get approval from province" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
-        <documentation>Process feedback from province about the changed engagement level.</documentation>
+        <documentation>Process feedback from province about changed engagement level.</documentation>
       </userTask>
       <serviceTask id="subprocess1mailtask5" name="Send change notification" activiti:type="mail">
         <extensionElements>
@@ -202,8 +202,8 @@ Ktunaxa Nation Council]]></activiti:expression>
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${provinceEngagementLevel != engagementLevel}]]></conditionExpression>
       </sequenceFlow>
       <sequenceFlow id="subprocess1flow42" name="" sourceRef="subprocess1mailtask5" targetRef="subprocess1usertask13"></sequenceFlow>
-      <sequenceFlow id="subprocess1flow43" name="" sourceRef="subprocess1usertask13" targetRef="subprocess1parallelgateway1"></sequenceFlow>
-      <sequenceFlow id="subprocess1flow44" name="same engagement level" sourceRef="subprocess1exclusivegateway6" targetRef="subprocess1parallelgateway1"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow43" name="" sourceRef="subprocess1usertask13" targetRef="subprocess1mailtask2"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow44" name="same engagement level" sourceRef="subprocess1exclusivegateway6" targetRef="subprocess1mailtask2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow45" name="" sourceRef="subprocess1parallelgateway2" targetRef="subprocess1servicetask1"></sequenceFlow>
     </subProcess>
     <endEvent id="endevent1" name="End"></endEvent>
@@ -294,19 +294,19 @@ Ktunaxa Nation Council]]></activiti:expression>
         <omgdc:Bounds height="40" width="40" x="122" y="255"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1parallelgateway1" id="BPMNShape_parallelgateway1">
-        <omgdc:Bounds height="40" width="40" x="360" y="255"></omgdc:Bounds>
+        <omgdc:Bounds height="40" width="40" x="200" y="255"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1parallelgateway2" id="BPMNShape_parallelgateway2">
         <omgdc:Bounds height="40" width="40" x="1070" y="255"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1exclusivegateway6" id="BPMNShape_exclusivegateway6">
-        <omgdc:Bounds height="40" width="40" x="252" y="255"></omgdc:Bounds>
+        <omgdc:Bounds height="40" width="40" x="302" y="314"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1usertask13" id="BPMNShape_usertask13">
-        <omgdc:Bounds height="55" width="105" x="220" y="97"></omgdc:Bounds>
+        <omgdc:Bounds height="55" width="105" x="270" y="151"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1mailtask5" id="BPMNShape_mailtask5">
-        <omgdc:Bounds height="55" width="105" x="220" y="177"></omgdc:Bounds>
+        <omgdc:Bounds height="55" width="105" x="270" y="231"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow6" id="BPMNEdge_flow6">
         <omgdi:waypoint x="160" y="58"></omgdi:waypoint>
@@ -424,16 +424,16 @@ Ktunaxa Nation Council]]></activiti:expression>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow36" id="BPMNEdge_flow36">
         <omgdi:waypoint x="142" y="295"></omgdi:waypoint>
-        <omgdi:waypoint x="252" y="275"></omgdi:waypoint>
+        <omgdi:waypoint x="200" y="275"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow37" id="BPMNEdge_flow37">
-        <omgdi:waypoint x="380" y="295"></omgdi:waypoint>
-        <omgdi:waypoint x="379" y="334"></omgdi:waypoint>
-        <omgdi:waypoint x="410" y="334"></omgdi:waypoint>
+        <omgdi:waypoint x="220" y="295"></omgdi:waypoint>
+        <omgdi:waypoint x="220" y="334"></omgdi:waypoint>
+        <omgdi:waypoint x="302" y="334"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow38" id="BPMNEdge_flow38">
-        <omgdi:waypoint x="380" y="255"></omgdi:waypoint>
-        <omgdi:waypoint x="380" y="69"></omgdi:waypoint>
+        <omgdi:waypoint x="220" y="255"></omgdi:waypoint>
+        <omgdi:waypoint x="220" y="68"></omgdi:waypoint>
         <omgdi:waypoint x="410" y="68"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow39" id="BPMNEdge_flow39">
@@ -446,22 +446,21 @@ Ktunaxa Nation Council]]></activiti:expression>
         <omgdi:waypoint x="1090" y="255"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow41" id="BPMNEdge_flow41">
-        <omgdi:waypoint x="272" y="255"></omgdi:waypoint>
-        <omgdi:waypoint x="272" y="232"></omgdi:waypoint>
+        <omgdi:waypoint x="322" y="314"></omgdi:waypoint>
+        <omgdi:waypoint x="322" y="286"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow42" id="BPMNEdge_flow42">
-        <omgdi:waypoint x="325" y="204"></omgdi:waypoint>
-        <omgdi:waypoint x="220" y="124"></omgdi:waypoint>
+        <omgdi:waypoint x="375" y="258"></omgdi:waypoint>
+        <omgdi:waypoint x="270" y="178"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow43" id="BPMNEdge_flow43">
-        <omgdi:waypoint x="325" y="124"></omgdi:waypoint>
-        <omgdi:waypoint x="343" y="124"></omgdi:waypoint>
-        <omgdi:waypoint x="343" y="272"></omgdi:waypoint>
-        <omgdi:waypoint x="380" y="255"></omgdi:waypoint>
+        <omgdi:waypoint x="375" y="178"></omgdi:waypoint>
+        <omgdi:waypoint x="463" y="178"></omgdi:waypoint>
+        <omgdi:waypoint x="410" y="334"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow44" id="BPMNEdge_flow44">
-        <omgdi:waypoint x="272" y="295"></omgdi:waypoint>
-        <omgdi:waypoint x="380" y="295"></omgdi:waypoint>
+        <omgdi:waypoint x="322" y="314"></omgdi:waypoint>
+        <omgdi:waypoint x="410" y="334"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow45" id="BPMNEdge_flow45">
         <omgdi:waypoint x="1110" y="275"></omgdi:waypoint>
