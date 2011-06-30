@@ -6,10 +6,8 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.google.gwt.core.client.GWT;
-import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.widgets.Window;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import java.util.List;
+
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
@@ -24,20 +22,21 @@ import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
 import org.ktunaxa.referral.client.widget.ReferralMapWidget;
 import org.ktunaxa.referral.client.widget.ResizableLeftLayout;
+import org.ktunaxa.referral.server.dto.TaskDto;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
-import org.ktunaxa.referral.server.dto.TaskDto;
-import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
-import java.util.List;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 /**
- * General definition of the main layout for the Ktunaxa mapping component. It
- * defines a left info pane and a map.
+ * General definition of the main layout for the Ktunaxa mapping component. It defines a left info pane and a map.
  * 
  * @author Jan De Moerloose
  * @author Pieter De Graef
@@ -51,6 +50,10 @@ public final class MapLayout extends VLayout {
 	private LocalizedMessages messages = GWT.create(LocalizedMessages.class);
 
 	private TopBar topBar;
+
+	private MenuBar menuBar;
+
+	private VLayout bodyLayout;
 
 	private ReferralMapWidget mapWidget;
 
@@ -77,10 +80,12 @@ public final class MapLayout extends VLayout {
 
 		setWidth100();
 		setHeight100();
+		setOverflow(Overflow.HIDDEN);
+
 		// the info pane
 		infoPane = new ResizableLeftLayout();
 		infoPane.setStyleName(STYLE_BLOCK);
-		
+
 		// the map
 		mapWidget = new ReferralMapWidget("mainMap", "app");
 
@@ -98,7 +103,7 @@ public final class MapLayout extends VLayout {
 		// top bar
 		topBar = new TopBar();
 		// menu bar
-		MenuBar menuBar = new MenuBar();
+		menuBar = new MenuBar();
 		for (ToolStripButton button : infoPane.getButtons()) {
 			menuBar.addNavigationButton(button);
 		}
@@ -109,7 +114,7 @@ public final class MapLayout extends VLayout {
 				createReferral();
 			}
 		});
-		
+
 		menuBar.addActionButton(newButton);
 
 		// add all
@@ -130,13 +135,16 @@ public final class MapLayout extends VLayout {
 		subHeader.setStyleName("subHeader");
 		addMember(subHeader);
 
+		bodyLayout = new VLayout();
+		bodyLayout.setOverflow(Overflow.AUTO);
 		HLayout hLayout = new HLayout();
 		hLayout.setMargin(5);
 		hLayout.setWidth100();
 		hLayout.setHeight100();
 		hLayout.addMember(infoPane);
 		hLayout.addMember(mapLayout);
-		addMember(hLayout);
+		bodyLayout.addMember(hLayout);
+		addMember(bodyLayout);
 	}
 
 	public ReferralMapWidget getMap() {
@@ -150,7 +158,7 @@ public final class MapLayout extends VLayout {
 	public LayersPanel getLayerPanel() {
 		return layerPanel;
 	}
-	
+
 	public ReferralPanel getReferralPanel() {
 		return referralPanel;
 	}
@@ -165,17 +173,18 @@ public final class MapLayout extends VLayout {
 
 	/**
 	 * Set the current referral and current task.
-	 *
-	 * @param referral referral to select
-	 * @param task task to select
+	 * 
+	 * @param referral
+	 *            referral to select
+	 * @param task
+	 *            task to select
 	 */
 	public void setReferralAndTask(@Nullable org.geomajas.layer.feature.Feature referral, @Nullable TaskDto task) {
 		currentReferral = referral;
 		currentTask = task;
 		String title;
 		if (null != referral) {
-			VectorLayer layer = (VectorLayer) getMap().getMapModel()
-					.getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
+			VectorLayer layer = (VectorLayer) getMap().getMapModel().getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
 			Feature feature = new Feature(referral, layer);
 			GWT.log("Referral found: " + feature.getId());
 			getReferralPanel().init(layer, feature);
@@ -194,8 +203,7 @@ public final class MapLayout extends VLayout {
 			String referralDescription = feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_PROJECT).toString();
 			if (null != task) {
 				String taskDescription = task.getDescription();
-				title = messages.referralAndTaskTitle(referral.getId(), referralDescription,
-						taskDescription);
+				title = messages.referralAndTaskTitle(referral.getId(), referralDescription, taskDescription);
 			} else {
 				title = messages.referralTitle(referral.getId(), referralDescription);
 			}
@@ -232,36 +240,42 @@ public final class MapLayout extends VLayout {
 
 	/**
 	 * Get the button for the last card which was added to the info pane.
-	 *
+	 * 
 	 * @return last button from info pane
 	 */
 	public ToolStripButton getLastButton() {
 		List<ToolStripButton> buttons = infoPane.getButtons();
 		return buttons.get(buttons.size() - 1);
 	}
-	
-	/**
-	 * Create a new referral.
-	 */
+
+	/** Create a new referral. */
 	public void createReferral() {
-		final Window window = new Window();
-		window.setIsModal(true);
-		window.maximize();
-		window.setShowHeader(false);
-		VLayout body = new VLayout();
-		body.setWidth100();
-		body.setHeight100();
-		body.setOverflow(Overflow.SCROLL);
-		body.setMargin(10);
+		final String title = topBar.getLeftTitle();
+		final VLayout haze = new VLayout();
+		haze.setSize(menuBar.getWidthAsString(), menuBar.getHeightAsString());
+		haze.setBackgroundColor("#EEEEEE");
+		haze.setOpacity(60);
+
+		final VLayout body = new VLayout();
+		body.setMargin(5);
 		ReferralCreationWizard wizard = new ReferralCreationWizard(new Runnable() {
+
 			public void run() {
-				window.destroy();
+				bodyLayout.removeChild(body);
+				bodyLayout.getChildren()[0].setVisible(true);
+				body.destroy();
+				menuBar.removeChild(haze);
+				topBar.setLeft(title);
 			}
 		});
 		body.addMember((ReferralCreationWizard.ReferralWizardView) wizard.getView());
 		addMember(body);
 		wizard.init();
-		window.addMember(body);
-		window.draw();
+		bodyLayout.addMember(body);
+		bodyLayout.getChildren()[0].setVisible(false);
+
+		// Disable all buttons in the toolbar:
+		menuBar.addChild(haze);
+		topBar.setLeftTitle("Referral Management System - Referral Creation Wizard");
 	}
 }

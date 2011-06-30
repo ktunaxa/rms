@@ -161,6 +161,15 @@ BLOCKS
 WIZARD
 ============================================================*/
 
+.wizardWidget {
+	background: #f0f0f0;
+	padding: 3px;
+	border: 1px solid #C0C0CC;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
 .wizardLeftLayout {
 	padding: 6px;
 	height: 100%;

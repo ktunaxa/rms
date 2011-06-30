@@ -63,16 +63,22 @@ public class TopBar extends HLayout {
 	/**
 	 * Sets the title of the top bar.
 	 * 
-	 * @param title the new title
+	 * @param title
+	 *            the new title
 	 */
 	public void setLeftTitle(@NotNull String title) {
 		leftLabel.setContents(title);
 	}
 
+	public String getLeftTitle() {
+		return leftLabel.getContents();
+	}
+
 	/**
 	 * Sets the tooltip of the top bar.
-	 *
-	 * @param tooltip the new title
+	 * 
+	 * @param tooltip
+	 *            the new title
 	 */
 	public void setLeftTooltip(@NotNull String tooltip) {
 		leftLabel.setTooltip(tooltip);
@@ -87,5 +93,4 @@ public class TopBar extends HLayout {
 	public ToolStripButton getUserButton() {
 		return userButton;
 	}
-
 }
