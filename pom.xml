@@ -185,7 +185,7 @@
 			<dependency>
 				<groupId>org.activiti</groupId>
 				<artifactId>activiti-rest</artifactId>
-				<version>${activiti.version}</version>
+				<version>${activiti.rest.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
@@ -269,7 +269,8 @@
 	</pluginRepositories>
 
 	<properties>
-		<activiti.version>5.4</activiti.version>
+		<activiti.version>5.6</activiti.version>
+		<activiti.rest.version>5.4</activiti.rest.version>
 		<geotools.version>2.7.0.1</geotools.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gwt-version>2.1.1</gwt-version>

@@ -21,10 +21,11 @@ public interface KtunaxaBpmConstant {
 	String VAR_REFERRAL_ID = "referralId";
 	String VAR_DESCRIPTION = "description";
 	String VAR_EMAIL = "requesterEmail";
+	String VAR_PROVINCE_ENGAGEMENT_LEVEL = "provinceEngagementLevel";
 	String VAR_ENGAGEMENT_LEVEL = "engagementLevel";
 	String VAR_COMPLETION_DEADLINE = "completionDeadline";
 	String VAR_FINAL_DECISION_CONSISTENT = "finalDecisionConsistent";
-	String VAR_EVALUATE_VALUES = "evaluateValues";
+	String VAR_REPORT_VALUES = "reportValues";
 	String VAR_DECISION_CONSISTENT = "decisionConsistent";
 	String VAR_EVALUATE_AQUATIC = "evalAquatic";
 	String VAR_EVALUATE_ARCHAEOLOGICAL = "evalArchaeological";

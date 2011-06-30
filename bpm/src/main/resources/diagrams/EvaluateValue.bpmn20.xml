@@ -4,16 +4,16 @@
     <documentation>Select which values need to be evaluated and evaluate them.</documentation>
     <startEvent id="startevent1" name="Start" activiti:formKey="diagrams/createReferral.form"></startEvent>
     <userTask id="usertask1" name="determine values to investigate" activiti:candidateGroups="evaluateEvaluator" activiti:formKey="diagrams/valueSelect.form">
-      <documentation>${ktunaxa.getReferralIdLink(execution)} determine values to evaluate and/or notify stewardship officer</documentation>
+      <documentation>Determine values to evaluate and/or whether to notify stewardship officer for community input.</documentation>
     </userTask>
     <sequenceFlow id="flow53" name="" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
     <sequenceFlow id="flow55" name="" sourceRef="usertask1" targetRef="parallelgateway2"></sequenceFlow>
     <userTask id="usertask3" name="Evaluate archaeological values" activiti:candidateGroups="archaeologyEvaluator" activiti:formKey="diagrams/redirect.form">
-      <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      <documentation>Evaluate archaeological values.</documentation>
     </userTask>
     <userTask id="usertask4" name="Evaluate aquatic values" activiti:candidateGroups="aquaticEvaluator" activiti:formKey="diagrams/redirect.form">
-      <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      <documentation>Evaluate aquatic values</documentation>
     </userTask>
     <manualTask id="manualtask1" name="auto evaluate aquatic values"></manualTask>
     <manualTask id="manualtask2" name="auto evaluate archaeological values"></manualTask>
@@ -24,16 +24,16 @@
       <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
     </userTask>
     <userTask id="usertask7" name="Evaluate cultural values" activiti:candidateGroups="culturalEvaluator" activiti:formKey="diagrams/redirect.form">
-      <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      <documentation>Evaluate cultural values.</documentation>
     </userTask>
     <userTask id="usertask8" name="Evaluate ecological values" activiti:candidateGroups="ecologyEvaluator" activiti:formKey="diagrams/redirect.form">
-      <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      <documentation>Evaluate ecological values.</documentation>
     </userTask>
     <userTask id="usertask9" name="Evaluate treaty values" activiti:candidateGroups="treatyEvaluator" activiti:formKey="diagrams/redirect.form">
-      <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      <documentation>Evaluate treaty values.</documentation>
     </userTask>
     <userTask id="usertask10" name="Process community input" activiti:candidateGroups="communityManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      <documentation>Advertise referral to community, schedule meeting and process community input.</documentation>
     </userTask>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>

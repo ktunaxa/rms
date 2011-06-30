@@ -55,6 +55,7 @@ public class CreateProcessCommand implements Command<CreateProcessRequest, Comma
 		context.put(KtunaxaBpmConstant.VAR_DESCRIPTION, description);
 		context.put(KtunaxaBpmConstant.VAR_EMAIL, email);
 		context.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL, request.getEngagementLevel());
+		context.put(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL, request.getEngagementLevel());
 		context.put(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE,
 				yyyymmdd.format(request.getCompletionDeadline()));
 		runtimeService.startProcessInstanceByKey(KtunaxaBpmConstant.REFERRAL_PROCESS_ID, context);

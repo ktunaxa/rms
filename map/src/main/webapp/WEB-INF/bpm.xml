@@ -36,6 +36,7 @@
 		<property name="mailServerUsername" value=""/>
 		<property name="mailServerPassword" value=""/>
 
+		<property name="deploymentResources" value="classpath*:/diagrams/*.bpmn20.xml" />
 	</bean>
 
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">

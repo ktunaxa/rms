@@ -20,29 +20,29 @@ import java.util.Map;
  */
 public class EvaluateOrFinishForm extends AbstractTaskForm {
 
-	private CheckboxItem evaluateValues = new CheckboxItem();
+	private CheckboxItem reportValues = new CheckboxItem();
 
 	public EvaluateOrFinishForm() {
 		super();
 
-		evaluateValues.setName("evaluateValues");
-		evaluateValues.setTitle("Evaluate values");
+		reportValues.setName("reportValues");
+		reportValues.setTitle("Report values");
 
-		setFields(evaluateValues);
+		setFields(reportValues);
 	}
 
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
-		evaluateValues.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.VAR_EVALUATE_VALUES));
+		reportValues.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_REPORT_VALUES));
 	}
 
 	@Override
 	public Map<String, String> getVariables() {
 		Map<String, String> result = new HashMap<String, String>();
-		result.put(KtunaxaBpmConstant.VAR_EVALUATE_VALUES + KtunaxaBpmConstant.SET_BOOLEAN,
-				nullSafeToString(evaluateValues.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_REPORT_VALUES + KtunaxaBpmConstant.SET_BOOLEAN,
+				nullSafeToString(reportValues.getValue()));
 		return result;
 	}
 

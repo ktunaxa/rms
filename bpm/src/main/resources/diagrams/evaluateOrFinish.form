@@ -4,8 +4,8 @@
 		<tr>
 			<td>
 				<label>
-					<input type="checkbox" name="evaluateValues"/>Evaluate values
-					<input type="hidden" name="evaluateValues_boolean" value="true"/>
+					<input type="checkbox" name="reportValues"/>Report value evaluation?
+					<input type="hidden" name="reportValues_boolean" value="true"/>
 				</label>
 			</td>
 		</tr>
