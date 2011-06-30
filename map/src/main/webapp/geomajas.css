@@ -337,10 +337,15 @@ SECTIONSTACK WITH LISTS
 ============================================================*/
 
 .sectionList {
-    padding: 4px 7px 4px 44px;
+    padding: 4px 7px;
     border-left: 1px solid #D9D9E0;
     border-right: 1px solid #D9D9E0;
     background: #F0F0FF;
     background-image: -moz-linear-gradient(top, #F0F0FF, #FAFAFF);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#F0F0FF), to(#FAFAFF));
+}
+
+/* The proper rul, ".sectionStack .taskBlock" is not recognized by SmartGWT/SmartClient */
+.taskBlock {
+    margin: 0 5px 0 15px;
 }

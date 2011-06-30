@@ -77,7 +77,9 @@ public class ListView<T extends Serializable> extends VLayout {
 	/**
 	 * Create a new list view instance with the given sort parameters. The ListView will have a create button and search
 	 * option.
-	 * 
+	 *
+	 * @param canCreate true when creating new items is allowed
+	 * @param canSearch true when searching is allowed
 	 * @param sortAttributes
 	 *            A mapping of sort attribute names (used in the GUI) with respective comparators. These comparators
 	 *            should be able to sort the actual collapsible blocks.
