@@ -120,14 +120,20 @@ public class UnassignedTasksPanel extends VLayout {
 						lists[MANAGER].add(block);
 					}
 				}
+				int sectionToExpand = 0;
+				int sectionsToExpandCount = 0;
 				for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
 					int count = lists[i].size();
 					if (count > 0) {
 						sections[i].setTitle(CANDIDATE_TITLES[i] +
 								"  (<span style=\"font-weight:bold;\">" + count + "</span>)");
-						sections[i].setExpanded(true);
+						sectionToExpand = i;
+						sectionsToExpandCount++;
 					}
 					views[i].populate(lists[i]); // @todo @sec only add when the role is assigned to the user
+				}
+				if (1 == sectionsToExpandCount) {
+					sections[sectionToExpand].setExpanded(true);
 				}
 			}
 		});
