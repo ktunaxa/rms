@@ -15,11 +15,6 @@
 
 	<context:component-scan base-package="org.ktunaxa.bpm"/>
 
-	<bean id="ktunaxa" class="org.ktunaxa.bpm.KtunaxaConfiguration">
-		<property name="mapDashboardBaseUrl" value="http://localhost:8888/map/"/>
-		<property name="bpmDashboardBaseUrl" value="http://localhost:8888/map/"/>
-	</bean>
-
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
 
 		<property name="dataSource" ref="postgisDataSource"/>

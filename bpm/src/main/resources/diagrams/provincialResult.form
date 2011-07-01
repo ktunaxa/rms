@@ -6,7 +6,7 @@
 
 <div>
 	<h1>Process decision from province about referral</h1>
-	<p>${ktunaxa.getReferralLink(execution)}</p>
+	<p>${referralId}</p>
 	<table>
 		<tr>
 			<td>

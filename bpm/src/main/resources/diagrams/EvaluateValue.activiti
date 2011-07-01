@@ -1721,7 +1721,7 @@
   <bpmn2:ManualTask id="manualtask4" name="auto evaluate ecological values" incoming="flow68" outgoing="flow83"/>
   <bpmn2:ManualTask id="manualtask5" name="auto evaluate treaty values" incoming="flow70" outgoing="flow84"/>
   <bpmn2:UserTask id="usertask6" name="Notify communities" incoming="flow71" outgoing="flow85" candidateGroups="/74" formKey="diagrams/redirect.form">
-    <documentation text="${ktunaxa.getReferralLink(execution)}"/>
+    <documentation text="Notify communities."/>
   </bpmn2:UserTask>
   <bpmn2:UserTask id="usertask7" name="Evaluate cultural values" incoming="flow82" outgoing="flow76" candidateGroups="/71" formKey="diagrams/redirect.form">
     <documentation text="Evaluate cultural values."/>

@@ -21,7 +21,7 @@
     <manualTask id="manualtask4" name="auto evaluate ecological values"></manualTask>
     <manualTask id="manualtask5" name="auto evaluate treaty values"></manualTask>
     <userTask id="usertask6" name="Notify communities" activiti:candidateGroups="communityManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+      <documentation>Notify communities.</documentation>
     </userTask>
     <userTask id="usertask7" name="Evaluate cultural values" activiti:candidateGroups="culturalEvaluator" activiti:formKey="diagrams/redirect.form">
       <documentation>Evaluate cultural values.</documentation>

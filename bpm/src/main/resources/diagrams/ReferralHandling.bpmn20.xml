@@ -9,10 +9,10 @@
       <serviceTask id="subprocess1mailtask1" name="Level 0 notification" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Level 0 notification"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Level 0 notification"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
 Project description: ${description}
 
@@ -26,10 +26,10 @@ Ktunaxa Nation Council]]></activiti:expression>
       <serviceTask id="subprocess1mailtask2" name="Receive/start notification" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
 Project description: ${description}
 
@@ -43,10 +43,10 @@ Ktunaxa Nation Council]]></activiti:expression>
       <serviceTask id="subprocess1mailtask3" name="Mail Task" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral received, processing started"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
 Project description: ${description}
 
@@ -80,7 +80,7 @@ Ktunaxa Nation Council]]></activiti:expression>
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 2}]]></conditionExpression>
       </sequenceFlow>
       <userTask id="subprocess1receivetask1" name="Notification decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
-		  <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+		  <documentation>Get notification of decision.</documentation>
       </userTask>
       <callActivity id="subprocess1callactivity2" name="Call activity" calledElement="evaluate-values">
 		  <extensionElements>
@@ -99,10 +99,10 @@ Ktunaxa Nation Council]]></activiti:expression>
       <serviceTask id="subprocess1mailtask4" name="Mail Result" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral results"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Referral results"></activiti:field>
           <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
 Project description: ${description}
 
@@ -115,7 +115,7 @@ Ktunaxa Nation Council]]></activiti:expression>
       </serviceTask>
       <sequenceFlow id="subprocess1flow16" name="" sourceRef="subprocess1servicetask1" targetRef="subprocess1mailtask4"></sequenceFlow>
       <userTask id="subprocess1receivetask2" name="Provincial decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/provincialResult.form">
-		  <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+		  <documentation>Get provincial decision.</documentation>
       </userTask>
       <sequenceFlow id="subprocess1flow17" name="" sourceRef="subprocess1mailtask4" targetRef="subprocess1receivetask2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow18" name="" sourceRef="subprocess1usertask4" targetRef="subprocess1usertask7"></sequenceFlow>
@@ -155,7 +155,7 @@ Ktunaxa Nation Council]]></activiti:expression>
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${finalDecisionConsistent}]]></conditionExpression>
       </sequenceFlow>
       <userTask id="subprocess1receivetask3" name="Application reports" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
-		  <documentation>${ktunaxa.getReferralLink(execution)}</documentation>
+		  <documentation>Build application report.</documentation>
       </userTask>
       <endEvent id="subprocess1endevent3" name="End-sub"></endEvent>
       <sequenceFlow id="subprocess1flow32" name="" sourceRef="subprocess1receivetask1" targetRef="subprocess1endevent3"></sequenceFlow>
@@ -183,9 +183,9 @@ Ktunaxa Nation Council]]></activiti:expression>
       <serviceTask id="subprocess1mailtask5" name="Send change notification" activiti:type="mail">
         <extensionElements>
           <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${ktunaxa.getReferralIdLink(execution)}: Referral received, want to change engagement level"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Referral received, want to change engagement level"></activiti:field>
           <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${ktunaxa.getReferralIdLink(execution)}.
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
 Project description: ${description}
 
