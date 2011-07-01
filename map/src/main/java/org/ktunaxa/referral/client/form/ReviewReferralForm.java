@@ -30,6 +30,7 @@ public class ReviewReferralForm extends AbstractTaskForm {
 	private TextAreaItem description = new TextAreaItem();
 	private TextItem email = new TextItem();
 	private SpinnerItem engagementLevel = new SpinnerItem();
+	private TextAreaItem engagementComment = new TextAreaItem();
 
 	public ReviewReferralForm() {
 		super();
@@ -54,20 +55,23 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		engagementLevel.setMin(0);
 		engagementLevel.setMax(3);
 
-		setFields(completionDeadline, description, email, engagementLevel);
+		engagementComment.setName("engagementComment");
+		engagementComment.setTitle("Comment about changes");
+		engagementComment.setWidth("*");
+
+		setFields(completionDeadline, description, email, engagementLevel, engagementComment);
 	}
 
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
-		completionDeadline.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE));
-		description.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.VAR_DESCRIPTION));
-		email.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.VAR_EMAIL));
-		engagementLevel.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL));
+		Map<String, String> variables = task.getVariables();
+		completionDeadline.setValue(variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE));
+		description.setValue(variables.get(KtunaxaBpmConstant.VAR_DESCRIPTION));
+		email.setValue(variables.get(KtunaxaBpmConstant.VAR_EMAIL));
+		engagementLevel.setValue(variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL));
+		engagementLevel.setHint("Province-" + variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL));
+		engagementComment.setValue(variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT));
 	}
 
 	@Override

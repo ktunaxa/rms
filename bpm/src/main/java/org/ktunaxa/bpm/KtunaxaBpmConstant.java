@@ -23,6 +23,7 @@ public interface KtunaxaBpmConstant {
 	String VAR_EMAIL = "requesterEmail";
 	String VAR_PROVINCE_ENGAGEMENT_LEVEL = "provinceEngagementLevel";
 	String VAR_ENGAGEMENT_LEVEL = "engagementLevel";
+	String VAR_ENGAGEMENT_COMMENT = "engagementComment";
 	String VAR_COMPLETION_DEADLINE = "completionDeadline";
 	String VAR_FINAL_DECISION_CONSISTENT = "finalDecisionConsistent";
 	String VAR_REPORT_VALUES = "reportValues";
