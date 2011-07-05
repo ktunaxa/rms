@@ -14,10 +14,10 @@
 		<tr>
 			<td>
 				<label>
-					Description:<br/>
-					<textarea name="description" placeholder="description for referral"></textarea>
-					<input type="hidden" name="description_required" value="false"/>
-					<input type="hidden" name="description_type" value="String"/>
+					Project name:<br/>
+					<textarea name="referralName" placeholder="Name for referral"></textarea>
+					<input type="hidden" name="referralName_required" value="false"/>
+					<input type="hidden" name="referralName_type" value="String"/>
 				</label><br/>
 			</td>
 		</tr>

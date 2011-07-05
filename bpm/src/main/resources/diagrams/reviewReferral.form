@@ -23,10 +23,10 @@
 		<tr>
 			<td>
 				<label>
-					Description:<br/>
-					<textarea name="description" value="" placeholder="description for referral">${description}</textarea>
-					<input type="hidden" name="description_required" value="false"/>
-					<input type="hidden" name="description_type" value="String"/>
+					Referral name:<br/>
+					<textarea name="referralName" value="" placeholder="Name for referral">${referralName}</textarea>
+					<input type="hidden" name="referralName_required" value="false"/>
+					<input type="hidden" name="referralName_type" value="String"/>
 				</label><br/>
 			</td>
 		</tr>

@@ -56,6 +56,8 @@ public class TaskDto implements Serializable {
 
 	/** The date/time when this task was created */
 	private Date createTime;
+	private Date startTime;
+	private Date endTime;
 
 	/** The id of the activity in the process defining this task or null if this is not related to a process */
 	private String taskDefinitionKey;
@@ -69,6 +71,7 @@ public class TaskDto implements Serializable {
 	private List<String> candidates = new ArrayList<String>();
 	private Map<String, String> variables = new HashMap<String, String>();
 	private String formKey;
+	private boolean history;
 
 	/**
 	 * Get the task id.
@@ -239,7 +242,7 @@ public class TaskDto implements Serializable {
 	}
 
 	/**
-	 * Get the creation time for the task.
+	 * Get the creation time for the task. This is null for historic tasks.
 	 *
 	 * @return creation time
 	 */
@@ -248,12 +251,48 @@ public class TaskDto implements Serializable {
 	}
 
 	/**
-	 * Set the creation time for the task.
+	 * Set the creation time for the task. Should not be set for historic tasks.
 	 *
 	 * @param createTime create time
 	 */
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	/**
+	 * Get the start time for the task. This is non-null for historic tasks.
+	 *
+	 * @return start time
+	 */
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	/**
+	 * Set the start time for the task. Should only be set for historic tasks.
+	 *
+	 * @param startTime create time
+	 */
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	/**
+	 * Get the end time for the task. This is non-null for historic tasks.
+	 *
+	 * @return end time
+	 */
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	/**
+	 * Set the end time for the task. Should only be set for historic tasks.
+	 *
+	 * @param endTime create time
+	 */
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	/**
@@ -365,6 +404,23 @@ public class TaskDto implements Serializable {
 		this.formKey = formKey;
 	}
 
+	/**
+	 * Set whether this is a hostoric/closed task.
+	 *
+	 * @param history history value
+	 */
+	public void setHistory(boolean history) {
+		this.history = history;
+	}
+
+	/**
+	 * Indicate whether this is a historic/finished task.
+	 *
+	 * @return true when historic/closed task
+	 */
+	public boolean isHistory() {
+		return history;
+	}
 	/**
 	 * Copy of task enum for delegation state.
 	 *

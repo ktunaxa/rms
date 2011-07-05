@@ -41,8 +41,8 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		completionDeadline.setName("completionDeadline");
 		completionDeadline.setTitle("Completion deadline");
 
-		description.setName("description");
-		description.setTitle("Description");
+		description.setName("referralName");
+		description.setTitle("Referral name");
 		description.setWidth("*");
 
 		email.setName("email");
@@ -66,8 +66,9 @@ public class ReviewReferralForm extends AbstractTaskForm {
 	public void refresh(TaskDto task) {
 		super.refresh(task);
 		Map<String, String> variables = task.getVariables();
-		completionDeadline.setValue(variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE));
-		description.setValue(variables.get(KtunaxaBpmConstant.VAR_DESCRIPTION));
+		DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
+		completionDeadline.setValue(formatter.parse(variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE)));
+		description.setValue(variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME));
 		email.setValue(variables.get(KtunaxaBpmConstant.VAR_EMAIL));
 		engagementLevel.setValue(variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL));
 		engagementLevel.setHint("Province-" + variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL));
@@ -81,7 +82,7 @@ public class ReviewReferralForm extends AbstractTaskForm {
 
 		result.put(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE,
 				formatter.format(completionDeadline.getValueAsDate()));
-		result.put(KtunaxaBpmConstant.VAR_DESCRIPTION,
+		result.put(KtunaxaBpmConstant.VAR_REFERRAL_NAME,
 				nullSafeToString(description.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_EMAIL,
 				nullSafeToString(email.getValue()));

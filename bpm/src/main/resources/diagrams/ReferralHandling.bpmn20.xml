@@ -14,7 +14,7 @@
           <activiti:field name="html">
             <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
-Project description: ${description}
+Project name: ${referralName}
 
 We consider this a level 0 referral and thus no further action is undertaken.
 
@@ -31,7 +31,7 @@ Ktunaxa Nation Council]]></activiti:expression>
           <activiti:field name="html">
             <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
-Project description: ${description}
+Project name: ${referralName}
 
 The referral is complete and will be processed by us. We will inform you with the result when it is available.
 
@@ -48,7 +48,7 @@ Ktunaxa Nation Council]]></activiti:expression>
           <activiti:field name="html">
             <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
-Project description: ${description}
+Project name: ${referralName}
 
 The referral is complete and will be processed by us. We will inform you with the result when it is available.
 
@@ -85,7 +85,8 @@ Ktunaxa Nation Council]]></activiti:expression>
       <callActivity id="subprocess1callactivity2" name="Call activity" calledElement="evaluate-values">
 		  <extensionElements>
 			<activiti:in source="referralId" target="referralId"></activiti:in>
-			  <activiti:in source="description" target="description"></activiti:in>
+			  <activiti:in source="projectName" target="projectName"></activiti:in>
+			  <activiti:in source="completionDeadline" target="completionDeadline"></activiti:in>
 		  </extensionElements>
       </callActivity>
       <userTask id="subprocess1usertask7" name="Meet &amp; discuss" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
@@ -104,7 +105,7 @@ Ktunaxa Nation Council]]></activiti:expression>
           <activiti:field name="html">
             <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
-Project description: ${description}
+Project name: ${referralName}
 
 The result of our evaluation is attached to this e-mail.
 
@@ -187,7 +188,7 @@ Ktunaxa Nation Council]]></activiti:expression>
           <activiti:field name="html">
             <activiti:expression><![CDATA[We have received your referral for ${referralId}.
 
-Project description: ${description}
+Project name: ${referralName}
 
 You had assigned a engagement level of ${provinceEngagementLevel}, but we feel this should be ${engagementLevel}.
 

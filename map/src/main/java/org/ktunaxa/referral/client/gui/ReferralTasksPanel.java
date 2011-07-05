@@ -33,6 +33,8 @@ import java.util.List;
  */
 public class ReferralTasksPanel extends VLayout {
 
+	private static final String STYLE_BLOCK = "sectionList";
+
 	// Candidate group titles, positions need to match {@link #CANDIDATE_CHECKS}
 	private static final String[] GROUP_TITLES = {
 			"Current task",
@@ -52,7 +54,7 @@ public class ReferralTasksPanel extends VLayout {
 	public ReferralTasksPanel() {
 		super();
 		setWidth100();
-		currentTaskBlock.setStyleName("sectionList");
+		currentTaskBlock.setStyleName(STYLE_BLOCK);
 
 		SectionStack groups = new SectionStack();
 		//groups.setSize("100%", "10");
@@ -65,7 +67,7 @@ public class ReferralTasksPanel extends VLayout {
 		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
 			sections[i] = new SectionStackSection(GROUP_TITLES[i]);
 			views[i] = new TaskListView();
-			views[i].setStyleName("sectionList");
+			views[i].setStyleName(STYLE_BLOCK);
 			lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
 			if (GROUP_CURRENT == i) {
 				sections[i].addItem(currentTaskBlock);
@@ -126,7 +128,7 @@ public class ReferralTasksPanel extends VLayout {
 					for (TaskDto task : response.getTasks()) {
 						// @todo @sec only when allowed to see this task
 						TaskBlock block = new TaskBlock(task);
-						if (null != task.getCreateTime()) { // @todo check is wrong
+						if (!task.isHistory()) {
 							lists[GROUP_OPEN].add(block);
 						} else {
 							lists[GROUP_FINISHED].add(block);

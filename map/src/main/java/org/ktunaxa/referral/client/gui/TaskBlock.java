@@ -208,7 +208,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		claimButton.setHoverWidth(40);
 		claimButton.setLayoutAlign(VerticalAlignment.CENTER);
 		claimButton.setShowRollOver(false);
-		setClaimButtonStatus(task);
+		claimButton.setDisabled(task.isHistory() | (null != task.getAssignee()));
 		claimButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent clickEvent) {
 				assign(getObject(), me, false);
@@ -219,34 +219,38 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		addMember(infoLayout);
 
 		Map<String, String> variables = task.getVariables();
-		content = new HTMLFlow("<div class='taskBlockContent'>"
-				+ "Referral: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID)
-				+ "<br />Description: " + variables.get(KtunaxaBpmConstant.VAR_DESCRIPTION)
-				+ "<br />Assignee: " + task.getAssignee()
-				+ "<br />Created: " + task.getCreateTime()
-				+ "<br />Due: " + task.getDueDate()
+		String htmlContent = "<div class='taskBlockContent'>"
+				+ "Referral id: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID)
+				+ "<br />Referral name: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)
+				+ "<br />Assignee: " + task.getAssignee();
+		if (task.isHistory()) {
+			htmlContent += "<br />Started: " + task.getStartTime() + ", ended: " + task.getEndTime();
+		} else {
+			htmlContent += "<br />Created: " + task.getCreateTime();
+		}
+		htmlContent += "<br />Due: " + task.getDueDate()
 				+ "<br />Completion deadline: " + variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE)
-				+ "<br />E-mail: " + variables.get(KtunaxaBpmConstant.VAR_EMAIL)
-				+ "<br />Engagement level: " + variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL) + " (prov "
-				+ variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")"
-				+ "</div>");
+				+ "<br />E-mail: " + variables.get(KtunaxaBpmConstant.VAR_EMAIL);
+		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
+		if (null != engagementLevel) {
+			htmlContent += "<br />Engagement level: " + engagementLevel + " (prov "
+					+ variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
+		}
+			htmlContent += "</div>";
+		content = new HTMLFlow(htmlContent);
 		content.setWidth100();
 		addMember(content);
 	}
 
 	private void setClaimButtonStatus(TaskDto task) {
-		if (null != task.getAssignee()) {
-			// disable when already assigned
-			claimButton.setDisabled(true);
-		}
+		// disable when history or already assigned
+		claimButton.setDisabled(task.isHistory() | (null != task.getAssignee()));
 	}
 
 	private void setStartButtonStatus(TaskDto task) {
 		String me = UserContext.getInstance().getUser();
-		if (null != task.getAssignee() && !me.equals(task.getAssignee())) {
-			// disable when assigned to someone else
-			startButton.setDisabled(true);
-		}
+		// disable when history or assigned to someone else
+		startButton.setDisabled(task.isHistory() | (null != task.getAssignee() && !me.equals(task.getAssignee())));
 	}
 
 	private void assign(final TaskDto task, final String assignee, final boolean start) {

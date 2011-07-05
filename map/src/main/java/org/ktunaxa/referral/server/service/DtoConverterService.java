@@ -6,6 +6,7 @@
 
 package org.ktunaxa.referral.server.service;
 
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceLayerType;
@@ -46,4 +47,13 @@ public interface DtoConverterService {
 	 * @return Returns the DTO version of the task.
 	 */
 	TaskDto toDto(Task task);
+
+	/**
+	 * Convert an Activiti task to a DTO.
+	 *
+	 * @param task
+	 *            The task to convert.
+	 * @return Returns the DTO version of the task.
+	 */
+	TaskDto toDto(HistoricTaskInstance task);
 }

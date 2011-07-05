@@ -19,7 +19,7 @@ public interface KtunaxaBpmConstant {
 	String REFERRAL_PROCESS_ID = "referral-handling";
 
 	String VAR_REFERRAL_ID = "referralId";
-	String VAR_DESCRIPTION = "description";
+	String VAR_REFERRAL_NAME = "referralName";
 	String VAR_EMAIL = "requesterEmail";
 	String VAR_PROVINCE_ENGAGEMENT_LEVEL = "provinceEngagementLevel";
 	String VAR_ENGAGEMENT_LEVEL = "engagementLevel";

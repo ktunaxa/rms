@@ -6,7 +6,10 @@
 
 package org.ktunaxa.referral.server.command.bpm;
 
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.geomajas.command.Command;
@@ -34,6 +37,9 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 	private TaskService taskService;
 
 	@Autowired
+	private HistoryService historyService;
+
+	@Autowired
 	private DtoConverterService converterService;
 
 	public GetTasksResponse getEmptyCommandResponse() {
@@ -53,15 +59,25 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 			TaskQuery taskQuery = taskService.createTaskQuery();
 			add(taskDtos, taskQuery.taskAssignee(request.getAssignee()).list());
 		}
-		if (null != request.getReferralId()) {
+		String referralId = request.getReferralId();
+		if (null != referralId) {
 			TaskQuery taskQuery = taskService.createTaskQuery();
 			add(taskDtos, taskQuery.processVariableValueEquals(KtunaxaBpmConstant.VAR_REFERRAL_ID,
-					request.getReferralId()).list());
+					referralId).list());
+			HistoricTaskInstanceQuery historicTaskQuery = historyService.createHistoricTaskInstanceQuery();
+			addHistoric(taskDtos, historicTaskQuery.finished().
+					processVariableValueEquals(KtunaxaBpmConstant.VAR_REFERRAL_ID, referralId).list());
 		}
 	}
 
 	private void add(List<TaskDto> taskDtos, List<Task> tasks) {
 		for (Task task : tasks) {
+			taskDtos.add(converterService.toDto(task));
+		}
+	}
+
+	private void addHistoric(List<TaskDto> taskDtos, List<HistoricTaskInstance> tasks) {
+		for (HistoricTaskInstance task : tasks) {
 			taskDtos.add(converterService.toDto(task));
 		}
 	}

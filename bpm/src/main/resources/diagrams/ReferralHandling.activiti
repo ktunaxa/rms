@@ -1487,9 +1487,9 @@
   <bpmn2:SubProcess id="subprocess1" name="Sub Process" incoming="flow46" outgoing="flow1">
     <flowElements xsi:type="bpmn2:StartEvent" id="startevent6" name="Start-sub" outgoing="flow6" formKey=""/>
     <flowElements xsi:type="bpmn2:ExclusiveGateway" id="exclusivegateway1" name="engagement level?" incoming="flow39" outgoing="flow10 flow11 flow12"/>
-    <flowElements xsi:type="bpmn2:MailTask" id="mailtask1" name="Level 0 notification" incoming="flow9" outgoing="flow25" to="${requesterEmail}" subject="${referralId}: Level 0 notification" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${referralId}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;We consider this a level 0 referral and thus no further action is undertaken.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
-    <flowElements xsi:type="bpmn2:MailTask" id="mailtask2" name="Receive/start notification" incoming="flow43 flow44" outgoing="flow39" to="${requesterEmail}" subject="${referralId}: Referral received, processing started" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${referralId}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The referral is complete and will be processed by us. We will inform you with the result when it is available.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
-    <flowElements xsi:type="bpmn2:MailTask" id="mailtask3" name="Mail Task" incoming="flow11" outgoing="flow21" to="${requesterEmail}" subject="${referralId}: Referral received, processing started" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${referralId}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The referral is complete and will be processed by us. We will inform you with the result when it is available.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
+    <flowElements xsi:type="bpmn2:MailTask" id="mailtask1" name="Level 0 notification" incoming="flow9" outgoing="flow25" to="${requesterEmail}" subject="${referralId}: Level 0 notification" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${referralId}.&#xA;&#xA;Project name: ${referralName}&#xA;&#xA;We consider this a level 0 referral and thus no further action is undertaken.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
+    <flowElements xsi:type="bpmn2:MailTask" id="mailtask2" name="Receive/start notification" incoming="flow43 flow44" outgoing="flow39" to="${requesterEmail}" subject="${referralId}: Referral received, processing started" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${referralId}.&#xA;&#xA;Project name: ${referralName}&#xA;&#xA;The referral is complete and will be processed by us. We will inform you with the result when it is available.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
+    <flowElements xsi:type="bpmn2:MailTask" id="mailtask3" name="Mail Task" incoming="flow11" outgoing="flow21" to="${requesterEmail}" subject="${referralId}: Referral received, processing started" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${referralId}.&#xA;&#xA;Project name: ${referralName}&#xA;&#xA;The referral is complete and will be processed by us. We will inform you with the result when it is available.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:UserTask" id="usertask4" name="Appointment" incoming="flow12" outgoing="flow18" candidateGroups="/10" formKey="diagrams/redirect.form">
       <documentation text="Make appointment with province to discuss referral."/>
     </flowElements>
@@ -1517,7 +1517,8 @@
     <flowElements xsi:type="bpmn2:UserTask" id="receivetask1" name="Notification decision" incoming="flow25 flow27 flow31" outgoing="flow32" formKey="diagrams/redirect.form"/>
     <flowElements xsi:type="bpmn2:CallActivity" id="callactivity2" name="Call activity" incoming="flow38" outgoing="flow40" calledElement="evaluate-values">
       <inParameters source="referralId" target="referralId"/>
-      <inParameters source="description" target="description"/>
+      <inParameters source="referralName" target="referralName"/>
+      <inParameters source="completionDeadline" target="completionDeadline"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:UserTask" id="usertask7" name="Meet &amp; discuss" incoming="flow18" outgoing="flow19" candidateGroups="/15" formKey="diagrams/redirect.form">
       <documentation text="Meet with province to discuss referral."/>
@@ -1527,7 +1528,7 @@
     </flowElements>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow14" name="" sourceRef="usertask8" targetRef="parallelgateway2"/>
     <flowElements xsi:type="bpmn2:ServiceTask" id="servicetask1" name="Produce result report" incoming="flow45" outgoing="flow16" implementation="org.ktunaxa.bpm.BuildResultReportTask" implementationType="classType" resultVariableName=""/>
-    <flowElements xsi:type="bpmn2:MailTask" id="mailtask4" name="Mail Result" incoming="flow16" outgoing="flow17" to="${requesterEmail}" subject="${referralId}: Referral results" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${referralId}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;The result of our evaluation is attached to this e-mail.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
+    <flowElements xsi:type="bpmn2:MailTask" id="mailtask4" name="Mail Result" incoming="flow16" outgoing="flow17" to="${requesterEmail}" subject="${referralId}: Referral results" cc="archive@TEMP-FOR-TESTING.ktunaxa.org" html="We have received your referral for ${referralId}.&#xA;&#xA;Project name: ${referralName}&#xA;&#xA;The result of our evaluation is attached to this e-mail.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow16" name="" sourceRef="servicetask1" targetRef="mailtask4"/>
     <flowElements xsi:type="bpmn2:UserTask" id="receivetask2" name="Provincial decision" incoming="flow17" outgoing="flow26" formKey="diagrams/provincialResult.form"/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow17" name="" sourceRef="mailtask4" targetRef="receivetask2"/>
@@ -1591,7 +1592,7 @@
     <flowElements xsi:type="bpmn2:UserTask" id="usertask13" name="Get approval from province" incoming="flow42" outgoing="flow43" candidateGroups="/18" formKey="diagrams/reviewReferral.form">
       <documentation text="Process feedback from province about changed engagement level."/>
     </flowElements>
-    <flowElements xsi:type="bpmn2:MailTask" id="mailtask5" name="Send change notification" incoming="flow41" outgoing="flow42" to="${requesterEmail}" subject="${referralId}: Referral received, want to change engagement level" cc="" html="We have received your referral for ${referralId}.&#xA;&#xA;Project description: ${description}&#xA;&#xA;You had assigned a engagement level of ${provinceEngagementLevel}, but we feel this should be ${engagementLevel}.&#xA;&#xA;Please let us know whether you agree with this.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
+    <flowElements xsi:type="bpmn2:MailTask" id="mailtask5" name="Send change notification" incoming="flow41" outgoing="flow42" to="${requesterEmail}" subject="${referralId}: Referral received, want to change engagement level" cc="" html="We have received your referral for ${referralId}.&#xA;&#xA;Project name: ${referralName}&#xA;&#xA;You had assigned a engagement level of ${provinceEngagementLevel}, but we feel this should be ${engagementLevel}.&#xA;&#xA;Please let us know whether you agree with this.&#xA;&#xA;Kind regards,&#xA;Ktunaxa Nation Council" text=""/>
     <flowElements xsi:type="bpmn2:SequenceFlow" id="flow41" name="diff engagement level" sourceRef="exclusivegateway6" targetRef="mailtask5">
       <conditionExpression id="flow41_condition" body="${provinceEngagementLevel != engagementLevel}"/>
     </flowElements>

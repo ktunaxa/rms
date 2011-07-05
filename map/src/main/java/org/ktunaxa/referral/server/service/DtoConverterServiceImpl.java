@@ -9,6 +9,7 @@ package org.ktunaxa.referral.server.service;
 import org.activiti.engine.FormService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
@@ -101,6 +102,32 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 
 		TaskFormData data = formService.getTaskFormData(task.getId());
 		taskDto.setFormKey(data.getFormKey());
+
+		return taskDto;
+	}
+
+	public TaskDto toDto(HistoricTaskInstance task) {
+		TaskDto taskDto = new TaskDto();
+		taskDto.setHistory(true);
+		taskDto.setAssignee(task.getAssignee());
+		taskDto.setDescription(task.getDescription());
+		taskDto.setExecutionId(task.getExecutionId());
+		taskDto.setStartTime(task.getStartTime());
+		taskDto.setEndTime(task.getEndTime());
+		taskDto.setDueDate(task.getDueDate());
+		taskDto.setId(task.getId());
+		taskDto.setName(task.getName());
+		taskDto.setPriority(task.getPriority());
+		taskDto.setProcessDefinitionId(task.getProcessDefinitionId());
+		taskDto.setProcessInstanceId(task.getProcessInstanceId());
+		taskDto.setTaskDefinitionKey(task.getTaskDefinitionKey());
+		/*
+		HistoricDetail historicDetail = historyService.createHistoricDetailQuery().taskId(task.getId()).singleResult();
+		Map<String, Object> variables = historyService.createHistoricDetailQuery().taskId(task.getId()).singleResult();
+		for (Map.Entry<String, Object> variable : variables.entrySet()) {
+			taskDto.addVariable(variable.getKey(), toString(variable.getValue()));
+		}
+		*/
 
 		return taskDto;
 	}

@@ -182,7 +182,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	}
 
 	private String getDocumentDescription() {
-		return (String) getValue().getAttributeValue("description");
+		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION);
 	}
 
 	private String getDocumentDisplayUrl() {

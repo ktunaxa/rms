@@ -137,7 +137,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 				AssociationValue document = new AssociationValue();
 				Map<String, Attribute<?>> attribs = new HashMap<String, Attribute<?>>();
 				attribs.put("title", new StringAttribute(title));
-				attribs.put("description", new StringAttribute(title));
+				attribs.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, new StringAttribute(title));
 				attribs.put("documentId", new StringAttribute(documentId));
 				attribs.put("displayUrl", new StringAttribute(displayUrl));
 				attribs.put("downloadUrl", new StringAttribute(downloadUrl));
