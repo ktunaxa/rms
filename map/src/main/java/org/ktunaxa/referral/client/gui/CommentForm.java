@@ -15,6 +15,8 @@ import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultAttributeProvider;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
+import org.geomajas.layer.feature.Attribute;
+import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -46,16 +48,12 @@ public class CommentForm extends DefaultFeatureForm {
 		}
 		if (KtunaxaConstant.ATTRIBUTE_COMMENT_INCLUDE_IN_REPORT.equals(info.getName())) {
 			includeInReport = item;
-			//includeInReport.setValue(false);
 		}
 		if (KtunaxaConstant.ATTRIBUTE_COMMENT_REPORT_CONTENT.equals(info.getName())) {
 			reportContent = item;
 		}
 		if (KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY.equals(info.getName())) {
 			createdBy = item;
-			if (isEmpty(createdBy.getValue())) {
-				createdBy.setValue(UserContext.getInstance().getUser());
-			}
 		}
 		if (KtunaxaConstant.ATTRIBUTE_COMMENT_CREATION_DATE.equals(info.getName())) {
 			creationDate = item;
@@ -97,4 +95,14 @@ public class CommentForm extends DefaultFeatureForm {
 		createdBy.setDisabled(true);
 		creationDate.setDisabled(true);
 	}
+
+	@Override
+	public void toForm(AssociationValue value) {
+		super.toForm(value);
+		if (isEmpty(createdBy.getValue())) {
+			createdBy.setValue(UserContext.getInstance().getUser());
+		}
+
+	}
+
 }
