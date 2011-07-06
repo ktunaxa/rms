@@ -6,7 +6,6 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.data.DataSource;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
@@ -15,7 +14,6 @@ import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultAttributeProvider;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
-import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -102,7 +100,6 @@ public class CommentForm extends DefaultFeatureForm {
 		if (isEmpty(createdBy.getValue())) {
 			createdBy.setValue(UserContext.getInstance().getUser());
 		}
-
 	}
 
 }
