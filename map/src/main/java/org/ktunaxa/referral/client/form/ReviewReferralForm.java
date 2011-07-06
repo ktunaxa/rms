@@ -14,7 +14,20 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
+import org.geomajas.command.CommandResponse;
+import org.geomajas.command.dto.PersistTransactionRequest;
+import org.geomajas.gwt.client.command.CommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.layer.feature.Attribute;
+import org.geomajas.layer.feature.Feature;
+import org.geomajas.layer.feature.FeatureTransaction;
+import org.geomajas.layer.feature.attribute.DateAttribute;
+import org.geomajas.layer.feature.attribute.IntegerAttribute;
+import org.geomajas.layer.feature.attribute.StringAttribute;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
+import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -94,6 +107,7 @@ public class ReviewReferralForm extends AbstractTaskForm {
 
 	@Override
 	public Map<String, String> getVariables() {
+		// actually get the values
 		Map<String, String> result = new HashMap<String, String>();
 		DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
 
@@ -105,6 +119,41 @@ public class ReviewReferralForm extends AbstractTaskForm {
 				nullSafeToString(email.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL,
 				nullSafeToString(engagementLevel.getValue()));
+
+		// update referral itself
+		MapLayout mapLayout = MapLayout.getInstance();
+		VectorLayer layer = mapLayout.getReferralLayer();
+		Feature current = mapLayout.getCurrentReferral();
+		Feature previous = new org.geomajas.gwt.client.map.feature.Feature(current, layer).toDto();
+		Map<String, Attribute> attributes = current.getAttributes();
+		((IntegerAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL)).setValue(
+				Integer.parseInt(result.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL))
+		);
+		((StringAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_PROJECT)).setValue(
+				result.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)
+		);
+		((StringAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_EMAIL)).setValue(
+				result.get(KtunaxaBpmConstant.VAR_EMAIL)
+		);
+		((DateAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE)).setValue(
+				completionDeadline.getValueAsDate()
+		);
+		final FeatureTransaction ft = new FeatureTransaction();
+		ft.setLayerId(layer.getServerLayerId());
+		ft.setOldFeatures(new Feature[] {previous});
+		ft.setNewFeatures(new Feature[] {current});
+		PersistTransactionRequest request = new PersistTransactionRequest();
+		request.setFeatureTransaction(ft);
+		request.setCrs(layer.getMapModel().getCrs());
+		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
+		command.setCommandRequest(request);
+		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback<CommandResponse>() {
+			public void execute(CommandResponse response) {
+				// all fine
+			}
+		});
+
+		// return result
 		return result;
 	}
 }

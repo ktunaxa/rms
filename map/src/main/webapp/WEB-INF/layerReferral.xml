@@ -486,7 +486,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	            </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Provincial Assessment Level"/>
-                    <property name="name" value="provincialAssessmentLevel"/>
+                    <property name="name">
+						<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE" />
+                    </property>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="INTEGER"/>
@@ -508,7 +510,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Final Assessment Level"/>
-                    <property name="name" value="finalAssessmentLevel"/>
+                    <property name="name">
+						<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL" />
+                    </property>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="INTEGER"/>

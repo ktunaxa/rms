@@ -71,6 +71,8 @@ public final class MapLayout extends VLayout {
 
 	private org.geomajas.layer.feature.Feature currentReferral;
 
+	private VectorLayer referralLayer;
+
 	public static MapLayout getInstance() {
 		return INSTANCE;
 	}
@@ -184,10 +186,10 @@ public final class MapLayout extends VLayout {
 		currentTask = task;
 		String title;
 		if (null != referral) {
-			VectorLayer layer = (VectorLayer) getMap().getMapModel().getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
-			Feature feature = new Feature(referral, layer);
+			referralLayer = (VectorLayer) getMap().getMapModel().getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
+			Feature feature = new Feature(referral, referralLayer);
 			GWT.log("Referral found: " + feature.getId());
-			getReferralPanel().init(layer, feature);
+			getReferralPanel().init(referralLayer, feature);
 			Geometry geometry = feature.getGeometry();
 			Bbox bounds = new Bbox(geometry.getBounds());
 			if (geometry instanceof MultiPoint || geometry instanceof Point) {
@@ -277,5 +279,9 @@ public final class MapLayout extends VLayout {
 		// Disable all buttons in the toolbar:
 		menuBar.addChild(haze);
 		topBar.setLeftTitle("Referral Management System - Referral Creation Wizard");
+	}
+
+	public VectorLayer getReferralLayer() {
+		return referralLayer;
 	}
 }
