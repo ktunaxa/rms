@@ -219,14 +219,15 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		addMember(infoLayout);
 
 		Map<String, String> variables = task.getVariables();
-		String htmlContent = "<div class='taskBlockContent'>"
-				+ "Referral id: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID)
-				+ "<br />Referral name: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)
-				+ "<br />Assignee: " + task.getAssignee();
+		String htmlContent = "<div class='taskBlockContent'>";
 		if (task.isHistory()) {
-			htmlContent += "<br />Started: " + task.getStartTime() + ", ended: " + task.getEndTime();
+			htmlContent += "Assignee: " + task.getAssignee()
+					+ "<br />Started: " + task.getStartTime() + ", ended: " + task.getEndTime();
 		} else {
-			htmlContent += "<br />Created: " + task.getCreateTime();
+			htmlContent += "Referral id: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID)
+				+ "<br />Referral name: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)
+				+ "<br />Assignee: " + task.getAssignee()
+				+ "<br />Created: " + task.getCreateTime();
 		}
 		htmlContent += "<br />Due: " + task.getDueDate()
 				+ "<br />Completion deadline: " + variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE)

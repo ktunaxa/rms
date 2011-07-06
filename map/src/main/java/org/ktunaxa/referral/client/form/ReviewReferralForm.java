@@ -11,6 +11,8 @@ import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.SpinnerItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -31,6 +33,7 @@ public class ReviewReferralForm extends AbstractTaskForm {
 	private TextItem email = new TextItem();
 	private SpinnerItem engagementLevel = new SpinnerItem();
 	private TextAreaItem engagementComment = new TextAreaItem();
+	private String provinceEngagementLevel;
 
 	public ReviewReferralForm() {
 		super();
@@ -56,10 +59,22 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		engagementLevel.setMax(3);
 
 		engagementComment.setName("engagementComment");
-		engagementComment.setTitle("Comment about changes");
+		engagementComment.setTitle("Comment about changed engagement level");
 		engagementComment.setWidth("*");
+		engagementComment.setDisabled(true);
+
+		engagementLevel.addChangedHandler(new ChangedHandler() {
+			public void onChanged(ChangedEvent event) {
+				updateEngagementCommentStatus();
+			}
+		});
 
 		setFields(completionDeadline, description, email, engagementLevel, engagementComment);
+	}
+
+	private void updateEngagementCommentStatus() {
+		String ev = engagementLevel.getValue().toString();
+		engagementComment.setDisabled(ev.equals(provinceEngagementLevel));
 	}
 
 	@Override
@@ -71,8 +86,10 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		description.setValue(variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME));
 		email.setValue(variables.get(KtunaxaBpmConstant.VAR_EMAIL));
 		engagementLevel.setValue(variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL));
-		engagementLevel.setHint("Province-" + variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL));
+		provinceEngagementLevel = variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL);
+		engagementLevel.setHint("Province:" + provinceEngagementLevel);
 		engagementComment.setValue(variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT));
+		updateEngagementCommentStatus();
 	}
 
 	@Override
