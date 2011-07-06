@@ -27,9 +27,9 @@ public class TaskListView extends ListView<TaskDto> {
 
 	static {
 		SORT_ATTRIBUTES = new HashMap<String, Comparator<AbstractCollapsibleListBlock<TaskDto>>>();
-		SORT_ATTRIBUTES.put("deadline", new DeadlineComparator());
-		SORT_ATTRIBUTES.put("referral", new ReferralComparator());
-		SORT_ATTRIBUTES.put("creation", new CreationComparator());
+		SORT_ATTRIBUTES.put("Deadline", new DeadlineComparator());
+		SORT_ATTRIBUTES.put("Referral", new ReferralComparator());
+		SORT_ATTRIBUTES.put("Creation", new CreationComparator());
 	}
 
 	public TaskListView() {

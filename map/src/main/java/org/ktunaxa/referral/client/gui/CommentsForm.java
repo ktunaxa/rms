@@ -49,11 +49,11 @@ public class CommentsForm implements FeatureForm<Canvas> {
 	public CommentsForm(VectorLayer referralLayer) {
 		Map<String, Comparator<AbstractAttributeBlock>> sortAttributes;
 		sortAttributes = new LinkedHashMap<String, Comparator<AbstractAttributeBlock>>();
-		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_COMMENT_TITLE, new AttributeComparator(
+		sortAttributes.put("Title", new AttributeComparator(
 				KtunaxaConstant.ATTRIBUTE_COMMENT_TITLE));
-		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_COMMENT_CREATION_DATE, new AttributeComparator(
+		sortAttributes.put("Creation date", new AttributeComparator(
 				KtunaxaConstant.ATTRIBUTE_COMMENT_CREATION_DATE));
-		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY, new AttributeComparator(
+		sortAttributes.put("Created by", new AttributeComparator(
 				KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY));
 		AttributeBlockList listView = new AttributeBlockList(sortAttributes);
 		listView.setDefaultCollapsed(true);

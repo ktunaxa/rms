@@ -45,11 +45,11 @@ public class DocumentsForm implements FeatureForm<Canvas> {
 	public DocumentsForm(VectorLayer referralLayer) {
 		Map<String, Comparator<AbstractAttributeBlock>> sortAttributes;
 		sortAttributes = new HashMap<String, Comparator<AbstractAttributeBlock>>();
-		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, new AttributeComparator(
+		sortAttributes.put("Title", new AttributeComparator(
 				KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE));
-		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, new AttributeComparator(
+		sortAttributes.put("Description", new AttributeComparator(
 				KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION));
-		sortAttributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE, new AttributeComparator(
+		sortAttributes.put("Type", new AttributeComparator(
 				KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE));
 		AttributeBlockList listView = new AttributeBlockList(sortAttributes);
 		for (AttributeInfo info : referralLayer.getLayerInfo().getFeatureInfo().getAttributes()) {
