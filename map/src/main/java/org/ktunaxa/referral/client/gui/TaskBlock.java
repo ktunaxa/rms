@@ -222,16 +222,16 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		String htmlContent = "<div class='taskBlockContent'>";
 		if (task.isHistory()) {
 			htmlContent += "Assignee: " + task.getAssignee()
-					+ "<br />Started: " + task.getStartTime() + ", ended: " + task.getEndTime();
+					+ "<br />Started: " + task.getStartTime()
+					+ "<br />Ended: " + task.getEndTime();
 		} else {
 			htmlContent += "Referral id: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID)
 				+ "<br />Referral name: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)
 				+ "<br />Assignee: " + task.getAssignee()
-				+ "<br />Created: " + task.getCreateTime();
-		}
-		htmlContent += "<br />Due: " + task.getDueDate()
+				+ "<br />Created: " + task.getCreateTime()
 				+ "<br />Completion deadline: " + variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE)
 				+ "<br />E-mail: " + variables.get(KtunaxaBpmConstant.VAR_EMAIL);
+		}
 		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
 		if (null != engagementLevel) {
 			htmlContent += "<br />Engagement level: " + engagementLevel + " (prov "

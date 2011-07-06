@@ -26,7 +26,10 @@ public class ValueSelectForm extends AbstractTaskForm {
 	private CheckboxItem evalCultural = new CheckboxItem();
 	private CheckboxItem evalEcological = new CheckboxItem();
 	private CheckboxItem evalTreaty = new CheckboxItem();
-	private CheckboxItem communityInput = new CheckboxItem();
+	private CheckboxItem communityAInput = new CheckboxItem();
+	private CheckboxItem communityBInput = new CheckboxItem();
+	private CheckboxItem communityCInput = new CheckboxItem();
+	private CheckboxItem communityDInput = new CheckboxItem();
 
 	public ValueSelectForm() {
 		super();
@@ -46,8 +49,17 @@ public class ValueSelectForm extends AbstractTaskForm {
 		evalTreaty.setName("evalTreaty");
 		evalTreaty.setTitle("Evaluate treaty values");
 
-		communityInput.setName("communityInput");
-		communityInput.setTitle("Request community input");
+		communityAInput.setName("communityAInput");
+		communityAInput.setTitle("Request A community input");
+
+		communityBInput.setName("communityBInput");
+		communityBInput.setTitle("Request B community input");
+
+		communityCInput.setName("communityCInput");
+		communityCInput.setTitle("Request C community input");
+
+		communityDInput.setName("communityDInput");
+		communityDInput.setTitle("Request D community input");
 
 		DynamicForm values = new DynamicForm();
 		values.setWidth100();
@@ -59,7 +71,7 @@ public class ValueSelectForm extends AbstractTaskForm {
 		community.setWidth100();
 		community.setIsGroup(true);
 		community.setGroupTitle("Is community input needed?");
-		community.setFields(communityInput);
+		community.setFields(communityAInput,communityBInput,communityCInput,communityDInput);
 
 		setForms(values, community);
 	}
@@ -77,8 +89,14 @@ public class ValueSelectForm extends AbstractTaskForm {
 				get(KtunaxaBpmConstant.VAR_EVALUATE_ECOLOGICAL));
 		evalTreaty.setValue(task.getVariables().
 				get(KtunaxaBpmConstant.VAR_EVALUATE_TREATY));
-		communityInput.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.VAR_COMMUNITY_INPUT));
+		communityAInput.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_COMMUNITY_A_INPUT));
+		communityBInput.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_COMMUNITY_B_INPUT));
+		communityCInput.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_COMMUNITY_C_INPUT));
+		communityDInput.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_COMMUNITY_D_INPUT));
 	}
 
 	@Override
@@ -94,8 +112,14 @@ public class ValueSelectForm extends AbstractTaskForm {
 				nullSafeToString(evalEcological.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_EVALUATE_TREATY + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(evalTreaty.getValue()));
-		result.put(KtunaxaBpmConstant.VAR_COMMUNITY_INPUT + KtunaxaBpmConstant.SET_BOOLEAN,
-				nullSafeToString(communityInput.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_COMMUNITY_A_INPUT + KtunaxaBpmConstant.SET_BOOLEAN,
+				nullSafeToString(communityAInput.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_COMMUNITY_B_INPUT + KtunaxaBpmConstant.SET_BOOLEAN,
+				nullSafeToString(communityBInput.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_COMMUNITY_C_INPUT + KtunaxaBpmConstant.SET_BOOLEAN,
+				nullSafeToString(communityCInput.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_COMMUNITY_D_INPUT + KtunaxaBpmConstant.SET_BOOLEAN,
+				nullSafeToString(communityDInput.getValue()));
 		return result;
 	}
 

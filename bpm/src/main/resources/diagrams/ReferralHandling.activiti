@@ -1519,6 +1519,7 @@
       <inParameters source="referralId" target="referralId"/>
       <inParameters source="referralName" target="referralName"/>
       <inParameters source="completionDeadline" target="completionDeadline"/>
+      <inParameters source="requesterEmail" target="requesterEmail"/>
     </flowElements>
     <flowElements xsi:type="bpmn2:UserTask" id="usertask7" name="Meet &amp; discuss" incoming="flow18" outgoing="flow19" candidateGroups="/15" formKey="diagrams/redirect.form">
       <documentation text="Meet with province to discuss referral."/>

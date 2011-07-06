@@ -13,9 +13,6 @@ package org.ktunaxa.bpm;
  */
 public interface KtunaxaBpmConstant {
 
-	String QUERY_REFERRAL_ID = "r";
-	String QUERY_TASK_ID = "bpm";
-
 	String REFERRAL_PROCESS_ID = "referral-handling";
 
 	String VAR_REFERRAL_ID = "referralId";
@@ -33,7 +30,10 @@ public interface KtunaxaBpmConstant {
 	String VAR_EVALUATE_CULTURAL = "evalCultural";
 	String VAR_EVALUATE_ECOLOGICAL = "evalEcological";
 	String VAR_EVALUATE_TREATY = "evalTreaty";
-	String VAR_COMMUNITY_INPUT = "communityInput";
+	String VAR_COMMUNITY_A_INPUT = "communityAInput";
+	String VAR_COMMUNITY_B_INPUT = "communityBInput";
+	String VAR_COMMUNITY_C_INPUT = "communityCInput";
+	String VAR_COMMUNITY_D_INPUT = "communityDInput";
 
 	String DATE_FORMAT = "yyyy-MM-dd";
 	String SET_BOOLEAN = "_Boolean";

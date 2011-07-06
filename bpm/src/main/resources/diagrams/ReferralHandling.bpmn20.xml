@@ -85,8 +85,9 @@ Ktunaxa Nation Council]]></activiti:expression>
       <callActivity id="subprocess1callactivity2" name="Call activity" calledElement="evaluate-values">
 		  <extensionElements>
 			<activiti:in source="referralId" target="referralId"></activiti:in>
-			  <activiti:in source="projectName" target="projectName"></activiti:in>
+			  <activiti:in source="referralName" target="referralName"></activiti:in>
 			  <activiti:in source="completionDeadline" target="completionDeadline"></activiti:in>
+			  <activiti:in source="requesterEmail" target="requesterEmail"></activiti:in>
 		  </extensionElements>
       </callActivity>
       <userTask id="subprocess1usertask7" name="Meet &amp; discuss" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">

@@ -10,7 +10,6 @@ package org.ktunaxa.referral.server.service;
  * Some constants available to both client and sever.
  * 
  * @author Jan De Moerloose
- * 
  */
 public interface KtunaxaConstant {
 
@@ -28,7 +27,6 @@ public interface KtunaxaConstant {
 	int LAYER_SRID = 26911;
 
 	String CREATE_REFERRAL_URL_PARAMETER = "createReferral";
-	String SEARCH_REFERRAL_URL_PARAMETER = "searchReferral";
 
 	String REFERRAL_LAYER_ID = "referralLayer";
 	String REFERRAL_SERVER_LAYER_ID = "referral";
