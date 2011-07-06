@@ -71,7 +71,7 @@ public class ValueSelectForm extends AbstractTaskForm {
 		community.setWidth100();
 		community.setIsGroup(true);
 		community.setGroupTitle("Is community input needed?");
-		community.setFields(communityAInput,communityBInput,communityCInput,communityDInput);
+		community.setFields(communityAInput, communityBInput, communityCInput, communityDInput);
 
 		setForms(values, community);
 	}
