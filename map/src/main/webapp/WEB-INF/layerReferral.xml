@@ -886,12 +886,13 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 										</property>
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-	                                    <property name="label" value="Content" />
+	                                    <property name="label" value="Notes" />
 	                                    <property name="name" value="content" />
 	                                    <property name="editable" value="true" />
 	                                    <property name="identifying" value="true" />
 	                                    <property name="type" value="STRING" />
                    						<property name="formInputType" value="textArea" />
+										<!--
 										<property name="validator">
 											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
 												<property name="constraints">
@@ -901,6 +902,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 												</property>
 											</bean>
 										</property>
+										-->
 	                                </bean>
 									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 										<property name="label" value="Include in report" />
