@@ -32,7 +32,10 @@
 	background: #FFFFFF url('org.ktunaxa.referral.KtunaxaEntryPoint/sc/images/header/content-bg.png') repeat-x;
 }
 
-
+/* disable resizing of textarea as the parent div will not follow anyway */
+textarea {
+    resize: none;
+}
 
 /*------------- ATTRIBUTE FORMS -------------*/
 
