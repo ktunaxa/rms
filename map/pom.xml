@@ -521,7 +521,55 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile>		
+		</profile>
+
+		<profile>
+			<id>updatedb</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<version>1.4</version>
+
+						<dependencies>
+							<!-- specify the dependent jdbc driver here -->
+							<dependency>
+								<groupId>postgresql</groupId>
+								<artifactId>postgresql</artifactId>
+								<version>8.1-407.jdbc3</version>
+							</dependency>
+						</dependencies>
+
+						<!-- common configuration shared by all executions -->
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://${dbHostPort}/postgres</url>
+							<username>${dbAdminUser}</username>
+							<password>${dbAdminPassword}</password>
+						</configuration>
+
+						<executions>
+							<execution>
+								<id>update</id>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+           						<phase>process-resources</phase>
+								<configuration>
+									<url>jdbc:postgresql://${dbHostPort}/referral</url>
+									<username>referral</username>
+									<password>referral</password>
+									<srcFiles>
+										<srcFile>src/main/sql/schema/update-tables.sql</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<repositories>
