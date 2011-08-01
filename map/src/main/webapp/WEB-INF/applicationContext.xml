@@ -20,14 +20,13 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<bean name="app" class="org.geomajas.configuration.client.ClientApplicationInfo">
 		<property name="maps">
 			<list>
-				<ref bean="mainMap" />
-				<ref bean="mainOverviewMap" />
+				<ref bean="mapMain" />
 				<ref bean="mapTestReferral" />
 			</list>
 		</property>
 	</bean>
 
-	<bean name="mainMap" class="org.geomajas.configuration.client.ClientMapInfo">
+	<bean name="mapMain" class="org.geomajas.configuration.client.ClientMapInfo">
 		<property name="backgroundColor" value="#FFFFFF" />
 		<property name="lineSelectStyle">
 			<bean class="org.geomajas.configuration.FeatureStyleInfo">
@@ -124,10 +123,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 						<ref bean="ZoomPrevious" />
 						<ref bean="ZoomNext" />
 						<ref bean="ToolbarSeparator" />
-						<ref bean="EditMode" />
 						<ref bean="MeasureDistanceMode" />
 						<ref bean="SelectionMode" />
 						<ref bean="FeatureInfoMode" />
+						<ref bean="ToolbarSeparator" />
 					</list>
 				</property>
 			</bean>
@@ -170,47 +169,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 					</bean>
 				</property>
 			</bean>
-		</property>
-	</bean>
-
-	<bean name="mainOverviewMap" class="org.geomajas.configuration.client.ClientMapInfo">
-		<property name="backgroundColor" value="#FFFFFF" />
-		<property name="lineSelectStyle">
-			<bean class="org.geomajas.configuration.FeatureStyleInfo">
-				<property name="fillOpacity" value="0" />
-				<property name="strokeColor" value="#FF6600" />
-				<property name="strokeOpacity" value="1" />
-			</bean>
-		</property>
-		<property name="pointSelectStyle">
-			<bean class="org.geomajas.configuration.FeatureStyleInfo">
-				<property name="fillColor" value="#FFFF00" />
-			</bean>
-		</property>
-		<property name="polygonSelectStyle">
-			<bean class="org.geomajas.configuration.FeatureStyleInfo">
-				<property name="fillColor" value="#FFFF00" />
-				<property name="fillOpacity" value=".5" />
-			</bean>
-		</property>
-		<property name="crs">
-			<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.MAP_CRS"/>
-		</property>
-		<property name="scaleBarEnabled" value="false" />
-		<property name="panButtonsEnabled" value="false" />
-		<property name="maximumScale" value="100000" />
-		<property name="initialBounds">
-			<bean class="org.geomajas.geometry.Bbox">
-				<property name="x" value="-20026376.393709917"/>
-				<property name="y" value="-20026376.393709917"/>
-				<property name="width" value="40052752.787419834"/>
-				<property name="height" value="40052752.787419834"/>
-			</bean>
-		</property>
-		<property name="layers">
-			<list>
-				<ref bean="osmLayer" />
-			</list>
 		</property>
 	</bean>
 
@@ -280,13 +238,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 			</list>
 		</property>
 	</bean>
-	<bean name="MarkedEditMode" class="org.geomajas.configuration.client.ClientToolInfo" />
-
-	<bean name="EditMode" class="org.geomajas.configuration.client.ClientToolInfo" />
-
-	<bean name="SplitPolygonMode" class="org.geomajas.configuration.client.ClientToolInfo" />
-
-	<bean name="MergePolygonMode" class="org.geomajas.configuration.client.ClientToolInfo" />
 
 	<bean name="NavigateMode" class="org.geomajas.configuration.client.ClientToolInfo" />
 
@@ -297,8 +248,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<!-- LayerTree tools -->
 
 	<bean name="LayerVisibleTool" class="org.geomajas.configuration.client.ClientToolInfo" />
-
-	<bean name="LayerSnappingTool" class="org.geomajas.configuration.client.ClientToolInfo" />
 
 	<bean name="LayerLabeledTool" class="org.geomajas.configuration.client.ClientToolInfo" />
 
