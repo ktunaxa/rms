@@ -86,7 +86,7 @@ public class TemplateDto implements Serializable {
 	}
 
 	/**
-	 * Return A short description to further clarify this document.
+	 * Return a short description to further clarify this document.
 	 * 
 	 * @return The description.
 	 */

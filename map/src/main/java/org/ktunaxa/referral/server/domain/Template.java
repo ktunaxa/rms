@@ -97,7 +97,7 @@ public class Template {
 	}
 
 	/**
-	 * Return A short description to further clarify this document.
+	 * Return a short description to further clarify this document.
 	 * 
 	 * @return The description.
 	 */

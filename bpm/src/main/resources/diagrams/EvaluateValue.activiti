@@ -217,7 +217,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" width="101" height="20" y="20" style="/0/@styles.16" horizontalAlignment="ALIGNMENT_CENTER" value="Notify A community">
+        <graphicsAlgorithm xsi:type="al:Text" width="101" height="20" y="20" style="/0/@styles.16" horizontalAlignment="ALIGNMENT_CENTER" value="Notify Akisqnuk community">
           <font name="Arial" size="8" bold="true"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask6"/>
@@ -293,7 +293,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" width="101" height="20" y="20" style="/0/@styles.20" horizontalAlignment="ALIGNMENT_CENTER" value="Process A community input">
+        <graphicsAlgorithm xsi:type="al:Text" width="101" height="20" y="20" style="/0/@styles.20" horizontalAlignment="ALIGNMENT_CENTER" value="Process Akisqnuk community input">
           <font name="Arial" size="8" bold="true"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask10"/>
@@ -1028,7 +1028,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Notify B community">
+        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Notify Lower Kootenay community">
           <font name="Arial" size="8"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask11"/>
@@ -1047,7 +1047,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Process B community input">
+        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Process Lower Kootenay community input">
           <font name="Arial" size="8"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask12"/>
@@ -1066,7 +1066,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Notify C community">
+        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Notify St. Marys community">
           <font name="Arial" size="8"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask13"/>
@@ -1085,7 +1085,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Process C community input">
+        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Process St. Marys community input">
           <font name="Arial" size="8"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask14"/>
@@ -1104,7 +1104,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Notify D community">
+        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Notify Tobacco Plains community">
           <font name="Arial" size="8"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask15"/>
@@ -1123,7 +1123,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Process D community input">
+        <graphicsAlgorithm xsi:type="al:Text" width="105" height="20" y="20" style="/0/@styles.60" horizontalAlignment="ALIGNMENT_CENTER" value="Process Tobacco Plains community input">
           <font name="Arial" size="8"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask16"/>
@@ -2446,8 +2446,8 @@
   <bpmn2:ManualTask id="manualtask3" name="auto evaluate cultural values" incoming="flow66" outgoing="flow82"/>
   <bpmn2:ManualTask id="manualtask4" name="auto evaluate ecological values" incoming="flow68" outgoing="flow83"/>
   <bpmn2:ManualTask id="manualtask5" name="auto evaluate treaty values" incoming="flow70" outgoing="flow84"/>
-  <bpmn2:UserTask id="usertask6" name="Notify A community" incoming="flow71" outgoing="flow85" candidateGroups="/106" formKey="diagrams/redirect.form">
-    <documentation text="Notify A community."/>
+  <bpmn2:UserTask id="usertask6" name="Notify Akisqnuk community" incoming="flow71" outgoing="flow85" candidateGroups="/106" formKey="diagrams/redirect.form">
+    <documentation text="Notify Akisqnuk community."/>
   </bpmn2:UserTask>
   <bpmn2:UserTask id="usertask7" name="Evaluate cultural values" incoming="flow82" outgoing="flow76" candidateGroups="/71" formKey="diagrams/redirect.form">
     <documentation text="Evaluate cultural values."/>
@@ -2458,8 +2458,8 @@
   <bpmn2:UserTask id="usertask9" name="Evaluate treaty values" incoming="flow84" outgoing="flow78" candidateGroups="/73" formKey="diagrams/redirect.form">
     <documentation text="Evaluate treaty values."/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask10" name="Process A community input" incoming="flow85" outgoing="flow79" candidateGroups="/107" formKey="diagrams/redirect.form">
-    <documentation text="Advertise referral to A community, schedule meeting and process A community input."/>
+  <bpmn2:UserTask id="usertask10" name="Process Akisqnuk community input" incoming="flow85" outgoing="flow79" candidateGroups="/107" formKey="diagrams/redirect.form">
+    <documentation text="Advertise referral to Akisqnuk community, schedule meeting and process Akisqnuk community input."/>
   </bpmn2:UserTask>
   <bpmn2:ExclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" incoming="flow56" outgoing="flow62 flow65"/>
   <bpmn2:ExclusiveGateway id="exclusivegateway2" name="Exclusive Gateway" incoming="flow57" outgoing="flow63 flow64"/>
@@ -2563,35 +2563,35 @@
   <bpmn2:SequenceFlow id="flow99" name="" sourceRef="exclusivegateway16" targetRef="parallelgateway4"/>
   <bpmn2:SequenceFlow id="flow100" name="" sourceRef="exclusivegateway17" targetRef="parallelgateway4"/>
   <bpmn2:SequenceFlow id="flow101" name="" sourceRef="exclusivegateway18" targetRef="parallelgateway4"/>
-  <bpmn2:UserTask id="usertask11" name="Notify B community" incoming="flow102" outgoing="flow103" candidateGroups="/109" formKey="diagrams/redirect.form">
-    <documentation text="Notify B community."/>
+  <bpmn2:UserTask id="usertask11" name="Notify Lower Kootenay community" incoming="flow102" outgoing="flow103" candidateGroups="/109" formKey="diagrams/redirect.form">
+    <documentation text="Notify Lower Kootenay community."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow102" name="" sourceRef="exclusivegateway13" targetRef="usertask11">
     <conditionExpression id="flow102_condition" body="${communityBInput}"/>
   </bpmn2:SequenceFlow>
-  <bpmn2:UserTask id="usertask12" name="Process B community input" incoming="flow103" outgoing="flow104" candidateGroups="/108" formKey="diagrams/redirect.form">
-    <documentation text="Advertise referral to B community, schedule meeting and process B community input."/>
+  <bpmn2:UserTask id="usertask12" name="Process Lower Kootenay community input" incoming="flow103" outgoing="flow104" candidateGroups="/108" formKey="diagrams/redirect.form">
+    <documentation text="Advertise referral to Lower Kootenay community, schedule meeting and process Lower Kootenay community input."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow103" name="" sourceRef="usertask11" targetRef="usertask12"/>
   <bpmn2:SequenceFlow id="flow104" name="" sourceRef="usertask12" targetRef="exclusivegateway16"/>
-  <bpmn2:UserTask id="usertask13" name="Notify C community" incoming="flow105" outgoing="flow106" assignee="communityCManager" formKey="diagrams/redirect.form">
-    <documentation text="Notify C community."/>
+  <bpmn2:UserTask id="usertask13" name="Notify St. Marys community" incoming="flow105" outgoing="flow106" assignee="communityCManager" formKey="diagrams/redirect.form">
+    <documentation text="Notify St. Marys community."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow105" name="" sourceRef="exclusivegateway14" targetRef="usertask13">
     <conditionExpression id="flow105_condition" body="${communityCInput}"/>
   </bpmn2:SequenceFlow>
-  <bpmn2:UserTask id="usertask14" name="Process C community input" incoming="flow106" outgoing="flow109" candidateGroups="/110" formKey="diagrams/redirect.form">
-    <documentation text="Advertise referral to C community, schedule meeting and process C community input."/>
+  <bpmn2:UserTask id="usertask14" name="Process St. Marys community input" incoming="flow106" outgoing="flow109" candidateGroups="/110" formKey="diagrams/redirect.form">
+    <documentation text="Advertise referral to St. Marys community, schedule meeting and process St. Marys community input."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow106" name="" sourceRef="usertask13" targetRef="usertask14"/>
-  <bpmn2:UserTask id="usertask15" name="Notify D community" incoming="flow107" outgoing="flow108" candidateGroups="/112" formKey="diagrams/redirect.form">
-    <documentation text="Notify D community."/>
+  <bpmn2:UserTask id="usertask15" name="Notify Tobacco Plains community" incoming="flow107" outgoing="flow108" candidateGroups="/112" formKey="diagrams/redirect.form">
+    <documentation text="Notify Tobacco Plains community."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow107" name="" sourceRef="exclusivegateway15" targetRef="usertask15">
     <conditionExpression id="flow107_condition" body="${communityDInput}"/>
   </bpmn2:SequenceFlow>
-  <bpmn2:UserTask id="usertask16" name="Process D community input" incoming="flow108" outgoing="flow110" candidateGroups="/111" formKey="diagrams/redirect.form">
-    <documentation text="Advertise referral to D community, schedule meeting and process D community input."/>
+  <bpmn2:UserTask id="usertask16" name="Process Tobacco Plains community input" incoming="flow108" outgoing="flow110" candidateGroups="/111" formKey="diagrams/redirect.form">
+    <documentation text="Advertise referral to Tobacco Plains community, schedule meeting and process Tobacco Plains community input."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow108" name="" sourceRef="usertask15" targetRef="usertask16"/>
   <bpmn2:SequenceFlow id="flow109" name="" sourceRef="usertask14" targetRef="exclusivegateway17"/>

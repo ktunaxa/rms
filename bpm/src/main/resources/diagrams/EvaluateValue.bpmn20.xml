@@ -20,8 +20,8 @@
     <manualTask id="manualtask3" name="auto evaluate cultural values"></manualTask>
     <manualTask id="manualtask4" name="auto evaluate ecological values"></manualTask>
     <manualTask id="manualtask5" name="auto evaluate treaty values"></manualTask>
-    <userTask id="usertask6" name="Notify A community" activiti:candidateGroups="communityAManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Notify A community.</documentation>
+    <userTask id="usertask6" name="Notify Akisqnuk community" activiti:candidateGroups="communityAManager" activiti:formKey="diagrams/redirect.form">
+      <documentation>Notify Akisqnuk community.</documentation>
     </userTask>
     <userTask id="usertask7" name="Evaluate cultural values" activiti:candidateGroups="culturalEvaluator" activiti:formKey="diagrams/redirect.form">
       <documentation>Evaluate cultural values.</documentation>
@@ -32,8 +32,8 @@
     <userTask id="usertask9" name="Evaluate treaty values" activiti:candidateGroups="treatyEvaluator" activiti:formKey="diagrams/redirect.form">
       <documentation>Evaluate treaty values.</documentation>
     </userTask>
-    <userTask id="usertask10" name="Process A community input" activiti:candidateGroups="communityAManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Advertise referral to A community, schedule meeting and process A community input.</documentation>
+    <userTask id="usertask10" name="Process Akisqnuk community input" activiti:candidateGroups="communityAManager" activiti:formKey="diagrams/redirect.form">
+      <documentation>Advertise referral to Akisqnuk community, schedule meeting and process Akisqnuk community input.</documentation>
     </userTask>
     <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
     <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
@@ -131,35 +131,35 @@
     <sequenceFlow id="flow99" name="" sourceRef="exclusivegateway16" targetRef="parallelgateway4"></sequenceFlow>
     <sequenceFlow id="flow100" name="" sourceRef="exclusivegateway17" targetRef="parallelgateway4"></sequenceFlow>
     <sequenceFlow id="flow101" name="" sourceRef="exclusivegateway18" targetRef="parallelgateway4"></sequenceFlow>
-    <userTask id="usertask11" name="Notify B community" activiti:candidateGroups="communityBManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Notify B community.</documentation>
+    <userTask id="usertask11" name="Notify Lower Kootenay community" activiti:candidateGroups="communityBManager" activiti:formKey="diagrams/redirect.form">
+      <documentation>Notify Lower Kootenay community.</documentation>
     </userTask>
     <sequenceFlow id="flow102" name="" sourceRef="exclusivegateway13" targetRef="usertask11">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${communityBInput}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask12" name="Process B community input" activiti:candidateGroups="communityBManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Advertise referral to B community, schedule meeting and process B community input.</documentation>
+    <userTask id="usertask12" name="Process Lower Kootenay community input" activiti:candidateGroups="communityBManager" activiti:formKey="diagrams/redirect.form">
+      <documentation>Advertise referral to Lower Kootenay community, schedule meeting and process Lower Kootenay community input.</documentation>
     </userTask>
     <sequenceFlow id="flow103" name="" sourceRef="usertask11" targetRef="usertask12"></sequenceFlow>
     <sequenceFlow id="flow104" name="" sourceRef="usertask12" targetRef="exclusivegateway16"></sequenceFlow>
-    <userTask id="usertask13" name="Notify C community" activiti:assignee="communityCManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Notify C community.</documentation>
+    <userTask id="usertask13" name="Notify St. Marys community" activiti:assignee="communityCManager" activiti:formKey="diagrams/redirect.form">
+      <documentation>Notify St. Marys community.</documentation>
     </userTask>
     <sequenceFlow id="flow105" name="" sourceRef="exclusivegateway14" targetRef="usertask13">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${communityCInput}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask14" name="Process C community input" activiti:candidateGroups="communityCManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Advertise referral to C community, schedule meeting and process C community input.</documentation>
+    <userTask id="usertask14" name="Process St. Marys community input" activiti:candidateGroups="communityCManager" activiti:formKey="diagrams/redirect.form">
+      <documentation>Advertise referral to St. Marys community, schedule meeting and process St. Marys community input.</documentation>
     </userTask>
     <sequenceFlow id="flow106" name="" sourceRef="usertask13" targetRef="usertask14"></sequenceFlow>
-    <userTask id="usertask15" name="Notify D community" activiti:candidateGroups="communityDManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Notify D community.</documentation>
+    <userTask id="usertask15" name="Notify Tobacco Plains community" activiti:candidateGroups="communityDManager" activiti:formKey="diagrams/redirect.form">
+      <documentation>Notify Tobacco Plains community.</documentation>
     </userTask>
     <sequenceFlow id="flow107" name="" sourceRef="exclusivegateway15" targetRef="usertask15">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${communityDInput}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask16" name="Process D community input" activiti:candidateGroups="communityDManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Advertise referral to D community, schedule meeting and process D community input.</documentation>
+    <userTask id="usertask16" name="Process Tobacco Plains community input" activiti:candidateGroups="communityDManager" activiti:formKey="diagrams/redirect.form">
+      <documentation>Advertise referral to Tobacco Plains community, schedule meeting and process Tobacco Plains community input.</documentation>
     </userTask>
     <sequenceFlow id="flow108" name="" sourceRef="usertask15" targetRef="usertask16"></sequenceFlow>
     <sequenceFlow id="flow109" name="" sourceRef="usertask14" targetRef="exclusivegateway17"></sequenceFlow>
