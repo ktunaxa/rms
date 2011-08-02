@@ -135,12 +135,12 @@ public final class MapLayout extends VLayout {
 
 		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
 
-            public void onMapModelChange(MapModelEvent event) {
-                ScaleSelect scaleSelect = new ScaleSelect(mapWidget.getMapModel().getMapView(),
+			public void onMapModelChange(MapModelEvent event) {
+				ScaleSelect scaleSelect = new ScaleSelect(mapWidget.getMapModel().getMapView(),
 						mapWidget.getPixelPerUnit());
-                toolbar.addMember(scaleSelect);
-            }
-        });
+				toolbar.addMember(scaleSelect);
+			}
+		});
 
 		addMember(topBar);
 		addMember(menuBar);

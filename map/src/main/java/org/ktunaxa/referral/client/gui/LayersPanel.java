@@ -76,6 +76,7 @@ public class LayersPanel extends VLayout {
 		tabReferrals.setPane(new VLayout()); // @todo provide proper content
 
 		tabs.setTabs(tabBackGround, tabBase, tabValue, tabReferrals);
+		tabs.selectTab(tabValue);
 		addMember(tabs);
 
 		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {

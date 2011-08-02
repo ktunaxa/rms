@@ -143,6 +143,11 @@
 			<artifactId>json-rpc</artifactId>
 		</dependency>
 
+		<dependency>
+			<artifactId>geomajas-widget-searchandfilter-gwt</artifactId>
+			<groupId>org.geomajas.widget</groupId>
+		</dependency>
+
 		<!-- Google dependencies -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
