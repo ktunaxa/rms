@@ -29,17 +29,17 @@ public class MenuBar extends ToolStrip {
 	public MenuBar() {
 		super();
 
-		setMembersMargin(5);
+		setMembersMargin(LayoutConstant.MARGIN_SMALL);
 		setSize("100%", "36");
 		setBorder("none");
 		navStrip.setBorder("none");
 		actionStrip.setBorder("none");
 		actionStrip.setAlign(Alignment.RIGHT);
-		addSpacer(10);
+		addSpacer(LayoutConstant.SPACER_SMALL);
 		addMember(navStrip);
 		addMember(new LayoutSpacer());
 		addMember(actionStrip);
-		addSpacer(10);
+		addSpacer(LayoutConstant.SPACER_SMALL);
 	}
 
 	/**

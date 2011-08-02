@@ -56,21 +56,21 @@ public class LayersPanel extends VLayout {
 		valueStack.setSize("100%", "100%");
 		valueStack.setOverflow(Overflow.AUTO);
 		valueStack.setVisibilityMode(VisibilityMode.MULTIPLE);
-		valueStack.setPadding(5);
+		valueStack.setPadding(LayoutConstant.MARGIN_SMALL);
 		tabValue.setPane(valueStack);
 
 		baseStack = new SectionStack();
 		baseStack.setSize("100%", "100%");
 		baseStack.setOverflow(Overflow.AUTO);
 		baseStack.setVisibilityMode(VisibilityMode.MULTIPLE);
-		baseStack.setPadding(5);
+		baseStack.setPadding(LayoutConstant.MARGIN_SMALL);
 		tabBase.setPane(baseStack);
 
 		final SectionStack bgStack = new SectionStack();
 		bgStack.setSize("100%", "100%");
 		bgStack.setOverflow(Overflow.AUTO);
 		bgStack.setVisibilityMode(VisibilityMode.MUTEX);
-		bgStack.setPadding(5);
+		bgStack.setPadding(LayoutConstant.MARGIN_SMALL);
 		tabBackGround.setPane(bgStack);
 
 		tabReferrals.setPane(new VLayout()); // @todo provide proper content

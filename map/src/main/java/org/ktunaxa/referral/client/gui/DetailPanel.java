@@ -50,7 +50,7 @@ public class DetailPanel extends VLayout {
 	private CancelButton cancelButton;
 
 	public DetailPanel() {
-		super(10);
+		super(LayoutConstant.MARGIN_LARGE);
 		setSize("100%", "100%");
 	}
 
@@ -73,7 +73,7 @@ public class DetailPanel extends VLayout {
 		ToolStrip toolStrip = new ToolStrip();
 		toolStrip.setWidth100();
 		toolStrip.setPadding(2);
-		toolStrip.setMembersMargin(5);
+		toolStrip.setMembersMargin(LayoutConstant.MARGIN_SMALL);
 		toolStrip.setHeight(32);
 		toolStrip.setBackgroundImage("");
 		toolStrip.setBorder("none");
@@ -128,16 +128,15 @@ public class DetailPanel extends VLayout {
 	 * Button that enables editing.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	private class EditButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
 		public EditButton() {
 			setIcon("[ISOMORPHIC]/geomajas/osgeo/edit.png");
-			setIconWidth(24);
-			setIconHeight(24);
-			setWidth(32);
-			setHeight(32);
+			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
+			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
+			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
+			setHeight(LayoutConstant.ICON_BUTTON_LARGE_HEIGHT);
 			setTooltip("Edit referral");
 			addClickHandler(this);
 		}
@@ -160,10 +159,10 @@ public class DetailPanel extends VLayout {
 
 		public SaveButton() {
 			setIcon("[ISOMORPHIC]/geomajas/osgeo/save1.png");
-			setIconWidth(24);
-			setIconHeight(24);
-			setWidth(32);
-			setHeight(32);
+			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
+			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
+			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
+			setHeight(LayoutConstant.ICON_BUTTON_LARGE_HEIGHT);
 			setTooltip("Save referral");
 			addClickHandler(this);
 		}
@@ -189,10 +188,10 @@ public class DetailPanel extends VLayout {
 
 		public CancelButton() {
 			setIcon("[ISOMORPHIC]/geomajas/silk/cancel.png");
-			setIconWidth(24);
-			setIconHeight(24);
-			setWidth(32);
-			setHeight(32);
+			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
+			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
+			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
+			setHeight(LayoutConstant.ICON_BUTTON_LARGE_HEIGHT);
 			setTooltip("Cancel");
 			addClickHandler(this);
 		}

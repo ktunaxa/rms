@@ -22,6 +22,7 @@ import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.widget.CardLayout;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.wizard.WizardPage;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -137,7 +138,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		toolStrip.setBackgroundImage("");
 		toolStrip.setBorder("none");
 		toolStrip.setSize("100%", "32");
-		toolStrip.setMembersMargin(5);
+		toolStrip.setMembersMargin(LayoutConstant.MARGIN_SMALL);
 
 		ToolStripButton shapeButton = new ToolStripButton("Shape");
 		shapeButton.setActionType(SelectionType.RADIO);

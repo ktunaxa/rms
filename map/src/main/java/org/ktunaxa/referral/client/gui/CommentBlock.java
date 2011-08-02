@@ -115,9 +115,9 @@ public class CommentBlock extends AbstractAttributeBlock {
 	private void buildGui() {
 		setStyleName("commentBlock");
 
-		title = new HLayout(10);
-		title.setSize("100%", "22");
-		title.setLayoutLeftMargin(10);
+		title = new HLayout(LayoutConstant.MARGIN_LARGE);
+		title.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
+		title.setLayoutLeftMargin(LayoutConstant.MARGIN_LARGE);
 		title.setStyleName("commentBlockTitle");
 		title.addClickHandler(new ClickHandler() {
 
@@ -137,36 +137,36 @@ public class CommentBlock extends AbstractAttributeBlock {
 		checked.setLayoutAlign(VerticalAlignment.CENTER);
 		title.addMember(checked);
 		titleText = new HTMLFlow("<div class='commentBlockTitleText'>" + getCommentTitle() + "</div>");
-		titleText.setSize("100%", "22");
+		titleText.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
 		title.addMember(titleText);
 		addMember(title);
 
-		infoLayout = new HLayout(5);
-		infoLayout.setLayoutRightMargin(5);
-		infoLayout.setLayoutTopMargin(5);
+		infoLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
+		infoLayout.setLayoutRightMargin(LayoutConstant.MARGIN_SMALL);
+		infoLayout.setLayoutTopMargin(LayoutConstant.MARGIN_SMALL);
 		info = new HTMLFlow("<div class='commentBlockInfo'>Posted by " + getCommentCreatedBy() + " @ "
 				+ getCommentCreationDate().toString() + "</div>");
-		info.setSize("100%", "24");
+		info.setSize(LayoutConstant.BLOCK_INFO_WIDTH, LayoutConstant.BLOCK_INFO_HEIGHT);
 		infoLayout.addMember(info);
 		LayoutSpacer space = new LayoutSpacer();
-		space.setWidth(20);
+		space.setWidth(LayoutConstant.SPACER_LARGE);
 		infoLayout.addMember(space);
 
 		editButton = new IButton();
 		editButton.setIcon("[ISOMORPHIC]/geomajas/osgeo/edit.png");
-		editButton.setIconWidth(16);
-		editButton.setIconHeight(16);
-		editButton.setWidth(24);
-		editButton.setHeight(24);
+		editButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
+		editButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
+		editButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
+		editButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
 		editButton.setTooltip("Edit comment");
 		infoLayout.addMember(editButton);
 		
 		deleteButton = new IButton();
 		deleteButton.setIcon("[ISOMORPHIC]/geomajas/silk/remove.png");
-		deleteButton.setIconWidth(16);
-		deleteButton.setIconHeight(16);
-		deleteButton.setWidth(24);
-		deleteButton.setHeight(24);
+		deleteButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
+		deleteButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
+		deleteButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
+		deleteButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
 		deleteButton.setTooltip("Delete comment");
 		deleteButton.setHoverWrap(false);
 		infoLayout.addMember(deleteButton);

@@ -56,7 +56,7 @@ public class TopBar extends HLayout {
 		headerBar.addSeparator();
 		ToolStripButton logoutButton = new ToolStripButton("Logout");
 		headerBar.addMember(logoutButton);
-		headerBar.addSpacer(10);
+		headerBar.addSpacer(LayoutConstant.SPACER_SMALL);
 		addMember(headerBar);
 	}
 

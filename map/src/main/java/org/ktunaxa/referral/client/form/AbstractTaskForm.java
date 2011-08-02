@@ -10,6 +10,7 @@ import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.layout.VLayout;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
 import java.util.Map;
@@ -29,7 +30,7 @@ public abstract class AbstractTaskForm extends VLayout {
 
 		setWidth100();
 		setHeight100();
-		setMembersMargin(5);
+		setMembersMargin(LayoutConstant.MARGIN_SMALL);
 		taskTitle.setWidth100();
 		addMember(taskTitle);
 	}

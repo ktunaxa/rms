@@ -111,12 +111,12 @@ public class DocumentItem extends CanvasItem {
 
 	private VLayout createUploadLayout() {
 		VLayout uploadLayout = new VLayout();
-		uploadLayout.setMembersMargin(10);
+		uploadLayout.setMembersMargin(LayoutConstant.MARGIN_LARGE);
 		uploadLayout.setWidth("*");
 		uploadLayout.setHeight(16);
 		form = new FileUploadForm("Select a file", GWT.getModuleBaseURL() + "../d/upload/referral/document");
 
-		HLayout messageLayout = new HLayout(10);
+		HLayout messageLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
 		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
 		busyImg.setVisible(false);
 		messageLayout.addMember(busyImg);

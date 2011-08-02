@@ -124,9 +124,9 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	private void buildGui(TaskDto task) {
 		setStyleName(BLOK_STYLE);
 
-		title = new HLayout(10);
-		title.setSize("100%", "22");
-		title.setLayoutLeftMargin(10);
+		title = new HLayout(LayoutConstant.MARGIN_LARGE);
+		title.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
+		title.setLayoutLeftMargin(LayoutConstant.MARGIN_LARGE);
 		title.setStyleName(TITLE_STYLE);
 		title.addClickHandler(new ClickHandler() {
 
@@ -142,15 +142,15 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		titleImage.setLayoutAlign(VerticalAlignment.CENTER);
 		title.addMember(titleImage);
 		HTMLFlow titleText = new HTMLFlow("<div class='taskBlockTitleText'>" + task.getName() + "</div>");
-		titleText.setSize("100%", "22");
+		titleText.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
 		title.addMember(titleText);
 		addMember(title);
 
-		HLayout infoLayout = new HLayout(5);
-		infoLayout.setLayoutRightMargin(5);
-		infoLayout.setLayoutTopMargin(5);
+		HLayout infoLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
+		infoLayout.setLayoutRightMargin(LayoutConstant.MARGIN_SMALL);
+		infoLayout.setLayoutTopMargin(LayoutConstant.MARGIN_SMALL);
 		HTMLFlow info = new HTMLFlow("<div class='taskBlockInfo'>" + task.getDescription() + "</div>");
-		info.setSize("100%", "24");
+		info.setSize(LayoutConstant.BLOCK_INFO_WIDTH, LayoutConstant.BLOCK_INFO_HEIGHT);
 		infoLayout.addMember(info);
 		infoLayout.addMember(new LayoutSpacer());
 
@@ -158,12 +158,12 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		startButton.setIcon(IMAGE_START);
 		startButton.setShowDisabledIcon(true);
-		startButton.setIconWidth(24);
-		startButton.setIconHeight(24);
-		startButton.setWidth(32);
-		startButton.setHeight(32);
+		startButton.setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
+		startButton.setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
+		startButton.setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
+		startButton.setHeight(LayoutConstant.ICON_BUTTON_LARGE_HEIGHT);
 		startButton.setPrompt("Start");
-		startButton.setHoverWidth(40);
+		startButton.setHoverWidth(LayoutConstant.ICON_BUTTON_LARGE_HOVER_WIDTH);
 		startButton.setLayoutAlign(VerticalAlignment.CENTER);
 		startButton.setShowRollOver(false);
 		setStartButtonStatus(task);
@@ -177,12 +177,12 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		IButton assignButton = new IButton();
 		assignButton.setIcon(IMAGE_ASSIGN);
 		assignButton.setShowDisabledIcon(true);
-		assignButton.setIconWidth(24);
-		assignButton.setIconHeight(24);
-		assignButton.setWidth(32);
-		assignButton.setHeight(32);
+		assignButton.setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
+		assignButton.setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
+		assignButton.setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
+		assignButton.setHeight(LayoutConstant.ICON_BUTTON_LARGE_HEIGHT);
 		assignButton.setPrompt("Assign");
-		assignButton.setHoverWidth(40);
+		assignButton.setHoverWidth(LayoutConstant.ICON_BUTTON_LARGE_HOVER_WIDTH);
 		assignButton.setLayoutAlign(VerticalAlignment.CENTER);
 		assignButton.setShowRollOver(false);
 		if (!UserContext.getInstance().isReferralAdmin()) {
@@ -200,12 +200,12 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		claimButton.setIcon(IMAGE_CLAIM);
 		claimButton.setShowDisabledIcon(true);
-		claimButton.setIconWidth(24);
-		claimButton.setIconHeight(24);
-		claimButton.setWidth(32);
-		claimButton.setHeight(32);
+		claimButton.setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
+		claimButton.setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
+		claimButton.setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
+		claimButton.setHeight(LayoutConstant.ICON_BUTTON_LARGE_HEIGHT);
 		claimButton.setPrompt("Claim");
-		claimButton.setHoverWidth(40);
+		claimButton.setHoverWidth(LayoutConstant.ICON_BUTTON_LARGE_HOVER_WIDTH);
 		claimButton.setLayoutAlign(VerticalAlignment.CENTER);
 		claimButton.setShowRollOver(false);
 		claimButton.setDisabled(task.isHistory() | (null != task.getAssignee()));

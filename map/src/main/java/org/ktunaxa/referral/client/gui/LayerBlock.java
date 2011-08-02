@@ -41,7 +41,7 @@ public class LayerBlock extends HLayout {
 		setSize("100%", "26px");
 		setStyleName("layerBlock");
 
-		setLayoutLeftMargin(10);
+		setLayoutLeftMargin(LayoutConstant.MARGIN_LARGE);
 		title = new HTMLFlow("<div style='line-height:26px;'>" + layer.getLabel() + "</div>");
 		title.setWidth100();
 		title.setLayoutAlign(VerticalAlignment.CENTER);

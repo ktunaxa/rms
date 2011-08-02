@@ -17,6 +17,7 @@ import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * An {@link AttributeBlockDetail} is a widget that shows a detail form of a one-to-many value.
@@ -85,7 +86,7 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 		toolStrip = new ToolStrip();
 		toolStrip.setWidth100();
 		toolStrip.setPadding(2);
-		toolStrip.setMembersMargin(5);
+		toolStrip.setMembersMargin(LayoutConstant.MARGIN_SMALL);
 		toolStrip.setBackgroundImage("");
 		toolStrip.setBorder("none");
 		toolStrip.setSize("100%", "32");
@@ -97,7 +98,7 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 		toolStrip.addMember(saveButton);
 		toolStrip.addMember(cancelButton);
 
-		VLayout layout = new VLayout(5);
+		VLayout layout = new VLayout(LayoutConstant.MARGIN_SMALL);
 		layout.setWidth100();
 		layout.addMember(toolStrip);
 		layout.addMember(form.getWidget());
@@ -119,10 +120,10 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 
 		public SaveButton() {
 			setIcon("[ISOMORPHIC]/geomajas/osgeo/save1.png");
-			setIconWidth(24);
-			setIconHeight(24);
-			setWidth(32);
-			setHeight(32);
+			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
+			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
+			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
+			setHeight(LayoutConstant.ICON_BUTTON_LARGE_HEIGHT);
 			setTooltip("Save");
 			setHoverWidth(50);
 			addClickHandler(this);
@@ -143,11 +144,11 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 
 		public CancelButton() {
 			setIcon("[ISOMORPHIC]/geomajas/silk/cancel.png");
-			setIconWidth(24);
-			setIconHeight(24);
-			setWidth(32);
-			setHeight(32);
-			setHoverWidth(55);
+			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
+			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
+			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
+			setHeight(LayoutConstant.ICON_BUTTON_LARGE_HEIGHT);
+			setHoverWidth(LayoutConstant.ICON_BUTTON_LARGE_HOVER_WIDTH);
 			setTooltip("Cancel");
 		}
 

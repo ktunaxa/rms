@@ -22,6 +22,7 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * <p>
@@ -280,7 +281,7 @@ public class ResizableLeftLayout extends VLayout {
 	 * @return title layout
 	 */
 	private HLayout createTitle() {
-		titleCanvas = new HLayout(5);
+		titleCanvas = new HLayout(LayoutConstant.MARGIN_SMALL);
 		titleCanvas.setSize("100%", CLOSED_WIDTH + "px");
 		titleCanvas.setStyleName(STYLE_BLOCK_TITLE);
 

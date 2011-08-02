@@ -77,7 +77,7 @@ public class CurrentTaskBlock extends CardLayout {
 		finishButton.setShowRollOver(false);
 		finishButton.addClickHandler(new FinishTaskClickHandler());
 		VLayout currentTask = new VLayout();
-		currentTask.setMembersMargin(5);
+		currentTask.setMembersMargin(LayoutConstant.MARGIN_SMALL);
 		taskForms.addCard(FORM_EMPTY, new EmptyForm());
 		taskForms.addCard(FORM_DISCUSS_EVALUATION, new DiscussEvaluationForm());
 		taskForms.addCard(FORM_EVALUATE_OR_FINISH, new EvaluateOrFinishForm());

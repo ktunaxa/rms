@@ -61,7 +61,7 @@ public class ReferralTasksPanel extends VLayout {
 		groups.setWidth100();
 		groups.setOverflow(Overflow.AUTO);
 		groups.setVisibilityMode(VisibilityMode.MUTEX);
-		//groups.setPadding(5);
+		//groups.setPadding(LayoutConstant.MARGIN_SMALL);
 		addMember(groups);
 
 		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {

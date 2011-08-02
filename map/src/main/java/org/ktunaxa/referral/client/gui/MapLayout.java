@@ -152,7 +152,7 @@ public final class MapLayout extends VLayout {
 		bodyLayout = new VLayout();
 		bodyLayout.setOverflow(Overflow.AUTO);
 		HLayout hLayout = new HLayout();
-		hLayout.setMargin(5);
+		hLayout.setMargin(LayoutConstant.MARGIN_SMALL);
 		hLayout.setWidth100();
 		hLayout.setHeight100();
 		hLayout.addMember(infoPane);
@@ -271,7 +271,7 @@ public final class MapLayout extends VLayout {
 		haze.setOpacity(60);
 
 		final VLayout body = new VLayout();
-		body.setMargin(5);
+		body.setMargin(LayoutConstant.MARGIN_SMALL);
 		ReferralCreationWizard wizard = new ReferralCreationWizard(new Runnable() {
 
 			public void run() {

@@ -70,7 +70,7 @@ public class UnassignedTasksPanel extends VLayout {
 		groups.setSize("100%", "100%");
 		groups.setOverflow(Overflow.AUTO);
 		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
-		groups.setPadding(5);
+		groups.setPadding(LayoutConstant.MARGIN_SMALL);
 		addMember(groups);
 
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
