@@ -101,8 +101,8 @@ public final class MapLayout extends VLayout {
 		infoPane.addCard(referralPanel.getName(), "Manage referral", referralPanel);
 		referralButton = getLastButton();
 		referralButton.setDisabled(true); // no referral at start
-		AnalysisPanel analysisPanel = new AnalysisPanel(mapWidget);
-		infoPane.addCard(analysisPanel.getName(), "GIS Analysis", analysisPanel);
+		SearchPanel searchPanel = new SearchPanel(mapWidget);
+		infoPane.addCard(searchPanel.getName(), "Search", searchPanel);
 		bpmPanel = new BpmPanel();
 		infoPane.addCard(bpmPanel.getName(), "Referral process", bpmPanel);
 		// top bar

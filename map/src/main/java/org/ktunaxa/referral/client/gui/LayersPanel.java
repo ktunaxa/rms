@@ -50,6 +50,7 @@ public class LayersPanel extends VLayout {
 		Tab tabBase = new Tab("Base layers");
 		Tab tabValue = new Tab("Ktunaxa Values");
 		Tab tabBackGround = new Tab("Background");
+		Tab tabReferrals = new Tab("Referrals");
 
 		valueStack = new SectionStack();
 		valueStack.setSize("100%", "100%");
@@ -72,7 +73,9 @@ public class LayersPanel extends VLayout {
 		bgStack.setPadding(5);
 		tabBackGround.setPane(bgStack);
 
-		tabs.setTabs(tabBase, tabValue, tabBackGround);
+		tabReferrals.setPane(new VLayout()); // @todo provide proper content
+
+		tabs.setTabs(tabBackGround, tabBase, tabValue, tabReferrals);
 		addMember(tabs);
 
 		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
