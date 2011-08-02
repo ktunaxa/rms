@@ -55,7 +55,7 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 			geomarkUrl = geomarkBaseUrl + request.getGeomark();
 		}
 		if (geomarkUrl.contains(GM_PREFIX)) {
-			int last = geomarkUrl.indexOf("/", geomarkUrl.lastIndexOf(GM_PREFIX));
+			int last = geomarkUrl.indexOf('/', geomarkUrl.lastIndexOf(GM_PREFIX));
 			if (last > 0) {
 				geomarkId = geomarkUrl.substring(geomarkUrl.lastIndexOf(GM_PREFIX) + 3, last);
 				geomarkUrl = geomarkUrl.substring(0, last);

@@ -68,11 +68,11 @@ public class DocumentForm extends DefaultFeatureForm {
 
 	@Override
 	public void fromForm(String name, Attribute<?> attribute) {
-		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE.equals(name)) {
+		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE.equals(name) && attribute instanceof StringAttribute) {
 			((StringAttribute) attribute).setValue(documentItem.getDocumentTitle());
-		} else if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL.equals(name)) {
+		} else if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL.equals(name) && attribute instanceof UrlAttribute) {
 			((UrlAttribute) attribute).setValue(documentItem.getDocumentDisplayUrl());
-		} else if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL.equals(name)) {
+		} else if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL.equals(name) && attribute instanceof UrlAttribute) {
 			((UrlAttribute) attribute).setValue(documentItem.getDocumentDownLoadUrl());
 		} else {
 			super.fromForm(name, attribute);
@@ -87,12 +87,9 @@ public class DocumentForm extends DefaultFeatureForm {
 
 	@Override
 	protected boolean isIncluded(AttributeInfo info) {
-		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE.equals(info.getName())
-				|| KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL.equals(info.getName())
-				|| KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL.equals(info.getName())) {
-			return false;
-		}
-		return super.isIncluded(info);
+		return !(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE.equals(info.getName()) ||
+				KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL.equals(info.getName()) ||
+				KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL.equals(info.getName())) && super.isIncluded(info);
 	}
 
 

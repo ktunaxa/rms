@@ -10,9 +10,7 @@ import org.geomajas.gwt.client.map.event.LayerFilteredEvent;
 import org.geomajas.gwt.client.map.event.LayerLabeledEvent;
 import org.geomajas.gwt.client.map.event.LayerShownEvent;
 import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
-import org.ktunaxa.referral.client.layer.action.RefreshLayerHandler;
 import org.ktunaxa.referral.client.layer.action.ShowMetadataHandler;
-import org.ktunaxa.referral.client.layer.action.ZoomToLayerHandler;
 
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.VerticalAlignment;
@@ -74,8 +72,6 @@ public class ReferenceLayerBlock extends HLayout {
 		MenuItem item2 = new MenuItem("Zoom to layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
 		MenuItem item3 = new MenuItem("Show meta-data", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
 		menu.setItems(item1, item2, item3);
-		item1.addClickHandler(new RefreshLayerHandler(subLayer));
-		item2.addClickHandler(new ZoomToLayerHandler(subLayer));
 		item3.addClickHandler(new ShowMetadataHandler(subLayer));
 		IMenuButton menuButton = new IMenuButton("", menu);
 		menuButton.setLayoutAlign(VerticalAlignment.CENTER);

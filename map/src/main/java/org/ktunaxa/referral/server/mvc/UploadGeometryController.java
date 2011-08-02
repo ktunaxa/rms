@@ -122,25 +122,32 @@ public class UploadGeometryController {
 
 		URL url = null;
 		ZipInputStream zin = new ZipInputStream(new ByteArrayInputStream(fileContent));
-		ZipEntry entry;
-		while ((entry = zin.getNextEntry()) != null) {
-			log.info("Extracting: " + entry);
-			String name = tempDir + "/" + entry.getName();
-			tempFiles.add(name);
-			if (name.endsWith(".shp")) {
-				url = new URL("file://" + name);
+		try {
+			ZipEntry entry;
+			while ((entry = zin.getNextEntry()) != null) {
+				log.info("Extracting: " + entry);
+				String name = tempDir + "/" + entry.getName();
+				tempFiles.add(name);
+				if (name.endsWith(".shp")) {
+					url = new URL("file://" + name);
+				}
+				int count;
+				byte[] data = new byte[BUFFER];
+				// write the files to the disk
+				deleteFileIfExists(name);
+				FileOutputStream fos = new FileOutputStream(name);
+				BufferedOutputStream destination = new BufferedOutputStream(fos, BUFFER);
+				try {
+					while ((count = zin.read(data, 0, BUFFER)) != -1) {
+						destination.write(data, 0, count);
+					}
+					destination.flush();
+				} finally {
+					destination.close();
+				}
 			}
-			int count;
-			byte[] data = new byte[BUFFER];
-			// write the files to the disk
-			deleteFileIfExists(name);
-			FileOutputStream fos = new FileOutputStream(name);
-			BufferedOutputStream destination = new BufferedOutputStream(fos, BUFFER);
-			while ((count = zin.read(data, 0, BUFFER)) != -1) {
-				destination.write(data, 0, count);
-			}
-			destination.flush();
-			destination.close();
+		} finally {
+			zin.close();
 		}
 		if (url == null) {
 			throw new IllegalArgumentException("Missing .shp file");
@@ -154,6 +161,5 @@ public class UploadGeometryController {
 			file.delete();
 		}
 	}
-
 
 }

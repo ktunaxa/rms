@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * File utility for unzipping, copying files.
  * 
  * @author Jan De Moerloose
- * 
  */
 public final class FileUtil {
 
@@ -32,28 +31,34 @@ public final class FileUtil {
 	private static final int BUFFER = 2048;
 
 	private FileUtil() {
-
 	}
 
 	public static String[] unzip(File zipFile, File targetDir) throws IOException {
 		ZipInputStream zin = new ZipInputStream(new FileInputStream(zipFile));
-		ZipEntry entry;
-		ArrayList<String> names = new ArrayList<String>();
-		while ((entry = zin.getNextEntry()) != null) {
-			LOG.info("Extracting: " + entry);
-			String name = entry.getName();
-			names.add(name);
-			int count;
-			byte[] data = new byte[BUFFER];
-			FileOutputStream fos = new FileOutputStream(new File(targetDir, name));
-			BufferedOutputStream destination = new BufferedOutputStream(fos, BUFFER);
-			while ((count = zin.read(data, 0, BUFFER)) != -1) {
-				destination.write(data, 0, count);
+		try {
+			ZipEntry entry;
+			ArrayList<String> names = new ArrayList<String>();
+			while ((entry = zin.getNextEntry()) != null) {
+				LOG.info("Extracting: " + entry);
+				String name = entry.getName();
+				names.add(name);
+				int count;
+				byte[] data = new byte[BUFFER];
+				FileOutputStream fos = new FileOutputStream(new File(targetDir, name));
+				BufferedOutputStream destination = new BufferedOutputStream(fos, BUFFER);
+				try {
+					while ((count = zin.read(data, 0, BUFFER)) != -1) {
+						destination.write(data, 0, count);
+					}
+					destination.flush();
+				} finally {
+					destination.close();
+				}
 			}
-			destination.flush();
-			destination.close();
+			return names.toArray(new String[names.size()]);
+		} finally {
+			zin.close();
 		}
-		return names.toArray(new String[names.size()]);
 	}
 
 	public static void copyURLToFile(URL url, File file) throws IOException {
