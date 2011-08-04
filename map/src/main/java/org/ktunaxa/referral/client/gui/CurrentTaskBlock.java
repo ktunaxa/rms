@@ -88,11 +88,6 @@ public class CurrentTaskBlock extends CardLayout {
 		currentTask.addMember(taskForms);
 		currentTask.addMember(finishButton);
 		currentTask.addMember(new LayoutSpacer());
-//		HLayout finishLayout = new HLayout();
-//		finishLayout.setWidth100();
-//		finishLayout.addMember(new LayoutSpacer());
-//		finishLayout.addMember(finishButton);
-//		currentTask.addMember(finishLayout);
 
 		addCard(KEY_NO, noTask);
 		addCard(KEY_CURRENT, currentTask);
