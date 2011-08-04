@@ -121,7 +121,6 @@ public class SearchPanel extends VLayout {
 	private static class CardPanelSearchWidget extends PanelSearchWidget {
 		private CardLayout cardLayout;
 		private String cardKey;
-		private boolean isShowingOrHiding; // to prevent infinite loop
 
 		public CardPanelSearchWidget(String id, String name, AbstractSearchPanel searchPanel, CardLayout cardLayout,
 				String cardKey) {
