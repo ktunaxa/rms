@@ -122,6 +122,11 @@ public class SearchPanel extends VLayout {
 		return NAME;
 	}
 
+	/**
+	 * Specific {@link PanelSearchWidget} to put as card inside {@link CardLayout}.
+	 *
+	 * @author Joachim Van der Auwera
+	 */
 	private static class CardPanelSearchWidget extends PanelSearchWidget {
 		private CardLayout<Card> cardLayout;
 		private Card cardKey;
