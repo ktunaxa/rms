@@ -61,7 +61,7 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 
 	@Override
 	protected boolean isIncluded(AttributeInfo info) {
-		if (info.isIncludedInForm()) {
+		if (!info.isHidden()) {
 			if (info instanceof AssociationAttributeInfo) {
 				AssociationAttributeInfo associationAttributeInfo = (AssociationAttributeInfo) info;
 				return associationAttributeInfo.getType() == AssociationType.MANY_TO_ONE;

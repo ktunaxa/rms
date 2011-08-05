@@ -22,7 +22,6 @@ import com.smartgwt.client.widgets.form.fields.SelectItem;
  * Form for editing referral details in mapping dashboard.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class ReferralDetailForm extends DefaultFeatureForm {
 
@@ -71,7 +70,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 				return false;
 			}
 		}
-		if (info.isIncludedInForm()) {
+		if (!info.isHidden()) {
 			if (info instanceof AssociationAttributeInfo) {
 				AssociationAttributeInfo associationAttributeInfo = (AssociationAttributeInfo) info;
 				return associationAttributeInfo.getType() == AssociationType.MANY_TO_ONE;
@@ -115,7 +114,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 
 		RowSpacerItem documentSpacer = new RowSpacerItem("document-info-spacer");
 		HeaderItem documentHeader = new HeaderItem("document-info-header");
-		documentHeader.setDefaultValue("Document management classificiation");
+		documentHeader.setDefaultValue("Document management classification");
 		documentHeader.setColSpan(4);
 		formItems.insertBefore("activeRetentionPeriod", documentSpacer, documentHeader);
 

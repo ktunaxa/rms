@@ -664,7 +664,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                <property name="name" value="documents" />
 	                <property name="editable" value="true" />
 	                <property name="identifying" value="false" />
-	                <property name="includedInForm" value="true" />
 	                <property name="type" value="ONE_TO_MANY" />
 	                <property name="feature">
 	                    <bean class="org.geomajas.configuration.FeatureInfo">
@@ -757,7 +756,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 						                <property name="name" value="type" />
 						                <property name="editable" value="true" />
 						                <property name="identifying" value="true" />
-						                <property name="includedInForm" value="true" />
 						                <property name="type" value="MANY_TO_ONE" />
 						                <property name="feature">
 						                    <bean class="org.geomajas.configuration.FeatureInfo">
@@ -855,7 +853,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	                <property name="name" value="comments" />
 	                <property name="editable" value="true" />
 	                <property name="identifying" value="false" />
-	                <property name="includedInForm" value="false" />
 	                <property name="type" value="ONE_TO_MANY" />
 	                <property name="feature">
 	                    <bean class="org.geomajas.configuration.FeatureInfo">
