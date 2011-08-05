@@ -9,7 +9,6 @@ package org.ktunaxa.referral.client.widget.attribute;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geomajas.gwt.client.widget.CardLayout;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.OneToManyAttribute;
@@ -24,6 +23,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
+import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
 
 /**
  * Layout for editing one-to-many attributes, consisting of a list view ({@link AttributeBlockList}) and a detail view (
@@ -49,7 +49,7 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 
 	private AttributeBlockDetail<W> detailView;
 
-	private CardLayout cardLayout;
+	private CardLayout<Card> cardLayout;
 
 	private HandlerManager manager = new HandlerManager(this);
 	
@@ -77,7 +77,7 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 		listView = list;
 		detailView = new AttributeBlockDetail<W>(form);
 		detailView.setVisible(false);
-		cardLayout = new CardLayout();
+		cardLayout = new CardLayout<Card>();
 		cardLayout.setWidth100();
 		cardLayout.setHeight(1);
 		cardLayout.addCard(Card.LIST, listView);

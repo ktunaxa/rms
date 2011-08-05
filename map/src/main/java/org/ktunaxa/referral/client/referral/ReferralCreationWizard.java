@@ -20,8 +20,8 @@ import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.MapWidget;
-import org.geomajas.gwt.client.widget.wizard.Wizard;
-import org.geomajas.gwt.client.widget.wizard.WizardWidget;
+import org.geomajas.widget.utility.smartgwt.client.wizard.Wizard;
+import org.geomajas.widget.utility.smartgwt.client.wizard.WizardWidget;
 import org.ktunaxa.referral.server.command.dto.CreateProcessRequest;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 

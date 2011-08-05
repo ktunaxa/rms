@@ -19,7 +19,7 @@ import org.geomajas.command.CommandResponse;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
-import org.geomajas.gwt.client.widget.CardLayout;
+import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
 import org.ktunaxa.referral.client.form.AbstractTaskForm;
 import org.ktunaxa.referral.client.form.DiscussEvaluationForm;
 import org.ktunaxa.referral.client.form.EmptyForm;
@@ -37,7 +37,7 @@ import java.util.Map;
  *
  * @author Joachim Van der Auwera
  */
-public class CurrentTaskBlock extends CardLayout {
+public class CurrentTaskBlock extends CardLayout<String> {
 
 	private static final String KEY_NO = "no";
 	private static final String KEY_CURRENT = "curr";
@@ -57,7 +57,7 @@ public class CurrentTaskBlock extends CardLayout {
 			FORM_VALUE_SELECT
 	};
 
-	private final CardLayout taskForms = new CardLayout();
+	private final CardLayout<String> taskForms = new CardLayout<String>();
 	private final Button finishButton = new Button("Finish task");
 
 	public CurrentTaskBlock() {

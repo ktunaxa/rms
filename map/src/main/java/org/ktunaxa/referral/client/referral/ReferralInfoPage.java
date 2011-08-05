@@ -10,12 +10,12 @@ import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
-import org.geomajas.gwt.client.widget.wizard.WizardPage;
 
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.layout.VLayout;
+import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
 
 /**
  * First page in the referral creation wizard: fill in the general referral meta-data.

@@ -9,6 +9,7 @@
 	<inherits name="com.smartgwt.tools.SmartGwtTools"/>
     <inherits name="org.geomajas.gwt.GeomajasClient"/>
 	<inherits name="org.geomajas.widget.searchandfilter.SearchAndFilter" />
+	<inherits name="org.geomajas.widget.utility.smartgwt.SmartGwtUtilityWidgets" />
 
 	<inherits name="com.smartclient.theme.simplicity.Simplicity" />
     <inherits name="org.ktunaxa.referral.theme.ActivitiBlue" /> 

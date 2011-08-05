@@ -7,7 +7,6 @@ package org.ktunaxa.referral.client.referral;
 
 import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.configuration.FeatureInfo;
-import org.geomajas.gwt.client.widget.wizard.WizardPage;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 
 import com.smartgwt.client.types.Alignment;
@@ -16,12 +15,12 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
 
 /**
  * Page to confirm creation of a new referral.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class ReferralConfirmPage extends WizardPage<ReferralData> {
 

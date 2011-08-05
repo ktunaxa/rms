@@ -19,9 +19,9 @@ import org.geomajas.gwt.client.map.MapView.ZoomOption;
 import org.geomajas.gwt.client.map.event.MapModelEvent;
 import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
-import org.geomajas.gwt.client.widget.CardLayout;
 import org.geomajas.gwt.client.widget.MapWidget;
-import org.geomajas.gwt.client.widget.wizard.WizardPage;
+import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
+import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
@@ -48,7 +48,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 
 	private VLayout layout;
 
-	private CardLayout uploadLayout;
+	private CardLayout<String> uploadLayout;
 
 	private MapWidget mapWidget;
 
@@ -119,7 +119,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 
 	private void initGui() {
 		layout = new VLayout(10);
-		uploadLayout = new CardLayout();
+		uploadLayout = new CardLayout<String>();
 		panelMap = new LinkedHashMap<String, UploadGeometryPanel>();
 		panelMap.put(UploadShapePanel.NAME, new UploadShapePanel());
 		panelMap.put(UploadGeoMarkUrlPanel.NAME, new UploadGeoMarkUrlPanel());

@@ -7,7 +7,6 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.types.Overflow;
-import org.geomajas.gwt.client.widget.CardLayout;
 import org.geomajas.gwt.client.widget.FeatureListGrid;
 import org.geomajas.gwt.client.widget.FeatureSearch;
 import org.geomajas.gwt.client.widget.MapWidget;
@@ -26,6 +25,7 @@ import org.geomajas.widget.searchandfilter.client.widget.search.CombinedSearchPa
 import org.geomajas.widget.searchandfilter.client.widget.search.PanelSearchWidget;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchController;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchWidget;
+import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +41,14 @@ public class SearchPanel extends VLayout {
 
 	private static final String NAME = "SEARCH";
 
-	private static final String CARD_EMPTY = "emptyCard";
-	private static final String CARD_GEOMETRIC = "geometricCard";
-	private static final String CARD_ATTRIBUTE = "attributeCard";
-	//private static final String CARD_FAVOURITE = "favouriteCard";
+	/**
+	 * Card type enumeration.
+	 *
+	 * @author Joachim Van der Auwera
+	 */
+	private enum Card {
+		EMPTY, GEOMETRIC, ATTRIBUTE
+	}
 
 	public SearchPanel(MapWidget mapWidget) {
 		setSize("100%", "100%");
@@ -69,18 +73,18 @@ public class SearchPanel extends VLayout {
 		// initialization for value searching
 		MultiFeatureListGrid valueResultList = new MultiFeatureListGrid(mapWidget);
 		valueResultList.setBackgroundColor("#FFFFFF");
-		CardLayout searchPanels = new CardLayout();
+		CardLayout<Card> searchPanels = new CardLayout<Card>();
 		GeometricSearchPanel gsp = new GeometricSearchPanel(mapWidget);
 		gsp.addSearchMethod(new SelectionSearch());
 		gsp.addSearchMethod(new FreeDrawingSearch());
 		PanelSearchWidget geometricSearch = new CardPanelSearchWidget("GeometricSearch", "Search on geometry", gsp,
-				searchPanels, CARD_GEOMETRIC);
+				searchPanels, Card.GEOMETRIC);
 		PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch", "Search on attributes",
-				new AttributeSearchPanel(mapWidget), searchPanels, CARD_ATTRIBUTE);
+				new AttributeSearchPanel(mapWidget), searchPanels, Card.ATTRIBUTE);
 		//PanelSearchWidget favouriteSearch = new CardPanelSearchWidget("FavouritesSearch", "Select favourite",
 		//		new SearchFavouritesListPanel(mapWidget), searchPanels, CARD_FAVOURITE);
-		searchPanels.addCard(CARD_EMPTY, new VLayout()); // add empty card option
-		searchPanels.showCard(CARD_EMPTY);
+		searchPanels.addCard(Card.EMPTY, new VLayout()); // add empty card option
+		searchPanels.showCard(Card.EMPTY);
 		searchPanels.setHeight(1); // minimum height
 		searchPanels.setOverflow(Overflow.VISIBLE); // but scale
 		List<SearchWidget> searchWidgetList = new ArrayList<SearchWidget>();
@@ -119,11 +123,11 @@ public class SearchPanel extends VLayout {
 	}
 
 	private static class CardPanelSearchWidget extends PanelSearchWidget {
-		private CardLayout cardLayout;
-		private String cardKey;
+		private CardLayout<Card> cardLayout;
+		private Card cardKey;
 
-		public CardPanelSearchWidget(String id, String name, AbstractSearchPanel searchPanel, CardLayout cardLayout,
-				String cardKey) {
+		public CardPanelSearchWidget(String id, String name, AbstractSearchPanel searchPanel,
+				CardLayout<Card> cardLayout, Card cardKey) {
 			super(id, name, searchPanel);
 			this.cardLayout = cardLayout;
 			this.cardKey = cardKey;
