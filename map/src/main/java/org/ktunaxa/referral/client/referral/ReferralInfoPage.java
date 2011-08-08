@@ -97,7 +97,6 @@ public class ReferralInfoPage extends WizardPage<ReferralData> {
 	 * Factory for {@link ReferralInfoForm}.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	class ReferralInfoFormFactory implements FeatureFormFactory<DynamicForm> {
 
