@@ -36,21 +36,22 @@ public class ReferralData {
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_PRIMARY, 3500);
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_SECONDARY, 10);
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_YEAR, 11);
-		feature.setStringAttribute("externalProjectId", "-99");
-		feature.setStringAttribute("externalFileId", "-99");
-		feature.setIntegerAttribute("activeRetentionPeriod", 2);
-		feature.setIntegerAttribute("semiActiveRetentionPeriod", 5);
-		feature.setBooleanAttribute("confidential", false);
+		feature.setStringAttribute(KtunaxaConstant.ATTRIBUTE_EXTERNAL_PROJECT_ID, "-99");
+		feature.setStringAttribute(KtunaxaConstant.ATTRIBUTE_EXTERNAL_FILE_ID, "-99");
+		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ACTIVE_RETENTION_PERIOD, 2);
+		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_SEMI_ACTIVE_RETENTION_PERIOD, 5);
+		feature.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_CONFIDENTIAL, false);
 		Date nextMonth = new Date();
 		CalendarUtil.addMonthsToDate(nextMonth, 1);
 		feature.setDateAttribute(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE, nextMonth);
-		feature.setManyToOneAttribute("type", new AssociationValue(new LongAttribute(1L),
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_TYPE, new AssociationValue(new LongAttribute(1L),
 				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute("finalDisposition", new AssociationValue(new IntegerAttribute(1),
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_FINAL_DISPOSITION,
+				new AssociationValue(new IntegerAttribute(1),
 				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute("applicationType", new AssociationValue(new LongAttribute(1L),
-				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute("status", new AssociationValue(new LongAttribute(1L),
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_APPLICATION_TYPE,
+				new AssociationValue(new LongAttribute(1L), new HashMap<String, PrimitiveAttribute<?>>()));
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_STATUS, new AssociationValue(new LongAttribute(1L),
 				new HashMap<String, PrimitiveAttribute<?>>()));
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE, 1);
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL, 1);

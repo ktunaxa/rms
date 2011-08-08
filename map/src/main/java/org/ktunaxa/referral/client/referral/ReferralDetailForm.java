@@ -34,9 +34,9 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 			KtunaxaConstant.ATTRIBUTE_SECONDARY,
 			KtunaxaConstant.ATTRIBUTE_NUMBER,
 			KtunaxaConstant.ATTRIBUTE_YEAR,
-			"activeRetentionPeriod",
-			"semiActiveRetentionPeriod",
-			"finalDisposition"
+			KtunaxaConstant.ATTRIBUTE_ACTIVE_RETENTION_PERIOD,
+			KtunaxaConstant.ATTRIBUTE_SEMI_ACTIVE_RETENTION_PERIOD,
+			KtunaxaConstant.ATTRIBUTE_FINAL_DISPOSITION
 		};
 
 	public ReferralDetailForm(VectorLayer layer) {

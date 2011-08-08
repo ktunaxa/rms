@@ -48,7 +48,16 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_EXTERNAL_AGENCY = "externalAgencyName";
 	String ATTRIBUTE_PROJECT_DESCRIPTION = "projectDescription";
 	String ATTRIBUTE_PROJECT_BACKGROUND = "projectBackground";
-	
+	String ATTRIBUTE_FINAL_DISPOSITION = "finalDisposition";
+	String ATTRIBUTE_APPLICATION_TYPE = "applicationType";
+	String ATTRIBUTE_STATUS = "status";
+	String ATTRIBUTE_TYPE = "type";
+	String ATTRIBUTE_EXTERNAL_PROJECT_ID = "externalProjectId";
+	String ATTRIBUTE_EXTERNAL_FILE_ID = "externalFileId";
+	String ATTRIBUTE_ACTIVE_RETENTION_PERIOD = "activeRetentionPeriod";
+	String ATTRIBUTE_SEMI_ACTIVE_RETENTION_PERIOD = "semiActiveRetentionPeriod";
+	String ATTRIBUTE_CONFIDENTIAL = "confidential";
+
 	String ATTRIBUTE_DOCUMENT_ID = "documentId";
 	String ATTRIBUTE_DOCUMENT_TITLE = "title";
 	String ATTRIBUTE_DOCUMENT_DESCRIPTION = "description";
