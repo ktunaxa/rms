@@ -127,6 +127,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 						<ref bean="SelectionMode" />
 						<ref bean="FeatureInfoMode" />
 						<ref bean="ToolbarSeparator" />
+						<ref bean="ScaleSelect" />
 					</list>
 				</property>
 			</bean>
@@ -244,6 +245,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<bean name="ShowDefaultPrint" class="org.geomajas.configuration.client.ClientToolInfo" />
 
 	<bean name="PrintMode" class="org.geomajas.configuration.client.ClientToolInfo" />
+
+	<bean name="ScaleSelect" class="org.geomajas.configuration.client.ClientToolInfo" />
 
 	<!-- LayerTree tools -->
 

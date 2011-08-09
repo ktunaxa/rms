@@ -11,15 +11,12 @@ import java.util.List;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
-import org.geomajas.gwt.client.map.event.MapModelEvent;
-import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.spatial.Bbox;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.spatial.geometry.MultiPoint;
 import org.geomajas.gwt.client.spatial.geometry.Point;
-import org.geomajas.gwt.client.widget.ScaleSelect;
 import org.geomajas.gwt.client.widget.Toolbar;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
@@ -132,15 +129,6 @@ public final class MapLayout extends VLayout {
 
 		mapLayout.addMember(toolbar);
 		mapLayout.addMember(mapWidget);
-
-		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
-
-			public void onMapModelChange(MapModelEvent event) {
-				ScaleSelect scaleSelect = new ScaleSelect(mapWidget.getMapModel().getMapView(),
-						mapWidget.getPixelPerUnit());
-				toolbar.addMember(scaleSelect);
-			}
-		});
 
 		addMember(topBar);
 		addMember(menuBar);
