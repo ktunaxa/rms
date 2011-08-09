@@ -19,6 +19,7 @@
 			WEB-INF/security.xml
 			WEB-INF/layer*.xml
 			WEB-INF/map*.xml
+			WEB-INF/geocoder.xml
         </param-value>
 	</context-param>
 

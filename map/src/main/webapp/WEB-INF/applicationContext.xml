@@ -127,6 +127,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 						<ref bean="SelectionMode" />
 						<ref bean="FeatureInfoMode" />
 						<ref bean="ToolbarSeparator" />
+						<ref bean="Geocoder" />
+						<ref bean="ToolbarSeparator" />
 						<ref bean="ScaleSelect" />
 					</list>
 				</property>
@@ -247,6 +249,21 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<bean name="PrintMode" class="org.geomajas.configuration.client.ClientToolInfo" />
 
 	<bean name="ScaleSelect" class="org.geomajas.configuration.client.ClientToolInfo" />
+
+	<bean name="Geocoder" class="org.geomajas.configuration.client.ClientToolInfo">
+		<property name="parameters">
+			<list>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="name" />
+					<property name="value" value="geocoder" />
+				</bean>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="title" />
+					<property name="value" value="Location" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- LayerTree tools -->
 
