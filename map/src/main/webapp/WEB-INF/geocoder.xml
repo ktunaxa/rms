@@ -21,7 +21,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="geocoderServices">
 			<list>
 				<bean class="org.geomajas.plugin.geocoder.service.TypeCoordinateService" >
-					<property name="crs" value="EPSG:26911"/>
+					<property name="defaultCrs" value="EPSG:26911"/>
 				</bean>
 				<bean class="org.geomajas.plugin.geocoder.service.GeonamesGeocoderService" >
 					<property name="userName" value="ktunaxa" />
