@@ -20,10 +20,18 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="pointDisplayHeight" value="1000" />
 		<property name="geocoderServices">
 			<list>
+				<bean class="org.geomajas.plugin.geocoder.service.TypeCoordinateService" >
+					<property name="crs" value="EPSG:26911"/>
+				</bean>
+				<bean class="org.geomajas.plugin.geocoder.service.GeonamesGeocoderService" >
+					<property name="userName" value="ktunaxa" />
+				</bean>
+				<!--
 				<bean class="org.geomajas.plugin.geocoder.service.YahooPlaceFinderGeocoderService">
 					<property name="appIdProperty" value="YahooAppId" />
-					<property name="skipAppIdCheck" value="true" />
+					<property name="skipAppIdCheck" value="false" />
 				</bean>
+				-->
 			</list>
 		</property>
 	</bean>
