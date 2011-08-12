@@ -3,6 +3,7 @@
   ~
   ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
   -->
+
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
@@ -13,18 +14,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
-
-	<context:component-scan base-package="org.ktunaxa.referral"
-		name-generator="org.geomajas.spring.GeomajasBeanNameGenerator" />
-
-	<bean name="app" class="org.geomajas.configuration.client.ClientApplicationInfo">
-		<property name="maps">
-			<list>
-				<ref bean="mapMain" />
-				<ref bean="mapTestReferral" />
-			</list>
-		</property>
-	</bean>
 
 	<bean name="ToolbarSeparator" class="org.geomajas.configuration.client.ClientToolInfo" />
 

@@ -42,7 +42,7 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 		} else if (KtunaxaConstant.ATTRIBUTE_TARGET_REFERRAL.equals(info.getName())) {
 			SelectItem targetItem = (SelectItem) formItem;
 			targetItem.setOptionDataSource(new ReferralManyToOneDataSource(info,
-					KtunaxaConstant.REFERRAL_SERVER_LAYER_ID));
+					KtunaxaConstant.LAYER_REFERRAL_SERVER_ID));
 			targetItem.setDisplayField(ReferralManyToOneDataSource.LAND_REFERRAL_ID_FIELD);
 		}
 		if (KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY.equals(info.getName())) {

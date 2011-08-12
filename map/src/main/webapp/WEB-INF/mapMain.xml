@@ -5,10 +5,8 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -17,7 +15,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-	<bean name="mapTestReferral" class="org.geomajas.configuration.client.ClientMapInfo">
+	<bean name="mapMain" class="org.geomajas.configuration.client.ClientMapInfo">
 		<property name="backgroundColor" value="#FFFFFF" />
 		<property name="lineSelectStyle">
 			<bean class="org.geomajas.configuration.FeatureStyleInfo">
@@ -88,11 +86,81 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 				<property name="maxY" value="25000000" />
 			</bean>
 		</property>
+		<property name="preferredPixelsPerTile">
+			<bean class="org.geomajas.configuration.client.ClientPreferredPixelsPerTile">
+				<property name="preferredPixelsPerTileType" value="CONFIGURED" />
+				<property name="width" value="256" />
+				<property name="height" value="256" />
+			</bean>
+		</property>
 		<property name="layers">
 			<list>
 				<ref bean="clientLayerOsm" />
+				<ref bean="referenceBaseLayer" />
+				<ref bean="referenceValueLayer" />
 				<ref bean="clientLayerReferral" />
 			</list>
+		</property>
+		<property name="toolbar">
+			<bean name="mainMapToolbar" class="org.geomajas.configuration.client.ClientToolbarInfo">
+				<property name="tools">
+					<list>
+						<ref bean="ZoomToRectangleMode" />
+						<ref bean="PanMode" />
+						<ref bean="ZoomToSelection" />
+						<ref bean="ToolbarSeparator" />
+						<ref bean="ZoomPrevious" />
+						<ref bean="ZoomNext" />
+						<ref bean="ToolbarSeparator" />
+						<ref bean="MeasureDistanceMode" />
+						<ref bean="SelectionMode" />
+						<ref bean="FeatureInfoMode" />
+						<ref bean="ToolbarSeparator" />
+						<ref bean="Geocoder" />
+						<ref bean="ToolbarSeparator" />
+						<ref bean="ScaleSelect" />
+					</list>
+				</property>
+			</bean>
+		</property>
+		<property name="layerTree">
+			<bean name="mainMapTree"
+				class="org.geomajas.configuration.client.ClientLayerTreeInfo">
+				<property name="tools">
+					<list>
+						<ref bean="LayerVisibleTool" />
+						<ref bean="LayerLabeledTool" />
+						<ref bean="ShowTableAction" />
+						<ref bean="LayerRefreshAction" />
+					</list>
+				</property>
+				<property name="treeNode">
+					<bean class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
+						<property name="label" value="Layers" />
+						<property name="treeNodes">
+							<list>
+								<bean class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
+									<property name="label" value="Base layers" />
+									<property name="layers">
+										<list>
+											<ref bean="clientLayerOsm" />
+										</list>
+									</property>
+								</bean>
+								<bean class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
+									<property name="label" value="Vector Layers" />
+									<property name="layers">
+										<list>
+											<ref bean="referenceBaseLayer" />
+										</list>
+									</property>
+								</bean>
+							</list>
+						</property>
+						<property name="expanded" value="true" />
+					</bean>
+				</property>
+			</bean>
 		</property>
 	</bean>
 

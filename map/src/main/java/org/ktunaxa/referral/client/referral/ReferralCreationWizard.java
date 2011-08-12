@@ -56,7 +56,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
 
 			public void onMapModelChange(MapModelEvent event) {
-				layer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
+				layer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
 				if (layer != null) {
 					addPage(new ReferralInfoPage());
 					addPage(new AddGeometryPage(mapWidget));

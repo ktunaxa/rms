@@ -186,7 +186,7 @@ public final class MapLayout extends VLayout {
 		currentTask = task;
 		String title;
 		if (null != referral) {
-			referralLayer = (VectorLayer) getMap().getMapModel().getLayer(KtunaxaConstant.REFERRAL_LAYER_ID);
+			referralLayer = (VectorLayer) getMap().getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
 			Feature feature = new Feature(referral, referralLayer);
 			GWT.log("Referral found: " + feature.getId());
 			getReferralPanel().init(referralLayer, feature);

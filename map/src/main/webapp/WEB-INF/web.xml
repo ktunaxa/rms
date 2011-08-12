@@ -17,8 +17,9 @@
 			WEB-INF/crs.xml
 			WEB-INF/cmis.xml
 			WEB-INF/security.xml
-			WEB-INF/layer*.xml
+			WEB-INF/tools.xml
 			WEB-INF/map*.xml
+			WEB-INF/layer*.xml
 			WEB-INF/geocoder.xml
         </param-value>
 	</context-param>

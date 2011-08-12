@@ -67,7 +67,7 @@ public class GetReferralCommand implements Command<GetReferralRequest, GetReferr
 			searchFeatureRequest.setBooleanOperator("AND");
 			searchFeatureRequest.setCriteria(ReferralUtil.createCriteria(referralId));
 			searchFeatureRequest.setCrs(KtunaxaConstant.MAP_CRS);
-			searchFeatureRequest.setLayerId(KtunaxaConstant.REFERRAL_SERVER_LAYER_ID);
+			searchFeatureRequest.setLayerId(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID);
 			searchFeatureRequest.setMax(1);
 			searchFeatureRequest.setFeatureIncludes(GeomajasConstant.FEATURE_INCLUDE_ALL);
 			CommandResponse commandResponse = commandDispatcher.execute(

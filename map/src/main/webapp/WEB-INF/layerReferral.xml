@@ -16,7 +16,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-	<bean id="referralLayer" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
+	<bean id="clientLayerReferral" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
 		<property name="serverLayerId" value="referral" />
 		<property name="label" value="Referral - project" />
 		<property name="visible" value="true" />

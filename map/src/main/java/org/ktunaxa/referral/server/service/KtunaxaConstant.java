@@ -28,10 +28,11 @@ public interface KtunaxaConstant {
 
 	String CREATE_REFERRAL_URL_PARAMETER = "createReferral";
 
-	String REFERRAL_LAYER_ID = "referralLayer";
-	String REFERRAL_SERVER_LAYER_ID = "referral";
-	String REFERENCE_BASE_LAYER_ID = "referenceBaseLayer";
-	String REFERENCE_VALUE_LAYER_ID = "referenceValueLayer";
+	String LAYER_OSM_ID = "clientLayerOsm";
+	String LAYER_REFERENCE_BASE_ID = "referenceBaseLayer";
+	String LAYER_REFERENCE_VALUE_ID = "referenceValueLayer";
+	String LAYER_REFERRAL_ID = "clientLayerReferral";
+	String LAYER_REFERRAL_SERVER_ID = "referral";
 
 	String ATTRIBUTE_PRIMARY = "primaryClassificationNumber";
 	String ATTRIBUTE_SECONDARY = "secondaryClassificationNumber";

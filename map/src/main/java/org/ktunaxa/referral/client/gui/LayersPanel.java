@@ -21,6 +21,7 @@ import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
  * Panel that displays the base and value layer trees.
@@ -73,7 +74,12 @@ public class LayersPanel extends VLayout {
 		bgStack.setPadding(LayoutConstant.MARGIN_SMALL);
 		tabBackGround.setPane(bgStack);
 
-		tabReferrals.setPane(new VLayout()); // @todo provide proper content
+		final SectionStack referralStack = new SectionStack();
+		referralStack.setSize("100%", "100%");
+		referralStack.setOverflow(Overflow.AUTO);
+		referralStack.setVisibilityMode(VisibilityMode.MUTEX);
+		referralStack.setPadding(LayoutConstant.MARGIN_SMALL);
+		tabReferrals.setPane(referralStack);
 
 		tabs.setTabs(tabBackGround, tabBase, tabValue, tabReferrals);
 		tabs.selectTab(tabValue);
@@ -82,16 +88,27 @@ public class LayersPanel extends VLayout {
 		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
 
 			public void onMapModelChange(MapModelEvent event) {
-				Layer<?> layer = mapWidget.getMapModel().getLayer("osmLayer");
+				Layer<?> layer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_OSM_ID);
 				LayerBlock osmBlock = new LayerBlock(layer);
 				VLayout sectionStackLayout = new VLayout();
 				sectionStackLayout.addMember(osmBlock);
 
-				SectionStackSection section = new SectionStackSection("Background rasters");
+				SectionStackSection section = new SectionStackSection("Background raster");
 				section.setExpanded(true);
 				section.setCanCollapse(false);
 				section.addItem(sectionStackLayout);
 				bgStack.addSection(section);
+
+				Layer<?> referral = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
+				LayerBlock referralClock = new LayerBlock(referral);
+				VLayout referralStackLayout = new VLayout();
+				referralStackLayout.addMember(referralClock);
+
+				SectionStackSection sectionStackSection = new SectionStackSection("Referral");
+				sectionStackSection.setExpanded(true);
+				sectionStackSection.setCanCollapse(false);
+				sectionStackSection.addItem(referralStackLayout);
+				referralStack.addSection(sectionStackSection);
 			}
 		});
 	}

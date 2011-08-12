@@ -108,9 +108,9 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		public void onResponse(GetReferralMapResponse response) {
 			MapLayout mapLayout = MapLayout.getInstance();
 			VectorLayer base = (VectorLayer) mapLayout.getMap().getMapModel()
-					.getLayer(KtunaxaConstant.REFERENCE_BASE_LAYER_ID);
+					.getLayer(KtunaxaConstant.LAYER_REFERENCE_BASE_ID);
 			VectorLayer value = (VectorLayer) mapLayout.getMap().getMapModel()
-			.getLayer(KtunaxaConstant.REFERENCE_VALUE_LAYER_ID);
+			.getLayer(KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
 			ReferenceLayer baseLayer = new ReferenceLayer(base, response.getLayers(), response.getLayerTypes(), true);
 			ReferenceLayer valueLayer = new ReferenceLayer(value, response.getLayers(), 
 					response.getLayerTypes(), false);
