@@ -88,7 +88,20 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
 	<bean name="PrintMode" class="org.geomajas.configuration.client.ClientToolInfo" />
 
-	<bean name="ScaleSelect" class="org.geomajas.configuration.client.ClientToolInfo" />
+	<bean name="ScaleSelect" class="org.geomajas.configuration.client.ClientToolInfo">
+		<property name="parameters">
+			<list>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="precision" />
+					<property name="value" value="1000" />
+				</bean>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="significantDigits" />
+					<property name="value" value="3" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<bean name="Geocoder" class="org.geomajas.configuration.client.ClientToolInfo">
 		<property name="parameters">
