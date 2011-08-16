@@ -56,20 +56,33 @@ public class SearchPanel extends VLayout {
 		Tab tabValues = new Tab("Values");
 
 		// initialization for value searching
+
+		tabReferral.setPane(getSearchTabContent(mapWidget, KtunaxaConstant.LAYER_REFERRAL_ID));
+		tabValues.setPane(getSearchTabContent(mapWidget, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID));
+		tabs.setTabs(tabReferral, tabValues);
+		addMember(tabs);
+	}
+
+	private VLayout getSearchTabContent(MapWidget mapWidget, String layerId) {
 		MultiFeatureListGrid valueResultList = new MultiFeatureListGrid(mapWidget);
 		valueResultList.setWidth100();
 		valueResultList.setHeight100();
 		CardLayout<Card> searchPanels = new CardLayout<Card>();
-		GeometricSearchPanel gsp = new GeometricSearchPanel(mapWidget);
-		gsp.addSearchMethod(new SelectionSearch());
-		gsp.addSearchMethod(new FreeDrawingSearch());
-		//gsp.setFeatureSearchVectorLayer(mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERENCE_VALUE_ID));
-		PanelSearchWidget geometricSearch = new CardPanelSearchWidget("GeometricSearch", "Search on geometry", gsp,
-				searchPanels, Card.GEOMETRIC);
+		GeometricSearchPanel geometricSearchPanel = new GeometricSearchPanel(mapWidget);
+		geometricSearchPanel.addSearchMethod(new SelectionSearch());
+		geometricSearchPanel.addSearchMethod(new FreeDrawingSearch());
+		geometricSearchPanel.setWidth100();
+		geometricSearchPanel.setCanAddToFavourites(false);
+		PanelSearchWidget geometricSearch = new CardPanelSearchWidget("GeometricSearch" + layerId, "Search on geometry",
+				geometricSearchPanel, searchPanels, Card.GEOMETRIC);
+		geometricSearch.setWidth100();
 		AttributeSearchPanel attributeSearchPanel = new AttributeSearchPanel(mapWidget,
-				false, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
-		PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch", "Search on attributes",
+				false, layerId);
+		attributeSearchPanel.setWidth100();
+		attributeSearchPanel.setCanAddToFavourites(false);
+		PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch" + layerId, "Search on attributes",
 				attributeSearchPanel, searchPanels, Card.ATTRIBUTE);
+		attributeSearch.setWidth100();
 		//PanelSearchWidget favouriteSearch = new CardPanelSearchWidget("FavouritesSearch", "Select favourite",
 		//		new SearchFavouritesListPanel(mapWidget), searchPanels, CARD_FAVOURITE);
 		searchPanels.addCard(Card.EMPTY, new VLayout()); // add empty card option
@@ -84,25 +97,19 @@ public class SearchPanel extends VLayout {
 		VLayout valueSearch = new VLayout();
 		CombinedSearchPanel combinedSearchPanel = new CombinedSearchPanel(mapWidget);
 		combinedSearchPanel.initializeList(searchWidgetList);
-		combinedSearchPanel.setHeight(1); // minimum height
-		combinedSearchPanel.setOverflow(Overflow.VISIBLE); // but scale
-		PanelSearchWidget searchCombined = new PanelSearchWidget("PanelSearchWidget", "search widget",
+		combinedSearchPanel.setCanAddToFavourites(false);
+		attributeSearchPanel.setWidth100();
+		PanelSearchWidget combinedSearch = new PanelSearchWidget("PanelSearchWidget" + layerId, "search widget",
 				combinedSearchPanel);
 		SearchController searchController = new SearchController(mapWidget, false);
 		searchController.addSearchHandler(valueResultList);
-		searchCombined.addSearchRequestHandler(searchController);
-		// following lines make sure the criterion type select is not visible
-		//searchCombined.setHeight(1); // minimum height
-		//searchCombined.setOverflow(Overflow.VISIBLE); // but scale
-		valueSearch.addMember(searchCombined);
+		combinedSearch.addSearchRequestHandler(searchController);
+		combinedSearch.setWidth100();
+		valueSearch.addMember(combinedSearch);
 		valueSearch.addMember(searchPanels);
 
 		valueSearch.addMember(valueResultList);
-
-		tabReferral.setPane(new VLayout()); // @todo provide proper content
-		tabValues.setPane(valueSearch);
-		tabs.setTabs(tabReferral, tabValues);
-		addMember(tabs);
+		return valueSearch;
 	}
 
 	public String getName() {
