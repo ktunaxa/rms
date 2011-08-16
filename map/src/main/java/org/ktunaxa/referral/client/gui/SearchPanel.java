@@ -80,8 +80,8 @@ public class SearchPanel extends VLayout {
 				false, layerId);
 		attributeSearchPanel.setWidth100();
 		attributeSearchPanel.setCanAddToFavourites(false);
-		PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch" + layerId, "Search on attributes",
-				attributeSearchPanel, searchPanels, Card.ATTRIBUTE);
+		PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch" + layerId,
+				"Search on attributes", attributeSearchPanel, searchPanels, Card.ATTRIBUTE);
 		attributeSearch.setWidth100();
 		//PanelSearchWidget favouriteSearch = new CardPanelSearchWidget("FavouritesSearch", "Select favourite",
 		//		new SearchFavouritesListPanel(mapWidget), searchPanels, CARD_FAVOURITE);

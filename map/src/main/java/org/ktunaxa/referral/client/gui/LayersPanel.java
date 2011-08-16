@@ -85,7 +85,7 @@ public class LayersPanel extends VLayout {
 
 		Legend legend = new Legend(mapWidget.getMapModel());
 		legend.setHeight100();
-        legend.setWidth100();
+		legend.setWidth100();
 		tabLegend.setPane(legend);
 
 		tabs.setTabs(tabLegend, tabBackGround, tabBase, tabValue, tabReferrals);
