@@ -98,7 +98,7 @@ public class SearchPanel extends VLayout {
 		CombinedSearchPanel combinedSearchPanel = new CombinedSearchPanel(mapWidget);
 		combinedSearchPanel.initializeList(searchWidgetList);
 		combinedSearchPanel.setCanAddToFavourites(false);
-		attributeSearchPanel.setWidth100();
+		combinedSearchPanel.setWidth100();
 		PanelSearchWidget combinedSearch = new PanelSearchWidget("PanelSearchWidget" + layerId, "search widget",
 				combinedSearchPanel);
 		SearchController searchController = new SearchController(mapWidget, false);
