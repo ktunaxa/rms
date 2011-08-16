@@ -18,7 +18,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
 	<bean id="clientLayerReferral" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
 		<property name="serverLayerId" value="referral" />
-		<property name="label" value="Referral - project" />
+		<property name="label" value="Referral" />
 		<property name="visible" value="true" />
 		<property name="viewScaleMax" value="1000000000" />
 		<property name="viewScaleMin" value="0" />

@@ -7,10 +7,7 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.types.Overflow;
-import org.geomajas.gwt.client.widget.FeatureListGrid;
-import org.geomajas.gwt.client.widget.FeatureSearch;
 import org.geomajas.gwt.client.widget.MapWidget;
-import org.geomajas.gwt.client.widget.event.DefaultSearchHandler;
 
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
@@ -26,6 +23,7 @@ import org.geomajas.widget.searchandfilter.client.widget.search.PanelSearchWidge
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchController;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchWidget;
 import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,33 +52,24 @@ public class SearchPanel extends VLayout {
 		setSize("100%", "100%");
 
 		final TabSet tabs = new TabSet();
-		Tab tab1 = new Tab("General Search");
-		Tab tab2 = new Tab("Search Results");
 		Tab tabReferral = new Tab("Referral");
 		Tab tabValues = new Tab("Values");
 
-		FeatureListGrid grid = new FeatureListGrid(mapWidget.getMapModel());
-		grid.setBackgroundColor("#FFFFFF");
-		FeatureSearch search = new FeatureSearch(mapWidget.getMapModel(), true);
-		search.setBackgroundColor("#FFFFFF");
-		search.addSearchHandler(new DefaultSearchHandler(grid) {
-
-			public void afterSearch() {
-				tabs.selectTab(1);
-			}
-		});
-
 		// initialization for value searching
 		MultiFeatureListGrid valueResultList = new MultiFeatureListGrid(mapWidget);
-		valueResultList.setBackgroundColor("#FFFFFF");
+		valueResultList.setWidth100();
+		valueResultList.setHeight100();
 		CardLayout<Card> searchPanels = new CardLayout<Card>();
 		GeometricSearchPanel gsp = new GeometricSearchPanel(mapWidget);
 		gsp.addSearchMethod(new SelectionSearch());
 		gsp.addSearchMethod(new FreeDrawingSearch());
+		//gsp.setFeatureSearchVectorLayer(mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERENCE_VALUE_ID));
 		PanelSearchWidget geometricSearch = new CardPanelSearchWidget("GeometricSearch", "Search on geometry", gsp,
 				searchPanels, Card.GEOMETRIC);
+		AttributeSearchPanel attributeSearchPanel = new AttributeSearchPanel(mapWidget,
+				false, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
 		PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch", "Search on attributes",
-				new AttributeSearchPanel(mapWidget), searchPanels, Card.ATTRIBUTE);
+				attributeSearchPanel, searchPanels, Card.ATTRIBUTE);
 		//PanelSearchWidget favouriteSearch = new CardPanelSearchWidget("FavouritesSearch", "Select favourite",
 		//		new SearchFavouritesListPanel(mapWidget), searchPanels, CARD_FAVOURITE);
 		searchPanels.addCard(Card.EMPTY, new VLayout()); // add empty card option
@@ -110,11 +99,9 @@ public class SearchPanel extends VLayout {
 
 		valueSearch.addMember(valueResultList);
 
-		tab1.setPane(search);
-		tab2.setPane(grid);
 		tabReferral.setPane(new VLayout()); // @todo provide proper content
 		tabValues.setPane(valueSearch);
-		tabs.setTabs(tab1, tab2, tabReferral, tabValues);
+		tabs.setTabs(tabReferral, tabValues);
 		addMember(tabs);
 	}
 
