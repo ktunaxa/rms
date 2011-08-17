@@ -7,6 +7,7 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.widgets.HTMLFlow;
 import org.geomajas.gwt.client.widget.MapWidget;
 
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -50,6 +51,7 @@ public class SearchPanel extends VLayout {
 
 	public SearchPanel(MapWidget mapWidget) {
 		setSize("100%", "100%");
+		setOverflow(Overflow.AUTO);
 
 		final TabSet tabs = new TabSet();
 		Tab tabReferral = new Tab("Referral");
@@ -106,6 +108,10 @@ public class SearchPanel extends VLayout {
 		combinedSearch.addSearchRequestHandler(searchController);
 		combinedSearch.setWidth100();
 		valueSearch.addMember(combinedSearch);
+		HTMLFlow divider = new HTMLFlow("<hr />");
+		divider.setWidth100();
+		divider.setHeight(5);
+		valueSearch.addMember(divider);
 		valueSearch.addMember(searchPanels);
 
 		valueSearch.addMember(valueResultList);
