@@ -8,7 +8,6 @@ package org.ktunaxa.referral.client.referral;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.TransformGeometryRequest;
 import org.geomajas.command.dto.TransformGeometryResponse;
-import org.geomajas.geometry.Bbox;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.CommandExceptionCallback;
@@ -42,15 +41,12 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * Panel to upload the referral geometry via an x and y coordinate.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPanel {
 
 	public static final String NAME = "UploadXyCoordinatePanel";
 
 	private DynamicForm form;
-
-	private IButton applyButton;
 
 	private FloatItem xItem;
 
@@ -66,7 +62,7 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 
 	private HandlerManager handlerManager = new HandlerManager(this);
 
-	public UploadXyCoordinatePanel(Bbox bbox) {
+	public UploadXyCoordinatePanel() {
 		setLayoutAlign(Alignment.CENTER);
 		form = new DynamicForm();
 
@@ -81,14 +77,14 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 		DataSource dataSource = new DataSource();
 		DataSourceFloatField xField = new DataSourceFloatField("x");
 		FloatRangeValidator xValidator = new FloatRangeValidator();
-		xValidator.setMin((float) bbox.getX());
-		xValidator.setMax((float) bbox.getMaxX());
+		xValidator.setMin((float) KtunaxaConstant.KTUNAXA_TERRITORY_MIN_X);
+		xValidator.setMax((float) KtunaxaConstant.KTUNAXA_TERRITORY_MAX_X);
 		xField.setValidators(xValidator);
 
 		DataSourceFloatField yField = new DataSourceFloatField("y");
 		FloatRangeValidator yValidator = new FloatRangeValidator();
-		yValidator.setMin((float) bbox.getY());
-		yValidator.setMax((float) bbox.getMaxY());
+		yValidator.setMin((float) KtunaxaConstant.KTUNAXA_TERRITORY_MIN_Y);
+		yValidator.setMax((float) KtunaxaConstant.KTUNAXA_TERRITORY_MAX_X);
 		yField.setValidators(yValidator);
 
 		dataSource.addField(xField);
@@ -99,7 +95,7 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
 		busyImg.setVisible(false);
 
-		applyButton = new IButton("Apply");
+		IButton applyButton = new IButton("Apply");
 
 		HLayout buttonPanel = new HLayout(10);
 		buttonPanel.addMember(applyButton);
@@ -121,7 +117,6 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 	 * Starts server-side transformation of point.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	class TransformHandler implements ClickHandler {
 
@@ -147,7 +142,6 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 	 * Handles the transformed geometry.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	class GeometryHandler implements CommandCallback<TransformGeometryResponse>, CommandExceptionCallback {
 

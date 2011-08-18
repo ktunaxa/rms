@@ -15,6 +15,7 @@ import org.geomajas.geometry.Coordinate;
 import org.geomajas.layer.tile.TileCode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -56,8 +57,8 @@ public class RunSingleTileTest {
 		GetVectorTileRequest request = new GetVectorTileRequest();
 		TileCode code = new TileCode(5, 16, 8);
 		request.setCode(code);
-		request.setLayerId("referenceBase");
-		request.setCrs("EPSG:900913");
+		request.setLayerId(KtunaxaConstant.LAYER_REFERENCE_BASE_SERVER_ID);
+		request.setCrs(KtunaxaConstant.MAP_CRS);
 		request.setScale(0.006541332273339661);
 		request.setPanOrigin(new Coordinate(-1.2803202237767024E7, 6306054.833527042));
 		NamedStyleInfo style = new NamedStyleInfo();
@@ -66,7 +67,11 @@ public class RunSingleTileTest {
 		request.setScale(0.05233065818671729);
 		request.setPaintGeometries(true);
 		request.setPaintLabels(false);
-		request.setFilter("layer.code = 1 or layer.code = 2 or layer.code = 5 or layer.code = 6 or layer.code = 7 or layer.code = 8 or layer.code = 9 or layer.code = 19 or layer.code = 20 or layer.code = 21 or layer.code = 22 or layer.code = 23 or layer.code = 24 or layer.code = 25 or layer.code = 26 or layer.code = 27 or layer.code = 28 or layer.code = 34 or layer.code = 78 or layer.code = 79 or layer.code = 82 or layer.code = 83");
+		request.setFilter("layer.code = 1 or layer.code = 2 or layer.code = 5 or layer.code = 6 or layer.code = 7 or " +
+				"layer.code = 8 or layer.code = 9 or layer.code = 19 or layer.code = 20 or layer.code = 21 or " +
+				"layer.code = 22 or layer.code = 23 or layer.code = 24 or layer.code = 25 or layer.code = 26 or " +
+				"layer.code = 27 or layer.code = 28 or layer.code = 34 or layer.code = 78 or layer.code = 79 or " +
+				"layer.code = 82 or layer.code = 83");
 		return request;
 	}
 }

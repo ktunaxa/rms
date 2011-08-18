@@ -72,18 +72,26 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		</property>
 		<property name="initialBounds">
 			<bean class="org.geomajas.geometry.Bbox">
-				<property name="x" value="-12915305" />
-				<property name="y" value="6269056" />
-				<property name="maxX" value="-12683653" />
-				<property name="maxY" value="6449826.5" />
+				<property name="x">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MIN_X"/>
+				</property>
+				<property name="y">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MIN_Y"/>
+				</property>
+				<property name="maxX">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MAX_X"/>
+				</property>
+				<property name="maxY">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MAX_Y"/>
+				</property>
 			</bean>
 		</property>
 		<property name="maxBounds">
 			<bean class="org.geomajas.geometry.Bbox">
-				<property name="x" value="-25000000" />
-				<property name="y" value="-25000000" />
-				<property name="maxX" value="25000000" />
-				<property name="maxY" value="25000000" />
+				<property name="x" value="-20026376.393709917"/>
+				<property name="y" value="-20026376.393709917"/>
+				<property name="width" value="40052752.787419834"/>
+				<property name="height" value="40052752.787419834"/>
 			</bean>
 		</property>
 		<property name="preferredPixelsPerTile">
@@ -96,8 +104,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="layers">
 			<list>
 				<ref bean="clientLayerOsm" />
-				<ref bean="referenceBaseLayer" />
-				<ref bean="referenceValueLayer" />
+				<ref bean="clientLayerReferenceBase" />
+				<ref bean="clientLayerReferenceValue" />
 				<ref bean="clientLayerReferral" />
 			</list>
 		</property>
@@ -153,7 +161,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 									<property name="label" value="Vector Layers" />
 									<property name="layers">
 										<list>
-											<ref bean="referenceBaseLayer" />
+											<ref bean="clientLayerReferenceBase" />
 										</list>
 									</property>
 								</bean>
@@ -164,6 +172,40 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 				</property>
 			</bean>
 		</property>
+	</bean>
+
+	<bean id="clientLayerReferral" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
+		<property name="serverLayerId" value="layerReferral" />
+		<property name="label" value="Referral" />
+		<property name="visible" value="true" />
+		<property name="maximumScale" value="100000" />
+		<property name="minimumScale" value="1:1000000" />
+		<property name="namedStyleInfo" ref="referralStyleInfo" />
+	</bean>
+
+	<bean id="clientLayerReferenceValue" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
+		<property name="serverLayerId" value="layerReferenceValue" />
+		<property name="label" value="Reference Value" />
+		<property name="visible" value="true" />
+		<property name="maximumScale" value="100000" />
+		<property name="minimumScale" value="1:1000000" />
+		<property name="namedStyleInfo" ref="referenceValueStyleInfo" />
+	</bean>
+
+	<bean id="clientLayerReferenceBase" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
+		<property name="serverLayerId" value="layerReferenceBase" />
+		<property name="label" value="Reference Base" />
+		<property name="visible" value="true" />
+		<property name="maximumScale" value="100000" />
+		<property name="minimumScale" value="1:1000000" />
+		<property name="namedStyleInfo" ref="referenceBaseStyleInfo" />
+	</bean>
+
+	<bean id="clientLayerOsm" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+		<property name="serverLayerId" value="layerOsm" />
+		<property name="label" value="OpenStreetMap" />
+		<property name="visible" value="true" />
+		<property name="style" value="1" />
 	</bean>
 
 </beans>

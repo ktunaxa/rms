@@ -18,8 +18,13 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
 	<bean class="org.geomajas.global.CrsTransformInfo">
-		<property name="source" value="EPSG:26911" />
-		<property name="target" value="EPSG:900913" />
+		<property name="source">
+			<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.LAYER_CRS"/>
+		</property>
+		<property name="target">
+			<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.MAP_CRS"/>
+		</property>
+
 		<property name="transformableArea">
 		<!-- see http://spatialreference.org/ref/epsg/26911/ (projected bounds)-->
 			<bean class="org.geomajas.geometry.Bbox">

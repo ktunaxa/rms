@@ -10,10 +10,27 @@ package org.ktunaxa.referral.server.service;
  * Some constants available to both client and sever.
  * 
  * @author Jan De Moerloose
+ * @author Joachim Van der Auwera
  */
 public interface KtunaxaConstant {
 
-	String FORM_ID = "formId";	
+	double KTUNAXA_TERRITORY_MIN_X = 383546.5;
+	double KTUNAXA_TERRITORY_MAX_X = 715337.9;
+	double KTUNAXA_TERRITORY_MIN_Y = 5427332.2;
+	double KTUNAXA_TERRITORY_MAX_Y = 5816801.6;
+
+	double KTUNAXA_TERRITORY_BUFFER = 10000;
+	double KTUNAXA_TERRITORY_BUFFER_MIN_X = KTUNAXA_TERRITORY_MIN_X - KTUNAXA_TERRITORY_BUFFER;
+	double KTUNAXA_TERRITORY_BUFFER_MAX_X = KTUNAXA_TERRITORY_MAX_X + KTUNAXA_TERRITORY_BUFFER;
+	double KTUNAXA_TERRITORY_BUFFER_MIN_Y = KTUNAXA_TERRITORY_MIN_Y - KTUNAXA_TERRITORY_BUFFER;
+	double KTUNAXA_TERRITORY_BUFFER_MAX_Y = KTUNAXA_TERRITORY_MAX_Y + KTUNAXA_TERRITORY_BUFFER;
+
+	double KTUNAXA_TERRITORY_MERCATOR_MIN_X = -13215308.489834055;
+	double KTUNAXA_TERRITORY_MERCATOR_MAX_X = -12671536.917193668;
+	double KTUNAXA_TERRITORY_MERCATOR_MIN_Y = 6268307.742732821;
+	double KTUNAXA_TERRITORY_MERCATOR_MAX_Y = 6891281.903592376;
+
+	String FORM_ID = "formId";
 	String FORM_FILE = "file";	
 	String FORM_GEOMETRY = "geometry";
 	String FORM_ERROR_MESSAGE = "errorMessage";
@@ -29,10 +46,12 @@ public interface KtunaxaConstant {
 	String CREATE_REFERRAL_URL_PARAMETER = "createReferral";
 
 	String LAYER_OSM_ID = "clientLayerOsm";
-	String LAYER_REFERENCE_BASE_ID = "referenceBaseLayer";
-	String LAYER_REFERENCE_VALUE_ID = "referenceValueLayer";
+	String LAYER_REFERENCE_BASE_ID = "clientLayerReferenceBase";
+	String LAYER_REFERENCE_BASE_SERVER_ID = "layerReferenceBase";
+	String LAYER_REFERENCE_VALUE_ID = "clientLayerReferenceValue";
+	String LAYER_REFERENCE_VALUE_SERVER_ID = "layerReferenceValue";
 	String LAYER_REFERRAL_ID = "clientLayerReferral";
-	String LAYER_REFERRAL_SERVER_ID = "referral";
+	String LAYER_REFERRAL_SERVER_ID = "layerReferral";
 
 	String ATTRIBUTE_PRIMARY = "primaryClassificationNumber";
 	String ATTRIBUTE_SECONDARY = "secondaryClassificationNumber";
