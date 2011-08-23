@@ -75,6 +75,7 @@ public class SearchPanel extends VLayout {
 		geometricSearchPanel.addSearchMethod(new FreeDrawingSearch());
 		geometricSearchPanel.setWidth100();
 		geometricSearchPanel.setCanAddToFavourites(false);
+		geometricSearchPanel.setFeatureSearchVectorLayer(layerId);
 		PanelSearchWidget geometricSearch = new CardPanelSearchWidget("GeometricSearch" + layerId, "Search on geometry",
 				geometricSearchPanel, searchPanels, Card.GEOMETRIC);
 		geometricSearch.setWidth100();
