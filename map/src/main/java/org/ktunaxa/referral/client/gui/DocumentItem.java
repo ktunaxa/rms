@@ -24,7 +24,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * Form item for searching/uploading documents.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class DocumentItem extends CanvasItem {
 
@@ -44,8 +43,7 @@ public class DocumentItem extends CanvasItem {
 
 	@Override
 	protected Canvas createCanvas() {
-		VLayout layout = createUploadLayout();
-		return layout;
+		return createUploadLayout();
 	}
 
 	@Override
@@ -102,11 +100,7 @@ public class DocumentItem extends CanvasItem {
 	@Override
 	public Boolean validate() {
 		// validate if we have a file ready for upload !
-		if (documentId == null) {
-			return form.validate();
-		} else {
-			return true;
-		}
+		return documentId != null || form.validate();
 	}
 
 	private VLayout createUploadLayout() {

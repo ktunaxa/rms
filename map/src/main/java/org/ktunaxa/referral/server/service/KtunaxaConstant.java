@@ -87,6 +87,8 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_DOCUMENT_TYPE = "type";
 	String ATTRIBUTE_DOCUMENT_DOWNLOAD_URL = "downloadUrl";
 	String ATTRIBUTE_DOCUMENT_DISPLAY_URL = "displayUrl";
+	String ATTRIBUTE_DOCUMENT_ADDED_BY = "addedBy";
+	String ATTRIBUTE_DOCUMENT_ADDITION_DATE = "additionDate";
 	String ATTRIBUTE_COMMENT_TITLE = "title";
 	String ATTRIBUTE_COMMENT_CONTENT = "content";
 	String ATTRIBUTE_COMMENT_CREATION_DATE = "creationDate";
