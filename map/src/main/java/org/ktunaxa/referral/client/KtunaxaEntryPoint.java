@@ -10,6 +10,7 @@ import org.geomajas.gwt.client.action.ToolCreator;
 import org.geomajas.gwt.client.action.ToolbarBaseAction;
 import org.geomajas.gwt.client.action.toolbar.ToolbarRegistry;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
@@ -42,6 +43,10 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	public static final String TOOL_ZOOM_CURRENT_REFERRAL = "ZoomCurrentReferral";
 
 	public void onModuleLoad() {
+		// force a fixed height to feature attribute windows, preventing them to become too big (and add scroll bars)
+		WidgetLayout.featureAttributeWindowHeight = Window.getClientHeight() - WidgetLayout.windowOffset * 4;
+		WidgetLayout.featureAttributeWindowWidth = 470;
+
 		ToolbarRegistry.put(TOOL_ZOOM_KTUNAXA_TERRITORY, new ToolCreator() {
 
 			public ToolbarBaseAction createTool(MapWidget mapWidget) {
