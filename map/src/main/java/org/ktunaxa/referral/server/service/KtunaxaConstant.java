@@ -31,7 +31,7 @@ public interface KtunaxaConstant {
 	double KTUNAXA_TERRITORY_MERCATOR_MAX_Y = 6891281.903592376;
 
 	String FORM_ID = "formId";
-	String FORM_FILE = "file";	
+	String FORM_FILE = "file";
 	String FORM_GEOMETRY = "geometry";
 	String FORM_ERROR_MESSAGE = "errorMessage";
 	String FORM_DOCUMENT_TITLE = "title";	
