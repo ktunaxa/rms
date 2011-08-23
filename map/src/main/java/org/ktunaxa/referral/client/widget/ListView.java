@@ -30,6 +30,7 @@ import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * Definition of a view that lists a group of objects of type T in the form of collapsible blocks. This view has
@@ -86,7 +87,7 @@ public class ListView<T extends Serializable> extends VLayout {
 	 */
 	public ListView(boolean canCreate, boolean canSearch,
 			Map<String, Comparator<AbstractCollapsibleListBlock<T>>> sortAttributes) {
-		super(10);
+		super(LayoutConstant.MARGIN_LARGE);
 		this.sortAttributes = sortAttributes;
 		this.canCreate = canCreate;
 		this.canSearch = canSearch;
@@ -123,7 +124,7 @@ public class ListView<T extends Serializable> extends VLayout {
 
 	/** Collapse all blocks within the list. */
 	public void collapse() {
-		blockLayout.setHeight(10); // to make it redraw....
+		blockLayout.setHeight(LayoutConstant.MARGIN_LARGE); // to make it redraw....
 		for (Canvas member : blockLayout.getMembers()) {
 			if (member instanceof AbstractCollapsibleListBlock<?>) {
 				((AbstractCollapsibleListBlock<?>) member).collapse();
@@ -278,9 +279,9 @@ public class ListView<T extends Serializable> extends VLayout {
 
 		addMember(toolStrip);
 
-		blockLayout = new VLayout(10);
+		blockLayout = new VLayout(LayoutConstant.MARGIN_LARGE);
 		blockLayout.setWidth100();
-		blockLayout.setHeight(10);
+		blockLayout.setHeight(LayoutConstant.MARGIN_LARGE);
 		addMember(blockLayout);
 	}
 

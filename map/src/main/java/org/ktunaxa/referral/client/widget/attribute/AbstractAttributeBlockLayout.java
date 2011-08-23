@@ -24,6 +24,7 @@ import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * Layout for editing one-to-many attributes, consisting of a list view ({@link AttributeBlockList}) and a detail view (
@@ -72,7 +73,7 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 	 * @param form form for attribute
 	 */
 	public AbstractAttributeBlockLayout(AttributeBlockList list, FeatureForm<W> form) {
-		super(10);
+		super(LayoutConstant.MARGIN_LARGE);
 		setWidth100();
 		listView = list;
 		detailView = new AttributeBlockDetail<W>(form);

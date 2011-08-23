@@ -28,6 +28,7 @@ import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * A layout that shows all elements of a one-to-many attribute as blocks in a list.
@@ -64,7 +65,7 @@ public class AttributeBlockList extends VLayout {
 	 *        comparators should be able to sort the actual collapsible blocks.
 	 */
 	public AttributeBlockList(Map<String, Comparator<AbstractAttributeBlock>> sortAttributes) {
-		super(10);
+		super(LayoutConstant.MARGIN_LARGE);
 		this.sortAttributes = sortAttributes;
 		setWidth100();
 		buildGui();
@@ -277,7 +278,7 @@ public class AttributeBlockList extends VLayout {
 
 		addMember(toolStrip);
 
-		blockLayout = new VLayout(10);
+		blockLayout = new VLayout(LayoutConstant.MARGIN_LARGE);
 		blockLayout.setWidth100();
 		addMember(blockLayout);
 	}

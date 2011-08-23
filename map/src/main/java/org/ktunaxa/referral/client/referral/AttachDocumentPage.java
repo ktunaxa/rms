@@ -14,6 +14,7 @@ import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.StringAttribute;
 import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
 import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
@@ -95,7 +96,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 	private VLayout createUploadLayout() {
 		VLayout uploadLayout = new VLayout();
 		uploadLayout.setLayoutAlign(Alignment.CENTER);
-		uploadLayout.setMembersMargin(10);
+		uploadLayout.setMembersMargin(LayoutConstant.MARGIN_LARGE);
 		HTMLFlow explanation = new HTMLFlow("<h3>Upload a new document</h3><div><p>Please note that it may take a"
 				+ " while to upload the document to the document management system.</p></div>");
 		LayoutSpacer spacer = new LayoutSpacer();
@@ -104,7 +105,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 				+ "../d/upload/referral/document");
 		form.setHeight(40);
 
-		HLayout btnLayout = new HLayout(10);
+		HLayout btnLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
 		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
 		busyImg.setVisible(false);
 		IButton uploadbutton = new IButton("Upload");

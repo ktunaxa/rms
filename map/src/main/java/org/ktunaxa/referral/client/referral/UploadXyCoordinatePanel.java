@@ -17,6 +17,7 @@ import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.spatial.geometry.GeometryFactory;
 import org.geomajas.gwt.client.util.GeometryConverter;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -97,7 +98,7 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 
 		IButton applyButton = new IButton("Apply");
 
-		HLayout buttonPanel = new HLayout(10);
+		HLayout buttonPanel = new HLayout(LayoutConstant.MARGIN_LARGE);
 		buttonPanel.addMember(applyButton);
 		buttonPanel.addMember(busyImg);
 		errorFlow = new HTMLFlow();

@@ -16,6 +16,7 @@ import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * Page to confirm creation of a new referral.
@@ -32,7 +33,7 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 		super();
 
 		widget = new VLayout();
-		widget.setMembersMargin(10);
+		widget.setMembersMargin(LayoutConstant.MARGIN_LARGE);
 		widget.setWidth100();
 		widget.setHeight100();
 

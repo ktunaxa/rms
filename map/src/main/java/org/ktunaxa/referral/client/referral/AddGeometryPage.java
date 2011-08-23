@@ -115,7 +115,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	}
 
 	private void initGui() {
-		layout = new VLayout(10);
+		layout = new VLayout(LayoutConstant.MARGIN_LARGE);
 		uploadLayout = new CardLayout<String>();
 		panelMap = new LinkedHashMap<String, UploadGeometryPanel>();
 		panelMap.put(UploadShapePanel.NAME, new UploadShapePanel());

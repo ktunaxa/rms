@@ -13,6 +13,7 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * General definition of the detailed view of a single object of type T. It is possible to add a pane to this widget.
@@ -60,7 +61,7 @@ public class DetailView<T extends Serializable> extends VLayout {
 	private void builGui() {
 		setSize("100%", "100%");
 
-		HLayout header = new HLayout(10);
+		HLayout header = new HLayout(LayoutConstant.MARGIN_LARGE);
 		header.setSize("100%", "40");
 
 		HTMLFlow title = new HTMLFlow("This is a title. It serves no purpose yet.");

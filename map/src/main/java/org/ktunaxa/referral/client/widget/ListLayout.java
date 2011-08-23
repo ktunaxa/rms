@@ -14,6 +14,7 @@ import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * General layout for managing a list of objects. This layout can display the full list of objects, but can also focus
@@ -45,11 +46,11 @@ public class ListLayout<T extends Serializable> extends VLayout {
 	 *            type T.
 	 */
 	public ListLayout(ListView<T> listView, DetailView<T> detailView) {
-		super(10);
+		super(LayoutConstant.MARGIN_LARGE);
 		this.listView = listView;
 		this.detailView = detailView;
 		setWidth100();
-		setPadding(10);
+		setPadding(LayoutConstant.MARGIN_LARGE);
 		setOverflow(Overflow.AUTO);
 
 		detailView.setVisible(false);

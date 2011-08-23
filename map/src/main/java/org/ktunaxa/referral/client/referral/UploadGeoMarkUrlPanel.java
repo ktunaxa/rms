@@ -13,6 +13,7 @@ import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.util.GeometryConverter;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
 import org.ktunaxa.referral.server.command.dto.GetGeomarkRequest;
@@ -78,7 +79,7 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 
 		downloadButton = new IButton("Download");
 
-		HLayout buttonPanel = new HLayout(10);
+		HLayout buttonPanel = new HLayout(LayoutConstant.MARGIN_LARGE);
 		buttonPanel.addMember(downloadButton);
 		buttonPanel.addMember(busyImg);
 		errorFlow = new HTMLFlow();

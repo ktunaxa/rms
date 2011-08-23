@@ -7,6 +7,7 @@ package org.ktunaxa.referral.client.referral;
 
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
 import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
@@ -59,7 +60,7 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 				+ "../d/upload/referral/geometry/");
 		form.setHeight(40);
 
-		HLayout btnLayout = new HLayout(10);
+		HLayout btnLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
 		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
 		busyImg.setVisible(false);
 		IButton uploadbutton = new IButton("Upload ShapeFile");

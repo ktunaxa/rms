@@ -54,7 +54,7 @@ public class ResizableLeftLayout extends VLayout {
 		MINIMIZED, RESTORED, MAXIMIZED
 	}
 
-	private static final String BUTTONGROUP = "the-only-one";
+	private static final String BUTTON_GROUP = "the-only-one";
 
 	private static final int CLOSED_WIDTH = 24;
 
@@ -123,7 +123,7 @@ public class ResizableLeftLayout extends VLayout {
 			}
 		});
 		button.setActionType(SelectionType.RADIO);
-		button.setRadioGroup(BUTTONGROUP);
+		button.setRadioGroup(BUTTON_GROUP);
 		buttons.add(button);
 	}
 
@@ -271,7 +271,7 @@ public class ResizableLeftLayout extends VLayout {
 		setShowResizeBar(false);
 		if (getParentElement() instanceof Layout) {
 			Layout parent = (Layout) getParentElement();
-			parent.setMembersMargin(10);
+			parent.setMembersMargin(LayoutConstant.MARGIN_LARGE);
 		}
 	}
 
