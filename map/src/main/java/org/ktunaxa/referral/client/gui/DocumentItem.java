@@ -92,8 +92,11 @@ public class DocumentItem extends CanvasItem {
 
 	@Override
 	public void setValue(String value) {
-		clearValue();
+		errorFlow.setContents("");
 		uploadSuccess = (null != value);
+		if (value == null) {
+			clearValue();
+		}
 		documentId = value;
 		super.setValue(value);
 	}
