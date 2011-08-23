@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Pieter De Graef
  * @author Jan De Moerloose
  */
-
 @Controller("/upload/referral/document/**")
 public class UploadDocumentController {
 
@@ -40,9 +39,10 @@ public class UploadDocumentController {
 		UploadResponse response = new UploadResponse();
 		response.addObject(KtunaxaConstant.FORM_ID, formId);
 		try {
-			Document document = cmisService.create(file.getOriginalFilename(), file.getContentType(),
+			String originalFilename = file.getOriginalFilename();
+			Document document = cmisService.create(originalFilename, file.getContentType(),
 					file.getInputStream());
-			response.addObject(KtunaxaConstant.FORM_DOCUMENT_TITLE, file.getOriginalFilename());
+			response.addObject(KtunaxaConstant.FORM_DOCUMENT_TITLE, originalFilename);
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_ID, document.getId());
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL, cmisService.getDisplayUrl(document));
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_DOWNLOAD_URL, cmisService.getDownloadUrl(document));
