@@ -794,6 +794,20 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 											</bean>
 										</property>
 						            </bean>
+									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+										<property name="label" value="Confidential" />
+										<property name="name" value="confidential" />
+										<property name="editable" value="true" />
+										<property name="identifying" value="true" />
+										<property name="type" value="BOOLEAN" />
+									</bean>
+									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+										<property name="label" value="Include in report" />
+										<property name="name" value="includeInReport" />
+										<property name="editable" value="true" />
+										<property name="identifying" value="true" />
+										<property name="type" value="BOOLEAN" />
+									</bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Added by" />
 	                                    <property name="name" value="addedBy" />
@@ -825,20 +839,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 												</property>
 											</bean>
 										</property>
-	                                </bean>
-	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-	                                    <property name="label" value="Confidential" />
-	                                    <property name="name" value="confidential" />
-	                                    <property name="editable" value="true" />
-	                                    <property name="identifying" value="true" />
-	                                    <property name="type" value="BOOLEAN" />
-	                                </bean>
-	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-	                                    <property name="label" value="Include in report" />
-	                                    <property name="name" value="includeInReport" />
-	                                    <property name="editable" value="true" />
-	                                    <property name="identifying" value="true" />
-	                                    <property name="type" value="BOOLEAN" />
 	                                </bean>
 	                            </list>
 	                        </property>

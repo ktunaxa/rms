@@ -7,6 +7,8 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.data.DataSource;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
@@ -31,6 +33,8 @@ public class DocumentForm extends DefaultFeatureForm {
 	private DocumentItem documentItem;
 	private FormItem addedBy;
 	private FormItem additionDate;
+	private FormItem confidential;
+	private FormItem includeInReport;
 
 	public DocumentForm(FeatureInfo documentsInfo, VectorLayer referralLayer) {
 		super(documentsInfo, new DefaultAttributeProvider(referralLayer, KtunaxaConstant.ATTRIBUTE_DOCUMENTS));
@@ -57,6 +61,12 @@ public class DocumentForm extends DefaultFeatureForm {
 		}
 		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_ADDITION_DATE.equals(info.getName())) {
 			additionDate = item;
+		}
+		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT.equals(info.getName())) {
+			includeInReport = item;
+		}
+		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL.equals(info.getName())) {
+			confidential = item;
 		}
 		return item;
 	}
@@ -111,9 +121,27 @@ public class DocumentForm extends DefaultFeatureForm {
 
 	@Override
 	protected void prepareForm(FormItemList formItems, DataSource source) {
+		super.prepareForm(formItems, source);
+		confidential.addChangedHandler(new ChangedHandler() {
+			public void onChanged(ChangedEvent event) {
+				confidentialDisableIncludeInReport();
+			}
+		});
+		confidentialDisableIncludeInReport();
+
 		addedBy.setDisabled(true);
 		additionDate.setDisabled(true);
 	}
+
+	private boolean confidentialDisableIncludeInReport() {
+		boolean value = (Boolean) confidential.getValue();
+		if (value) {
+			includeInReport.setValue(false);
+		}
+		includeInReport.setDisabled(value);
+		return value;
+	}
+
 
 	private boolean isEmpty(Object value) {
 		return value == null || "".equals(value.toString().trim());

@@ -60,6 +60,7 @@ public class CommentForm extends DefaultFeatureForm {
 
 	@Override
 	protected void prepareForm(FormItemList formItems, DataSource source) {
+		super.prepareForm(formItems, source);
 		includeInReport.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
 				boolean selected = isIncludeInReportAndDisable();

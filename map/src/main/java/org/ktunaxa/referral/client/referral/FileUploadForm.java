@@ -76,8 +76,6 @@ public class FileUploadForm extends DynamicForm {
 	public final HandlerRegistration addFileUploadDoneHandler(final FileUploadDoneHandler handler) {
 		return handlerManager.addHandler(FileUploadDoneHandler.TYPE, handler);
 	}
-	
-	
 
 	@Override
 	public boolean validate() {
