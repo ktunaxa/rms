@@ -41,6 +41,8 @@ public class DocumentItem extends CanvasItem {
 	
 	private boolean uploadSuccess;
 
+	HTMLFlow errorFlow = new HTMLFlow();
+
 	@Override
 	protected Canvas createCanvas() {
 		return createUploadLayout();
@@ -53,6 +55,7 @@ public class DocumentItem extends CanvasItem {
 		documentTitle = null;
 		documentDisplayUrl = null;
 		documentDownLoadUrl = null;
+		errorFlow.setContents("");
 	}
 
 	public String getDocumentId() {
@@ -89,10 +92,8 @@ public class DocumentItem extends CanvasItem {
 
 	@Override
 	public void setValue(String value) {
-		if (value == null) {
-			uploadSuccess = false;
-			clearValue();
-		} 
+		clearValue();
+		uploadSuccess = (null != value);
 		documentId = value;
 		super.setValue(value);
 	}
@@ -108,13 +109,12 @@ public class DocumentItem extends CanvasItem {
 		uploadLayout.setMembersMargin(LayoutConstant.MARGIN_LARGE);
 		uploadLayout.setWidth("*");
 		uploadLayout.setHeight(16);
-		form = new FileUploadForm("Select a file", GWT.getModuleBaseURL() + "../d/upload/referral/document");
+		form = new FileUploadForm("Select a file", GWT.getModuleBaseURL() + KtunaxaConstant.URL_DOCUMENT_UPLOAD);
 
 		HLayout messageLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
 		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
 		busyImg.setVisible(false);
 		messageLayout.addMember(busyImg);
-		final HTMLFlow errorFlow = new HTMLFlow();
 		errorFlow.setHeight(16);
 		errorFlow.setWidth100();
 		errorFlow.setVisible(false);
@@ -148,9 +148,7 @@ public class DocumentItem extends CanvasItem {
 
 		return uploadLayout;
 	}
-	
-	
-	
+
 	public void upload() {
 		form.submit();
 		busyImg.setVisible(true);

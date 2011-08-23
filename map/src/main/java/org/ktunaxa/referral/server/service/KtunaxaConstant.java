@@ -46,6 +46,8 @@ public interface KtunaxaConstant {
 
 	String CREATE_REFERRAL_URL_PARAMETER = "createReferral";
 
+	String URL_DOCUMENT_UPLOAD = "../d/upload/referral/document";
+
 	String LAYER_OSM_ID = "clientLayerOsm";
 	String LAYER_REFERENCE_BASE_ID = "clientLayerReferenceBase";
 	String LAYER_REFERENCE_BASE_SERVER_ID = "layerReferenceBase";
