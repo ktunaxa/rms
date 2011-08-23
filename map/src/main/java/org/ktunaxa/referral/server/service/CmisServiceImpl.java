@@ -63,11 +63,12 @@ public class CmisServiceImpl implements CmisService {
 		}
 		parameter.put(SessionParameter.USER, config.getUserName());
 		parameter.put(SessionParameter.PASSWORD, config.getPassword());
-		if (config.getUrl().endsWith("/")) {
-			parameter.put(SessionParameter.ATOMPUB_URL, config.getUrl() + "service/cmis");
-		} else {
-			parameter.put(SessionParameter.ATOMPUB_URL, config.getUrl() + "/service/cmis");
+		String url = config.getUrl();
+		if (!url.endsWith("/")) {
+			url += "/";
 		}
+		parameter.put(SessionParameter.ATOMPUB_URL, url + "service/cmis");
+
 		parameter.put(SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
 
 		// Session locale.

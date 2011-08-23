@@ -40,8 +40,9 @@ public interface KtunaxaConstant {
 	String FORM_DOCUMENT_DOWNLOAD_URL = "downloadUrl";
 	
 	String LAYER_CRS = "EPSG:26911";
-	String MAP_CRS = "EPSG:900913";
 	int LAYER_SRID = 26911;
+	String MAP_CRS = "EPSG:900913";
+	int MAP_SRID = 900913;
 
 	String CREATE_REFERRAL_URL_PARAMETER = "createReferral";
 

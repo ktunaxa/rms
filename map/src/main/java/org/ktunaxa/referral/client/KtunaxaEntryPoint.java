@@ -6,10 +6,16 @@
 
 package org.ktunaxa.referral.client;
 
+import org.geomajas.gwt.client.action.ToolCreator;
+import org.geomajas.gwt.client.action.ToolbarBaseAction;
+import org.geomajas.gwt.client.action.toolbar.ToolbarRegistry;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
+import org.ktunaxa.referral.client.action.ZoomCurrentReferralModalAction;
+import org.ktunaxa.referral.client.action.ZoomKtunaxaTerritoryModalAction;
 import org.ktunaxa.referral.client.gui.DocumentItem;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
@@ -32,8 +38,24 @@ import com.smartgwt.client.widgets.form.fields.TextAreaItem;
  */
 public class KtunaxaEntryPoint implements EntryPoint {
 
+	public static final String TOOL_ZOOM_KTUNAXA_TERRITORY = "ZoomKtunaxaTerritory";
+	public static final String TOOL_ZOOM_CURRENT_REFERRAL = "ZoomCurrentReferral";
+
 	public void onModuleLoad() {
-		// Register custom textarea item
+		ToolbarRegistry.put(TOOL_ZOOM_KTUNAXA_TERRITORY, new ToolCreator() {
+
+			public ToolbarBaseAction createTool(MapWidget mapWidget) {
+				return new ZoomKtunaxaTerritoryModalAction(mapWidget);
+			}
+		});
+		ToolbarRegistry.put(TOOL_ZOOM_CURRENT_REFERRAL, new ToolCreator() {
+
+			public ToolbarBaseAction createTool(MapWidget mapWidget) {
+				return new ZoomCurrentReferralModalAction(mapWidget);
+			}
+		});
+
+		// Register custom text area item
 		registerTextAreaFormItem();
 		// Register custom item for uploading documents
 		registerDocumentIdFormItem();

@@ -118,6 +118,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		</property>
 	</bean>
 
+	<bean name="ZoomKtunaxaTerritory" class="org.geomajas.configuration.client.ClientToolInfo" />
+
+	<bean name="ZoomCurrentReferral" class="org.geomajas.configuration.client.ClientToolInfo" />
+
 	<!-- LayerTree tools -->
 
 	<bean name="LayerVisibleTool" class="org.geomajas.configuration.client.ClientToolInfo" />
