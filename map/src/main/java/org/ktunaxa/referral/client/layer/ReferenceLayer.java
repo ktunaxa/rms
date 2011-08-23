@@ -23,11 +23,10 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
- * A reference layer is a wrapper of the Geomajas layer that takes care of handling the sublayers as if they were
+ * A reference layer is a wrapper of the Geomajas layer that takes care of handling the sub layers as if they were
  * individual Geomajas layers.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class ReferenceLayer {
 
@@ -44,8 +43,6 @@ public class ReferenceLayer {
 	public ReferenceLayer(VectorLayer layer, List<ReferenceLayerDto> subLayerDtos,
 			List<ReferenceLayerTypeDto> layerTypeDtos, boolean isBase) {
 		this.layer = layer;
-		// we only need the name for the style !
-		layer.getLayerInfo().getNamedStyleInfo().getFeatureStyles().clear();
 		for (ReferenceLayerTypeDto layerType : layerTypeDtos) {
 			if (isBase == layerType.isBaseLayer()) {
 				layerTypes.add(layerType);
@@ -70,6 +67,7 @@ public class ReferenceLayer {
 	 * 
 	 * @param handler
 	 *            The new handler to be added.
+	 * @return handler registration
 	 */
 	public HandlerRegistration addLayerChangedHandler(LayerChangedHandler handler) {
 		return handlerManager.addHandler(LayerChangedHandler.TYPE, handler);
@@ -99,7 +97,8 @@ public class ReferenceLayer {
 				} else {
 					builder.append(" or ");
 				}
-				builder.append("layer.code = " + id);
+				builder.append("layer.code = ");
+				builder.append(id);
 			}
 		}
 		String filter = (builder == null ? "EXCLUDE" : builder.toString());
@@ -107,7 +106,7 @@ public class ReferenceLayer {
 		if (!layer.isVisible()) {
 			layer.setVisible(true);
 		}
-		// indicates show status has changed for one or more sublayers
+		// indicates show status has changed for one or more sub layers
 		handlerManager.fireEvent(new LayerShownEvent(layer));
 	}
 
@@ -130,7 +129,6 @@ public class ReferenceLayer {
 	 * Updates the show status when the map view changes.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public class LayerShowingHandler implements MapViewChangedHandler {
 
@@ -153,7 +151,6 @@ public class ReferenceLayer {
 	 * Forwards layer changed events to our listeners.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public class LayerChangedForwarder implements LayerChangedHandler {
 
