@@ -272,9 +272,9 @@
 					<execution>
 						<phase>test-compile</phase>
 						<goals>
-							<goal>clean</goal>
+							<!--<goal>clean</goal>-->
 							<goal>compile</goal>
-							<goal>test</goal>
+							<!--<goal>test</goal>-->
 						</goals>
 					</execution>
 				</executions>
