@@ -37,7 +37,6 @@ import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
  * 
  * @author Jan De Moerloose
  */
-
 public class CommentsForm implements FeatureForm<Canvas> {
 
 	private CommentsLayout commentsLayout;
@@ -127,7 +126,6 @@ public class CommentsForm implements FeatureForm<Canvas> {
 	 * Block layout for comments.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	class CommentsLayout extends AbstractAttributeBlockLayout<DynamicForm> {
 

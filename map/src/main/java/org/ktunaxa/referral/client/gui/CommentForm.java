@@ -22,7 +22,6 @@ import org.ktunaxa.referral.server.service.KtunaxaConstant;
  * Form for editing comments.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class CommentForm extends DefaultFeatureForm {
 

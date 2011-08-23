@@ -23,7 +23,7 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 
 /**
- * Implementation of the CollapsableBlock abstraction that handles {@link CommentDto} type objects. Instances of this
+ * Implementation of the {@link AbstractAttributeBlock} abstraction that handles comment type objects. Instances of this
  * class will form the list of comments on the comment page. Each block can collapse and expand. When collapsed only the
  * comment title is visible.
  * 
@@ -31,9 +31,18 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
  */
 public class CommentBlock extends AbstractAttributeBlock {
 
-	private HLayout title;
+	public static final String COMMENT_BLOCK_STYLE = "commentBlock";
+	public static final String COMMENT_BLOCK_COLLAPSED_STYLE = "commentBlockCollapsed";
+	public static final String COMMENT_BLOCK_TITLE_STYLE = "commentBlockTitle";
+	public static final String COMMENT_BLOCK_TITLE_COLLAPSED_STYLE = "commentBlockTitleCollapsed";
+	public static final String ICON_EDIT = "[ISOMORPHIC]/geomajas/osgeo/edit.png";
+	public static final String ICON_REMOVE = "[ISOMORPHIC]/geomajas/silk/remove.png";
+	public static final String ICON_ADD_FILES =
+			"[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png";
+	public static final String ICON_REMOVE_FILES =
+			"[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png";
 
-	private HLayout infoLayout;
+	private HLayout title;
 
 	private HTMLFlow content;
 
@@ -66,16 +75,16 @@ public class CommentBlock extends AbstractAttributeBlock {
 
 	/** Expand the comment block, displaying (almost) everything. */
 	public void expand() {
-		setStyleName("commentBlock");
-		title.setStyleName("commentBlockTitle");
+		setStyleName(COMMENT_BLOCK_STYLE);
+		title.setStyleName(COMMENT_BLOCK_TITLE_STYLE);
 		//infoLayout.setVisible(true);
 		content.setVisible(true);
 	}
 
 	/** Collapse the comment block, leaving only the title visible. */
 	public void collapse() {
-		setStyleName("commentBlockCollapsed");
-		title.setStyleName("commentBlockTitleCollapsed");
+		setStyleName(COMMENT_BLOCK_COLLAPSED_STYLE);
+		title.setStyleName(COMMENT_BLOCK_TITLE_COLLAPSED_STYLE);
 		//infoLayout.setVisible(false);
 		content.setVisible(false);
 	}
@@ -113,12 +122,12 @@ public class CommentBlock extends AbstractAttributeBlock {
 	// ------------------------------------------------------------------------
 
 	private void buildGui() {
-		setStyleName("commentBlock");
+		setStyleName(COMMENT_BLOCK_STYLE);
 
 		title = new HLayout(LayoutConstant.MARGIN_LARGE);
 		title.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
 		title.setLayoutLeftMargin(LayoutConstant.MARGIN_LARGE);
-		title.setStyleName("commentBlockTitle");
+		title.setStyleName(COMMENT_BLOCK_TITLE_STYLE);
 		title.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
@@ -130,9 +139,9 @@ public class CommentBlock extends AbstractAttributeBlock {
 			}
 		});
 		title.setCursor(Cursor.HAND);
-		checked = new Img("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png", 16, 16);
+		checked = new Img(ICON_REMOVE_FILES, 16, 16);
 		if (isCommentIncludeInReport()) {
-			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png");
+			checked.setSrc(ICON_ADD_FILES);
 		}
 		checked.setLayoutAlign(VerticalAlignment.CENTER);
 		title.addMember(checked);
@@ -141,7 +150,7 @@ public class CommentBlock extends AbstractAttributeBlock {
 		title.addMember(titleText);
 		addMember(title);
 
-		infoLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
+		HLayout infoLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutRightMargin(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutTopMargin(LayoutConstant.MARGIN_SMALL);
 		info = new HTMLFlow("<div class='commentBlockInfo'>Posted by " + getCommentCreatedBy() + " @ "
@@ -153,7 +162,7 @@ public class CommentBlock extends AbstractAttributeBlock {
 		infoLayout.addMember(space);
 
 		editButton = new IButton();
-		editButton.setIcon("[ISOMORPHIC]/geomajas/osgeo/edit.png");
+		editButton.setIcon(ICON_EDIT);
 		editButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
 		editButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
 		editButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
@@ -162,7 +171,7 @@ public class CommentBlock extends AbstractAttributeBlock {
 		infoLayout.addMember(editButton);
 		
 		deleteButton = new IButton();
-		deleteButton.setIcon("[ISOMORPHIC]/geomajas/silk/remove.png");
+		deleteButton.setIcon(ICON_REMOVE);
 		deleteButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
 		deleteButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
 		deleteButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
@@ -233,9 +242,9 @@ public class CommentBlock extends AbstractAttributeBlock {
 				+ getCommentCreationDate().toString() + "</div>");
 		content.setContents("<div class='commentBlockContent'>" + getCommentContent() + "</div>");
 		if (isCommentIncludeInReport()) {
-			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png");
+			checked.setSrc(ICON_ADD_FILES);
 		} else {
-			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png");
+			checked.setSrc(ICON_REMOVE_FILES);
 		}
 	}
 }
