@@ -37,7 +37,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * Panel to upload the referral geometry via a Geomark URL.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPanel {
 
@@ -48,8 +47,6 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 	private HTMLFlow errorFlow;
 
 	private DynamicForm form;
-
-	private IButton downloadButton;
 
 	private TextItem textItem;
 
@@ -65,7 +62,8 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 						+ " the WKT format will be tried.</p>" + "</div>");
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight(20);
-		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
+		busyImg = new Img(LayoutConstant.LOADING_IMAGE,
+				LayoutConstant.LOADING_IMAGE_WIDTH, LayoutConstant.LOADING_IMAGE_HEIGHT);
 		busyImg.setVisible(false);
 
 		form = new DynamicForm();
@@ -77,7 +75,7 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 
 		form.setItems(textItem);
 
-		downloadButton = new IButton("Download");
+		IButton downloadButton = new IButton("Download");
 
 		HLayout buttonPanel = new HLayout(LayoutConstant.MARGIN_LARGE);
 		buttonPanel.addMember(downloadButton);
@@ -93,7 +91,6 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 		addMember(form);
 		addMember(buttonPanel);
 		downloadButton.addClickHandler(new DownloadHandler());
-
 	}
 
 	public void setFeature(Feature feature) {
@@ -108,7 +105,6 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 	 * Starts download of geometry from Geomark URL.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	class DownloadHandler implements ClickHandler {
 
@@ -128,7 +124,6 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 	 * Handles downloaded geometry from Geomark URL.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	class GeometryHandler implements CommandCallback<GetGeomarkResponse>, CommandExceptionCallback {
 

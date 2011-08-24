@@ -26,6 +26,7 @@ import org.hibernate.SessionFactory;
 import org.ktunaxa.referral.server.domain.ReferenceBase;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceValue;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.expression.Expression;
@@ -191,7 +192,7 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 				String crsName = schema.getCoordinateReferenceSystem()
 						.getName().getCode();
 				if ("NAD_1983_UTM_Zone_11N".equalsIgnoreCase(crsName)) {
-					code = 26911;
+					code = KtunaxaConstant.LAYER_SRID;
 				} else {
 					throw new IOException( "Unknown coordinate reference system: " + crsName);
 				}
@@ -269,17 +270,6 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 	// ------------------------------------------------------------------------
 
 	/**
-	 * Get the current base path that determines where to look for shape files.
-	 * Must be a folder!
-	 * 
-	 * @return The current base path that determines where to look for shape
-	 *         files.
-	 */
-	public String getBasePath() {
-		return basePath;
-	}
-
-	/**
 	 * Set the folder that determines where this service should go looking for
 	 * shape files.
 	 * 
@@ -290,16 +280,8 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 		this.basePath = basePath;
 	}
 
-	public Map<String, String> getStyleAttributeMap() {
-		return styleAttributeMap;
-	}
-
 	public void setStyleAttributeMap(Map<String, String> styleAttributeMap) {
 		this.styleAttributeMap = styleAttributeMap;
-	}
-
-	public Map<String, String> getLabelAttributeMap() {
-		return labelAttributeMap;
 	}
 
 	public void setLabelAttributeMap(Map<String, String> labelAttributeMap) {

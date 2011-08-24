@@ -16,6 +16,7 @@ import org.geomajas.gwt.client.spatial.geometry.MultiPolygon;
 import org.geomajas.gwt.client.spatial.geometry.Point;
 import org.geomajas.gwt.client.spatial.geometry.Polygon;
 import org.junit.Test;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 public class WktParserTest {
 
@@ -43,7 +44,7 @@ public class WktParserTest {
 	private WktParser parser;
 
 	public WktParserTest() {
-		parser = new WktParser(29611);
+		parser = new WktParser(KtunaxaConstant.LAYER_SRID);
 	}
 	
 	@Test

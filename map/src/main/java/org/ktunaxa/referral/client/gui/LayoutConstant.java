@@ -35,4 +35,8 @@ public interface LayoutConstant {
 
 	int SPACER_LARGE = 20;
 	int SPACER_SMALL = 10;
+
+	String LOADING_IMAGE = "[ISOMORPHIC]/images/loading.gif";
+	int LOADING_IMAGE_WIDTH = 16;
+	int LOADING_IMAGE_HEIGHT = 16;
 }

@@ -17,6 +17,7 @@ import org.ktunaxa.referral.server.domain.ReferenceBaseAttribute;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceValue;
 import org.ktunaxa.referral.server.domain.ReferenceValueAttribute;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.type.AttributeDescriptor;
@@ -42,7 +43,7 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 
 	private final Logger log = LoggerFactory.getLogger(LayerPersistServiceImpl.class);
 
-	private int srid = 26911;
+	private int srid = KtunaxaConstant.LAYER_SRID;
 
 	@Autowired
 	private SessionFactory sessionFactory;
