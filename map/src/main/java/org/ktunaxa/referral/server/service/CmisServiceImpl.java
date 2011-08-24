@@ -121,25 +121,17 @@ public class CmisServiceImpl implements CmisService {
 	}
 
 	public String getDownloadUrl(Document document) {
-		String url = config.getUrl();
-		if (url.endsWith("/")) {
-			url += "d/a/";
-		} else {
-			url += "/d/a/";
-		}
-		String docId = document.getId().replaceAll("://", "/");
-		return url + docId + "/" + document.getContentStreamFileName();
+		return getDocumentUrl(document, "d/a/");
 	}
 
 	public String getDisplayUrl(Document document) {
-		String url = config.getUrl();
-		if (url.endsWith("/")) {
-			url += "d/d/";
-		} else {
-			url += "/d/d/";
-		}
+		return getDocumentUrl(document, "d/d/");
+	}
+
+	private String getDocumentUrl(Document document, String restCommand) {
 		String docId = document.getId().replaceAll("://", "/");
-		return url + docId + "/" + document.getContentStreamFileName();
+		return config.getUrl() + restCommand + docId + "/" + document.getContentStreamFileName();
+
 	}
 
 	public Document create(String documentName, String mimeType, InputStream in) throws IOException {
