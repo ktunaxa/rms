@@ -134,8 +134,20 @@ public class CmisServiceImpl implements CmisService {
 
 	}
 
-	public Document create(String documentName, String mimeType, InputStream in) throws IOException {
+	public Document create(String documentName, String mimeType, InputStream in, String... folderNames)
+			throws IOException {
 		Folder folder = getWorkingFolder();
+
+		for (String folderName : folderNames) {
+			// properties
+			// (minimal set: name and object type id)
+			Map<String, Object> properties = new HashMap<String, Object>();
+			properties.put(PropertyIds.OBJECT_TYPE_ID, "cmis:folder");
+			properties.put(PropertyIds.NAME, folderName);
+
+			// create the folder
+			folder = folder.createFolder(properties);
+		}
 
 		// Go over all children and see if the document already exists:
 		for (CmisObject object : folder.getChildren()) {

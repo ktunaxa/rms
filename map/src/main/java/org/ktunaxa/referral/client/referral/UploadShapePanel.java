@@ -33,7 +33,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * Panel to upload the referral geometry via a local shape file.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 
@@ -47,7 +46,7 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 
 	private HandlerManager handlerManager = new HandlerManager(this);
 
-	public UploadShapePanel() {
+	public UploadShapePanel(Feature referral) {
 		setLayoutAlign(Alignment.CENTER);
 		HTMLFlow explanation = new HTMLFlow("<h3>Attach a zipped shape file</h3><div><p>In order to attach a geometry"
 				+ " to this referral, you have to provide a shape file (zipped) that contains the project area. Please"
@@ -57,22 +56,23 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight(20);
 		final FileUploadForm form = new FileUploadForm("Select a file (.zip)", GWT.getModuleBaseURL()
-				+ "../d/upload/referral/geometry/");
+				+ "../d/upload/referral/geometry/", ReferralUtil.createId(referral));
 		form.setHeight(40);
 
 		HLayout btnLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
-		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
+		busyImg = new Img(LayoutConstant.LOADING_IMAGE,
+				LayoutConstant.LOADING_IMAGE_WIDTH, LayoutConstant.LOADING_IMAGE_HEIGHT);
 		busyImg.setVisible(false);
-		IButton uploadbutton = new IButton("Upload ShapeFile");
-		uploadbutton.setAutoFit(true);
-		uploadbutton.addClickHandler(new ClickHandler() {
+		IButton uploadButton = new IButton("Upload ShapeFile");
+		uploadButton.setAutoFit(true);
+		uploadButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 				form.submit();
 				busyImg.setVisible(true);
 			}
 		});
-		btnLayout.addMember(uploadbutton);
+		btnLayout.addMember(uploadButton);
 		btnLayout.addMember(busyImg);
 		errorFlow = new HTMLFlow();
 		errorFlow.setHeight100();
@@ -84,7 +84,7 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 
 			public void onFileUploadComplete(FileUploadCompleteEvent event) {
 				busyImg.setVisible(false);
-				WktParser wktParser = new WktParser(29611);
+				WktParser wktParser = new WktParser(KtunaxaConstant.LAYER_SRID);
 				Geometry geometry = wktParser.parse(event.getString(KtunaxaConstant.FORM_GEOMETRY));
 				if (geometry != null) {
 					errorFlow.setContents("");

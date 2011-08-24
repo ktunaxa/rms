@@ -6,6 +6,7 @@
 package org.ktunaxa.referral.client.gui;
 
 import org.ktunaxa.referral.client.referral.FileUploadForm;
+import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
 import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
@@ -41,7 +42,7 @@ public class DocumentItem extends CanvasItem {
 	
 	private boolean uploadSuccess;
 
-	HTMLFlow errorFlow = new HTMLFlow();
+	private HTMLFlow errorFlow = new HTMLFlow();
 
 	@Override
 	protected Canvas createCanvas() {
@@ -112,10 +113,12 @@ public class DocumentItem extends CanvasItem {
 		uploadLayout.setMembersMargin(LayoutConstant.MARGIN_LARGE);
 		uploadLayout.setWidth("*");
 		uploadLayout.setHeight(16);
-		form = new FileUploadForm("Select a file", GWT.getModuleBaseURL() + KtunaxaConstant.URL_DOCUMENT_UPLOAD);
+		form = new FileUploadForm("Select a file", GWT.getModuleBaseURL() + KtunaxaConstant.URL_DOCUMENT_UPLOAD,
+				ReferralUtil.createId(MapLayout.getInstance().getCurrentReferral()));
 
 		HLayout messageLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
-		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
+		busyImg = new Img(LayoutConstant.LOADING_IMAGE,
+				LayoutConstant.LOADING_IMAGE_WIDTH, LayoutConstant.LOADING_IMAGE_HEIGHT);
 		busyImg.setVisible(false);
 		messageLayout.addMember(busyImg);
 		errorFlow.setHeight(16);

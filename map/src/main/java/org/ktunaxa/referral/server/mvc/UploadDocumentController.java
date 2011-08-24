@@ -34,14 +34,16 @@ public class UploadDocumentController {
 
 	@RequestMapping(value = "/upload/referral/document", method = RequestMethod.POST)
 	public String handleFormUpload(@RequestParam(KtunaxaConstant.FORM_ID) String formId,
+			@RequestParam(KtunaxaConstant.FORM_REFERRAL) String referralId,
 			@RequestParam("file") MultipartFile file, Model model) {
 
 		UploadResponse response = new UploadResponse();
 		response.addObject(KtunaxaConstant.FORM_ID, formId);
 		try {
+			String year = "20" + referralId.substring(8, 10);
 			String originalFilename = file.getOriginalFilename();
 			Document document = cmisService.create(originalFilename, file.getContentType(),
-					file.getInputStream());
+					file.getInputStream(), year, referralId);
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_TITLE, originalFilename);
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_ID, document.getId());
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL, cmisService.getDisplayUrl(document));

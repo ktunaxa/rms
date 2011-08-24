@@ -33,17 +33,20 @@ public class FileUploadForm extends DynamicForm {
 	
 	private UploadItem fileItem;
 
-	public FileUploadForm(String title, String targetUrl) {
+	public FileUploadForm(String title, String targetUrl, String referralId) {
 		super();
 		if (!targetUrl.contains("?")) {
-			targetUrl += "?" + KtunaxaConstant.FORM_ID + "=" + getID();
+			targetUrl += "?";
 		} else {
-			targetUrl += "&" + KtunaxaConstant.FORM_ID + "=" + getID();
+			targetUrl += "&";
 		}
+		targetUrl += KtunaxaConstant.FORM_ID + "=" + getID() + "&" +
+				KtunaxaConstant.FORM_REFERRAL + "=" + referralId.replace("/", "%2F");
+		String targetFrame = "resFrame" + getID();
 		handlerManager = new HandlerManager(this);
 		initComplete(this);
 		setEncoding(Encoding.MULTIPART);
-		setTarget(targetUrl);
+		setTarget(targetFrame);
 		setCanSubmit(true);
 		setAction(targetUrl);
 		setWidth100();
@@ -67,7 +70,7 @@ public class FileUploadForm extends DynamicForm {
 		*/
 		setFields(fileItem);
 
-		NamedFrame frame = new NamedFrame(targetUrl);
+		NamedFrame frame = new NamedFrame(targetFrame);
 		frame.setSize("1", "1");
 		frame.setVisible(false);
 		addChild(frame);

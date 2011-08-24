@@ -118,7 +118,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		layout = new VLayout(LayoutConstant.MARGIN_LARGE);
 		uploadLayout = new CardLayout<String>();
 		panelMap = new LinkedHashMap<String, UploadGeometryPanel>();
-		panelMap.put(UploadShapePanel.NAME, new UploadShapePanel());
+		panelMap.put(UploadShapePanel.NAME, new UploadShapePanel(getWizardData().getFeature()));
 		panelMap.put(UploadGeoMarkUrlPanel.NAME, new UploadGeoMarkUrlPanel());
 		panelMap.put(UploadXyCoordinatePanel.NAME, new UploadXyCoordinatePanel());
 		ShowGeometryOnMapHandler handler = new ShowGeometryOnMapHandler();

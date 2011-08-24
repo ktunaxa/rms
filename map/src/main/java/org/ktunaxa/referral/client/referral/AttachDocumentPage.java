@@ -59,8 +59,8 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 		grid.setHeight100();
 		grid.setShowAllRecords(true);
 
-		ListGridField titleField = new ListGridField("title", "Title");
-		ListGridField documentIdField = new ListGridField("documentId", "Alfresco ID");
+		ListGridField titleField = new ListGridField(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, "Title");
+		ListGridField documentIdField = new ListGridField(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID, "Alfresco ID");
 		grid.setFields(titleField, documentIdField);
 		grid.setData(new ListGridRecord[] {});
 		layout.addMember(grid);
@@ -88,8 +88,8 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 
 	private void addDocument(String title, String documentId) {
 		ListGridRecord record = new ListGridRecord();
-		record.setAttribute("title", title);
-		record.setAttribute("documentId", documentId);
+		record.setAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, title);
+		record.setAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID, documentId);
 		grid.addData(record);
 	}
 
@@ -102,22 +102,23 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight(20);
 		final FileUploadForm form = new FileUploadForm("Select a file", GWT.getModuleBaseURL()
-				+ "../d/upload/referral/document");
+				+ KtunaxaConstant.URL_DOCUMENT_UPLOAD, ReferralUtil.createId(getWizardData().getFeature()));
 		form.setHeight(40);
 
 		HLayout btnLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
-		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
+		busyImg = new Img(LayoutConstant.LOADING_IMAGE,
+				LayoutConstant.LOADING_IMAGE_WIDTH, LayoutConstant.LOADING_IMAGE_HEIGHT);
 		busyImg.setVisible(false);
-		IButton uploadbutton = new IButton("Upload");
-		uploadbutton.setAutoFit(true);
-		uploadbutton.addClickHandler(new ClickHandler() {
+		IButton uploadButton = new IButton("Upload");
+		uploadButton.setAutoFit(true);
+		uploadButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 				form.submit();
 				busyImg.setVisible(true);
 			}
 		});
-		btnLayout.addMember(uploadbutton);
+		btnLayout.addMember(uploadButton);
 		btnLayout.addMember(busyImg);
 		final HTMLFlow errorFlow = new HTMLFlow();
 		errorFlow.setHeight100();
@@ -136,13 +137,13 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 				String displayUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL);
 				String downloadUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DOWNLOAD_URL);
 				AssociationValue document = new AssociationValue();
-				Map<String, Attribute<?>> attribs = new HashMap<String, Attribute<?>>();
-				attribs.put("title", new StringAttribute(title));
-				attribs.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, new StringAttribute(title));
-				attribs.put("documentId", new StringAttribute(documentId));
-				attribs.put("displayUrl", new StringAttribute(displayUrl));
-				attribs.put("downloadUrl", new StringAttribute(downloadUrl));
-				document.setAllAttributes(attribs);
+				Map<String, Attribute<?>> attributes = new HashMap<String, Attribute<?>>();
+				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, new StringAttribute(title));
+				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, new StringAttribute(title));
+				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID, new StringAttribute(documentId));
+				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL, new StringAttribute(displayUrl));
+				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL, new StringAttribute(downloadUrl));
+				document.setAllAttributes(attributes);
 				getWizardData().getFeature().addOneToManyValue(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, document);
 				busyImg.setVisible(false);
 				show();
@@ -176,8 +177,9 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 				KtunaxaConstant.ATTRIBUTE_DOCUMENTS);
 		if (documents != null) {
 			for (AssociationValue associationValue : documents) {
-				String title = (String) associationValue.getAllAttributes().get("title").getValue();
-				String documentId = (String) associationValue.getAllAttributes().get("documentId").getValue();
+				Map<String, Attribute<?>> attributes = associationValue.getAllAttributes();
+				String title = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE).getValue();
+				String documentId = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID).getValue();
 				addDocument(title, documentId);
 			}
 		}

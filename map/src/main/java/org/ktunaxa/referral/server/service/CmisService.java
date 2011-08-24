@@ -72,12 +72,13 @@ public interface CmisService {
 	 *            The mime-type for the document (i.e. 'text/html').
 	 * @param in
 	 *            The actual document contents in the form of a stream.
+	 * @param folderName names of the folder tree in which the document should be put
 	 * @return Returns the CMIS document instance on a successful create.
 	 * @throws IOException
 	 *             In case there was a problem saving the document in the CMIS instance. No document will have been
 	 *             created.
 	 */
-	Document create(String documentName, String mimeType, InputStream in) throws IOException;
+	Document create(String documentName, String mimeType, InputStream in, String... folderName) throws IOException;
 
 	/**
 	 * Get a certain document by it's document name.
