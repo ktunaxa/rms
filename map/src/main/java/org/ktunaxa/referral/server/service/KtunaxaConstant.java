@@ -31,6 +31,7 @@ public interface KtunaxaConstant {
 	double KTUNAXA_TERRITORY_MERCATOR_MAX_Y = 6891281.903592376;
 
 	String FORM_ID = "formId";
+	String FORM_REFERRAL = "refId";
 	String FORM_FILE = "file";
 	String FORM_GEOMETRY = "geometry";
 	String FORM_ERROR_MESSAGE = "errorMessage";
@@ -100,4 +101,7 @@ public interface KtunaxaConstant {
 
 	String MAIL_VALIDATOR_REGEX = "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z]{2,4}$";
 
+	String GEOMARK_BASE_URL = "http://delivery.apps.gov.bc.ca/pub/geomark/geomarks/";
+	String GEOMARK_SHAPE_REQUEST = "/asPolygon.shpz?srid=";
+	String GEOMARK_WKT_REQUEST = "/asPolygon.wkt?srid=";
 }

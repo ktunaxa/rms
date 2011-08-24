@@ -14,6 +14,7 @@ import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import org.geomajas.command.Command;
 import org.geomajas.service.DtoConverterService;
+import org.geomajas.service.GeoService;
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.ktunaxa.referral.server.FileUtil;
@@ -40,7 +41,8 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 	@Autowired
 	private DtoConverterService converterService;
 
-	private String geomarkBaseUrl = "http://delivery.apps.gov.bc.ca/pub/geomark/geomarks/";
+	@Autowired
+	private GeoService geoService;
 
 	private static final String GM_PREFIX = "gm-";
 
@@ -52,7 +54,7 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 		String geomarkUrl = request.getGeomark();
 		String geomarkId = null;
 		if (geomarkUrl.startsWith(GM_PREFIX)) {
-			geomarkUrl = geomarkBaseUrl + request.getGeomark();
+			geomarkUrl = KtunaxaConstant.GEOMARK_BASE_URL + request.getGeomark();
 		}
 		if (geomarkUrl.contains(GM_PREFIX)) {
 			int last = geomarkUrl.indexOf('/', geomarkUrl.lastIndexOf(GM_PREFIX));
@@ -65,29 +67,13 @@ public class GetGeomarkCommand implements Command<GetGeomarkRequest, GetGeomarkR
 		}
 		Geometry geometry;
 		try {
-			geometry = loadZippedShape(geomarkId, geomarkUrl + "/asPolygon.shpz?srid=26911");
+			geometry = loadZippedShape(geomarkId, geomarkUrl + KtunaxaConstant.GEOMARK_SHAPE_REQUEST +
+					KtunaxaConstant.LAYER_SRID);
 		} catch (Exception e) {
-			geometry = loadWkt(geomarkUrl + "/asPolygon.wkt?srid=26911");
+			geometry = loadWkt(geomarkUrl + KtunaxaConstant.GEOMARK_WKT_REQUEST + KtunaxaConstant.LAYER_SRID);
 		}
+		geometry = geoService.transform(geometry, KtunaxaConstant.LAYER_CRS, KtunaxaConstant.MAP_CRS);
 		response.setGeometry(converterService.toDto(geometry));
-	}
-	
-	/**
-	 * Get the Geomark base URL.
-	 *
-	 * @return base URL
-	 */
-	public String getGeomMarkBaseUrl() {
-		return geomarkBaseUrl;
-	}
-
-	/**
-	 * Set the Geomark base URL (up till but not including gm-xxx).
-	 *
-	 * @param geomMarkBaseUrl base URL
-	 */
-	public void setGeomMarkBaseUrl(String geomMarkBaseUrl) {
-		this.geomarkBaseUrl = geomMarkBaseUrl;
 	}
 
 	private Geometry loadWkt(String url) throws IOException, ParseException {

@@ -11,7 +11,6 @@ import org.geomajas.command.CommandRequest;
  * Request data for a {@link org.ktunaxa.referral.server.command.GetGeomarkCommand}.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class GetGeomarkRequest implements CommandRequest {
 
