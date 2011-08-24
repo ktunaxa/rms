@@ -9,6 +9,7 @@ import org.geomajas.gwt.client.map.event.LayerChangedHandler;
 import org.geomajas.gwt.client.map.event.LayerFilteredEvent;
 import org.geomajas.gwt.client.map.event.LayerLabeledEvent;
 import org.geomajas.gwt.client.map.event.LayerShownEvent;
+import org.geomajas.gwt.client.util.WidgetLayout;
 import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
 import org.ktunaxa.referral.client.layer.action.ShowMetadataHandler;
 
@@ -58,7 +59,7 @@ public class ReferenceLayerBlock extends HLayout {
 		visibleBtn.setLayoutAlign(VerticalAlignment.CENTER);
 		visibleBtn.setShowTitle(false);
 		visibleBtn.setSize("24", "22");
-		visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show.png");
+		visibleBtn.setIcon(WidgetLayout.iconLayerShow);
 		visibleBtn.setIconSize(16);
 		visibleBtn.setActionType(SelectionType.CHECKBOX);
 		visibleBtn.setSelected(subLayer.isVisible());
@@ -68,11 +69,9 @@ public class ReferenceLayerBlock extends HLayout {
 		Menu menu = new Menu();
 		menu.setShowShadow(true);
 		menu.setShadowDepth(10);
-		MenuItem item1 = new MenuItem("Refresh layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-		MenuItem item2 = new MenuItem("Zoom to layer", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-		MenuItem item3 = new MenuItem("Show meta-data", "[ISOMORPHIC]/geomajas/widget/layertree/labels-show.png");
-		menu.setItems(item1, item2, item3);
-		item3.addClickHandler(new ShowMetadataHandler(subLayer));
+		MenuItem item1 = new MenuItem("Show meta-data", WidgetLayout.iconLabelsShow);
+		menu.setItems(item1);
+		item1.addClickHandler(new ShowMetadataHandler(subLayer));
 		IMenuButton menuButton = new IMenuButton("", menu);
 		menuButton.setLayoutAlign(VerticalAlignment.CENTER);
 		menuButton.setShowTitle(false);
@@ -87,18 +86,18 @@ public class ReferenceLayerBlock extends HLayout {
 			if (subLayer.isShowing()) {
 				if (subLayer.isLabeled()) {
 					visibleBtn.setIcon(null);
-					visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show-labeled.png");
+					visibleBtn.setIcon(WidgetLayout.iconLayerShowLabeled);
 				} else {
 					visibleBtn.setIcon(null);
-					visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show.png");
+					visibleBtn.setIcon(WidgetLayout.iconLayerShow);
 				}
 			} else {
 				visibleBtn.setIcon(null);
-				visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-hide.png");
+				visibleBtn.setIcon(WidgetLayout.iconLayerHide);
 			}
 		} else {
 			visibleBtn.setIcon(null);
-			visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-invisible.png");
+			visibleBtn.setIcon(WidgetLayout.iconLayerInvisible);
 		}
 	}
 

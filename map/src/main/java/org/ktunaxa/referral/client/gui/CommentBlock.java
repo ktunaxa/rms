@@ -8,6 +8,7 @@ package org.ktunaxa.referral.client.gui;
 
 import java.util.Date;
 
+import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -35,8 +36,6 @@ public class CommentBlock extends AbstractAttributeBlock {
 	public static final String COMMENT_BLOCK_COLLAPSED_STYLE = "commentBlockCollapsed";
 	public static final String COMMENT_BLOCK_TITLE_STYLE = "commentBlockTitle";
 	public static final String COMMENT_BLOCK_TITLE_COLLAPSED_STYLE = "commentBlockTitleCollapsed";
-	public static final String ICON_EDIT = "[ISOMORPHIC]/geomajas/osgeo/edit.png";
-	public static final String ICON_REMOVE = "[ISOMORPHIC]/geomajas/silk/remove.png";
 	public static final String ICON_ADD_FILES =
 			"[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png";
 	public static final String ICON_REMOVE_FILES =
@@ -162,7 +161,7 @@ public class CommentBlock extends AbstractAttributeBlock {
 		infoLayout.addMember(space);
 
 		editButton = new IButton();
-		editButton.setIcon(ICON_EDIT);
+		editButton.setIcon(WidgetLayout.iconEdit);
 		editButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
 		editButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
 		editButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
@@ -171,7 +170,7 @@ public class CommentBlock extends AbstractAttributeBlock {
 		infoLayout.addMember(editButton);
 		
 		deleteButton = new IButton();
-		deleteButton.setIcon(ICON_REMOVE);
+		deleteButton.setIcon(WidgetLayout.iconRemove);
 		deleteButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
 		deleteButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
 		deleteButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);

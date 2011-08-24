@@ -7,6 +7,8 @@ package org.ktunaxa.referral.client.gui;
 
 import java.util.Date;
 
+import com.google.gwt.user.client.Window;
+import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -29,6 +31,12 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
  */
 public class DocumentBlock extends AbstractAttributeBlock {
 
+	private static final String ICON_ADD = "[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png";
+	private static final String ICON_REMOVE =
+			"[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png";
+	private static final String BLOCK_STYLE = "documentBlock";
+	private static final String BLOCK_TITLE_STYLE = "documentBlockTitle";
+
 	private HLayout title;
 
 	private HLayout infoLayout;
@@ -40,7 +48,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	private HTMLFlow info;
 
 	private IButton editButton;
-
+	
 	private IButton deleteButton;
 
 	private Img checked;
@@ -52,8 +60,8 @@ public class DocumentBlock extends AbstractAttributeBlock {
 
 	@Override
 	public void expand() {
-		setStyleName("documentBlock");
-		title.setStyleName("documentBlockTitle");
+		setStyleName(BLOCK_STYLE);
+		title.setStyleName(BLOCK_TITLE_STYLE);
 		infoLayout.setVisible(true);
 		content.setVisible(true);
 	}
@@ -85,14 +93,12 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		titleText.setContents("<div class='documentBlockTitleText'>" + getDocumentTitle() + "</div>");
 		info.setContents("<div class='documentBlockInfo'>Added by " + getAddedBy() + " @ " + getAdditionDate()
 				+ "</div>");
-		content.setContents("<div class='documentBlockType'>" + "Description : " + getDocumentDescription()
-				+ "<br>Type : " + getDocumentTypeTitle() + "<br>" + "<a target='_ktunaxa_doc' href='"
-				+ getDocumentDisplayUrl() + "'>Open</a>  " + "<a href='" + getDocumentDownloadUrl() + "'>Save</a>"
-				+ "</div>");
+		content.setContents("<div class='documentBlockType'>" + "Description: " + getDocumentDescription()
+				+ "<br>Type: " + getDocumentTypeTitle());
 		if (isIncludeInReport()) {
-			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png");
+			checked.setSrc(ICON_ADD);
 		} else {
-			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png");
+			checked.setSrc(ICON_REMOVE);
 		}
 	}
 
@@ -102,12 +108,12 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	}
 
 	private void buildGui() {
-		setStyleName("documentBlock");
+		setStyleName(BLOCK_STYLE);
 
 		title = new HLayout(LayoutConstant.MARGIN_LARGE);
 		title.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
 		title.setLayoutLeftMargin(LayoutConstant.MARGIN_LARGE);
-		title.setStyleName("documentBlockTitle");
+		title.setStyleName(BLOCK_TITLE_STYLE);
 		title.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
@@ -119,9 +125,9 @@ public class DocumentBlock extends AbstractAttributeBlock {
 			}
 		});
 		title.setCursor(Cursor.HAND);
-		checked = new Img("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png", 16, 16);
+		checked = new Img(ICON_REMOVE, 16, 16);
 		if (isIncludeInReport()) {
-			checked.setSrc("[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_add_files.png");
+			checked.setSrc(ICON_ADD);
 		}
 		checked.setLayoutAlign(VerticalAlignment.CENTER);
 		title.addMember(checked);
@@ -142,8 +148,36 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		space.setWidth(LayoutConstant.SPACER_LARGE);
 		infoLayout.addMember(space);
 
+		IButton openButton = new IButton();
+		openButton.setIcon(WidgetLayout.iconOpen);
+		openButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
+		openButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
+		openButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
+		openButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
+		openButton.setTooltip("Open document");
+		infoLayout.addMember(openButton);
+		openButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Window.Location.assign(getDocumentDisplayUrl());
+			}
+		});
+
+		IButton saveButton = new IButton();
+		saveButton.setIcon(WidgetLayout.iconSave);
+		saveButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
+		saveButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
+		saveButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
+		saveButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
+		saveButton.setTooltip("Save document");
+		infoLayout.addMember(saveButton);
+		saveButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Window.Location.assign(getDocumentDownloadUrl());
+			}
+		});
+		
 		editButton = new IButton();
-		editButton.setIcon("[ISOMORPHIC]/geomajas/osgeo/edit.png");
+		editButton.setIcon(WidgetLayout.iconEdit);
 		editButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
 		editButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
 		editButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
@@ -152,7 +186,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		infoLayout.addMember(editButton);
 
 		deleteButton = new IButton();
-		deleteButton.setIcon("[ISOMORPHIC]/geomajas/silk/remove.png");
+		deleteButton.setIcon(WidgetLayout.iconRemove);
 		deleteButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
 		deleteButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
 		deleteButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
@@ -178,7 +212,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	}
 
 	private String getDocumentTitle() {
-		return (String) getValue().getAttributeValue("title");
+		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE);
 	}
 
 	private String getDocumentDescription() {
@@ -186,23 +220,23 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	}
 
 	private String getDocumentDisplayUrl() {
-		return (String) getValue().getAttributeValue("displayUrl");
+		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL );
 	}
 
 	private String getDocumentDownloadUrl() {
-		return (String) getValue().getAttributeValue("downloadUrl");
+		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL);
 	}
 
 	private Date getAdditionDate() {
-		return (Date) getValue().getAttributeValue("additionDate");
+		return (Date) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ADDITION_DATE);
 	}
 
 	private String getAddedBy() {
-		return (String) getValue().getAttributeValue("addedBy");
+		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ADDED_BY);
 	}
 
 	private Boolean isIncludeInReport() {
-		return (Boolean) getValue().getAttributeValue("includeInReport");
+		return (Boolean) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT);
 	}
 
 	@Override

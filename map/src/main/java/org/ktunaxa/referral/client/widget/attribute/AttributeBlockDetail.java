@@ -6,6 +6,7 @@
 
 package org.ktunaxa.referral.client.widget.attribute;
 
+import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 
@@ -119,7 +120,7 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	private class SaveButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
 		public SaveButton() {
-			setIcon("[ISOMORPHIC]/geomajas/osgeo/save1.png");
+			setIcon(WidgetLayout.iconSave);
 			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
 			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
 			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
@@ -143,7 +144,7 @@ public class AttributeBlockDetail<W extends Widget> extends VLayout {
 	private class CancelButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
 		public CancelButton() {
-			setIcon("[ISOMORPHIC]/geomajas/silk/cancel.png");
+			setIcon(WidgetLayout.iconRemove);
 			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
 			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
 			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);

@@ -16,6 +16,7 @@ import org.geomajas.gwt.client.map.event.FeatureTransactionHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
@@ -132,7 +133,7 @@ public class DetailPanel extends VLayout {
 	private class EditButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
 		public EditButton() {
-			setIcon("[ISOMORPHIC]/geomajas/osgeo/edit.png");
+			setIcon(WidgetLayout.iconEdit);
 			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
 			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
 			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
@@ -158,7 +159,7 @@ public class DetailPanel extends VLayout {
 	private class SaveButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
 		public SaveButton() {
-			setIcon("[ISOMORPHIC]/geomajas/osgeo/save1.png");
+			setIcon(WidgetLayout.iconSave);
 			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
 			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
 			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
@@ -187,7 +188,7 @@ public class DetailPanel extends VLayout {
 	private class CancelButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
 
 		public CancelButton() {
-			setIcon("[ISOMORPHIC]/geomajas/silk/cancel.png");
+			setIcon(WidgetLayout.iconRemove);
 			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
 			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
 			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);

@@ -43,10 +43,9 @@ public class ReferralMapWidget extends MapWidget {
 		GwtCommandDispatcher.getInstance().execute(commandRequest, new CommandCallback<GetReferralMapResponse>() {
 
 			public void execute(GetReferralMapResponse response) {
-					GetReferralMapResponse r = (GetReferralMapResponse) response;
-					initializationCallback(r);
+					initializationCallback(response.getMapInfo());
 					for (MapCallback callback : callbacks) {
-						callback.onResponse(r);
+						callback.onResponse(response);
 					}
 				}
 			
@@ -66,7 +65,6 @@ public class ReferralMapWidget extends MapWidget {
 	 * Callback function that will be called when all response data is present and the map is initialized.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public interface MapCallback {
 

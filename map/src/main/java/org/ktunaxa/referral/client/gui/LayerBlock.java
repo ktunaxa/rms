@@ -18,6 +18,7 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import org.geomajas.gwt.client.util.WidgetLayout;
 
 /**
  * Layer block that display a panel for turning a layer (a real layer) on and off.
@@ -51,7 +52,7 @@ public class LayerBlock extends HLayout {
 		visibleBtn.setLayoutAlign(VerticalAlignment.CENTER);
 		visibleBtn.setShowTitle(false);
 		visibleBtn.setSize("24", "22");
-		visibleBtn.setIcon("[ISOMORPHIC]/geomajas/widget/layertree/layer-show.png");
+		visibleBtn.setIcon(WidgetLayout.iconLayerShow);
 		visibleBtn.setIconSize(16);
 		visibleBtn.setActionType(SelectionType.CHECKBOX);
 		visibleBtn.setSelected(((ClientLayerInfo) layer.getLayerInfo()).isVisible());
