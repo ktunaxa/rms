@@ -138,15 +138,32 @@ public class CmisServiceImpl implements CmisService {
 			throws IOException {
 		Folder folder = getWorkingFolder();
 
-		for (String folderName : folderNames) {
-			// properties
-			// (minimal set: name and object type id)
-			Map<String, Object> properties = new HashMap<String, Object>();
-			properties.put(PropertyIds.OBJECT_TYPE_ID, "cmis:folder");
-			properties.put(PropertyIds.NAME, folderName);
+		for (String orgFolderName : folderNames) {
+			String folderName = orgFolderName.replace('/', '_').replace('\\', '_'); // remove invalid characters
 
-			// create the folder
-			folder = folder.createFolder(properties);
+			boolean exists = false;
+			for (CmisObject object : folder.getChildren()) {
+				if (folderName.equals(object.getName())) {
+					if (object instanceof Folder) {
+						exists = true;
+						folder = (Folder) object;
+					} else {
+						throw new IOException("Folder '" + folderName +
+								"' cannot be created, file with that name already exists.");
+					}
+				}
+			}
+			if (!exists) {
+				// properties
+				// (minimal set: name and object type id)
+				Map<String, Object> properties = new HashMap<String, Object>();
+				properties.put(PropertyIds.OBJECT_TYPE_ID, "cmis:folder");
+				properties.put(PropertyIds.NAME, folderName);
+
+				// create the folder
+				log.error("create folder " + folderName);
+				folder = folder.createFolder(properties);
+			}
 		}
 
 		// Go over all children and see if the document already exists:
