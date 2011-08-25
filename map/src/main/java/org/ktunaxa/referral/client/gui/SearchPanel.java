@@ -92,9 +92,7 @@ public class SearchPanel extends VLayout {
 		makeCurrentButton.setShowDisabledIcon(false);
 		makeCurrentButton.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					SC.say("Set as current, start");
 					ListGridRecord[] records = valueResultList.getSelection(KtunaxaConstant.LAYER_REFERRAL_ID);
-					SC.say("Records " + (null==records? "null":records.length));
 					if (null != records && records.length > 0) {
 						String featureId = records[0].getAttribute(FeatureListGrid.FIELD_NAME_FEATURE_ID);
 						mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID).
