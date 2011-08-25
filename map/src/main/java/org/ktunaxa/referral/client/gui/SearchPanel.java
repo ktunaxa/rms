@@ -7,12 +7,25 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+import org.geomajas.global.GeomajasConstant;
+import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
+import org.geomajas.gwt.client.spatial.geometry.Geometry;
+import org.geomajas.gwt.client.util.GeometryConverter;
+import org.geomajas.gwt.client.util.WidgetLayout;
+import org.geomajas.gwt.client.widget.FeatureListGrid;
 import org.geomajas.gwt.client.widget.MapWidget;
 
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
+import org.geomajas.layer.feature.Feature;
 import org.geomajas.widget.searchandfilter.client.widget.attributesearch.AttributeSearchPanel;
 import org.geomajas.widget.searchandfilter.client.widget.geometricsearch.FreeDrawingSearch;
 import org.geomajas.widget.searchandfilter.client.widget.geometricsearch.GeometricSearchPanel;
@@ -24,6 +37,8 @@ import org.geomajas.widget.searchandfilter.client.widget.search.PanelSearchWidge
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchController;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchWidget;
 import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
+import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
+import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import java.util.ArrayList;
@@ -49,7 +64,7 @@ public class SearchPanel extends VLayout {
 		EMPTY, GEOMETRIC, ATTRIBUTE
 	}
 
-	public SearchPanel(MapWidget mapWidget) {
+	public SearchPanel(MapLayout mapLayout) {
 		setSize("100%", "100%");
 		setOverflow(Overflow.AUTO);
 
@@ -59,19 +74,68 @@ public class SearchPanel extends VLayout {
 
 		// initialization for value searching
 
-		tabReferral.setPane(getSearchTabContent(mapWidget, KtunaxaConstant.LAYER_REFERRAL_ID));
-		tabValues.setPane(getSearchTabContent(mapWidget, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID));
+		tabReferral.setPane(getSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERRAL_ID));
+		tabValues.setPane(getSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID));
 		tabs.setTabs(tabReferral, tabValues);
 		addMember(tabs);
 	}
 
-	private VLayout getSearchTabContent(MapWidget mapWidget, String layerId) {
-		MultiFeatureListGrid valueResultList = new MultiFeatureListGrid(mapWidget);
+	private VLayout getSearchTabContent(final MapLayout mapLayout, String layerId) {
+		final MapWidget mapWidget = mapLayout.getMap();
+		final MultiFeatureListGrid valueResultList = new MultiFeatureListGrid(mapWidget);
 		valueResultList.setWidth100();
 		valueResultList.setHeight100();
+		valueResultList.setClearTabsetOnSearch(true);
+		ToolStripButton makeCurrentButton = new ToolStripButton("Make current");
+		makeCurrentButton.setIcon(WidgetLayout.iconSaveAlt);
+		makeCurrentButton.setTooltip("Set as current referral");
+		makeCurrentButton.setShowDisabledIcon(false);
+		makeCurrentButton.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					SC.say("Set as current, start");
+					ListGridRecord[] records = valueResultList.getSelection(KtunaxaConstant.LAYER_REFERRAL_ID);
+					SC.say("Records " + (null==records? "null":records.length));
+					if (null != records && records.length > 0) {
+						String featureId = records[0].getAttribute(FeatureListGrid.FIELD_NAME_FEATURE_ID);
+						mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID).
+								getFeatureStore().getFeature(featureId, GeomajasConstant.FEATURE_INCLUDE_ALL,
+								new LazyLoadCallback() {
+							public void execute(List<org.geomajas.gwt.client.map.feature.Feature> response) {
+								if (response.size() > 1) {
+									mapLayout.setReferralAndTask(response.get(0).toDto(), null);
+								}
+							}
+						});
+					}
+				}
+			});
+		valueResultList.addButton(KtunaxaConstant.LAYER_REFERRAL_ID, makeCurrentButton, 1);
 		CardLayout<Card> searchPanels = new CardLayout<Card>();
 		GeometricSearchPanel geometricSearchPanel = new GeometricSearchPanel(mapWidget);
-		geometricSearchPanel.addSearchMethod(new SelectionSearch());
+		final SelectionSearch selectionSearch = new SelectionSearch();
+		final IButton currentReferralGeometry = new IButton("Use current referral");
+		currentReferralGeometry.setIcon(WidgetLayout.iconOpenAlt);
+		currentReferralGeometry.setShowDisabledIcon(false);
+		currentReferralGeometry.setAutoFit(true);
+		currentReferralGeometry.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				List<Geometry> geometries = new ArrayList<Geometry>();
+				Feature referral = mapLayout.getCurrentReferral();
+				if (null != referral) {
+					geometries.add(GeometryConverter.toGwt(referral.getGeometry()));
+				}
+				selectionSearch.setGeometry(geometries);
+			}
+		});
+		currentReferralGeometry.setDisabled(true); // no current referral yet
+		CurrentReferralChangedHandler currentReferralChangedHandler = new CurrentReferralChangedHandler() {
+			public void onCurrentReferralChanged(CurrentReferralChangedEvent event) {
+				currentReferralGeometry.setDisabled(null == event.getReferral());
+			}
+		};
+		mapLayout.addCurrentReferralChangedHandler(currentReferralChangedHandler);
+		selectionSearch.addSelectButton(currentReferralGeometry);
+		geometricSearchPanel.addSearchMethod(selectionSearch);
 		geometricSearchPanel.addSearchMethod(new FreeDrawingSearch());
 		geometricSearchPanel.setWidth100();
 		geometricSearchPanel.setCanAddToFavourites(false);

@@ -8,6 +8,8 @@ package org.ktunaxa.referral.client.gui;
 
 import java.util.List;
 
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.HandlerRegistration;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
@@ -20,6 +22,8 @@ import org.geomajas.gwt.client.spatial.geometry.Point;
 import org.geomajas.gwt.client.widget.Toolbar;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
+import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
+import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
 import org.ktunaxa.referral.client.widget.ReferralMapWidget;
 import org.ktunaxa.referral.client.widget.ResizableLeftLayout;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -47,7 +51,7 @@ public final class MapLayout extends VLayout {
 
 	private static final String STYLE_BLOCK = "block";
 
-	private LocalizedMessages messages = GWT.create(LocalizedMessages.class);
+	private static final LocalizedMessages MESSAGES = GWT.create(LocalizedMessages.class);
 
 	private TopBar topBar;
 
@@ -73,12 +77,15 @@ public final class MapLayout extends VLayout {
 
 	private VectorLayer referralLayer;
 
+	private HandlerManager handlerManager;
+
 	public static MapLayout getInstance() {
 		return INSTANCE;
 	}
 
 	private MapLayout() {
 		super();
+		handlerManager = new HandlerManager(this);
 
 		setWidth100();
 		setHeight100();
@@ -98,7 +105,7 @@ public final class MapLayout extends VLayout {
 		infoPane.addCard(referralPanel.getName(), "Manage referral", referralPanel);
 		referralButton = getLastButton();
 		referralButton.setDisabled(true); // no referral at start
-		SearchPanel searchPanel = new SearchPanel(mapWidget);
+		SearchPanel searchPanel = new SearchPanel(this);
 		infoPane.addCard(searchPanel.getName(), "Search", searchPanel);
 		bpmPanel = new BpmPanel();
 		infoPane.addCard(bpmPanel.getName(), "Referral process", bpmPanel);
@@ -205,13 +212,13 @@ public final class MapLayout extends VLayout {
 			String referralDescription = feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_PROJECT).toString();
 			if (null != task) {
 				String taskDescription = task.getDescription();
-				title = messages.referralAndTaskTitle(referral.getId(), referralDescription, taskDescription);
+				title = MESSAGES.referralAndTaskTitle(referral.getId(), referralDescription, taskDescription);
 			} else {
-				title = messages.referralTitle(referral.getId(), referralDescription);
+				title = MESSAGES.referralTitle(referral.getId(), referralDescription);
 			}
 			referralButton.setDisabled(false);
 		} else {
-			title = messages.mapTitle();
+			title = MESSAGES.mapTitle();
 			referralButton.setDisabled(true);
 		}
 		getTopBar().setLeftTitle(title);
@@ -223,6 +230,17 @@ public final class MapLayout extends VLayout {
 			// open the layers tab
 			infoPane.showCard(LayersPanel.NAME);
 		}
+		handlerManager.fireEvent(new CurrentReferralChangedEvent(referral));
+	}
+
+	/**
+	 * Add a handler which is invoked when the current referral changes.
+	 *
+	 * @param handler handler for the event
+	 * @return handler registration
+	 */
+	public HandlerRegistration addCurrentReferralChangedHandler(CurrentReferralChangedHandler handler) {
+		return handlerManager.addHandler(CurrentReferralChangedHandler.TYPE, handler);
 	}
 
 	/**
