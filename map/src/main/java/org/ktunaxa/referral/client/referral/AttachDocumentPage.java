@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.event.shared.HandlerRegistration;
+import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.StringAttribute;
@@ -18,6 +20,7 @@ import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
 import org.ktunaxa.referral.client.referral.event.FileUploadDoneHandler;
 import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
+import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.GWT;
@@ -40,13 +43,14 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  * @author Pieter De Graef
  */
-public class AttachDocumentPage extends WizardPage<ReferralData> {
+public class AttachDocumentPage extends WizardPage<ReferralData> implements UploadGeometryPanel {
 
 	private VLayout layout;
 
 	private ListGrid grid;
 
 	private Img busyImg;
+	private VLayout uploadLayout;
 
 	public AttachDocumentPage() {
 		super();
@@ -94,13 +98,42 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 	}
 
 	private VLayout createUploadLayout() {
-		VLayout uploadLayout = new VLayout();
+		uploadLayout = new VLayout();
 		uploadLayout.setLayoutAlign(Alignment.CENTER);
 		uploadLayout.setMembersMargin(LayoutConstant.MARGIN_LARGE);
 		HTMLFlow explanation = new HTMLFlow("<h3>Upload a new document</h3><div><p>Please note that it may take a"
 				+ " while to upload the document to the document management system.</p></div>");
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight(20);
+
+		uploadLayout.addMember(explanation);
+		uploadLayout.addMember(spacer);
+
+		return uploadLayout;
+	}
+
+	public void clear() {
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void show() {
+		clear();
+		List<AssociationValue> documents = (List<AssociationValue>) getWizardData().getFeature().getAttributeValue(
+				KtunaxaConstant.ATTRIBUTE_DOCUMENTS);
+		if (documents != null) {
+			for (AssociationValue associationValue : documents) {
+				Map<String, Attribute<?>> attributes = associationValue.getAllAttributes();
+				String title = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE).getValue();
+				String documentId = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID).getValue();
+				addDocument(title, documentId);
+			}
+		}
+	}
+
+	public void setFeature(Feature feature) {
+		// finish layout cfr upload form
+
 		final FileUploadForm form = new FileUploadForm("Select a file", GWT.getModuleBaseURL()
 				+ KtunaxaConstant.URL_DOCUMENT_UPLOAD, ReferralUtil.createId(getWizardData().getFeature()));
 		form.setHeight(40);
@@ -156,33 +189,11 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 			}
 		});
 
-		uploadLayout.addMember(explanation);
-		uploadLayout.addMember(spacer);
 		uploadLayout.addMember(form);
 		uploadLayout.addMember(btnLayout);
-
-		return uploadLayout;
 	}
 
-	public void clear() {
-		busyImg.setVisible(false);
-		grid.setData(new ListGridRecord[] {});
+	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {
+		return null;  // don't do anything for this one
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void show() {
-		clear();
-		List<AssociationValue> documents = (List<AssociationValue>) getWizardData().getFeature().getAttributeValue(
-				KtunaxaConstant.ATTRIBUTE_DOCUMENTS);
-		if (documents != null) {
-			for (AssociationValue associationValue : documents) {
-				Map<String, Attribute<?>> attributes = associationValue.getAllAttributes();
-				String title = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE).getValue();
-				String documentId = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID).getValue();
-				addDocument(title, documentId);
-			}
-		}
-	}
-
 }

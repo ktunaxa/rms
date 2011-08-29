@@ -46,7 +46,8 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 
 	private HandlerManager handlerManager = new HandlerManager(this);
 
-	public UploadShapePanel(Feature referral) {
+	public UploadShapePanel() {
+		// base layout, completed when the feature is set
 		setLayoutAlign(Alignment.CENTER);
 		HTMLFlow explanation = new HTMLFlow("<h3>Attach a zipped shape file</h3><div><p>In order to attach a geometry"
 				+ " to this referral, you have to provide a shape file (zipped) that contains the project area. Please"
@@ -55,8 +56,18 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 				+ "</div>");
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight(20);
+
+		addMember(explanation);
+		addMember(spacer);
+	}
+
+	public void setFeature(Feature referral) {
+		this.feature = referral;
+
+		// finish layout, add shape upload form
+
 		final FileUploadForm form = new FileUploadForm("Select a file (.zip)", GWT.getModuleBaseURL()
-				+ "../d/upload/referral/geometry/", ReferralUtil.createId(referral));
+				+ "../d/upload/referral/geometry/", ReferralUtil.createId(feature));
 		form.setHeight(40);
 
 		HLayout btnLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
@@ -105,14 +116,8 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 			}
 		});
 
-		addMember(explanation);
-		addMember(spacer);
 		addMember(form);
 		addMember(btnLayout);
-	}
-
-	public void setFeature(Feature feature) {
-		this.feature = feature;
 	}
 
 	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {

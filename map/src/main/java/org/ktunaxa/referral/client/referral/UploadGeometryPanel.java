@@ -12,9 +12,9 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * Common interface for the 3 upload panels (shape, geomark, point).
+ * It is also used for the {@link AttachDocumentPage} to get the referral...
  * 
  * @author Jan De Moerloose
- * 
  */
 public interface UploadGeometryPanel {
 

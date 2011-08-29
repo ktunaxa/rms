@@ -99,9 +99,9 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 								PersistTransactionResponse ptr = (PersistTransactionResponse) response;
 								mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(), ptr
 										.getFeatureTransaction()));
-								Feature newfeature = new Feature(ptr.getFeatureTransaction().getNewFeatures()[0], ft
+								Feature newFeature = new Feature(ptr.getFeatureTransaction().getNewFeatures()[0], ft
 										.getLayer());
-								createProcess(newfeature);
+								createProcess(newFeature);
 							}
 						}
 					});
