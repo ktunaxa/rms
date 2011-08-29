@@ -69,7 +69,9 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_TARGET_REFERRAL = "targetReferral";
 	String ATTRIBUTE_DOCUMENTS = "documents";
 	String ATTRIBUTE_COMMENTS = "comments";
+	String ATTRIBUTE_EXTERNAL_AGENCY_TYPE = "externalAgencyType";
 	String ATTRIBUTE_EXTERNAL_AGENCY = "externalAgencyName";
+	String ATTRIBUTE_PRIORITY = "priority";
 	String ATTRIBUTE_PROJECT_DESCRIPTION = "projectDescription";
 	String ATTRIBUTE_PROJECT_BACKGROUND = "projectBackground";
 	String ATTRIBUTE_FINAL_DISPOSITION = "finalDisposition";

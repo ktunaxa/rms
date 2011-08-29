@@ -32,6 +32,8 @@
 		<mapping class="org.ktunaxa.referral.server.domain.ReferralApplicationType"/>
 		<mapping class="org.ktunaxa.referral.server.domain.ReferralDispositionType"/>
 		<mapping class="org.ktunaxa.referral.server.domain.ReferralComment"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferralPriority"/>
+		<mapping class="org.ktunaxa.referral.server.domain.ReferralExternalAgencyType"/>
 
    </session-factory>
 </hibernate-configuration>

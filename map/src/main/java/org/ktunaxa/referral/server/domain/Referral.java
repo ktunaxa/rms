@@ -99,9 +99,19 @@ public class Referral {
 	@Column(nullable = false, name = "external_file_id")
 	private String externalFileId = "-99";
 
+	/** Type of external agency who submitted referral. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "external_agency_type_id", nullable = false)
+	private ReferralExternalAgencyType externalAgencyType;
+
 	/** Name of provincial or external client agency who submitted referral. */
 	@Column(name = "external_agency_name")
 	private String externalAgencyName;
+
+	/** Name of provincial or external client agency who submitted referral. */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "priority_id", nullable = false)
+	private ReferralPriority priority;
 
 	// General contact information:
 
@@ -546,6 +556,24 @@ public class Referral {
 	}
 
 	/**
+	 * Get the type of external agency which submitted this referral.
+	 *
+	 * @return type of external agency which submitted this referral
+	 */
+	public ReferralExternalAgencyType getExternalAgencyType() {
+		return externalAgencyType;
+	}
+
+	/**
+	 * Set the type of external agency which submitted this referral.
+	 *
+	 * @param externalAgencyType type of external agency which submitted this referral
+	 */
+	public void setExternalAgencyType(ReferralExternalAgencyType externalAgencyType) {
+		this.externalAgencyType = externalAgencyType;
+	}
+
+	/**
 	 * Get the name of provincial or external client agency who submitted referral.
 	 * 
 	 * @return Name of provincial or external client agency who submitted referral.
@@ -562,6 +590,24 @@ public class Referral {
 	 */
 	public void setExternalAgencyName(String externalAgencyName) {
 		this.externalAgencyName = externalAgencyName;
+	}
+
+	/**
+	 * Get the priority for handling this referral.
+	 *
+	 * @return priority for handling this referral
+	 */
+	public ReferralPriority getPriority() {
+		return priority;
+	}
+
+	/**
+	 * Set the priority for handling this referral.
+	 *
+	 * @param priority priority for handling this referral
+	 */
+	public void setPriority(ReferralPriority priority) {
+		this.priority = priority;
 	}
 
 	/**

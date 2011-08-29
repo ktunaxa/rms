@@ -14,7 +14,6 @@ INSERT INTO reference_layer_type (id, description, base_layer) values (9, 'Ecolo
 INSERT INTO reference_layer_type (id, description, base_layer) values (10, 'Treaty', false); 
 
 
-
 -- ----------------------------------------------------------------------------
 -- Table: REFERENCE LAYER
 -- ----------------------------------------------------------------------------
@@ -114,7 +113,6 @@ INSERT INTO referral_status (id, title, description) values (3, 'Approved', 'A r
 INSERT INTO referral_status (id, title, description) values (4, 'Denied', 'A referral that has been processed and has been turned down.'); 
 
 
-
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL TYPE
 -- ----------------------------------------------------------------------------
@@ -147,7 +145,6 @@ INSERT INTO referral_type (id, title, description) values (25, 'Roads', '');
 INSERT INTO referral_type (id, title, description) values (26, 'Utilities', ''); 
 
 
-
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL APPLICATION TYPE
 -- ----------------------------------------------------------------------------
@@ -157,8 +154,9 @@ INSERT INTO referral_application_type (id, title, description) values (2, 'Renew
 INSERT INTO referral_application_type (id, title, description) values (3, 'Amendment', 'The referral is an addition to an existing referral.'); 
 INSERT INTO referral_application_type (id, title, description) values (4, 'Replacement', 'The referral should replace an existing referral.'); 
 
+
 -- ----------------------------------------------------------------------------
--- Table: REFERRAL APPLICATION TYPE
+-- Table: REFERRAL DISPOSITION TYPE
 -- ----------------------------------------------------------------------------
 
 INSERT INTO referral_disposition_type (id, code, description) values (1, 'D', 'Destruction'); 
@@ -178,3 +176,21 @@ INSERT INTO document_type (id, title, description) values (5, 'External - Initia
 INSERT INTO document_type (id, title, description) values (6, 'External - General Communication', 'External document containing general communication.'); 
 INSERT INTO document_type (id, title, description) values (7, 'External - Request for Information', 'External document requesting more information on the referral.'); 
 
+
+-- ----------------------------------------------------------------------------
+-- Table: REFERRAL EXTERNAL AGENCY TYPE
+-- ----------------------------------------------------------------------------
+
+INSERT INTO referral_external_agency_type (id, title, description) values (1, 'BC Government', 'BC Government');
+INSERT INTO referral_external_agency_type (id, title, description) values (2, 'Government of Canada', 'Government of Canada');
+INSERT INTO referral_external_agency_type (id, title, description) values (3, 'Local Government', 'Local Government');
+INSERT INTO referral_external_agency_type (id, title, description) values (4, 'Industry', 'Industry');
+
+
+-- ----------------------------------------------------------------------------
+-- Table: REFERRAL PRIORITY
+-- ----------------------------------------------------------------------------
+
+INSERT INTO referral_priority (id, title, description) values (1, 'Low', 'Low priority.');
+INSERT INTO referral_priority (id, title, description) values (2, 'Medium', 'Medium priority.');
+INSERT INTO referral_priority (id, title, description) values (3, 'High', 'High priority.');

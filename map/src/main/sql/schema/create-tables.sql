@@ -11,8 +11,6 @@ ALTER TABLE reference_layer_type OWNER TO referral_group;
 GRANT ALL ON TABLE reference_layer_type TO referral_group; 
 
 
-
-
 -- ----------------------------------------------------------------------------
 -- Table: REFERENCE LAYER
 -- ----------------------------------------------------------------------------
@@ -42,7 +40,6 @@ CREATE INDEX reference_layer_code_idx
 
 ALTER TABLE reference_layer OWNER TO referral_group; 
 GRANT ALL ON TABLE reference_layer TO referral_group; 
-
 
 
 -- ----------------------------------------------------------------------------
@@ -94,7 +91,6 @@ ALTER TABLE reference_value_attribute OWNER TO referral_group;
 GRANT ALL ON TABLE reference_value_attribute TO referral_group; 
 
 
-
 -- ----------------------------------------------------------------------------
 -- Table: REFERENCE_BASE layer
 -- ----------------------------------------------------------------------------
@@ -122,6 +118,7 @@ CREATE INDEX reference_base_gist
 ALTER TABLE reference_base OWNER TO referral_group; 
 GRANT ALL ON TABLE reference_base TO referral_group; 
 
+
 -- ----------------------------------------------------------------------------
 -- Table: REFERENCE VALUE KEY VALUE
 -- ----------------------------------------------------------------------------
@@ -142,7 +139,6 @@ ALTER TABLE reference_base_attribute OWNER TO referral_group;
 GRANT ALL ON TABLE reference_base_attribute TO referral_group; 
 
 
-
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL STATUS
 -- ----------------------------------------------------------------------------
@@ -154,6 +150,7 @@ CREATE TABLE referral_status(
 
 ALTER TABLE referral_status OWNER TO referral_group; 
 GRANT ALL ON TABLE referral_status TO referral_group; 
+
 
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL TYPE
@@ -167,6 +164,7 @@ CREATE TABLE referral_type(
 ALTER TABLE referral_type OWNER TO referral_group; 
 GRANT ALL ON TABLE referral_type TO referral_group; 
 
+
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL APPLICATION TYPE
 -- ----------------------------------------------------------------------------
@@ -178,6 +176,33 @@ CREATE TABLE referral_application_type(
 
 ALTER TABLE referral_application_type OWNER TO referral_group; 
 GRANT ALL ON TABLE referral_application_type TO referral_group; 
+
+
+-- ----------------------------------------------------------------------------
+-- Table: REFERRAL EXTERNAL_AGENCY TYPE
+-- ----------------------------------------------------------------------------
+CREATE TABLE referral_external_agency_type(
+	id serial PRIMARY KEY,
+	title character varying(254) NOT NULL,
+	description character varying(254) NOT NULL
+);
+
+ALTER TABLE referral_external_agency_type OWNER TO referral_group;
+GRANT ALL ON TABLE referral_external_agency_type TO referral_group;
+
+
+-- ----------------------------------------------------------------------------
+-- Table: REFERRAL PRIORITY
+-- ----------------------------------------------------------------------------
+CREATE TABLE referral_priority(
+	id serial PRIMARY KEY,
+	title character varying(254) NOT NULL,
+	description character varying(254) NOT NULL
+);
+
+ALTER TABLE referral_priority OWNER TO referral_group;
+GRANT ALL ON TABLE referral_priority TO referral_group;
+
 
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL DISPOSITION TYPE
@@ -191,6 +216,7 @@ CREATE TABLE referral_disposition_type(
 ALTER TABLE referral_disposition_type OWNER TO referral_group; 
 GRANT ALL ON TABLE referral_disposition_type TO referral_group; 
 
+
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL SEQUENCE FOR NUMBER
 -- ----------------------------------------------------------------------------
@@ -201,6 +227,7 @@ CREATE SEQUENCE referral_number_seq
   START 1
   CACHE 1;
 ALTER TABLE referral_number_seq OWNER TO referral_group;
+
 
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL
@@ -239,11 +266,15 @@ CREATE TABLE referral
   provincial_assessment_level integer,
   final_assessment_level integer,
   status_id integer NOT NULL,
+  external_agency_type_id integer NOT NULL default 1,
+  priority_id integer NOT NULL default 1,
   CONSTRAINT fk_referral_application_type FOREIGN KEY (application_type_id) REFERENCES referral_application_type (id),
   CONSTRAINT fk_referral_status FOREIGN KEY (status_id) REFERENCES referral_status (id),
   CONSTRAINT fk_referral_disposition FOREIGN KEY (final_disposition_id) REFERENCES referral_disposition_type (id),
-  CONSTRAINT fk_referral_type FOREIGN KEY (type_id) REFERENCES referral_type (id)
-); 
+  CONSTRAINT fk_referral_type FOREIGN KEY (type_id) REFERENCES referral_type (id),
+  CONSTRAINT fk_referral_external_agency_type FOREIGN KEY (external_agency_type_id) REFERENCES referral_external_agency_type (id),
+  CONSTRAINT fk_referral_priority FOREIGN KEY (priority_id) REFERENCES referral_priority (id)
+);
 
 CREATE INDEX referral_application_type_id_idx
   ON referral
@@ -265,6 +296,16 @@ CREATE INDEX referral_final_disposition_id_idx
   USING btree
   (final_disposition_id);
 
+CREATE INDEX referral_external_agency_type_id_idx
+  ON referral
+  USING btree
+  (external_agency_type_id);
+
+CREATE INDEX referral_priority_id_idx
+  ON referral
+  USING btree
+  (priority_id);
+
 SELECT AddGeometryColumn('','referral','geom','26911','GEOMETRY',2);
 
 CREATE INDEX referral_gist
@@ -274,6 +315,7 @@ CREATE INDEX referral_gist
 
 ALTER TABLE referral OWNER TO referral_group; 
 GRANT ALL ON TABLE referral TO referral_group; 
+
 
 -- ----------------------------------------------------------------------------
 -- Table: DOCUMENT TYPE
@@ -286,6 +328,7 @@ CREATE TABLE document_type(
 
 ALTER TABLE document_type OWNER TO referral_group; 
 GRANT ALL ON TABLE document_type TO referral_group; 
+
 
 -- ----------------------------------------------------------------------------
 -- Table: DOCUMENT
@@ -321,7 +364,6 @@ ALTER TABLE document OWNER TO referral_group;
 GRANT ALL ON TABLE document TO referral_group; 
 
 
-
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL COMMENT
 -- ----------------------------------------------------------------------------
@@ -336,7 +378,7 @@ CREATE TABLE referral_comment(
 	reference_layer_type_id integer,
 	referral_id integer NOT NULL,
 	CONSTRAINT fk_referral_comment_referral FOREIGN KEY (referral_id) REFERENCES referral (id),
-	CONSTRAINT fk_referrel_comment_layer_type FOREIGN KEY (reference_layer_type_id) REFERENCES reference_layer_type (id)
+	CONSTRAINT fk_referral_comment_layer_type FOREIGN KEY (reference_layer_type_id) REFERENCES reference_layer_type (id)
 ); 
 
 CREATE INDEX referral_comment_referral_id_idx
@@ -351,7 +393,6 @@ CREATE INDEX referral_comment_reference_layer_type_id_idx
 
 ALTER TABLE referral_comment OWNER TO referral_group; 
 GRANT ALL ON TABLE referral_comment TO referral_group; 
-
 
 
 -- ----------------------------------------------------------------------------
@@ -383,7 +424,6 @@ CREATE INDEX document_comment_reference_layer_type_id_idx
 
 ALTER TABLE document_comment OWNER TO referral_group; 
 GRANT ALL ON TABLE document_comment TO referral_group; 
-
 
 
 -- ----------------------------------------------------------------------------
