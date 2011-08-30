@@ -22,6 +22,7 @@ import org.geomajas.gwt.client.spatial.geometry.Point;
 import org.geomajas.gwt.client.widget.Toolbar;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
+import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
 import org.ktunaxa.referral.client.widget.ReferralMapWidget;
@@ -210,11 +211,12 @@ public final class MapLayout extends VLayout {
 					"#FF00FF", 0.8f, 1));
 			getMap().registerWorldPaintable(highlight);
 			String referralDescription = feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_PROJECT).toString();
+			String referralId = ReferralUtil.createId(referral);
 			if (null != task) {
 				String taskDescription = task.getDescription();
-				title = MESSAGES.referralAndTaskTitle(referral.getId(), referralDescription, taskDescription);
+				title = MESSAGES.referralAndTaskTitle(referralId, referralDescription, taskDescription);
 			} else {
-				title = MESSAGES.referralTitle(referral.getId(), referralDescription);
+				title = MESSAGES.referralTitle(referralId, referralDescription);
 			}
 			referralButton.setDisabled(false);
 		} else {
