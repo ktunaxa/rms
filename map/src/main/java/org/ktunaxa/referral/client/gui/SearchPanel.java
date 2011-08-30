@@ -98,7 +98,7 @@ public class SearchPanel extends VLayout {
 								getFeatureStore().getFeature(featureId, GeomajasConstant.FEATURE_INCLUDE_ALL,
 								new LazyLoadCallback() {
 							public void execute(List<org.geomajas.gwt.client.map.feature.Feature> response) {
-								if (response.size() > 1) {
+								if (response.size() > 0) {
 									mapLayout.setReferralAndTask(response.get(0).toDto(), null);
 								}
 							}

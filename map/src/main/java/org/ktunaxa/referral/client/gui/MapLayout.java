@@ -190,6 +190,7 @@ public final class MapLayout extends VLayout {
 	 *            task to select
 	 */
 	public void setReferralAndTask(@Nullable org.geomajas.layer.feature.Feature referral, @Nullable TaskDto task) {
+		Log.logServer(Log.LEVEL_INFO, "1 setReferralAndTask");
 		currentReferral = referral;
 		currentTask = task;
 		String title;
