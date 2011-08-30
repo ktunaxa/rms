@@ -19,6 +19,8 @@ public class CmisConfig {
 
 	private String url;
 
+	private String urlBrowse;
+
 	private String repository;
 
 	private String folder;
@@ -49,6 +51,24 @@ public class CmisConfig {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	/**
+	 * CMIS URL prefix used when passing URLs to the browser.
+	 *
+	 * @return CMIS URL prefix
+	 */
+	public String getUrlBrowse() {
+		return urlBrowse;
+	}
+
+	/**
+	 * CMIS URL prefix used when passing URLs to the browser.
+	 *
+	 * @param urlBrowse CMIS URL prefix
+	 */
+	public void setUrlBrowse(String urlBrowse) {
+		this.urlBrowse = urlBrowse;
 	}
 
 	public String getRepository() {
