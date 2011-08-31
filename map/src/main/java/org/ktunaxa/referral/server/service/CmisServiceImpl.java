@@ -138,32 +138,8 @@ public class CmisServiceImpl implements CmisService {
 			throws IOException {
 		Folder folder = getWorkingFolder();
 
-		for (String orgFolderName : folderNames) {
-			String folderName = orgFolderName.replace('/', '_').replace('\\', '_'); // remove invalid characters
-
-			boolean exists = false;
-			for (CmisObject object : folder.getChildren()) {
-				if (folderName.equals(object.getName())) {
-					if (object instanceof Folder) {
-						exists = true;
-						folder = (Folder) object;
-					} else {
-						throw new IOException("Folder '" + folderName +
-								"' cannot be created, file with that name already exists.");
-					}
-				}
-			}
-			if (!exists) {
-				// properties
-				// (minimal set: name and object type id)
-				Map<String, Object> properties = new HashMap<String, Object>();
-				properties.put(PropertyIds.OBJECT_TYPE_ID, "cmis:folder");
-				properties.put(PropertyIds.NAME, folderName);
-
-				// create the folder
-				log.error("create folder " + folderName);
-				folder = folder.createFolder(properties);
-			}
+		for (String folderName : folderNames) {
+			folder = getOrCreateSubFolder(folder, folderName);
 		}
 
 		// Go over all children and see if the document already exists:
@@ -225,11 +201,18 @@ public class CmisServiceImpl implements CmisService {
 	// Private methods:
 	// ------------------------------------------------------------------------
 
-	private Folder getOrCreateSubFolder(Folder parent, String name) {
+	private Folder getOrCreateSubFolder(Folder parent, String orgName) throws IOException {
+		String name = orgName.replace('/', '_').replace('\\', '_'); // remove invalid characters
+
 		// Go over all children and see if one matches the folder we're looking for:
 		for (CmisObject object : parent.getChildren()) {
 			if (name.equalsIgnoreCase(object.getName())) {
-				return (Folder) object;
+				if (object instanceof Folder) {
+					return (Folder) object;
+				} else {
+					throw new IOException("Folder '" + name +
+							"' cannot be created, file with that name already exists.");
+				}
 			}
 		}
 
