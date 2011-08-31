@@ -451,10 +451,12 @@
 										create database referral TEMPLATE=template_postgis;
 										alter database referral OWNER TO referral_group;
 										grant all on database referral to referral_group;
+										<!--
 										drop database alfresco;
 										create database alfresco;
 										alter database alfresco OWNER TO alfresco_group;
 										grant all on database alfresco to alfresco_group;
+										-->
 									</sqlCommand>
 									<onError>continue</onError>
 								</configuration>
