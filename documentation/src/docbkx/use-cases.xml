@@ -2,94 +2,201 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
 "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <chapter id="chapter-use-cases">
-	<title>Use cases</title>
+  <title>Use cases</title>
 
-	<para>This chapter will go over all the use-cases one by one in an
-		attempt to describe them as clear as possible.</para>
+  <para>This chapter will go over all the use-cases one by one in an attempt
+  to describe them as clear as possible.</para>
 
-	<section>
-		<title>Use cases - BPM</title>
-		<para>Within this paragraph all use-cases related to the referral
-			business process are described.</para>
-	</section>
+  <section>
+    <title>Use cases - BPM</title>
 
-	<section>
-		<title>Use cases - mapping dashboard</title>
-		<para>This paragraph will handle the specific use-cases for the
-			mapping dashboard, such as managing document or comments.</para>
-		<section>
-			<title>Managing layers</title>
-			<para>...</para>
-		</section>
-		<section>
-			<title>Searching for features</title>
-			<para>...</para>
-		</section>
-		<section>
-			<title>Printing the map</title>
-			<para>...</para>
-		</section>
-		<section>
-			<title>Managing comments</title>
-			<para>When inspecting the different values in respect to a referral,
-				it is possible to attach comments to the referral in question.
-				Nevertheless not all comments are regarded as equal, since some of
-				them can be attached to the final report, while others are there
-				only to provide some extra feedback.</para>
-			<para>When entering the comments view, the application will display the current list of comments attached to the referral, as seen in the image below:
-			</para>
-			<para><figure float="0">
-	<title>Adding comments to a referral</title>
-	<screenshot><mediaobject>
-	<imageobject>
-	<imagedata fileref="image/mockup/comment_overview.png" format="PNG"/>
-	</imageobject>
-	<textobject>
-	<phrase></phrase>
-	</textobject>
-	</mediaobject></screenshot>
-</figure></para>
-<para>In the image above, the list consists of 2 comments. The first one has not been added to the report, while the second one is. As a result, different options will be available for both.</para>
-<para>As it can be difficult to navigate through large lists, the application will allow the user to sort and search/filter within the list. Sorting will be possible on the following attributes:</para>
-<itemizedlist>
-	  <listitem><para><emphasis>Author</emphasis>: The name of the author who wrote the original content. This does not have to be the same person who added the comment to the report.</para></listitem>
-	  <listitem><para><emphasis>Date</emphasis>: The time and date when the comment was originally created.</para></listitem>
-	  <listitem><para><emphasis>Title</emphasis>: The title of the comment.</para></listitem>
-</itemizedlist>
-<para>Note also that a button is added to allow the user to add a new comment to the referral. By clicking on this button, the user will be presented the following view:</para>
-<para><figure float="0">
-	<title>Adding a comment to a referral</title>
-	<screenshot><mediaobject>
-	<imageobject>
-	<imagedata fileref="images/mockup/comment_add.png" format="PNG"/>
-	</imageobject>
-	<textobject>
-	<phrase></phrase>
-	</textobject>
-	</mediaobject></screenshot>
-</figure></para>
-<para>When creating a new comment, the user has to fill in a title and an original content. He immediately has the option to add the comment to the report. The second text-area for the report-content will at first be disabled. Only when the user actually checks the "add to report" button, will this new text-are become available. At that time, the original contents will also be copied to the new field.</para>
-<para>If the comments is save, the application will bring the user back to the comments list view. From the list view, it is possible to edit an existing comment. If the comment has not yet been added to the report, the user can do this by clicking the "add to report" button, otherwise the user can click the "Edit comment" button. The application will then present the following view:</para>
-<para><figure float="0">
-	<title>Changing an existing comment</title>
-	<screenshot><mediaobject>
-	<imageobject>
-	<imagedata fileref="images/mockup/comment_edit.png" format="PNG"/>
-	</imageobject>
-	<textobject>
-	<phrase></phrase>
-	</textobject>
-	</mediaobject></screenshot>
-</figure></para>
-<para>The original content of a comment can only be changed by the original author of that comment. All other users are not allowed to do so. What can be changed is the contents that should be added to the report.</para>
-<para>If the original author of a comment decides to change the original contents, then the process of adding the comment to the report has to be done anew.</para>
+    <para>Within this paragraph all use-cases related to the referral business
+    process are described.</para>
 
+    <section>
+      <title>General process information</title>
 
-		</section>
-		<section>
-			<title>Managing documents</title>
-			<para>...</para>
-		</section>
-	</section>
+      <para>There are two processes which are combined in the
+      application.</para>
 
+      <para></para>
+
+      <figure>
+        <title>General (main) business process</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../../../bpm/src/main/resources/diagrams/ReferralHandling.png"
+                       width="100%" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <figure>
+        <title>Evaluate values business process ("call activity" in main
+        process)</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../../../bpm/src/main/resources/diagrams/EvaluateValue.png"
+                       width="100%" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+    </section>
+
+    <section>
+      <title></title>
+
+      <para></para>
+    </section>
+  </section>
+
+  <section>
+    <title>Use cases - mapping dashboard</title>
+
+    <para>This paragraph will handle the specific use-cases for the mapping
+    dashboard, such as managing document or comments.</para>
+
+    <section>
+      <title>Managing layers</title>
+
+      <para>...</para>
+    </section>
+
+    <section>
+      <title>Searching for features</title>
+
+      <para>...</para>
+    </section>
+
+    <section>
+      <title>Printing the map</title>
+
+      <para>...</para>
+    </section>
+
+    <section>
+      <title>Managing comments</title>
+
+      <para>When inspecting the different values in respect to a referral, it
+      is possible to attach comments to the referral in question. Nevertheless
+      not all comments are regarded as equal, since some of them can be
+      attached to the final report, while others are there only to provide
+      some extra feedback.</para>
+
+      <para>When entering the comments view, the application will display the
+      current list of comments attached to the referral, as seen in the image
+      below:</para>
+
+      <para><figure float="0">
+          <title>Adding comments to a referral</title>
+
+          <screenshot>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/mockup/comment_overview.png"
+                           format="PNG" />
+              </imageobject>
+
+              <textobject>
+                <phrase></phrase>
+              </textobject>
+            </mediaobject>
+          </screenshot>
+        </figure></para>
+
+      <para>In the image above, the list consists of 2 comments. The first one
+      has not been added to the report, while the second one is. As a result,
+      different options will be available for both.</para>
+
+      <para>As it can be difficult to navigate through large lists, the
+      application will allow the user to sort and search/filter within the
+      list. Sorting will be possible on the following attributes:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><emphasis>Author</emphasis>: The name of the author who wrote
+          the original content. This does not have to be the same person who
+          added the comment to the report.</para>
+        </listitem>
+
+        <listitem>
+          <para><emphasis>Date</emphasis>: The time and date when the comment
+          was originally created.</para>
+        </listitem>
+
+        <listitem>
+          <para><emphasis>Title</emphasis>: The title of the comment.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Note also that a button is added to allow the user to add a new
+      comment to the referral. By clicking on this button, the user will be
+      presented the following view:</para>
+
+      <para><figure float="0">
+          <title>Adding a comment to a referral</title>
+
+          <screenshot>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/mockup/comment_add.png"
+                           format="PNG" />
+              </imageobject>
+
+              <textobject>
+                <phrase></phrase>
+              </textobject>
+            </mediaobject>
+          </screenshot>
+        </figure></para>
+
+      <para>When creating a new comment, the user has to fill in a title and
+      an original content. He immediately has the option to add the comment to
+      the report. The second text-area for the report-content will at first be
+      disabled. Only when the user actually checks the "add to report" button,
+      will this new text-are become available. At that time, the original
+      contents will also be copied to the new field.</para>
+
+      <para>If the comments is save, the application will bring the user back
+      to the comments list view. From the list view, it is possible to edit an
+      existing comment. If the comment has not yet been added to the report,
+      the user can do this by clicking the "add to report" button, otherwise
+      the user can click the "Edit comment" button. The application will then
+      present the following view:</para>
+
+      <para><figure float="0">
+          <title>Changing an existing comment</title>
+
+          <screenshot>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/mockup/comment_edit.png"
+                           format="PNG" />
+              </imageobject>
+
+              <textobject>
+                <phrase></phrase>
+              </textobject>
+            </mediaobject>
+          </screenshot>
+        </figure></para>
+
+      <para>The original content of a comment can only be changed by the
+      original author of that comment. All other users are not allowed to do
+      so. What can be changed is the contents that should be added to the
+      report.</para>
+
+      <para>If the original author of a comment decides to change the original
+      contents, then the process of adding the comment to the report has to be
+      done anew.</para>
+    </section>
+
+    <section>
+      <title>Managing documents</title>
+
+      <para>...</para>
+    </section>
+  </section>
 </chapter>
