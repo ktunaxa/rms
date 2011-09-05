@@ -137,6 +137,7 @@ public class SearchPanel extends VLayout {
 		geometricSearchPanel.setWidth100();
 		geometricSearchPanel.setCanAddToFavourites(false);
 		geometricSearchPanel.setFeatureSearchVectorLayer(layerId);
+		geometricSearchPanel.setCanCancel(true);
 		PanelSearchWidget geometricSearch = new CardPanelSearchWidget("GeometricSearch" + layerId, "Search on geometry",
 				geometricSearchPanel, searchPanels, Card.GEOMETRIC);
 		geometricSearch.setWidth100();
@@ -144,6 +145,7 @@ public class SearchPanel extends VLayout {
 				false, layerId);
 		attributeSearchPanel.setWidth100();
 		attributeSearchPanel.setCanAddToFavourites(false);
+		attributeSearchPanel.setCanCancel(true);
 		PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch" + layerId,
 				"Search on attributes", attributeSearchPanel, searchPanels, Card.ATTRIBUTE);
 		attributeSearch.setWidth100();
@@ -162,6 +164,9 @@ public class SearchPanel extends VLayout {
 		CombinedSearchPanel combinedSearchPanel = new CombinedSearchPanel(mapWidget);
 		combinedSearchPanel.initializeList(searchWidgetList);
 		combinedSearchPanel.setCanAddToFavourites(false);
+		combinedSearchPanel.setAlwaysShowElements(false);
+		combinedSearchPanel.setHideButtonsWhenAdding(true);
+		combinedSearchPanel.setCanCancel(false);
 		combinedSearchPanel.setWidth100();
 		PanelSearchWidget combinedSearch = new PanelSearchWidget("PanelSearchWidget" + layerId, "search widget",
 				combinedSearchPanel);

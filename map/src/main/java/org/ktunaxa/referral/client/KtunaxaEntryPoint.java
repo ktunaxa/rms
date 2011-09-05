@@ -15,6 +15,7 @@ import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
+import org.geomajas.widget.searchandfilter.client.util.GsfLayout;
 import org.ktunaxa.referral.client.action.ZoomCurrentReferralModalAction;
 import org.ktunaxa.referral.client.action.ZoomKtunaxaTerritoryModalAction;
 import org.ktunaxa.referral.client.gui.DocumentItem;
@@ -44,8 +45,10 @@ public class KtunaxaEntryPoint implements EntryPoint {
 
 	public void onModuleLoad() {
 		// force a fixed height to feature attribute windows, preventing them to become too big (and add scroll bars)
-		WidgetLayout.featureAttributeWindowHeight = Window.getClientHeight() - WidgetLayout.windowOffset * 4;
-		WidgetLayout.featureAttributeWindowWidth = 470;
+		WidgetLayout.featureAttributeWindowHeight =
+				Integer.toString( Window.getClientHeight() - WidgetLayout.windowOffset * 4 );
+		WidgetLayout.featureAttributeWindowWidth = "470";
+		GsfLayout.geometricSearchPanelTabWidth = "100%";
 
 		ToolbarRegistry.put(TOOL_ZOOM_KTUNAXA_TERRITORY, new ToolCreator() {
 
