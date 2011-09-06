@@ -46,7 +46,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	public void onModuleLoad() {
 		// force a fixed height to feature attribute windows, preventing them to become too big (and add scroll bars)
 		WidgetLayout.featureAttributeWindowHeight =
-				Integer.toString( Window.getClientHeight() - WidgetLayout.windowOffset * 4 );
+				Integer.toString(Window.getClientHeight() - WidgetLayout.windowOffset * 4);
 		WidgetLayout.featureAttributeWindowWidth = "470";
 		GsfLayout.geometricSearchPanelTabWidth = "100%";
 
