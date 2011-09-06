@@ -20,6 +20,7 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.security.UserContext;
@@ -40,9 +41,9 @@ import java.util.Map;
  */
 public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
-	private static final String BLOK_STYLE = "taskBlock";
+	private static final String BLOCK_STYLE = "taskBlock";
 	private static final String TITLE_STYLE = "taskBlockTitle";
-	private static final String BLOK_STYLE_COLLAPSED = "taskBlockCollapsed";
+	private static final String BLOCK_STYLE_COLLAPSED = "taskBlockCollapsed";
 	private static final String TITLE_STYLE_COLLAPSED = "taskBlockTitleCollapsed";
 
 	private static final String IMAGE_MINIMIZE = "[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/minimize.gif";
@@ -75,7 +76,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 	/** Expand the task block, displaying everything. */
 	public void expand() {
-		setStyleName(BLOK_STYLE);
+		setStyleName(BLOCK_STYLE);
 		title.setStyleName(TITLE_STYLE);
 		titleImage.setSrc(IMAGE_MINIMIZE);
 		content.setVisible(true);
@@ -83,7 +84,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 	/** Collapse the task block, leaving only the title visible. */
 	public void collapse() {
-		setStyleName(BLOK_STYLE_COLLAPSED);
+		setStyleName(BLOCK_STYLE_COLLAPSED);
 		title.setStyleName(TITLE_STYLE_COLLAPSED);
 		titleImage.setSrc(IMAGE_MAXIMIZE);
 		content.setVisible(false);
@@ -122,7 +123,9 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	// ------------------------------------------------------------------------
 
 	private void buildGui(TaskDto task) {
-		setStyleName(BLOK_STYLE);
+		Map<String, String> variables = task.getVariables();
+
+		setStyleName(BLOCK_STYLE);
 
 		title = new HLayout(LayoutConstant.MARGIN_LARGE);
 		title.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
@@ -141,7 +144,10 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		title.setCursor(Cursor.HAND);
 		titleImage.setLayoutAlign(VerticalAlignment.CENTER);
 		title.addMember(titleImage);
-		HTMLFlow titleText = new HTMLFlow("<div class='taskBlockTitleText'>" + task.getName() + "</div>");
+		HTMLFlow titleText = new HTMLFlow("<div class='taskBlockTitleText'>" +
+				variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID) +
+				": " + WidgetLayout.htmlEncode(task.getName()) +
+				"</div>");
 		titleText.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
 		title.addMember(titleText);
 		addMember(title);
@@ -149,7 +155,10 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		HLayout infoLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutRightMargin(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutTopMargin(LayoutConstant.MARGIN_SMALL);
-		HTMLFlow info = new HTMLFlow("<div class='taskBlockInfo'>" + task.getDescription() + "</div>");
+		HTMLFlow info = new HTMLFlow("<div class='taskBlockInfo'>" +
+				WidgetLayout.htmlEncode(task.getDescription()) +
+				"<br />Referral: " + WidgetLayout.htmlEncode(variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)) +
+				"</div>");
 		info.setSize(LayoutConstant.BLOCK_INFO_WIDTH, LayoutConstant.BLOCK_INFO_HEIGHT);
 		infoLayout.addMember(info);
 		infoLayout.addMember(new LayoutSpacer());
@@ -218,26 +227,23 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		addMember(infoLayout);
 
-		Map<String, String> variables = task.getVariables();
 		String htmlContent = "<div class='taskBlockContent'>";
 		if (task.isHistory()) {
-			htmlContent += "Assignee: " + task.getAssignee()
+			htmlContent += "Assignee: " + WidgetLayout.htmlEncode(task.getAssignee())
 					+ "<br />Started: " + task.getStartTime()
 					+ "<br />Ended: " + task.getEndTime();
 		} else {
-			htmlContent += "Referral id: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID)
-				+ "<br />Referral name: " + variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)
-				+ "<br />Assignee: " + task.getAssignee()
+			htmlContent += "Assignee: " + WidgetLayout.htmlEncode(task.getAssignee())
 				+ "<br />Created: " + task.getCreateTime()
 				+ "<br />Completion deadline: " + variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE)
-				+ "<br />E-mail: " + variables.get(KtunaxaBpmConstant.VAR_EMAIL);
+				+ "<br />E-mail: " + WidgetLayout.htmlEncode(variables.get(KtunaxaBpmConstant.VAR_EMAIL));
 		}
 		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
 		if (null != engagementLevel) {
 			htmlContent += "<br />Engagement level: " + engagementLevel + " (prov "
 					+ variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
 		}
-			htmlContent += "</div>";
+		htmlContent += "</div>";
 		content = new HTMLFlow(htmlContent);
 		content.setWidth100();
 		addMember(content);

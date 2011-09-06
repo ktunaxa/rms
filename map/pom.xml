@@ -101,6 +101,7 @@
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
 			<artifactId>geomajas-layer-openstreetmap</artifactId>
+			<scope>compile</scope> <!-- caching contains bad test dependency which trickled here -->
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
