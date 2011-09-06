@@ -3,7 +3,7 @@
   <process id="evaluate-values" name="evaluate-values">
     <documentation>Select which values need to be evaluated and evaluate them.</documentation>
     <startEvent id="startevent1" name="Start" activiti:formKey="diagrams/createReferral.form"></startEvent>
-    <userTask id="usertask1" name="determine values to investigate" activiti:candidateGroups="evaluateEvaluator" activiti:formKey="diagrams/valueSelect.form">
+    <userTask id="usertask1" name="Determine values to investigate" activiti:candidateGroups="evaluateEvaluator" activiti:formKey="diagrams/valueSelect.form">
       <documentation>Determine values to evaluate and/or whether to notify stewardship officer for community input.</documentation>
     </userTask>
     <sequenceFlow id="flow53" name="" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
@@ -15,11 +15,11 @@
     <userTask id="usertask4" name="Evaluate aquatic values" activiti:candidateGroups="aquaticEvaluator" activiti:formKey="diagrams/redirect.form">
       <documentation>Evaluate aquatic values</documentation>
     </userTask>
-    <manualTask id="manualtask1" name="auto evaluate aquatic values"></manualTask>
-    <manualTask id="manualtask2" name="auto evaluate archaeological values"></manualTask>
-    <manualTask id="manualtask3" name="auto evaluate cultural values"></manualTask>
-    <manualTask id="manualtask4" name="auto evaluate ecological values"></manualTask>
-    <manualTask id="manualtask5" name="auto evaluate treaty values"></manualTask>
+    <manualTask id="manualtask1" name="Auto evaluate aquatic values"></manualTask>
+    <manualTask id="manualtask2" name="Auto evaluate archaeological values"></manualTask>
+    <manualTask id="manualtask3" name="Auto evaluate cultural values"></manualTask>
+    <manualTask id="manualtask4" name="Auto evaluate ecological values"></manualTask>
+    <manualTask id="manualtask5" name="Auto evaluate treaty values"></manualTask>
     <userTask id="usertask6" name="Notify Akisqnuk community" activiti:candidateGroups="communityAManager" activiti:formKey="diagrams/redirect.form">
       <documentation>Notify Akisqnuk community.</documentation>
     </userTask>

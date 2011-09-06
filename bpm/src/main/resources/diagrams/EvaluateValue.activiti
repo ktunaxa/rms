@@ -28,7 +28,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" width="101" height="20" y="20" style="/0/@styles.2" horizontalAlignment="ALIGNMENT_CENTER" value="determine values to investigate">
+        <graphicsAlgorithm xsi:type="al:Text" width="101" height="20" y="20" style="/0/@styles.2" horizontalAlignment="ALIGNMENT_CENTER" value="Determine values to investigate">
           <font name="Arial" size="8" bold="true"/>
         </graphicsAlgorithm>
         <link businessObjects="usertask1"/>
@@ -2429,7 +2429,7 @@
     <documentation id="documentation_process" text="Select which values need to be evaluated and evaluate them."/>
   </bpmn2:Process>
   <bpmn2:StartEvent id="startevent1" name="Start" outgoing="flow53" formKey="diagrams/createReferral.form"/>
-  <bpmn2:UserTask id="usertask1" name="determine values to investigate" incoming="flow53" outgoing="flow55" candidateGroups="/74" formKey="diagrams/valueSelect.form">
+  <bpmn2:UserTask id="usertask1" name="Determine values to investigate" incoming="flow53" outgoing="flow55" candidateGroups="/74" formKey="diagrams/valueSelect.form">
     <documentation text="Determine values to evaluate and/or whether to notify stewardship officer for community input."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow53" name="" sourceRef="startevent1" targetRef="usertask1"/>
