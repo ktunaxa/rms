@@ -142,7 +142,7 @@
     </userTask>
     <sequenceFlow id="flow103" name="" sourceRef="usertask11" targetRef="usertask12"></sequenceFlow>
     <sequenceFlow id="flow104" name="" sourceRef="usertask12" targetRef="exclusivegateway16"></sequenceFlow>
-    <userTask id="usertask13" name="Notify St. Marys community" activiti:assignee="communityCManager" activiti:formKey="diagrams/redirect.form">
+    <userTask id="usertask13" name="Notify St. Marys community" activiti:candidateGroups="communityCManager" activiti:formKey="diagrams/redirect.form">
       <documentation>Notify St. Marys community.</documentation>
     </userTask>
     <sequenceFlow id="flow105" name="" sourceRef="exclusivegateway14" targetRef="usertask13">

@@ -2441,11 +2441,11 @@
   <bpmn2:UserTask id="usertask4" name="Evaluate aquatic values" incoming="flow80" outgoing="flow74" candidateGroups="/75" formKey="diagrams/redirect.form">
     <documentation text="Evaluate aquatic values"/>
   </bpmn2:UserTask>
-  <bpmn2:ManualTask id="manualtask1" name="auto evaluate aquatic values" incoming="flow65" outgoing="flow80"/>
-  <bpmn2:ManualTask id="manualtask2" name="auto evaluate archaeological values" incoming="flow64" outgoing="flow81"/>
-  <bpmn2:ManualTask id="manualtask3" name="auto evaluate cultural values" incoming="flow66" outgoing="flow82"/>
-  <bpmn2:ManualTask id="manualtask4" name="auto evaluate ecological values" incoming="flow68" outgoing="flow83"/>
-  <bpmn2:ManualTask id="manualtask5" name="auto evaluate treaty values" incoming="flow70" outgoing="flow84"/>
+  <bpmn2:ManualTask id="manualtask1" name="Auto evaluate aquatic values" incoming="flow65" outgoing="flow80"/>
+  <bpmn2:ManualTask id="manualtask2" name="Auto evaluate archaeological values" incoming="flow64" outgoing="flow81"/>
+  <bpmn2:ManualTask id="manualtask3" name="Auto evaluate cultural values" incoming="flow66" outgoing="flow82"/>
+  <bpmn2:ManualTask id="manualtask4" name="Auto evaluate ecological values" incoming="flow68" outgoing="flow83"/>
+  <bpmn2:ManualTask id="manualtask5" name="Auto evaluate treaty values" incoming="flow70" outgoing="flow84"/>
   <bpmn2:UserTask id="usertask6" name="Notify Akisqnuk community" incoming="flow71" outgoing="flow85" candidateGroups="/106" formKey="diagrams/redirect.form">
     <documentation text="Notify Akisqnuk community."/>
   </bpmn2:UserTask>
@@ -2574,7 +2574,7 @@
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow103" name="" sourceRef="usertask11" targetRef="usertask12"/>
   <bpmn2:SequenceFlow id="flow104" name="" sourceRef="usertask12" targetRef="exclusivegateway16"/>
-  <bpmn2:UserTask id="usertask13" name="Notify St. Marys community" incoming="flow105" outgoing="flow106" assignee="communityCManager" formKey="diagrams/redirect.form">
+  <bpmn2:UserTask id="usertask13" name="Notify St. Marys community" incoming="flow105" outgoing="flow106" candidateGroups="/113" formKey="diagrams/redirect.form">
     <documentation text="Notify St. Marys community."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow105" name="" sourceRef="exclusivegateway14" targetRef="usertask13">
@@ -2603,4 +2603,5 @@
   <bpmn2:CandidateGroup group="communityCManager"/>
   <bpmn2:CandidateGroup group="communityDManager"/>
   <bpmn2:CandidateGroup group="communityDManager"/>
+  <bpmn2:CandidateGroup group="communityCManager"/>
 </xmi:XMI>
