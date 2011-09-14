@@ -14,13 +14,9 @@ import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.MapModel;
-import org.geomajas.gwt.client.map.event.MapModelEvent;
-import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.util.Log;
-import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.widget.utility.smartgwt.client.wizard.Wizard;
 import org.geomajas.widget.utility.smartgwt.client.wizard.WizardWidget;
 import org.ktunaxa.referral.client.gui.MapLayout;
@@ -119,7 +115,8 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 
 			public void execute(CommandResponse response) {
 				getView().setLoading(false);
-				SC.ask("Referral " + referralId + " successfully created./n/n Create a new referral?", new BooleanCallback() {
+				SC.ask("Referral " + referralId + " successfully created./n/n" +
+						" Create a new referral?", new BooleanCallback() {
 
 					public void execute(Boolean value) {
 						if (value != null && value) {

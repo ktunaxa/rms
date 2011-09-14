@@ -297,7 +297,6 @@ public final class MapLayout extends VLayout {
 			}
 		});
 		wizardBody.addMember((ReferralCreationWizard.ReferralWizardView) wizard.getView());
-//		addMember(body);
 		wizard.init();
 		bodyLayout.addMember(wizardBody);
 		bodyLayout.getChildren()[0].setVisible(false);

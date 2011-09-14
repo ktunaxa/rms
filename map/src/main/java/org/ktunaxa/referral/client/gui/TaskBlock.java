@@ -20,6 +20,7 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.util.Html;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
@@ -227,23 +228,52 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 		addMember(infoLayout);
 
-		String htmlContent = "<div class='taskBlockContent'>";
+		String htmlContent = WidgetLayout.openTag(Html.Tag.TABLE, "taskBlockContent", "", "");
+		final String openTr = WidgetLayout.openTag(Html.Tag.TR, "", "", "");
+		final String closeTr = WidgetLayout.closeTag(Html.Tag.TR);
 		if (task.isHistory()) {
-			htmlContent += "Assignee: " + WidgetLayout.htmlEncode(task.getAssignee())
-					+ "<br />Started: " + task.getStartTime()
-					+ "<br />Ended: " + task.getEndTime();
+			htmlContent += openTr 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Assignee: ")
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getAssignee()) 
+						+ closeTr
+						+ openTr 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Started: ") 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getStartTime() + "") 
+						+ closeTr
+						+ openTr 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Ended: ") 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getEndTime() + "") 
+						+ closeTr;
 		} else {
-			htmlContent += "Assignee: " + WidgetLayout.htmlEncode(task.getAssignee())
-				+ "<br />Created: " + task.getCreateTime()
-				+ "<br />Completion deadline: " + variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE)
-				+ "<br />E-mail: " + WidgetLayout.htmlEncode(variables.get(KtunaxaBpmConstant.VAR_EMAIL));
+			htmlContent += openTr 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Assignee: ")
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getAssignee()) 
+						+ closeTr
+						+ openTr 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Created: ") 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getCreateTime() + "")
+						+ closeTr
+						+ openTr 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Completion deadline: ") 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", 
+								variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
+						+ closeTr
+						+ openTr 
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "E-mail: ")
+						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", 
+								variables.get(KtunaxaBpmConstant.VAR_EMAIL))
+						+ closeTr;
 		}
 		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
 		if (null != engagementLevel) {
-			htmlContent += "<br />Engagement level: " + engagementLevel + " (prov "
-					+ variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
+			String engagementContent = engagementLevel + " (prov " + 
+									variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
+			htmlContent += openTr 
+			 			+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Engagement level: ")
+			 			+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", engagementContent)
+						+ closeTr;
 		}
-		htmlContent += "</div>";
+		htmlContent += WidgetLayout.closeTag(Html.Tag.TABLE);
 		content = new HTMLFlow(htmlContent);
 		content.setWidth100();
 		addMember(content);
