@@ -62,7 +62,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 
 	@Override
 	protected void onFinish() {
-		SC.confirm("Are you sure you want to create the referral ?", new BooleanCallback() {
+		SC.ask("Are you sure you want to create the referral ?", new BooleanCallback() {
 
 			public void execute(Boolean value) {
 				if (value != null && value) {
@@ -72,9 +72,9 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 							.getFeature() });
 					PersistTransactionRequest request = new PersistTransactionRequest();
 					request.setFeatureTransaction(ft.toDto());
-					final MapModel mapModel = data.getLayer().getMapModel();
+					final MapModel mapModel = layer.getMapModel();
 					// assume layer crs
-					request.setCrs(layer.getMapModel().getCrs());
+					request.setCrs(mapModel.getCrs());
 
 					GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 					command.setCommandRequest(request);
@@ -119,7 +119,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 
 			public void execute(CommandResponse response) {
 				getView().setLoading(false);
-				SC.confirm("Referral " + referralId + " successfully created. Create another ?", new BooleanCallback() {
+				SC.ask("Referral " + referralId + " successfully created./n/n Create a new referral?", new BooleanCallback() {
 
 					public void execute(Boolean value) {
 						if (value != null && value) {
