@@ -19,9 +19,11 @@ import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.util.Log;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.widget.utility.smartgwt.client.wizard.Wizard;
 import org.geomajas.widget.utility.smartgwt.client.wizard.WizardWidget;
+import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.server.command.dto.CreateProcessRequest;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -35,11 +37,7 @@ import com.smartgwt.client.util.SC;
  */
 public class ReferralCreationWizard extends Wizard<ReferralData> {
 
-	private MapWidget mapWidget;
-
 	private ReferralData data;
-
-	private VectorLayer layer;
 
 	private Runnable finishAction;
 
@@ -49,23 +47,11 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 	}
 
 	public void init() {
-		// need layer instance to start editing
-		mapWidget = new MapWidget("mapTestReferral", "app");
-		mapWidget.setVisible(false);
-		mapWidget.init();
-		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
-
-			public void onMapModelChange(MapModelEvent event) {
-				layer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
-				if (layer != null) {
-					addPage(new ReferralInfoPage());
-					addPage(new AddGeometryPage(mapWidget));
-					addPage(new AttachDocumentPage());
-					addPage(new ReferralConfirmPage());
-					start();
-				}
-			}
-		});
+		addPage(new ReferralInfoPage());
+		addPage(new AddGeometryPage());
+		addPage(new AttachDocumentPage());
+		addPage(new ReferralConfirmPage());
+		start();
 	}
 
 	@Override
@@ -81,11 +67,12 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 			public void execute(Boolean value) {
 				if (value != null && value) {
 					getView().setLoading(true);
+					VectorLayer layer = data.getLayer();
 					final FeatureTransaction ft = new FeatureTransaction(layer, new Feature[0], new Feature[] { data
 							.getFeature() });
 					PersistTransactionRequest request = new PersistTransactionRequest();
 					request.setFeatureTransaction(ft.toDto());
-					final MapModel mapModel = layer.getMapModel();
+					final MapModel mapModel = data.getLayer().getMapModel();
 					// assume layer crs
 					request.setCrs(layer.getMapModel().getCrs());
 
@@ -111,7 +98,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 	}
 
 	private void start() {
-		data = new ReferralData(layer);
+		data = new ReferralData(MapLayout.getInstance().getReferralLayer());
 		start(data);
 	}
 

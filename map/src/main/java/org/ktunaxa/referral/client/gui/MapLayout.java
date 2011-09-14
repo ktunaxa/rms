@@ -13,6 +13,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
+import org.geomajas.gwt.client.map.event.MapModelEvent;
+import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.spatial.Bbox;
@@ -98,6 +100,11 @@ public final class MapLayout extends VLayout {
 
 		// the map
 		mapWidget = new ReferralMapWidget("mapMain", "app");
+		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
+ 			public void onMapModelChange(MapModelEvent event) {
+ 				referralLayer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
+ 			}
+ 		});
 
 		// add layers, referral, GIS panel
 		layerPanel = new LayersPanel(mapWidget);
@@ -194,7 +201,6 @@ public final class MapLayout extends VLayout {
 		currentTask = task;
 		String title;
 		if (null != referral) {
-			referralLayer = (VectorLayer) getMap().getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
 			Feature feature = new Feature(referral, referralLayer);
 			GWT.log("Referral found: " + feature.getId());
 			getReferralPanel().init(referralLayer, feature);
@@ -278,22 +284,22 @@ public final class MapLayout extends VLayout {
 		haze.setBackgroundColor("#EEEEEE");
 		haze.setOpacity(60);
 
-		final VLayout body = new VLayout();
-		body.setMargin(LayoutConstant.MARGIN_SMALL);
+		final VLayout wizardBody = new VLayout();
+		wizardBody.setMargin(LayoutConstant.MARGIN_SMALL);
 		ReferralCreationWizard wizard = new ReferralCreationWizard(new Runnable() {
-
+			// resets the main window after completing/closing the wizard.
 			public void run() {
-				bodyLayout.removeChild(body);
+				bodyLayout.removeChild(wizardBody);
 				bodyLayout.getChildren()[0].setVisible(true);
-				body.destroy();
+				wizardBody.destroy();
 				menuBar.removeChild(haze);
 				topBar.setLeft(title);
 			}
 		});
-		body.addMember((ReferralCreationWizard.ReferralWizardView) wizard.getView());
-		addMember(body);
+		wizardBody.addMember((ReferralCreationWizard.ReferralWizardView) wizard.getView());
+//		addMember(body);
 		wizard.init();
-		bodyLayout.addMember(body);
+		bodyLayout.addMember(wizardBody);
 		bodyLayout.getChildren()[0].setVisible(false);
 
 		// Disable all buttons in the toolbar:

@@ -25,7 +25,7 @@
 
 		<property name="dbCycleUsed" value="true"/>
 
-		<property name="mailServerHost" value="smtp.skynet.be"/>  <!-- at office smtp.ibbt.be should work -->
+		<property name="mailServerHost" value="smtp.ibbt.be"/>  <!-- at office smtp.ibbt.be should work -->
 		<property name="mailServerPort" value="25"/>
 		<property name="mailServerDefaultFrom" value="activiti.referral@ktunaxa.org"/>
 		<property name="mailServerUsername" value=""/>

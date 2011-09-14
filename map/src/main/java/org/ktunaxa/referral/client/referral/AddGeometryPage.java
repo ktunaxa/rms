@@ -16,6 +16,7 @@ import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView.ZoomOption;
 import org.geomajas.gwt.client.map.event.MapModelEvent;
 import org.geomajas.gwt.client.map.event.MapModelHandler;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
@@ -23,12 +24,14 @@ import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
@@ -43,7 +46,9 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 
 	private static final String WORLD_PAINTABLE_ID = "referral-geometry";
 
-	private VLayout layout;
+	private VLayout vLayout;
+	
+	private HLayout hLayout;
 
 	private CardLayout<String> uploadLayout;
 
@@ -52,10 +57,11 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	private GfxGeometry gfxGeometry;
 
 	private Map<String, UploadGeometryPanel> panelMap;
-
-	public AddGeometryPage(MapWidget mapWidget) {
+	
+	public AddGeometryPage() {
 		super();
-		this.mapWidget = mapWidget;
+		mapWidget = new MapWidget("mapTestReferral", "app");
+		mapWidget.setVisible(false);
 		initGui();
 	}
 
@@ -68,7 +74,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	}
 
 	public Canvas asWidget() {
-		return layout;
+		return vLayout;
 	}
 
 	public void clear() {
@@ -115,7 +121,8 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	}
 
 	private void initGui() {
-		layout = new VLayout(LayoutConstant.MARGIN_LARGE);
+		vLayout = new VLayout(LayoutConstant.MARGIN_LARGE);
+		hLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
 		uploadLayout = new CardLayout<String>();
 		panelMap = new LinkedHashMap<String, UploadGeometryPanel>();
 		panelMap.put(UploadShapePanel.NAME, new UploadShapePanel());
@@ -175,14 +182,17 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 				uploadLayout.showCard(UploadXyCoordinatePanel.NAME);
 			}
 		});
-
-		layout.addMember(toolStrip);
-		layout.addMember(uploadLayout);
+		uploadLayout.setSize("50%", "100%");
+		hLayout.addMember(uploadLayout);
 		mapWidget.setZoomOnScrollEnabled(true);
 		mapWidget.setBorder("1px solid #C0C0CC");
-		mapWidget.setSize("600px", "400px");
+		mapWidget.setSize("50%", "100%");
 		mapWidget.setVisible(true);
-		layout.addMember(mapWidget);
+		hLayout.setSize("100%", "100%");
+		hLayout.addMember(mapWidget);
+		
+		vLayout.addMember(toolStrip);
+		vLayout.addMember(hLayout);
 	}
 
 	/**
