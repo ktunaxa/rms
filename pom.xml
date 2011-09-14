@@ -168,7 +168,7 @@
 			<dependency>
 				<groupId>org.geomajas</groupId>
 				<artifactId>geomajas-dep</artifactId>
-				<version>1.11.26</version>
+				<version>1.11.36</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -231,6 +231,21 @@
 				<artifactId>xalan</artifactId>
 				<version>2.7.0</version>
 			</dependency>
+
+			<!-- Google dependencies -->
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-user</artifactId>
+				<version>${gwt.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-servlet</artifactId>
+				<version>${gwt.version}</version>
+				<scope>runtime</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -284,9 +299,9 @@
 		<activiti.version>5.4</activiti.version>
 		<activiti.rest.version>5.4</activiti.rest.version>
 		<geotools.version>2.7.0.1</geotools.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<gwt-version>2.1.1</gwt-version>
+		<gwt.version>2.4.0</gwt.version>
 		<alfresco.version>3.4.a</alfresco.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 </project>
