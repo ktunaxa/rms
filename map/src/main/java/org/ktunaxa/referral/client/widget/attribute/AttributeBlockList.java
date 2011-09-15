@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import com.smartgwt.client.types.KeyNames;
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Button;
@@ -311,7 +312,7 @@ public class AttributeBlockList extends VLayout {
 		filterItem.addKeyPressHandler(new KeyPressHandler() {
 
 			public void onKeyPress(KeyPressEvent event) {
-				if ("Enter".equalsIgnoreCase(event.getKeyName())) {
+				if (KeyNames.ENTER.equals(event.getKeyName())) {
 					search((String) event.getItem().getValue());
 				}
 			}
