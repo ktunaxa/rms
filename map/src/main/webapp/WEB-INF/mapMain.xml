@@ -112,6 +112,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 						<ref bean="ZoomCurrentReferral" />
 						<ref bean="ZoomKtunaxaTerritory" />
 						<ref bean="ToolbarSeparator" />
+						<ref bean="ShowDefaultPrint" />
+						<ref bean="ToolbarSeparator" />
 						<!--
 						<ref bean="ZoomToRectangleMode" />
 						<ref bean="PanMode" />
