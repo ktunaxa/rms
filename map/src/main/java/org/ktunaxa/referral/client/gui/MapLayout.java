@@ -218,7 +218,8 @@ public final class MapLayout extends VLayout {
 			// highlight the feature
 			SymbolInfo symbolInfo = null;
 			if (feature != null && feature.getStyleId() != null) {
-				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().getNamedStyleInfo().getFeatureStyles()) {
+				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().
+						getNamedStyleInfo().getFeatureStyles()) {
 					if (feature.getStyleId().equals(style.getStyleId())) {
 						symbolInfo = style.getSymbol();
 						break;
