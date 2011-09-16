@@ -20,8 +20,7 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
-import org.geomajas.gwt.client.util.Html;
-import org.geomajas.gwt.client.util.WidgetLayout;
+import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.security.UserContext;
@@ -147,7 +146,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		title.addMember(titleImage);
 		HTMLFlow titleText = new HTMLFlow("<div class='taskBlockTitleText'>" +
 				variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID) +
-				": " + WidgetLayout.htmlEncode(task.getName()) +
+				": " + HtmlBuilder.htmlEncode(task.getName()) +
 				"</div>");
 		titleText.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
 		title.addMember(titleText);
@@ -157,8 +156,8 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		infoLayout.setLayoutRightMargin(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutTopMargin(LayoutConstant.MARGIN_SMALL);
 		HTMLFlow info = new HTMLFlow("<div class='taskBlockInfo'>" +
-				WidgetLayout.htmlEncode(task.getDescription()) +
-				"<br />Referral: " + WidgetLayout.htmlEncode(variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)) +
+				HtmlBuilder.htmlEncode(task.getDescription()) +
+				"<br />Referral: " + HtmlBuilder.htmlEncode(variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)) +
 				"</div>");
 		info.setSize(LayoutConstant.BLOCK_INFO_WIDTH, LayoutConstant.BLOCK_INFO_HEIGHT);
 		infoLayout.addMember(info);
@@ -225,55 +224,85 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 			}
 		});
 		infoLayout.addMember(claimButton);
-
 		addMember(infoLayout);
-
-		String htmlContent = WidgetLayout.openTag(Html.Tag.TABLE, "taskBlockContent", "", "");
-		final String openTr = WidgetLayout.openTag(Html.Tag.TR, "", "", "");
-		final String closeTr = WidgetLayout.closeTag(Html.Tag.TR);
+		String[] rows = null;
 		if (task.isHistory()) {
-			htmlContent += openTr 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Assignee: ")
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getAssignee()) 
-						+ closeTr
-						+ openTr 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Started: ") 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getStartTime() + "") 
-						+ closeTr
-						+ openTr 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Ended: ") 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getEndTime() + "") 
-						+ closeTr;
+			rows = new String[4];
+			rows[0] = HtmlBuilder.trHtmlContent(new String[] {
+							HtmlBuilder.tdStyle("text-align:right", "Assignee: "),
+							HtmlBuilder.tdStyle("text-align:left", task.getAssignee())
+						});
+			rows[1] = HtmlBuilder.trHtmlContent(new String[] {
+							HtmlBuilder.tdStyle("text-align:right", "Started: "),
+							HtmlBuilder.tdStyle("text-align:left", task.getStartTime() + "")
+						});
+			rows[2] = HtmlBuilder.trHtmlContent(new String[] {
+							HtmlBuilder.tdStyle("text-align:right", "Assignee: "),
+							HtmlBuilder.tdStyle("text-align:left", task.getEndTime() + "")
+						});
+//			htmlContent += openTr 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Assignee: ")
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getAssignee()) 
+//						+ closeTr
+//						+ openTr 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Started: ") 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getStartTime() + "") 
+//						+ closeTr
+//						+ openTr 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Ended: ") 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getEndTime() + "") 
+//						+ closeTr;
 		} else {
-			htmlContent += openTr 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Assignee: ")
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getAssignee()) 
-						+ closeTr
-						+ openTr 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Created: ") 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", task.getCreateTime() + "")
-						+ closeTr
-						+ openTr 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Completion deadline: ") 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", 
-								variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
-						+ closeTr
-						+ openTr 
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "E-mail: ")
-						+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", 
-								variables.get(KtunaxaBpmConstant.VAR_EMAIL))
-						+ closeTr;
+			rows = new String[5];
+			rows[0] = HtmlBuilder.trHtmlContent(new String[] {
+					HtmlBuilder.tdStyle("text-align:right", "Assignee: "),
+					HtmlBuilder.tdStyle("text-align:left", task.getAssignee())
+				});
+			rows[1] = HtmlBuilder.trHtmlContent(new String[] {
+					HtmlBuilder.tdStyle("text-align:right", "Created: "),
+					HtmlBuilder.tdStyle("text-align:left", task.getCreateTime() + "")
+				});
+			rows[2] = HtmlBuilder.trHtmlContent(new String[] {
+					HtmlBuilder.tdStyle("text-align:right", "Completion deadline: "),
+					HtmlBuilder.tdStyle("text-align:left", variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
+				});
+			rows[3] = HtmlBuilder.trHtmlContent(new String[] {
+					HtmlBuilder.tdStyle("text-align:right", "E-mail: "),
+					HtmlBuilder.tdStyle("text-align:left", variables.get(KtunaxaBpmConstant.VAR_EMAIL))
+				});
+//			htmlContent += openTr 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Assignee: ")
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getAssignee()) 
+//						+ closeTr
+//						+ openTr 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Created: ") 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getCreateTime() + "")
+//						+ closeTr
+//						+ openTr 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Completion deadline: ") 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", 
+//								variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
+//						+ closeTr
+//						+ openTr 
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "E-mail: ")
+//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", 
+//								variables.get(KtunaxaBpmConstant.VAR_EMAIL))
+//						+ closeTr;
 		}
 		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
 		if (null != engagementLevel) {
 			String engagementContent = engagementLevel + " (prov " + 
-									variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
-			htmlContent += openTr 
-			 			+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:right", "Engagement level: ")
-			 			+ WidgetLayout.getTagString(Html.Tag.TD, "", "text-align:left", engagementContent)
-						+ closeTr;
+			variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
+			rows[rows.length - 1] = HtmlBuilder.trHtmlContent(new String[] {
+					HtmlBuilder.tdStyle("text-align:right", "Engagement level: "),
+					HtmlBuilder.tdStyle("text-align:left", engagementContent)
+				});
+//			htmlContent += openTr 
+//			 			+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Engagement level: ")
+//			 			+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", engagementContent)
+//						+ closeTr;
 		}
-		htmlContent += WidgetLayout.closeTag(Html.Tag.TABLE);
+		String htmlContent = HtmlBuilder.tableClassHtmlContent("taskBlockContent", rows);
 		content = new HTMLFlow(htmlContent);
 		content.setWidth100();
 		addMember(content);
