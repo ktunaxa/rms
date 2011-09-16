@@ -41,6 +41,8 @@ import java.util.Map;
  */
 public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
+	private static final String TEXT_ALIGN_LEFT = "text-align:left";
+	private static final String TEXT_ALIGN_RIGHT = "text-align:right";
 	private static final String BLOCK_STYLE = "taskBlock";
 	private static final String TITLE_STYLE = "taskBlockTitle";
 	private static final String BLOCK_STYLE_COLLAPSED = "taskBlockCollapsed";
@@ -229,78 +231,44 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		if (task.isHistory()) {
 			rows = new String[4];
 			rows[0] = HtmlBuilder.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle("text-align:right", "Assignee: "),
-							HtmlBuilder.tdStyle("text-align:left", task.getAssignee())
+							HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Assignee: "),
+							HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getAssignee())
 						});
 			rows[1] = HtmlBuilder.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle("text-align:right", "Started: "),
-							HtmlBuilder.tdStyle("text-align:left", task.getStartTime() + "")
+							HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Started: "),
+							HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getStartTime() + "")
 						});
 			rows[2] = HtmlBuilder.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle("text-align:right", "Assignee: "),
-							HtmlBuilder.tdStyle("text-align:left", task.getEndTime() + "")
+							HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Assignee: "),
+							HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getEndTime() + "")
 						});
-//			htmlContent += openTr 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Assignee: ")
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getAssignee()) 
-//						+ closeTr
-//						+ openTr 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Started: ") 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getStartTime() + "") 
-//						+ closeTr
-//						+ openTr 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Ended: ") 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getEndTime() + "") 
-//						+ closeTr;
 		} else {
 			rows = new String[5];
 			rows[0] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle("text-align:right", "Assignee: "),
-					HtmlBuilder.tdStyle("text-align:left", task.getAssignee())
+					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Assignee: "),
+					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getAssignee())
 				});
 			rows[1] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle("text-align:right", "Created: "),
-					HtmlBuilder.tdStyle("text-align:left", task.getCreateTime() + "")
+					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Created: "),
+					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getCreateTime() + "")
 				});
 			rows[2] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle("text-align:right", "Completion deadline: "),
-					HtmlBuilder.tdStyle("text-align:left", variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
+					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Completion deadline: "),
+					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
 				});
 			rows[3] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle("text-align:right", "E-mail: "),
-					HtmlBuilder.tdStyle("text-align:left", variables.get(KtunaxaBpmConstant.VAR_EMAIL))
+					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "E-mail: "),
+					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, variables.get(KtunaxaBpmConstant.VAR_EMAIL))
 				});
-//			htmlContent += openTr 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Assignee: ")
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getAssignee()) 
-//						+ closeTr
-//						+ openTr 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Created: ") 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", task.getCreateTime() + "")
-//						+ closeTr
-//						+ openTr 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Completion deadline: ") 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", 
-//								variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
-//						+ closeTr
-//						+ openTr 
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "E-mail: ")
-//						+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", 
-//								variables.get(KtunaxaBpmConstant.VAR_EMAIL))
-//						+ closeTr;
 		}
 		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
 		if (null != engagementLevel) {
 			String engagementContent = engagementLevel + " (prov " + 
 			variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
 			rows[rows.length - 1] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle("text-align:right", "Engagement level: "),
-					HtmlBuilder.tdStyle("text-align:left", engagementContent)
+					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Engagement level: "),
+					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, engagementContent)
 				});
-//			htmlContent += openTr 
-//			 			+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:right", "Engagement level: ")
-//			 			+ HtmlBuilder.getTagString(Html.Tag.TD, "", "text-align:left", engagementContent)
-//						+ closeTr;
 		}
 		String htmlContent = HtmlBuilder.tableClassHtmlContent("taskBlockContent", rows);
 		content = new HTMLFlow(htmlContent);
