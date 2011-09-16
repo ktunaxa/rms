@@ -10,6 +10,9 @@ import java.util.List;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
+
+import org.geomajas.configuration.FeatureStyleInfo;
+import org.geomajas.configuration.SymbolInfo;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
@@ -213,8 +216,17 @@ public final class MapLayout extends VLayout {
 			// Now display feature on this page!
 			getMap().getMapModel().getMapView().applyBounds(bounds, MapView.ZoomOption.LEVEL_FIT);
 			// highlight the feature
+			SymbolInfo symbolInfo = null;
+			if (feature != null && feature.getStyleId() != null) {
+				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().getNamedStyleInfo().getFeatureStyles()) {
+					if (feature.getStyleId().equals(style.getStyleId())) {
+						symbolInfo = style.getSymbol();
+						break;
+					}
+				}
+			}
 			GfxGeometry highlight = new GfxGeometry("referral-highlight", geometry, new ShapeStyle("#FF00FF", 0.5f,
-					"#FF00FF", 0.8f, 1));
+					"#FF00FF", 0.8f, 1), symbolInfo);
 			getMap().registerWorldPaintable(highlight);
 			String referralDescription = feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_PROJECT).toString();
 			String referralId = ReferralUtil.createId(referral);

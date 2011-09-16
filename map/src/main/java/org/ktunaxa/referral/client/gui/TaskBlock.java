@@ -23,6 +23,8 @@ import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
+import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
+import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.server.command.dto.AssignTaskRequest;
@@ -62,6 +64,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	private Img titleImage = new Img(IMAGE_MINIMIZE, 16, 16);
 	private IButton startButton = new IButton();
 	private IButton claimButton = new IButton();
+	private boolean needToDisplayCurrentTask;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -70,6 +73,15 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	public TaskBlock(TaskDto task) {
 		super(task);
 		buildGui(task);
+		MapLayout.getInstance().addCurrentReferralChangedHandler(new CurrentReferralChangedHandler() {
+			
+			public void onCurrentReferralChanged(CurrentReferralChangedEvent event) {
+				if (needToDisplayCurrentTask) {
+					MapLayout.getInstance().focusCurrentTask();
+				}
+				needToDisplayCurrentTask = false;
+			}
+		});
 	}
 
 	// ------------------------------------------------------------------------
@@ -307,7 +319,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 	private void start(TaskDto task, Feature referral) {
 		MapLayout mapLayout = MapLayout.getInstance();
-		mapLayout.setReferralAndTask(referral, task);
-		mapLayout.focusCurrentTask();
+		needToDisplayCurrentTask = true;
+		mapLayout.setReferralAndTask(referral, task); 
 	}
 }
