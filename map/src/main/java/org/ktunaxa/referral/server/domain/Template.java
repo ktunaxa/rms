@@ -14,8 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * A template from which documents can be created. These templates will be used in multiple processes (e-mails, reports,
- * ...)
+ * A template from which documents can be created. These templates will be used in multiple processes
+ * (e-mails, reports,...)
  * 
  * @author Pieter De Graef
  */
@@ -35,12 +35,16 @@ public class Template {
 	@Column(nullable = false, name = "description")
 	private String description;
 
+	/** The sender for the email. */
+	@Column(nullable = false, name = "mail_sender")
+	private String mailSender;
+
 	/** The XML contents of the template. */
 	@Column(nullable = false, name = "content")
 	private byte[] content;
 
 	/** The mime-type for the actual template. */
-	@Column(nullable = false, name = "mime-type")
+	@Column(nullable = false, name = "mime_type")
 	private String mimeType;
 
 	// ------------------------------------------------------------------------
@@ -48,11 +52,11 @@ public class Template {
 	// ------------------------------------------------------------------------
 
 	public Template() {
-	};
+	}
 
 	public Template(long id) {
 		this.id = id;
-	};
+	}
 
 	// ------------------------------------------------------------------------
 	// Getters and setters:
@@ -94,6 +98,24 @@ public class Template {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	/**
+	 * Get the sender e-mail address.
+	 *
+	 * @return sender
+	 */
+	public String getMailSender() {
+		return mailSender;
+	}
+
+	/**
+	 * Set the sender e-mail address.
+	 *
+	 * @param mailSender sender
+	 */
+	public void setMailSender(String mailSender) {
+		this.mailSender = mailSender;
 	}
 
 	/**

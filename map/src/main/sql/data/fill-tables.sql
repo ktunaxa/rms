@@ -194,3 +194,24 @@ INSERT INTO referral_external_agency_type (id, title, description) values (4, 'I
 INSERT INTO referral_priority (id, title, description) values (1, 'Low', 'Low priority.');
 INSERT INTO referral_priority (id, title, description) values (2, 'Medium', 'Medium priority.');
 INSERT INTO referral_priority (id, title, description) values (3, 'High', 'High priority.');
+
+
+-- ----------------------------------------------------------------------------
+-- Table: TEMPLATE
+-- ----------------------------------------------------------------------------
+
+INSERT INTO template (id, mime_type, mail_sender, title, description, content) values
+(1, 'text', 'bla@ktunaxa.org', 'notify.level0', '',
+'Referral ${referralId} ${referralName}\nWe have received this referral but do not think we need to take action to process it. For us it has engagament level 0.\nKind regards\nKtunaxa Nation Council');
+INSERT INTO template (id, mime_type, mail_sender, title, description, content) values
+(2, 'text', 'bla@ktunaxa.org', 'notify.change.engagementLevel', '',
+'Referral ${referralId} ${referralName}\nThanks for submitting this referral. After investigation, we believe the engagement level needs to be changed from {provinceEngagementLevel} to ${engagementLevel}. Our seasoning for this:\n${engagementComment}\nPlease confirm receipt of this message or let us know of any problems with this decision.\nWe will process your referral by ${completionDeadline}.\nKind regards\nKtunaxa Nation Council');');
+INSERT INTO template (id, mime_type, mail_sender, title, description, content) values
+(3, 'text', 'bla@ktunaxa.org', 'notify.start', '',
+'Referral ${referralId} ${referralName}\nThanks for submitting this referral.\nWe will process your referral by ${completionDeadline}.\nKind regards\nKtunaxa Nation Council');');
+INSERT INTO template (id, mime_type, mail_sender, title, description, content) values
+(4, 'text', 'bla@ktunaxa.org', 'notify.start.level3', '',
+'Referral ${referralId} ${referralName}\n???\nKind regards\nKtunaxa Nation Council');');
+INSERT INTO template (id, mime_type, mail_sender, title, description, content) values
+(5, 'text', 'bla@ktunaxa.org', 'notify.result', '',
+'''Referral ${referralId} ${referralName}\nOur evalution of this referral is attached.\nKind regards\nKtunaxa Nation Council');');
