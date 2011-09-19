@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.event.shared.HandlerRegistration;
 import org.geomajas.gwt.client.map.feature.Feature;
+import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.StringAttribute;
@@ -24,6 +24,7 @@ import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
@@ -52,6 +53,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 
 	private Img busyImg;
 	private VLayout uploadLayout;
+	private AssociationValue currentDocument;
 
 	public AttachDocumentPage() {
 		super();
@@ -97,7 +99,10 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 	// Private methods:
 	// ------------------------------------------------------------------------
 
-	private void addDocument(String title, String documentId) {
+	private void addDocument(AssociationValue associationValue) {
+		Map<String, Attribute<?>> attributes = associationValue.getAllAttributes();
+		String title = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE).getValue();
+		String documentId = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID).getValue();
 		ListGridRecord record = new ListGridRecord();
 		record.setAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, title);
 		record.setAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID, documentId);
@@ -118,23 +123,23 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 
 		return uploadLayout;
 	}
-
-	public void clear() {
-	}
-
 	@SuppressWarnings("unchecked")
-	@Override
-	protected void show() {
-		clear();
+	public void init() {
 		List<AssociationValue> documents = (List<AssociationValue>) getWizardData().getFeature().getAttributeValue(
 				KtunaxaConstant.ATTRIBUTE_DOCUMENTS);
 		if (documents != null) {
 			for (AssociationValue associationValue : documents) {
-				Map<String, Attribute<?>> attributes = associationValue.getAllAttributes();
-				String title = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE).getValue();
-				String documentId = (String) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID).getValue();
-				addDocument(title, documentId);
+				addDocument(associationValue);
 			}
+		}
+	}
+	
+	@Override
+	protected void show() {
+		if (null == currentDocument) {
+			init();
+		} else {
+			addDocument(currentDocument);
 		}
 	}
 
@@ -144,8 +149,8 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 		final FileUploadForm form = new FileUploadForm("Select a file", GWT.getModuleBaseURL()
 				+ KtunaxaConstant.URL_DOCUMENT_UPLOAD, ReferralUtil.createId(getWizardData().getFeature()));
 		form.setHeight(40);
-
 		HLayout btnLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
+		btnLayout.setHeight(60);
 		busyImg = new Img(LayoutConstant.LOADING_IMAGE,
 				LayoutConstant.LOADING_IMAGE_WIDTH, LayoutConstant.LOADING_IMAGE_HEIGHT);
 		busyImg.setVisible(false);
@@ -158,6 +163,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 				busyImg.setVisible(true);
 			}
 		});
+		btnLayout.addMember(form);
 		btnLayout.addMember(uploadButton);
 		btnLayout.addMember(busyImg);
 		final HTMLFlow errorFlow = new HTMLFlow();
@@ -165,6 +171,9 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 		errorFlow.setWidth100();
 		errorFlow.setVisible(false);
 		btnLayout.addMember(errorFlow);
+		LayoutSpacer component = new LayoutSpacer();
+		component.setWidth("60%");
+		btnLayout.addMember(component);
 
 		form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
 
@@ -176,31 +185,34 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 				String documentId = event.getString(KtunaxaConstant.FORM_DOCUMENT_ID);
 				String displayUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL);
 				String downloadUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DOWNLOAD_URL);
-				AssociationValue document = new AssociationValue();
+				currentDocument = new AssociationValue();
 				Map<String, Attribute<?>> attributes = new HashMap<String, Attribute<?>>();
 				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, new StringAttribute(title));
 				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, new StringAttribute(title));
 				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID, new StringAttribute(documentId));
 				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL, new StringAttribute(displayUrl));
 				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL, new StringAttribute(downloadUrl));
-				document.setAllAttributes(attributes);
-				getWizardData().getFeature().addOneToManyValue(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, document);
+				currentDocument.setAllAttributes(attributes);
+				getWizardData().getFeature().addOneToManyValue(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, currentDocument);
 				busyImg.setVisible(false);
 				show();
 			}
 
 			public void onFileUploadFailed(FileUploadFailedEvent event) {
 				busyImg.setVisible(false);
-				errorFlow.setContents("<div style='color: #AA0000'>" + event.getErrorMessage() + "</div>");
+				errorFlow.setContents(HtmlBuilder.divStyle("color: #AA0000", event.getErrorMessage()));
 				errorFlow.setVisible(true);
 			}
 		});
 
-		uploadLayout.addMember(form);
 		uploadLayout.addMember(btnLayout);
 	}
 
 	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {
 		return null;  // don't do anything for this one
+	}
+
+	@Override
+	protected void clear() {
 	}
 }
