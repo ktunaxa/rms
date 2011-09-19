@@ -45,6 +45,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
  */
 public class AttachDocumentPage extends WizardPage<ReferralData> implements UploadGeometryPanel {
 
+
 	private VLayout layout;
 
 	private ListGrid grid;
@@ -70,6 +71,12 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 		layout.addMember(grid);
 	}
 
+	@Override
+	protected void setWizardData(ReferralData wizardData) {
+		super.setWizardData(wizardData);
+		setFeature(wizardData.getFeature());
+	}
+	
 	public String getTitle() {
 		return "Attach documents";
 	}
