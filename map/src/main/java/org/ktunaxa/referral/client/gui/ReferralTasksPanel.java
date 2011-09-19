@@ -57,22 +57,7 @@ public class ReferralTasksPanel extends VLayout {
 		super();
 		setWidth100();
 		currentTaskBlock.setStyleName(STYLE_BLOCK);
-	}
-
-	public void init(VectorLayer referralLayer, Feature referral) {
-		if (null == referral) {
-			currentTaskBlock.refresh(MapLayout.getInstance().getCurrentTask());
-		}
-	}
-
-	@Override
-	public void show() {
-		super.show();
-
-		if (null != groups) {
-			removeMember(groups);
-		}
-
+		
 		groups = new SectionStack();
 		groups.setWidth100();
 		groups.setOverflow(Overflow.AUTO);
@@ -87,13 +72,31 @@ public class ReferralTasksPanel extends VLayout {
 				sections[i].addItem(currentTaskBlock);
 			} else {
 				sections[i].addItem(views[i]);
+			}
+			sections[i].setExpanded(false);
+			groups.addSection(sections[i]);
+		}
+		addMember(groups);
+	}
+
+	public void init(VectorLayer referralLayer, Feature referral) {
+		if (null == referral) {
+			currentTaskBlock.refresh(MapLayout.getInstance().getCurrentTask());
+		}
+	}
+
+	@Override
+	public void show() {
+		super.show();
+
+		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
+			if (GROUP_CURRENT != i) {
 				sections[i].setTitle(GROUP_TITLES[i]);
 				lists[i].clear();
 				views[i].populate(lists[i]);
 			}
-			sections[i].setExpanded(false);
 		}
-		
+
 		MapLayout mapLayout = MapLayout.getInstance();
 		org.geomajas.layer.feature.Feature referral = mapLayout.getCurrentReferral();
 		if (null != referral) {
@@ -127,23 +130,15 @@ public class ReferralTasksPanel extends VLayout {
 							views[i].populate(lists[i]); // @todo @sec only add when the role is assigned to the user
 						}
 					}
+					TaskDto task = MapLayout.getInstance().getCurrentTask();
+					currentTaskBlock.refresh(task);
+					if (null != task) {
+						sections[GROUP_CURRENT].setExpanded(true);
+					} else {
+						sections[GROUP_OPEN].setExpanded(true);
+					}
 				}
 			});
 		}
-		TaskDto task = mapLayout.getCurrentTask();
-		currentTaskBlock.refresh(task);
-		if (null != task) {
-			sections[GROUP_CURRENT].setExpanded(true);
-		} else {
-			sections[GROUP_OPEN].setExpanded(true);
-		}
-		
-		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
-			if (i == GROUP_CURRENT || UserContext.getInstance().isReferralAdmin()) {
-				// only add current task unless logged in user is referral administrator
-				groups.addSection(sections[i]);
-			}
-		}
-		addMember(groups);
 	}
 }
