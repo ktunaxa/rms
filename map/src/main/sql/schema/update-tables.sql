@@ -16,8 +16,5 @@ INSERT INTO template (id, mime_type, mail_sender, title, description, string_con
 (3, 'text', 'bla@ktunaxa.org', 'notify.start', '',
 'Referral ${referralId} ${referralName}\nThanks for submitting this referral.\nWe will process your referral by ${completionDeadline}.\nKind regards\nKtunaxa Nation Council');
 INSERT INTO template (id, mime_type, mail_sender, title, description, string_content) values
-(4, 'text', 'bla@ktunaxa.org', 'notify.start.level3', '',
-'Referral ${referralId} ${referralName}\n???\nKind regards\nKtunaxa Nation Council');
-INSERT INTO template (id, mime_type, mail_sender, title, description, string_content) values
-(5, 'text', 'bla@ktunaxa.org', 'notify.result', '',
+(4, 'text', 'bla@ktunaxa.org', 'notify.result', '',
 '''Referral ${referralId} ${referralName}\nOur evaluation of this referral is attached.\nKind regards\nKtunaxa Nation Council');
