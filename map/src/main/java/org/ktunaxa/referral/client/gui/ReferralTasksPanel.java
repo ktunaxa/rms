@@ -6,25 +6,25 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.types.VisibilityMode;
-import com.smartgwt.client.widgets.layout.SectionStack;
-import com.smartgwt.client.widgets.layout.SectionStackSection;
-import com.smartgwt.client.widgets.layout.VLayout;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
-import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.types.VisibilityMode;
+import com.smartgwt.client.widgets.layout.SectionStack;
+import com.smartgwt.client.widgets.layout.SectionStackSection;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Panel to display tasks for the current referral.

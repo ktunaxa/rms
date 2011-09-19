@@ -315,7 +315,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 					start(task, response.getReferral());
 				} else {
 					SC.ask("Do you want to claim the task?<br /><br />" +
-							" You are currently logged in as "+ UserContext.getInstance().getUser(), 
+							" You are currently logged in as " + UserContext.getInstance().getUser(), 
 							new BooleanCallback() {
 
 						public void execute(Boolean value) {
