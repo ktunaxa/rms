@@ -434,7 +434,8 @@ CREATE TABLE template(
 	title character varying(254) NOT NULL,
 	description character varying(254) NOT NULL,
 	mail_sender character varying(254) NOT NULL,
-	content oid NOT NULL,
+	string_content text,
+	content oid,
 	mime_type character varying(254) NOT NULL
 ); 
 

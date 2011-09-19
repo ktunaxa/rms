@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -40,8 +41,13 @@ public class Template {
 	private String mailSender;
 
 	/** The XML contents of the template. */
-	@Column(nullable = false, name = "content")
+	@Column(nullable = true, name = "content")
 	private byte[] content;
+
+	/** The XML contents of the template. */
+	@Column(nullable = true, name = "string_content")
+	@Lob
+	private String stringContent;
 
 	/** The mime-type for the actual template. */
 	@Column(nullable = false, name = "mime_type")
@@ -138,22 +144,48 @@ public class Template {
 	}
 
 	/**
-	 * Get the XML contents of the template.
-	 * 
-	 * @return The XML contents of the template.
+	 * Get the binary contents of the template.
+	 * <p/>
+	 * Whether string or binary content should be used depends on the mime type of the template.
+	 *
+	 * @return The binary contents of the template.
 	 */
 	public byte[] getContent() {
 		return content;
 	}
 
 	/**
-	 * Set the XML contents of the template.
-	 * 
+	 * Set the binary contents of the template.
+	 * <p/>
+	 * Whether string or binary content should be used depends on the mime type of the template.
+	 *
 	 * @param content
 	 *            The new value.
 	 */
 	public void setContent(byte[] content) {
 		this.content = content;
+	}
+
+	/**
+	 * Get the string content of the template.
+	 * <p/>
+	 * Whether string or binary content should be used depends on the mime type of the template.
+	 *
+	 * @return string content
+	 */
+	public String getStringContent() {
+		return stringContent;
+	}
+
+	/**
+	 * Set the string content of the template.
+	 * <p/>
+	 * Whether string or binary content should be used depends on the mime type of the template.
+	 *
+	 * @param stringContent string content
+	 */
+	public void setStringContent(String stringContent) {
+		this.stringContent = stringContent;
 	}
 
 	/**
