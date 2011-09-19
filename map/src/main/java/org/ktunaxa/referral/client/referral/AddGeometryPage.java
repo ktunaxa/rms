@@ -17,6 +17,7 @@ import org.geomajas.gwt.client.map.MapView.ZoomOption;
 import org.geomajas.gwt.client.map.event.MapModelEvent;
 import org.geomajas.gwt.client.map.event.MapModelHandler;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
+import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
 import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
@@ -153,7 +154,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		xyButton.setRadioGroup("geometry");
 
 		HTMLFlow cmd = new HTMLFlow(
-				"<div style='text-align:right; line-height:32px; font-size:12px;'>Choose a method:</div>");
+				HtmlBuilder.divStyle("text-align:right; line-height:32px; font-size:12px;", "Choose a method:"));
 		cmd.setSize("120px", "32px");
 		toolStrip.addMember(cmd);
 		toolStrip.addMember(shapeButton);
