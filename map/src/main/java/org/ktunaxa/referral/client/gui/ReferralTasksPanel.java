@@ -51,19 +51,33 @@ public class ReferralTasksPanel extends VLayout {
 	private TaskListView[] views = new TaskListView[GROUP_TITLES.length];
 	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[GROUP_TITLES.length];
 
+	private SectionStack groups;
+
 	public ReferralTasksPanel() {
 		super();
 		setWidth100();
 		currentTaskBlock.setStyleName(STYLE_BLOCK);
+	}
 
-		SectionStack groups = new SectionStack();
-		//groups.setSize("100%", "10");
+	public void init(VectorLayer referralLayer, Feature referral) {
+		if (null == referral) {
+			currentTaskBlock.refresh(MapLayout.getInstance().getCurrentTask());
+		}
+	}
+
+	@Override
+	public void show() {
+		super.show();
+
+		if (null != groups) {
+			removeMember(groups);
+		}
+
+		groups = new SectionStack();
 		groups.setWidth100();
 		groups.setOverflow(Overflow.AUTO);
-		groups.setVisibilityMode(VisibilityMode.MUTEX);
-		//groups.setPadding(LayoutConstant.MARGIN_SMALL);
-		addMember(groups);
-
+		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
+		
 		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
 			sections[i] = new SectionStackSection(GROUP_TITLES[i]);
 			views[i] = new TaskListView();
@@ -73,45 +87,14 @@ public class ReferralTasksPanel extends VLayout {
 				sections[i].addItem(currentTaskBlock);
 			} else {
 				sections[i].addItem(views[i]);
-			}
-			if (i == GROUP_CURRENT || UserContext.getInstance().isReferralAdmin()) {
-				// only add current task unless logged in user is referral administrator
-				groups.addSection(sections[i]);
-			}
-		}
-	}
-
-	public void init(VectorLayer referralLayer, Feature referral) {
-		if (null != referral) {
-			show();
-		} else {
-			currentTaskBlock.refresh(MapLayout.getInstance().getCurrentTask());
-		}
-	}
-
-	@Override
-	public void show() {
-		super.show();
-
-		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
-			sections[i].setExpanded(false);
-			if (GROUP_CURRENT != i) {
 				sections[i].setTitle(GROUP_TITLES[i]);
 				lists[i].clear();
 				views[i].populate(lists[i]);
 			}
+			sections[i].setExpanded(false);
 		}
-
+		
 		MapLayout mapLayout = MapLayout.getInstance();
-		TaskDto task = mapLayout.getCurrentTask();
-		currentTaskBlock.refresh(task);
-
-		if (null != task) {
-			sections[GROUP_CURRENT].setExpanded(true);
-		} else {
-			sections[GROUP_OPEN].setExpanded(true);
-		}
-
 		org.geomajas.layer.feature.Feature referral = mapLayout.getCurrentReferral();
 		if (null != referral) {
 			GetTasksRequest request = new GetTasksRequest();
@@ -147,5 +130,20 @@ public class ReferralTasksPanel extends VLayout {
 				}
 			});
 		}
+		TaskDto task = mapLayout.getCurrentTask();
+		currentTaskBlock.refresh(task);
+		if (null != task) {
+			sections[GROUP_CURRENT].setExpanded(true);
+		} else {
+			sections[GROUP_OPEN].setExpanded(true);
+		}
+		
+		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
+			if (i == GROUP_CURRENT || UserContext.getInstance().isReferralAdmin()) {
+				// only add current task unless logged in user is referral administrator
+				groups.addSection(sections[i]);
+			}
+		}
+		addMember(groups);
 	}
 }
