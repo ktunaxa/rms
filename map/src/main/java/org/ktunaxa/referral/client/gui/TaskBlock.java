@@ -8,6 +8,7 @@ package org.ktunaxa.referral.client.gui;
 
 import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HTMLFlow;
@@ -312,6 +313,18 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 				// @todo do I need to modify the state of the task in the list, possibly remove, refresh, whatever?
 				if (start) {
 					start(task, response.getReferral());
+				} else {
+					SC.ask("Do you want to claim the task?<br /><br />" +
+							" You are currently logged in as "+ UserContext.getInstance().getUser(), 
+							new BooleanCallback() {
+
+						public void execute(Boolean value) {
+							if (value != null && value) {
+								MapLayout.getInstance().focusBpm();
+							}
+						}
+					});
+					
 				}
 			}
 		});
