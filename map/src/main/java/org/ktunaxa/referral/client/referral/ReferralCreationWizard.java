@@ -115,7 +115,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 
 			public void execute(CommandResponse response) {
 				getView().setLoading(false);
-				SC.ask("Referral " + referralId + " successfully created./n/n" +
+				SC.ask("Referral " + referralId + " successfully created.<br /><br />" +
 						" Create a new referral?", new BooleanCallback() {
 
 					public void execute(Boolean value) {
