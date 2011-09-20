@@ -6,6 +6,8 @@
     <subProcess id="subprocess1" name="Sub Process">
       <startEvent id="subprocess1startevent6" name="Start-sub"></startEvent>
       <exclusiveGateway id="subprocess1exclusivegateway1" name="engagement level?"></exclusiveGateway>
+      <userTask id="subprocess1mailtask1" name="Level 0 notification" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewLevel0Notification.form"></userTask>
+      <userTask id="subprocess1mailtask2" name="Receive/start notification" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewStartNotification.form"></userTask>
       <userTask id="subprocess1usertask4" name="Appointment" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
         <documentation>Make appointment with province to discuss referral.</documentation>
       </userTask>
@@ -16,7 +18,7 @@
       <sequenceFlow id="subprocess1flow6" name="" sourceRef="subprocess1startevent6" targetRef="subprocess1completenessCheck"></sequenceFlow>
       <sequenceFlow id="subprocess1flow7" name="" sourceRef="subprocess1completenessCheck" targetRef="subprocess1usertask6"></sequenceFlow>
       <sequenceFlow id="subprocess1flow8" name="" sourceRef="subprocess1usertask6" targetRef="subprocess1exclusivegateway5"></sequenceFlow>
-      <sequenceFlow id="subprocess1flow9" name="level 0" sourceRef="subprocess1exclusivegateway5" targetRef="subprocess1usertask15">
+      <sequenceFlow id="subprocess1flow9" name="level 0" sourceRef="subprocess1exclusivegateway5" targetRef="subprocess1mailtask1">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 0}]]></conditionExpression>
       </sequenceFlow>
       <sequenceFlow id="subprocess1flow10" name="level 1" sourceRef="subprocess1exclusivegateway1" targetRef="subprocess1parallelgateway2">
@@ -41,8 +43,9 @@
       </userTask>
       <sequenceFlow id="subprocess1flow14" name="" sourceRef="subprocess1usertask8" targetRef="subprocess1parallelgateway2"></sequenceFlow>
       <serviceTask id="subprocess1servicetask1" name="Produce result report" activiti:class="org.ktunaxa.bpm.BuildResultReportTask"></serviceTask>
-      <sequenceFlow id="subprocess1flow16" name="" sourceRef="subprocess1servicetask1" targetRef="subprocess1usertask18"></sequenceFlow>
-      <sequenceFlow id="subprocess1flow17" name="" sourceRef="subprocess1usertask18" targetRef="subprocess1receivetask2"></sequenceFlow>
+      <userTask id="subprocess1mailtask4" name="Mail Result" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewResultNotification.form"></userTask>
+      <sequenceFlow id="subprocess1flow16" name="" sourceRef="subprocess1servicetask1" targetRef="subprocess1mailtask4"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow17" name="" sourceRef="subprocess1mailtask4" targetRef="subprocess1receivetask2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow18" name="" sourceRef="subprocess1usertask4" targetRef="subprocess1usertask7"></sequenceFlow>
       <sequenceFlow id="subprocess1flow19" name="" sourceRef="subprocess1usertask7" targetRef="subprocess1usertask8"></sequenceFlow>
       <userTask id="subprocess1usertask9" name="Meeting train" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
@@ -57,7 +60,7 @@
       <sequenceFlow id="subprocess1flow24" name="Evaluate values" sourceRef="subprocess1exclusivegateway2" targetRef="subprocess1parallelgateway2">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${reportValues}]]></conditionExpression>
       </sequenceFlow>
-      <sequenceFlow id="subprocess1flow25" name="" sourceRef="subprocess1usertask15" targetRef="subprocess1receivetask1"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow25" name="" sourceRef="subprocess1mailtask1" targetRef="subprocess1receivetask1"></sequenceFlow>
       <exclusiveGateway id="subprocess1exclusivegateway3" name="consistentDecision"></exclusiveGateway>
       <sequenceFlow id="subprocess1flow26" name="" sourceRef="subprocess1receivetask2" targetRef="subprocess1exclusivegateway3"></sequenceFlow>
       <sequenceFlow id="subprocess1flow27" name="" sourceRef="subprocess1exclusivegateway3" targetRef="subprocess1receivetask1">
@@ -95,23 +98,20 @@
       <sequenceFlow id="subprocess1flow37" name="" sourceRef="subprocess1parallelgateway1" targetRef="subprocess1exclusivegateway6"></sequenceFlow>
       <parallelGateway id="subprocess1parallelgateway2" name="Parallel Gateway"></parallelGateway>
       <sequenceFlow id="subprocess1flow38" name="" sourceRef="subprocess1parallelgateway1" targetRef="subprocess1callactivity2"></sequenceFlow>
-      <sequenceFlow id="subprocess1flow39" name="" sourceRef="subprocess1usertask17" targetRef="subprocess1exclusivegateway1"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow39" name="" sourceRef="subprocess1mailtask2" targetRef="subprocess1exclusivegateway1"></sequenceFlow>
       <sequenceFlow id="subprocess1flow40" name="" sourceRef="subprocess1callactivity2" targetRef="subprocess1parallelgateway2"></sequenceFlow>
       <exclusiveGateway id="subprocess1exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
       <userTask id="subprocess1usertask13" name="Get approval from province" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
         <documentation>Process feedback from province about changed engagement level.</documentation>
       </userTask>
-      <sequenceFlow id="subprocess1flow41" name="diff engagement level" sourceRef="subprocess1exclusivegateway6" targetRef="subprocess1usertask16">
+      <userTask id="subprocess1mailtask5" name="Send change notification" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewChangeNotification.form"></userTask>
+      <sequenceFlow id="subprocess1flow41" name="diff engagement level" sourceRef="subprocess1exclusivegateway6" targetRef="subprocess1mailtask5">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${provinceEngagementLevel != engagementLevel}]]></conditionExpression>
       </sequenceFlow>
-      <sequenceFlow id="subprocess1flow42" name="" sourceRef="subprocess1usertask16" targetRef="subprocess1usertask13"></sequenceFlow>
-      <sequenceFlow id="subprocess1flow43" name="" sourceRef="subprocess1usertask13" targetRef="subprocess1usertask17"></sequenceFlow>
-      <sequenceFlow id="subprocess1flow44" name="same engagement level" sourceRef="subprocess1exclusivegateway6" targetRef="subprocess1usertask17"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow42" name="" sourceRef="subprocess1mailtask5" targetRef="subprocess1usertask13"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow43" name="" sourceRef="subprocess1usertask13" targetRef="subprocess1mailtask2"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow44" name="same engagement level" sourceRef="subprocess1exclusivegateway6" targetRef="subprocess1mailtask2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow45" name="" sourceRef="subprocess1parallelgateway2" targetRef="subprocess1servicetask1"></sequenceFlow>
-      <userTask id="subprocess1usertask15" name="Level 0 notification" activiti:assignee="referralManager" activiti:formKey="diagrams/reviewLevel0Notification.form"></userTask>
-      <userTask id="subprocess1usertask16" name="Send change notification" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewChangeNotification.form"></userTask>
-      <userTask id="subprocess1usertask17" name="Receive/start notification" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewStartNotification.form"></userTask>
-      <userTask id="subprocess1usertask18" name="Mail result" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewResultNotification.form"></userTask>
       <sequenceFlow id="subprocess1flow47" name="level 3" sourceRef="subprocess1exclusivegateway1" targetRef="subprocess1usertask9">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 3}]]></conditionExpression>
       </sequenceFlow>
@@ -133,6 +133,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1exclusivegateway1" id="BPMNShape_exclusivegateway1">
         <omgdc:Bounds height="40" width="40" x="540" y="314"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocess1mailtask1" id="BPMNShape_mailtask1">
+        <omgdc:Bounds height="55" width="105" x="90" y="361"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocess1mailtask2" id="BPMNShape_mailtask2">
+        <omgdc:Bounds height="55" width="105" x="410" y="307"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1usertask4" id="BPMNShape_usertask4">
         <omgdc:Bounds height="55" width="105" x="640" y="201"></omgdc:Bounds>
@@ -157,6 +163,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1servicetask1" id="BPMNShape_servicetask1">
         <omgdc:Bounds height="55" width="105" x="1170" y="41"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocess1mailtask4" id="BPMNShape_mailtask4">
+        <omgdc:Bounds height="55" width="105" x="1170" y="123"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1receivetask2" id="BPMNShape_receivetask2">
         <omgdc:Bounds height="55" width="105" x="1170" y="199"></omgdc:Bounds>
@@ -203,17 +212,8 @@
       <bpmndi:BPMNShape bpmnElement="subprocess1usertask13" id="BPMNShape_usertask13">
         <omgdc:Bounds height="55" width="105" x="270" y="151"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="subprocess1usertask15" id="BPMNShape_usertask15">
-        <omgdc:Bounds height="55" width="105" x="90" y="361"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="subprocess1usertask16" id="BPMNShape_usertask16">
+      <bpmndi:BPMNShape bpmnElement="subprocess1mailtask5" id="BPMNShape_mailtask5">
         <omgdc:Bounds height="55" width="105" x="270" y="231"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="subprocess1usertask17" id="BPMNShape_usertask17">
-        <omgdc:Bounds height="55" width="105" x="410" y="307"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="subprocess1usertask18" id="BPMNShape_usertask18">
-        <omgdc:Bounds height="55" width="105" x="1170" y="123"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow6" id="BPMNEdge_flow6">
         <omgdi:waypoint x="125" y="58"></omgdi:waypoint>
@@ -318,7 +318,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow35" id="BPMNEdge_flow35">
         <omgdi:waypoint x="1090" y="354"></omgdi:waypoint>
-        <omgdi:waypoint x="1390" y="334"></omgdi:waypoint>
+        <omgdi:waypoint x="1390" y="338"></omgdi:waypoint>
         <omgdi:waypoint x="1415" y="388"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow36" id="BPMNEdge_flow36">

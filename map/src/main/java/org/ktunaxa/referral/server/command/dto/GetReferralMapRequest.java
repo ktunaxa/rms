@@ -19,8 +19,7 @@ public class GetReferralMapRequest extends GetMapConfigurationRequest {
 	public static final String COMMAND = "command.GetReferralMap";
 
 	public GetReferralMapRequest(String mapId, String applicationId) {
-		setMapId(mapId);
-		setApplicationId(applicationId);
+		super(mapId, applicationId);
 	}
 
 	public GetReferralMapRequest() {		
