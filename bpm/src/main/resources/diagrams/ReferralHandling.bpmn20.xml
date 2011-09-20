@@ -6,57 +6,15 @@
     <subProcess id="subprocess1" name="Sub Process">
       <startEvent id="subprocess1startevent6" name="Start-sub"></startEvent>
       <exclusiveGateway id="subprocess1exclusivegateway1" name="engagement level?"></exclusiveGateway>
-      <serviceTask id="subprocess1mailtask1" name="Level 0 notification" activiti:type="mail">
-        <extensionElements>
-          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${referralId}: Level 0 notification"></activiti:field>
-          <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
-          <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
-
-Project name: ${referralName}
-
-We consider this a level 0 referral and thus no further action is undertaken.
-
-Kind regards,
-Ktunaxa Nation Council]]></activiti:expression>
-          </activiti:field>
-        </extensionElements>
-      </serviceTask>
-      <serviceTask id="subprocess1mailtask2" name="Receive/start notification" activiti:type="mail">
-        <extensionElements>
-          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
-          <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
-          <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
-
-Project name: ${referralName}
-
-The referral is complete and will be processed by us. We will inform you with the result when it is available.
-
-Kind regards,
-Ktunaxa Nation Council]]></activiti:expression>
-          </activiti:field>
-        </extensionElements>
-      </serviceTask>
-      <serviceTask id="subprocess1mailtask3" name="Mail Task" activiti:type="mail">
-        <extensionElements>
-          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
-          <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
-          <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
-
-Project name: ${referralName}
-
-The referral is complete and will be processed by us. We will inform you with the result when it is available.
-
-Kind regards,
-Ktunaxa Nation Council]]></activiti:expression>
-          </activiti:field>
-        </extensionElements>
-      </serviceTask>
+      <userTask id="subprocess1mailtask1" name="Level 0 notification"
+				activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewLevel0Notification.form">
+        <documentation>Review and optionally send level 0 notification e-mail.</documentation>
+      </userTask>
+      <userTask id="subprocess1mailtask2" name="Receive/start notification"
+				activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewStartNotification.form">
+        <documentation>Review and optionally send start notification e-mail.</documentation>
+      </userTask>
+	<manualTask id="subprocess1mailtask3" name="Mail task"></manualTask>
       <userTask id="subprocess1usertask4" name="Appointment" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
         <documentation>Make appointment with province to discuss referral.</documentation>
       </userTask>
@@ -93,28 +51,16 @@ Ktunaxa Nation Council]]></activiti:expression>
       <userTask id="subprocess1usertask7" name="Meet &amp; discuss" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
         <documentation>Meet with province to discuss referral.</documentation>
       </userTask>
-      <userTask id="subprocess1usertask8" name="Review timelines" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
+      <userTask id="subprocess1usertask8" name="Review timelines"
+		activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
         <documentation>Review referral timelines.</documentation>
       </userTask>
       <sequenceFlow id="subprocess1flow14" name="" sourceRef="subprocess1usertask8" targetRef="subprocess1parallelgateway2"></sequenceFlow>
       <serviceTask id="subprocess1servicetask1" name="Produce result report" activiti:class="org.ktunaxa.bpm.BuildResultReportTask"></serviceTask>
-      <serviceTask id="subprocess1mailtask4" name="Mail Result" activiti:type="mail">
-        <extensionElements>
-          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${referralId}: Referral results"></activiti:field>
-          <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
-          <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
-
-Project name: ${referralName}
-
-The result of our evaluation is attached to this e-mail.
-
-Kind regards,
-Ktunaxa Nation Council]]></activiti:expression>
-          </activiti:field>
-        </extensionElements>
-      </serviceTask>
+      <userTask id="subprocess1mailtask4" name="Mail Result"
+				activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewResultNotification.form">
+        <documentation>Review and send result notification e-mail.</documentation>
+      </userTask>
       <sequenceFlow id="subprocess1flow16" name="" sourceRef="subprocess1servicetask1" targetRef="subprocess1mailtask4"></sequenceFlow>
       <userTask id="subprocess1receivetask2" name="Provincial decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/provincialResult.form">
 		  <documentation>Get provincial decision.</documentation>
@@ -182,24 +128,10 @@ Ktunaxa Nation Council]]></activiti:expression>
       <userTask id="subprocess1usertask13" name="Get approval from province" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
         <documentation>Process feedback from province about changed engagement level.</documentation>
       </userTask>
-      <serviceTask id="subprocess1mailtask5" name="Send change notification" activiti:type="mail">
-        <extensionElements>
-          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
-          <activiti:field name="subject" expression="${referralId}: Referral received, want to change engagement level"></activiti:field>
-          <activiti:field name="html">
-            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
-
-Project name: ${referralName}
-
-You had assigned a engagement level of ${provinceEngagementLevel}, but we feel this should be ${engagementLevel}.
-
-Please let us know whether you agree with this.
-
-Kind regards,
-Ktunaxa Nation Council]]></activiti:expression>
-          </activiti:field>
-        </extensionElements>
-      </serviceTask>
+      <userTask id="subprocess1mailtask5" name="Send change notification"
+				activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewChangeNotification.form">
+        <documentation>Review and optionally send change notification e-mail..</documentation>
+      </userTask>
       <sequenceFlow id="subprocess1flow41" name="diff engagement level" sourceRef="subprocess1exclusivegateway6" targetRef="subprocess1mailtask5">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${provinceEngagementLevel != engagementLevel}]]></conditionExpression>
       </sequenceFlow>
