@@ -21,7 +21,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="maps">
 			<list>
 				<ref bean="mapMain" />
-				<ref bean="mapTestReferral" />
+				<ref bean="mapCreateReferral" />
 			</list>
 		</property>
 	</bean>

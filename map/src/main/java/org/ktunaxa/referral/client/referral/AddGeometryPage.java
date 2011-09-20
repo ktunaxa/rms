@@ -34,6 +34,7 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
  * Second step in the referral creation wizard: Attach a geometry to the referral (by means of uploading a compressed
@@ -59,7 +60,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	
 	public AddGeometryPage() {
 		super();
-		mapWidget = new MapWidget("mapTestReferral", "app");
+		mapWidget = new MapWidget(KtunaxaConstant.MAP_CREATE_REFERRAL, KtunaxaConstant.APPLICATION);
 		mapWidget.setVisible(false);
 		initGui();
 	}

@@ -102,7 +102,7 @@ public final class MapLayout extends VLayout {
 		infoPane.setStyleName(STYLE_BLOCK);
 
 		// the map
-		mapWidget = new ReferralMapWidget("mapMain", "app");
+		mapWidget = new ReferralMapWidget(KtunaxaConstant.MAP_MAIN, KtunaxaConstant.APPLICATION);
 		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
  			public void onMapModelChange(MapModelEvent event) {
  				referralLayer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);

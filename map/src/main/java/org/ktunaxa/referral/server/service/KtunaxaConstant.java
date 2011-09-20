@@ -45,6 +45,10 @@ public interface KtunaxaConstant {
 	String MAP_CRS = "EPSG:900913";
 	int MAP_SRID = 900913;
 
+	String APPLICATION = "app";
+	String MAP_MAIN = "mapMain";
+	String MAP_CREATE_REFERRAL = "mapCreateReferral";
+
 	String CREATE_REFERRAL_URL_PARAMETER = "createReferral";
 
 	String URL_DOCUMENT_UPLOAD = "../d/upload/referral/document";
