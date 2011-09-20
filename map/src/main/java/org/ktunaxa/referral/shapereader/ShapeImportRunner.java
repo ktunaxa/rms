@@ -43,9 +43,9 @@ public final class ShapeImportRunner {
 		try {
 			new ShapeImportRunner().importShape(args.length > 0 ? args[0] : null);
 		} catch (Exception e) {
-			System.err.println("ERROR: " + e.getMessage());
-			System.err.println("Aborting...");
-			System.exit(1);
+			System.err.println("ERROR: " + e.getMessage()); // NOSONAR
+			System.err.println("Aborting..."); // NOSONAR
+			System.exit(1); // NOSONAR
 		}
 		System.out.println("Done!");
 	}
@@ -55,22 +55,22 @@ public final class ShapeImportRunner {
 		File[] files = reader.service.getAllFiles(subDirectory);
 		if (files != null && files.length > 0) {
 			File choice = selectFile(files);
-			System.out.println("Your choice: " + choice.getName());
+			System.out.println("Your choice: " + choice.getName()); // NOSONAR
 			DataStore dataStore = reader.service.read(choice);
 			reader.service.validateFormat(dataStore);
-			System.out.println("");
+			System.out.println(""); // NOSONAR
 			List<ReferenceLayer> layers = reader.service.getAllLayers();
 			ReferenceLayer layer = selectLayer(layers);
-			System.out.println("");
-			System.out.println("You have selected shape file '" + choice.getName()
+			System.out.println(""); // NOSONAR
+			System.out.println("You have selected shape file '" + choice.getName() // NOSONAR
 					+ "' to replace the current contents of data type '" + layer.getName() + "' in the database.");
-			System.out.println("Are you sure you want to continue? (y / n)");
+			System.out.println("Are you sure you want to continue? (y / n)"); // NOSONAR
 			boolean letsGo = readYesNo();
 			if (letsGo) {
-				System.out.println("Busy loading the new contents into the database...");
+				System.out.println("Busy loading the new contents into the database..."); // NOSONAR
 				reader.service.persist(layer, dataStore);
 			} else {
-				System.out.println("Aborting upload process. Hope to see you later.");
+				System.out.println("Aborting upload process. Hope to see you later."); // NOSONAR
 			}
 		} else {
 			throw new IOException("No shape files could be found.");
@@ -88,16 +88,16 @@ public final class ShapeImportRunner {
 	 * @return chosen layer
 	 */
 	private ReferenceLayer selectLayer(List<ReferenceLayer> layers) {
-		System.out.println("Choose one of the following data types:");
+		System.out.println("Choose one of the following data types:"); // NOSONAR
 		for (int i = 0; i < layers.size(); i++) {
-			System.out.println((i + 1) + ": " + layers.get(i).getType().getDescription() + " - "
+			System.out.println((i + 1) + ": " + layers.get(i).getType().getDescription() + " - " // NOSONAR
 					+ layers.get(i).getName());
 		}
-		System.out.println("Type a number:");
+		System.out.println("Type a number:"); // NOSONAR
 		int choice = readIntegerLine();
 		if (choice <= 0 || choice > layers.size()) {
-			System.out.println("");
-			System.out.println("Selected data type does not exist. Please try again.");
+			System.out.println(""); // NOSONAR
+			System.out.println("Selected data type does not exist. Please try again."); // NOSONAR
 			return selectLayer(layers);
 		}
 		return layers.get(choice - 1);
@@ -115,7 +115,7 @@ public final class ShapeImportRunner {
 		} else if ("n".equalsIgnoreCase(answer)) {
 			return false;
 		}
-		System.out.println("Please type only 'y' or 'n':");
+		System.out.println("Please type only 'y' or 'n':"); // NOSONAR
 		return readYesNo();
 	}
 
@@ -126,15 +126,14 @@ public final class ShapeImportRunner {
 	 * @return chosen file
 	 */
 	private File selectFile(File[] files) {
-		System.out.println("Choose one of the following shape files:");
+		System.out.println("Choose one of the following shape files:"); // NOSONAR
 		for (int i = 0; i < files.length; i++) {
-			System.out.println((i + 1) + ": " + files[i].getName());
+			System.out.println((i + 1) + ": " + files[i].getName()); // NOSONAR
 		}
-		System.out.println("Type a number:");
+		System.out.println("Type a number:"); // NOSONAR
 		int choice = readIntegerLine();
 		if (choice <= 0 || choice > files.length) {
-			System.out.println("");
-			System.out.println("Selected shape files does not exist. Please try again.");
+			System.out.println("\nSelected shape files does not exist. Please try again."); // NOSONAR
 			return selectFile(files);
 		}
 		return files[choice - 1];
@@ -151,8 +150,8 @@ public final class ShapeImportRunner {
 		try {
 			line = br.readLine();
 		} catch (IOException ioe) {
-			System.out.println("IO error trying to read your answer.");
-			System.exit(1);
+			System.out.println("IO error trying to read your answer."); // NOSONAR
+			System.exit(1); // NOSONAR
 		}
 		return line;
 	}
@@ -167,7 +166,7 @@ public final class ShapeImportRunner {
 		try {
 			return Integer.parseInt(line);
 		} catch (NumberFormatException e) {
-			System.out.println("Error while parsing the input as an integer. Please try again:");
+			System.out.println("Error while parsing the input as an integer. Please try again:"); // NOSONAR
 			return readIntegerLine();
 		}
 	}
