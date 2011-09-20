@@ -6,8 +6,57 @@
     <subProcess id="subprocess1" name="Sub Process">
       <startEvent id="subprocess1startevent6" name="Start-sub"></startEvent>
       <exclusiveGateway id="subprocess1exclusivegateway1" name="engagement level?"></exclusiveGateway>
-      <userTask id="subprocess1mailtask1" name="Level 0 notification" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewLevel0Notification.form"></userTask>
-      <userTask id="subprocess1mailtask2" name="Receive/start notification" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewStartNotification.form"></userTask>
+      <serviceTask id="subprocess1mailtask1" name="Level 0 notification" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Level 0 notification"></activiti:field>
+          <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
+          <activiti:field name="html">
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
+
+Project name: ${referralName}
+
+We consider this a level 0 referral and thus no further action is undertaken.
+
+Kind regards,
+Ktunaxa Nation Council]]></activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <serviceTask id="subprocess1mailtask2" name="Receive/start notification" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
+          <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
+          <activiti:field name="html">
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
+
+Project name: ${referralName}
+
+The referral is complete and will be processed by us. We will inform you with the result when it is available.
+
+Kind regards,
+Ktunaxa Nation Council]]></activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <serviceTask id="subprocess1mailtask3" name="Mail Task" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Referral received, processing started"></activiti:field>
+          <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
+          <activiti:field name="html">
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
+
+Project name: ${referralName}
+
+The referral is complete and will be processed by us. We will inform you with the result when it is available.
+
+Kind regards,
+Ktunaxa Nation Council]]></activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
       <userTask id="subprocess1usertask4" name="Appointment" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
         <documentation>Make appointment with province to discuss referral.</documentation>
       </userTask>
@@ -24,16 +73,22 @@
       <sequenceFlow id="subprocess1flow10" name="level 1" sourceRef="subprocess1exclusivegateway1" targetRef="subprocess1parallelgateway2">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 1}]]></conditionExpression>
       </sequenceFlow>
+      <sequenceFlow id="subprocess1flow11" name="level 3" sourceRef="subprocess1exclusivegateway1" targetRef="subprocess1mailtask3">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 3}]]></conditionExpression>
+      </sequenceFlow>
       <sequenceFlow id="subprocess1flow12" name="level 2" sourceRef="subprocess1exclusivegateway1" targetRef="subprocess1usertask4">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 2}]]></conditionExpression>
       </sequenceFlow>
+      <userTask id="subprocess1receivetask1" name="Notification decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
+		  <documentation>Get notification of decision.</documentation>
+      </userTask>
       <callActivity id="subprocess1callactivity2" name="Call activity" calledElement="evaluate-values">
-        <extensionElements>
-          <activiti:in source="referralId" target="referralId"></activiti:in>
-          <activiti:in source="referralName" target="referralName"></activiti:in>
-          <activiti:in source="completionDeadline" target="completionDeadline"></activiti:in>
-          <activiti:in source="requesterEmail" target="requesterEmail"></activiti:in>
-        </extensionElements>
+		  <extensionElements>
+			<activiti:in source="referralId" target="referralId"></activiti:in>
+			  <activiti:in source="referralName" target="referralName"></activiti:in>
+			  <activiti:in source="completionDeadline" target="completionDeadline"></activiti:in>
+			  <activiti:in source="requesterEmail" target="requesterEmail"></activiti:in>
+		  </extensionElements>
       </callActivity>
       <userTask id="subprocess1usertask7" name="Meet &amp; discuss" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
         <documentation>Meet with province to discuss referral.</documentation>
@@ -43,8 +98,27 @@
       </userTask>
       <sequenceFlow id="subprocess1flow14" name="" sourceRef="subprocess1usertask8" targetRef="subprocess1parallelgateway2"></sequenceFlow>
       <serviceTask id="subprocess1servicetask1" name="Produce result report" activiti:class="org.ktunaxa.bpm.BuildResultReportTask"></serviceTask>
-      <userTask id="subprocess1mailtask4" name="Mail Result" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewResultNotification.form"></userTask>
+      <serviceTask id="subprocess1mailtask4" name="Mail Result" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Referral results"></activiti:field>
+          <activiti:field name="cc" expression="archive@TEMP-FOR-TESTING.ktunaxa.org"></activiti:field>
+          <activiti:field name="html">
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
+
+Project name: ${referralName}
+
+The result of our evaluation is attached to this e-mail.
+
+Kind regards,
+Ktunaxa Nation Council]]></activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
       <sequenceFlow id="subprocess1flow16" name="" sourceRef="subprocess1servicetask1" targetRef="subprocess1mailtask4"></sequenceFlow>
+      <userTask id="subprocess1receivetask2" name="Provincial decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/provincialResult.form">
+		  <documentation>Get provincial decision.</documentation>
+      </userTask>
       <sequenceFlow id="subprocess1flow17" name="" sourceRef="subprocess1mailtask4" targetRef="subprocess1receivetask2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow18" name="" sourceRef="subprocess1usertask4" targetRef="subprocess1usertask7"></sequenceFlow>
       <sequenceFlow id="subprocess1flow19" name="" sourceRef="subprocess1usertask7" targetRef="subprocess1usertask8"></sequenceFlow>
@@ -55,6 +129,7 @@
         <documentation>Is the referral handling finished a report be built based on the evaluation and comment?</documentation>
       </userTask>
       <sequenceFlow id="subprocess1flow20" name="" sourceRef="subprocess1usertask9" targetRef="subprocess1usertask10"></sequenceFlow>
+      <sequenceFlow id="subprocess1flow21" name="" sourceRef="subprocess1mailtask3" targetRef="subprocess1usertask9"></sequenceFlow>
       <exclusiveGateway id="subprocess1exclusivegateway2" name="evaluateOrDone"></exclusiveGateway>
       <sequenceFlow id="subprocess1flow23" name="" sourceRef="subprocess1usertask10" targetRef="subprocess1exclusivegateway2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow24" name="Evaluate values" sourceRef="subprocess1exclusivegateway2" targetRef="subprocess1parallelgateway2">
@@ -81,6 +156,9 @@
       <sequenceFlow id="subprocess1flow31" name="consistent decision" sourceRef="subprocess1exclusivegateway4" targetRef="subprocess1receivetask1">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${finalDecisionConsistent}]]></conditionExpression>
       </sequenceFlow>
+      <userTask id="subprocess1receivetask3" name="Application reports" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
+		  <documentation>Build application report.</documentation>
+      </userTask>
       <endEvent id="subprocess1endevent3" name="End-sub"></endEvent>
       <sequenceFlow id="subprocess1flow32" name="" sourceRef="subprocess1receivetask1" targetRef="subprocess1endevent3"></sequenceFlow>
       <sequenceFlow id="subprocess1flow33" name="" sourceRef="subprocess1receivetask3" targetRef="subprocess1endevent3"></sequenceFlow>
@@ -104,7 +182,24 @@
       <userTask id="subprocess1usertask13" name="Get approval from province" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewReferral.form">
         <documentation>Process feedback from province about changed engagement level.</documentation>
       </userTask>
-      <userTask id="subprocess1mailtask5" name="Send change notification" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewChangeNotification.form"></userTask>
+      <serviceTask id="subprocess1mailtask5" name="Send change notification" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="to" expression="${requesterEmail}"></activiti:field>
+          <activiti:field name="subject" expression="${referralId}: Referral received, want to change engagement level"></activiti:field>
+          <activiti:field name="html">
+            <activiti:expression><![CDATA[We have received your referral for ${referralId}.
+
+Project name: ${referralName}
+
+You had assigned a engagement level of ${provinceEngagementLevel}, but we feel this should be ${engagementLevel}.
+
+Please let us know whether you agree with this.
+
+Kind regards,
+Ktunaxa Nation Council]]></activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
       <sequenceFlow id="subprocess1flow41" name="diff engagement level" sourceRef="subprocess1exclusivegateway6" targetRef="subprocess1mailtask5">
         <conditionExpression xsi:type="tFormalExpression"><![CDATA[${provinceEngagementLevel != engagementLevel}]]></conditionExpression>
       </sequenceFlow>
@@ -112,9 +207,6 @@
       <sequenceFlow id="subprocess1flow43" name="" sourceRef="subprocess1usertask13" targetRef="subprocess1mailtask2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow44" name="same engagement level" sourceRef="subprocess1exclusivegateway6" targetRef="subprocess1mailtask2"></sequenceFlow>
       <sequenceFlow id="subprocess1flow45" name="" sourceRef="subprocess1parallelgateway2" targetRef="subprocess1servicetask1"></sequenceFlow>
-      <sequenceFlow id="subprocess1flow47" name="level 3" sourceRef="subprocess1exclusivegateway1" targetRef="subprocess1usertask9">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 3}]]></conditionExpression>
-      </sequenceFlow>
     </subProcess>
     <endEvent id="endevent1" name="End"></endEvent>
     <sequenceFlow id="flow1" name="" sourceRef="subprocess1" targetRef="endevent1"></sequenceFlow>
@@ -139,6 +231,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1mailtask2" id="BPMNShape_mailtask2">
         <omgdc:Bounds height="55" width="105" x="410" y="307"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocess1mailtask3" id="BPMNShape_mailtask3">
+        <omgdc:Bounds height="55" width="105" x="640" y="311"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1usertask4" id="BPMNShape_usertask4">
         <omgdc:Bounds height="55" width="105" x="640" y="201"></omgdc:Bounds>
@@ -171,13 +266,13 @@
         <omgdc:Bounds height="55" width="105" x="1170" y="199"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1usertask9" id="BPMNShape_usertask9">
-        <omgdc:Bounds height="55" width="105" x="790" y="307"></omgdc:Bounds>
+        <omgdc:Bounds height="55" width="105" x="790" y="311"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1usertask10" id="BPMNShape_usertask10">
-        <omgdc:Bounds height="55" width="105" x="940" y="307"></omgdc:Bounds>
+        <omgdc:Bounds height="55" width="105" x="940" y="311"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1exclusivegateway2" id="BPMNShape_exclusivegateway2">
-        <omgdc:Bounds height="40" width="40" x="1070" y="314"></omgdc:Bounds>
+        <omgdc:Bounds height="40" width="40" x="1070" y="318"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="subprocess1exclusivegateway3" id="BPMNShape_exclusivegateway3">
         <omgdc:Bounds height="40" width="40" x="1300" y="206"></omgdc:Bounds>
@@ -216,7 +311,7 @@
         <omgdc:Bounds height="55" width="105" x="270" y="231"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow6" id="BPMNEdge_flow6">
-        <omgdi:waypoint x="125" y="58"></omgdi:waypoint>
+        <omgdi:waypoint x="160" y="58"></omgdi:waypoint>
         <omgdi:waypoint x="90" y="124"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow7" id="BPMNEdge_flow7">
@@ -229,12 +324,16 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow9" id="BPMNEdge_flow9">
         <omgdi:waypoint x="142" y="295"></omgdi:waypoint>
-        <omgdi:waypoint x="142" y="361"></omgdi:waypoint>
+        <omgdi:waypoint x="142" y="306"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow10" id="BPMNEdge_flow10">
         <omgdi:waypoint x="560" y="314"></omgdi:waypoint>
         <omgdi:waypoint x="560" y="275"></omgdi:waypoint>
         <omgdi:waypoint x="1090" y="295"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="subprocess1flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="560" y="314"></omgdi:waypoint>
+        <omgdi:waypoint x="640" y="338"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow12" id="BPMNEdge_flow12">
         <omgdi:waypoint x="560" y="314"></omgdi:waypoint>
@@ -263,15 +362,19 @@
         <omgdi:waypoint x="940" y="228"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow20" id="BPMNEdge_flow20">
-        <omgdi:waypoint x="895" y="334"></omgdi:waypoint>
-        <omgdi:waypoint x="940" y="334"></omgdi:waypoint>
+        <omgdi:waypoint x="895" y="338"></omgdi:waypoint>
+        <omgdi:waypoint x="940" y="338"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="subprocess1flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="745" y="338"></omgdi:waypoint>
+        <omgdi:waypoint x="790" y="338"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow23" id="BPMNEdge_flow23">
-        <omgdi:waypoint x="1045" y="334"></omgdi:waypoint>
-        <omgdi:waypoint x="1070" y="334"></omgdi:waypoint>
+        <omgdi:waypoint x="1045" y="338"></omgdi:waypoint>
+        <omgdi:waypoint x="1070" y="338"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow24" id="BPMNEdge_flow24">
-        <omgdi:waypoint x="1090" y="314"></omgdi:waypoint>
+        <omgdi:waypoint x="1090" y="318"></omgdi:waypoint>
         <omgdi:waypoint x="1090" y="295"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow25" id="BPMNEdge_flow25">
@@ -314,15 +417,15 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow34" id="BPMNEdge_flow34">
         <omgdi:waypoint x="1432" y="224"></omgdi:waypoint>
-        <omgdi:waypoint x="1432" y="248"></omgdi:waypoint>
+        <omgdi:waypoint x="1432" y="193"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow35" id="BPMNEdge_flow35">
-        <omgdi:waypoint x="1090" y="354"></omgdi:waypoint>
+        <omgdi:waypoint x="1090" y="358"></omgdi:waypoint>
         <omgdi:waypoint x="1390" y="338"></omgdi:waypoint>
         <omgdi:waypoint x="1415" y="388"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow36" id="BPMNEdge_flow36">
-        <omgdi:waypoint x="162" y="275"></omgdi:waypoint>
+        <omgdi:waypoint x="142" y="295"></omgdi:waypoint>
         <omgdi:waypoint x="200" y="275"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow37" id="BPMNEdge_flow37">
@@ -358,7 +461,7 @@
         <omgdi:waypoint x="410" y="334"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow44" id="BPMNEdge_flow44">
-        <omgdi:waypoint x="342" y="334"></omgdi:waypoint>
+        <omgdi:waypoint x="322" y="314"></omgdi:waypoint>
         <omgdi:waypoint x="410" y="334"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="subprocess1flow45" id="BPMNEdge_flow45">
@@ -366,10 +469,6 @@
         <omgdi:waypoint x="1139" y="274"></omgdi:waypoint>
         <omgdi:waypoint x="1139" y="68"></omgdi:waypoint>
         <omgdi:waypoint x="1170" y="68"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="subprocess1flow47" id="BPMNEdge_flow47">
-        <omgdi:waypoint x="580" y="334"></omgdi:waypoint>
-        <omgdi:waypoint x="790" y="334"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
         <omgdc:Bounds height="61" width="61" x="1520" y="147"></omgdc:Bounds>
