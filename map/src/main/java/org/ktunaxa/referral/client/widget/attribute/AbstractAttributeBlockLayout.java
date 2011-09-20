@@ -199,8 +199,6 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 							listView.removeBlock(block);
 							// we've changed, let the handlers know
 							manager.fireEvent(new ChangedEvent(null));
-						} else {
-							// nothing
 						}
 					}
 				});
@@ -222,7 +220,6 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 	 * Default save action.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public class SaveAction implements ClickHandler {
 
@@ -236,7 +233,6 @@ public abstract class AbstractAttributeBlockLayout<W extends Widget> extends VLa
 	 * Default cancel action.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public class CancelAction implements ClickHandler {
 
