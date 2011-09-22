@@ -6,18 +6,8 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.types.Cursor;
-import com.smartgwt.client.types.VerticalAlignment;
-import com.smartgwt.client.util.BooleanCallback;
-import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.Button;
-import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.IButton;
-import com.smartgwt.client.widgets.Img;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
+import java.util.Map;
+
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
@@ -32,7 +22,17 @@ import org.ktunaxa.referral.server.command.dto.AssignTaskRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
-import java.util.Map;
+import com.smartgwt.client.types.Cursor;
+import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.SC;
+import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.LayoutSpacer;
 
 /**
  * Implementation of the CollapsableBlock abstraction that handles {@link TaskDto} type objects. Instances of this
@@ -313,18 +313,8 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 				// @todo do I need to modify the state of the task in the list, possibly remove, refresh, whatever?
 				if (start) {
 					start(task, response.getReferral());
-				} else {
-					SC.ask("Do you want to claim the task?<br /><br />" +
-							" You are currently logged in as " + UserContext.getInstance().getUser(), 
-							new BooleanCallback() {
-
-						public void execute(Boolean value) {
-							if (value != null && value) {
-								MapLayout.getInstance().focusBpm();
-							}
-						}
-					});
-					
+//				} else {
+//					MapLayout.getInstance().focusBpm();
 				}
 			}
 		});

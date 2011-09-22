@@ -51,7 +51,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-
 			<dependency>
 				<groupId>org.ktunaxa.referral</groupId>
 				<artifactId>ktunaxa-bpm</artifactId>
@@ -245,6 +244,13 @@
 				<artifactId>gwt-servlet</artifactId>
 				<version>${gwt.version}</version>
 				<scope>runtime</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<!-- Latest 2.3.x (not 2.4.x), at least 2.3.18 -->
+				<version>[2.3.18,2.4)</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

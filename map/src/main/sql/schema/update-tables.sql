@@ -11,7 +11,7 @@ INSERT INTO template (id, mime_type, mail_sender, title, description, string_con
 'Referral ${referralId} ${referralName}\nWe have received this referral but do not think we need to take action to process it. For us it has engagement level 0.\nKind regards\nKtunaxa Nation Council');
 INSERT INTO template (id, mime_type, mail_sender, title, description, string_content) values
 (2, 'text', 'bla@ktunaxa.org', 'notify.change.engagementLevel', '',
-'Referral ${referralId} ${referralName}\nThanks for submitting this referral. After investigation, we believe the engagement level needs to be changed from {provinceEngagementLevel} to ${engagementLevel}. Our seasoning for this:\n${engagementComment}\nPlease confirm receipt of this message or let us know of any problems with this decision.\nWe will process your referral by ${completionDeadline}.\nKind regards\nKtunaxa Nation Council');
+'Referral ${referralId} ${referralName}\nThanks for submitting this referral. After investigation, we believe the engagement level needs to be changed from ${provinceEngagementLevel} to ${engagementLevel}. Our seasoning for this:\n${engagementComment}\nPlease confirm receipt of this message or let us know of any problems with this decision.\nWe will process your referral by ${completionDeadline}.\nKind regards\nKtunaxa Nation Council');
 INSERT INTO template (id, mime_type, mail_sender, title, description, string_content) values
 (3, 'text', 'bla@ktunaxa.org', 'notify.start', '',
 'Referral ${referralId} ${referralName}\nThanks for submitting this referral.\nWe will process your referral by ${completionDeadline}.\nKind regards\nKtunaxa Nation Council');

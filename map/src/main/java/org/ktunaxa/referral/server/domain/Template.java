@@ -31,6 +31,10 @@ public class Template {
 	/** This document's title. */
 	@Column(nullable = false, name = "title")
 	private String title;
+	
+	/** The subject of an email. */
+	@Column(nullable = true, name = "subject")
+	private String subject;
 
 	/** A short description to further clarify this document. */
 	@Column(nullable = false, name = "description")
@@ -205,5 +209,13 @@ public class Template {
 	 */
 	public void setMimeType(String mimeType) {
 		this.mimeType = mimeType;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getSubject() {
+		return subject;
 	}
 }

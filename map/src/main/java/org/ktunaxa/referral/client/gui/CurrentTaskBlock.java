@@ -6,6 +6,24 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import java.util.Map;
+
+import org.geomajas.command.CommandResponse;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
+import org.ktunaxa.referral.client.form.AbstractTaskForm;
+import org.ktunaxa.referral.client.form.DiscussEvaluationForm;
+import org.ktunaxa.referral.client.form.EmailForm;
+import org.ktunaxa.referral.client.form.EmptyForm;
+import org.ktunaxa.referral.client.form.EvaluateOrFinishForm;
+import org.ktunaxa.referral.client.form.ProvincialResultForm;
+import org.ktunaxa.referral.client.form.ReviewReferralForm;
+import org.ktunaxa.referral.client.form.ValueSelectForm;
+import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
+import org.ktunaxa.referral.server.dto.TaskDto;
+
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
@@ -15,22 +33,6 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.geomajas.command.CommandResponse;
-import org.geomajas.gwt.client.command.AbstractCommandCallback;
-import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
-import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
-import org.ktunaxa.referral.client.form.AbstractTaskForm;
-import org.ktunaxa.referral.client.form.DiscussEvaluationForm;
-import org.ktunaxa.referral.client.form.EmptyForm;
-import org.ktunaxa.referral.client.form.EvaluateOrFinishForm;
-import org.ktunaxa.referral.client.form.ProvincialResultForm;
-import org.ktunaxa.referral.client.form.ReviewReferralForm;
-import org.ktunaxa.referral.client.form.ValueSelectForm;
-import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
-import org.ktunaxa.referral.server.dto.TaskDto;
-
-import java.util.Map;
 
 /**
  * Block which displays the current task with the ability to set variables and finish the task.
@@ -41,6 +43,12 @@ public class CurrentTaskBlock extends CardLayout<String> {
 
 	private static final String KEY_NO = "no";
 	private static final String KEY_CURRENT = "curr";
+	
+	// Unique identifiers, with which the {@link Template} is fetched from the DB.
+	private static final String NOTIFY_LVL_0 = "notify.level0";
+	private static final String NOTIFY_START = "notify.start"; 
+	private static final String NOTIFY_CHANGE = "notify.change.engagementLevel"; 
+	private static final String NOTIFY_RESULT = "notify.result"; 
 
 	// form names should match task names for the form
 	private static final String FORM_EMPTY = "empty";
@@ -49,12 +57,20 @@ public class CurrentTaskBlock extends CardLayout<String> {
 	private static final String FORM_PROVINCIAL_RESULT = "provincialResult.form";
 	private static final String FORM_REVIEW_REFERRAL = "reviewReferral.form";
 	private static final String FORM_VALUE_SELECT = "valueSelect.form";
+	private static final String FORM_REVIEW_LEVEL_0 = "reviewLevel0Notification.form";
+	private static final String FORM_REVIEW_CHANGE = "reviewChangeNotification.form";
+	private static final String FORM_REVIEW_START = "reviewStartNotification.form";
+	private static final String FORM_REVIEW_RESULT = "reviewResultNotification.form";
 	private static final String[] TASKS_WITH_FORM = {
 			FORM_DISCUSS_EVALUATION,
 			FORM_EVALUATE_OR_FINISH,
 			FORM_PROVINCIAL_RESULT,
 			FORM_REVIEW_REFERRAL,
-			FORM_VALUE_SELECT
+			FORM_VALUE_SELECT,
+			FORM_REVIEW_LEVEL_0,
+			FORM_REVIEW_CHANGE,
+			FORM_REVIEW_START,
+			FORM_REVIEW_RESULT
 	};
 
 	private final CardLayout<String> taskForms = new CardLayout<String>();
@@ -84,6 +100,10 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		taskForms.addCard(FORM_PROVINCIAL_RESULT, new ProvincialResultForm());
 		taskForms.addCard(FORM_REVIEW_REFERRAL, new ReviewReferralForm());
 		taskForms.addCard(FORM_VALUE_SELECT, new ValueSelectForm());
+		taskForms.addCard(FORM_REVIEW_LEVEL_0, new EmailForm(NOTIFY_LVL_0));
+		taskForms.addCard(FORM_REVIEW_START, new EmailForm(NOTIFY_START));
+		taskForms.addCard(FORM_REVIEW_CHANGE, new EmailForm(NOTIFY_CHANGE));
+		taskForms.addCard(FORM_REVIEW_RESULT, new EmailForm(NOTIFY_RESULT));
 		taskForms.setWidth100();
 		currentTask.addMember(taskForms);
 		currentTask.addMember(finishButton);
@@ -125,6 +145,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		public void onClick(ClickEvent event) {
 			finishButton.disable();
 			Canvas card = taskForms.getCurrentCard();
+			//TODO add EmailForm instanceof check and create SendEmailRequest.COMMAND
 			if (card instanceof AbstractTaskForm) {
 				AbstractTaskForm taskForm = (AbstractTaskForm) card;
 				boolean valid = taskForm.validate();
