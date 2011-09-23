@@ -66,7 +66,6 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 	 * @param layer
 	 *            The reference layer instance to clear.
 	 */
-	@SuppressWarnings("unchecked")
 	public void clearLayer(ReferenceLayer layer) {
 		int count;
 		if (layer.getType().isBaseLayer()) {

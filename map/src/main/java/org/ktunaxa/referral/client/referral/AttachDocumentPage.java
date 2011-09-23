@@ -177,7 +177,6 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 
 		form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
 
-			@SuppressWarnings("unchecked")
 			public void onFileUploadComplete(FileUploadCompleteEvent event) {
 				errorFlow.setContents("");
 				errorFlow.setVisible(false);

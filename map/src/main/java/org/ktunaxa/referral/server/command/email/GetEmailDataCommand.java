@@ -40,9 +40,10 @@ public class GetEmailDataCommand implements Command<GetEmailDataRequest, GetEmai
 		Template result = (Template) query.uniqueResult();
 		if (null != result) {
 			response.setFrom(result.getMailSender());
-			response.setSubject(result.getSubject()); // @todo needs Freemarker processing
-			response.setBody(result.getStringContent()); // @todo needs Freemarker processing
+			TemplateFiller filler = new TemplateFiller(request.getTask(), result);
+			response.setSubject(filler.getFilledSubject());
+			response.setBody(filler.getFilledMessage());
 		}
 	}
-
 }
+

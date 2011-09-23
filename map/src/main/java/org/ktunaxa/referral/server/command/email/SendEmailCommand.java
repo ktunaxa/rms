@@ -30,3 +30,4 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 	}
 
 }
+

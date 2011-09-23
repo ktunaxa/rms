@@ -21,10 +21,12 @@ import freemarker.template.TemplateException;
  * {@link TaskDto} variables using the FreeMarker package.
  * 
  * @author Emiel Ackermann
+ *
  */
+
 public class TemplateFiller {
 	
-	private String filledTitle;
+	private String filledSubject;
 	private String filledMessage;
 	
 	public TemplateFiller(TaskDto task, 
@@ -35,13 +37,13 @@ public class TemplateFiller {
 		StringWriter baos = new StringWriter();
 		Map<String, String> variables = task.getVariables();
 		titleTpl.process(variables, baos);
-		filledTitle = baos.toString();
+		filledSubject = baos.toString();
 		messageTpl.process(variables, baos);
 		filledMessage = baos.toString();
 	}
 
-	public String getFilledTitle() {
-		return filledTitle;
+	public String getFilledSubject() {
+		return filledSubject;
 	}
 
 	public String getFilledMessage() {

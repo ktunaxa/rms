@@ -7,6 +7,7 @@
 package org.ktunaxa.referral.server.command.dto;
 
 import org.geomajas.command.CommandRequest;
+import org.ktunaxa.referral.server.dto.TaskDto;
 
 /**
  * Request object for {@link org.ktunaxa.referral.server.command.email.GetEmailDataCommand}.
@@ -20,6 +21,7 @@ public class GetEmailDataRequest implements CommandRequest {
 	public static final String COMMAND = "command.email.GetEmailData";
 
 	private String notifier;
+	private TaskDto task;
 
 	public GetEmailDataRequest(String notifier) {
 		this.notifier = notifier;
@@ -31,6 +33,14 @@ public class GetEmailDataRequest implements CommandRequest {
 
 	public String getNotifier() {
 		return notifier;
+	}
+
+	public void setTask(TaskDto task) {
+		this.task = task;
+	}
+
+	public TaskDto getTask() {
+		return task;
 	}
 	
 }

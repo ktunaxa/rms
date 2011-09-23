@@ -23,6 +23,7 @@ import org.ktunaxa.referral.client.form.ReviewReferralForm;
 import org.ktunaxa.referral.client.form.ValueSelectForm;
 import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
 import org.ktunaxa.referral.server.dto.TaskDto;
+import org.ktunaxa.referral.server.email.EmailNotifiers;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Button;
@@ -44,12 +45,6 @@ public class CurrentTaskBlock extends CardLayout<String> {
 	private static final String KEY_NO = "no";
 	private static final String KEY_CURRENT = "curr";
 	
-	// Unique identifiers, with which the {@link Template} is fetched from the DB.
-	private static final String NOTIFY_LVL_0 = "notify.level0";
-	private static final String NOTIFY_START = "notify.start"; 
-	private static final String NOTIFY_CHANGE = "notify.change.engagementLevel"; 
-	private static final String NOTIFY_RESULT = "notify.result"; 
-
 	// form names should match task names for the form
 	private static final String FORM_EMPTY = "empty";
 	private static final String FORM_DISCUSS_EVALUATION = "discussEvaluationResult.form";
@@ -100,10 +95,10 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		taskForms.addCard(FORM_PROVINCIAL_RESULT, new ProvincialResultForm());
 		taskForms.addCard(FORM_REVIEW_REFERRAL, new ReviewReferralForm());
 		taskForms.addCard(FORM_VALUE_SELECT, new ValueSelectForm());
-		taskForms.addCard(FORM_REVIEW_LEVEL_0, new EmailForm(NOTIFY_LVL_0));
-		taskForms.addCard(FORM_REVIEW_START, new EmailForm(NOTIFY_START));
-		taskForms.addCard(FORM_REVIEW_CHANGE, new EmailForm(NOTIFY_CHANGE));
-		taskForms.addCard(FORM_REVIEW_RESULT, new EmailForm(NOTIFY_RESULT));
+		taskForms.addCard(FORM_REVIEW_LEVEL_0, new EmailForm(EmailNotifiers.LEVEL_0));
+		taskForms.addCard(FORM_REVIEW_START, new EmailForm(EmailNotifiers.START));
+		taskForms.addCard(FORM_REVIEW_CHANGE, new EmailForm(EmailNotifiers.CHANGE));
+		taskForms.addCard(FORM_REVIEW_RESULT, new EmailForm(EmailNotifiers.RESULT));
 		taskForms.setWidth100();
 		currentTask.addMember(taskForms);
 		currentTask.addMember(finishButton);

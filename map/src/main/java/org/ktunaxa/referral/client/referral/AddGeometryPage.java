@@ -24,6 +24,7 @@ import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.widgets.Canvas;
@@ -34,7 +35,6 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
-import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
  * Second step in the referral creation wizard: Attach a geometry to the referral (by means of uploading a compressed

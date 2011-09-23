@@ -128,7 +128,6 @@ public class DocumentItem extends CanvasItem {
 
 		form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
 
-			@SuppressWarnings("unchecked")
 			public void onFileUploadComplete(FileUploadCompleteEvent event) {
 				documentId = event.getString(KtunaxaConstant.FORM_DOCUMENT_ID);
 				documentTitle = event.getString(KtunaxaConstant.FORM_DOCUMENT_TITLE);
