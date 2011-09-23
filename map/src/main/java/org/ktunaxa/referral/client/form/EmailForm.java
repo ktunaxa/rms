@@ -8,15 +8,14 @@ package org.ktunaxa.referral.client.form;
 
 import java.util.Map;
 
-import org.geomajas.command.CommandResponse;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.referral.client.gui.MapLayout;
-import org.ktunaxa.referral.server.command.email.GetEmailDataRequest;
-import org.ktunaxa.referral.server.command.email.GetEmailDataResponse;
+import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
+import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
 import org.ktunaxa.referral.server.domain.Template;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -28,7 +27,6 @@ import com.smartgwt.client.widgets.form.validator.RegExpValidator;
  * Form used to display a pre formed default email using {@link org.ktunaxa.referral.server.domain.Template}.
  * 
  * @author Emiel Ackermann
- *
  */
 public class EmailForm extends AbstractTaskForm {
 	
@@ -73,12 +71,11 @@ public class EmailForm extends AbstractTaskForm {
 		GetEmailDataRequest request = new GetEmailDataRequest(notifier);
 		GwtCommand command = new GwtCommand(GetEmailDataRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<CommandResponse>() {
-			public void execute(CommandResponse response) {
-				Template domain = ((GetEmailDataResponse) response).getTemplate();
-				from.setValue(domain.getMailSender());
-				subject.setValue(domain.getTitle()); //TODO check title and convert it into something readable.
-				message.setValue(domain.getStringContent());
+		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {
+			public void execute(GetEmailDataResponse response) {
+				from.setValue(response.getFrom());
+				subject.setValue(response.getSubject());
+				message.setValue(response.getBody());
 			}
 		});
 	}

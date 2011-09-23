@@ -7,22 +7,23 @@
 package org.ktunaxa.referral.server.command.email;
 
 import org.geomajas.command.Command;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
+import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
+import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
 import org.ktunaxa.referral.server.domain.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Retrieves the default data for an email.
  * 
  * @author Emiel Ackermann
- *
  */
 @Component
+@Transactional(readOnly = true, rollbackFor = { Exception.class })
 public class GetEmailDataCommand implements Command<GetEmailDataRequest, GetEmailDataResponse> {
 
 	@Autowired
@@ -33,23 +34,14 @@ public class GetEmailDataCommand implements Command<GetEmailDataRequest, GetEmai
 	}
 
 	public void execute(GetEmailDataRequest request, GetEmailDataResponse response) throws Exception {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
-		Object result = null;
-		try {
-			transaction = session.beginTransaction();
-			Query query = session.createQuery("from Template where title = :emailTitle ");
-			query.setParameter("emailTitle", request.getNotifier());
-			result = query.uniqueResult();
-			transaction.commit();
-		} catch (HibernateException e) {
-			transaction.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-			if (null != result && result instanceof Template) {
-				response.setTemplate((Template) result);
-			}
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Template where title = :emailTitle ");
+		query.setParameter("emailTitle", request.getNotifier());
+		Template result = (Template) query.uniqueResult();
+		if (null != result) {
+			response.setFrom(result.getMailSender());
+			response.setSubject(result.getSubject()); // @todo needs Freemarker processing
+			response.setBody(result.getStringContent()); // @todo needs Freemarker processing
 		}
 	}
 

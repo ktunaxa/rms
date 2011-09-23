@@ -7,6 +7,8 @@
 package org.ktunaxa.referral.server.command.email;
 
 import org.geomajas.command.Command;
+import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
+import org.ktunaxa.referral.server.command.dto.SendEmailResponse;
 import org.springframework.stereotype.Component;
 
 /**
