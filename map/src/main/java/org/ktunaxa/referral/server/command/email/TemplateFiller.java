@@ -21,9 +21,7 @@ import freemarker.template.TemplateException;
  * {@link TaskDto} variables using the FreeMarker package.
  * 
  * @author Emiel Ackermann
- *
  */
-
 public class TemplateFiller {
 	
 	private String filledTitle;

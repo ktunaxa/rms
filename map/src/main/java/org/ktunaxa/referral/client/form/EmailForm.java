@@ -16,7 +16,6 @@ import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
-import org.ktunaxa.referral.server.domain.Template;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
