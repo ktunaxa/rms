@@ -16,21 +16,22 @@ import org.geomajas.configuration.SymbolInfo;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
-import org.geomajas.gwt.client.map.event.MapModelEvent;
-import org.geomajas.gwt.client.map.event.MapModelHandler;
+import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
+import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.spatial.Bbox;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.spatial.geometry.MultiPoint;
 import org.geomajas.gwt.client.spatial.geometry.Point;
+import org.geomajas.gwt.client.util.WidgetLayout;
+import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.Toolbar;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
 import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
-import org.ktunaxa.referral.client.widget.ReferralMapWidget;
 import org.ktunaxa.referral.client.widget.ResizableLeftLayout;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -65,7 +66,7 @@ public final class MapLayout extends VLayout {
 
 	private VLayout bodyLayout;
 
-	private ReferralMapWidget mapWidget;
+	private MapWidget mapWidget;
 
 	private ResizableLeftLayout infoPane;
 
@@ -102,12 +103,12 @@ public final class MapLayout extends VLayout {
 		infoPane.setStyleName(STYLE_BLOCK);
 
 		// the map
-		mapWidget = new ReferralMapWidget(KtunaxaConstant.MAP_MAIN, KtunaxaConstant.APPLICATION);
-		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
- 			public void onMapModelChange(MapModelEvent event) {
- 				referralLayer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
- 			}
- 		});
+		mapWidget = new MapWidget(KtunaxaConstant.MAP_MAIN, KtunaxaConstant.APPLICATION);
+		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
+			public void onMapModelChanged(MapModelChangedEvent event) {
+				referralLayer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
+			}
+		});
 
 		// add layers, referral, GIS panel
 		layerPanel = new LayersPanel(mapWidget);
@@ -142,7 +143,7 @@ public final class MapLayout extends VLayout {
 		mapLayout.setSize("100%", "100%");
 		mapLayout.setStyleName(STYLE_BLOCK);
 		final Toolbar toolbar = new Toolbar(mapWidget);
-		toolbar.setButtonSize(Toolbar.BUTTON_SIZE_BIG);
+		toolbar.setButtonSize(WidgetLayout.toolbarLargeButtonSize);
 		toolbar.setBorder("none");
 
 		mapLayout.addMember(toolbar);
@@ -167,7 +168,7 @@ public final class MapLayout extends VLayout {
 		addMember(bodyLayout);
 	}
 
-	public ReferralMapWidget getMap() {
+	public MapWidget getMap() {
 		return mapWidget;
 	}
 
@@ -217,7 +218,7 @@ public final class MapLayout extends VLayout {
 			getMap().getMapModel().getMapView().applyBounds(bounds, MapView.ZoomOption.LEVEL_FIT);
 			// highlight the feature
 			SymbolInfo symbolInfo = null;
-			if (feature != null && feature.getStyleId() != null) {
+			if (feature.getStyleId() != null) {
 				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().
 						getNamedStyleInfo().getFeatureStyles()) {
 					if (feature.getStyleId().equals(style.getStyleId())) {

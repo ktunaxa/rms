@@ -5,21 +5,22 @@
  */
 package org.ktunaxa.referral.server.command.dto;
 
-import org.geomajas.command.dto.GetMapConfigurationRequest;
+import org.geomajas.command.dto.GetConfigurationRequest;
 
 /**
  * Request DTO object for {@link org.ktunaxa.referral.server.command.GetReferralMapCommand} command.
  * 
  * @author Jan De Moerloose
  */
-public class GetReferralMapRequest extends GetMapConfigurationRequest {
+public class GetReferralMapRequest extends GetConfigurationRequest {
 
 	private static final long serialVersionUID = 100L;
 
 	public static final String COMMAND = "command.GetReferralMap";
 
-	public GetReferralMapRequest(String mapId, String applicationId) {
-		super(mapId, applicationId);
+	public GetReferralMapRequest(String applicationId) {
+		super();
+		setApplicationId(applicationId);
 	}
 
 	public GetReferralMapRequest() {		

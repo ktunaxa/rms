@@ -7,7 +7,7 @@ package org.ktunaxa.referral.server.command.dto;
 
 import java.util.List;
 
-import org.geomajas.command.dto.GetMapConfigurationResponse;
+import org.geomajas.command.dto.GetConfigurationResponse;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.referral.server.dto.ReferenceLayerDto;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
@@ -18,7 +18,7 @@ import org.ktunaxa.referral.server.dto.TaskDto;
  * 
  * @author Jan De Moerloose
  */
-public class GetReferralMapResponse extends GetMapConfigurationResponse {
+public class GetReferralMapResponse extends GetConfigurationResponse {
 
 	private static final long serialVersionUID = 100L;
 

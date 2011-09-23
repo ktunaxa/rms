@@ -9,7 +9,15 @@ package org.ktunaxa.referral.client;
 import org.geomajas.gwt.client.action.ToolCreator;
 import org.geomajas.gwt.client.action.ToolbarBaseAction;
 import org.geomajas.gwt.client.action.toolbar.ToolbarRegistry;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
+import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.service.ClientConfigurationLoader;
+import org.geomajas.gwt.client.service.ClientConfigurationService;
+import org.geomajas.gwt.client.service.ClientConfigurationSetter;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
@@ -21,8 +29,7 @@ import org.ktunaxa.referral.client.action.ZoomKtunaxaTerritoryModalAction;
 import org.ktunaxa.referral.client.gui.DocumentItem;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
-import org.ktunaxa.referral.client.widget.ReferralMapWidget;
-import org.ktunaxa.referral.client.widget.ReferralMapWidget.MapCallback;
+import org.ktunaxa.referral.server.command.dto.GetReferralMapRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -42,6 +49,8 @@ public class KtunaxaEntryPoint implements EntryPoint {
 
 	public static final String TOOL_ZOOM_KTUNAXA_TERRITORY = "ZoomKtunaxaTerritory";
 	public static final String TOOL_ZOOM_CURRENT_REFERRAL = "ZoomCurrentReferral";
+
+	private GetReferralMapResponse appInfo;
 
 	public void onModuleLoad() {
 		// force a fixed height to feature attribute windows, preventing them to become too big (and add scroll bars)
@@ -63,6 +72,22 @@ public class KtunaxaEntryPoint implements EntryPoint {
 			}
 		});
 
+		ClientConfigurationService.setConfigurationLoader(new ClientConfigurationLoader() {
+			public void loadClientApplicationInfo(final String applicationId, final ClientConfigurationSetter setter) {
+				GwtCommand commandRequest = new GwtCommand(GetReferralMapRequest.COMMAND);
+				commandRequest.setCommandRequest(new GetReferralMapRequest(applicationId));
+				GwtCommandDispatcher dispatcher = GwtCommandDispatcher.getInstance();
+				dispatcher.execute(commandRequest, new AbstractCommandCallback<GetReferralMapResponse>() {
+
+					public void execute(GetReferralMapResponse response) {
+						setter.set(applicationId, response.getApplication());
+						appInfo = response;
+					}
+
+				});
+			}
+		});
+
 		// Register custom text area item
 		registerTextAreaFormItem();
 		// Register custom item for uploading documents
@@ -72,13 +97,28 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		String createReferralParam = Window.Location.getParameter(KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER);
 
 		MapLayout mapLayout = MapLayout.getInstance();
-		ReferralMapWidget map = mapLayout.getMap();
-		// initialize referral on callback
-		map.addMapCallback(new ReferralInitializer());
-		// initialize layers on callback
-		map.addMapCallback(new LayerInitializer());
-		// set default state
+		mapLayout.getMap().getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
+			public void onMapModelChanged(MapModelChangedEvent event) {
+				// Initializes the referral state: map navigation + title.
+				MapLayout mapLayout = MapLayout.getInstance();
+				mapLayout.setReferralAndTask(appInfo.getReferral(), appInfo.getTask());
 
+				// Initializes the layer tree.
+				VectorLayer base = (VectorLayer) mapLayout.getMap().getMapModel()
+						.getLayer(KtunaxaConstant.LAYER_REFERENCE_BASE_ID);
+				VectorLayer value = (VectorLayer) mapLayout.getMap().getMapModel()
+						.getLayer(KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
+				ReferenceLayer baseLayer =
+						new ReferenceLayer(base, appInfo.getLayers(), appInfo.getLayerTypes(), true);
+				ReferenceLayer valueLayer = new ReferenceLayer(value, appInfo.getLayers(),
+						appInfo.getLayerTypes(), false);
+				mapLayout.getLayerPanel().setBaseLayer(baseLayer);
+				mapLayout.getLayerPanel().setValueLayer(valueLayer);
+
+			}
+		});
+
+		// set default state
 		mapLayout.draw();
 		if (null != createReferralParam) {
 			mapLayout.createReferral();
@@ -113,40 +153,6 @@ public class KtunaxaEntryPoint implements EntryPoint {
 				return new DocumentItem();
 			}
 		}, null);
-	}
-	
-	/**
-	 * Initializes the referral state: map navigation + title.
-	 * 
-	 * @author Jan De Moerloose
-	 */
-	private static class ReferralInitializer implements MapCallback {
-
-		public void onResponse(GetReferralMapResponse response) {
-			MapLayout mapLayout = MapLayout.getInstance();
-			mapLayout.setReferralAndTask(response.getReferral(), response.getTask());
-		}
-	}
-
-	/**
-	 * Initializes the layer tree.
-	 * 
-	 * @author Jan De Moerloose
-	 */
-	private static class LayerInitializer implements MapCallback {
-
-		public void onResponse(GetReferralMapResponse response) {
-			MapLayout mapLayout = MapLayout.getInstance();
-			VectorLayer base = (VectorLayer) mapLayout.getMap().getMapModel()
-					.getLayer(KtunaxaConstant.LAYER_REFERENCE_BASE_ID);
-			VectorLayer value = (VectorLayer) mapLayout.getMap().getMapModel()
-			.getLayer(KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
-			ReferenceLayer baseLayer = new ReferenceLayer(base, response.getLayers(), response.getLayerTypes(), true);
-			ReferenceLayer valueLayer = new ReferenceLayer(value, response.getLayers(), 
-					response.getLayerTypes(), false);
-			mapLayout.getLayerPanel().setBaseLayer(baseLayer);
-			mapLayout.getLayerPanel().setValueLayer(valueLayer);
-		}
 	}
 
 }

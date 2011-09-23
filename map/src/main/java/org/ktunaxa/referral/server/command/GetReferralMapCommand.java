@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.geomajas.command.Command;
 import org.geomajas.command.CommandDispatcher;
-import org.geomajas.command.dto.GetMapConfigurationRequest;
-import org.geomajas.command.dto.GetMapConfigurationResponse;
+import org.geomajas.command.dto.GetConfigurationRequest;
+import org.geomajas.command.dto.GetConfigurationResponse;
 import org.geomajas.security.SecurityContext;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
@@ -54,9 +54,9 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 	}
 
 	public void execute(GetReferralMapRequest request, GetReferralMapResponse response) throws Exception {
-		GetMapConfigurationResponse original = (GetMapConfigurationResponse) commandDispatcher.execute(
-				GetMapConfigurationRequest.COMMAND, request, securityContext.getToken(), null);
-		response.setMapInfo(original.getMapInfo());
+		GetConfigurationResponse original = (GetConfigurationResponse) commandDispatcher.execute(
+				GetConfigurationRequest.COMMAND, request, securityContext.getToken(), null);
+		response.setApplication(original.getApplication());
 
 		// Add the urls to the response:
 		response.setCmisBaseUrl(cmisService.getBaseUrl());
