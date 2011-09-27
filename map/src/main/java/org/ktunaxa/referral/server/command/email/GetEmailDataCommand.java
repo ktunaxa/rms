@@ -38,7 +38,7 @@ public class GetEmailDataCommand implements Command<GetEmailDataRequest, GetEmai
 	@SuppressWarnings("rawtypes")
 	public void execute(GetEmailDataRequest request, GetEmailDataResponse response) throws Exception {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Template where title = '"+request.getNotifier()+"'");
+		Query query = session.createQuery("from Template where title = '" + request.getNotifier() + "'");
 		List list = query.list();
 		Template result = (Template) list.get(0);
 		if (null != result) {

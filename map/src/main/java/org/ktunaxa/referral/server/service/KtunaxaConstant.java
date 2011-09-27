@@ -6,8 +6,6 @@
 
 package org.ktunaxa.referral.server.service;
 
-import org.ktunaxa.referral.server.domain.Template;
-
 /**
  * Some constants available to both client and sever.
  * 

@@ -17,9 +17,6 @@ import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
-import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
-import org.ktunaxa.referral.server.command.dto.SendEmailResponse;
-import org.ktunaxa.referral.server.command.email.SendEmailCommand;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -134,7 +131,7 @@ public class EmailForm extends AbstractTaskForm {
 	 */
 	@Override
 	public Map<String, String> getVariables() {
-		Map <String, String> variables = new HashMap<String, String>();
+		Map<String, String> variables = new HashMap<String, String>();
 		variables.put(from.getName(), from.getValueAsString());
 		variables.put(to.getName(), to.getValueAsString());
 		variables.put(cc.getName(), cc.getValueAsString());

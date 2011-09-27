@@ -18,13 +18,12 @@ import org.geomajas.command.CommandRequest;
 public class SendEmailRequest implements CommandRequest {
 
 	private static final long serialVersionUID = 1000L;
-	
+
 	public static final String COMMAND = "command.email.SendEmail";
-	
+
 	private Map<String, String> mailVariables;
-    
-	public SendEmailRequest() {
-	}
+
+	public SendEmailRequest() {}
 
 	public void setMailVariables(Map<String, String> mailVariables) {
 		this.mailVariables = mailVariables;
@@ -33,6 +32,5 @@ public class SendEmailRequest implements CommandRequest {
 	public Map<String, String> getMailVariables() {
 		return mailVariables;
 	}
-
 
 }
