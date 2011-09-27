@@ -63,5 +63,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<import resource="classpath:org/ktunaxa/referral/bpm/bpm.xml" />
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	  <property name="host" value="smtp.ibbt.be"/>
+	</bean>
 
 </beans>
