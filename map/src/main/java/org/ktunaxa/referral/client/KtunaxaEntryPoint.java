@@ -80,8 +80,8 @@ public class KtunaxaEntryPoint implements EntryPoint {
 				dispatcher.execute(commandRequest, new AbstractCommandCallback<GetReferralMapResponse>() {
 
 					public void execute(GetReferralMapResponse response) {
-						setter.set(applicationId, response.getApplication());
 						appInfo = response;
+						setter.set(applicationId, response.getApplication());
 					}
 
 				});
