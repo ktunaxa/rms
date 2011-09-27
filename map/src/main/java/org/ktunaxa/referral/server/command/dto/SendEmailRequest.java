@@ -19,7 +19,7 @@ public class SendEmailRequest implements CommandRequest {
 
 	private static final long serialVersionUID = 1000L;
 
-	public static final String COMMAND = "command.email.SendEmail";
+	public static final String COMMAND = "command.email.Send";
 
 	private Map<String, String> mailVariables;
 

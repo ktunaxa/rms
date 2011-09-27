@@ -17,6 +17,9 @@ import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
+import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
+import org.ktunaxa.referral.server.command.dto.SendEmailResponse;
+import org.ktunaxa.referral.server.command.email.SendEmailCommand;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -50,7 +53,7 @@ public class EmailForm extends AbstractTaskForm {
 		
 		RegExpValidator mailValidator = new RegExpValidator();
 		mailValidator.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
-		
+		//TODO MAndatory fields.
 		from.setName(KtunaxaConstant.Email.FROM_NAME);
 		from.setTitle("From");
 		from.setValidators(mailValidator);
@@ -60,7 +63,6 @@ public class EmailForm extends AbstractTaskForm {
 		to.setTitle("To");
 		to.setDisabled(true);
 		to.setWidth("100%");
-		//TODO to not editable, add cc.
 		
 		cc.setName(KtunaxaConstant.Email.CC_NAME);
 		cc.setTitle("Cc");
@@ -126,21 +128,6 @@ public class EmailForm extends AbstractTaskForm {
 		});
 	}
 
-	/**
-	 * Get the variables of the filled in email form. These are given to the {@link SendEmailCommand}.
-	 */
-	@Override
-	public Map<String, String> getVariables() {
-		Map<String, String> variables = new HashMap<String, String>();
-		variables.put(from.getName(), from.getValueAsString());
-		variables.put(to.getName(), to.getValueAsString());
-		variables.put(cc.getName(), cc.getValueAsString());
-		variables.put(bcc.getName(), bcc.getValueAsString());
-		variables.put(subject.getName(), subject.getValueAsString());
-		variables.put(message.getName(), message.getValueAsString());
-		return variables;
-	}
-
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
@@ -151,22 +138,32 @@ public class EmailForm extends AbstractTaskForm {
 	@Override
 	public boolean validate() {
 		boolean result = super.validate();
-//		if (result) {
-//			result = sendMail.getValueAsBoolean();
-//		}
-//		if (result) {
-//			Map<String, String> variables = getVariables();
-//			//TODO Create SendEmailRequest.COMMAND
-//			SendEmailRequest request = new SendEmailRequest();
-//			request.setMailVariables(variables);
-//			GwtCommand command = new GwtCommand(SendEmailRequest.COMMAND);
-//			command.setCommandRequest(request);
-//			GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<SendEmailResponse>() {
-//				public void execute(SendEmailResponse response) {
-//					response.mailIsSent();
-//				}
-//			});
-//		}
+		if (result) {
+			result = sendMail.getValueAsBoolean();
+		}
+		if (result) {
+			Map<String, String> variables = new HashMap<String, String>();
+			variables.put(from.getName(), from.getValueAsString());
+			variables.put(to.getName(), to.getValueAsString());
+			variables.put(cc.getName(), cc.getValueAsString());
+			variables.put(bcc.getName(), bcc.getValueAsString());
+			variables.put(subject.getName(), subject.getValueAsString());
+			variables.put(message.getName(), message.getValueAsString());
+			SendEmailRequest request = new SendEmailRequest();
+			request.setMailVariables(variables);
+			GwtCommand command = new GwtCommand(SendEmailRequest.COMMAND);
+			command.setCommandRequest(request);
+			GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<SendEmailResponse>() {
+				public void execute(SendEmailResponse response) {
+					// response is not used.
+				}
+			});
+		}
 		return result;
+	}
+
+	@Override
+	public Map<String, String> getVariables() {
+		return new HashMap<String, String>();
 	}
 }

@@ -17,7 +17,7 @@ import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
 import org.ktunaxa.referral.server.command.dto.SendEmailResponse;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +31,9 @@ import org.springframework.stereotype.Component;
 public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResponse> {
 	
 	@Autowired
-	private JavaMailSender mailSender;
+	private JavaMailSenderImpl mailSender;
 	
-	public void setMailSender(JavaMailSender mailSender) {
+	public void setMailSender(JavaMailSenderImpl mailSender) {
 		this.mailSender = mailSender;
 	}
 
@@ -51,10 +51,16 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 				//Is there a default separator in smart GWT, like ','?
 				mimeMessage.setRecipient(Message.RecipientType.TO,
 						new InternetAddress(mailVariables.get(KtunaxaConstant.Email.TO_NAME)));
-				mimeMessage.setRecipient(Message.RecipientType.CC,
-						new InternetAddress(mailVariables.get(KtunaxaConstant.Email.CC_NAME)));
-				mimeMessage.setRecipient(Message.RecipientType.BCC,
-						new InternetAddress(mailVariables.get(KtunaxaConstant.Email.BCC_NAME)));
+				String cc = mailVariables.get(KtunaxaConstant.Email.CC_NAME);
+				if (null != cc) {
+					mimeMessage.setRecipient(Message.RecipientType.CC,
+						new InternetAddress(cc));
+				}
+				String bcc = mailVariables.get(KtunaxaConstant.Email.BCC_NAME);
+				if (null != bcc) {
+					mimeMessage.setRecipient(Message.RecipientType.BCC,
+						new InternetAddress(bcc));
+				}
 				mimeMessage.setFrom(new InternetAddress(mailVariables.get(KtunaxaConstant.Email.FROM_NAME)));
 				mimeMessage.setSubject(mailVariables.get(KtunaxaConstant.Email.SUBJECT_NAME));
 				mimeMessage.setText(mailVariables.get(KtunaxaConstant.Email.MESSAGE_NAME));

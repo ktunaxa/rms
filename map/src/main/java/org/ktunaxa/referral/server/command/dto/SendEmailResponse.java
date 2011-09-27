@@ -16,17 +16,5 @@ import org.geomajas.command.CommandResponse;
 public class SendEmailResponse extends CommandResponse {
 
 	private static final long serialVersionUID = 1000L;
-	
-	private boolean mailIsSent;
-
-	public void setMailIsSent(boolean mailIsSent) {
-		this.mailIsSent = mailIsSent;
-	}
-
-	public boolean mailIsSent() {
-		return mailIsSent;
-	}
-	
-	
 
 }
