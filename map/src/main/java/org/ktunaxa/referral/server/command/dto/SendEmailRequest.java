@@ -6,6 +6,8 @@
 
 package org.ktunaxa.referral.server.command.dto;
 
+import java.util.Map;
+
 import org.geomajas.command.CommandRequest;
 
 /**
@@ -13,15 +15,24 @@ import org.geomajas.command.CommandRequest;
  * 
  * @author Emiel Ackermann
  */
-// Temporary Checkstyle solution
-public final class SendEmailRequest implements CommandRequest {
+public class SendEmailRequest implements CommandRequest {
 
 	private static final long serialVersionUID = 1000L;
 	
 	public static final String COMMAND = "command.email.SendEmail";
 	
-	// Temporary Checkstyle solution
-	private SendEmailRequest() {
+	private Map<String, String> mailVariables;
+    
+	public SendEmailRequest() {
 	}
+
+	public void setMailVariables(Map<String, String> mailVariables) {
+		this.mailVariables = mailVariables;
+	}
+
+	public Map<String, String> getMailVariables() {
+		return mailVariables;
+	}
+
 
 }

@@ -25,6 +25,7 @@
 
 		<property name="dbCycleUsed" value="true"/>
 
+		<!-- TODO only needed for old processes -->
 		<property name="mailServerHost" value="smtp.ibbt.be"/>  <!-- at office smtp.ibbt.be should work -->
 		<property name="mailServerPort" value="25"/>
 		<property name="mailServerDefaultFrom" value="activiti.referral@ktunaxa.org"/>

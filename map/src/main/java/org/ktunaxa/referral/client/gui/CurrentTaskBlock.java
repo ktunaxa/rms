@@ -23,7 +23,7 @@ import org.ktunaxa.referral.client.form.ReviewReferralForm;
 import org.ktunaxa.referral.client.form.ValueSelectForm;
 import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
 import org.ktunaxa.referral.server.dto.TaskDto;
-import org.ktunaxa.referral.server.email.EmailNotifiers;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Button;
@@ -95,10 +95,10 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		taskForms.addCard(FORM_PROVINCIAL_RESULT, new ProvincialResultForm());
 		taskForms.addCard(FORM_REVIEW_REFERRAL, new ReviewReferralForm());
 		taskForms.addCard(FORM_VALUE_SELECT, new ValueSelectForm());
-		taskForms.addCard(FORM_REVIEW_LEVEL_0, new EmailForm(EmailNotifiers.LEVEL_0));
-		taskForms.addCard(FORM_REVIEW_START, new EmailForm(EmailNotifiers.START));
-		taskForms.addCard(FORM_REVIEW_CHANGE, new EmailForm(EmailNotifiers.CHANGE));
-		taskForms.addCard(FORM_REVIEW_RESULT, new EmailForm(EmailNotifiers.RESULT));
+		taskForms.addCard(FORM_REVIEW_LEVEL_0, new EmailForm(KtunaxaConstant.Email.LEVEL_0));
+		taskForms.addCard(FORM_REVIEW_START, new EmailForm(KtunaxaConstant.Email.START));
+		taskForms.addCard(FORM_REVIEW_CHANGE, new EmailForm(KtunaxaConstant.Email.CHANGE));
+		taskForms.addCard(FORM_REVIEW_RESULT, new EmailForm(KtunaxaConstant.Email.RESULT));
 		taskForms.setWidth100();
 		currentTask.addMember(taskForms);
 		currentTask.addMember(finishButton);
@@ -140,7 +140,6 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		public void onClick(ClickEvent event) {
 			finishButton.disable();
 			Canvas card = taskForms.getCurrentCard();
-			//TODO add EmailForm instanceof check and create SendEmailRequest.COMMAND
 			if (card instanceof AbstractTaskForm) {
 				AbstractTaskForm taskForm = (AbstractTaskForm) card;
 				boolean valid = taskForm.validate();

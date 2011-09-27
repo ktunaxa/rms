@@ -6,9 +6,19 @@
 
 package org.ktunaxa.referral.server.command.email;
 
+import java.util.Map;
+
+import javax.mail.Message;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.geomajas.command.Command;
 import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
 import org.ktunaxa.referral.server.command.dto.SendEmailResponse;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,14 +30,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResponse> {
 	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+
 	public SendEmailResponse getEmptyCommandResponse() {
 		return new SendEmailResponse();
 	}
 
 	public void execute(SendEmailRequest request, SendEmailResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		
+		final Map<String, String> mailVariables = request.getMailVariables();
+		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+	        
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+        
+            	//TODO What if there are several recipients per type. Is there a default separator in smart GWT, like ','?
+                mimeMessage.setRecipient(Message.RecipientType.TO, 
+                        new InternetAddress(mailVariables.get(KtunaxaConstant.Email.TO_NAME)));
+                mimeMessage.setRecipient(Message.RecipientType.CC, 
+                        new InternetAddress(mailVariables.get(KtunaxaConstant.Email.CC_NAME)));
+                mimeMessage.setRecipient(Message.RecipientType.BCC, 
+                        new InternetAddress(mailVariables.get(KtunaxaConstant.Email.BCC_NAME)));
+                mimeMessage.setFrom(new InternetAddress(mailVariables.get(KtunaxaConstant.Email.FROM_NAME)));
+                mimeMessage.setSubject(mailVariables.get(KtunaxaConstant.Email.SUBJECT_NAME));
+                mimeMessage.setText(mailVariables.get(KtunaxaConstant.Email.MESSAGE_NAME));
+            }
+        };
+        mailSender.send(preparator);
 	}
-
 }
 

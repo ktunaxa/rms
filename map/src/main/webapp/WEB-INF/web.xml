@@ -21,6 +21,7 @@
 			WEB-INF/map*.xml
 			WEB-INF/layer*.xml
 			WEB-INF/geocoder.xml
+			WEB-INF/mail.xml
         </param-value>
 	</context-param>
 

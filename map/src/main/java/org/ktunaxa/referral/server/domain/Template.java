@@ -211,10 +211,21 @@ public class Template {
 		this.mimeType = mimeType;
 	}
 
+	/**
+	 * Set the subject for the actual template.
+	 * 
+	 * @param subject
+	 *            The new subject.
+	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 
+	/**
+	 * Get the subject for the actual template.
+	 * 
+	 * @return The subject for the actual template.
+	 */
 	public String getSubject() {
 		return subject;
 	}

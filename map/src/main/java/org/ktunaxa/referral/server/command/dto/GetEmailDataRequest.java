@@ -22,6 +22,9 @@ public class GetEmailDataRequest implements CommandRequest {
 
 	private String notifier;
 	private TaskDto task;
+	
+	public GetEmailDataRequest() {
+	}
 
 	public GetEmailDataRequest(String notifier) {
 		this.notifier = notifier;

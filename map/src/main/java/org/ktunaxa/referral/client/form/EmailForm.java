@@ -6,6 +6,7 @@
 
 package org.ktunaxa.referral.client.form;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
@@ -16,10 +17,15 @@ import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
+import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
+import org.ktunaxa.referral.server.command.dto.SendEmailResponse;
+import org.ktunaxa.referral.server.command.email.SendEmailCommand;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
@@ -34,40 +40,73 @@ public class EmailForm extends AbstractTaskForm {
 	private String notifier;
 	private TextItem from = new TextItem();
 	private TextItem to = new TextItem();
+	private TextItem cc = new TextItem();
+	private TextItem bcc = new TextItem();
 	private TextItem subject = new TextItem();
 	private TextAreaItem message = new TextAreaItem();
+	private CheckboxItem sendMail = new CheckboxItem();
 	private TaskDto task;
 
 	public EmailForm(String notifier) {
 		super();
 		this.notifier = notifier;
+		
 		RegExpValidator mailValidator = new RegExpValidator();
 		mailValidator.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
 		
-		from.setName("fromAddress");
-		from.setTitle("From: ");
+		from.setName(KtunaxaConstant.Email.FROM_NAME);
+		from.setTitle("From");
 		from.setValidators(mailValidator);
+		from.setWidth("100%");
 		
-		to.setName("toAddress");
-		to.setTitle("To: ");
-		to.setValidators(mailValidator);
+		to.setName(KtunaxaConstant.Email.TO_NAME);
+		to.setTitle("To");
+		to.setDisabled(true);
+		to.setWidth("100%");
+		//TODO to not editable, add cc.
 		
-		subject.setName("subject");
-		subject.setTitle("Subject: ");
+		cc.setName(KtunaxaConstant.Email.CC_NAME);
+		cc.setTitle("Cc");
+		cc.setValidators(mailValidator);
+		cc.setWidth("100%");
 		
-		message.setName("message");
-		DynamicForm form = new DynamicForm();
-		form.setWidth100();
-		form.setFields(from, to, subject, message);
-		form.setStyleName("emailContent");
-		setForms(form);
+		bcc.setName(KtunaxaConstant.Email.BCC_NAME);
+		bcc.setTitle("Bcc");
+		bcc.setValidators(mailValidator);
+		bcc.setWidth("100%");
+		
+		subject.setName(KtunaxaConstant.Email.SUBJECT_NAME);
+		subject.setTitle("Subject");
+		subject.setWidth("100%");
+		
+		message.setShowTitle(false);
+		message.setName(KtunaxaConstant.Email.MESSAGE_NAME);
+		message.setColSpan(2);
+		message.setWidth("100%");
+		message.setHeight(200);
+		
+		sendMail.setTitle("Send mail when finished");
+		sendMail.setValue(true);
+		
+		setStyleName("taskBlockContent");
+		
+		DynamicForm mail = new DynamicForm();
+		mail.setWidth100();
+		mail.setFields(from, to, cc, bcc, subject);
+		mail.setColWidths("13%", "*");
+		
+		DynamicForm messageForm = new DynamicForm();
+		messageForm.setWidth("87%");
+		messageForm.setLayoutAlign(Alignment.RIGHT);
+		messageForm.setFields(message);
+		
+		DynamicForm checkBox = new DynamicForm();
+		checkBox.setWidth100();
+		checkBox.setFields(sendMail);
+		checkBox.setTitleWidth("70%");
+		setForms(mail, messageForm, checkBox);
 	}
 	
-	@Override
-	public void show() {
-		super.show();
-		setVariables();
-	}
 	/**
 	 * Get email data from db and put/convert it into values for the items of the form.
 	 */
@@ -95,13 +134,42 @@ public class EmailForm extends AbstractTaskForm {
 	 */
 	@Override
 	public Map<String, String> getVariables() {
-		// TODO Auto-generated method stub
-		return null;
+		Map <String, String> variables = new HashMap<String, String>();
+		variables.put(from.getName(), from.getValueAsString());
+		variables.put(to.getName(), to.getValueAsString());
+		variables.put(cc.getName(), cc.getValueAsString());
+		variables.put(bcc.getName(), bcc.getValueAsString());
+		variables.put(subject.getName(), subject.getValueAsString());
+		variables.put(message.getName(), message.getValueAsString());
+		return variables;
 	}
 
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
 		this.task = task;
+		setVariables();
+	}
+
+	@Override
+	public boolean validate() {
+		boolean result = super.validate();
+//		if (result) {
+//			result = sendMail.getValueAsBoolean();
+//		}
+//		if (result) {
+//			Map<String, String> variables = getVariables();
+//			//TODO Create SendEmailRequest.COMMAND
+//			SendEmailRequest request = new SendEmailRequest();
+//			request.setMailVariables(variables);
+//			GwtCommand command = new GwtCommand(SendEmailRequest.COMMAND);
+//			command.setCommandRequest(request);
+//			GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<SendEmailResponse>() {
+//				public void execute(SendEmailResponse response) {
+//					response.mailIsSent();
+//				}
+//			});
+//		}
+		return result;
 	}
 }

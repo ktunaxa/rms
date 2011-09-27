@@ -86,10 +86,13 @@ public class ReviewReferralForm extends AbstractTaskForm {
 	}
 
 	private void updateEngagementCommentStatus() {
-		String ev = engagementLevel.getValue().toString();
-		engagementComment.setDisabled(ev.equals(provinceEngagementLevel));
+		engagementComment.setDisabled(!isEngagementLevelChanged());
 	}
 
+	private boolean isEngagementLevelChanged() {
+		String ev = engagementLevel.getValue().toString();
+		return !ev.equals(provinceEngagementLevel);
+	}
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
@@ -119,7 +122,12 @@ public class ReviewReferralForm extends AbstractTaskForm {
 				nullSafeToString(email.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL,
 				nullSafeToString(engagementLevel.getValue()));
-
+		if (isEngagementLevelChanged()) {
+			result.put(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL, 
+					provinceEngagementLevel);
+			result.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT,
+					nullSafeToString(engagementComment.getValue()));
+		}
 		// update referral itself
 		MapLayout mapLayout = MapLayout.getInstance();
 		VectorLayer layer = mapLayout.getReferralLayer();

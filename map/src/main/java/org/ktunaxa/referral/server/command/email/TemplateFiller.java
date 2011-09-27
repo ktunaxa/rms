@@ -7,6 +7,7 @@
 package org.ktunaxa.referral.server.command.email;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
 
@@ -32,14 +33,15 @@ public class TemplateFiller {
 	public TemplateFiller(TaskDto task, 
 			org.ktunaxa.referral.server.domain.Template domain) throws IOException, TemplateException {
 		Configuration cfg = new Configuration();
-		Template titleTpl = cfg.getTemplate(domain.getTitle());
-		Template messageTpl = cfg.getTemplate(domain.getStringContent());
-		StringWriter baos = new StringWriter();
+		Template titleTpl = new Template("SubjectTemplate", new StringReader(domain.getSubject()), cfg);
+		Template messageTpl = new Template("ContentTemplate", new StringReader(domain.getStringContent()), cfg);
 		Map<String, String> variables = task.getVariables();
-		titleTpl.process(variables, baos);
-		filledSubject = baos.toString();
-		messageTpl.process(variables, baos);
-		filledMessage = baos.toString();
+		StringWriter titleWriter = new StringWriter();
+		titleTpl.process(variables, titleWriter);
+		filledSubject = titleWriter.toString();
+		StringWriter messageWriter = new StringWriter();
+		messageTpl.process(variables, messageWriter);
+		filledMessage = messageWriter.toString();
 	}
 
 	public String getFilledSubject() {

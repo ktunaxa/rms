@@ -6,6 +6,8 @@
 
 package org.ktunaxa.referral.server.service;
 
+import org.ktunaxa.referral.server.domain.Template;
+
 /**
  * Some constants available to both client and sever.
  * 
@@ -110,4 +112,28 @@ public interface KtunaxaConstant {
 	String GEOMARK_BASE_URL = "http://delivery.apps.gov.bc.ca/pub/geomark/geomarks/";
 	String GEOMARK_SHAPE_REQUEST = "/asPolygon.shpz?srid=";
 	String GEOMARK_WKT_REQUEST = "/asPolygon.wkt?srid=";
+	
+	/**
+	 * Constants used for building and sending emails.
+	 * @author Emiel Ackermann
+	 *
+	 */
+	public interface Email {
+		/**
+		 * The notifiers/identifiers for retrieving {@link Template} objects from the DB.
+		 */
+		String LEVEL_0 = "notify.level0";
+		String START = "notify.start";
+		String CHANGE = "notify.change.engagementLevel";
+		String RESULT = "notify.result";
+		/**
+		 * Field names.
+		 */
+		String FROM_NAME = "from";
+		String TO_NAME = "to";
+		String SUBJECT_NAME = "subject";
+		String MESSAGE_NAME = "message";
+		String CC_NAME = "cc";
+		String BCC_NAME = "bcc";
+	}
 }

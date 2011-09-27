@@ -6,6 +6,8 @@
 
 package org.ktunaxa.referral.server.command.email;
 
+import java.util.List;
+
 import org.geomajas.command.Command;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -33,11 +35,12 @@ public class GetEmailDataCommand implements Command<GetEmailDataRequest, GetEmai
 		return new GetEmailDataResponse();
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void execute(GetEmailDataRequest request, GetEmailDataResponse response) throws Exception {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Template where title = :emailTitle ");
-		query.setParameter("emailTitle", request.getNotifier());
-		Template result = (Template) query.uniqueResult();
+		Query query = session.createQuery("from Template where title = '"+request.getNotifier()+"'");
+		List list = query.list();
+		Template result = (Template) list.get(0);
 		if (null != result) {
 			response.setFrom(result.getMailSender());
 			TemplateFiller filler = new TemplateFiller(request.getTask(), result);
