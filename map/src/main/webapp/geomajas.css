@@ -295,6 +295,10 @@ COMMENTS, TASKS, DOCUMENTS
 	color: #000000;
 }
 
+.taskBlockContent {
+    width: 100%;
+}
+
 
 /*============================================================
 Layer Tree stuff

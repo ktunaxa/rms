@@ -44,12 +44,13 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
  */
 public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
-	private static final String TEXT_ALIGN_LEFT = "text-align:left";
-	private static final String TEXT_ALIGN_RIGHT = "text-align:right";
 	private static final String BLOCK_STYLE = "taskBlock";
+	private static final String BLOCK_CONTENT_STYLE = "taskBlockContent";
 	private static final String TITLE_STYLE = "taskBlockTitle";
 	private static final String BLOCK_STYLE_COLLAPSED = "taskBlockCollapsed";
 	private static final String TITLE_STYLE_COLLAPSED = "taskBlockTitleCollapsed";
+	private static final String STYLE_VARIABLE_NAME = "text-align:right; width:120px";
+	private static final String STYLE_VARIABLE_VALUE = "text-align:left";
 
 	private static final String IMAGE_MINIMIZE = "[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/minimize.gif";
 	private static final String IMAGE_MAXIMIZE = "[ISOMORPHIC]/skins/ActivitiBlue/images/headerIcons/maximize.gif";
@@ -240,38 +241,38 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		});
 		infoLayout.addMember(claimButton);
 		addMember(infoLayout);
-		String[] rows = null;
+		String[] rows;
 		if (task.isHistory()) {
 			rows = new String[4];
 			rows[0] = HtmlBuilder.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Assignee: "),
-							HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getAssignee())
+							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
+							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())
 						});
 			rows[1] = HtmlBuilder.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Started: "),
-							HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getStartTime() + "")
+							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Started: "),
+							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getStartTime() + "")
 						});
 			rows[2] = HtmlBuilder.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Assignee: "),
-							HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getEndTime() + "")
+							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
+							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getEndTime() + "")
 						});
 		} else {
 			rows = new String[5];
 			rows[0] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Assignee: "),
-					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getAssignee())
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())
 				});
 			rows[1] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Created: "),
-					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, task.getCreateTime() + "")
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Created: "),
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getCreateTime() + "")
 				});
 			rows[2] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Completion deadline: "),
-					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Completion deadline: "),
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
 				});
 			rows[3] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "E-mail: "),
-					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, variables.get(KtunaxaBpmConstant.VAR_EMAIL))
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "E-mail: "),
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, variables.get(KtunaxaBpmConstant.VAR_EMAIL))
 				});
 		}
 		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
@@ -279,11 +280,11 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 			String engagementContent = engagementLevel + " (prov " + 
 			variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
 			rows[rows.length - 1] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle(TEXT_ALIGN_RIGHT, "Engagement level: "),
-					HtmlBuilder.tdStyle(TEXT_ALIGN_LEFT, engagementContent)
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Engagement level: "),
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, engagementContent)
 				});
 		}
-		String htmlContent = HtmlBuilder.tableClassHtmlContent("taskBlockContent", rows);
+		String htmlContent = HtmlBuilder.tableClassHtmlContent(BLOCK_CONTENT_STYLE, rows);
 		content = new HTMLFlow(htmlContent);
 		content.setWidth100();
 		addMember(content);
