@@ -12,7 +12,6 @@ import org.geomajas.command.Command;
 import org.geomajas.command.CommandDispatcher;
 import org.geomajas.command.dto.GetConfigurationRequest;
 import org.geomajas.command.dto.GetConfigurationResponse;
-import org.geomajas.security.SecurityContext;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;

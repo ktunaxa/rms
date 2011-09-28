@@ -8,7 +8,6 @@ package org.ktunaxa.referral.server.security;
 
 import org.geomajas.security.BaseAuthorization;
 
-import java.util.List;
 import java.util.Set;
 
 /**
