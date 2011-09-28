@@ -47,12 +47,10 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 
-				//TODO What if there are several recipients per type. 
-				//Is there a default separator in smart GWT, like ','?
 				mimeMessage.setRecipient(Message.RecipientType.TO,
 						new InternetAddress(mailVariables.get(KtunaxaConstant.Email.TO_NAME)));
 				String cc = mailVariables.get(KtunaxaConstant.Email.CC_NAME);
-				if (null != cc) {
+				if (null != cc && !"".equals(cc)) { // "" is given to cc, to clear the cc field for later use.
 					String[] split = null;
 					if (cc.contains(", ")) {
 						split = cc.split(", ");

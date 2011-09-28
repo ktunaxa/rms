@@ -146,7 +146,7 @@ public class EmailForm extends AbstractTaskForm {
 				from.setValue(response.getFrom());
 				subject.setValue(response.getSubject());
 				message.setValue(response.getBody());
-				cc.setValue("");
+				cc.setValue(""); // clear the cc field of old values.
 			}
 		});
 	}
