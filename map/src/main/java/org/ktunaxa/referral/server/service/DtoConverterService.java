@@ -42,8 +42,7 @@ public interface DtoConverterService {
 	/**
 	 * Convert an Activiti task to a DTO.
 	 * 
-	 * @param task
-	 *            The task to convert.
+	 * @param task The task to convert or null when not authorized to see the task
 	 * @return Returns the DTO version of the task.
 	 */
 	TaskDto toDto(Task task);

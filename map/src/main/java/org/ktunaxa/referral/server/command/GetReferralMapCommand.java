@@ -19,6 +19,7 @@ import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceLayerType;
 import org.ktunaxa.referral.server.dto.ReferenceLayerDto;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
+import org.ktunaxa.referral.server.security.AppSecurityContext;
 import org.ktunaxa.referral.server.service.CmisService;
 import org.ktunaxa.referral.server.service.DtoConverterService;
 import org.ktunaxa.referral.server.service.ReferenceLayerService;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Component;
  * Command to get the RFA map configuration and some additional data.
  * 
  * @author Jan De Moerloose
- * 
+ * @author Joachim Van der Auwera
  */
 @Component
 public class GetReferralMapCommand implements Command<GetReferralMapRequest, GetReferralMapResponse> {
@@ -38,7 +39,7 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 	private CommandDispatcher commandDispatcher;
 
 	@Autowired
-	private SecurityContext securityContext;
+	private AppSecurityContext securityContext;
 
 	@Autowired
 	private ReferenceLayerService referenceLayerService;
@@ -76,6 +77,8 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 			dtos.add(converterService.toDto(layer));
 		}
 		response.setLayers(dtos);
+
+		response.setBpmRoles(securityContext.getBpmRoles());
 	}
 
 }

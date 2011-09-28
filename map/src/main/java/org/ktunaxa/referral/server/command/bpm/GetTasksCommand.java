@@ -17,6 +17,7 @@ import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
+import org.ktunaxa.referral.server.security.AppSecurityContext;
 import org.ktunaxa.referral.server.service.DtoConverterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,6 +42,7 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 
 	@Autowired
 	private DtoConverterService converterService;
+
 
 	public GetTasksResponse getEmptyCommandResponse() {
 		return new GetTasksResponse();
@@ -72,7 +74,10 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 
 	private void add(List<TaskDto> taskDtos, List<Task> tasks) {
 		for (Task task : tasks) {
-			taskDtos.add(converterService.toDto(task));
+			TaskDto dto = converterService.toDto(task);
+			if (null != dto) {
+				taskDtos.add(dto);
+			}
 		}
 	}
 

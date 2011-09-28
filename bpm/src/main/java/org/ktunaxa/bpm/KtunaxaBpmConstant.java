@@ -37,4 +37,16 @@ public interface KtunaxaBpmConstant {
 
 	String DATE_FORMAT = "yyyy-MM-dd";
 	String SET_BOOLEAN = "_Boolean";
+
+	String ROLE_REFERRAL_MANAGER = "referralManager";
+	String ROLE_ARCHAEOLOGY = "archaeologyEvaluator";
+	String ROLE_CULTURAL = "culturalEvaluator";
+	String ROLE_ECOLOGY = "ecologyEvaluator";
+	String ROLE_TREATY = "treatyEvaluator";
+	String ROLE_EVALUATE = "evaluateEvaluator";
+	String ROLE_AQUATIC = "aquaticEvaluator";
+	String ROLE_COMMUNITY_AKISQNUK = "communityAManager";
+	String ROLE_COMMUNITY_LOWER_KOOTENAY = "communityBManager";
+	String ROLE_COMMUNITY_ST_MARYS = "communityCManager";
+	String ROLE_COMMUNITY_TOBACCO_PLAINS = "communityDManager";
 }

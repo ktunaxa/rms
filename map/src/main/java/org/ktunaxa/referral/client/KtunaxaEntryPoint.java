@@ -12,6 +12,8 @@ import org.geomajas.gwt.client.action.toolbar.ToolbarRegistry;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.command.event.TokenChangedEvent;
+import org.geomajas.gwt.client.command.event.TokenChangedHandler;
 import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
 import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
@@ -23,12 +25,14 @@ import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
+import org.geomajas.plugin.staticsecurity.client.StaticSecurityTokenRequestHandler;
 import org.geomajas.widget.searchandfilter.client.util.GsfLayout;
 import org.ktunaxa.referral.client.action.ZoomCurrentReferralModalAction;
 import org.ktunaxa.referral.client.action.ZoomKtunaxaTerritoryModalAction;
 import org.ktunaxa.referral.client.gui.DocumentItem;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
+import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -72,6 +76,14 @@ public class KtunaxaEntryPoint implements EntryPoint {
 			}
 		});
 
+		GwtCommandDispatcher.getInstance().setTokenRequestHandler(new StaticSecurityTokenRequestHandler());
+
+		GwtCommandDispatcher.getInstance().addTokenChangedHandler(new TokenChangedHandler() {
+			public void onTokenChanged(TokenChangedEvent event) {
+				UserContext.getInstance().set(event.getUserDetail().getUserId(), event.getUserDetail().getUserName());
+			}
+		});
+
 		ClientConfigurationService.setConfigurationLoader(new ClientConfigurationLoader() {
 			public void loadClientApplicationInfo(final String applicationId, final ClientConfigurationSetter setter) {
 				GwtCommand commandRequest = new GwtCommand(GetReferralMapRequest.COMMAND);
@@ -80,6 +92,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 				dispatcher.execute(commandRequest, new AbstractCommandCallback<GetReferralMapResponse>() {
 
 					public void execute(GetReferralMapResponse response) {
+						UserContext.getInstance().setBpmRoles(response.getBpmRoles());
 						appInfo = response;
 						setter.set(applicationId, response.getApplication());
 					}

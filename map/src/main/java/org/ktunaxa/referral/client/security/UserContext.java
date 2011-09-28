@@ -6,6 +6,11 @@
 
 package org.ktunaxa.referral.client.security;
 
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
+
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Static holder of the user context.
  *
@@ -14,8 +19,9 @@ package org.ktunaxa.referral.client.security;
 public final class UserContext {
 
 	private static final UserContext INSTANCE = new UserContext();
-	private String user = "KtBpmAdmin";
-	private String name = "Testing admin user";
+	private String user = "???";
+	private String name = "???";
+	private Set<String> bpmRoles = new HashSet<String>();
 
 	private UserContext() {
 		// hide constructor
@@ -39,6 +45,7 @@ public final class UserContext {
 	public void set(String user, String name) {
 		this.user = user;
 		this.name = name;
+		bpmRoles.clear();
 	}
 
 	/**
@@ -65,6 +72,56 @@ public final class UserContext {
 	 * @return true when referral admin
 	 */
 	public boolean isReferralAdmin() {
-		return true;  // @todo @sec proper role check
+		return bpmRoles.contains(KtunaxaBpmConstant.ROLE_REFERRAL_MANAGER);
+	}
+
+	/**
+	 * Check whether the current user has a specific BPM role.
+	 *
+	 * @param role role to test
+	 * @return true when current user has the given role
+	 */
+	public boolean hasBpmRole(String role) {
+		return bpmRoles.contains(role);
+	}
+
+	/**
+	 * Check whether the current user has a one of the specified BPM roles.
+	 *
+	 * @param roles roles to test
+	 * @return true when current user has one of the given roles
+	 */
+	public boolean hasBpmRole(String... roles) {
+		for (String role : roles) {
+			if (hasBpmRole(role)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Check whether the current user has a one of the specified BPM roles.
+	 *
+	 * @param roles roles to test
+	 * @return true when current user has one of the given roles
+	 */
+	public boolean hasBpmRole(Iterable<String> roles) {
+		for (String role : roles) {
+			if (hasBpmRole(role)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Set the BPM roles for this user.
+	 *
+	 * @param bpmRoles BPM roles for current user
+	 */
+	public void setBpmRoles(Set<String> bpmRoles) {
+		this.bpmRoles.clear();
+		this.bpmRoles.addAll(bpmRoles);
 	}
 }

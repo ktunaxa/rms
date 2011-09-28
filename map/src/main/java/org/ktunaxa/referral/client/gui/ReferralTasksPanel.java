@@ -15,6 +15,7 @@ import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
+import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
@@ -106,18 +107,21 @@ public class ReferralTasksPanel extends VLayout {
 			command.setCommandRequest(request);
 			GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
 				public void execute(GetTasksResponse response) {
+					UserContext user = UserContext.getInstance();
+
 					for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
 						if (GROUP_CURRENT != i) {
 							lists[i].clear(); // clear again to avoid double AJAX calls causing duplicates
 						}
 					}
 					for (TaskDto task : response.getTasks()) {
-						// @todo @sec only when allowed to see this task
-						TaskBlock block = new TaskBlock(task);
-						if (!task.isHistory()) {
-							lists[GROUP_OPEN].add(block);
-						} else {
-							lists[GROUP_FINISHED].add(block);
+						if (user.hasBpmRole(task.getCandidates())) {
+							TaskBlock block = new TaskBlock(task);
+							if (!task.isHistory()) {
+								lists[GROUP_OPEN].add(block);
+							} else {
+								lists[GROUP_FINISHED].add(block);
+							}
 						}
 					}
 					for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
@@ -127,7 +131,7 @@ public class ReferralTasksPanel extends VLayout {
 								sections[i].setTitle(GROUP_TITLES[i] +
 										"  (<span style=\"font-weight:bold;\">" + count + "</span>)");
 							}
-							views[i].populate(lists[i]); // @todo @sec only add when the role is assigned to the user
+							views[i].populate(lists[i]);
 						}
 					}
 					TaskDto task = MapLayout.getInstance().getCurrentTask();

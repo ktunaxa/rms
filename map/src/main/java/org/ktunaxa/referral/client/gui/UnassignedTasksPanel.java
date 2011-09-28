@@ -16,6 +16,8 @@ import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
+import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
@@ -44,15 +46,16 @@ public class UnassignedTasksPanel extends VLayout {
 	};
 
 	// Candidate group string to test, positions need to match {@link #CANDIDATE_TITLES}
-	private static final String[] CANDIDATE_CHECKS = {
-			"aquatic",
-			"archaeology",
-			"community",
-			"cultural",
-			"ecology",
-			"evaluate",
-			"referral",
-			"treaty"
+	private static final String[][] CANDIDATE_CHECKS = {
+			{KtunaxaBpmConstant.ROLE_AQUATIC},
+			{KtunaxaBpmConstant.ROLE_ARCHAEOLOGY},
+			{KtunaxaBpmConstant.ROLE_COMMUNITY_AKISQNUK, KtunaxaBpmConstant.ROLE_COMMUNITY_LOWER_KOOTENAY,
+					KtunaxaBpmConstant.ROLE_COMMUNITY_ST_MARYS, KtunaxaBpmConstant.ROLE_COMMUNITY_TOBACCO_PLAINS},
+			{KtunaxaBpmConstant.ROLE_CULTURAL},
+			{KtunaxaBpmConstant.ROLE_ECOLOGY},
+			{KtunaxaBpmConstant.ROLE_EVALUATE},
+			{KtunaxaBpmConstant.ROLE_REFERRAL_MANAGER},
+			{KtunaxaBpmConstant.ROLE_TREATY}
 	};
 
 	// index of the referralManager role in the candidate lists
@@ -62,11 +65,12 @@ public class UnassignedTasksPanel extends VLayout {
 	private TaskListView[] views = new TaskListView[CANDIDATE_CHECKS.length];
 	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[CANDIDATE_CHECKS.length];
 
+	private SectionStack groups = new SectionStack();
+
 	public UnassignedTasksPanel() {
 		super();
 		setWidth100();
 
-		SectionStack groups = new SectionStack();
 		groups.setSize("100%", "100%");
 		groups.setOverflow(Overflow.AUTO);
 		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
@@ -78,7 +82,6 @@ public class UnassignedTasksPanel extends VLayout {
 			views[i] = new TaskListView();
 			lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
 			sections[i].addItem(views[i]);
-			groups.addSection(sections[i]); // @todo @sec only add when the role is assigned to the user
 		}
 	}
 
@@ -90,11 +93,19 @@ public class UnassignedTasksPanel extends VLayout {
 	public void show() {
 		super.show();
 
+		UserContext user = UserContext.getInstance();
+		for (SectionStackSection section : groups.getSections()) {
+			groups.removeSection(section.getID());
+		}
+
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
+			if (user.hasBpmRole(CANDIDATE_CHECKS[i])) {
+				groups.addSection(sections[i]);
+				sections[i].setExpanded(false);
+			}
 			lists[i].clear();
 			views[i].populate(lists[i]);
 			sections[i].setTitle(CANDIDATE_TITLES[i]);
-			sections[i].setExpanded(false);
 		}
 
  		GetTasksRequest request = new GetTasksRequest();
@@ -103,6 +114,7 @@ public class UnassignedTasksPanel extends VLayout {
 		command.setCommandRequest(request);
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
 			public void execute(GetTasksResponse response) {
+				UserContext user = UserContext.getInstance();
 				for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
 					lists[i].clear(); // clear again to avoid double AJAX calls causing duplicates
 				}
@@ -111,26 +123,34 @@ public class UnassignedTasksPanel extends VLayout {
 					String candidates = task.getCandidates().toString();
 					boolean added = false;
 					for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
-						if (candidates.contains(CANDIDATE_CHECKS[i])) {
-							lists[i].add(block);
-							added = true;
+						for (String role : CANDIDATE_CHECKS[i]) {
+							if (candidates.contains(role)) {
+								if (user.hasBpmRole(role)) {
+									lists[i].add(block);
+								}
+								added = true;
+							}
 						}
 					}
 					if (!added) {
-						lists[MANAGER].add(block);
+						if (user.isReferralAdmin()) {
+							lists[MANAGER].add(block);
+						}
 					}
 				}
 				int sectionToExpand = 0;
 				int sectionsToExpandCount = 0;
 				for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
-					int count = lists[i].size();
-					if (count > 0) {
-						sections[i].setTitle(CANDIDATE_TITLES[i] +
-								"  (<span style=\"font-weight:bold;\">" + count + "</span>)");
-						sectionToExpand = i;
-						sectionsToExpandCount++;
+					if (user.hasBpmRole(CANDIDATE_CHECKS[i])) {
+						int count = lists[i].size();
+						if (count > 0) {
+							sections[i].setTitle(CANDIDATE_TITLES[i] +
+									"  (<span style=\"font-weight:bold;\">" + count + "</span>)");
+							sectionToExpand = i;
+							sectionsToExpandCount++;
+						}
+						views[i].populate(lists[i]);
 					}
-					views[i].populate(lists[i]); // @todo @sec only add when the role is assigned to the user
 				}
 				if (1 == sectionsToExpandCount) {
 					sections[sectionToExpand].setExpanded(true);

@@ -18,6 +18,7 @@ import org.ktunaxa.referral.server.domain.ReferenceLayerType;
 import org.ktunaxa.referral.server.dto.ReferenceLayerDto;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
 import org.ktunaxa.referral.server.dto.TaskDto;
+import org.ktunaxa.referral.server.security.AppSecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +39,9 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 
 	@Autowired
 	private FormService formService;
+
+	@Autowired
+	private AppSecurityContext securityContext;
 
 	public ReferenceLayerTypeDto toDto(ReferenceLayerType layerType) {
 		ReferenceLayerTypeDto dto = new ReferenceLayerTypeDto(layerType.getId());
@@ -84,16 +88,22 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 			}
 		}
 		List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(task.getId());
+		boolean authorized = false;
 		for (IdentityLink link : identityLinks) {
 			String type = link.getType();
 			if (IdentityLinkType.CANDIDATE.equals(type)) {
 				if (null != link.getGroupId()) {
+					authorized |= securityContext.getBpmRoles().contains(link.getGroupId());
 					taskDto.addCandidate(link.getGroupId());
 				}
 				if (null != link.getUserId()) {
+					authorized |= link.getUserId().equals(securityContext.getUserId());
 					taskDto.addCandidate(link.getUserId());
 				}
 			}
+		}
+		if (!authorized) {
+			return null;
 		}
 		Map<String, Object> variables = taskService.getVariables(task.getId());
 		for (Map.Entry<String, Object> variable : variables.entrySet()) {
