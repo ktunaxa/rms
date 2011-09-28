@@ -158,6 +158,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 							mapLayout.focusBpm();
 						}
 					});
+					taskForms.showCard(KEY_NO);
 				} else {
 					finishButton.enable();
 				}
