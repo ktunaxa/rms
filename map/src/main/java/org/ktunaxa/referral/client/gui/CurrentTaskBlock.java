@@ -156,9 +156,9 @@ public class CurrentTaskBlock extends CardLayout<String> {
 							MapLayout mapLayout = MapLayout.getInstance();
 							mapLayout.setReferralAndTask(mapLayout.getCurrentReferral(), null); // clear task
 							mapLayout.focusBpm();
+							showCard(KEY_NO);
 						}
 					});
-					taskForms.showCard(KEY_NO);
 				} else {
 					finishButton.enable();
 				}
