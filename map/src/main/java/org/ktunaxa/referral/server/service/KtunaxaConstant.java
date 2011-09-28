@@ -105,7 +105,9 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_COMMENT_INCLUDE_IN_REPORT = "includeInReport";
 	String ATTRIBUTE_COMMENT_REPORT_CONTENT = "reportContent";
 
-	String MAIL_VALIDATOR_REGEX = "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z]{2,4}$";
+	String RAW_MAIL_REGEX = "([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)[a-zA-Z]{2,4}";
+	String MAIL_VALIDATOR_REGEX = "^" + RAW_MAIL_REGEX + "$";
+	String MULTIPLE_MAIL_VALIDATOR_REGEX = "(" + RAW_MAIL_REGEX + "(,|;)\\s)*" + RAW_MAIL_REGEX + "$";
 
 	String GEOMARK_BASE_URL = "http://delivery.apps.gov.bc.ca/pub/geomark/geomarks/";
 	String GEOMARK_SHAPE_REQUEST = "/asPolygon.shpz?srid=";

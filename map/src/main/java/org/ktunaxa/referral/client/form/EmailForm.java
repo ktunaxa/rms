@@ -27,7 +27,10 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
+import com.smartgwt.client.widgets.form.validator.Validator;
 
 /**
  * Form used to display a pre formed default email using {@link org.ktunaxa.referral.server.domain.Template}.
@@ -40,38 +43,41 @@ public class EmailForm extends AbstractTaskForm {
 	private TextItem from = new TextItem();
 	private TextItem to = new TextItem();
 	private TextItem cc = new TextItem();
-	private TextItem bcc = new TextItem();
 	private TextItem subject = new TextItem();
 	private TextAreaItem message = new TextAreaItem();
 	private CheckboxItem sendMail = new CheckboxItem();
 	private TaskDto task;
+	private RegExpValidator multiAddress;
+	private RegExpValidator oneAddress;
 
 	public EmailForm(String notifier) {
 		super();
 		this.notifier = notifier;
 		
-		RegExpValidator mailValidator = new RegExpValidator();
-		mailValidator.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
-		//TODO MAndatory fields.
+		oneAddress = new RegExpValidator();
+		oneAddress.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
+		oneAddress.setErrorMessage("Invalid email address.");
+		
 		from.setName(KtunaxaConstant.Email.FROM_NAME);
 		from.setTitle("From");
-		from.setValidators(mailValidator);
+		from.setValidators(oneAddress);
 		from.setWidth("100%");
+		from.setRequired(true);
+		from.setRequiredMessage("Sender email address required.");
 		
 		to.setName(KtunaxaConstant.Email.TO_NAME);
 		to.setTitle("To");
 		to.setDisabled(true);
 		to.setWidth("100%");
 		
+		multiAddress = new RegExpValidator();
+		multiAddress.setExpression(KtunaxaConstant.MULTIPLE_MAIL_VALIDATOR_REGEX);
+		multiAddress.setErrorMessage("Invalid email address(es). Seperate with ', ' or '; '");
+		
 		cc.setName(KtunaxaConstant.Email.CC_NAME);
 		cc.setTitle("Cc");
-		cc.setValidators(mailValidator);
+		cc.setValidators(multiAddress);
 		cc.setWidth("100%");
-		
-		bcc.setName(KtunaxaConstant.Email.BCC_NAME);
-		bcc.setTitle("Bcc");
-		bcc.setValidators(mailValidator);
-		bcc.setWidth("100%");
 		
 		subject.setName(KtunaxaConstant.Email.SUBJECT_NAME);
 		subject.setTitle("Subject");
@@ -85,12 +91,29 @@ public class EmailForm extends AbstractTaskForm {
 		
 		sendMail.setTitle("Send mail when finished");
 		sendMail.setValue(true);
+		sendMail.addChangeHandler(new ChangeHandler() {
+			
+			public void onChange(ChangeEvent event) {
+				Boolean disable = sendMail.getValueAsBoolean(); // == pre-change value.
+				from.setDisabled(disable);
+				cc.setDisabled(disable);
+				subject.setDisabled(disable);
+				message.setDisabled(disable);
+				if (disable) {
+					from.setValidators(new Validator[]{});
+					cc.setValidators(new Validator[]{});
+				} else {
+					from.setValidators(oneAddress);
+					cc.setValidators(multiAddress);
+				}
+			} 
+		});
 		
 		setStyleName("taskBlockContent");
 		
 		DynamicForm mail = new DynamicForm();
 		mail.setWidth100();
-		mail.setFields(from, to, cc, bcc, subject);
+		mail.setFields(from, to, cc, subject);
 		mail.setColWidths("13%", "*");
 		
 		DynamicForm messageForm = new DynamicForm();
@@ -123,6 +146,7 @@ public class EmailForm extends AbstractTaskForm {
 				from.setValue(response.getFrom());
 				subject.setValue(response.getSubject());
 				message.setValue(response.getBody());
+				cc.setValue("");
 			}
 		});
 	}
@@ -138,25 +162,23 @@ public class EmailForm extends AbstractTaskForm {
 	public boolean validate() {
 		boolean result = super.validate();
 		if (result) {
-			result = sendMail.getValueAsBoolean();
-		}
-		if (result) {
-			Map<String, String> variables = new HashMap<String, String>();
-			variables.put(from.getName(), from.getValueAsString());
-			variables.put(to.getName(), to.getValueAsString());
-			variables.put(cc.getName(), cc.getValueAsString());
-			variables.put(bcc.getName(), bcc.getValueAsString());
-			variables.put(subject.getName(), subject.getValueAsString());
-			variables.put(message.getName(), message.getValueAsString());
-			SendEmailRequest request = new SendEmailRequest();
-			request.setMailVariables(variables);
-			GwtCommand command = new GwtCommand(SendEmailRequest.COMMAND);
-			command.setCommandRequest(request);
-			GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<SendEmailResponse>() {
-				public void execute(SendEmailResponse response) {
-					// response is not used.
-				}
-			});
+			if (sendMail.getValueAsBoolean()) {
+				Map<String, String> variables = new HashMap<String, String>();
+				variables.put(from.getName(), from.getValueAsString());
+				variables.put(to.getName(), to.getValueAsString());
+				variables.put(cc.getName(), cc.getValueAsString());
+				variables.put(subject.getName(), subject.getValueAsString());
+				variables.put(message.getName(), message.getValueAsString());
+				SendEmailRequest request = new SendEmailRequest();
+				request.setMailVariables(variables);
+				GwtCommand command = new GwtCommand(SendEmailRequest.COMMAND);
+				command.setCommandRequest(request);
+				GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<SendEmailResponse>() {
+					public void execute(SendEmailResponse response) {
+						// response is not used.
+					}
+				});
+			}
 		}
 		return result;
 	}

@@ -53,13 +53,21 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 						new InternetAddress(mailVariables.get(KtunaxaConstant.Email.TO_NAME)));
 				String cc = mailVariables.get(KtunaxaConstant.Email.CC_NAME);
 				if (null != cc) {
-					mimeMessage.setRecipient(Message.RecipientType.CC,
-						new InternetAddress(cc));
-				}
-				String bcc = mailVariables.get(KtunaxaConstant.Email.BCC_NAME);
-				if (null != bcc) {
-					mimeMessage.setRecipient(Message.RecipientType.BCC,
-						new InternetAddress(bcc));
+					String[] split = null;
+					if (cc.contains(", ")) {
+						split = cc.split(", ");
+					} else if (cc.contains("; ")) {
+						split = cc.split("; ");
+					}
+					if (null != split) {
+						for (String c : split) {
+							mimeMessage.setRecipient(Message.RecipientType.CC,
+									new InternetAddress(c));
+						}
+					} else {
+						mimeMessage.setRecipient(Message.RecipientType.CC,
+							new InternetAddress(cc));
+					}
 				}
 				mimeMessage.setFrom(new InternetAddress(mailVariables.get(KtunaxaConstant.Email.FROM_NAME)));
 				mimeMessage.setSubject(mailVariables.get(KtunaxaConstant.Email.SUBJECT_NAME));
