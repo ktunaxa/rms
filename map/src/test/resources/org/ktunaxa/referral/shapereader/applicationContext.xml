@@ -62,6 +62,4 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<!-- enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<import resource="classpath:org/ktunaxa/referral/bpm/bpm.xml" />
-
 </beans>

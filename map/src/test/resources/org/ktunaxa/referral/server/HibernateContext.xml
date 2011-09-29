@@ -72,15 +72,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	    <constructor-arg type="java.lang.String" value="dd/MM/yyyy" />
 	</bean>
 
-	<import resource="classpath:org/ktunaxa/referral/bpm/bpm.xml" />
-	<bean name="geocoderInfo" class="org.geomajas.plugin.geocoder.api.GeocoderInfo">
-		<property name="loopAllServices" value="false"/>
-		<property name="pointDisplayWidth" value="2000" />
-		<property name="pointDisplayHeight" value="1000" />
-		<property name="geocoderServices">
-			<list>
-			</list>
-		</property>
-	</bean>
+	<import resource="classpath:org/ktunaxa/referral/server/required4test.xml" />
 
 </beans>

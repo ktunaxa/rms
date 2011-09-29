@@ -33,10 +33,6 @@
 
 	</bean>
 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	  <property name="host" value="smtp.ibbt.be"/>
-	</bean>
-
 	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
 		<property name="processEngineConfiguration" ref="processEngineConfiguration"/>
 	</bean>
@@ -47,5 +43,9 @@
 	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
 	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
 	<bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	  <property name="host" value="smtp.ibbt.be"/>
+	</bean>
 
 </beans>
