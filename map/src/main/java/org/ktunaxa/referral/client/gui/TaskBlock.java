@@ -13,6 +13,7 @@ import java.util.Map;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.util.Html;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
@@ -48,6 +49,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 	private static final String BLOCK_STYLE = "taskBlock";
 	private static final String BLOCK_CONTENT_STYLE = "taskBlockContent";
+	private static final String BLOCK_CONTENT_TABLE_STYLE = "taskBlockContentTable";
 	private static final String TITLE_STYLE = "taskBlockTitle";
 	private static final String BLOCK_STYLE_COLLAPSED = "taskBlockCollapsed";
 	private static final String TITLE_STYLE_COLLAPSED = "taskBlockTitleCollapsed";
@@ -177,7 +179,8 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 				HtmlBuilder.divClassHtmlContent("taskBlockInfo",
 				HtmlBuilder.htmlEncode(task.getDescription()) +
 				"<br />Referral: " + 
-				HtmlBuilder.htmlEncode(variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME))));
+				HtmlBuilder.tagClass(Html.Tag.SPAN, "taskBlockInfoBold", 
+						variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME))));
 		info.setSize(LayoutConstant.BLOCK_INFO_WIDTH, LayoutConstant.BLOCK_INFO_HEIGHT);
 		infoLayout.addMember(info);
 		infoLayout.addMember(new LayoutSpacer());
@@ -296,8 +299,9 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		for (int i = 0; i < array.length; i++) {
 			array[i] = rows.get(i);
 		} 
-		String htmlContent = HtmlBuilder.tableClassHtmlContent(BLOCK_CONTENT_STYLE, array);
+		String htmlContent = HtmlBuilder.tableClassHtmlContent(BLOCK_CONTENT_TABLE_STYLE, array);
 		content = new HTMLFlow(htmlContent);
+		content.setStyleName(BLOCK_CONTENT_STYLE);
 		content.setWidth100();
 		addMember(content);
 	}
