@@ -87,7 +87,8 @@ public class EmailForm extends AbstractTaskForm {
 		message.setName(KtunaxaConstant.Email.MESSAGE_NAME);
 		message.setColSpan(2);
 		message.setWidth("100%");
-		message.setHeight(200);
+		message.setMinHeight(100);
+		message.setHeight("*");
 		
 		sendMail.setTitle("Send mail when finished");
 		sendMail.setValue(true);
@@ -120,6 +121,7 @@ public class EmailForm extends AbstractTaskForm {
 		messageForm.setWidth("87%");
 		messageForm.setLayoutAlign(Alignment.RIGHT);
 		messageForm.setFields(message);
+		messageForm.setHeight("*");
 		
 		DynamicForm checkBox = new DynamicForm();
 		checkBox.setWidth100();

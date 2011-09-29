@@ -32,7 +32,6 @@ import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.Layout;
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
@@ -102,7 +101,6 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		taskForms.setWidth100();
 		currentTask.addMember(taskForms);
 		currentTask.addMember(finishButton);
-		currentTask.addMember(new LayoutSpacer());
 
 		addCard(KEY_NO, noTask);
 		addCard(KEY_CURRENT, currentTask);
