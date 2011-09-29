@@ -55,6 +55,8 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	private MapWidget mapWidget;
 
 	private GfxGeometry gfxGeometry;
+	
+	private HTMLFlow invalidTop;
 
 	private Map<String, UploadGeometryPanel> panelMap;
 	
@@ -191,7 +193,9 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		hLayout.setSize("100%", "100%");
 		hLayout.addMember(mapWidget);
 		
+		invalidTop = createInvalid();
 		vLayout.addMember(toolStrip);
+		vLayout.addMember(invalidTop);
 		vLayout.addMember(hLayout);
 	}
 
@@ -208,9 +212,21 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 			}
 		}
 	}
+	
+	private HTMLFlow createInvalid() {
+		HTMLFlow flow = new HTMLFlow(
+				HtmlBuilder.divStyle("color: #AA0000", "Provide a geometry using one of the 3 methods."));
+		flow.setWidth100();
+		flow.setVisible(false);
+		return flow;
+	}
 
 	@Override
 	protected boolean doValidate() {
-		return getWizardData().getFeature().isGeometryLoaded();
+		boolean validate = getWizardData().getFeature().isGeometryLoaded();
+		if (!validate) {
+			invalidTop.setVisible(true); 
+		}
+		return validate;
 	}
 }
