@@ -6,6 +6,8 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
@@ -76,7 +78,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		super(task);
 		buildGui(task);
 		MapLayout.getInstance().addCurrentReferralChangedHandler(new CurrentReferralChangedHandler() {
-			
+
 			public void onCurrentReferralChanged(CurrentReferralChangedEvent event) {
 				if (needToDisplayCurrentTask) {
 					MapLayout.getInstance().focusCurrentTask();
@@ -171,10 +173,11 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		HLayout infoLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutRightMargin(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutTopMargin(LayoutConstant.MARGIN_SMALL);
-		HTMLFlow info = new HTMLFlow("<div class='taskBlockInfo'>" +
+		HTMLFlow info = new HTMLFlow(
+				HtmlBuilder.divClassHtmlContent("taskBlockInfo",
 				HtmlBuilder.htmlEncode(task.getDescription()) +
-				"<br />Referral: " + HtmlBuilder.htmlEncode(variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)) +
-				"</div>");
+				"<br />Referral: " + 
+				HtmlBuilder.htmlEncode(variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME))));
 		info.setSize(LayoutConstant.BLOCK_INFO_WIDTH, LayoutConstant.BLOCK_INFO_HEIGHT);
 		infoLayout.addMember(info);
 		infoLayout.addMember(new LayoutSpacer());
@@ -193,6 +196,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		startButton.setShowRollOver(false);
 		setStartButtonStatus(task);
 		startButton.addClickHandler(new ClickHandler() {
+
 			public void onClick(ClickEvent clickEvent) {
 				assign(getObject(), me, true);
 			}
@@ -215,6 +219,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 			assignButton.setDisabled(true);
 		}
 		assignButton.addClickHandler(new ClickHandler() {
+
 			public void onClick(ClickEvent clickEvent) {
 				SC.say("assign task, temp to KtBpmAdmin " + getObject().getId());
 				// @todo select user
@@ -235,56 +240,63 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		claimButton.setShowRollOver(false);
 		claimButton.setDisabled(task.isHistory() | (null != task.getAssignee()));
 		claimButton.addClickHandler(new ClickHandler() {
+
 			public void onClick(ClickEvent clickEvent) {
 				assign(getObject(), me, false);
 			}
 		});
 		infoLayout.addMember(claimButton);
 		addMember(infoLayout);
-		String[] rows;
+		List<String> rows = new ArrayList<String>();
+		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
 		if (task.isHistory()) {
-			rows = new String[4];
-			rows[0] = HtmlBuilder.trHtmlContent(new String[] {
+			rows.add(HtmlBuilder.trHtmlContent(new String[] {
 							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
 							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())
-						});
-			rows[1] = HtmlBuilder.trHtmlContent(new String[] {
+						}));
+			rows.add(HtmlBuilder.trHtmlContent(new String[] {
 							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Started: "),
 							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getStartTime() + "")
-						});
-			rows[2] = HtmlBuilder.trHtmlContent(new String[] {
+						}));
+			rows.add(HtmlBuilder.trHtmlContent(new String[] {
 							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
 							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getEndTime() + "")
-						});
+						}));
 		} else {
-			rows = new String[5];
-			rows[0] = HtmlBuilder.trHtmlContent(new String[] {
+			rows.add(HtmlBuilder.trHtmlContent(new String[] {
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())
-				});
-			rows[1] = HtmlBuilder.trHtmlContent(new String[] {
+				}));
+			rows.add(HtmlBuilder.trHtmlContent(new String[] {
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Created: "),
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getCreateTime() + "")
-				});
-			rows[2] = HtmlBuilder.trHtmlContent(new String[] {
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Completion deadline: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
-				});
-			rows[3] = HtmlBuilder.trHtmlContent(new String[] {
+				}));
+			rows.add(HtmlBuilder
+					.trHtmlContent(new String[] {
+							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Completion deadline: "),
+							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE,
+									variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
+				}));
+			rows.add(HtmlBuilder.trHtmlContent(new String[] {
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "E-mail: "),
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, variables.get(KtunaxaBpmConstant.VAR_EMAIL))
-				});
+				}));
 		}
-		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
 		if (null != engagementLevel) {
-			String engagementContent = engagementLevel + " (prov " + 
-			variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
-			rows[rows.length - 1] = HtmlBuilder.trHtmlContent(new String[] {
+			String engagementContent = engagementLevel + " (prov " +
+					variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
+			rows.add(HtmlBuilder.trHtmlContent(new String[] {
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Engagement level: "),
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, engagementContent)
-				});
+				}));
 		}
-		String htmlContent = HtmlBuilder.tableClassHtmlContent(BLOCK_CONTENT_STYLE, rows);
+// 		Simple 'list to array' code block. Exact array.length unknown until after 
+//		the engagementLEvel has been checked for null.
+		String[] array = new String[rows.size()];
+		for (int i = 0; i < array.length; i++) {
+			array[i] = rows.get(i);
+		} 
+		String htmlContent = HtmlBuilder.tableClassHtmlContent(BLOCK_CONTENT_STYLE, array);
 		content = new HTMLFlow(htmlContent);
 		content.setWidth100();
 		addMember(content);
@@ -308,14 +320,14 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		GwtCommand command = new GwtCommand(AssignTaskRequest.COMMAND);
 		command.setCommandRequest(request);
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetReferralResponse>() {
+
 			public void execute(GetReferralResponse response) {
 				setStartButtonStatus(task);
 				setClaimButtonStatus(task);
-				// @todo do I need to modify the state of the task in the list, possibly remove, refresh, whatever?
 				if (start) {
 					start(task, response.getReferral());
-//				} else {
-//					MapLayout.getInstance().focusBpm();
+				} else {
+					MapLayout.getInstance().focusBpm();
 				}
 			}
 		});
@@ -324,6 +336,6 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	private void start(TaskDto task, Feature referral) {
 		MapLayout mapLayout = MapLayout.getInstance();
 		needToDisplayCurrentTask = true;
-		mapLayout.setReferralAndTask(referral, task); 
+		mapLayout.setReferralAndTask(referral, task);
 	}
 }
