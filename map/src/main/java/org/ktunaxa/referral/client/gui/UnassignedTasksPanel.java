@@ -78,10 +78,8 @@ public class UnassignedTasksPanel extends VLayout {
 		addMember(groups);
 
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
-			sections[i] = new SectionStackSection(CANDIDATE_TITLES[i]);
 			views[i] = new TaskListView();
 			lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
-			sections[i].addItem(views[i]);
 		}
 	}
 
@@ -100,12 +98,11 @@ public class UnassignedTasksPanel extends VLayout {
 
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
 			if (user.hasBpmRole(CANDIDATE_CHECKS[i])) {
-				groups.addSection(sections[i]);
+				sections[i] = new SectionStackSection(CANDIDATE_TITLES[i]);
+				sections[i].setTitle(CANDIDATE_TITLES[i]);
 				sections[i].setExpanded(false);
 			}
 			lists[i].clear();
-			views[i].populate(lists[i]);
-			sections[i].setTitle(CANDIDATE_TITLES[i]);
 		}
 
  		GetTasksRequest request = new GetTasksRequest();
@@ -150,6 +147,8 @@ public class UnassignedTasksPanel extends VLayout {
 							sectionsToExpandCount++;
 						}
 						views[i].populate(lists[i]);
+						sections[i].addItem(views[i]);
+						groups.addSection(sections[i]);
 					}
 				}
 				if (1 == sectionsToExpandCount) {
