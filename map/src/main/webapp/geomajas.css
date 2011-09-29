@@ -267,6 +267,10 @@ COMMENTS, TASKS, DOCUMENTS
 	font-size: 12px;
 	padding: 5px;
 }
+.taskBlockInfoBold {
+	font-weight: bold;
+}
+
 .commentBlockContent, .taskBlockContent, .documentBlockContent {
 	font-size: 12px;
 	padding: 3px 5px;
@@ -295,8 +299,9 @@ COMMENTS, TASKS, DOCUMENTS
 	color: #000000;
 }
 
-.taskBlockContent {
+.taskBlockContentTable {
     width: 100%;
+    font-size: inherit;
 }
 
 
