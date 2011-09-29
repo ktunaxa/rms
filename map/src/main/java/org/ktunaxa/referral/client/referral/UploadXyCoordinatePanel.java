@@ -70,10 +70,18 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 		xItem = new FloatItem("x");
 		xItem.setTitle("X");
 		xItem.setHint("<nobr>x-coordinate (NAD83/UTM zone 11N)</nobr>");
+		xItem.setRequired(true);
+		xItem.setRequiredMessage("Enter coordinate between "
+				+ KtunaxaConstant.KTUNAXA_TERRITORY_MIN_X + " and "
+				+ KtunaxaConstant.KTUNAXA_TERRITORY_MAX_X + ".");
 
 		yItem = new FloatItem("y");
 		yItem.setTitle("Y");
 		yItem.setHint("<nobr>y-coordinate (NAD83/UTM zone 11N)</nobr>");
+		yItem.setRequired(true);
+		yItem.setRequiredMessage("Enter coordinate between "
+				+ KtunaxaConstant.KTUNAXA_TERRITORY_MIN_Y + " and "
+				+ KtunaxaConstant.KTUNAXA_TERRITORY_MAX_Y + ".");
 
 		DataSource dataSource = new DataSource();
 		DataSourceFloatField xField = new DataSourceFloatField("x");
@@ -116,7 +124,7 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 
 	/**
 	 * Starts server-side transformation of point.
-	 * 
+	 *
 	 * @author Jan De Moerloose
 	 */
 	class TransformHandler implements ClickHandler {
@@ -141,7 +149,7 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 
 	/**
 	 * Handles the transformed geometry.
-	 * 
+	 *
 	 * @author Jan De Moerloose
 	 */
 	class GeometryHandler implements CommandCallback<TransformGeometryResponse>, CommandExceptionCallback {
