@@ -84,6 +84,7 @@ public class ReferralTasksPanel extends VLayout {
 		if (null == referral) {
 			currentTaskBlock.refresh(MapLayout.getInstance().getCurrentTask());
 		}
+		show();
 	}
 
 	@Override
