@@ -65,44 +65,54 @@ public class UnassignedTasksPanel extends VLayout {
 	private TaskListView[] views = new TaskListView[CANDIDATE_CHECKS.length];
 	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[CANDIDATE_CHECKS.length];
 
-	private SectionStack groups = new SectionStack();
+	private SectionStack groups;
 
 	public UnassignedTasksPanel() {
 		super();
 		setWidth100();
-
-		groups.setSize("100%", "100%");
-		groups.setOverflow(Overflow.AUTO);
-		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
-		groups.setPadding(LayoutConstant.MARGIN_SMALL);
-		addMember(groups);
-
-		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
-			views[i] = new TaskListView();
-			lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
-		}
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
 		// nothing to do for now
 	}
 
+//	@Override
+//	public void hide() {
+//		super.hide();
+//		groups.destroy();
+//		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
+//			views[i].destroy();
+//			sections[i] = null;
+//			lists[i] = null;
+//		}
+//	}
+	
 	@Override
 	public void show() {
 		super.show();
+		if (null != groups) {
+			removeMember(groups);
+		}
+		groups = new SectionStack();
+		groups.setSize("100%", "100%");
+		groups.setOverflow(Overflow.AUTO);
+		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
+		groups.setPadding(LayoutConstant.MARGIN_SMALL);
+		addMember(groups);
+		
+//		for (SectionStackSection section : groups.getSections()) {
+//			groups.removeSection(section.getID());
+//		}
 
 		UserContext user = UserContext.getInstance();
-		for (SectionStackSection section : groups.getSections()) {
-			groups.removeSection(section.getID());
-		}
-
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
 			if (user.hasBpmRole(CANDIDATE_CHECKS[i])) {
 				sections[i] = new SectionStackSection(CANDIDATE_TITLES[i]);
 				sections[i].setTitle(CANDIDATE_TITLES[i]);
 				sections[i].setExpanded(false);
+				views[i] = new TaskListView();
+				lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
 			}
-			lists[i].clear();
 		}
 
  		GetTasksRequest request = new GetTasksRequest();
@@ -112,9 +122,9 @@ public class UnassignedTasksPanel extends VLayout {
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
 			public void execute(GetTasksResponse response) {
 				UserContext user = UserContext.getInstance();
-				for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
-					lists[i].clear(); // clear again to avoid double AJAX calls causing duplicates
-				}
+//				for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
+//					lists[i].clear(); // clear again to avoid double AJAX calls causing duplicates
+//				}
 				for (TaskDto task : response.getTasks()) {
 					TaskBlock block = new TaskBlock(task);
 					String candidates = task.getCandidates().toString();
@@ -151,6 +161,7 @@ public class UnassignedTasksPanel extends VLayout {
 						groups.addSection(sections[i]);
 					}
 				}
+				//Section is expanded AFTER it was added to the group. Does this even work?
 				if (1 == sectionsToExpandCount) {
 					sections[sectionToExpand].setExpanded(true);
 				}

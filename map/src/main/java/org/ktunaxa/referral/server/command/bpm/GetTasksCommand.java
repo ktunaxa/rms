@@ -18,6 +18,8 @@ import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.DtoConverterService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +35,8 @@ import java.util.List;
 @Component
 public class GetTasksCommand implements Command<GetTasksRequest, GetTasksResponse> {
 
+	private static final Logger LOG = LoggerFactory.getLogger(GetTasksCommand.class);
+	
 	@Autowired
 	private TaskService taskService;
 
@@ -49,6 +53,7 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 
 	public void execute(GetTasksRequest request, GetTasksResponse response) throws Exception {
 
+		LOG.info("GetTasksCommand started");
 		List<TaskDto> taskDtos = new ArrayList<TaskDto>();
 		response.setTasks(taskDtos);
 
@@ -69,6 +74,7 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 			addHistoric(taskDtos, historicTaskQuery.finished().
 					processVariableValueEquals(KtunaxaBpmConstant.VAR_REFERRAL_ID, referralId).list());
 		}
+		LOG.info("GetTasksCommand finished. " + taskDtos.size() + " were retrieved.");
 	}
 
 	private void add(List<TaskDto> taskDtos, List<Task> tasks) {
@@ -76,6 +82,7 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 			TaskDto dto = converterService.toDto(task);
 			if (null != dto) {
 				taskDtos.add(dto);
+				LOG.info(dto.getId() + ": " + dto.getDescription() + " added.");
 			}
 		}
 	}
