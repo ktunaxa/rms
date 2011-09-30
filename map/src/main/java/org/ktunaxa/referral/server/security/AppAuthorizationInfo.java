@@ -20,7 +20,7 @@ import java.util.Set;
  */
 public class AppAuthorizationInfo extends LayerAuthorizationInfo {
 
-	private Set<String> bpmRoles;
+	private transient Set<String> bpmRoles; // do not serialize to assure this makes no difference for caching tiles
 
 	/**
 	 * Set some sensible default values giving access to everything...
