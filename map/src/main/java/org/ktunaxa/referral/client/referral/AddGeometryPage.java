@@ -44,6 +44,11 @@ import com.smartgwt.client.widgets.toolbar.ToolStripButton;
  */
 public class AddGeometryPage extends WizardPage<ReferralData> {
 
+	//TODO place in geomajas.css
+	public static final String FLOW_NOTE_STYLE = "font-size:12px; line-height:18px;";
+	public static final String FLOW_INVALID_STYLE = "color:#AA0000; " + FLOW_NOTE_STYLE;
+	public static final String FLOW_TOOL_STYLE = "text-align:right; line-height:32px; font-size:12px;";
+
 	private static final String WORLD_PAINTABLE_ID = "referral-geometry";
 
 	private VLayout vLayout;
@@ -59,6 +64,8 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	private HTMLFlow invalidTop;
 
 	private Map<String, UploadGeometryPanel> panelMap;
+
+	private UploadNoGeometryPanel noGeometryPanel;
 	
 	public AddGeometryPage() {
 		super();
@@ -72,7 +79,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	}
 
 	public String getExplanation() {
-		return "Add a geometry to the referral by one of 3 methods.";
+		return "Add a geometry to the referral by one of 3 methods or choose not to add a geometry.";
 	}
 
 	public Canvas asWidget() {
@@ -124,12 +131,16 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 
 	private void initGui() {
 		vLayout = new VLayout(LayoutConstant.MARGIN_LARGE);
-		hLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
+		hLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
 		uploadLayout = new CardLayout<String>();
+		invalidTop = createInvalid();
+		uploadLayout.addMember(invalidTop);
 		panelMap = new LinkedHashMap<String, UploadGeometryPanel>();
 		panelMap.put(UploadShapePanel.NAME, new UploadShapePanel());
 		panelMap.put(UploadGeoMarkUrlPanel.NAME, new UploadGeoMarkUrlPanel());
 		panelMap.put(UploadXyCoordinatePanel.NAME, new UploadXyCoordinatePanel());
+		noGeometryPanel = new UploadNoGeometryPanel();
+		panelMap.put(UploadNoGeometryPanel.NAME, noGeometryPanel);
 		ShowGeometryOnMapHandler handler = new ShowGeometryOnMapHandler();
 		for (Map.Entry<String, UploadGeometryPanel> entry : panelMap.entrySet()) {
 			entry.getValue().addGeometryUploadHandler(handler);
@@ -155,14 +166,19 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		ToolStripButton xyButton = new ToolStripButton("X:Y");
 		xyButton.setActionType(SelectionType.RADIO);
 		xyButton.setRadioGroup("geometry");
+		
+		ToolStripButton noneButton = new ToolStripButton("No geometry");
+		noneButton.setActionType(SelectionType.RADIO);
+		noneButton.setRadioGroup("geometry");
 
 		HTMLFlow cmd = new HTMLFlow(
-				HtmlBuilder.divStyle("text-align:right; line-height:32px; font-size:12px;", "Choose a method:"));
+				HtmlBuilder.divStyle(FLOW_TOOL_STYLE, "Choose a method:"));
 		cmd.setSize("120px", "32px");
 		toolStrip.addMember(cmd);
 		toolStrip.addMember(shapeButton);
 		toolStrip.addMember(geoMarkButton);
 		toolStrip.addMember(xyButton);
+		toolStrip.addMember(noneButton);
 
 		shapeButton.addClickHandler(new ClickHandler() {
 
@@ -184,6 +200,13 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 				uploadLayout.showCard(UploadXyCoordinatePanel.NAME);
 			}
 		});
+		
+		noneButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent event) {
+				uploadLayout.showCard(UploadNoGeometryPanel.NAME);
+			}
+		});
 		uploadLayout.setSize("50%", "100%");
 		hLayout.addMember(uploadLayout);
 		mapWidget.setZoomOnScrollEnabled(true);
@@ -193,9 +216,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		hLayout.setSize("100%", "100%");
 		hLayout.addMember(mapWidget);
 		
-		invalidTop = createInvalid();
 		vLayout.addMember(toolStrip);
-		vLayout.addMember(invalidTop);
 		vLayout.addMember(hLayout);
 	}
 
@@ -215,18 +236,20 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	
 	private HTMLFlow createInvalid() {
 		HTMLFlow flow = new HTMLFlow(
-				HtmlBuilder.divStyle("color: #AA0000", "Provide a geometry using one of the 3 methods."));
+				HtmlBuilder.divStyle(AddGeometryPage.FLOW_INVALID_STYLE, 
+						"Provide a geometry using one of the 3 methods or choose to not add a geometry."));
 		flow.setWidth100();
 		flow.setVisible(false);
 		return flow;
 	}
-
+	
 	@Override
 	protected boolean doValidate() {
 		boolean validate = getWizardData().getFeature().isGeometryLoaded();
 		if (!validate) {
-			invalidTop.setVisible(true); 
+			validate = noGeometryPanel.validate();
 		}
+		invalidTop.setVisible(!validate); 
 		return validate;
 	}
 }
