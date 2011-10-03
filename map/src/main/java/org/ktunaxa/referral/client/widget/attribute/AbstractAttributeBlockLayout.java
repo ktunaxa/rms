@@ -23,7 +23,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
+import org.geomajas.widget.utility.gwt.client.widget.CardLayout;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**

@@ -15,7 +15,7 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
+import org.geomajas.widget.utility.gwt.client.wizard.WizardPage;
 
 /**
  * First page in the referral creation wizard: fill in the general referral meta-data.

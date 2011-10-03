@@ -12,7 +12,7 @@ import org.geomajas.command.CommandResponse;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
-import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
+import org.geomajas.widget.utility.gwt.client.widget.CardLayout;
 import org.ktunaxa.referral.client.form.AbstractTaskForm;
 import org.ktunaxa.referral.client.form.DiscussEvaluationForm;
 import org.ktunaxa.referral.client.form.EmailForm;

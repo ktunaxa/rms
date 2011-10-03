@@ -15,7 +15,7 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.geomajas.widget.utility.smartgwt.client.wizard.WizardPage;
+import org.geomajas.widget.utility.gwt.client.wizard.WizardPage;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**

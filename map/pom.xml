@@ -158,7 +158,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.widget</groupId>
-			<artifactId>geomajas-widget-utility-smartgwt</artifactId>
+			<artifactId>geomajas-widget-utility-gwt</artifactId>
 		</dependency>
 
 		<dependency>

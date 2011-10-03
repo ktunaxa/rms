@@ -35,7 +35,7 @@ import org.geomajas.widget.searchandfilter.client.widget.search.CombinedSearchPa
 import org.geomajas.widget.searchandfilter.client.widget.search.PanelSearchWidget;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchController;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchWidget;
-import org.geomajas.widget.utility.smartgwt.client.widget.CardLayout;
+import org.geomajas.widget.utility.gwt.client.widget.CardLayout;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
