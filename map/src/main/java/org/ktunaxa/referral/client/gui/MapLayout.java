@@ -207,7 +207,8 @@ public final class MapLayout extends VLayout {
 		if (null != referral) {
 			Feature feature = new Feature(referral, referralLayer);
 			GWT.log("Referral found: " + feature.getId());
-			getReferralPanel().init(referralLayer, feature);
+			referralPanel.init(referralLayer, feature);
+			referralPanel.focusCurrentTask();
 			Geometry geometry = feature.getGeometry();
 			Bbox bounds = new Bbox(geometry.getBounds());
 			if (geometry instanceof MultiPoint || geometry instanceof Point) {
