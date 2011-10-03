@@ -160,7 +160,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 
 			public void onClick(ClickEvent event) {
 				form.submit();
-				busyImg.setVisible(true);
+//				busyImg.setVisible(true);
 			}
 		});
 		btnLayout.addMember(form);

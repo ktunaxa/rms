@@ -15,8 +15,6 @@ import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.referral.client.gui.MapLayout;
-import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
-import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
 import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
 import org.ktunaxa.referral.server.command.dto.SendEmailResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -25,70 +23,35 @@ import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
-import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
-import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import com.smartgwt.client.widgets.form.validator.Validator;
 
 /**
- * Form used to display a pre formed default email using {@link org.ktunaxa.referral.server.domain.Template}.
+ * Form used to display a pre formed default email using {@link org.ktunaxa.referral.server.domain.Template}.<br />
+ * One EmailForm is created for each notifier.
  * 
  * @author Emiel Ackermann
  */
-public class EmailForm extends AbstractTaskForm {
+public class EmailForm extends AbstractEmailForm {
 	
-	private String notifier;
-	private TextItem from = new TextItem();
 	private TextItem to = new TextItem();
 	private TextItem cc = new TextItem();
-	private TextItem subject = new TextItem();
-	private TextAreaItem message = new TextAreaItem();
 	private CheckboxItem sendMail = new CheckboxItem();
-	private TaskDto task;
-	private RegExpValidator multiAddress;
-	private RegExpValidator oneAddress;
 
 	public EmailForm(String notifier) {
-		super();
-		this.notifier = notifier;
-		
-		oneAddress = new RegExpValidator();
-		oneAddress.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
-		oneAddress.setErrorMessage("Invalid email address.");
-		
-		from.setName(KtunaxaConstant.Email.FROM_NAME);
-		from.setTitle("From");
-		from.setValidators(oneAddress);
-		from.setWidth("100%");
-		from.setRequired(true);
-		from.setRequiredMessage("Sender email address required.");
+		super(notifier);
 		
 		to.setName(KtunaxaConstant.Email.TO_NAME);
 		to.setTitle("To");
 		to.setDisabled(true);
 		to.setWidth("100%");
 		
-		multiAddress = new RegExpValidator();
-		multiAddress.setExpression(KtunaxaConstant.MULTIPLE_MAIL_VALIDATOR_REGEX);
-		multiAddress.setErrorMessage("Invalid email address(es). Seperate with ', ' or '; '");
-		
 		cc.setName(KtunaxaConstant.Email.CC_NAME);
 		cc.setTitle("Cc");
 		cc.setValidators(multiAddress);
 		cc.setWidth("100%");
-		
-		subject.setName(KtunaxaConstant.Email.SUBJECT_NAME);
-		subject.setTitle("Subject");
-		subject.setWidth("100%");
-		
-		message.setShowTitle(false);
-		message.setName(KtunaxaConstant.Email.MESSAGE_NAME);
-		message.setColSpan(2);
-		message.setWidth("100%");
-		message.setMinHeight(100);
-		message.setHeight("*");
 		
 		sendMail.setTitle("Send mail when finished");
 		sendMail.setValue(true);
@@ -109,9 +72,10 @@ public class EmailForm extends AbstractTaskForm {
 				}
 			} 
 		});
-		
-		setStyleName("taskBlockContent");
-		
+		setSendForm();
+	}
+
+	private void setSendForm() {
 		DynamicForm mail = new DynamicForm();
 		mail.setWidth100();
 		mail.setFields(from, to, cc, subject);
@@ -130,34 +94,21 @@ public class EmailForm extends AbstractTaskForm {
 		setForms(mail, messageForm, checkBox);
 	}
 	
-	/**
-	 * Get email data from db and put/convert it into values for the items of the form.
-	 */
 	@SuppressWarnings("unchecked")
-	public void setVariables() {
+	public void fillTemplate() {
+		super.fillTemplate();
+		cc.setValue(""); // clear the cc field of old values.
 		Feature currentReferral = MapLayout.getInstance().getCurrentReferral();
 		Attribute<String> email = currentReferral.getAttributes().get(KtunaxaConstant.ATTRIBUTE_EMAIL);
 		to.setValue(email.getValue());
 		
-		GetEmailDataRequest request = new GetEmailDataRequest(notifier);
-		request.setTask(task);
-		GwtCommand command = new GwtCommand(GetEmailDataRequest.COMMAND);
-		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {
-			public void execute(GetEmailDataResponse response) {
-				from.setValue(response.getFrom());
-				subject.setValue(response.getSubject());
-				message.setValue(response.getBody());
-				cc.setValue(""); // clear the cc field of old values.
-			}
-		});
 	}
 
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
 		this.task = task;
-		setVariables();
+		fillTemplate();
 	}
 
 	@Override
