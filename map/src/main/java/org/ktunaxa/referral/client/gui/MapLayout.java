@@ -208,7 +208,6 @@ public final class MapLayout extends VLayout {
 			Feature feature = new Feature(referral, referralLayer);
 			GWT.log("Referral found: " + feature.getId());
 			referralPanel.init(referralLayer, feature);
-			referralPanel.focusCurrentTask();
 			Geometry geometry = feature.getGeometry();
 			Bbox bounds = new Bbox(geometry.getBounds());
 			if (geometry instanceof MultiPoint || geometry instanceof Point) {
@@ -236,6 +235,7 @@ public final class MapLayout extends VLayout {
 			if (null != task) {
 				String taskDescription = task.getDescription();
 				title = MESSAGES.referralAndTaskTitle(referralId, referralDescription, taskDescription);
+				focusCurrentTask();
 			} else {
 				title = MESSAGES.referralTitle(referralId, referralDescription);
 			}
