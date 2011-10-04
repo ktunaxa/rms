@@ -53,15 +53,15 @@ public class EditEmailWindow extends Window {
 				form.disableButtons();
 			}
 		});
+		form.setFinishHandler(new Runnable() {
+			public void run() {
+				hide();
+			}
+		});
 		form.getEditButton().addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				boolean result = form.validate();
-				if (result) {
-					form.updateTemplate();
-					hide();
-					form.disableButtons();
-				}
+				form.validate();
 			}
 		});
 		fillDummyTask();

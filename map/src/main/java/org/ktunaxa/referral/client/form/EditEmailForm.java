@@ -14,15 +14,21 @@ package org.ktunaxa.referral.client.form;
 
 import java.util.Map;
 
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.Html;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
+import org.ktunaxa.referral.server.command.dto.ValidateTemplateRequest;
+import org.ktunaxa.referral.server.command.dto.ValidateTemplateResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -39,11 +45,13 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
  *
  */
 public class EditEmailForm extends AbstractEmailForm {
+	
 
 	private final Button cancelButton = new Button("Cancel");
 	private final Button resetButton = new Button("Reset");
 	private final Button editButton = new Button("Edit");
 	private HTMLFlow label = new HTMLFlow();
+	private Runnable finishHandler;
 	
 	public EditEmailForm() {
 		super(null);
@@ -110,7 +118,7 @@ public class EditEmailForm extends AbstractEmailForm {
 	 */
 	private void updateExplanation() {
 		StringBuilder explanation = new StringBuilder(HtmlBuilder.divClass("commentBlockInfo", 
-				"Text between '${' and '}' is replaced with referral data, before the template is shown to an user. " +
+				"Text between '${' and '}' is replaced with referral data, before the template is shown to a user. " +
 		"Allowed placeholders for this template are:"));
 //		id, name for all notifiers.
 		explanation.append(HtmlBuilder.openTagStyleHtmlContent(Html.Tag.UL, "font-weight:bold",  
@@ -135,7 +143,7 @@ public class EditEmailForm extends AbstractEmailForm {
 				HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", "Tip: ") +
 		"Copy/paste a placeholder to use it in the template."));
 		explanation.append(HtmlBuilder.divClassHtmlContent("commentBlockInfo", 
-				HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", "Warning: ") + 
+				HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", "Note: ") + 
 		"Using unallowed text between the '${' and '}', will break the template."));
 		label.setContents(explanation.toString());  
 	}
@@ -156,12 +164,57 @@ public class EditEmailForm extends AbstractEmailForm {
 		resetButton.setDisabled(true);
 		editButton.setDisabled(true);
 	}
-	
+	@Override
+	public boolean validate() {
+		boolean valid = super.validate();
+		if (valid) {
+			ValidateTemplateRequest request = new ValidateTemplateRequest();
+			request.setTask(task);
+			request.setBody(message.getValueAsString());
+			request.setSubject(subject.getValueAsString());
+			GwtCommand command = new GwtCommand(ValidateTemplateRequest.COMMAND);
+			command.setCommandRequest(request);
+			GwtCommandDispatcher.getInstance().execute(command, 
+					new AbstractCommandCallback<ValidateTemplateResponse>() {
+				public void execute(ValidateTemplateResponse response) {
+					if (!response.isValid()) {
+						String corruptPlaceholder = response.getCorruptPlaceholder();
+						if (null != corruptPlaceholder) {
+							SC.warn(HtmlBuilder.divClassHtmlContent("commentBlockInfo", 
+									"At least one placeholder is not allowed.",
+									HtmlBuilder.tagHtmlContent(Html.Tag.P, "First unallowed placeholder: ",
+											HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", 
+													corruptPlaceholder)), 
+									HtmlBuilder.tag(Html.Tag.P, "Please, correct the used placeholders.")));
+						} else {
+							SC.warn("Unknown problem occured while editing the template.");
+						}
+					} else {
+						updateTemplate();
+						if (null != finishHandler) {
+							finishHandler.run();
+						} 
+						disableButtons();
+					}
+				}
+			});
+		}
+		return false;
+	}
+	/**
+	 * ChangedHandler which updates the form if changed.
+	 * @author Emiel Ackermann
+	 *
+	 */
 	private class FormChangedHandler implements ChangedHandler {
 		
 		public void onChanged(ChangedEvent event) {
 			resetButton.setDisabled(false);
 			editButton.setDisabled(false);
 		}
+	}
+
+	public void setFinishHandler(Runnable runnable) {
+		finishHandler = runnable;
 	}
 }

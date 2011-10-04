@@ -30,6 +30,9 @@ public class TemplateFiller {
 	private String filledSubject;
 	private String filledMessage;
 	
+	public TemplateFiller() {
+	}
+	
 	public TemplateFiller(TaskDto task, 
 			org.ktunaxa.referral.server.domain.Template domain) throws IOException, TemplateException {
 		Configuration cfg = new Configuration();
@@ -50,5 +53,25 @@ public class TemplateFiller {
 
 	public String getFilledMessage() {
 		return filledMessage;
+	}
+	
+	/**
+	 * Fills the given String containing ${} placeholders with the given Map,
+	 * as long as the keys of the map coincide with the placeholders.
+	 * @param template
+	 * @param variables
+	 * @return
+	 * @throws IOException 
+	 * @throws TemplateException 
+	 */
+	public String fillStringWithData(String template, Map<String, String> variables) 
+													throws IOException, TemplateException {
+		String filled = "";
+		Configuration cfg = new Configuration();
+		Template t = new Template(template, new StringReader(template), cfg);
+		StringWriter baos = new StringWriter();
+		t.process(variables, baos);
+		filled = baos.toString();
+		return filled;
 	}
 }

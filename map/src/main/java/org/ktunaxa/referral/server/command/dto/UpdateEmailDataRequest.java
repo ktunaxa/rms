@@ -7,7 +7,6 @@
 package org.ktunaxa.referral.server.command.dto;
 
 import org.geomajas.command.CommandRequest;
-import org.ktunaxa.referral.server.dto.TaskDto;
 
 /**
  * Request object for {@link org.ktunaxa.referral.server.command.email.UpdateEmailDataCommand}.

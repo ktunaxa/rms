@@ -96,7 +96,7 @@ public abstract class AbstractEmailForm extends AbstractTaskForm {
 		command.setCommandRequest(request);
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<UpdateEmailDataResponse>() {
 			public void execute(UpdateEmailDataResponse response) {
-				if(response.isUpdated()) {
+				if (response.isUpdated()) {
 					SC.say("Template has been succesfully edited.");
 				}
 			}

@@ -6,15 +6,12 @@
 
 package org.ktunaxa.referral.server.command.email;
 
-import java.util.List;
-
 import org.geomajas.command.Command;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.ktunaxa.referral.server.command.dto.UpdateEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.UpdateEmailDataResponse;
-import org.ktunaxa.referral.server.domain.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
