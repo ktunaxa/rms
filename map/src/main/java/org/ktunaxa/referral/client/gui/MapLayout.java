@@ -104,11 +104,6 @@ public final class MapLayout extends VLayout {
 
 		// the map
 		mapWidget = new MapWidget(KtunaxaConstant.MAP_MAIN, KtunaxaConstant.APPLICATION);
-		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
-			public void onMapModelChanged(MapModelChangedEvent event) {
-				referralLayer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
-			}
-		});
 
 		// add layers, referral, GIS panel
 		layerPanel = new LayersPanel(mapWidget);
@@ -123,6 +118,12 @@ public final class MapLayout extends VLayout {
 		infoPane.addCard(bpmPanel.getName(), "Referral process", bpmPanel);
 		// top bar
 		topBar = new TopBar();
+		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
+			public void onMapModelChanged(MapModelChangedEvent event) {
+				referralLayer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
+				topBar.update();
+			}
+		});
 		// menu bar
 		menuBar = new MenuBar();
 		for (ToolStripButton button : infoPane.getButtons()) {

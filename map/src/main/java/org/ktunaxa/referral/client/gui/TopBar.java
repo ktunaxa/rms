@@ -26,6 +26,7 @@ import com.smartgwt.client.widgets.menu.events.MenuItemClickEvent;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 import com.smartgwt.client.widgets.toolbar.ToolStripMenuButton;
+import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
 
 /**
  * Top menu bar of the general layout. The top bar has a user section (login/logout,status) on the right and a list of
@@ -51,6 +52,8 @@ public class TopBar extends HLayout {
 	private ToolStripButton userButton;
 	
 	private EditEmailWindow emailWindow = new EditEmailWindow();
+	private ToolStripSeparator separator;
+	private ToolStripMenuButton menuButton;
 
 	/**
 	 * Constructs a top bar.
@@ -79,17 +82,20 @@ public class TopBar extends HLayout {
 
 			public void onTokenChanged(TokenChangedEvent event) {
 				userButton.setTitle(UserContext.getInstance().getName());
+				update();
 			}
 		});
 		userButton.setIcon("[ISOMORPHIC]/images/user-icon.png");
 		headerBar.addMember(userButton);
 		
-		//TODO if user has admin role.
-		if (true) {
-			headerBar.addSeparator();
-			ToolStripMenuButton menuButton = createAdminButton();
-			headerBar.addMenuButton(menuButton);
-		}
+		separator = new ToolStripSeparator();
+		separator.hide();
+		headerBar.addMember(separator);
+		
+		menuButton = createAdminButton();
+		menuButton.hide();
+		headerBar.addMember(menuButton);
+		
 		headerBar.addSeparator();
 		
 		ToolStripButton logoutButton = new ToolStripButton(LOGOUT);
@@ -167,6 +173,18 @@ public class TopBar extends HLayout {
 
 		ToolStripMenuButton menuButton = new ToolStripMenuButton(ADMIN, menu);
 		return menuButton;
+	}
+	/**
+	 * Updates the admin section of the tool strip.
+	 */
+	public void update() {
+		if (UserContext.getInstance().isReferralAdmin()) {
+			separator.show();
+			menuButton.show();
+		} else {
+			separator.hide();
+			menuButton.hide();
+		}
 	}
 	/**
 	 * Internal class used for the creation of {@link MenuItem}s for editing of {@link Template}s.
