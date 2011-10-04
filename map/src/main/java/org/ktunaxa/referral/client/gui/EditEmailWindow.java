@@ -6,6 +6,7 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import org.geomajas.gwt.client.util.WidgetLayout;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.form.EditEmailForm;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -16,7 +17,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
 import com.smartgwt.client.widgets.events.CloseClientEvent;
 /**
- * Contains a {@link EditEmailForm} used for editing {@link Template}s.
+ * Shows an {@link EditEmailForm} used for editing {@link org.ktunaxa.referral.server.domain.Template}s.
  * @author Emiel Ackermann
  *
  */
@@ -33,20 +34,23 @@ public class EditEmailWindow extends Window {
 		setMembersMargin(LayoutConstant.MARGIN_LARGE);
 		setIsModal(true);
 		setShowModalMask(true);
+		setModalMaskOpacity(WidgetLayout.modalMaskOpacity);
 		centerInPage();
 		setCanDragResize(true);
 		setShowMinimizeButton(false);
+		form = new EditEmailForm();
 		addCloseClickHandler(new CloseClickHandler() {
 
 			public void onCloseClick(CloseClientEvent event) {
 				hide();
+				form.disableButtons();
 			}
 		});
-		form = new EditEmailForm();
 		form.getCancelButton().addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 				hide();
+				form.disableButtons();
 			}
 		});
 		form.getEditButton().addClickHandler(new ClickHandler() {
@@ -54,15 +58,14 @@ public class EditEmailWindow extends Window {
 			public void onClick(ClickEvent event) {
 				boolean result = form.validate();
 				if (result) {
-					// result = update template.
-				}
-				if (result) {
+					form.updateTemplate();
 					hide();
+					form.disableButtons();
 				}
 			}
 		});
-		addItem(form);
 		fillDummyTask();
+		addItem(form);
 	}
 
 	private void fillDummyTask() {

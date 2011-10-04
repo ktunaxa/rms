@@ -11,9 +11,12 @@ import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
+import org.ktunaxa.referral.server.command.dto.UpdateEmailDataRequest;
+import org.ktunaxa.referral.server.command.dto.UpdateEmailDataResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
@@ -77,6 +80,25 @@ public abstract class AbstractEmailForm extends AbstractTaskForm {
 				from.setValue(response.getFrom());
 				subject.setValue(response.getSubject());
 				message.setValue(response.getBody());
+			}
+		});
+	}
+	
+	/**
+	 * Update email data from altered template.
+	 */
+	public void updateTemplate() {
+		UpdateEmailDataRequest request = new UpdateEmailDataRequest(notifier);
+		request.setSubject(subject.getValueAsString());
+		request.setFrom(from.getValueAsString());
+		request.setBody(message.getValueAsString());
+		GwtCommand command = new GwtCommand(UpdateEmailDataRequest.COMMAND);
+		command.setCommandRequest(request);
+		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<UpdateEmailDataResponse>() {
+			public void execute(UpdateEmailDataResponse response) {
+				if(response.isUpdated()) {
+					SC.say("Template has been succesfully edited.");
+				}
 			}
 		});
 	}
