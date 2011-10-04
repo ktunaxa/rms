@@ -220,20 +220,6 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		vLayout.addMember(hLayout);
 	}
 
-	/**
-	 * Shows the new geometry on the map.
-	 * 
-	 * @author Jan De Moerloose
-	 */
-	class ShowGeometryOnMapHandler implements GeometryUploadHandler {
-
-		public void onUploadSuccess(GeometryUploadSuccessEvent event) {
-			if (getWizardData().getFeature().isGeometryLoaded()) {
-				show();
-			}
-		}
-	}
-	
 	private HTMLFlow createInvalid() {
 		HTMLFlow flow = new HTMLFlow(
 				HtmlBuilder.divStyle(AddGeometryPage.FLOW_INVALID_STYLE, 
@@ -252,4 +238,19 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		invalidTop.setVisible(!validate); 
 		return validate;
 	}
+
+	/**
+	 * Shows the new geometry on the map.
+	 *
+	 * @author Jan De Moerloose
+	 */
+	class ShowGeometryOnMapHandler implements GeometryUploadHandler {
+
+		public void onUploadSuccess(GeometryUploadSuccessEvent event) {
+			if (getWizardData().getFeature().isGeometryLoaded()) {
+				show();
+			}
+		}
+	}
+
 }
