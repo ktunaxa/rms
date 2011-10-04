@@ -26,7 +26,6 @@ import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
-import com.smartgwt.client.widgets.form.validator.Validator;
 
 /**
  * Form used to display a pre formed default email using {@link org.ktunaxa.referral.server.domain.Template}.<br />
@@ -64,8 +63,8 @@ public class EmailForm extends AbstractEmailForm {
 				subject.setDisabled(disable);
 				message.setDisabled(disable);
 				if (disable) {
-					from.setValidators(new Validator[]{});
-					cc.setValidators(new Validator[]{});
+					from.setValidators();
+					cc.setValidators();
 				} else {
 					from.setValidators(oneAddress);
 					cc.setValidators(multiAddress);
