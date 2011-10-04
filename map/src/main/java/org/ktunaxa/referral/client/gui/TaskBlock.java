@@ -253,48 +253,39 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		List<String> rows = new ArrayList<String>();
 		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
 		if (task.isHistory()) {
-			rows.add(HtmlBuilder.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
-							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())
-						}));
-			rows.add(HtmlBuilder.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Started: "),
-							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getStartTime() + "")
-						}));
-			rows.add(HtmlBuilder.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
-							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getEndTime() + "")
-						}));
-		} else {
-			rows.add(HtmlBuilder.trHtmlContent(new String[] {
+			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())
-				}));
-			rows.add(HtmlBuilder.trHtmlContent(new String[] {
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())));
+			rows.add(HtmlBuilder.trHtmlContent(
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Started: "),
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getStartTime() + "")));
+			rows.add(HtmlBuilder.trHtmlContent(
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getEndTime() + "")));
+		} else {
+			rows.add(HtmlBuilder.trHtmlContent(
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())));
+			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Created: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getCreateTime() + "")
-				}));
-			rows.add(HtmlBuilder
-					.trHtmlContent(new String[] {
-							HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Completion deadline: "),
-							HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE,
-									variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))
-				}));
-			rows.add(HtmlBuilder.trHtmlContent(new String[] {
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getCreateTime() + "")));
+			rows.add(HtmlBuilder.trHtmlContent(
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Completion deadline: "),
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE,
+							variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE))));
+			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "E-mail: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, variables.get(KtunaxaBpmConstant.VAR_EMAIL))
-				}));
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, variables.get(KtunaxaBpmConstant.VAR_EMAIL))));
 		}
 		if (null != engagementLevel) {
 			String engagementContent = engagementLevel + " (prov " +
 					variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL) + ")";
-			rows.add(HtmlBuilder.trHtmlContent(new String[] {
+			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Engagement level: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, engagementContent)
-				}));
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, engagementContent)));
 		}
 // 		Simple 'list to array' code block. Exact array.length unknown until after 
-//		the engagementLEvel has been checked for null.
+//		the engagementLevel has been checked for null.
 		String[] array = new String[rows.size()];
 		for (int i = 0; i < array.length; i++) {
 			array[i] = rows.get(i);
