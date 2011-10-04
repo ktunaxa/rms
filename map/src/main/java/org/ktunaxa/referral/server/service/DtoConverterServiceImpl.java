@@ -88,7 +88,11 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 			}
 		}
 		List<IdentityLink> identityLinks = taskService.getIdentityLinksForTask(task.getId());
+		String userId = securityContext.getUserId();
 		boolean authorized = false;
+		if (null != userId) {
+			authorized = userId.equals(task.getAssignee());
+		}
 		for (IdentityLink link : identityLinks) {
 			String type = link.getType();
 			if (IdentityLinkType.CANDIDATE.equals(type)) {
@@ -97,7 +101,7 @@ public class DtoConverterServiceImpl implements DtoConverterService {
 					taskDto.addCandidate(link.getGroupId());
 				}
 				if (null != link.getUserId()) {
-					authorized |= link.getUserId().equals(securityContext.getUserId());
+					authorized |= link.getUserId().equals(userId);
 					taskDto.addCandidate(link.getUserId());
 				}
 			}

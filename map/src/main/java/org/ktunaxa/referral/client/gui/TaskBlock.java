@@ -10,15 +10,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.smartgwt.client.data.DataSource;
+import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.Record;
+import com.smartgwt.client.data.fields.DataSourceTextField;
+import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.events.CloseClickHandler;
+import com.smartgwt.client.widgets.events.CloseClientEvent;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.SelectItem;
+import com.smartgwt.client.widgets.layout.VLayout;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.Html;
 import org.geomajas.gwt.client.util.HtmlBuilder;
+import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.Feature;
+import org.geomajas.plugin.staticsecurity.command.dto.GetUsersRequest;
+import org.geomajas.plugin.staticsecurity.command.dto.GetUsersResponse;
+import org.geomajas.widget.utility.gwt.client.widget.InScreenWindow;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
-import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
-import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.server.command.dto.AssignTaskRequest;
@@ -27,7 +39,6 @@ import org.ktunaxa.referral.server.dto.TaskDto;
 
 import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.IButton;
@@ -38,7 +49,7 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 
 /**
- * Implementation of the CollapsableBlock abstraction that handles {@link TaskDto} type objects. Instances of this
+ * Implementation of {@link AbstractCollapsibleListBlock} that handles {@link TaskDto} type objects. Instances of this
  * class will form the list of tasks on task tabs. Each block can collapse and expand. When collapsed only the
  * task title is visible.
  *
@@ -63,6 +74,11 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	private static final String IMAGE_START = "[ISOMORPHIC]/images/task/start.png";
 	private static final String IMAGE_ASSIGN = "[ISOMORPHIC]/images/task/assign.png";
 
+	private static final String FIELD_LABEL = "label";
+	private static final String FIELD_VALUE = "value";
+
+	private static final int DISABLED_OPACITY = 60;
+
 	private HLayout title;
 
 	private HTMLFlow content;
@@ -70,7 +86,6 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	private Img titleImage = new Img(IMAGE_MINIMIZE, 16, 16);
 	private IButton startButton = new IButton();
 	private IButton claimButton = new IButton();
-	private boolean needToDisplayCurrentTask;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -79,15 +94,6 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	public TaskBlock(TaskDto task) {
 		super(task);
 		buildGui(task);
-		MapLayout.getInstance().addCurrentReferralChangedHandler(new CurrentReferralChangedHandler() {
-
-			public void onCurrentReferralChanged(CurrentReferralChangedEvent event) {
-				if (needToDisplayCurrentTask) {
-					MapLayout.getInstance().focusCurrentTask();
-				}
-				needToDisplayCurrentTask = false;
-			}
-		});
 	}
 
 	// ------------------------------------------------------------------------
@@ -138,11 +144,20 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		return null;
 	}
 
+	@Override
+	public void setDisabled(boolean disabled) {
+		super.setDisabled(disabled);
+		if (disabled) {
+			this.setOpacity(DISABLED_OPACITY);
+			this.content.setOpacity(DISABLED_OPACITY);
+		}
+	}
+
 	// ------------------------------------------------------------------------
 	// Private methods:
 	// ------------------------------------------------------------------------
 
-	private void buildGui(TaskDto task) {
+	private void buildGui(final TaskDto task) {
 		Map<String, String> variables = task.getVariables();
 
 		setStyleName(BLOCK_STYLE);
@@ -223,10 +238,13 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		}
 		assignButton.addClickHandler(new ClickHandler() {
 
-			public void onClick(ClickEvent clickEvent) {
-				SC.say("assign task, temp to KtBpmAdmin " + getObject().getId());
-				// @todo select user
-				assign(getObject(), me, false); // @todo assign selected user
+			public void onClick(final ClickEvent clickEvent) {
+				GwtCommand command = new GwtCommand(GetUsersRequest.COMMAND);
+				GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetUsersResponse>() {
+					public void execute(GetUsersResponse response) {
+						assignWindow(task, response, clickEvent);
+					}
+				});
 			}
 		});
 		infoLayout.addMember(assignButton);
@@ -297,6 +315,86 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		addMember(content);
 	}
 
+	private void assignWindow(TaskDto task, GetUsersResponse response, ClickEvent clickEvent) {
+		final Window assignWindow = new InScreenWindow();
+		assignWindow.setTitle("Assign task for " + task.getVariables().get(KtunaxaBpmConstant.VAR_REFERRAL_ID));
+		assignWindow.setAutoSize(true);
+		assignWindow.setCanDragReposition(true);
+		assignWindow.setCanDragResize(false);
+		assignWindow.setShowMinimizeButton(false);
+		assignWindow.setModalMaskOpacity(WidgetLayout.modalMaskOpacity);
+		assignWindow.setShowModalMask(true);
+		assignWindow.setIsModal(true);
+		assignWindow.addCloseClickHandler(new CloseClickHandler() {
+			public void onCloseClick(CloseClientEvent closeClientEvent) {
+				assignWindow.destroy();
+			}
+		});
+		assignWindow.setLeft(clickEvent.getX());
+		assignWindow.setTop(clickEvent.getY());
+		VLayout layout = new VLayout(WidgetLayout.marginLarge);
+
+		HTMLFlow label = new HTMLFlow(HtmlBuilder.htmlEncode(task.getName()));
+		label.setWidth100();
+		layout.addMember(label);
+
+		// add select box with users
+		final SelectItem users = new SelectItem("User", "User");
+		users.setDefaultToFirstOption(true);
+		users.setOptionDataSource(getUsersSelectDataSource(response));
+		users.setDisplayField(FIELD_LABEL);
+		users.setValueField(FIELD_VALUE);
+		DynamicForm usersForm = new DynamicForm();
+		usersForm.setFields(users);
+		layout.addMember(usersForm);
+
+		HLayout buttons = new HLayout(WidgetLayout.marginSmall);
+		buttons.setWidth100();
+		buttons.setHeight(1);
+		LayoutSpacer spacer = new LayoutSpacer();
+		spacer.setWidth(60);
+		buttons.addMember(spacer);
+		Button assignButton = new Button("Assign");
+		assignButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent clickEvent) {
+				assign(getObject(), users.getValueAsString(), false);
+				assignWindow.destroy();
+			}
+		});
+		buttons.addMember(assignButton);
+		Button cancelButton = new Button("Cancel");
+		cancelButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent clickEvent) {
+				assignWindow.destroy();
+			}
+		});
+		buttons.addMember(cancelButton);
+		layout.addMember(buttons);
+
+		assignWindow.addItem(layout);
+		assignWindow.draw();
+	}
+
+	private DataSource getUsersSelectDataSource(GetUsersResponse response) {
+		DataSource dataSource = new DataSource();
+		dataSource.setClientOnly(true);
+		DataSourceField label = new DataSourceTextField(FIELD_LABEL);
+		DataSourceField regex = new DataSourceTextField(FIELD_VALUE);
+		dataSource.setFields(label, regex);
+
+		String me = UserContext.getInstance().getUser();
+		for (String user : response.getUsers()) {
+			if (!me.equals(user)) {
+				Record record = new Record();
+				record.setAttribute(FIELD_LABEL, user);
+				record.setAttribute(FIELD_VALUE, user);
+				dataSource.addData(record);
+			}
+		}
+
+		return dataSource;
+	}
+
 	private void setClaimButtonStatus(TaskDto task) {
 		// disable when history or already assigned
 		claimButton.setDisabled(task.isHistory() | (null != task.getAssignee()));
@@ -322,7 +420,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 				if (start) {
 					start(task, response.getReferral());
 				} else {
-					MapLayout.getInstance().focusBpm();
+					TaskBlock.this.setDisabled(true);
 				}
 			}
 		});
@@ -330,7 +428,6 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 	private void start(TaskDto task, Feature referral) {
 		MapLayout mapLayout = MapLayout.getInstance();
-		needToDisplayCurrentTask = true;
 		mapLayout.setReferralAndTask(referral, task);
 	}
 }
