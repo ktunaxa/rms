@@ -276,17 +276,17 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())));
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Started: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getStartTime() + "")));
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getStartTime() + ""))); // NOSONAR cfr GWT
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getEndTime() + "")));
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getEndTime() + ""))); // NOSONAR cfr GWT
 		} else {
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())));
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Created: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getCreateTime() + "")));
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getCreateTime() + ""))); // NOSONAR cfr GWT
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Completion deadline: "),
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE,

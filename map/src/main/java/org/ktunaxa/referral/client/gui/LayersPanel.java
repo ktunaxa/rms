@@ -148,12 +148,13 @@ public class LayersPanel extends VLayout {
 			SectionStackSection section = new SectionStackSection(type.getDescription());
 			section.setExpanded(false);
 			section.addItem(new VLayout());
-			section.setID(type.getId() + "");
+			section.setID(Long.toString(type.getId()));
 			stack.addSection(section);
 		}
 		for (ReferenceSubLayer subLayer : layer.getSubLayers()) {
 			ReferenceLayerTypeDto type = subLayer.getDto().getType();
-			((VLayout) stack.getSection(type.getId() + "").getItems()[0]).addMember(new ReferenceLayerBlock(subLayer));
+			((VLayout) stack.getSection(Long.toString(type.getId())).getItems()[0]).
+					addMember(new ReferenceLayerBlock(subLayer));
 		}
 	}
 }
