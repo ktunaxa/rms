@@ -182,12 +182,12 @@ public class EditEmailForm extends AbstractEmailForm {
 						if (null != corruptPlaceholder) {
 							SC.warn(HtmlBuilder.divClassHtmlContent("commentBlockInfo", 
 									"At least one placeholder is not allowed.",
-									HtmlBuilder.tagHtmlContent(Html.Tag.P, "First unallowed placeholder: ",
+									HtmlBuilder.tagHtmlContent(Html.Tag.P, "First placeholder which is not allowed: ",
 											HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", 
 													corruptPlaceholder)), 
 									HtmlBuilder.tag(Html.Tag.P, "Please, correct the used placeholders.")));
 						} else {
-							SC.warn("Unknown problem occured while editing the template.");
+							SC.warn("Unknown problem occurred while editing the template.");
 						}
 					} else {
 						updateTemplate();
@@ -203,8 +203,8 @@ public class EditEmailForm extends AbstractEmailForm {
 	}
 	/**
 	 * ChangedHandler which updates the form if changed.
-	 * @author Emiel Ackermann
 	 *
+	 * @author Emiel Ackermann
 	 */
 	private class FormChangedHandler implements ChangedHandler {
 		
