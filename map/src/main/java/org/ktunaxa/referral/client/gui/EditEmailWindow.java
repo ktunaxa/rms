@@ -18,8 +18,8 @@ import com.smartgwt.client.widgets.events.CloseClickHandler;
 import com.smartgwt.client.widgets.events.CloseClientEvent;
 /**
  * Shows an {@link EditEmailForm} used for editing {@link org.ktunaxa.referral.server.domain.Template}s.
- * @author Emiel Ackermann
  *
+ * @author Emiel Ackermann
  */
 public class EditEmailWindow extends Window {
 
@@ -77,9 +77,9 @@ public class EditEmailWindow extends Window {
 				"${" + KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL + "}");
 		dummy.addVariable(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL, 
 				"${" + KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL + "}");
-		dummy.addVariable(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT, "" +
+		dummy.addVariable(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT,
 				"${" + KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT + "}");
-		dummy.addVariable(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE, "" +
+		dummy.addVariable(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE,
 				"${" + KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE + "}");
 	}
 
