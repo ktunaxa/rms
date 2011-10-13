@@ -120,7 +120,7 @@ public interface KtunaxaConstant {
 	 */
 	public interface Email {
 		/**
-		 * The notifiers/identifiers for retrieving {@link Template} objects from the DB.
+		 * The notifiers/identifiers for retrieving {@link org.ktunaxa.referral.server.domain.Template} objects from DB.
 		 */
 		String LEVEL_0 = "notify.level0";
 		String START = "notify.start";
@@ -134,6 +134,5 @@ public interface KtunaxaConstant {
 		String SUBJECT_NAME = "subject";
 		String MESSAGE_NAME = "message";
 		String CC_NAME = "cc";
-		String BCC_NAME = "bcc";
 	}
 }

@@ -13,6 +13,7 @@
 	<inherits name="org.geomajas.plugin.geocoder.Geocoder" />
 	<inherits name="org.geomajas.plugin.printing.Printing" />
 	<inherits name="org.geomajas.plugin.staticsecurity.StaticSecurity" />
+	<inherits name="org.geomajas.plugin.reporting.GeomajasReporting" />
 
 	<inherits name="com.smartclient.theme.simplicity.Simplicity" />
     <inherits name="org.ktunaxa.referral.theme.ActivitiBlue" /> 
