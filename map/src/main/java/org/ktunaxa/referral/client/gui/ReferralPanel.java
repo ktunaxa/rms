@@ -48,7 +48,6 @@ public class ReferralPanel extends VLayout {
 
 		tabs = new TabSet();
 		tabs.setSize("100%", "100%");
-		tabs.setOverflow(Overflow.CLIP_V);
 		Tab tabDetails = new Tab("Details");
 		Tab tabDocuments = new Tab("Documents");
 		Tab tabComments = new Tab("Comments");
