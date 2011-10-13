@@ -16,7 +16,7 @@ import org.ktunaxa.referral.server.dto.TaskDto;
  */
 public class ValidateTemplateRequest implements CommandRequest {
 
-	private static final long serialVersionUID = 1000L;
+	private static final long serialVersionUID = 100L;
 	
 	public static final String COMMAND = "command.email.ValidateTemplate";
 

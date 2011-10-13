@@ -15,7 +15,7 @@ import org.geomajas.command.CommandResponse;
  */
 public class UpdateEmailDataResponse extends CommandResponse {
 
-	private static final long serialVersionUID = 1000L;
+	private static final long serialVersionUID = 100L;
 	private boolean updated;
 
 	public boolean isUpdated() {

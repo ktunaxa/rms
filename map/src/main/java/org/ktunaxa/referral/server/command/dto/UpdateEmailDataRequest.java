@@ -15,7 +15,7 @@ import org.geomajas.command.CommandRequest;
  */
 public class UpdateEmailDataRequest implements CommandRequest {
 
-	private static final long serialVersionUID = 1000L;
+	private static final long serialVersionUID = 100L;
 	
 	public static final String COMMAND = "command.email.UpdateEmailData";
 
@@ -34,28 +34,23 @@ public class UpdateEmailDataRequest implements CommandRequest {
 	public String getSubject() {
 		return subject;
 	}
-	
-	
+
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	
-	
+
 	public String getFrom() {
 		return from;
 	}
-	
-	
+
 	public void setFrom(String from) {
 		this.from = from;
 	}
-	
-	
+
 	public String getBody() {
 		return body;
 	}
-	
-	
+
 	public void setBody(String body) {
 		this.body = body;
 	}
@@ -68,5 +63,4 @@ public class UpdateEmailDataRequest implements CommandRequest {
 		return notifier;
 	}
 
-	
 }

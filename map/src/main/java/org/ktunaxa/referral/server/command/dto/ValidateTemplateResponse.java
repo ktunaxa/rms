@@ -15,7 +15,7 @@ import org.geomajas.command.CommandResponse;
  */
 public class ValidateTemplateResponse extends CommandResponse {
 
-	private static final long serialVersionUID = 1000L;
+	private static final long serialVersionUID = 100L;
 
 	private String corruptPlaceholder;
 	private boolean valid;
