@@ -5,5 +5,6 @@
   -->
 
 <div>
-	<p>Referral: ${referralId}</p>
+	<h1>Review and send final report.</h1>
+	<p>${referralId}</p>
 </div>

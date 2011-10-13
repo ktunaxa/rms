@@ -1,0 +1,16 @@
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+  -->
+
+<div>
+	<p><a href="${ktunaxa.getReferralUrl(execution)}">Referral in mapping dashboard</a></p>
+	<p>${ktunaxa.getReferralLink(execution)}</p>
+
+<script type="text/javascript">
+<!--
+window.location = "${ktunaxa.getReferralUrl(execution)}";
+//-->
+</script>
+</div>

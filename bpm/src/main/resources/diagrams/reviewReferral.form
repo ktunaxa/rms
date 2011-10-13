@@ -1,6 +1,6 @@
 <div>
 	<h1>Review referral</h1>
-	<p><a href="${ktunaxa.getReferralUrl(execution)}">Referral in mapping dashboard</a></p>
+	<p>Referral in mapping dashboard</p>
 	<table>
 		<tr>
 			<td>
