@@ -9,7 +9,6 @@ package org.ktunaxa.referral.client.gui;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 
-import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
