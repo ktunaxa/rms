@@ -76,7 +76,7 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 	private void addRecipients(MimeMessage mimeMessage, Message.RecipientType recipientType, String recipients)
 			throws MessagingException {
 		if (null != recipients && recipients.length() > 0) {
-			for (String part : recipients.split("[,;\\w]")) {
+			for (String part : recipients.split("[,;\\s]")) {
 				String address = part.trim();
 				if (address.length() > 0) {
 					mimeMessage.setRecipient(recipientType, new InternetAddress(address));
