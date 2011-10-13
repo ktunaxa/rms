@@ -10,17 +10,23 @@
  * 
  * @author Emiel Ackermann
  */
-package org.ktunaxa.referral.client.form;
 
-import java.util.Map;
+package org.ktunaxa.referral.client.gui;
 
+import com.smartgwt.client.widgets.form.fields.TextAreaItem;
+import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.Html;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
-import org.ktunaxa.referral.client.gui.LayoutConstant;
+import org.ktunaxa.referral.client.form.AbstractTaskForm;
+import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
+import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
+import org.ktunaxa.referral.server.command.dto.UpdateEmailDataRequest;
+import org.ktunaxa.referral.server.command.dto.UpdateEmailDataResponse;
 import org.ktunaxa.referral.server.command.dto.ValidateTemplateRequest;
 import org.ktunaxa.referral.server.command.dto.ValidateTemplateResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -39,22 +45,51 @@ import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 
-/**
- * Form used for editing a {@link org.ktunaxa.referral.server.domain.Template} found in a linked database. 
- * @author Emiel Ackermann
- *
- */
-public class EditEmailForm extends AbstractEmailForm {
-	
+import java.util.Map;
 
+/**
+ * Form used for editing a {@link org.ktunaxa.referral.server.domain.Template} found in a linked database.
+ *
+ * @author Emiel Ackermann
+ */
+public class EditEmailTemplateForm extends AbstractTaskForm {
+
+	private final TextItem from = new TextItem();
+	private final TextItem subject = new TextItem();
+	private final TextAreaItem message = new TextAreaItem();
+	private TaskDto task;
 	private final Button cancelButton = new Button("Cancel");
 	private final Button resetButton = new Button("Reset");
 	private final Button editButton = new Button("Edit");
-	private HTMLFlow label = new HTMLFlow();
+	private final HTMLFlow label = new HTMLFlow();
 	private Runnable finishHandler;
+	private String templateTitle;
 	
-	public EditEmailForm() {
-		super(null);
+	public EditEmailTemplateForm() {
+		setStyleName("taskBlockContent");
+
+		RegExpValidator oneAddress = new RegExpValidator();
+		oneAddress.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
+		oneAddress.setErrorMessage("Invalid email address.");
+
+		from.setName(KtunaxaConstant.Email.FROM_NAME);
+		from.setTitle("From");
+		from.setValidators(oneAddress);
+		from.setWidth("100%");
+		from.setRequired(true);
+		from.setRequiredMessage("Sender email address required.");
+
+		subject.setName(KtunaxaConstant.Email.SUBJECT_NAME);
+		subject.setTitle("Subject");
+		subject.setWidth("100%");
+
+		message.setShowTitle(false);
+		message.setName(KtunaxaConstant.Email.MESSAGE_NAME);
+		message.setColSpan(2);
+		message.setWidth("100%");
+		message.setMinHeight(100);
+		message.setHeight("*");
+
 		FormChangedHandler handler = new FormChangedHandler();
 		from.addChangedHandler(handler);
 		subject.addChangedHandler(handler);
@@ -107,12 +142,30 @@ public class EditEmailForm extends AbstractEmailForm {
 	}
 
 
-	public void refresh(String notifier, TaskDto task) {
-		this.notifier = notifier;
+	public void refresh(String templateTitle, TaskDto task) {
 		this.task = task;
 		fillTemplate();
+		this.templateTitle = templateTitle;
 		updateExplanation();
 	}
+
+	/**
+	 * Get email data from db and put/convert it into values for the items of the form.
+	 */
+	public void fillTemplate() {
+		GetEmailDataRequest request = new GetEmailDataRequest(templateTitle);
+		request.setTask(task);
+		GwtCommand command = new GwtCommand(GetEmailDataRequest.COMMAND);
+		command.setCommandRequest(request);
+		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {
+			public void execute(GetEmailDataResponse response) {
+				from.setValue(response.getFrom());
+				subject.setValue(response.getSubject());
+				message.setValue(response.getBody());
+			}
+		});
+	}
+
 	/**
 	 * Provides explanation with allowed placeholders, based on notifier String.
 	 */
@@ -124,10 +177,10 @@ public class EditEmailForm extends AbstractEmailForm {
 		explanation.append(HtmlBuilder.openTagStyleHtmlContent(Html.Tag.UL, "font-weight:bold",  
 				HtmlBuilder.tag(Html.Tag.LI, "${" + KtunaxaBpmConstant.VAR_REFERRAL_ID + "}"),
 				HtmlBuilder.tag(Html.Tag.LI, "${" + KtunaxaBpmConstant.VAR_REFERRAL_NAME + "}")));
-		if (KtunaxaConstant.Email.START.equals(notifier)) {
+		if (KtunaxaConstant.Email.START.equals(templateTitle)) {
 //			+ deadline
 			explanation.append(HtmlBuilder.tag(Html.Tag.LI, "${" + KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE + "}"));
-		} else if (KtunaxaConstant.Email.CHANGE.equals(notifier)) {
+		} else if (KtunaxaConstant.Email.CHANGE.equals(templateTitle)) {
 //			+ prov engag lvl, engag lvl, engag comment, deadline
 			explanation.append(HtmlBuilder.tag(Html.Tag.LI, 
 					"${" + KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL + "}"));
@@ -144,9 +197,10 @@ public class EditEmailForm extends AbstractEmailForm {
 		"Copy/paste a placeholder to use it in the template."));
 		explanation.append(HtmlBuilder.divClassHtmlContent("commentBlockInfo", 
 				HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", "Note: ") + 
-		"Using unallowed text between the '${' and '}', will break the template."));
+		"Using non-allowed text between the '${' and '}', will break the template."));
 		label.setContents(explanation.toString());  
 	}
+
 	@Override
 	public Map<String, String> getVariables() {
 		return null;
@@ -164,6 +218,7 @@ public class EditEmailForm extends AbstractEmailForm {
 		resetButton.setDisabled(true);
 		editButton.setDisabled(true);
 	}
+
 	@Override
 	public boolean validate() {
 		boolean valid = super.validate();
@@ -201,6 +256,30 @@ public class EditEmailForm extends AbstractEmailForm {
 		}
 		return false;
 	}
+
+	/**
+	 * Update email data from altered template.
+	 */
+	public void updateTemplate() {
+		UpdateEmailDataRequest request = new UpdateEmailDataRequest(templateTitle);
+		request.setSubject(subject.getValueAsString());
+		request.setFrom(from.getValueAsString());
+		request.setBody(message.getValueAsString());
+		GwtCommand command = new GwtCommand(UpdateEmailDataRequest.COMMAND);
+		command.setCommandRequest(request);
+		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<UpdateEmailDataResponse>() {
+			public void execute(UpdateEmailDataResponse response) {
+				if (response.isUpdated()) {
+					SC.say("Template has been successfully edited.");
+				}
+			}
+		});
+	}
+
+	public void setFinishHandler(Runnable runnable) {
+		finishHandler = runnable;
+	}
+
 	/**
 	 * ChangedHandler which updates the form if changed.
 	 *
@@ -214,7 +293,4 @@ public class EditEmailForm extends AbstractEmailForm {
 		}
 	}
 
-	public void setFinishHandler(Runnable runnable) {
-		finishHandler = runnable;
-	}
 }

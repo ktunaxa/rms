@@ -88,6 +88,24 @@ public abstract class AbstractTaskForm extends VLayout {
 	}
 
 	/**
+	 * Validate the form value using callbacks for the correct case. Display validation markers if needed.
+	 *
+	 * @param valid action to run when validation succeeded
+	 * @param invalid action to run when validation failed
+	 */
+	public void validate(Runnable valid, Runnable invalid) {
+		if (validate()) {
+			if (null != valid) {
+				valid.run();
+			}
+		} else {
+			if (null != invalid) {
+				invalid.run();
+			}
+		}
+	}
+
+	/**
 	 * Get the variables from the form.
 	 *
 	 * @return form values

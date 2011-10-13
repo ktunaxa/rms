@@ -15,11 +15,12 @@ import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.widget.utility.gwt.client.widget.CardLayout;
 import org.ktunaxa.referral.client.form.AbstractTaskForm;
 import org.ktunaxa.referral.client.form.DiscussEvaluationForm;
-import org.ktunaxa.referral.client.form.EmailTemplateForm;
+import org.ktunaxa.referral.client.form.VerifyAndSendEmailForm;
 import org.ktunaxa.referral.client.form.EmptyForm;
 import org.ktunaxa.referral.client.form.EvaluateOrFinishForm;
 import org.ktunaxa.referral.client.form.ProvincialResultForm;
 import org.ktunaxa.referral.client.form.ReviewReferralForm;
+import org.ktunaxa.referral.client.form.ReviewResultForm;
 import org.ktunaxa.referral.client.form.ValueSelectForm;
 import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -94,10 +95,10 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		taskForms.addCard(FORM_PROVINCIAL_RESULT, new ProvincialResultForm());
 		taskForms.addCard(FORM_REVIEW_REFERRAL, new ReviewReferralForm());
 		taskForms.addCard(FORM_VALUE_SELECT, new ValueSelectForm());
-		taskForms.addCard(FORM_REVIEW_LEVEL_0, new EmailTemplateForm(KtunaxaConstant.Email.LEVEL_0));
-		taskForms.addCard(FORM_REVIEW_START, new EmailTemplateForm(KtunaxaConstant.Email.START));
-		taskForms.addCard(FORM_REVIEW_CHANGE, new EmailTemplateForm(KtunaxaConstant.Email.CHANGE));
-		taskForms.addCard(FORM_REVIEW_RESULT, new EmailTemplateForm(KtunaxaConstant.Email.RESULT));
+		taskForms.addCard(FORM_REVIEW_LEVEL_0, new VerifyAndSendEmailForm(KtunaxaConstant.Email.LEVEL_0));
+		taskForms.addCard(FORM_REVIEW_START, new VerifyAndSendEmailForm(KtunaxaConstant.Email.START));
+		taskForms.addCard(FORM_REVIEW_CHANGE, new VerifyAndSendEmailForm(KtunaxaConstant.Email.CHANGE));
+		taskForms.addCard(FORM_REVIEW_RESULT, new ReviewResultForm());
 		taskForms.setWidth100();
 		currentTask.addMember(taskForms);
 		currentTask.addMember(finishButton);
@@ -135,30 +136,39 @@ public class CurrentTaskBlock extends CardLayout<String> {
 	 * @author Joachim Van der Auwera
 	 */
 	private class FinishTaskClickHandler implements ClickHandler {
+
 		public void onClick(ClickEvent event) {
-			finishButton.disable();
 			Canvas card = taskForms.getCurrentCard();
 			if (card instanceof AbstractTaskForm) {
-				AbstractTaskForm taskForm = (AbstractTaskForm) card;
-				boolean valid = taskForm.validate();
-				TaskDto currentTask = MapLayout.getInstance().getCurrentTask();
-				if (valid && null != currentTask) {
-					Map<String, String> variables = taskForm.getVariables();
-					FinishTaskRequest request = new FinishTaskRequest();
-					request.setTaskId(currentTask.getId());
-					request.setVariables(variables);
-					GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
-					command.setCommandRequest(request);
-					GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<CommandResponse>() {
-						public void execute(CommandResponse response) {
-							MapLayout mapLayout = MapLayout.getInstance();
-							mapLayout.setReferralAndTask(mapLayout.getCurrentReferral(), null); // clear task
-							mapLayout.focusBpm();
-							showCard(KEY_NO);
+				final AbstractTaskForm taskForm = (AbstractTaskForm) card;
+				final TaskDto currentTask = MapLayout.getInstance().getCurrentTask();
+				if (null != currentTask) {
+					finishButton.disable();
+					taskForm.validate(new Runnable() {
+								public void run() {
+									Map<String, String> variables = taskForm.getVariables();
+									FinishTaskRequest request = new FinishTaskRequest();
+									request.setTaskId(currentTask.getId());
+									request.setVariables(variables);
+									GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
+									command.setCommandRequest(request);
+									GwtCommandDispatcher.getInstance().execute(command,
+											new AbstractCommandCallback<CommandResponse>() {
+												public void execute(CommandResponse response) {
+													MapLayout mapLayout = MapLayout.getInstance();
+													mapLayout.setReferralAndTask(mapLayout.getCurrentReferral(),
+															null); // clear task
+													mapLayout.focusBpm();
+													showCard(KEY_NO);
+												}
+											});
+								}
+							}, new Runnable() {
+						public void run() {
+							finishButton.enable();
 						}
-					});
-				} else {
-					finishButton.enable();
+					}
+					);
 				}
 			}
 		}

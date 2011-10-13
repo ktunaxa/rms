@@ -8,7 +8,6 @@ package org.ktunaxa.referral.client.gui;
 
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
-import org.ktunaxa.referral.client.form.EditEmailForm;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
 import com.smartgwt.client.widgets.Window;
@@ -17,7 +16,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
 import com.smartgwt.client.widgets.events.CloseClientEvent;
 /**
- * Shows an {@link EditEmailForm} used for editing {@link org.ktunaxa.referral.server.domain.Template}s.
+ * Shows an {@link EditEmailTemplateForm} used for editing {@link org.ktunaxa.referral.server.domain.Template}s.
  *
  * @author Emiel Ackermann
  */
@@ -25,7 +24,7 @@ public class EditEmailWindow extends Window {
 
 	private static final String EDIT_EMAIL_TEMPLATE = "Edit email template";
 	private final TaskDto dummy = new TaskDto();
-	private EditEmailForm form;
+	private final EditEmailTemplateForm form = new EditEmailTemplateForm();
 
 	public EditEmailWindow() {
 		setWidth(700);
@@ -38,7 +37,6 @@ public class EditEmailWindow extends Window {
 		centerInPage();
 		setCanDragResize(true);
 		setShowMinimizeButton(false);
-		form = new EditEmailForm();
 		addCloseClickHandler(new CloseClickHandler() {
 
 			public void onCloseClick(CloseClientEvent event) {
