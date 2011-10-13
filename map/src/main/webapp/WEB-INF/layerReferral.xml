@@ -129,7 +129,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                     <property name="type" value="INTEGER"/>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
-                    <property name="label" value="Applicant Name"/>
+                    <property name="label" value="Proponent Name"/>
                     <property name="name" value="applicantName"/>
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
