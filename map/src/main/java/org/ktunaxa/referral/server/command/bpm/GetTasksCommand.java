@@ -35,7 +35,7 @@ import java.util.List;
 @Component
 public class GetTasksCommand implements Command<GetTasksRequest, GetTasksResponse> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(GetTasksCommand.class);
+	private final Logger log = LoggerFactory.getLogger(GetTasksCommand.class);
 	
 	@Autowired
 	private TaskService taskService;
@@ -53,7 +53,7 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 
 	public void execute(GetTasksRequest request, GetTasksResponse response) throws Exception {
 
-		LOG.info("GetTasksCommand started");
+		log.debug("GetTasksCommand started");
 		List<TaskDto> taskDtos = new ArrayList<TaskDto>();
 		response.setTasks(taskDtos);
 
@@ -74,7 +74,7 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 			addHistoric(taskDtos, historicTaskQuery.finished().
 					processVariableValueEquals(KtunaxaBpmConstant.VAR_REFERRAL_ID, referralId).list());
 		}
-		LOG.info("GetTasksCommand finished. " + taskDtos.size() + " were retrieved.");
+		log.debug("GetTasksCommand finished. {} were retrieved.", taskDtos.size());
 	}
 
 	private void add(List<TaskDto> taskDtos, List<Task> tasks) {
@@ -82,7 +82,7 @@ public class GetTasksCommand implements Command<GetTasksRequest, GetTasksRespons
 			TaskDto dto = converterService.toDto(task);
 			if (null != dto) {
 				taskDtos.add(dto);
-				LOG.info(dto.getId() + ": " + dto.getDescription() + " added.");
+				log.debug("{}: {} added.", dto.getId(), dto.getDescription());
 			}
 		}
 	}
