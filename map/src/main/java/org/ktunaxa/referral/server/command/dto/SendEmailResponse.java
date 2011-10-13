@@ -6,15 +6,15 @@
 
 package org.ktunaxa.referral.server.command.dto;
 
-import org.geomajas.command.CommandResponse;
+import org.geomajas.command.SuccessCommandResponse;
 
 /**
  * Response object for {@link org.ktunaxa.referral.server.command.email.SendEmailCommand}.
  * 
  * @author Emiel Ackermann
  */
-public class SendEmailResponse extends CommandResponse {
+public class SendEmailResponse extends SuccessCommandResponse {
 
-	private static final long serialVersionUID = 1000L;
+	private static final long serialVersionUID = 100L;
 
 }
