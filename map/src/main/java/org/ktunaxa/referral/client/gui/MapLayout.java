@@ -207,7 +207,6 @@ public final class MapLayout extends VLayout {
 		String title;
 		if (null != referral) {
 			Feature feature = new Feature(referral, referralLayer);
-			GWT.log("Referral found: " + feature.getId());
 			referralPanel.init(referralLayer, feature);
 			Geometry geometry = feature.getGeometry();
 			Bbox bounds = new Bbox(geometry.getBounds());
