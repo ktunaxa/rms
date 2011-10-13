@@ -40,7 +40,6 @@ public class UnassignedTasksPanel extends VLayout {
 			"Community manager",
 			"Cultural evaluator",
 			"Ecology evaluator",
-			"Evaluate evaluator",
 			"Referral manager",
 			"Treaty evaluator"
 	};
@@ -53,7 +52,6 @@ public class UnassignedTasksPanel extends VLayout {
 					KtunaxaBpmConstant.ROLE_COMMUNITY_ST_MARYS, KtunaxaBpmConstant.ROLE_COMMUNITY_TOBACCO_PLAINS},
 			{KtunaxaBpmConstant.ROLE_CULTURAL},
 			{KtunaxaBpmConstant.ROLE_ECOLOGY},
-			{KtunaxaBpmConstant.ROLE_EVALUATE},
 			{KtunaxaBpmConstant.ROLE_REFERRAL_MANAGER},
 			{KtunaxaBpmConstant.ROLE_TREATY}
 	};

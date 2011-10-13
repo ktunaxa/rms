@@ -1,5 +1,4 @@
 
-insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'evaluateEvaluator', 1, 'evaluateEvaluator', 'assignment');
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'treatyEvaluator', 1, 'treatyEvaluator', 'assignment');
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'culturalEvaluator', 1, 'culturalEvaluator', 'assignment');
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'ecologyEvaluator', 1, 'ecologyEvaluator', 'assignment');
@@ -11,7 +10,6 @@ insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'referralManager', 1
 insert into ACT_ID_USER values ('KtBpmAdmin', 1, 'Ktunaxa', 'BPM Admin', 'admin@localhost', 'nasukin3', null);
 insert into ACT_ID_MEMBERSHIP values ('KtBpmAdmin', 'admin');
 insert into ACT_ID_MEMBERSHIP values ('KtBpmAdmin', 'manager');
-insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'evaluateEvaluator' );
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'treatyEvaluator' );
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'culturalEvaluator' );
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'ecologyEvaluator' );
@@ -23,10 +21,6 @@ insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'refe
 insert into ACT_ID_USER values ('refman', 1, 'Referral', 'Manager', 'refman@localhost', 'namfer', null);
 insert into ACT_ID_MEMBERSHIP values ('refman', 'user');
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'refman', 'referralManager' );
-
-insert into ACT_ID_USER values ('evaluate', 1, 'Evaluate', 'Evaluator', 'evaluator@localhost', 'etaulave', null);
-insert into ACT_ID_MEMBERSHIP values ('evaluate', 'user');
-insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'evaluate', 'evaluateEvaluator' );
 
 insert into ACT_ID_USER values ('treaty', 1, 'Treaty', 'Evaluator', 'treaty@localhost', 'ytaert', null);
 insert into ACT_ID_MEMBERSHIP values ('treaty', 'user');

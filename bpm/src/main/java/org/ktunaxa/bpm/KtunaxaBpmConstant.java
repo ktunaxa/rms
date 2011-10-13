@@ -43,7 +43,6 @@ public interface KtunaxaBpmConstant {
 	String ROLE_CULTURAL = "culturalEvaluator";
 	String ROLE_ECOLOGY = "ecologyEvaluator";
 	String ROLE_TREATY = "treatyEvaluator";
-	String ROLE_EVALUATE = "evaluateEvaluator";
 	String ROLE_AQUATIC = "aquaticEvaluator";
 	String ROLE_COMMUNITY_AKISQNUK = "communityAManager";
 	String ROLE_COMMUNITY_LOWER_KOOTENAY = "communityBManager";

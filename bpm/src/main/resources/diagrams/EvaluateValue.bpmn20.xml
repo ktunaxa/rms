@@ -3,7 +3,7 @@
   <process id="evaluate-values" name="evaluate-values">
     <documentation>Select which values need to be evaluated and evaluate them.</documentation>
     <startEvent id="startevent1" name="Start" activiti:formKey="diagrams/createReferral.form"></startEvent>
-    <userTask id="usertask1" name="Determine values to investigate" activiti:candidateGroups="evaluateEvaluator" activiti:formKey="diagrams/valueSelect.form">
+    <userTask id="usertask1" name="Determine values to investigate" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/valueSelect.form">
       <documentation>Determine values to evaluate and/or whether to notify stewardship officer for community input.</documentation>
     </userTask>
     <sequenceFlow id="flow53" name="" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
@@ -299,7 +299,7 @@
         <omgdi:waypoint x="300" y="180"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow56" id="BPMNEdge_flow56">
-        <omgdi:waypoint x="330" y="150"></omgdi:waypoint>
+        <omgdi:waypoint x="361" y="180"></omgdi:waypoint>
         <omgdi:waypoint x="330" y="110"></omgdi:waypoint>
         <omgdi:waypoint x="400" y="110"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
@@ -337,17 +337,17 @@
         <omgdi:waypoint x="820" y="241"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow64" id="BPMNEdge_flow64">
-        <omgdi:waypoint x="430" y="180"></omgdi:waypoint>
+        <omgdi:waypoint x="461" y="210"></omgdi:waypoint>
         <omgdi:waypoint x="430" y="175"></omgdi:waypoint>
         <omgdi:waypoint x="500" y="175"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow65" id="BPMNEdge_flow65">
-        <omgdi:waypoint x="430" y="80"></omgdi:waypoint>
+        <omgdi:waypoint x="461" y="110"></omgdi:waypoint>
         <omgdi:waypoint x="430" y="75"></omgdi:waypoint>
         <omgdi:waypoint x="500" y="75"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow66" id="BPMNEdge_flow66">
-        <omgdi:waypoint x="430" y="280"></omgdi:waypoint>
+        <omgdi:waypoint x="461" y="310"></omgdi:waypoint>
         <omgdi:waypoint x="430" y="275"></omgdi:waypoint>
         <omgdi:waypoint x="500" y="275"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
@@ -356,7 +356,7 @@
         <omgdi:waypoint x="820" y="341"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow68" id="BPMNEdge_flow68">
-        <omgdi:waypoint x="430" y="380"></omgdi:waypoint>
+        <omgdi:waypoint x="461" y="410"></omgdi:waypoint>
         <omgdi:waypoint x="430" y="375"></omgdi:waypoint>
         <omgdi:waypoint x="500" y="375"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
@@ -365,12 +365,12 @@
         <omgdi:waypoint x="820" y="441"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow70" id="BPMNEdge_flow70">
-        <omgdi:waypoint x="430" y="480"></omgdi:waypoint>
+        <omgdi:waypoint x="461" y="510"></omgdi:waypoint>
         <omgdi:waypoint x="430" y="475"></omgdi:waypoint>
         <omgdi:waypoint x="500" y="475"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow71" id="BPMNEdge_flow71">
-        <omgdi:waypoint x="430" y="580"></omgdi:waypoint>
+        <omgdi:waypoint x="461" y="610"></omgdi:waypoint>
         <omgdi:waypoint x="430" y="575"></omgdi:waypoint>
         <omgdi:waypoint x="500" y="575"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
@@ -513,7 +513,7 @@
         <omgdi:waypoint x="930" y="210"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow102" id="BPMNEdge_flow102">
-        <omgdi:waypoint x="430" y="670"></omgdi:waypoint>
+        <omgdi:waypoint x="450" y="690"></omgdi:waypoint>
         <omgdi:waypoint x="431" y="657"></omgdi:waypoint>
         <omgdi:waypoint x="498" y="657"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
@@ -527,7 +527,7 @@
         <omgdi:waypoint x="820" y="670"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow105" id="BPMNEdge_flow105">
-        <omgdi:waypoint x="430" y="740"></omgdi:waypoint>
+        <omgdi:waypoint x="450" y="760"></omgdi:waypoint>
         <omgdi:waypoint x="429" y="727"></omgdi:waypoint>
         <omgdi:waypoint x="498" y="727"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
@@ -536,7 +536,7 @@
         <omgdi:waypoint x="648" y="727"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow107" id="BPMNEdge_flow107">
-        <omgdi:waypoint x="430" y="810"></omgdi:waypoint>
+        <omgdi:waypoint x="450" y="830"></omgdi:waypoint>
         <omgdi:waypoint x="430" y="797"></omgdi:waypoint>
         <omgdi:waypoint x="498" y="797"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
