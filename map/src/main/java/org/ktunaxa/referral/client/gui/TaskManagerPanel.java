@@ -19,17 +19,17 @@ import org.geomajas.gwt.client.map.layer.VectorLayer;
  *
  * @author Joachim Van der Auwera
  */
-public class BpmPanel extends VLayout {
+public class TaskManagerPanel extends VLayout {
 
 	/** Name of the panel in navigation link. */
-	public static final String NAME = "BPM";
+	public static final String NAME = "TASK MANAGER";
 
 	private MyTasksPanel panelMyTasks;
 	private UnassignedTasksPanel panelUnassigned;
 	private TabSet tabs;
 
 	/** Constructs a new referral panel. */
-	public BpmPanel() {
+	public TaskManagerPanel() {
 		super();
 		setSize("100%", "100%");
 

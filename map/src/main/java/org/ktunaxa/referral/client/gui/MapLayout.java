@@ -74,7 +74,7 @@ public final class MapLayout extends VLayout {
 
 	private ReferralPanel referralPanel;
 
-	private BpmPanel bpmPanel;
+	private TaskManagerPanel taskManagerPanel;
 
 	private TaskDto currentTask;
 
@@ -114,8 +114,8 @@ public final class MapLayout extends VLayout {
 		referralButton.setDisabled(true); // no referral at start
 		SearchPanel searchPanel = new SearchPanel(this);
 		infoPane.addCard(searchPanel.getName(), "Search", searchPanel);
-		bpmPanel = new BpmPanel();
-		infoPane.addCard(bpmPanel.getName(), "Referral process", bpmPanel);
+		taskManagerPanel = new TaskManagerPanel();
+		infoPane.addCard(taskManagerPanel.getName(), "Referral process", taskManagerPanel);
 		// top bar
 		topBar = new TopBar();
 		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
@@ -278,7 +278,7 @@ public final class MapLayout extends VLayout {
 	 * Put the focus on the current task.
 	 */
 	public void focusBpm() {
-		infoPane.showCard(bpmPanel.getName());
+		infoPane.showCard(taskManagerPanel.getName());
 	}
 
 	/**
