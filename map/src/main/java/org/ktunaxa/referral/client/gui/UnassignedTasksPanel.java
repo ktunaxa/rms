@@ -74,17 +74,6 @@ public class UnassignedTasksPanel extends VLayout {
 		// nothing to do for now
 	}
 
-//	@Override
-//	public void hide() {
-//		super.hide();
-//		groups.destroy();
-//		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
-//			views[i].destroy();
-//			sections[i] = null;
-//			lists[i] = null;
-//		}
-//	}
-	
 	@Override
 	public void show() {
 		super.show();
@@ -98,10 +87,6 @@ public class UnassignedTasksPanel extends VLayout {
 		groups.setPadding(LayoutConstant.MARGIN_SMALL);
 		addMember(groups);
 		
-//		for (SectionStackSection section : groups.getSections()) {
-//			groups.removeSection(section.getID());
-//		}
-
 		UserContext user = UserContext.getInstance();
 		for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
 			if (user.hasBpmRole(CANDIDATE_CHECKS[i])) {
@@ -120,9 +105,6 @@ public class UnassignedTasksPanel extends VLayout {
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
 			public void execute(GetTasksResponse response) {
 				UserContext user = UserContext.getInstance();
-//				for (int i = 0 ; i < CANDIDATE_CHECKS.length ; i++) {
-//					lists[i].clear(); // clear again to avoid double AJAX calls causing duplicates
-//				}
 				for (TaskDto task : response.getTasks()) {
 					TaskBlock block = new TaskBlock(task);
 					String candidates = task.getCandidates().toString();
@@ -159,7 +141,6 @@ public class UnassignedTasksPanel extends VLayout {
 						groups.addSection(sections[i]);
 					}
 				}
-				//Section is expanded AFTER it was added to the group. Does this even work?
 				if (1 == sectionsToExpandCount) {
 					sections[sectionToExpand].setExpanded(true);
 				}
