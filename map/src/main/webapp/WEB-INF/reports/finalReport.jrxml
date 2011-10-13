@@ -1,60 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ This is part of the Ktunaxa referral system.
-  ~
-  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
-  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="1008" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<field name="NAME" class="java.lang.String"/>
-	<field name="PEOPLE" class="java.lang.Double"/>
+	<property name="ireport.y" value="274"/>
+	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
+	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
+	<field name="primaryClassificationNumber" class="java.lang.String"/>
+	<field name="secondaryClassificationNumber" class="java.lang.String"/>
+	<field name="calendarYear" class="java.lang.String"/>
+	<field name="number" class="java.lang.String"/>
+	<field name="applicantName" class="java.lang.String"/>
+	<field name="projectName" class="java.lang.String"/>
+	<field name="projectLocation" class="java.lang.String"/>
+	<field name="projectDescription" class="java.lang.String"/>
+	<field name="projectBackground" class="java.lang.String"/>
+	<field name="externalProjectId" class="java.lang.String"/>
+	<field name="externalFileId" class="java.lang.String"/>
+	<field name="externalAgencyType" class="java.lang.String"/>
+	<field name="externalAgencyType.title" class="java.lang.String"/>
+	<field name="externalAgencyType.description" class="java.lang.String"/>
+	<field name="externalAgencyName" class="java.lang.String"/>
+	<field name="priority" class="java.lang.String"/>
+	<field name="priority.title" class="java.lang.String"/>
+	<field name="priority.description" class="java.lang.String"/>
+	<field name="contactName" class="java.lang.String"/>
+	<field name="contactEmail" class="java.lang.String"/>
+	<field name="contactPhone" class="java.lang.String"/>
+	<field name="contactAddress" class="java.lang.String"/>
+	<field name="type" class="java.lang.String"/>
+	<field name="type.title" class="java.lang.String"/>
+	<field name="type.description" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="status.title" class="java.lang.String"/>
+	<field name="status.description" class="java.lang.String"/>
+	<field name="applicationType" class="java.lang.String"/>
+	<field name="applicationType.title" class="java.lang.String"/>
+	<field name="applicationType.description" class="java.lang.String"/>
+	<field name="targetReferral" class="java.lang.String"/>
+	<field name="targetReferral.primaryClassificationNumber" class="java.lang.String"/>
+	<field name="targetReferral.secondaryClassificationNumber" class="java.lang.String"/>
+	<field name="targetReferral.calendarYear" class="java.lang.String"/>
+	<field name="targetReferral.number" class="java.lang.String"/>
+	<field name="provincialAssessmentLevel" class="java.lang.String"/>
+	<field name="finalAssessmentLevel" class="java.lang.String"/>
+	<field name="confidential" class="java.lang.String"/>
+	<field name="receiveDate" class="java.lang.String"/>
+	<field name="responseDate" class="java.lang.String"/>
+	<field name="responseDeadline" class="java.lang.String"/>
+	<field name="activeRetentionPeriod" class="java.lang.String"/>
+	<field name="semiActiveRetentionPeriod" class="java.lang.String"/>
+	<field name="finalDisposition" class="java.lang.String"/>
+	<field name="finalDisposition.code" class="java.lang.String"/>
+	<field name="finalDisposition.description" class="java.lang.String"/>
+	<field name="documents" class="org.geomajas.layer.feature.attribute.OneToManyAttribute"/>
+	<field name="comments" class="org.geomajas.layer.feature.attribute.OneToManyAttribute"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="347" splitType="Stretch">
 			<staticText>
-				<reportElement x="249" y="27" width="67" height="24"/>
+				<reportElement x="0" y="0" width="572" height="26"/>
 				<textElement markup="none">
-					<font size="13"/>
+					<font size="20"/>
 				</textElement>
-				<text><![CDATA[Features]]></text>
+				<text><![CDATA[Referral $F{primaryClassificationNumber}-$F{secondaryClassificationNumber}/$F{calendarYear}-$F{number}]]></text>
 			</staticText>
+			<image scaleImage="RetainShape" hAlign="Right">
+				<reportElement x="76" y="46" width="300" height="300"/>
+				<imageExpression><![CDATA[$P{map}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="416" y="46" width="131" height="300"/>
+				<imageExpression><![CDATA[$P{legend}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="26" width="572" height="20"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{projectName}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="76" splitType="Stretch">
+			<image>
+				<reportElement x="2" y="0" width="181" height="74"/>
+				<imageExpression><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/Header_KNC_Logo.png"]]></imageExpression>
+			</image>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="23" splitType="Stretch">
 			<staticText>
 				<reportElement x="100" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[NAME]]></text>
+				<text><![CDATA[application]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="276" y="0" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[PEOPLE]]></text>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[engagement level]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="38" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<line>
-				<reportElement x="24" y="33" width="459" height="1"/>
+				<reportElement x="24" y="20" width="459" height="1"/>
 			</line>
 			<textField>
-				<reportElement x="100" y="11" width="100" height="20"/>
+				<reportElement x="100" y="0" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{applicantName}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="276" y="8" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{PEOPLE}]]></textFieldExpression>
+			<textField pattern="#,##0">
+				<reportElement x="276" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{finalAssessmentLevel}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -62,10 +126,14 @@
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="51" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="572" height="50"/>
+				<imageExpression><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/Footer_Image.png"]]></imageExpression>
+			</image>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>
 	</summary>
 </jasperReport>
-

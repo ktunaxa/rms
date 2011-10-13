@@ -5,7 +5,7 @@
   ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
   -->
 
-<module>
+<module rename-to="Ktunaxa">
 	<inherits name="com.smartgwt.tools.SmartGwtTools"/>
     <inherits name="org.geomajas.gwt.GeomajasClient"/>
 	<inherits name="org.geomajas.widget.searchandfilter.SearchAndFilter" />
