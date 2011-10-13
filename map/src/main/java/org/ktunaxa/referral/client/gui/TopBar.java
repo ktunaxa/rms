@@ -178,7 +178,7 @@ public class TopBar extends HLayout {
 	 * Updates the admin section of the tool strip.
 	 */
 	public void update() {
-		if (UserContext.getInstance().isReferralAdmin()) {
+		if (UserContext.getInstance().isReferralManager()) {
 			separator.show();
 			menuButton.show();
 		} else {

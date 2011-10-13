@@ -67,12 +67,12 @@ public final class UserContext {
 	}
 
 	/**
-	 * Return whether the currently logged in user is a referral administrator.
+	 * Return whether the currently logged in user is a referral manager.
 	 *
-	 * @return true when referral admin
+	 * @return true when referral manager
 	 */
-	public boolean isReferralAdmin() {
-		return bpmRoles.contains(KtunaxaBpmConstant.ROLE_REFERRAL_MANAGER);
+	public boolean isReferralManager() {
+		return hasBpmRole(KtunaxaBpmConstant.ROLE_REFERRAL_MANAGER);
 	}
 
 	/**

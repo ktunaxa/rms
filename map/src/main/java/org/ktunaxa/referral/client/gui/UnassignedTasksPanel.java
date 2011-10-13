@@ -140,7 +140,7 @@ public class UnassignedTasksPanel extends VLayout {
 						}
 					}
 					if (!added) {
-						if (user.isReferralAdmin()) {
+						if (user.isReferralManager()) {
 							lists[MANAGER].add(block);
 						}
 					}

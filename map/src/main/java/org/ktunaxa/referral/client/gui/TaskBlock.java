@@ -232,7 +232,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		assignButton.setHoverWidth(LayoutConstant.ICON_BUTTON_LARGE_HOVER_WIDTH);
 		assignButton.setLayoutAlign(VerticalAlignment.CENTER);
 		assignButton.setShowRollOver(false);
-		if (!UserContext.getInstance().isReferralAdmin()) {
+		if (!UserContext.getInstance().isReferralManager()) {
 			// disable when already assigned
 			assignButton.setDisabled(true);
 		}

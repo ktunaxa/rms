@@ -52,14 +52,12 @@ public class ReferralTasksPanel extends VLayout {
 	private TaskListView[] views = new TaskListView[GROUP_TITLES.length];
 	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[GROUP_TITLES.length];
 
-	private SectionStack groups;
-
 	public ReferralTasksPanel() {
 		super();
 		setWidth100();
 		currentTaskBlock.setStyleName(STYLE_BLOCK);
-		
-		groups = new SectionStack();
+
+		SectionStack groups = new SectionStack();
 		groups.setWidth100();
 		groups.setOverflow(Overflow.AUTO);
 		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
@@ -115,7 +113,7 @@ public class ReferralTasksPanel extends VLayout {
 						}
 					}
 					for (TaskDto task : response.getTasks()) {
-						if (user.hasBpmRole(task.getCandidates())) {
+						if ((user.isReferralManager() && task.isHistory() ) || user.hasBpmRole(task.getCandidates())) {
 							TaskBlock block = new TaskBlock(task);
 							if (!task.isHistory()) {
 								lists[GROUP_OPEN].add(block);
