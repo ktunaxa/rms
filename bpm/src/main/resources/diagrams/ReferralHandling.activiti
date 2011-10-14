@@ -439,11 +439,11 @@
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
-      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="1085" y="280">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="1085" y="218">
         <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="1" transparency="0.0" width="105" height="55" style="/0/@styles.1" cornerHeight="20" cornerWidth="20"/>
       </graphicsAlgorithm>
       <link businessObjects="provincial"/>
-      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.23" incomingConnections="/0/@connections.21 /0/@connections.22"/>
+      <anchors xsi:type="pi:ChopboxAnchor" outgoingConnections="/0/@connections.23" incomingConnections="/0/@connections.22"/>
       <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="/0/@children.19/@graphicsAlgorithm/@graphicsAlgorithmChildren.0" relativeWidth="1.0" relativeHeight="0.51">
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
@@ -456,7 +456,7 @@
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
-      <graphicsAlgorithm xsi:type="al:Polygon" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="40" height="40" x="1261" y="287">
+      <graphicsAlgorithm xsi:type="al:Polygon" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="40" height="40" x="1262" y="225">
         <graphicsAlgorithmChildren xsi:type="al:Polygon" lineWidth="1" transparency="0.0" width="40" height="40" style="/0/@styles.0">
           <points y="20"/>
           <points x="20"/>
@@ -493,7 +493,7 @@
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
-      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="1229" y="218">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="1230" y="141">
         <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="1" transparency="0.0" width="105" height="55" style="/0/@styles.1" cornerHeight="20" cornerWidth="20"/>
       </graphicsAlgorithm>
       <link businessObjects="appointmentDecision"/>
@@ -514,10 +514,10 @@
         <graphicsAlgorithmChildren xsi:type="al:Ellipse" lineWidth="3" transparency="0.0" width="35" height="35" style="/0/@styles.0"/>
       </graphicsAlgorithm>
       <link businessObjects="endevent1"/>
-      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.25 /0/@connections.28 /0/@connections.30"/>
+      <anchors xsi:type="pi:ChopboxAnchor" incomingConnections="/0/@connections.25 /0/@connections.28 /0/@connections.30 /0/@connections.21"/>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
-      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="1229" y="141">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="1230" y="70">
         <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="1" transparency="0.0" width="105" height="55" style="/0/@styles.1" cornerHeight="20" cornerWidth="20"/>
       </graphicsAlgorithm>
       <link businessObjects="discussDecision"/>
@@ -534,7 +534,7 @@
       </children>
     </children>
     <children xsi:type="pi:ContainerShape" visible="true" active="true">
-      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="1229" y="64">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="105" height="55" x="1230">
         <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="1" transparency="0.0" width="105" height="55" style="/0/@styles.1" cornerHeight="20" cornerWidth="20"/>
       </graphicsAlgorithm>
       <link businessObjects="fileReports"/>
@@ -981,7 +981,7 @@
         </graphicsAlgorithm>
       </connectionDecorators>
     </connections>
-    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.4/@anchors.0" end="/0/@children.19/@anchors.0">
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.4/@anchors.0" end="/0/@children.22/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0"/>
       <link businessObjects="flow23"/>
       <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
@@ -1132,7 +1132,7 @@
           <points x="-8" before="3" after="3"/>
         </graphicsAlgorithm>
       </connectionDecorators>
-      <bendpoints x="1357" y="245"/>
+      <bendpoints x="990" y="307"/>
     </connections>
     <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.25/@anchors.0" end="/0/@children.17/@anchors.0">
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0"/>
@@ -1242,10 +1242,10 @@
     <documentation text="Verify and send final report."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow22" name="" sourceRef="parallelgateway2" targetRef="finalReport"/>
-  <bpmn2:UserTask id="provincial" name="Provincial decision" incoming="flow23 flow24" outgoing="flow25" candidateGroups="/68" formKey="diagrams/provincialResult.form" dueDate="">
+  <bpmn2:UserTask id="provincial" name="Provincial decision" incoming="flow24" outgoing="flow25" candidateGroups="/68" formKey="diagrams/provincialResult.form" dueDate="">
     <documentation text="Process provincial decision."/>
   </bpmn2:UserTask>
-  <bpmn2:SequenceFlow id="flow23" name="" sourceRef="level0Notification" targetRef="provincial"/>
+  <bpmn2:SequenceFlow id="flow23" name="" sourceRef="level0Notification" targetRef="endevent1"/>
   <bpmn2:SequenceFlow id="flow24" name="" sourceRef="finalReport" targetRef="provincial"/>
   <bpmn2:ExclusiveGateway id="exclusivegateway5" name="Exclusive Gateway" incoming="flow25" outgoing="flow26 flow27"/>
   <bpmn2:SequenceFlow id="flow25" name="" sourceRef="provincial" targetRef="exclusivegateway5"/>
@@ -1255,7 +1255,7 @@
   <bpmn2:SequenceFlow id="flow26" name="Needs discussion" sourceRef="exclusivegateway5" targetRef="appointmentDecision">
     <conditionExpression id="flow26_condition" body="${!decisionConsistent}"/>
   </bpmn2:SequenceFlow>
-  <bpmn2:EndEvent id="endevent1" name="End" incoming="flow27 flow30 flow32"/>
+  <bpmn2:EndEvent id="endevent1" name="End" incoming="flow27 flow30 flow32 flow23"/>
   <bpmn2:SequenceFlow id="flow27" name="accepted" sourceRef="exclusivegateway5" targetRef="endevent1">
     <conditionExpression id="flow27_condition" body="${decisionConsistent}"/>
   </bpmn2:SequenceFlow>

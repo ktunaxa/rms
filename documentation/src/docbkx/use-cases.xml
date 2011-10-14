@@ -8,7 +8,7 @@
   to describe them as clear as possible.</para>
 
   <section>
-    <title>Use cases - BPM</title>
+    <title>Use cases - Task management</title>
 
     <para>Within this paragraph all use-cases related to the referral business
     process are described.</para>
@@ -19,7 +19,24 @@
       <para>There are two processes which are combined in the
       application.</para>
 
-      <para></para>
+      <para>The main process handles the tasks for the referral manager. It is
+      started when a new referral is entered.</para>
+
+      <para>The process starts by a review of the referral. The referral
+      manager can correct some of the main fields, including the engagement
+      level, completion deadline and the default e-mail address which should
+      be used for notifications. </para>
+
+      <para>If the referral manager indicated that the engagement level is 0 ,
+      then the process finished by suggesting to send a level 0 notification.
+      After that the process ends.</para>
+
+      <para>If the engagement level was non-zero then the process splits in
+      two parallel flows (indicated by the plus sign). At the top the
+      "evaluate values" sub-process is called to evaluate the Ktunaxa values
+      and notify the communities.</para>
+
+      <para>.....</para>
 
       <figure>
         <title>General (main) business process</title>
@@ -32,8 +49,23 @@
         </mediaobject>
       </figure>
 
+      <para></para>
+
+      <para>The evaluate values block in the main process is handled by the
+      evaluate values process.</para>
+
+      <para>In this process the referral manager first determined the values
+      to be investigated and the communities which need to be contacted. Then
+      for each selected value an evaluator for that value needs to investigate
+      the referral. Note the the "auto evaluate..." tasks are place holders
+      for possible inclusion of business rules to do some evaluations
+      automatically. For each community the community manager needs to inform
+      the community and then collect the feedback from the community. The
+      process finishes when all selected values and communities have been
+      processed.</para>
+
       <figure>
-        <title>Evaluate values business process ("call activity" in main
+        <title>Evaluate values business process ("evaluate values" in main
         process)</title>
 
         <mediaobject>
