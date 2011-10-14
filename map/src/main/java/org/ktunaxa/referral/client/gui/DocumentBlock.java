@@ -158,7 +158,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		infoLayout.addMember(openButton);
 		openButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				Window.Location.assign(getDocumentDisplayUrl());
+				Window.open(getDocumentDisplayUrl(), "_blank", null);
 			}
 		});
 
