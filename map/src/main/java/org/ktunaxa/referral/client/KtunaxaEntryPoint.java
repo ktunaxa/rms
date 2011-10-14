@@ -27,6 +27,7 @@ import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataS
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
 import org.geomajas.plugin.printing.client.util.PrintingLayout;
 import org.geomajas.plugin.staticsecurity.client.StaticSecurityTokenRequestHandler;
+import org.geomajas.plugin.staticsecurity.client.util.SsecLayout;
 import org.geomajas.widget.searchandfilter.client.util.GsfLayout;
 import org.ktunaxa.referral.client.action.ZoomCurrentReferralModalAction;
 import org.ktunaxa.referral.client.action.ZoomKtunaxaTerritoryModalAction;
@@ -64,6 +65,12 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		WidgetLayout.featureAttributeWindowWidth = "470";
 		GsfLayout.geometricSearchPanelTabWidth = "100%";
 		PrintingLayout.templateIncludeLegend = false;
+
+		SsecLayout.tokenRequestWindowLogo = "[ISOMORPHIC]/images/logoKtunaxaReferrals.png";
+		SsecLayout.tokenRequestWindowLogoWidth = "300";
+		SsecLayout.tokenRequestWindowLogoHeight = "120";
+		SsecLayout.tokenRequestWindowWidth = "400";
+		SsecLayout.tokenRequestWindowHeight = "240";
 
 		ToolbarRegistry.put(TOOL_ZOOM_KTUNAXA_TERRITORY, new ToolCreator() {
 
