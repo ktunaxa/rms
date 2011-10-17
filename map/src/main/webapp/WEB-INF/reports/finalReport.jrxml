@@ -2,13 +2,13 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="274"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
 	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
-	<field name="primaryClassificationNumber" class="java.lang.String"/>
-	<field name="secondaryClassificationNumber" class="java.lang.String"/>
-	<field name="calendarYear" class="java.lang.String"/>
-	<field name="number" class="java.lang.String"/>
+	<field name="primaryClassificationNumber" class="java.lang.Integer"/>
+	<field name="secondaryClassificationNumber" class="java.lang.Integer"/>
+	<field name="calendarYear" class="java.lang.Integer"/>
+	<field name="number" class="java.lang.Integer"/>
 	<field name="applicantName" class="java.lang.String"/>
 	<field name="projectName" class="java.lang.String"/>
 	<field name="projectLocation" class="java.lang.String"/>
@@ -37,18 +37,18 @@
 	<field name="applicationType.title" class="java.lang.String"/>
 	<field name="applicationType.description" class="java.lang.String"/>
 	<field name="targetReferral" class="java.lang.String"/>
-	<field name="targetReferral.primaryClassificationNumber" class="java.lang.String"/>
-	<field name="targetReferral.secondaryClassificationNumber" class="java.lang.String"/>
-	<field name="targetReferral.calendarYear" class="java.lang.String"/>
-	<field name="targetReferral.number" class="java.lang.String"/>
-	<field name="provincialAssessmentLevel" class="java.lang.String"/>
-	<field name="finalAssessmentLevel" class="java.lang.String"/>
-	<field name="confidential" class="java.lang.String"/>
-	<field name="receiveDate" class="java.lang.String"/>
-	<field name="responseDate" class="java.lang.String"/>
-	<field name="responseDeadline" class="java.lang.String"/>
-	<field name="activeRetentionPeriod" class="java.lang.String"/>
-	<field name="semiActiveRetentionPeriod" class="java.lang.String"/>
+	<field name="targetReferral.primaryClassificationNumber" class="java.lang.Integer"/>
+	<field name="targetReferral.secondaryClassificationNumber" class="java.lang.Integer"/>
+	<field name="targetReferral.calendarYear" class="java.lang.Integer"/>
+	<field name="targetReferral.number" class="java.lang.Integer"/>
+	<field name="provincialAssessmentLevel" class="java.lang.Integer"/>
+	<field name="finalAssessmentLevel" class="java.lang.Integer"/>
+	<field name="confidential" class="java.lang.Boolean"/>
+	<field name="receiveDate" class="java.util.Date"/>
+	<field name="responseDate" class="java.util.Date"/>
+	<field name="responseDeadline" class="java.util.Date"/>
+	<field name="activeRetentionPeriod" class="java.lang.Integer"/>
+	<field name="semiActiveRetentionPeriod" class="java.lang.Integer"/>
 	<field name="finalDisposition" class="java.lang.String"/>
 	<field name="finalDisposition.code" class="java.lang.String"/>
 	<field name="finalDisposition.description" class="java.lang.String"/>
@@ -59,13 +59,6 @@
 	</background>
 	<title>
 		<band height="347" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="572" height="26"/>
-				<textElement markup="none">
-					<font size="20"/>
-				</textElement>
-				<text><![CDATA[Referral $F{primaryClassificationNumber}-$F{secondaryClassificationNumber}/$F{calendarYear}-$F{number}]]></text>
-			</staticText>
 			<image scaleImage="RetainShape" hAlign="Right">
 				<reportElement x="76" y="46" width="300" height="300"/>
 				<imageExpression><![CDATA[$P{map}]]></imageExpression>
@@ -80,6 +73,14 @@
 					<font size="18" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{projectName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="572" height="26"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Referral $F{primaryClassificationNumber}-$F{secondaryClassificationNumber}/$F{calendarYear}-$F{number}
+]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
