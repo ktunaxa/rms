@@ -5,6 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
 	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
+	<field name="@" class="org.geomajas.layer.feature.InternalFeature"/>
 	<field name="primaryClassificationNumber" class="java.lang.Integer"/>
 	<field name="secondaryClassificationNumber" class="java.lang.Integer"/>
 	<field name="calendarYear" class="java.lang.Integer"/>
@@ -79,8 +80,7 @@
 				<textElement>
 					<font size="20"/>
 				</textElement>
-				<textFieldExpression><![CDATA[Referral $F{primaryClassificationNumber}-$F{secondaryClassificationNumber}/$F{calendarYear}-$F{number}
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Referral " + org.ktunaxa.referral.ReportUtil.referralId($F{@})]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
