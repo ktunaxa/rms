@@ -44,6 +44,7 @@ public class FinalReportClickHandler implements ClickHandler {
 		request.setImageHeight(500);
 		request.setLegendWidth(200);
 		request.setLegendHeight(500);
+		request.setMinimumGeometrySize(500.0); // make geometry at least 500M wide/high
 		request.setMargin(200);
 		request.setDpi(300);
 		imageUrlService.makeRasterizable(mapWidget);
