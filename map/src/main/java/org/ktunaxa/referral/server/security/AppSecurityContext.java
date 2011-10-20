@@ -37,4 +37,17 @@ public class AppSecurityContext extends DefaultSecurityContext implements AppAut
 		return roles;
 	}
 
+	public boolean isAdmin() {
+		for (Authentication authentication : getSecurityServiceResults()) {
+			for (BaseAuthorization authorization : authentication.getAuthorizations()) {
+				if (authorization instanceof AppAuthorization) {
+					if (((AppAuthorization) authorization).isAdmin()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 }

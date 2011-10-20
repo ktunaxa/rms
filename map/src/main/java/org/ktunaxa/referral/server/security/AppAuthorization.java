@@ -23,4 +23,12 @@ public interface AppAuthorization extends BaseAuthorization {
 	 * @return list of bpm roles
 	 */
 	Set<String> getBpmRoles();
+
+	/**
+	 * Can this user administer the application?
+	 *
+	 * @return true when user is administrator
+	 */
+	boolean isAdmin();
+
 }

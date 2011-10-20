@@ -102,6 +102,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 
 					public void execute(GetReferralMapResponse response) {
 						UserContext.getInstance().setBpmRoles(response.getBpmRoles());
+						UserContext.getInstance().setAdmin(response.isAdmin());
 						appInfo = response;
 						setter.set(applicationId, response.getApplication());
 					}

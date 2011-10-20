@@ -31,4 +31,8 @@ public class AppAuthorizationImpl extends LayerAuthorization implements AppAutho
 	public Set<String> getBpmRoles() {
 		return appAuthorizationInfo.getBpmRoles();
 	}
+
+	public boolean isAdmin() {
+		return appAuthorizationInfo.isAdmin();
+	}
 }

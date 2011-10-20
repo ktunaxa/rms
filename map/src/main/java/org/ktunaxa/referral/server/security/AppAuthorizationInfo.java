@@ -20,7 +20,9 @@ import java.util.Set;
  */
 public class AppAuthorizationInfo extends LayerAuthorizationInfo {
 
-	private transient Set<String> bpmRoles; // do not serialize to assure this makes no difference for caching tiles
+	// do not serialize to assure this makes no difference for caching tiles
+	private transient Set<String> bpmRoles;
+	private transient boolean admin;
 
 	/**
 	 * Set some sensible default values giving access to everything...
@@ -52,6 +54,24 @@ public class AppAuthorizationInfo extends LayerAuthorizationInfo {
 	 */
 	Set<String> getBpmRoles() {
 		return bpmRoles;
+	}
+
+	/**
+	 * Can this user administer the application?
+	 *
+	 * @return true when user is administrator
+	 */
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	/**
+	 * Can this user administer the application?
+	 *
+	 * @param admin true when user is administrator
+	 */
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	@Override

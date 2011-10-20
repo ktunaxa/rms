@@ -78,6 +78,7 @@ public class GetReferralMapCommand implements Command<GetReferralMapRequest, Get
 		response.setLayers(dtos);
 
 		response.setBpmRoles(securityContext.getBpmRoles());
+		response.setAdmin(securityContext.isAdmin());
 	}
 
 }

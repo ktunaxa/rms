@@ -22,6 +22,7 @@ public final class UserContext {
 	private String user = "???";
 	private String name = "???";
 	private Set<String> bpmRoles = new HashSet<String>();
+	private boolean admin;
 
 	private UserContext() {
 		// hide constructor
@@ -64,6 +65,24 @@ public final class UserContext {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * Can this user administer the application?
+	 *
+	 * @return true when user is administrator
+	 */
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	/**
+	 * Can this user administer the application?
+	 *
+	 * @param admin true when user is administrator
+	 */
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	/**

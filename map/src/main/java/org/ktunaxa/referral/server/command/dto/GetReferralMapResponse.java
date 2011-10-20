@@ -36,6 +36,8 @@ public class GetReferralMapResponse extends GetConfigurationResponse {
 
 	private Set<String> bpmRoles;
 
+	private boolean admin;
+
 	/**
 	 * Get the Alfresco CMIS service URL.
 	 *
@@ -109,7 +111,7 @@ public class GetReferralMapResponse extends GetConfigurationResponse {
 	/**
 	 * Roles for the BPM tasks.
 	 *
-	 * @return bpm roles
+	 * @return BPM roles
 	 */
 	public Set<String> getBpmRoles() {
 		return bpmRoles;
@@ -118,9 +120,28 @@ public class GetReferralMapResponse extends GetConfigurationResponse {
 	/**
 	 * Roles for the BPM tasks.
 	 *
-	 * @param bpmRoles BPM roler
+	 * @param bpmRoles BPM roles
 	 */
 	public void setBpmRoles(Set<String> bpmRoles) {
 		this.bpmRoles = bpmRoles;
 	}
+
+	/**
+	 * Can this user administer the application?
+	 *
+	 * @return true when user is administrator
+	 */
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	/**
+	 * Can this user administer the application?
+	 *
+	 * @param admin true when user is administrator
+	 */
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
 }
