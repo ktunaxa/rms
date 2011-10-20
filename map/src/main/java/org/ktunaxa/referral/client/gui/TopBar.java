@@ -8,11 +8,19 @@ package org.ktunaxa.referral.client.gui;
 
 import javax.validation.constraints.NotNull;
 
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
+import org.geomajas.command.CommandResponse;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.command.event.TokenChangedEvent;
 import org.geomajas.gwt.client.command.event.TokenChangedHandler;
+import org.geomajas.layer.feature.Feature;
 import org.geomajas.plugin.staticsecurity.client.util.SsecAccess;
+import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.security.UserContext;
+import org.ktunaxa.referral.server.command.dto.CloseReferralRequest;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.widgets.HTMLFlow;
@@ -33,7 +41,6 @@ import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
  * links. On the left there is a title.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class TopBar extends HLayout {
 	
@@ -124,26 +131,6 @@ public class TopBar extends HLayout {
 		return leftLabel.getContents();
 	}
 
-	/**
-	 * Sets the tooltip of the top bar.
-	 * 
-	 * @param tooltip
-	 *            the new title
-	 */
-	public void setLeftTooltip(@NotNull String tooltip) {
-		leftLabel.setTooltip(tooltip);
-		leftLabel.setHoverWidth(700);
-	}
-
-	/**
-	 * Gets the button to open the user profile.
-	 * 
-	 * @return the user button
-	 */
-	public ToolStripButton getUserButton() {
-		return userButton;
-	}
-
 	private ToolStripMenuButton createAdminButton() {
 		Menu menu = new Menu();
 		menu.setShowShadow(true);
@@ -158,6 +145,13 @@ public class TopBar extends HLayout {
 					new EmailItem(FINISHED));
 		editEmails.setSubmenu(emailTemplates);
 
+		MenuItem closeReferral = new MenuItem("Close current referral");
+		closeReferral.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
+			public void onClick(MenuItemClickEvent menuItemClickEvent) {
+				closeCurrentReferral();
+			}
+		});
+
 //		TODO add report edit.
 //		MenuItemSeparator separator = new MenuItemSeparator();
 //		
@@ -169,16 +163,15 @@ public class TopBar extends HLayout {
 //					new MenuItem("Plain text"));
 //		editEmails.setSubmenu(emailTemplates);
 
-		menu.setItems(editEmails);
+		menu.setItems(editEmails, closeReferral);
 
-		ToolStripMenuButton menuButton = new ToolStripMenuButton(ADMIN, menu);
-		return menuButton;
+		return new ToolStripMenuButton(ADMIN, menu);
 	}
 	/**
 	 * Updates the admin section of the tool strip.
 	 */
 	public void update() {
-		if (UserContext.getInstance().isReferralManager()) {
+		if (UserContext.getInstance().isAdmin()) {
 			separator.show();
 			menuButton.show();
 		} else {
@@ -186,10 +179,38 @@ public class TopBar extends HLayout {
 			menuButton.hide();
 		}
 	}
+
+	private void closeCurrentReferral() {
+		final Feature referral = MapLayout.getInstance().getCurrentReferral();
+		if (null == referral) {
+			SC.say("There is no current referral.");
+		} else {
+			SC.ask("Are you sure you want to close referral " + ReferralUtil.createId(referral), new BooleanCallback() {
+				public void execute(Boolean close) {
+					if (close) {
+						CloseReferralRequest request = new CloseReferralRequest();
+						request.setReferralId(ReferralUtil.createId(referral));
+						GwtCommand command = new GwtCommand(CloseReferralRequest.COMMAND);
+						command.setCommandRequest(request);
+						GwtCommandDispatcher.getInstance()
+								.execute(command, new AbstractCommandCallback<CommandResponse>() {
+									public void execute(CommandResponse response) {
+										// nothing to do // NOSONAR
+									}
+								});
+
+						MapLayout.getInstance().setReferralAndTask(null, null);
+					}
+				}
+			});
+		}
+	}
+
 	/**
-	 * Internal class used for the creation of {@link MenuItem}s for editing of {@link Template}s.
-	 * @author Emiel Ackermann
+	 * Internal class used for the creation of {@link MenuItem}s for editing of
+	 * {@link org.ktunaxa.referral.server.domain.Template}s.
 	 *
+	 * @author Emiel Ackermann
 	 */
 	private class EmailItem extends MenuItem {
 		
@@ -199,7 +220,7 @@ public class TopBar extends HLayout {
 			addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
 				
 				public void onClick(MenuItemClickEvent event) {
-					String notifier = "";
+					String notifier;
 					if (REJECTED.equals(title)) {
 						notifier = KtunaxaConstant.Email.LEVEL_0;
 					} else if (STARTED.equals(title)) {
@@ -208,6 +229,8 @@ public class TopBar extends HLayout {
 						notifier = KtunaxaConstant.Email.CHANGE;
 					} else if (FINISHED.equals(title)) {
 						notifier = KtunaxaConstant.Email.RESULT;
+					} else {
+						throw new IllegalArgumentException("Unknown template.");
 					}
 					emailWindow.setEmailTemplate(notifier);
 					emailWindow.show();
