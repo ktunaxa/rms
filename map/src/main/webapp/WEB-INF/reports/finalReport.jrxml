@@ -60,27 +60,144 @@
 	</background>
 	<title>
 		<band height="347" splitType="Stretch">
-			<image scaleImage="RetainShape" hAlign="Right">
-				<reportElement x="76" y="46" width="300" height="300"/>
-				<imageExpression><![CDATA[$P{map}]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="416" y="46" width="131" height="300"/>
-				<imageExpression><![CDATA[$P{legend}]]></imageExpression>
-			</image>
-			<textField>
-				<reportElement x="0" y="26" width="572" height="20"/>
+			<staticText>
+				<reportElement x="0" y="0" width="27" height="15"/>
 				<textElement>
-					<font size="18" isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{projectName}]]></textFieldExpression>
+				<text><![CDATA[To:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="27" y="0" width="208" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contactName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="0" width="572" height="26"/>
+				<reportElement x="0" y="15" width="235" height="60"/>
 				<textElement>
-					<font size="20"/>
+					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Referral " + org.ktunaxa.referral.ReportUtil.referralId($F{@})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{contactAddress}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="349" y="0" width="90" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KLRA File No.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="30" width="104" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Your Project Id.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="15" width="90" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Your File No.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="439" y="0" width="133" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[org.ktunaxa.referral.ReportUtil.referralId($F{@})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="439" y="15" width="133" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{externalFileId}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="453" y="30" width="119" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{externalProjectId}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="84" width="39" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="39" y="85" width="208" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORT_FORMAT_FACTORY}.createDateFormat( "MMM dd, yyyy", $P{REPORT_LOCALE}, $P{REPORT_TIME_ZONE} ).format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="115" width="27" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Re:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="155" width="73" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proponent:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="170" width="62" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Location:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="185" width="83" height="15"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Background:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="225" width="183" height="15"/>
+				<textElement>
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Dear Sir/Madam,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="265" width="572" height="82"/>
+				<textElement>
+					<font size="11" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[The proposed land and resource development activity falls within the territory of the Ktunaxa Nation in south-eastern British Columbia. Ktunaxa Nation has Aboriginal Rights, including Title that are protected under Section 35 of the Constitution Act, 1982 of Canada.
+
+Further the Ktunaxa Nation filed a "Statement of Intent" to negotiate its outstanding Aboriginal Title and Treaty Rights in their traditional territory of December of 1993 and negotiations are ongoing.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="73" y="155" width="499" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+			</textField>
+			<textField>
+				<reportElement x="62" y="170" width="510" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+			</textField>
+			<textField>
+				<reportElement x="83" y="185" width="489" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
 			</textField>
 		</band>
 	</title>
@@ -90,6 +207,22 @@
 				<reportElement x="2" y="0" width="181" height="74"/>
 				<imageExpression><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/Header_KNC_Logo.png"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="200" y="0" width="372" height="45" forecolor="#6B6B6B"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Ktunaxa Nation Counsil - Lands & Resource Agency
+7468 Mission Road, Cranbrook, BC  V1C 7E5
+Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="54" width="176" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Referral Response]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -107,24 +240,33 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
-			<line>
-				<reportElement x="24" y="20" width="459" height="1"/>
-			</line>
+		<band height="146" splitType="Stretch">
 			<textField>
-				<reportElement x="100" y="0" width="100" height="20"/>
+				<reportElement x="219" y="52" width="100" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{applicantName}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="276" y="0" width="100" height="20"/>
+				<reportElement x="329" y="52" width="100" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{finalAssessmentLevel}]]></textFieldExpression>
 			</textField>
+			<image scaleImage="RetainShape" hAlign="Right">
+				<reportElement x="0" y="0" width="144" height="144"/>
+				<imageExpression><![CDATA[$P{map}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="150" y="0" width="50" height="144"/>
+				<imageExpression><![CDATA[$P{legend}]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement x="3" y="0" width="459" height="1"/>
+			</line>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="51" splitType="Stretch">
