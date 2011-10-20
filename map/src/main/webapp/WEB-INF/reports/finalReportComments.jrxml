@@ -2,79 +2,63 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="1008" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="189"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
 	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
-									<field name="title" class="java.lang.String"/>
-									<field name="content" class="java.lang.String"/>
-									<field name="includeInReport" class="java.lang.String"/>
-									<field name="reportContent" class="java.lang.String"/>
-									<field name="createdBy" class="java.lang.String"/>
-									<field name="creationDate" class="java.lang.String"/>
-
+	<field name="title" class="java.lang.String"/>
+	<field name="content" class="java.lang.String"/>
+	<field name="includeInReport" class="java.lang.Boolean"/>
+	<field name="reportContent" class="java.lang.String"/>
+	<field name="createdBy" class="java.lang.String"/>
+	<field name="creationDate" class="java.util.Date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="300" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="111" height="32"/>
-				<textElement markup="none">
-					<font size="20"/>
-				</textElement>
-				<text><![CDATA[Countries]]></text>
-			</staticText>
-			<image scaleImage="RetainShape" hAlign="Right">
-				<reportElement x="111" y="0" width="300" height="300"/>
-				<imageExpression><![CDATA[$P{map}]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="424" y="0" width="131" height="300"/>
-				<imageExpression><![CDATA[$P{legend}]]></imageExpression>
-			</image>
-		</band>
+		<band height="1" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="1" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="23" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<staticText>
-				<reportElement x="100" y="0" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[NAME]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="276" y="0" width="100" height="20"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[PEOPLE]]></text>
+				<reportElement x="0" y="0" width="200" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Referral Comments]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="18" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{includeInReport}]]></printWhenExpression>
 			<line>
-				<reportElement x="24" y="20" width="459" height="1"/>
+				<reportElement x="14" y="17" width="558" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
 			</line>
-			<textField>
-				<reportElement x="100" y="0" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="14" y="0" width="558" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportContent}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
-				<reportElement x="276" y="0" width="100" height="20"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{PEOPLE}]]></textFieldExpression>
-			</textField>
+			<ellipse>
+				<reportElement x="0" y="4" width="4" height="4"/>
+			</ellipse>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="1" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

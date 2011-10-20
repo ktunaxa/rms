@@ -55,7 +55,7 @@ public final class ReportUtil {
 		return referralId;
 	}
 
-	public static String pad(String s, int i) {
+	private static String pad(String s, int i) {
 		int padLength = i - s.length();
 		while (padLength-- > 0) {
 			s = "0" + s;

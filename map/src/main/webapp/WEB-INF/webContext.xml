@@ -34,6 +34,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 					value="org.geomajas.plugin.reporting.mvc.JasperReportsDocxView" />
 			</map>
 		</property>
+		<property name="subReportUrls">
+			<map>
+				<entry key="commentsSubReport" value="/WEB-INF/reports/finalReportComments.jrxml"/>
+			</map>
+		</property>
 	</bean>
 
 </beans>
