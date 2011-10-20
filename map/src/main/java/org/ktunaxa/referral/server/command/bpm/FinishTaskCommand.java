@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Finish a task and return the BPM dashboard URL (which should be redirected to.
+ * Finish a task and return the BPM dashboard URL (which should be redirected to).
  *
  * @author Joachim Van der Auwera
  */
