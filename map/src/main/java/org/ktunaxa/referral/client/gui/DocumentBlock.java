@@ -182,7 +182,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		editButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
 		editButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
 		editButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
-		editButton.setTooltip("Edit comment");
+		editButton.setTooltip("Edit document");
 		infoLayout.addMember(editButton);
 
 		deleteButton = new IButton();
@@ -191,7 +191,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		deleteButton.setIconHeight(LayoutConstant.ICON_BUTTON_SMALL_ICON_HEIGHT);
 		deleteButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
 		deleteButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
-		deleteButton.setTooltip("Delete comment");
+		deleteButton.setTooltip("Delete document");
 		deleteButton.setHoverWrap(false);
 		infoLayout.addMember(deleteButton);
 		addMember(infoLayout);
