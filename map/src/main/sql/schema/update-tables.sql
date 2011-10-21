@@ -38,3 +38,9 @@ ALTER TABLE template ALTER COLUMN content DROP NOT NULL;
 -- KTU-255 add fields for producing the final report
 -- ALTER TABLE referral ADD COLUMN final_report_introduction text;
 -- ALTER TABLE referral ADD COLUMN final_report_conclusion text;
+
+
+-- update field lengths to be larger for textarea fields
+ALTER TABLE referral ALTER COLUMN project_description TYPE character varying(2048);
+ALTER TABLE referral ALTER COLUMN project_background TYPE character varying(2048);
+ALTER TABLE referral ALTER COLUMN contact_address TYPE character varying(2048);

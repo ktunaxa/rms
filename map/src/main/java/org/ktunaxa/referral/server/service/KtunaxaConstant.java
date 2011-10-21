@@ -82,12 +82,17 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_APPLICATION_TYPE = "applicationType";
 	String ATTRIBUTE_STATUS = "status";
 	String ATTRIBUTE_STOP_REASON = "stopReason";
+	String ATTRIBUTE_DECISION = "decision";
+	String ATTRIBUTE_PROVINCIAL_DECISION = "provincialDecision";
+	String ATTRIBUTE_CONTACT_ADDRESS = "contactAddress";
 	String ATTRIBUTE_TYPE = "type";
 	String ATTRIBUTE_EXTERNAL_PROJECT_ID = "externalProjectId";
 	String ATTRIBUTE_EXTERNAL_FILE_ID = "externalFileId";
 	String ATTRIBUTE_ACTIVE_RETENTION_PERIOD = "activeRetentionPeriod";
 	String ATTRIBUTE_SEMI_ACTIVE_RETENTION_PERIOD = "semiActiveRetentionPeriod";
 	String ATTRIBUTE_CONFIDENTIAL = "confidential";
+	String ATTRIBUTE_FINAL_REPORT_INTRODUCTION = "finalReportIntroduction";
+	String ATTRIBUTE_FINAL_REPORT_CONCLUSION = "finalReportConclusion";
 
 	String ATTRIBUTE_DOCUMENT_ID = "documentId";
 	String ATTRIBUTE_DOCUMENT_TITLE = "title";

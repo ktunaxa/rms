@@ -401,6 +401,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                     <property name="editable" value="true"/>
                     <property name="identifying" value="true"/>
                     <property name="type" value="STRING"/>
+					<property name="formInputType" value="textArea" />
                 </bean>
 	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 	                <property name="label" value="Referral Type" />
@@ -1222,6 +1223,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 										<property name="name" value="finalReportIntroduction"/>
 										<property name="editable" value="false"/>
 										<property name="identifying" value="false"/>
+										<property name="hidden" value="true"/>
 										<property name="type" value="STRING"/>
 									</bean>
 									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
@@ -1229,6 +1231,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 										<property name="name" value="finalReportConclusion"/>
 										<property name="editable" value="false"/>
 										<property name="identifying" value="false"/>
+										<property name="hidden" value="true"/>
 										<property name="type" value="STRING"/>
 									</bean>
 	                            </list>

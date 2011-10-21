@@ -29,6 +29,14 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 
 	private static final int COLUMN_COUNT = 4;
 
+	private static final String[] SKIPPED_NAMES = new String[] {
+			KtunaxaConstant.ATTRIBUTE_DECISION,
+			KtunaxaConstant.ATTRIBUTE_PROVINCIAL_DECISION,
+			KtunaxaConstant.ATTRIBUTE_STATUS,
+			KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL,
+			KtunaxaConstant.ATTRIBUTE_STOP_REASON
+		};
+
 	public ReferralInfoForm(VectorLayer layer) {
 		super(layer);
 		addItemChangedHandler(new ReferralIdSetter());
@@ -53,6 +61,8 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 		} else if (KtunaxaConstant.ATTRIBUTE_PROJECT_BACKGROUND.equals(info.getName())) {
 			formItem.setColSpan(COLUMN_COUNT);
 			formItem.setHeight(50);
+		} else if (KtunaxaConstant.ATTRIBUTE_CONTACT_ADDRESS.equals(info.getName())) {
+			formItem.setHeight(50);
 		} else if (KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE.equals(info.getName())) {
 			formItem.setColSpan(4);
 		}
@@ -61,6 +71,11 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 
 	@Override
 	protected boolean isIncluded(AttributeInfo info) {
+		for (String name : SKIPPED_NAMES) {
+			if (info.getName().equals(name)) {
+				return false;
+			}
+		}
 		if (!info.isHidden()) {
 			if (info instanceof AssociationAttributeInfo) {
 				AssociationAttributeInfo associationAttributeInfo = (AssociationAttributeInfo) info;

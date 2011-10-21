@@ -7,6 +7,7 @@ package org.ktunaxa.referral.client.referral;
 
 import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.configuration.FeatureInfo;
+import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 
 import com.smartgwt.client.types.Alignment;
@@ -17,6 +18,8 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import org.geomajas.widget.utility.gwt.client.wizard.WizardPage;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
+
+import java.util.Collection;
 
 /**
  * Page to confirm creation of a new referral.
@@ -57,12 +60,18 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 	}
 
 	private String valueToString(Object value) {
-		if (value instanceof AssociationValue) {
-			AssociationValue asso = (AssociationValue) value;
-			// is there a better way ?
-			return asso.getAllAttributes().values().iterator().next().getValue().toString();
+		if (null != value) {
+			if (value instanceof AssociationValue) {
+				AssociationValue asso = (AssociationValue) value;
+				// is there a better way ?
+				Collection<Attribute<?>> attributes = asso.getAllAttributes().values();
+				if (null != attributes && attributes.size() > 0) {
+					return valueToString(attributes.iterator().next().getValue());
+				}
+			}
+			return value.toString();
 		}
-		return value.toString();
+		return "";
 	}
 
 	public Canvas asWidget() {
@@ -81,7 +90,7 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 		FeatureInfo featureInfo = getWizardData().getLayer().getLayerInfo().getFeatureInfo();
 		for (AttributeInfo info : featureInfo.getAttributes()) {
 			Object value = getWizardData().getFeature().getAttributeValue(info.getName());
-			SummaryLine line = new SummaryLine(info.getLabel(), value == null ? "" : valueToString(value));
+			SummaryLine line = new SummaryLine(info.getLabel(), valueToString(value));
 			line.setStyleName(even ? "summaryLine" : "summaryLineDark");
 			summaryLayout.addMember(line);
 			even = !even;
@@ -92,7 +101,6 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 	 * A line of the form summary.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	private class SummaryLine extends HLayout {
 
@@ -115,6 +123,5 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 		}
 
 	}
-
 
 }
