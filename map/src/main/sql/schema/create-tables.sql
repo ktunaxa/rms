@@ -153,6 +153,19 @@ GRANT ALL ON TABLE referral_status TO referral_group;
 
 
 -- ----------------------------------------------------------------------------
+-- Table: REFERRAL DECISION
+-- ----------------------------------------------------------------------------
+CREATE TABLE referral_decision(
+	id serial PRIMARY KEY,
+	title character varying(254) NOT NULL,
+	description character varying(254) NOT NULL
+);
+
+ALTER TABLE referral_decision OWNER TO referral_group;
+GRANT ALL ON TABLE referral_decision TO referral_group;
+
+
+-- ----------------------------------------------------------------------------
 -- Table: REFERRAL TYPE
 -- ----------------------------------------------------------------------------
 CREATE TABLE referral_type(
@@ -266,10 +279,17 @@ CREATE TABLE referral
   provincial_assessment_level integer,
   final_assessment_level integer,
   status_id integer NOT NULL,
+  stop_reason character varying(254),
+  decision_id integer NOT NULL,
+  provincial_decision_id integer NOT NULL,
   external_agency_type_id integer NOT NULL default 1,
   priority_id integer NOT NULL default 1,
+  final_report_introduction text,
+  final_report_conclusion text,
   CONSTRAINT fk_referral_application_type FOREIGN KEY (application_type_id) REFERENCES referral_application_type (id),
   CONSTRAINT fk_referral_status FOREIGN KEY (status_id) REFERENCES referral_status (id),
+  CONSTRAINT fk_referral_decision FOREIGN KEY (decision_id) REFERENCES referral_decision (id),
+  CONSTRAINT fk_referral_decision FOREIGN KEY (provincial_decision_id) REFERENCES referral_decision (id),
   CONSTRAINT fk_referral_disposition FOREIGN KEY (final_disposition_id) REFERENCES referral_disposition_type (id),
   CONSTRAINT fk_referral_type FOREIGN KEY (type_id) REFERENCES referral_type (id),
   CONSTRAINT fk_referral_external_agency_type FOREIGN KEY (external_agency_type_id) REFERENCES referral_external_agency_type (id),

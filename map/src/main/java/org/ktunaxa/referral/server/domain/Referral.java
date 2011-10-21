@@ -18,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -34,6 +35,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * TODO automatic sorting of all collections by date?
  * 
  * @author Pieter De Graef
+ * @author Joachim Van der Auwera
  */
 @Entity
 @Table(name = "referral")
@@ -203,10 +205,24 @@ public class Referral {
 	@Column(name = "final_assessment_level")
 	private int finalAssessmentLevel = 1;
 
-	/** What is the current status of this referral? (new, in progress, approved, denied) */
+	/** What is the current status of this referral? (in progress, finished, stopped) */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "status_id", nullable = false)
 	private ReferralStatus status;
+
+	/** Reason for stopping the processing of the referral (when status==stopped). */
+	@Column(name = "stop_reason")
+	private String stopReason;
+
+	/** What is the decision for this referral? (unknown, approved, denied) */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "decision_id", nullable = false)
+	private ReferralDecision decision;
+
+	/** What is the provincial decision for this referral? (unknown, approved, denied) */
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "provincial_decision_id", nullable = false)
+	private ReferralDecision provincialDecision;
 
 	/** The geometry that represents this referral on the map. */
 	@Type(type = "org.hibernatespatial.GeometryUserType")
@@ -221,6 +237,16 @@ public class Referral {
 	/** The collection of all comments made on this referral. */
 	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<ReferralComment> comments = new ArrayList<ReferralComment>();
+
+	/** Introduction field to put in final report.*/
+	@Column(nullable = true, name = "final_report_introduction")
+	@Lob
+	private String finalReportIntroduction;
+
+	/** Introduction field to put in final report.*/
+	@Column(nullable = true, name = "final_report_conclusion")
+	@Lob
+	private String finalReportConclusion;
 
 	// ------------------------------------------------------------------------
 	// Constructors:
@@ -292,6 +318,60 @@ public class Referral {
 	 */
 	public void setStatus(ReferralStatus status) {
 		this.status = status;
+	}
+
+	/**
+	 * Reason for stopping the processing of this referral (only when stopped).
+	 *
+	 * @return stop reason
+	 */
+	public String getStopReason() {
+		return stopReason;
+	}
+
+	/**
+	 * Reason for stopping the processing of this referral (only when stopped).
+	 *
+	 * @param stopReason stop reason
+	 */
+	public void setStopReason(String stopReason) {
+		this.stopReason = stopReason;
+	}
+
+	/**
+	 * Decision for this referral.
+	 *
+	 * @return decision
+	 */
+	public ReferralDecision getDecision() {
+		return decision;
+	}
+
+	/**
+	 * Decision for this referral.
+	 *
+	 * @param decision decision
+	 */
+	public void setDecision(ReferralDecision decision) {
+		this.decision = decision;
+	}
+
+	/**
+	 * Provincial decision for this referral.
+	 *
+	 * @return provincial decision
+	 */
+	public ReferralDecision getProvincialDecision() {
+		return provincialDecision;
+	}
+
+	/**
+	 * Provincial decision for this referral.
+	 *
+	 * @param provincialDecision provincial decision
+	 */
+	public void setProvincialDecision(ReferralDecision provincialDecision) {
+		this.provincialDecision = provincialDecision;
 	}
 
 	/**
@@ -902,33 +982,40 @@ public class Referral {
 	public void setFinalAssessmentLevel(int finalAssessmentLevel) {
 		this.finalAssessmentLevel = finalAssessmentLevel;
 	}
-	
-	/**
-	 * Splits the referral id to store the first part in the database
-	 */
-//	private void splitReferralId() {
-//		if (landReferralId != null && landReferralId.length() == 15) {
-//			setPrimaryClassificationNumber(Integer.parseInt(landReferralId.substring(0, 4)));
-//			setSecondaryClassificationNumber(Integer.parseInt(landReferralId.substring(5, 7)));
-//			setCalendarYear(Integer.parseInt(landReferralId.substring(8, 10)));
-//		}
-//	}
-//
-//	/**
-//	 * Joins the first part of the referral id with the unique number 
-//	 */
-//	private void joinReferralId() {
-//		if(getNumber() > 0) {
-//			StringBuilder builder = new StringBuilder();
-//			builder.append(String.format("%04d", getPrimaryClassificationNumber()));
-//			builder.append("-");
-//			builder.append(String.format("%02d", getSecondaryClassificationNumber()));
-//			builder.append("/");
-//			builder.append(String.format("%02d", getCalendarYear()));
-//			builder.append("-");
-//			builder.append(String.format("%04d", getNumber()));
-//	    	setLandReferralId(builder.toString());
-//		}
-//    }
 
+	/**
+	 * Introduction for the final report.
+	 *
+	 * @return introduction
+	 */
+	public String getFinalReportIntroduction() {
+		return finalReportIntroduction;
+	}
+
+	/**
+	 * Introduction for the final report.
+	 *
+	 * @param finalReportIntroduction introduction
+	 */
+	public void setFinalReportIntroduction(String finalReportIntroduction) {
+		this.finalReportIntroduction = finalReportIntroduction;
+	}
+
+	/**
+	 * Conclusion for final report.
+	 *
+	 * @return conclusion
+	 */
+	public String getFinalReportConclusion() {
+		return finalReportConclusion;
+	}
+
+	/**
+	 * Conclusion for final report.
+	 *
+	 * @param finalReportConclusion conclusion
+	 */
+	public void setFinalReportConclusion(String finalReportConclusion) {
+		this.finalReportConclusion = finalReportConclusion;
+	}
 }

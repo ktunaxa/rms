@@ -107,10 +107,19 @@ INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by
 -- Table: REFERRAL STATUS
 -- ----------------------------------------------------------------------------
 
-INSERT INTO referral_status (id, title, description) values (1, 'New', 'A referral that has not yet been processed.'); 
-INSERT INTO referral_status (id, title, description) values (2, 'In progress', 'A referral which is currently being processed.'); 
-INSERT INTO referral_status (id, title, description) values (3, 'Approved', 'A referral that has been processed and has been given approval.'); 
-INSERT INTO referral_status (id, title, description) values (4, 'Denied', 'A referral that has been processed and has been turned down.'); 
+INSERT INTO referral_status (id, title, description) values (1, 'New', 'Referral is not yet complete.');
+INSERT INTO referral_status (id, title, description) values (2, 'In progress', 'Referral is being processed.');
+INSERT INTO referral_status (id, title, description) values (3, 'Finished', 'Referral has been fully processed.');
+INSERT INTO referral_status (id, title, description) values (4, 'Stopped', 'Referral processing was stopped.');
+
+
+-- ----------------------------------------------------------------------------
+-- Table: REFERRAL DECISION
+-- ----------------------------------------------------------------------------
+
+INSERT INTO referral_decision (id, title, description) values (1, 'Unknown', 'The decision is not yet known.');
+INSERT INTO referral_decision (id, title, description) values (2, 'Approved', 'The referral was approved.');
+INSERT INTO referral_decision (id, title, description) values (3, 'Denied', 'The referral was denied.');
 
 
 -- ----------------------------------------------------------------------------
@@ -185,6 +194,7 @@ INSERT INTO referral_external_agency_type (id, title, description) values (1, 'B
 INSERT INTO referral_external_agency_type (id, title, description) values (2, 'Government of Canada', 'Government of Canada');
 INSERT INTO referral_external_agency_type (id, title, description) values (3, 'Local Government', 'Local Government');
 INSERT INTO referral_external_agency_type (id, title, description) values (4, 'Industry', 'Industry');
+INSERT INTO referral_external_agency_type (id, title, description) values (5, 'Other', 'Other');
 
 
 -- ----------------------------------------------------------------------------

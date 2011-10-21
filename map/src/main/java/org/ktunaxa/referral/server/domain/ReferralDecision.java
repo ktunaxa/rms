@@ -16,23 +16,23 @@ import javax.persistence.Table;
 /**
  * Status value object that referrals can point to. Only a limited set of possible status' are known:
  * <ul>
- * <li>New</li>
- * <li>In progress</li>
- * <li>Finished</li>
- * <li>Stopped</li>
+ * <li>Unknown</li>
+ * <li>Approved</li>
+ * <li>Denied</li>
  * </ul>
  * 
  * @author Pieter De Graef
+ * @author Joachim Van der Auwera
  */
 @Entity
-@Table(name = "referral_status")
-public class ReferralStatus {
+@Table(name = "referral_decision")
+public class ReferralDecision {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	/** The general process status of the referral (new, in progress, finished, stopped). */
+	/** The general process status of the referral (unknown, approved, denied). */
 	@Column(nullable = false, name = "title")
 	private String title;
 
@@ -40,20 +40,12 @@ public class ReferralStatus {
 	@Column(nullable = false, name = "description")
 	private String description;
 
-	// ------------------------------------------------------------------------
-	// Constructors:
-	// ------------------------------------------------------------------------
-
-	public ReferralStatus() {
+	public ReferralDecision() {
 	}
 
-	public ReferralStatus(long id) {
+	public ReferralDecision(long id) {
 		this.id = id;
 	}
-
-	// ------------------------------------------------------------------------
-	// Getters and setters:
-	// ------------------------------------------------------------------------
 
 	/**
 	 * The aspect's unique identifier.

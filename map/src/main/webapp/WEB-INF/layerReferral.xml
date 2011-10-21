@@ -512,6 +512,123 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 						</bean>
 					</property>
 	            </bean>
+				<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+					<property name="label" value="Stop reason"/>
+					<property name="name" value="stopReason"/>
+					<property name="editable" value="true"/>
+					<property name="identifying" value="false"/>
+					<property name="type" value="STRING"/>
+				</bean>
+				<bean class="org.geomajas.configuration.AssociationAttributeInfo">
+					<property name="label" value="Final Decision" />
+					<property name="name" value="decision" />
+					<property name="editable" value="true" />
+					<property name="identifying" value="true" />
+					<property name="type" value="MANY_TO_ONE" />
+					<property name="feature">
+						<bean class="org.geomajas.configuration.FeatureInfo">
+							<property name="dataSourceName" value="org.ktunaxa.referral.server.domain.ReferralDecision" />
+							<property name="identifier">
+								<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+									<property name="label" value="Id" />
+									<property name="name" value="id" />
+									<property name="type" value="LONG" />
+								</bean>
+							</property>
+							<property name="attributes">
+								<list>
+									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+										<property name="label" value="Title" />
+										<property name="name" value="title" />
+										<property name="editable" value="false" />
+										<property name="identifying" value="true" />
+										<property name="type" value="STRING" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
+									</bean>
+									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+										<property name="label" value="Description" />
+										<property name="name" value="description" />
+										<property name="editable" value="false" />
+										<property name="identifying" value="false" />
+										<property name="type" value="STRING" />
+									</bean>
+								</list>
+							</property>
+						</bean>
+					</property>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+				<bean class="org.geomajas.configuration.AssociationAttributeInfo">
+					<property name="label" value="Provincial Decision" />
+					<property name="name" value="provincialDecision" />
+					<property name="editable" value="true" />
+					<property name="identifying" value="true" />
+					<property name="type" value="MANY_TO_ONE" />
+					<property name="feature">
+						<bean class="org.geomajas.configuration.FeatureInfo">
+							<property name="dataSourceName" value="org.ktunaxa.referral.server.domain.ReferralDecision" />
+							<property name="identifier">
+								<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+									<property name="label" value="Id" />
+									<property name="name" value="id" />
+									<property name="type" value="LONG" />
+								</bean>
+							</property>
+							<property name="attributes">
+								<list>
+									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+										<property name="label" value="Title" />
+										<property name="name" value="title" />
+										<property name="editable" value="false" />
+										<property name="identifying" value="true" />
+										<property name="type" value="STRING" />
+										<property name="validator">
+											<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+												<property name="constraints">
+													<list>
+														<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+													</list>
+												</property>
+											</bean>
+										</property>
+									</bean>
+									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+										<property name="label" value="Description" />
+										<property name="name" value="description" />
+										<property name="editable" value="false" />
+										<property name="identifying" value="false" />
+										<property name="type" value="STRING" />
+									</bean>
+								</list>
+							</property>
+						</bean>
+					</property>
+					<property name="validator">
+						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
+							<property name="constraints">
+								<list>
+									<bean class="org.geomajas.configuration.validation.NotNullConstraintInfo" />
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
 	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
 	                <property name="label" value="Application Type" />
 	                <property name="name" value="applicationType" />
@@ -1100,6 +1217,20 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 											</bean>
 										</property>
 	                                </bean>
+									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+										<property name="label" value="Final report introduction"/>
+										<property name="name" value="finalReportIntroduction"/>
+										<property name="editable" value="false"/>
+										<property name="identifying" value="false"/>
+										<property name="type" value="STRING"/>
+									</bean>
+									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+										<property name="label" value="Final report conclusion"/>
+										<property name="name" value="finalReportConclusion"/>
+										<property name="editable" value="false"/>
+										<property name="identifying" value="false"/>
+										<property name="type" value="STRING"/>
+									</bean>
 	                            </list>
 	                        </property>
 	                    </bean>

@@ -81,6 +81,7 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_FINAL_DISPOSITION = "finalDisposition";
 	String ATTRIBUTE_APPLICATION_TYPE = "applicationType";
 	String ATTRIBUTE_STATUS = "status";
+	String ATTRIBUTE_STOP_REASON = "stopReason";
 	String ATTRIBUTE_TYPE = "type";
 	String ATTRIBUTE_EXTERNAL_PROJECT_ID = "externalProjectId";
 	String ATTRIBUTE_EXTERNAL_FILE_ID = "externalFileId";
@@ -104,6 +105,19 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_COMMENT_CREATED_BY = "createdBy";
 	String ATTRIBUTE_COMMENT_INCLUDE_IN_REPORT = "includeInReport";
 	String ATTRIBUTE_COMMENT_REPORT_CONTENT = "reportContent";
+	String ATTRIBUTE_STATUS_TITLE = "title";
+	String ATTRIBUTE_STATUS_DESCRIPTION = "description";
+	String ATTRIBUTE_DECISION_TITLE = "title";
+	String ATTRIBUTE_DECISION_DESCRIPTION = "description";
+
+	String STATUS_NEW = "New";
+	String STATUS_IN_PROGRESS = "In progress";
+	String STATUS_FINISHED = "Finished";
+	String STATUS_STOPPED = "Stopped";
+
+	String DECISION_UNKNOWN = "Unknown";
+	String DECISION_APPROVED = "Approved";
+	String DECISION_DENIED = "Denied";
 
 	String RAW_MAIL_REGEX = "([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)[a-zA-Z]{2,4}";
 	String MAIL_VALIDATOR_REGEX = "^" + RAW_MAIL_REGEX + "$";
@@ -112,7 +126,7 @@ public interface KtunaxaConstant {
 	String GEOMARK_BASE_URL = "http://delivery.apps.gov.bc.ca/pub/geomark/geomarks/";
 	String GEOMARK_SHAPE_REQUEST = "/asPolygon.shpz?srid=";
 	String GEOMARK_WKT_REQUEST = "/asPolygon.wkt?srid=";
-	
+
 	/**
 	 * Constants used for building and sending emails.
 	 * @author Emiel Ackermann
