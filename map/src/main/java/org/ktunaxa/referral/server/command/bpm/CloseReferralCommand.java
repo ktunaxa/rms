@@ -41,7 +41,7 @@ import java.util.Map;
  * @author Joachim Van der Auwera
  */
 @Component
-@Transactional(rollbackFor = {Exception.class})
+@Transactional(rollbackFor = { Exception.class })
 public class CloseReferralCommand implements Command<CloseReferralRequest, CommandResponse> {
 
 	private final Logger log = LoggerFactory.getLogger(CloseReferralCommand.class);

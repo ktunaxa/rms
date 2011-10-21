@@ -55,8 +55,8 @@ public class ReferralData {
 				new HashMap<String, PrimitiveAttribute<?>>()));
 		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DECISION, new AssociationValue(new LongAttribute(1L),
 				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_PROVINCIAL_DECISION, new AssociationValue(new LongAttribute(1L),
-				new HashMap<String, PrimitiveAttribute<?>>()));
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_PROVINCIAL_DECISION,
+				new AssociationValue(new LongAttribute(1L), new HashMap<String, PrimitiveAttribute<?>>()));
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE, 1);
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL, 1);
 		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY_TYPE,
