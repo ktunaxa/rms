@@ -20,6 +20,7 @@ public class CloseReferralRequest implements CommandRequest {
 	public static final String COMMAND = "command.bpm.CloseReferral";
 
 	private String referralId;
+	private String reason;
 
 	/**
 	 * Full id for referral to close (eg "3500-12/10-201").
@@ -37,5 +38,23 @@ public class CloseReferralRequest implements CommandRequest {
 	 */
 	public void setReferralId(String referralId) {
 		this.referralId = referralId;
+	}
+
+	/**
+	 * Reason for stopping the referral process.
+	 *
+	 * @return reason
+	 */
+	public String getReason() {
+		return reason;
+	}
+
+	/**
+	 * Reason for stopping the referral process.
+	 *
+	 * @param reason reason
+	 */
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 }

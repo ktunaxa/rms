@@ -8,6 +8,7 @@ package org.ktunaxa.referral.client.gui;
 
 import javax.validation.constraints.NotNull;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.smartgwt.client.util.BooleanCallback;
 import com.smartgwt.client.util.SC;
 import org.geomajas.command.CommandResponse;
@@ -18,6 +19,7 @@ import org.geomajas.gwt.client.command.event.TokenChangedEvent;
 import org.geomajas.gwt.client.command.event.TokenChangedHandler;
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.plugin.staticsecurity.client.util.SsecAccess;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.command.dto.CloseReferralRequest;
@@ -35,6 +37,8 @@ import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 import com.smartgwt.client.widgets.toolbar.ToolStripMenuButton;
 import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
+
+import java.util.Date;
 
 /**
  * Top menu bar of the general layout. The top bar has a user section (login/logout,status) on the right and a list of
@@ -190,6 +194,9 @@ public class TopBar extends HLayout {
 					if (close) {
 						CloseReferralRequest request = new CloseReferralRequest();
 						request.setReferralId(ReferralUtil.createId(referral));
+						DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
+						request.setReason("Closed by " + UserContext.getInstance().getUser() + " at " +
+								formatter.format(new Date())  + ".");
 						GwtCommand command = new GwtCommand(CloseReferralRequest.COMMAND);
 						command.setCommandRequest(request);
 						GwtCommandDispatcher.getInstance()
