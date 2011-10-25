@@ -28,6 +28,7 @@
 
 		<mapping class="org.ktunaxa.referral.server.domain.Referral"/>
 		<mapping class="org.ktunaxa.referral.server.domain.ReferralStatus"/>
+	   <mapping class="org.ktunaxa.referral.server.domain.ReferralDecision"/>
 		<mapping class="org.ktunaxa.referral.server.domain.ReferralType"/>
 		<mapping class="org.ktunaxa.referral.server.domain.ReferralApplicationType"/>
 		<mapping class="org.ktunaxa.referral.server.domain.ReferralDispositionType"/>
