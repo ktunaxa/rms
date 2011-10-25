@@ -143,15 +143,30 @@ INSERT INTO referral_type (id, title, description) values (14, 'Industrial', '')
 INSERT INTO referral_type (id, title, description) values (15, 'Mining: Placer', ''); 
 INSERT INTO referral_type (id, title, description) values (16, 'Mining: Aggregate and Quarry', ''); 
 INSERT INTO referral_type (id, title, description) values (17, 'Mining: Mine Development', ''); 
-INSERT INTO referral_type (id, title, description) values (18, 'Oil and Gas', ''); 
+--INSERT INTO referral_type (id, title, description) values (18, 'Oil and Gas', '');
 INSERT INTO referral_type (id, title, description) values (19, 'Private Moorage', ''); 
 INSERT INTO referral_type (id, title, description) values (20, 'Property Development', ''); 
 INSERT INTO referral_type (id, title, description) values (21, 'Public Recreation - Parks', ''); 
 INSERT INTO referral_type (id, title, description) values (22, 'Public Recreation - General', ''); 
 INSERT INTO referral_type (id, title, description) values (23, 'Residential', ''); 
 INSERT INTO referral_type (id, title, description) values (24, 'Resort Development', ''); 
-INSERT INTO referral_type (id, title, description) values (25, 'Roads', ''); 
+INSERT INTO referral_type (id, title, description) values (25, 'Roads/Bridges', '');
 INSERT INTO referral_type (id, title, description) values (26, 'Utilities', ''); 
+INSERT INTO referral_type (id, title, description) values (27, 'Crown Grant', '');
+INSERT INTO referral_type (id, title, description) values (28, 'Mineral Exploration', '');
+INSERT INTO referral_type (id, title, description) values (29, 'Oil and Gas Production', '');
+INSERT INTO referral_type (id, title, description) values (30, 'Oil and Gas Exploration', '');
+INSERT INTO referral_type (id, title, description) values (31, 'Oil and Gas Infrastructure', '');
+INSERT INTO referral_type (id, title, description) values (32, 'Zoning, DPA or OCP Changes', '');
+INSERT INTO referral_type (id, title, description) values (33, 'Subdivision Application', '');
+INSERT INTO referral_type (id, title, description) values (34, 'Water Diversion', '');
+INSERT INTO referral_type (id, title, description) values (35, 'Changes in/about stream/waterbody', '');
+INSERT INTO referral_type (id, title, description) values (36, 'Waste Discharge', '');
+INSERT INTO referral_type (id, title, description) values (37, 'Pest Management', '');
+INSERT INTO referral_type (id, title, description) values (38, 'Assignment (name change)', '');
+INSERT INTO referral_type (id, title, description) values (39, 'Follow up letter', '');
+INSERT INTO referral_type (id, title, description) values (40, 'Multiple', '');
+INSERT INTO referral_type (id, title, description) values (41, 'Other', '');
 
 
 -- ----------------------------------------------------------------------------
