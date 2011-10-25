@@ -25,7 +25,7 @@ ALTER TABLE template ALTER COLUMN content DROP NOT NULL;
 -- ALTER TABLE referral ADD COLUMN decision_id integer NOT NULL DEFAULT 1;
 -- ALTER TABLE referral ADD CONSTRAINT fk_referral_decision FOREIGN KEY (decision_id) REFERENCES referral_decision (id);
 -- ALTER TABLE referral ADD COLUMN provincial_decision_id integer NOT NULL DEFAULT 1;
--- ALTER TABLE referral ADD CONSTRAINT fk_provincial_decision FOREIGN KEY (provincial_decision_id) REFERENCES referral_decision (id);
+-- ALTER TABLE referral ADD CONSTRAINT fk_referral_provincial_decision FOREIGN KEY (provincial_decision_id) REFERENCES referral_decision (id);
 -- DELETE FROM referral_status where id = 3 OR id = 4;
 -- INSERT INTO referral_status (id, title, description) values (3, 'Finished', 'Referral has been fully processed.');
 -- INSERT INTO referral_status (id, title, description) values (4, 'Stopped', 'Referral processing was stopped.');

@@ -289,7 +289,7 @@ CREATE TABLE referral
   CONSTRAINT fk_referral_application_type FOREIGN KEY (application_type_id) REFERENCES referral_application_type (id),
   CONSTRAINT fk_referral_status FOREIGN KEY (status_id) REFERENCES referral_status (id),
   CONSTRAINT fk_referral_decision FOREIGN KEY (decision_id) REFERENCES referral_decision (id),
-  CONSTRAINT fk_referral_decision FOREIGN KEY (provincial_decision_id) REFERENCES referral_decision (id),
+  CONSTRAINT fk_referral_provincial_decision FOREIGN KEY (provincial_decision_id) REFERENCES referral_decision (id),
   CONSTRAINT fk_referral_disposition FOREIGN KEY (final_disposition_id) REFERENCES referral_disposition_type (id),
   CONSTRAINT fk_referral_type FOREIGN KEY (type_id) REFERENCES referral_type (id),
   CONSTRAINT fk_referral_external_agency_type FOREIGN KEY (external_agency_type_id) REFERENCES referral_external_agency_type (id),
