@@ -48,3 +48,4 @@ ALTER TABLE referral ALTER COLUMN contact_address TYPE character varying(2048);
 
 -- KTU-259 increase length of content field in referral_comment
 ALTER TABLE referral_comment ALTER COLUMN content TYPE character varying(2048);
+ALTER TABLE document_comment ALTER COLUMN content TYPE character varying(2048);
