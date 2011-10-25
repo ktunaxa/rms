@@ -52,20 +52,20 @@ ALTER TABLE document_comment ALTER COLUMN content TYPE character varying(2048);
 
 
 -- KTU-262 update referral types
-DELETE from referral_type where id=18;
-UPDATE referral_type SET title='Roads/Bridges' WHERE id=25;
-INSERT INTO referral_type (id, title, description) values (27, 'Crown Grant', '');
-INSERT INTO referral_type (id, title, description) values (28, 'Mineral Exploration', '');
-INSERT INTO referral_type (id, title, description) values (29, 'Oil and Gas Production', '');
-INSERT INTO referral_type (id, title, description) values (30, 'Oil and Gas Exploration', '');
-INSERT INTO referral_type (id, title, description) values (31, 'Oil and Gas Infrastructure', '');
-INSERT INTO referral_type (id, title, description) values (32, 'Zoning, DPA or OCP Changes', '');
-INSERT INTO referral_type (id, title, description) values (33, 'Subdivision Application', '');
-INSERT INTO referral_type (id, title, description) values (34, 'Water Diversion', '');
-INSERT INTO referral_type (id, title, description) values (35, 'Changes in/about stream/waterbody', '');
-INSERT INTO referral_type (id, title, description) values (36, 'Waste Discharge', '');
-INSERT INTO referral_type (id, title, description) values (37, 'Pest Management', '');
-INSERT INTO referral_type (id, title, description) values (38, 'Assignment (name change)', '');
-INSERT INTO referral_type (id, title, description) values (39, 'Follow up letter', '');
-INSERT INTO referral_type (id, title, description) values (40, 'Multiple', '');
-INSERT INTO referral_type (id, title, description) values (41, 'Other', '');
+-- DELETE from referral_type where id=18;
+-- UPDATE referral_type SET title='Roads/Bridges' WHERE id=25;
+-- INSERT INTO referral_type (id, title, description) values (27, 'Crown Grant', '');
+-- INSERT INTO referral_type (id, title, description) values (28, 'Mineral Exploration', '');
+-- INSERT INTO referral_type (id, title, description) values (29, 'Oil and Gas Production', '');
+-- INSERT INTO referral_type (id, title, description) values (30, 'Oil and Gas Exploration', '');
+-- INSERT INTO referral_type (id, title, description) values (31, 'Oil and Gas Infrastructure', '');
+-- INSERT INTO referral_type (id, title, description) values (32, 'Zoning, DPA or OCP Changes', '');
+-- INSERT INTO referral_type (id, title, description) values (33, 'Subdivision Application', '');
+-- INSERT INTO referral_type (id, title, description) values (34, 'Water Diversion', '');
+-- INSERT INTO referral_type (id, title, description) values (35, 'Changes in/about stream/waterbody', '');
+-- INSERT INTO referral_type (id, title, description) values (36, 'Waste Discharge', '');
+-- INSERT INTO referral_type (id, title, description) values (37, 'Pest Management', '');
+-- INSERT INTO referral_type (id, title, description) values (38, 'Assignment (name change)', '');
+-- INSERT INTO referral_type (id, title, description) values (39, 'Follow up letter', '');
+-- INSERT INTO referral_type (id, title, description) values (40, 'Multiple', '');
+-- INSERT INTO referral_type (id, title, description) values (41, 'Other', '');
