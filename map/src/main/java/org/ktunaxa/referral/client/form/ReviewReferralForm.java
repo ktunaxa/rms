@@ -134,18 +134,14 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		Feature current = mapLayout.getCurrentReferral();
 		Feature previous = new org.geomajas.gwt.client.map.feature.Feature(current, layer).toDto();
 		Map<String, Attribute> attributes = current.getAttributes();
-		((IntegerAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL)).setValue(
-				Integer.parseInt(result.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL))
-		);
-		((StringAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_PROJECT)).setValue(
-				result.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)
-		);
-		((StringAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_EMAIL)).setValue(
-				result.get(KtunaxaBpmConstant.VAR_EMAIL)
-		);
-		((DateAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE)).setValue(
-				completionDeadline.getValueAsDate()
-		);
+		attributes.put(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL, new IntegerAttribute(
+				Integer.parseInt(result.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL))));
+		attributes.put(KtunaxaConstant.ATTRIBUTE_PROJECT, new StringAttribute(
+				result.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)));
+		attributes.put(KtunaxaConstant.ATTRIBUTE_EMAIL, new StringAttribute(
+				result.get(KtunaxaBpmConstant.VAR_EMAIL)));
+		attributes.put(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE, new DateAttribute(
+				completionDeadline.getValueAsDate()));
 		final FeatureTransaction ft = new FeatureTransaction();
 		ft.setLayerId(layer.getServerLayerId());
 		ft.setOldFeatures(new Feature[] {previous});

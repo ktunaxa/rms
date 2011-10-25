@@ -74,7 +74,8 @@ public class GetReferralCommand implements Command<GetReferralRequest, GetReferr
 					SearchFeatureRequest.COMMAND, searchFeatureRequest, securityContext.getToken(), null);
 			if (commandResponse instanceof SearchFeatureResponse) {
 				SearchFeatureResponse searchFeatureResponse = (SearchFeatureResponse) commandResponse;
-				if (searchFeatureResponse.getFeatures().length > 0) {
+				Feature[] features = searchFeatureResponse.getFeatures();
+				if (null != features && features.length > 0) {
 					return searchFeatureResponse.getFeatures()[0];
 				}
 			} else {
