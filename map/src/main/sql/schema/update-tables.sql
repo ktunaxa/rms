@@ -44,3 +44,7 @@ ALTER TABLE template ALTER COLUMN content DROP NOT NULL;
 ALTER TABLE referral ALTER COLUMN project_description TYPE character varying(2048);
 ALTER TABLE referral ALTER COLUMN project_background TYPE character varying(2048);
 ALTER TABLE referral ALTER COLUMN contact_address TYPE character varying(2048);
+
+
+-- KTU-259 increase length of content field in referral_comment
+ALTER TABLE referral_comment ALTER COLUMN content TYPE character varying(2048);

@@ -390,7 +390,7 @@ GRANT ALL ON TABLE document TO referral_group;
 CREATE TABLE referral_comment(
 	id serial PRIMARY KEY,
 	title character varying(254) NOT NULL,
-	content character varying(254),
+	content character varying(2048),
 	creation_date timestamp NOT NULL,
 	created_by character varying(254),
 	include_in_report boolean NOT NULL DEFAULT false,
