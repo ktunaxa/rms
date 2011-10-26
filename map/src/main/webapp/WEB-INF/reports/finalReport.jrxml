@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="478"/>
+	<property name="ireport.y" value="476"/>
 	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
 	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
 	<parameter name="commentsSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
@@ -305,18 +305,18 @@ Ktunaxa Nation Counsil
 		<band height="5" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="52" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="2" width="572" height="50"/>
+				<reportElement x="0" y="0" width="572" height="50"/>
 				<imageExpression><![CDATA["reports/Footer_Image.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="492" y="31" width="80" height="19"/>
+				<reportElement x="452" y="30" width="80" height="19"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="619" y="31" width="40" height="20"/>
+				<reportElement x="532" y="30" width="40" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
