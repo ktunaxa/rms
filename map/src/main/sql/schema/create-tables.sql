@@ -425,7 +425,7 @@ CREATE TABLE document_comment(
 	creation_date timestamp NOT NULL,
 	created_by character varying(254),
 	include_in_report boolean NOT NULL DEFAULT false,
-	report_content character varying(254),
+	report_content character varying(2048),
 	reference_layer_type_id integer,
 	document_id integer NOT NULL,
 	CONSTRAINT fk_document_comment_document FOREIGN KEY (document_id) REFERENCES document (id),
