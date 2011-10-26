@@ -6,8 +6,8 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import org.geomajas.gwt.client.map.event.MapModelEvent;
-import org.geomajas.gwt.client.map.event.MapModelHandler;
+import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
+import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.layer.Layer;
 import org.geomajas.gwt.client.widget.Legend;
 import org.geomajas.gwt.client.widget.MapWidget;
@@ -32,13 +32,9 @@ import org.ktunaxa.referral.server.service.KtunaxaConstant;
  */
 public class LayersPanel extends VLayout {
 
-	private ReferenceLayer baseLayer;
+	private final Tab tabBase;
 
-	private ReferenceLayer valueLayer;
-
-	private SectionStack baseStack;
-
-	private SectionStack valueStack;
+	private final Tab tabValue;
 
 	public static final String NAME = "LAYERS";
 
@@ -49,39 +45,11 @@ public class LayersPanel extends VLayout {
 
 		TabSet tabs = new TabSet();
 		tabs.setSize("100%", "100%");
-		Tab tabBase = new Tab("Base layers");
-		Tab tabValue = new Tab("Ktunaxa Values");
-		Tab tabBackGround = new Tab("Background");
-		Tab tabReferrals = new Tab("Referrals");
+		tabBase = new Tab("Base layers");
+		tabValue = new Tab("Ktunaxa Values");
+		final Tab tabBackGround = new Tab("Background");
+		final Tab tabReferrals = new Tab("Referrals");
 		Tab tabLegend = new Tab("Legend");
-
-		valueStack = new SectionStack();
-		valueStack.setSize("100%", "100%");
-		valueStack.setOverflow(Overflow.AUTO);
-		valueStack.setVisibilityMode(VisibilityMode.MULTIPLE);
-		valueStack.setPadding(LayoutConstant.MARGIN_SMALL);
-		tabValue.setPane(valueStack);
-
-		baseStack = new SectionStack();
-		baseStack.setSize("100%", "100%");
-		baseStack.setOverflow(Overflow.AUTO);
-		baseStack.setVisibilityMode(VisibilityMode.MULTIPLE);
-		baseStack.setPadding(LayoutConstant.MARGIN_SMALL);
-		tabBase.setPane(baseStack);
-
-		final SectionStack bgStack = new SectionStack();
-		bgStack.setSize("100%", "100%");
-		bgStack.setOverflow(Overflow.AUTO);
-		bgStack.setVisibilityMode(VisibilityMode.MUTEX);
-		bgStack.setPadding(LayoutConstant.MARGIN_SMALL);
-		tabBackGround.setPane(bgStack);
-
-		final SectionStack referralStack = new SectionStack();
-		referralStack.setSize("100%", "100%");
-		referralStack.setOverflow(Overflow.AUTO);
-		referralStack.setVisibilityMode(VisibilityMode.MUTEX);
-		referralStack.setPadding(LayoutConstant.MARGIN_SMALL);
-		tabReferrals.setPane(referralStack);
 
 		Legend legend = new Legend(mapWidget.getMapModel());
 		legend.setHeight100();
@@ -92,9 +60,23 @@ public class LayersPanel extends VLayout {
 		tabs.selectTab(tabValue);
 		addMember(tabs);
 
-		mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
+		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
 
-			public void onMapModelChange(MapModelEvent event) {
+			public void onMapModelChanged(MapModelChangedEvent event) {
+				final SectionStack bgStack = new SectionStack();
+				bgStack.setSize("100%", "100%");
+				bgStack.setOverflow(Overflow.AUTO);
+				bgStack.setVisibilityMode(VisibilityMode.MUTEX);
+				bgStack.setPadding(LayoutConstant.MARGIN_SMALL);
+				tabBackGround.setPane(bgStack);
+
+				final SectionStack referralStack = new SectionStack();
+				referralStack.setSize("100%", "100%");
+				referralStack.setOverflow(Overflow.AUTO);
+				referralStack.setVisibilityMode(VisibilityMode.MUTEX);
+				referralStack.setPadding(LayoutConstant.MARGIN_SMALL);
+				tabReferrals.setPane(referralStack);
+
 				Layer<?> layer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_OSM_ID);
 				LayerBlock osmBlock = new LayerBlock(layer);
 				VLayout sectionStackLayout = new VLayout();
@@ -121,28 +103,23 @@ public class LayersPanel extends VLayout {
 	}
 
 	public void setBaseLayer(ReferenceLayer baseLayer) {
-		this.baseLayer = baseLayer;
-		copyToStack(baseLayer, baseStack);
+		tabBase.setPane(copyToStack(baseLayer));
 	}
 
 	public void setValueLayer(ReferenceLayer valueLayer) {
-		this.valueLayer = valueLayer;
-		copyToStack(valueLayer, valueStack);
-	}
-
-	public ReferenceLayer getBaseLayer() {
-		return baseLayer;
-	}
-
-	public ReferenceLayer getValueLayer() {
-		return valueLayer;
+		tabValue.setPane(copyToStack(valueLayer));
 	}
 
 	public String getName() {
 		return NAME;
 	}
 
-	private void copyToStack(ReferenceLayer layer, SectionStack stack) {
+	private SectionStack copyToStack(ReferenceLayer layer) {
+		SectionStack stack = new SectionStack();
+		stack.setSize("100%", "100%");
+		stack.setOverflow(Overflow.AUTO);
+		stack.setVisibilityMode(VisibilityMode.MULTIPLE);
+		stack.setPadding(LayoutConstant.MARGIN_SMALL);
 		for (ReferenceLayerTypeDto type : layer.getLayerTypes()) {
 			// Create section in stack:
 			SectionStackSection section = new SectionStackSection(type.getDescription());
@@ -156,5 +133,6 @@ public class LayersPanel extends VLayout {
 			((VLayout) stack.getSection(Long.toString(type.getId())).getItems()[0]).
 					addMember(new ReferenceLayerBlock(subLayer));
 		}
+		return stack;
 	}
 }
