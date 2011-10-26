@@ -73,9 +73,11 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_TARGET_REFERRAL = "targetReferral";
 	String ATTRIBUTE_DOCUMENTS = "documents";
 	String ATTRIBUTE_COMMENTS = "comments";
+	String ATTRIBUTE_APPLICANT_NAME = "applicantName";
 	String ATTRIBUTE_EXTERNAL_AGENCY_TYPE = "externalAgencyType";
 	String ATTRIBUTE_EXTERNAL_AGENCY = "externalAgencyName";
 	String ATTRIBUTE_PRIORITY = "priority";
+	String ATTRIBUTE_PROJECT_LOCATION = "projectLocation";
 	String ATTRIBUTE_PROJECT_DESCRIPTION = "projectDescription";
 	String ATTRIBUTE_PROJECT_BACKGROUND = "projectBackground";
 	String ATTRIBUTE_FINAL_DISPOSITION = "finalDisposition";
@@ -84,6 +86,8 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_STOP_REASON = "stopReason";
 	String ATTRIBUTE_DECISION = "decision";
 	String ATTRIBUTE_PROVINCIAL_DECISION = "provincialDecision";
+	String ATTRIBUTE_CONTACT_NAME = "contactName";
+	String ATTRIBUTE_CONTACT_PHONE = "contactPhone";
 	String ATTRIBUTE_CONTACT_ADDRESS = "contactAddress";
 	String ATTRIBUTE_TYPE = "type";
 	String ATTRIBUTE_EXTERNAL_PROJECT_ID = "externalProjectId";

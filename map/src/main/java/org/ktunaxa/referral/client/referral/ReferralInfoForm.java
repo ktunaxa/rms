@@ -21,7 +21,7 @@ import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 
 /**
- * Custom form for the referral layer.
+ * Custom form for the referral layer, used when creating a new referral.
  * 
  * @author Pieter De Graef
  */
@@ -34,7 +34,9 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 			KtunaxaConstant.ATTRIBUTE_PROVINCIAL_DECISION,
 			KtunaxaConstant.ATTRIBUTE_STATUS,
 			KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL,
-			KtunaxaConstant.ATTRIBUTE_STOP_REASON
+			KtunaxaConstant.ATTRIBUTE_STOP_REASON,
+			KtunaxaConstant.ATTRIBUTE_FINAL_REPORT_INTRODUCTION,
+			KtunaxaConstant.ATTRIBUTE_FINAL_REPORT_CONCLUSION
 		};
 
 	public ReferralInfoForm(VectorLayer layer) {
