@@ -168,6 +168,8 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 			if (sendMail.getValueAsBoolean()) {
 				SendEmailRequest request = new SendEmailRequest();
 				request.setFrom(from.getValueAsString());
+				request.setReplyTo(from.getValueAsString());
+				request.setBcc(KtunaxaConstant.EMAIL_BCC);
 				request.setTo(to.getValueAsString());
 				request.setCc(cc.getValueAsString());
 				request.setSubject(subject.getValueAsString());

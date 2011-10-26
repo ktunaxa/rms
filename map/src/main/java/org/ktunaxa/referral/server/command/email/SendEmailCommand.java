@@ -19,10 +19,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Send an email.
@@ -60,6 +63,7 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 				addRecipients(mimeMessage, Message.RecipientType.TO, to);
 				addRecipients(mimeMessage, Message.RecipientType.CC, request.getCc());
 				addRecipients(mimeMessage, Message.RecipientType.BCC, request.getBcc());
+				addReplyTo(mimeMessage, request.getReplyTo());
 				mimeMessage.setFrom(new InternetAddress(from));
 				mimeMessage.setSubject(request.getSubject());
 				mimeMessage.setText(request.getText());
@@ -70,6 +74,19 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 			response.setSuccess(true);
 		} catch (MailException me) {
 			log.error("Could not send e-mail", me);
+		}
+	}
+
+	private void addReplyTo(MimeMessage mimeMessage, String replyTo) throws MessagingException {
+		if (null != replyTo && replyTo.length() > 0) {
+			List<Address> replyTos = new ArrayList<Address>();
+			for (String part : replyTo.split("[,;\\s]")) {
+				String address = part.trim();
+				if (address.length() > 0) {
+					replyTos.add(new InternetAddress(address));
+				}
+			}
+			mimeMessage.setReplyTo(replyTos.toArray(new Address[replyTos.size()]));
 		}
 	}
 

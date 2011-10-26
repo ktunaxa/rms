@@ -136,6 +136,9 @@ public interface KtunaxaConstant {
 	String GEOMARK_SHAPE_REQUEST = "/asPolygon.shpz?srid=";
 	String GEOMARK_WKT_REQUEST = "/asPolygon.wkt?srid=";
 
+	/** E-mail address which is included as bcc field in all referrals related e-mails sent by the system. */
+	String EMAIL_BCC = "";
+
 	/**
 	 * Constants used for building and sending emails.
 	 * @author Emiel Ackermann

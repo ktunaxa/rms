@@ -24,6 +24,7 @@ public class SendEmailRequest implements CommandRequest {
 	private String to;
 	private String cc;
 	private String bcc;
+	private String replyTo;
 	private String subject;
 	private String text;
 
@@ -134,4 +135,23 @@ public class SendEmailRequest implements CommandRequest {
 	public void setText(String text) {
 		this.text = text;
 	}
+
+	/**
+	 * Reply-to address for the e-mail.
+	 *
+	 * @return reply-to address
+	 */
+	public String getReplyTo() {
+		return replyTo;
+	}
+
+	/**
+	 * Reply-to address for the e-mail.
+	 *
+	 * @param replyTo reply-to address
+	 */
+	public void setReplyTo(String replyTo) {
+		this.replyTo = replyTo;
+	}
+
 }

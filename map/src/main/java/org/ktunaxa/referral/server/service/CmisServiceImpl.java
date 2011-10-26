@@ -131,7 +131,6 @@ public class CmisServiceImpl implements CmisService {
 	private String getDocumentUrl(Document document, String restCommand) {
 		String docId = document.getId().replaceAll("://", "/");
 		return config.getUrlBrowse() + restCommand + docId + "/" + document.getContentStreamFileName();
-
 	}
 
 	public Document create(String documentName, String mimeType, InputStream in, String... folderNames)
