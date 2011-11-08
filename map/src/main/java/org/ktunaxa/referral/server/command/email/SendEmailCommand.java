@@ -6,6 +6,10 @@
 
 package org.ktunaxa.referral.server.command.email;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.geomajas.command.Command;
 import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
@@ -23,7 +27,9 @@ import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,9 +62,11 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 		}
 
 		response.setSuccess(false);
+		final List<HttpGet> attachmentConnections = new ArrayList<HttpGet>();
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 
 			public void prepare(MimeMessage mimeMessage) throws Exception {
+				log.debug("Build mime message");
 
 				addRecipients(mimeMessage, Message.RecipientType.TO, to);
 				addRecipients(mimeMessage, Message.RecipientType.CC, request.getCc());
@@ -67,13 +75,38 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 				mimeMessage.setFrom(new InternetAddress(from));
 				mimeMessage.setSubject(request.getSubject());
 				mimeMessage.setText(request.getText());
+
+				List<String> attachments = request.getAttachmentUrls();
+				if (null != attachments && !attachments.isEmpty()) {
+					MimeMultipart mp = new MimeMultipart();
+					for (String url : attachments) {
+						log.debug("add mime part for {}", url);
+						HttpClient httpClient = new DefaultHttpClient();
+						HttpGet httpGet = new HttpGet(url);
+						attachmentConnections.add(httpGet);
+						HttpResponse httpResponse = httpClient.execute(httpGet);
+						mp.addBodyPart(new MimeBodyPart(httpResponse.getEntity().getContent()));
+					}
+					mimeMessage.setContent(mp);
+					log.debug("message {}", mimeMessage);
+				}
 			}
 		};
 		try {
 			mailSender.send(preparator);
+			cleanAttachmentConnection(attachmentConnections);
+			log.debug("mail sent");
 			response.setSuccess(true);
 		} catch (MailException me) {
 			log.error("Could not send e-mail", me);
+		}
+	}
+
+	private void cleanAttachmentConnection(List<HttpGet> attachmentConnections) {
+		for (HttpGet httpGet : attachmentConnections) {
+			if (!httpGet.isAborted()) {
+				httpGet.abort(); // assure low level resources are released
+			}
 		}
 	}
 

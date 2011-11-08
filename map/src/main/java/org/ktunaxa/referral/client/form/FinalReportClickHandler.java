@@ -29,8 +29,8 @@ import org.ktunaxa.referral.server.service.KtunaxaConstant;
  */
 public class FinalReportClickHandler implements ClickHandler {
 
-	private static final String REPORT_NAME = "finalReport";
-	private static final String FORMAT = "pdf";
+	public static final String REPORT_NAME = "finalReport";
+	public static final String FORMAT = "pdf";
 
 	private final ImageUrlService imageUrlService = new ImageUrlServiceImpl();
 
@@ -39,6 +39,22 @@ public class FinalReportClickHandler implements ClickHandler {
 
 		VectorLayer layer = mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
 
+		imageUrlService.makeRasterizable(mapWidget);
+		PrepareReportingRequest request = getPrepareReportingRequest(
+				mapWidget.getMapModel().getMapInfo(), layer.getFilter());
+		GwtCommand command = new GwtCommand(PrepareReportingRequest.COMMAND);
+		command.setCommandRequest(request);
+		GwtCommandDispatcher.getInstance().execute(command, new ReportCallback());
+	}
+
+	/**
+	 * Get request object for preparing the report.
+	 *
+	 * @param mapInfo map info
+	 * @param filter layer filter
+	 * @return reporting request
+	 */
+	public static PrepareReportingRequest getPrepareReportingRequest(ClientMapInfo mapInfo, String filter) {
 		PrepareReportingRequest request = new PrepareReportingRequest();
 		request.setImageWidth(500);
 		request.setImageHeight(500);
@@ -47,16 +63,11 @@ public class FinalReportClickHandler implements ClickHandler {
 		request.setMinimumGeometrySize(500.0); // make geometry at least 500M wide/high
 		request.setMargin(200);
 		request.setDpi(300);
-		imageUrlService.makeRasterizable(mapWidget);
-
-		ClientMapInfo mapInfo = mapWidget.getMapModel().getMapInfo();
 		request.setClientMapInfo(mapInfo);
 		request.setLayerId(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID);
-		request.setFilter(layer.getFilter());
+		request.setFilter(filter);
 		request.setFeatureIds(new String[] {MapLayout.getInstance().getCurrentReferral().getId()});
-		GwtCommand command = new GwtCommand(PrepareReportingRequest.COMMAND);
-		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new ReportCallback());
+		return request;
 	}
 
 	/**

@@ -8,6 +8,8 @@ package org.ktunaxa.referral.server.command.dto;
 
 import org.geomajas.command.CommandRequest;
 
+import java.util.List;
+
 /**
  * Request object for {@link org.ktunaxa.referral.server.command.email.SendEmailCommand}.
  * 
@@ -27,6 +29,7 @@ public class SendEmailRequest implements CommandRequest {
 	private String replyTo;
 	private String subject;
 	private String text;
+	private List<String> attachmentUrls;
 
 	/**
 	 * From address for the e-mail. Required.
@@ -154,4 +157,21 @@ public class SendEmailRequest implements CommandRequest {
 		this.replyTo = replyTo;
 	}
 
+	/**
+	 * List of URLs which need to be added as attachment.
+	 *
+	 * @return attachment URLs
+	 */
+	public List<String> getAttachmentUrls() {
+		return attachmentUrls;
+	}
+
+	/**
+	 * List of URLs which need to be added as attachment.
+	 *
+	 * @param attachmentUrls attachment URLs
+	 */
+	public void setAttachmentUrls(List<String> attachmentUrls) {
+		this.attachmentUrls = attachmentUrls;
+	}
 }

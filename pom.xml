@@ -230,6 +230,12 @@
 			</dependency>
 
 			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.1.2</version>
+			</dependency>
+
+			<dependency>
 				<groupId>com.metaparadigm</groupId>
 				<artifactId>json-rpc</artifactId>
 				<version>1.0</version>

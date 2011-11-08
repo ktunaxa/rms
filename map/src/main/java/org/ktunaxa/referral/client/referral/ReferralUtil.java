@@ -145,4 +145,14 @@ public final class ReferralUtil {
 			return id;
 		}
 	}
+
+	/**
+	 * Get the full year from the referral id.
+	 *
+	 * @param referralId full referral id (e.g. "3500-10/11-0017")
+	 * @return year, e.g. "2011"
+	 */
+	public static String getYear(String referralId) {
+		return "20" + parse(referralId)[2];
+	}
 }

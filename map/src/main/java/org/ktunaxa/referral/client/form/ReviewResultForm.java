@@ -15,10 +15,12 @@ import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.layer.feature.FeatureTransaction;
@@ -27,7 +29,12 @@ import org.geomajas.layer.feature.attribute.LongAttribute;
 import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.geomajas.layer.feature.attribute.StringAttribute;
+import org.geomajas.plugin.rasterizing.client.image.ImageUrlService;
+import org.geomajas.plugin.rasterizing.client.image.ImageUrlServiceImpl;
 import org.ktunaxa.referral.client.gui.MapLayout;
+import org.ktunaxa.referral.client.referral.ReferralUtil;
+import org.ktunaxa.referral.server.command.dto.FinishFinalReportTaskRequest;
+import org.ktunaxa.referral.server.command.dto.FinishFinalReportTaskResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -58,6 +65,7 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 	private TextAreaItem conclusion;
 	private Button preview;
 	private boolean initialized;
+	private final ImageUrlService imageUrlService = new ImageUrlServiceImpl();
 
 	public ReviewResultForm() {
 		super(KtunaxaConstant.Email.RESULT);
@@ -173,6 +181,47 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 		});
 	}
 
+	@Override
+	public void validate(Runnable valid, final Runnable invalid) {
+		if (validate()) {
+			if (isSendMail()) {
+				FinishFinalReportTaskRequest request = new FinishFinalReportTaskRequest();
+				setEmailRequest(request);
+				request.setSendMail(isSendMail());
+				MapLayout mapLayout = MapLayout.getInstance();
+				request.setReferralId(ReferralUtil.createId(mapLayout.getCurrentReferral()));
+				request.setTaskId(mapLayout.getCurrentTask().getId());
+				request.setVariables(getVariables());
+
+				MapWidget mapWidget = MapLayout.getInstance().getMap();
+				VectorLayer layer = mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
+				imageUrlService.makeRasterizable(mapWidget);
+				request.setReportingRequest(FinalReportClickHandler.getPrepareReportingRequest(
+						mapWidget.getMapModel().getMapInfo(), layer.getFilter()));
+
+				GwtCommand command = new GwtCommand(FinishFinalReportTaskRequest.COMMAND);
+				command.setCommandRequest(request);
+				GwtCommandDispatcher.getInstance().execute(command,
+						new AbstractCommandCallback<FinishFinalReportTaskResponse>() {
+							public void execute(FinishFinalReportTaskResponse response) {
+								if (response.isSuccess()) {
+									MapLayout mapLayout = MapLayout.getInstance();
+									mapLayout.setReferralAndTask(mapLayout.getCurrentReferral(), null); // clear task
+									mapLayout.focusBpm();
+								} else {
+									GwtCommandDispatcher.getInstance().onCommandException(response);
+									invalid.run();
+								}
+							}
+						});
+			} else {
+				valid.run();
+			}
+		} else {
+			invalid.run();
+		}
+	}
+
 	/**
 	 * Click handler for preview button, update referral and display report.
 	 *
@@ -205,4 +254,5 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 			}
 			finalReportClickHandler.onClick(new ClickEvent(null));
 		}
-	}                                                                      }
+	}
+}

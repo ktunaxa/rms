@@ -49,8 +49,7 @@ class DocumentsLayout extends AbstractAttributeBlockLayout<DynamicForm> {
 		AssociationValue document = AttributeUtil.createEmptyAssociationValue(attributeInfo);
 		document.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT, false);
 		document.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL, false);
-		document.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL, false);
-		document.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE, 
+		document.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE,
 				new AssociationValue(new LongAttribute(1L),
 				new HashMap<String, PrimitiveAttribute<?>>()));
 		return document;

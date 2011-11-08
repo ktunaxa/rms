@@ -6,7 +6,6 @@
 
 package org.ktunaxa.referral.client.referral;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,6 @@ import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
-import org.geomajas.layer.feature.attribute.StringAttribute;
 import org.geomajas.widget.utility.gwt.client.wizard.WizardPage;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.FileUploadCompleteEvent;
@@ -185,13 +183,11 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 				String displayUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL);
 				String downloadUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DOWNLOAD_URL);
 				currentDocument = new AssociationValue();
-				Map<String, Attribute<?>> attributes = new HashMap<String, Attribute<?>>();
-				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, new StringAttribute(title));
-				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, new StringAttribute(title));
-				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID, new StringAttribute(documentId));
-				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL, new StringAttribute(displayUrl));
-				attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL, new StringAttribute(downloadUrl));
-				currentDocument.setAllAttributes(attributes);
+				currentDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, title);
+				currentDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, title);
+				currentDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID, documentId);
+				currentDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL, displayUrl);
+				currentDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL, downloadUrl);
 				getWizardData().getFeature().addOneToManyValue(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, currentDocument);
 				busyImg.setVisible(false);
 				show();

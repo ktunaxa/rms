@@ -165,15 +165,9 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 	@Override
 	public void validate(final Runnable valid, final Runnable invalid) {
 		if (validate()) {
-			if (sendMail.getValueAsBoolean()) {
+			if (isSendMail()) {
 				SendEmailRequest request = new SendEmailRequest();
-				request.setFrom(from.getValueAsString());
-				request.setReplyTo(from.getValueAsString());
-				request.setBcc(KtunaxaConstant.EMAIL_BCC);
-				request.setTo(to.getValueAsString());
-				request.setCc(cc.getValueAsString());
-				request.setSubject(subject.getValueAsString());
-				request.setText(message.getValueAsString());
+				setEmailRequest(request);
 				GwtCommand command = new GwtCommand(SendEmailRequest.COMMAND);
 				command.setCommandRequest(request);
 				GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<SendEmailResponse>() {
@@ -192,6 +186,30 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		} else {
 			invalid.run();
 		}
+	}
+
+	/**
+	 * Should the e-mail be sent or not?
+	 *
+	 * @return truen when -email should be sent
+	 */
+	protected boolean isSendMail() {
+		return sendMail.getValueAsBoolean();
+	}
+
+	/**
+	 * Fill the parameters for sending the e-mail from the form.
+	 *
+	 * @param request {@link SendEmailRequest} request object
+	 */
+	protected void setEmailRequest(SendEmailRequest request) {
+		request.setFrom(from.getValueAsString());
+		request.setReplyTo(from.getValueAsString());
+		request.setBcc(KtunaxaConstant.EMAIL_BCC);
+		request.setTo(to.getValueAsString());
+		request.setCc(cc.getValueAsString());
+		request.setSubject(subject.getValueAsString());
+		request.setText(message.getValueAsString());
 	}
 
 	@Override

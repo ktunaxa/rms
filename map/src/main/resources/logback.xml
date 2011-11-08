@@ -7,9 +7,9 @@
 		</encoder>
 	</appender>
 
-<!-- 
+	<!--
 	<logger name="org.geomajas.internal.service.CommandDispatcherImpl" level="TRACE" />
--->
+	-->
 	<logger name="org.ktunaxa.referral.server.command" level="DEBUG" />
 
 	<root level="INFO">
