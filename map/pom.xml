@@ -328,6 +328,8 @@
 				<configuration>
 					<excludes>
 						<exclude>tools/*.java</exclude>
+						<exclude>**/SendEmailTest.java</exclude>
+						<exclude>**/CmisServiceTest.java</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

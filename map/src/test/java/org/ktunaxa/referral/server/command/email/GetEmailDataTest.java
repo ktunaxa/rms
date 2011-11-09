@@ -38,11 +38,14 @@ public class GetEmailDataTest {
 		task.addVariable("referralName", "Test referral");
 		GetEmailDataRequest request = new GetEmailDataRequest(KtunaxaConstant.Email.LEVEL_0);
 		request.setTask(task);
-		GetEmailDataResponse response = (GetEmailDataResponse) dispatcher.execute(GetEmailDataRequest.COMMAND, request, null, "en");
+		GetEmailDataResponse response = (GetEmailDataResponse) dispatcher.execute(
+				GetEmailDataRequest.COMMAND, request, null, "en");
 		String from = response.getFrom();
 		Assert.assertTrue("bla@ktunaxa.org".equals(from));
 		String body = response.getBody();
-		Assert.assertTrue("Referral 12345 Test referral\n\nWe have received this referral but do not think we need to take action to process it. For us it has engagement level 0.\n\nKind regards,\nKtunaxa Nation Council".equals(body));
+		Assert.assertEquals("Referral 12345 Test referral\n\nWe have received this referral but do not think we " +
+				"need to take action to process it. For us it has engagement level 0.\n\nKind regards,\n" +
+				"Ktunaxa Nation Council", body);
 	}
 
 }

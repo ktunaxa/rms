@@ -6,10 +6,7 @@
 
 package org.ktunaxa.referral.server.command.email;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.geomajas.command.Command;
 import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
@@ -23,6 +20,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
+import javax.activation.DataHandler;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -30,6 +28,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 		if (null == from) {
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "from");
 		}
-		final String to = request.getFrom();
+		final String to = request.getTo();
 		if (null == to) {
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "to");
 		}
@@ -74,22 +73,29 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 				addReplyTo(mimeMessage, request.getReplyTo());
 				mimeMessage.setFrom(new InternetAddress(from));
 				mimeMessage.setSubject(request.getSubject());
-				mimeMessage.setText(request.getText());
+				//mimeMessage.setText(request.getText());
 
 				List<String> attachments = request.getAttachmentUrls();
+				MimeMultipart mp = new MimeMultipart();
+				MimeBodyPart mailBody = new MimeBodyPart();
+				mailBody.setText(request.getText());
+				mp.addBodyPart(mailBody);
 				if (null != attachments && !attachments.isEmpty()) {
-					MimeMultipart mp = new MimeMultipart();
 					for (String url : attachments) {
 						log.debug("add mime part for {}", url);
-						HttpClient httpClient = new DefaultHttpClient();
-						HttpGet httpGet = new HttpGet(url);
-						attachmentConnections.add(httpGet);
-						HttpResponse httpResponse = httpClient.execute(httpGet);
-						mp.addBodyPart(new MimeBodyPart(httpResponse.getEntity().getContent()));
+						MimeBodyPart part = new MimeBodyPart();
+						String filename = url;
+						int pos = filename.lastIndexOf('/');
+						if (pos >= 0) {
+							filename = filename.substring(pos + 1);
+						}
+						part.setFileName(filename);
+						part.setDataHandler(new DataHandler(new URL(url)));
+						mp.addBodyPart(part);
 					}
-					mimeMessage.setContent(mp);
-					log.debug("message {}", mimeMessage);
 				}
+				mimeMessage.setContent(mp);
+				log.debug("message {}", mimeMessage);
 			}
 		};
 		try {

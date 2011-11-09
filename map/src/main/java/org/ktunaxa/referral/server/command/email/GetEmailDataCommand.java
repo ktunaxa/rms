@@ -40,12 +40,14 @@ public class GetEmailDataCommand implements Command<GetEmailDataRequest, GetEmai
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Template where title = '" + request.getNotifier() + "'");
 		List list = query.list();
-		Template result = (Template) list.get(0);
-		if (null != result) {
-			response.setFrom(result.getMailSender());
-			TemplateFiller filler = new TemplateFiller(request.getTask(), result);
-			response.setSubject(filler.getFilledSubject());
-			response.setBody(filler.getFilledMessage());
+		if (!list.isEmpty()) {
+			Template result = (Template) list.get(0);
+			if (null != result) {
+				response.setFrom(result.getMailSender());
+				TemplateFiller filler = new TemplateFiller(request.getTask(), result);
+				response.setSubject(filler.getFilledSubject());
+				response.setBody(filler.getFilledMessage());
+			}
 		}
 	}
 }
