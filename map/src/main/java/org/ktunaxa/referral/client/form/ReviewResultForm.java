@@ -184,39 +184,35 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 	@Override
 	public void validate(Runnable valid, final Runnable invalid) {
 		if (validate()) {
-			if (isSendMail()) {
-				FinishFinalReportTaskRequest request = new FinishFinalReportTaskRequest();
-				setEmailRequest(request);
-				request.setSendMail(isSendMail());
-				MapLayout mapLayout = MapLayout.getInstance();
-				request.setReferralId(ReferralUtil.createId(mapLayout.getCurrentReferral()));
-				request.setTaskId(mapLayout.getCurrentTask().getId());
-				request.setVariables(getVariables());
+			FinishFinalReportTaskRequest request = new FinishFinalReportTaskRequest();
+			setEmailRequest(request);
+			request.setSendMail(isSendMail());
+			MapLayout mapLayout = MapLayout.getInstance();
+			request.setReferralId(ReferralUtil.createId(mapLayout.getCurrentReferral()));
+			request.setTaskId(mapLayout.getCurrentTask().getId());
+			request.setVariables(getVariables());
 
-				MapWidget mapWidget = MapLayout.getInstance().getMap();
-				VectorLayer layer = mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
-				imageUrlService.makeRasterizable(mapWidget);
-				request.setReportingRequest(FinalReportClickHandler.getPrepareReportingRequest(
-						mapWidget.getMapModel().getMapInfo(), layer.getFilter()));
+			MapWidget mapWidget = MapLayout.getInstance().getMap();
+			VectorLayer layer = mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
+			imageUrlService.makeRasterizable(mapWidget);
+			request.setReportingRequest(FinalReportClickHandler.getPrepareReportingRequest(
+					mapWidget.getMapModel().getMapInfo(), layer.getFilter()));
 
-				GwtCommand command = new GwtCommand(FinishFinalReportTaskRequest.COMMAND);
-				command.setCommandRequest(request);
-				GwtCommandDispatcher.getInstance().execute(command,
-						new AbstractCommandCallback<FinishFinalReportTaskResponse>() {
-							public void execute(FinishFinalReportTaskResponse response) {
-								if (response.isSuccess()) {
-									MapLayout mapLayout = MapLayout.getInstance();
-									mapLayout.setReferralAndTask(mapLayout.getCurrentReferral(), null); // clear task
-									mapLayout.focusBpm();
-								} else {
-									GwtCommandDispatcher.getInstance().onCommandException(response);
-									invalid.run();
-								}
+			GwtCommand command = new GwtCommand(FinishFinalReportTaskRequest.COMMAND);
+			command.setCommandRequest(request);
+			GwtCommandDispatcher.getInstance().execute(command,
+					new AbstractCommandCallback<FinishFinalReportTaskResponse>() {
+						public void execute(FinishFinalReportTaskResponse response) {
+							if (response.isSuccess()) {
+								MapLayout mapLayout = MapLayout.getInstance();
+								mapLayout.setReferralAndTask(mapLayout.getCurrentReferral(), null); // clear task
+								mapLayout.focusBpm();
+							} else {
+								GwtCommandDispatcher.getInstance().onCommandException(response);
+								invalid.run();
 							}
-						});
-			} else {
-				valid.run();
-			}
+						}
+					});
 		} else {
 			invalid.run();
 		}

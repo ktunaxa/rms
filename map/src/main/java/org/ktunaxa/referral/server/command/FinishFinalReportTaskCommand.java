@@ -97,10 +97,11 @@ public class FinishFinalReportTaskCommand
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "referralId");
 		}
 
+		String token = securityContext.getToken();
+
 		// build report and save as in referral
-		CommandResponse prepareReportResponse =
-				commandDispatcher.execute(PrepareReportingRequest.COMMAND, request.getPrepareReportingRequest(),
-						securityContext.getToken(), null);
+		CommandResponse prepareReportResponse = commandDispatcher.execute(PrepareReportingRequest.COMMAND,
+				request.getPrepareReportingRequest(), token, null);
 		if (prepareReportResponse.isError()) {
 			response.getErrors().addAll(prepareReportResponse.getErrors());
 			response.getErrorMessages().addAll(prepareReportResponse.getErrorMessages());
@@ -183,8 +184,7 @@ public class FinishFinalReportTaskCommand
 			log.debug("e-mail attachments {}", attachments);
 			request.setAttachmentUrls(attachments);
 			log.debug("Going to send final report e-mail.");
-			CommandResponse emailResponse = commandDispatcher.execute(SendEmailRequest.COMMAND, request,
-					securityContext.getToken(), null);
+			CommandResponse emailResponse = commandDispatcher.execute(SendEmailRequest.COMMAND, request, token, null);
 			if (emailResponse.isError() || !(emailResponse instanceof SuccessCommandResponse) ||
 					!((SuccessCommandResponse) emailResponse).isSuccess()) {
 				response.getErrors().addAll(emailResponse.getErrors());
@@ -200,9 +200,8 @@ public class FinishFinalReportTaskCommand
 		finishTaskRequest.setTaskId(request.getTaskId());
 		finishTaskRequest.setVariables(request.getVariables());
 		CommandResponse finishResponse =
-				commandDispatcher.execute(FinishTaskRequest.COMMAND, request, securityContext.getToken(), null );
-		if (finishResponse.isError() || !(finishResponse instanceof SuccessCommandResponse) ||
-					!((SuccessCommandResponse) finishResponse).isSuccess()) {
+				commandDispatcher.execute(FinishTaskRequest.COMMAND, finishTaskRequest, token, null );
+		if (finishResponse.isError()) {
 			response.getErrors().addAll(finishResponse.getErrors());
 			response.getErrorMessages().addAll(finishResponse.getErrorMessages());
 			response.getExceptions().addAll(finishResponse.getExceptions());
