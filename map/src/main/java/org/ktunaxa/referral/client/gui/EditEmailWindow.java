@@ -37,20 +37,9 @@ public class EditEmailWindow extends Window {
 		centerInPage();
 		setCanDragResize(true);
 		setShowMinimizeButton(false);
-		addCloseClickHandler(new CloseClickHandler() {
-
-			public void onCloseClick(CloseClientEvent event) {
-				hide();
-				form.disableButtons();
-			}
-		});
-		form.getCancelButton().addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				hide();
-				form.disableButtons();
-			}
-		});
+		MyCloseClickHandler closeClickHandler = new MyCloseClickHandler();
+		addCloseClickHandler(closeClickHandler);
+		form.getCancelButton().addClickHandler(closeClickHandler);
 		form.setFinishHandler(new Runnable() {
 			public void run() {
 				hide();
@@ -83,5 +72,16 @@ public class EditEmailWindow extends Window {
 
 	public void setEmailTemplate(String notifier) {
 		form.refresh(notifier, dummy);
+	}
+
+	private class MyCloseClickHandler implements ClickHandler, CloseClickHandler {
+		public void onClick(ClickEvent event) {
+			hide();
+			form.disableButtons();
+		}
+
+		public void onCloseClick(CloseClientEvent event) {
+			onClick(null);
+		}
 	}
 }

@@ -41,5 +41,33 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		</property>
 	</bean>
 
+	<bean id="systemReportView"
+		class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
+		<property name="url" value="WEB-INF/reports/systemReport.jrxml" />
+		<property name="reportDataKey" value="datasource" />
+		<property name="formatKey" value="format" />
+		<property name="formatMappings">
+			<map>
+				<entry key="csv"
+					value="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView" />
+				<entry key="html"
+					value="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView" />
+				<entry key="pdf"
+					value="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView" />
+				<entry key="xls"
+					value="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView" />
+				<entry key="odt"
+					value="org.geomajas.plugin.reporting.mvc.JasperReportsOdtView" />
+				<entry key="docx"
+					value="org.geomajas.plugin.reporting.mvc.JasperReportsDocxView" />
+			</map>
+		</property>
+		<property name="subReportUrls">
+			<map>
+				<entry key="part1SubReport" value="/WEB-INF/reports/systemReportPart1.jrxml"/>
+			</map>
+		</property>
+	</bean>
+
 </beans>
 

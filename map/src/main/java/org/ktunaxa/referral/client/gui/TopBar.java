@@ -63,6 +63,7 @@ public class TopBar extends HLayout {
 	private ToolStripButton userButton;
 	
 	private EditEmailWindow emailWindow = new EditEmailWindow();
+	private SystemReportWindow systemReportWindow = new SystemReportWindow();
 	private ToolStripSeparator separator;
 	private ToolStripMenuButton menuButton;
 
@@ -156,18 +157,14 @@ public class TopBar extends HLayout {
 			}
 		});
 
-//		TODO add report edit.
-//		MenuItemSeparator separator = new MenuItemSeparator();
-//		
-//		MenuItem editEmails = new MenuItem("Edit email...", "icons/16/export1.png");
-//		Menu emailTemplates = new Menu();
-//		emailTemplates.setItems(
-//					new MenuItem("XML"),
-//					new MenuItem("CSV"),
-//					new MenuItem("Plain text"));
-//		editEmails.setSubmenu(emailTemplates);
+		MenuItem systemReport = new MenuItem("System report");
+		systemReport.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
+			public void onClick(MenuItemClickEvent menuItemClickEvent) {
+				systemReportWindow.show();
+			}
+		});
 
-		menu.setItems(editEmails, closeReferral);
+		menu.setItems(editEmails, closeReferral, systemReport);
 
 		return new ToolStripMenuButton(ADMIN, menu);
 	}

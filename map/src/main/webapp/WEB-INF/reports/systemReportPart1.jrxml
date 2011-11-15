@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+  -->
+
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="570" pageHeight="1008" columnWidth="530" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
+	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="content" class="java.lang.String"/>
+	<field name="includeInReport" class="java.lang.Boolean"/>
+	<field name="reportContent" class="java.lang.String"/>
+	<field name="createdBy" class="java.lang.String"/>
+	<field name="creationDate" class="java.util.Date"/>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="200" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Referral Comments]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{includeInReport}]]></printWhenExpression>
+			<line>
+				<reportElement x="14" y="0" width="516" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="14" y="2" width="558" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportContent}]]></textFieldExpression>
+			</textField>
+			<ellipse>
+				<reportElement x="0" y="4" width="4" height="4"/>
+			</ellipse>
+		</band>
+	</detail>
+</jasperReport>
