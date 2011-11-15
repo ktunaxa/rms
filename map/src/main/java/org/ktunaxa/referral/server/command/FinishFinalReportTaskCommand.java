@@ -32,6 +32,7 @@ import org.geomajas.service.DispatcherUrlService;
 import org.geomajas.service.FilterService;
 import org.geomajas.service.GeoService;
 import org.ktunaxa.referral.client.form.FinalReportClickHandler;
+import org.ktunaxa.referral.client.gui.DocumentBlock;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.command.dto.FinishFinalReportTaskRequest;
 import org.ktunaxa.referral.server.command.dto.FinishFinalReportTaskResponse;
@@ -176,7 +177,8 @@ public class FinishFinalReportTaskCommand
 			for (AssociationValue doc : newDocuments.getValue()) {
 				log.debug("include " + doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT));
 				if ((Boolean) doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT)) {
-					String url = (String) doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL);
+					String url = DocumentBlock.addGuestAccess(
+							(String) doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
 					log.debug("Add attachment {}", url);
 					attachments.add(url);
 				}

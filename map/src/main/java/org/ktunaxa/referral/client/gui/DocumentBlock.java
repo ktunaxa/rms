@@ -36,6 +36,9 @@ public class DocumentBlock extends AbstractAttributeBlock {
 			"[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png";
 	private static final String BLOCK_STYLE = "documentBlock";
 	private static final String BLOCK_TITLE_STYLE = "documentBlockTitle";
+	private static final String GUEST_ACCESS_PARAMETER = "guest=true";
+	private static final String PARAMETER_SEPARATOR_FIRST = "?";
+	private static final String PARAMETER_SEPARATOR_MORE = "&";
 
 	private HLayout title;
 
@@ -220,11 +223,21 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	}
 
 	private String getDocumentDisplayUrl() {
-		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL );
+		return addGuestAccess((String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL));
+	}
+
+	public static String addGuestAccess(String url) {
+		if (url.contains(GUEST_ACCESS_PARAMETER)) {
+			return url;
+		} else if (url.contains(PARAMETER_SEPARATOR_FIRST)) {
+			return url + PARAMETER_SEPARATOR_MORE + GUEST_ACCESS_PARAMETER;
+		} else {
+			return url + PARAMETER_SEPARATOR_FIRST + GUEST_ACCESS_PARAMETER;
+		}
 	}
 
 	private String getDocumentDownloadUrl() {
-		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL);
+		return addGuestAccess((String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
 	}
 
 	private Date getAdditionDate() {
