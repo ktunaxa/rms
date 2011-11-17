@@ -118,6 +118,11 @@ public class SystemReportWindow extends Window {
 		return new int[] { date.getYear() + FIRST_YEAR, date.getMonth() + 1, date.getDate() };
 	}
 
+	/**
+	 * Button to select a period.
+	 *
+	 * @author Joachim Van der Auwera
+	 */
 	private class PeriodButton extends IButton {
 
 		public PeriodButton(String label, final int what, final int how) {
@@ -132,6 +137,11 @@ public class SystemReportWindow extends Window {
 		}
 	}
 
+	/**
+	 * Button to create a report.
+	 *
+	 * @author Joachim Van der Auwera
+	 */
 	private class ReportButton extends IButton {
 
 		public ReportButton(String label, final String format) {

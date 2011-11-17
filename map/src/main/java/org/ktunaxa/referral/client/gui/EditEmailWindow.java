@@ -74,6 +74,11 @@ public class EditEmailWindow extends Window {
 		form.refresh(notifier, dummy);
 	}
 
+	/**
+	 * Handler to close the e-mail window. This also disables the buttons.
+	 *
+	 * @author Joachim Van der Auwera
+	 */
 	private class MyCloseClickHandler implements ClickHandler, CloseClickHandler {
 		public void onClick(ClickEvent event) {
 			hide();

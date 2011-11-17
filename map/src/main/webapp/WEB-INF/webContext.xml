@@ -65,6 +65,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="subReportUrls">
 			<map>
 				<entry key="part1SubReport" value="/WEB-INF/reports/systemReportPart1.jrxml"/>
+				<entry key="part2SubReport" value="/WEB-INF/reports/systemReportPart2.jrxml"/>
+				<entry key="part3SubReport" value="/WEB-INF/reports/systemReportPart3.jrxml"/>
+				<entry key="part4SubReport" value="/WEB-INF/reports/systemReportPart4.jrxml"/>
 			</map>
 		</property>
 	</bean>
