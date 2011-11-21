@@ -1,52 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ This is part of the Ktunaxa referral system.
-  ~
-  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
-  -->
-
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="570" pageHeight="1008" columnWidth="530" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
-	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
+	<parameter name="dateFrom" class="java.util.Date"/>
+	<parameter name="dateTill" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+  count(*),
+  referral_external_agency_type.id,
+  referral_external_agency_type.title,
+  referral_external_agency_type.description,
+  referral.status_id
+FROM
+  referral left outer join referral_external_agency_type
+  on referral_external_agency_type.id = referral.external_agency_type_id
+WHERE
+  referral.create_date >= $P{dateFrom}
+  AND referral.create_date <= $P{dateTill}
+  AND referral.status_id <> 1
+GROUP BY
+  referral_external_agency_type.id,
+  referral_external_agency_type.title,
+  referral_external_agency_type.description,
+  referral.status_id
+;]]>
+	</queryString>
+	<field name="count" class="java.lang.Long"/>
+	<field name="id" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
-	<field name="content" class="java.lang.String"/>
-	<field name="includeInReport" class="java.lang.Boolean"/>
-	<field name="reportContent" class="java.lang.String"/>
-	<field name="createdBy" class="java.lang.String"/>
-	<field name="creationDate" class="java.util.Date"/>
-	<columnHeader>
-		<band height="15" splitType="Stretch">
+	<field name="description" class="java.lang.String"/>
+	<field name="status_id" class="java.lang.Integer"/>
+	<title>
+		<band height="15">
 			<staticText>
-				<reportElement x="0" y="0" width="200" height="15"/>
+				<reportElement x="0" y="0" width="530" height="15"/>
 				<textElement>
-					<font size="11"/>
+					<font size="11" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Referral Comments]]></text>
+				<text><![CDATA[Referrals created per external agency type]]></text>
 			</staticText>
 		</band>
-	</columnHeader>
+	</title>
 	<detail>
-		<band height="18" splitType="Stretch">
-			<printWhenExpression><![CDATA[$F{includeInReport}]]></printWhenExpression>
-			<line>
-				<reportElement x="14" y="0" width="516" height="1"/>
-				<graphicElement>
-					<pen lineWidth="0.5"/>
-				</graphicElement>
-			</line>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="14" y="2" width="558" height="15"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{reportContent}]]></textFieldExpression>
-			</textField>
-			<ellipse>
-				<reportElement x="0" y="4" width="4" height="4"/>
-			</ellipse>
-		</band>
+		<band splitType="Stretch"/>
 	</detail>
+	<columnFooter>
+		<band height="157">
+			<pie3DChart>
+				<chart>
+					<reportElement x="0" y="0" width="530" height="157"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend position="Right"/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{id}]]></keyExpression>
+					<valueExpression><![CDATA[$F{count}]]></valueExpression>
+					<labelExpression><![CDATA[$F{title}]]></labelExpression>
+				</pieDataset>
+				<pie3DPlot isShowLabels="true" isCircular="false" labelFormat="{0} {2}" legendLabelFormat="count {1} ({2})">
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</columnFooter>
 </jasperReport>

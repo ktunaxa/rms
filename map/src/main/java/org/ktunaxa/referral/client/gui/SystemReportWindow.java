@@ -7,6 +7,7 @@
 package org.ktunaxa.referral.client.gui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -18,7 +19,9 @@ import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.WidgetLayout;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import java.util.Date;
@@ -72,6 +75,8 @@ public class SystemReportWindow extends Window {
 		selectButtons.addMember(new PeriodButton("This month", MONTH, CURRENT));
 		selectButtons.addMember(new PeriodButton("Last month", MONTH, LAST));
 		formLayout.addMember(selectButtons);
+
+		setDates(MONTH, CURRENT); // default statistics is this month
 
 		DynamicForm datesForm = new DynamicForm();
 		datesForm.setWidth100();
@@ -129,12 +134,16 @@ public class SystemReportWindow extends Window {
 			super(label);
 			this.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					Date now = new Date();
-					fromDate.setValue(dateStart(now, what, how));
-					tillDate.setValue(dateEnd(now, what, how));
+					setDates(what, how);
 				}
 			});
 		}
+	}
+
+	private void setDates(final int what, final int how) {
+		Date now = new Date();
+		fromDate.setValue(dateStart(now, what, how));
+		tillDate.setValue(dateEnd(now, what, how));
 	}
 
 	/**
@@ -148,8 +157,12 @@ public class SystemReportWindow extends Window {
 			super(label);
 			this.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
+					DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
 					String url = GWT.getHostPageBaseURL();
-					url += "d/reporting/f/" + KtunaxaConstant.LAYER_REFERRAL_SERVER_ID + "/" + "systemReport." + format;
+					url += "d/systemreport/" + KtunaxaConstant.LAYER_REFERRAL_SERVER_ID + "/" + "systemReport." +
+							format + "?dateFrom=" + formatter.format(fromDate.getValueAsDate()) + "&dateTill=" +
+							formatter.format(tillDate.getValueAsDate()) + "&userToken=" +
+							GwtCommandDispatcher.getInstance().getUserToken();
 					com.google.gwt.user.client.Window.open(url, "_blank", null);
 				}
 			});
