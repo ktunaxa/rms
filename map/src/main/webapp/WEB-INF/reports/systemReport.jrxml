@@ -3,10 +3,13 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="part1SubReport" class="net.sf.jasperreports.engine.JasperReport"/>
-	<parameter name="part2SubReport" class="net.sf.jasperreports.engine.JasperReport"/>
-	<parameter name="part3SubReport" class="net.sf.jasperreports.engine.JasperReport"/>
-	<parameter name="part4SubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="eaTypePieSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="eaTypeRespSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="statusPieSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="eaSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="eaTypeElSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="eaTypeElRespSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="eaTypeActivitySubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="dateFrom" class="java.util.Date"/>
 	<parameter name="dateTill" class="java.util.Date"/>
 	<queryString>
@@ -104,7 +107,71 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<!--
 				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
 				-->
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{part1SubReport}]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypePieSubReport}]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="105" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="572" height="104"/>
+				<subreportParameter name="dateFrom">
+					<subreportParameterExpression><![CDATA[$P{dateFrom}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dateTill">
+					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<!--
+				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
+				-->
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypeRespSubReport}]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="105" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="572" height="104"/>
+				<subreportParameter name="dateFrom">
+					<subreportParameterExpression><![CDATA[$P{dateFrom}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dateTill">
+					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<!--
+				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
+				-->
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypeElSubReport}]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="105" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="572" height="104"/>
+				<subreportParameter name="dateFrom">
+					<subreportParameterExpression><![CDATA[$P{dateFrom}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dateTill">
+					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<!--
+				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
+				-->
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypeElRespSubReport}]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="105" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="572" height="104"/>
+				<subreportParameter name="dateFrom">
+					<subreportParameterExpression><![CDATA[$P{dateFrom}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dateTill">
+					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<!--
+				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
+				-->
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypeActivitySubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -120,7 +187,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<!--
 				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart2.jasper"]]></subreportExpression>
 				-->
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{part2SubReport}]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -133,20 +200,10 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{part3SubReport}]]></subreportExpression>
-			</subreport>
-		</band>
-		<band height="105" splitType="Stretch">
-			<subreport>
-				<reportElement x="0" y="0" width="572" height="104"/>
-				<subreportParameter name="dateFrom">
-					<subreportParameterExpression><![CDATA[$P{dateFrom}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="dateTill">
-					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{part4SubReport}]]></subreportExpression>
+				<!--
+				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
+				-->
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{statusPieSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

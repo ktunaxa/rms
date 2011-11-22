@@ -10,12 +10,16 @@
   count(*),
   referral_external_agency_type.id,
   referral_external_agency_type.title,
-  referral_external_agency_type.description,
+  referral_type.id as referral_type_id,
+  referral_type.title as referral_type_title,
   referral.status_id,
-  referral.external_agency_name
+  referral.application_type_id
 FROM
-  referral left outer join referral_external_agency_type
+  referral
+  left outer join referral_external_agency_type
   on referral_external_agency_type.id = referral.external_agency_type_id
+  left outer join referral_type
+  on referral_type.id = referral.type_id
 WHERE
   referral.create_date >= $P{dateFrom}
   AND referral.create_date <= $P{dateTill}
@@ -23,17 +27,19 @@ WHERE
 GROUP BY
   referral_external_agency_type.id,
   referral_external_agency_type.title,
-  referral_external_agency_type.description,
+  referral_type.id,
+  referral_type.title,
   referral.status_id,
-  referral.external_agency_name
+  referral.application_type_id
 ;]]>
 	</queryString>
 	<field name="count" class="java.lang.Long"/>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
-	<field name="description" class="java.lang.String"/>
+	<field name="referral_type_id" class="java.lang.Integer"/>
+	<field name="referral_type_title" class="java.lang.String"/>
 	<field name="status_id" class="java.lang.Integer"/>
-	<field name="external_agency_name" class="java.lang.String"/>
+	<field name="application_type_id" class="java.lang.Integer"/>
 	<variable name="count" class="java.lang.Long" resetType="Group" resetGroup="externalAgencyType" calculation="Sum">
 		<variableExpression><![CDATA[$F{count}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -69,9 +75,9 @@ GROUP BY
 			<staticText>
 				<reportElement x="0" y="0" width="530" height="15"/>
 				<textElement>
-					<font size="11" isBold="true" isItalic="true"/>
+					<font size="11" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
 				</textElement>
-				<text><![CDATA[External agencies for which referrals are created]]></text>
+				<text><![CDATA[Activity by external agency type]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -89,7 +95,7 @@ GROUP BY
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[External agency]]></text>
+				<text><![CDATA[Activity]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="457" y="0" width="73" height="15"/>
@@ -120,7 +126,7 @@ GROUP BY
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{external_agency_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{referral_type_title}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="457" y="3" width="73" height="15"/>

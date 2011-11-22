@@ -11,7 +11,8 @@
   referral_external_agency_type.id,
   referral_external_agency_type.title,
   referral_external_agency_type.description,
-  referral.status_id
+  referral.status_id,
+  referral.final_assessment_level
 FROM
   referral left outer join referral_external_agency_type
   on referral_external_agency_type.id = referral.external_agency_type_id
@@ -23,7 +24,8 @@ GROUP BY
   referral_external_agency_type.id,
   referral_external_agency_type.title,
   referral_external_agency_type.description,
-  referral.status_id
+  referral.status_id,
+  referral.final_assessment_level
 ;]]>
 	</queryString>
 	<field name="count" class="java.lang.Long"/>
@@ -31,10 +33,48 @@ GROUP BY
 	<field name="title" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="status_id" class="java.lang.Integer"/>
-	<variable name="count" class="java.lang.Long" calculation="Sum">
+	<field name="final_assessment_level" class="java.lang.Integer"/>
+	<variable name="count" class="java.lang.Long" resetType="Group" resetGroup="externalAgencyType" calculation="Sum">
 		<variableExpression><![CDATA[$F{count}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
+	<variable name="countAll" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{count}]]></variableExpression>
+	</variable>
+	<group name="externalAgencyType">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupHeader>
+			<band height="2"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<line>
+					<reportElement x="457" y="0" width="73" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="457" y="3" width="73" height="15"/>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{count}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="15">
+			<staticText>
+				<reportElement x="0" y="0" width="530" height="15"/>
+				<textElement>
+					<font size="11" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
+				</textElement>
+				<text><![CDATA[Engagement level by external agency type]]></text>
+			</staticText>
+		</band>
+	</title>
 	<columnHeader>
 		<band height="15" splitType="Stretch">
 			<staticText>
@@ -49,7 +89,7 @@ GROUP BY
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[Description]]></text>
+				<text><![CDATA[Engagement level]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="457" y="0" width="73" height="15"/>
@@ -80,7 +120,7 @@ GROUP BY
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{final_assessment_level}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="457" y="3" width="73" height="15"/>
@@ -96,7 +136,7 @@ GROUP BY
 			<line>
 				<reportElement x="457" y="0" width="73" height="1"/>
 				<graphicElement>
-					<pen lineWidth="0.5"/>
+					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<textField>
@@ -104,8 +144,15 @@ GROUP BY
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{count}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{countAll}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="268" y="3" width="179" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Total number of referrals :]]></text>
+			</staticText>
 		</band>
 	</columnFooter>
 </jasperReport>

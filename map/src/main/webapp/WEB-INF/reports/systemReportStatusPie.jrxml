@@ -3,42 +3,42 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="dateFrom" class="java.util.Date"/>
-	<parameter name="dateTill" class="java.util.Date"/>
+	<parameter name="dateFrom" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateTill" class="java.util.Date">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
   count(*),
-  referral_external_agency_type.id,
-  referral_external_agency_type.title,
-  referral_external_agency_type.description,
+  referral_status.id,
+  referral_status.title,
   referral.status_id
 FROM
-  referral left outer join referral_external_agency_type
-  on referral_external_agency_type.id = referral.external_agency_type_id
+  referral left outer join referral_status
+  on referral_status.id = referral.status_id
 WHERE
   referral.create_date >= $P{dateFrom}
   AND referral.create_date <= $P{dateTill}
-  AND referral.status_id <> 1
 GROUP BY
-  referral_external_agency_type.id,
-  referral_external_agency_type.title,
-  referral_external_agency_type.description,
+  referral_status.id,
+  referral_status.title,
   referral.status_id
 ;]]>
 	</queryString>
 	<field name="count" class="java.lang.Long"/>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
-	<field name="description" class="java.lang.String"/>
 	<field name="status_id" class="java.lang.Integer"/>
 	<title>
 		<band height="15">
 			<staticText>
 				<reportElement x="0" y="0" width="530" height="15"/>
 				<textElement>
-					<font size="11" isBold="true" isItalic="true"/>
+					<font size="11" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
 				</textElement>
-				<text><![CDATA[Referrals created per external agency type]]></text>
+				<text><![CDATA[Referrals by status]]></text>
 			</staticText>
 		</band>
 	</title>

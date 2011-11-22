@@ -64,10 +64,13 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		</property>
 		<property name="subReportUrls">
 			<map>
-				<entry key="part1SubReport" value="/WEB-INF/reports/systemReportPart1.jrxml"/>
-				<entry key="part2SubReport" value="/WEB-INF/reports/systemReportPart2.jrxml"/>
-				<entry key="part3SubReport" value="/WEB-INF/reports/systemReportPart3.jrxml"/>
-				<entry key="part4SubReport" value="/WEB-INF/reports/systemReportPart4.jrxml"/>
+				<entry key="eaTypePieSubReport" value="/WEB-INF/reports/systemReportEaTypePie.jrxml"/>
+				<entry key="eaTypeRespSubReport" value="/WEB-INF/reports/systemReportEaTypeResp.jrxml"/>
+				<entry key="eaSubReport" value="/WEB-INF/reports/systemReportEa.jrxml"/>
+				<entry key="eaTypeActivitySubReport" value="/WEB-INF/reports/systemReportEaTypeActivity.jrxml"/>
+				<entry key="eaTypeElSubReport" value="/WEB-INF/reports/systemReportEaTypeEl.jrxml"/>
+				<entry key="eaTypeElRespSubReport" value="/WEB-INF/reports/systemReportEaTypeElResp.jrxml"/>
+				<entry key="statusPieSubReport" value="/WEB-INF/reports/systemReportStatusPie.jrxml"/>
 			</map>
 		</property>
 	</bean>
