@@ -11,7 +11,6 @@
   referral_external_agency_type.id,
   referral_external_agency_type.title,
   referral_external_agency_type.description,
-  referral.status_id,
   referral.final_assessment_level
 FROM
   referral left outer join referral_external_agency_type
@@ -24,7 +23,6 @@ GROUP BY
   referral_external_agency_type.id,
   referral_external_agency_type.title,
   referral_external_agency_type.description,
-  referral.status_id,
   referral.final_assessment_level
 ;]]>
 	</queryString>
@@ -32,7 +30,6 @@ GROUP BY
 	<field name="id" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
-	<field name="status_id" class="java.lang.Integer"/>
 	<field name="final_assessment_level" class="java.lang.Integer"/>
 	<title>
 		<band height="15">
@@ -62,7 +59,7 @@ GROUP BY
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA[$F{count}]]></seriesExpression>
+						<seriesExpression><![CDATA[$F{final_assessment_level}]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{title}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{count}]]></valueExpression>
 					</categorySeries>

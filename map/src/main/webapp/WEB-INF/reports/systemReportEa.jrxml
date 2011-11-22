@@ -11,7 +11,6 @@
   referral_external_agency_type.id,
   referral_external_agency_type.title,
   referral_external_agency_type.description,
-  referral.status_id,
   referral.external_agency_name
 FROM
   referral left outer join referral_external_agency_type
@@ -24,7 +23,6 @@ GROUP BY
   referral_external_agency_type.id,
   referral_external_agency_type.title,
   referral_external_agency_type.description,
-  referral.status_id,
   referral.external_agency_name
 ;]]>
 	</queryString>
@@ -32,7 +30,6 @@ GROUP BY
 	<field name="id" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
-	<field name="status_id" class="java.lang.Integer"/>
 	<field name="external_agency_name" class="java.lang.String"/>
 	<variable name="count" class="java.lang.Long" resetType="Group" resetGroup="externalAgencyType" calculation="Sum">
 		<variableExpression><![CDATA[$F{count}]]></variableExpression>
@@ -132,6 +129,9 @@ GROUP BY
 		</band>
 	</detail>
 	<columnFooter>
+		<band/>
+	</columnFooter>
+	<lastPageFooter>
 		<band height="18">
 			<line>
 				<reportElement x="457" y="0" width="73" height="1"/>
@@ -154,5 +154,5 @@ GROUP BY
 				<text><![CDATA[Total number of referrals :]]></text>
 			</staticText>
 		</band>
-	</columnFooter>
+	</lastPageFooter>
 </jasperReport>

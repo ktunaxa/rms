@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Referral Management System Report" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="725"/>
 	<parameter name="eaTypePieSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="eaTypeRespSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="statusPieSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
@@ -19,7 +19,7 @@ FROM
      referral
 WHERE
      create_date >= $P{dateFrom} AND create_date <= $P{dateTill}
-     AND status_id <> 1]]>
+     AND status_id <> 1 AND status_id <> 4]]>
 	</queryString>
 	<field name="count" class="java.lang.Long"/>
 	<background>
@@ -52,28 +52,28 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 	<detail>
 		<band height="40" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="83" height="15"/>
+				<reportElement x="0" y="0" width="232" height="15"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Date range:]]></text>
+				<text><![CDATA[Referrals created in the date range:]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="83" y="0" width="100" height="15"/>
+				<reportElement x="232" y="0" width="120" height="15"/>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{dateFrom}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="183" y="0" width="27" height="15"/>
+				<reportElement x="352" y="0" width="23" height="15"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ till]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="210" y="0" width="120" height="15"/>
+				<reportElement x="375" y="0" width="120" height="15"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
@@ -104,10 +104,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<!--
-				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
-				-->
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypePieSubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{eaTypePieSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -120,10 +117,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<!--
-				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
-				-->
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypeRespSubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{eaTypeRespSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -136,10 +130,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<!--
-				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
-				-->
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypeElSubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{eaTypeElSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -152,10 +143,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<!--
-				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
-				-->
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypeElRespSubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{eaTypeElRespSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -168,10 +156,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<!--
-				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
-				-->
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaTypeActivitySubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{eaTypeActivitySubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -184,10 +169,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<!--
-				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart2.jasper"]]></subreportExpression>
-				-->
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{eaSubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{eaSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -200,10 +182,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<!--
-				<subreportExpression class="java.lang.String"><![CDATA["/home/joachim/apps/java/ktunaxa/map/src/main/webapp/WEB-INF/reports/systemReportPart1.jasper"]]></subreportExpression>
-				-->
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{statusPieSubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{statusPieSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
@@ -217,18 +196,32 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<imageExpression><![CDATA["reports/Footer_Image.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="452" y="30" width="80" height="19"/>
+				<reportElement x="452" y="35" width="80" height="15"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="532" y="30" width="40" height="20"/>
+				<reportElement x="532" y="35" width="40" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="0" width="572" height="1"/>
 			</line>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="292" y="35" width="141" height="15"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss">
+				<reportElement x="151" y="35" width="141" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Report created: "]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>

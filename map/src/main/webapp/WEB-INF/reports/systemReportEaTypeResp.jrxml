@@ -11,7 +11,6 @@
   referral_external_agency_type.id,
   referral_external_agency_type.title,
   referral_external_agency_type.description,
-  referral.status_id,
   CASE WHEN referral.response_date <= referral.response_deadline THEN
     CASE WHEN referral.status_id = 1 THEN 'NEW'
          WHEN referral.status_id = 2 THEN 'In progress'
@@ -20,7 +19,7 @@
          ELSE '?? in time'
     END
   ELSE
-    CASE WHEN referral.status_id = 1 THEN 'NEW - over time'
+    CASE WHEN referral.status_id = 1 THEN 'NEW'
          WHEN referral.status_id = 2 THEN 'In progress - over time'
          WHEN referral.status_id = 3 THEN 'Over time'
          WHEN referral.status_id = 4 THEN 'Removed'
@@ -38,7 +37,6 @@ GROUP BY
   referral_external_agency_type.id,
   referral_external_agency_type.title,
   referral_external_agency_type.description,
-  referral.status_id,
   response
 ;]]>
 	</queryString>
@@ -46,7 +44,6 @@ GROUP BY
 	<field name="id" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
-	<field name="status_id" class="java.lang.Integer"/>
 	<field name="response" class="java.lang.String"/>
 	<title>
 		<band height="15">
