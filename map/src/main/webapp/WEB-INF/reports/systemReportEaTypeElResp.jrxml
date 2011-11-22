@@ -19,7 +19,7 @@ FROM
 WHERE
   referral.create_date >= $P{dateFrom}
   AND referral.create_date <= $P{dateTill}
-  AND referral.status_id <> 1
+  AND referral.status_id <> 1 AND referral.status_id <> 4
 GROUP BY
   referral_external_agency_type.id,
   referral_external_agency_type.title,

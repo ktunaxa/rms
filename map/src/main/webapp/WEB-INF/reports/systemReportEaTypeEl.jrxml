@@ -19,7 +19,7 @@ FROM
 WHERE
   referral.create_date >= $P{dateFrom}
   AND referral.create_date <= $P{dateTill}
-  AND referral.status_id <> 1
+  AND referral.status_id <> 1 AND referral.status_id <> 4
 GROUP BY
   referral_external_agency_type.id,
   referral_external_agency_type.title,
@@ -34,36 +34,6 @@ GROUP BY
 	<field name="description" class="java.lang.String"/>
 	<field name="status_id" class="java.lang.Integer"/>
 	<field name="final_assessment_level" class="java.lang.Integer"/>
-	<variable name="count" class="java.lang.Long" resetType="Group" resetGroup="externalAgencyType" calculation="Sum">
-		<variableExpression><![CDATA[$F{count}]]></variableExpression>
-		<initialValueExpression><![CDATA[0]]></initialValueExpression>
-	</variable>
-	<variable name="countAll" class="java.lang.Long" calculation="Sum">
-		<variableExpression><![CDATA[$F{count}]]></variableExpression>
-	</variable>
-	<group name="externalAgencyType">
-		<groupExpression><![CDATA[$F{id}]]></groupExpression>
-		<groupHeader>
-			<band height="2"/>
-		</groupHeader>
-		<groupFooter>
-			<band height="18">
-				<line>
-					<reportElement x="457" y="0" width="73" height="1"/>
-					<graphicElement>
-						<pen lineWidth="1.0"/>
-					</graphicElement>
-				</line>
-				<textField>
-					<reportElement x="457" y="3" width="73" height="15"/>
-					<textElement textAlignment="Right">
-						<font size="11"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{count}]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupFooter>
-	</group>
 	<title>
 		<band height="15">
 			<staticText>
@@ -76,83 +46,32 @@ GROUP BY
 		</band>
 	</title>
 	<columnHeader>
-		<band height="15" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="127" height="15"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<text><![CDATA[External agency type]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="137" y="0" width="310" height="15"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<text><![CDATA[Engagement level]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="457" y="0" width="73" height="15"/>
-				<textElement textAlignment="Right">
-					<font size="11"/>
-				</textElement>
-				<text><![CDATA[Count]]></text>
-			</staticText>
-		</band>
+		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="18" splitType="Stretch">
-			<line>
-				<reportElement x="0" y="0" width="530" height="1"/>
-				<graphicElement>
-					<pen lineWidth="0.5"/>
-				</graphicElement>
-			</line>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="3" width="127" height="15"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="137" y="3" width="310" height="15"/>
-				<textElement>
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{final_assessment_level}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="457" y="3" width="73" height="15"/>
-				<textElement textAlignment="Right">
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band splitType="Stretch"/>
 	</detail>
 	<columnFooter>
-		<band height="18">
-			<line>
-				<reportElement x="457" y="0" width="73" height="1"/>
-				<graphicElement>
-					<pen lineWidth="1.0"/>
-				</graphicElement>
-			</line>
-			<textField>
-				<reportElement x="457" y="3" width="73" height="15"/>
-				<textElement textAlignment="Right">
-					<font size="11"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{countAll}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="268" y="3" width="179" height="15"/>
-				<textElement textAlignment="Right">
-					<font size="11"/>
-				</textElement>
-				<text><![CDATA[Total number of referrals :]]></text>
-			</staticText>
+		<band height="160">
+			<bar3DChart>
+				<chart>
+					<reportElement x="0" y="0" width="530" height="160"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{count}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{title}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{count}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+				</bar3DPlot>
+			</bar3DChart>
 		</band>
 	</columnFooter>
 </jasperReport>
