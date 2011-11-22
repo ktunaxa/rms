@@ -128,7 +128,7 @@
             <mediaobject>
               <imageobject>
                 <imagedata fileref="images/mockup/comment_overview.png"
-                           format="PNG" />
+                           format="PNG" width="100%" />
               </imageobject>
 
               <textobject>
@@ -174,7 +174,7 @@
             <mediaobject>
               <imageobject>
                 <imagedata fileref="images/mockup/comment_add.png"
-                           format="PNG" />
+                           format="PNG" width="100%" />
               </imageobject>
 
               <textobject>
@@ -205,7 +205,7 @@
             <mediaobject>
               <imageobject>
                 <imagedata fileref="images/mockup/comment_edit.png"
-                           format="PNG" />
+                           format="PNG" width="100%" />
               </imageobject>
 
               <textobject>

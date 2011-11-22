@@ -19,7 +19,7 @@
         <screenshot>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/ktunaxa-domain.png" format="PNG" />
+              <imagedata fileref="images/ktunaxa-domain.png" format="PNG" width="100%" />
             </imageobject>
           </mediaobject>
         </screenshot>
@@ -97,7 +97,7 @@
         <screenshot>
           <mediaobject>
             <imageobject>
-              <imagedata fileref="images/ktunaxa-geo-domain.png" format="PNG" />
+              <imagedata fileref="images/ktunaxa-geo-domain.png" format="PNG" width="100%" />
             </imageobject>
           </mediaobject>
         </screenshot>
