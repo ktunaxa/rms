@@ -50,6 +50,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 	private static final String FORM_DISCUSS_EVALUATION = "discussEvaluationResult.form";
 	private static final String FORM_EVALUATE_OR_FINISH = "evaluateOrFinish.form";
 	private static final String FORM_PROVINCIAL_RESULT = "provincialResult.form";
+	private static final String FORM_FILE_FINAL_REPORT = "fileFinalReport.form";
 	private static final String FORM_REVIEW_REFERRAL = "reviewReferral.form";
 	private static final String FORM_VALUE_SELECT = "valueSelect.form";
 	private static final String FORM_REVIEW_LEVEL_0 = "reviewLevel0Notification.form";
@@ -65,6 +66,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 			FORM_REVIEW_LEVEL_0,
 			FORM_REVIEW_CHANGE,
 			FORM_REVIEW_START,
+			FORM_FILE_FINAL_REPORT,
 			FORM_REVIEW_RESULT
 	};
 
@@ -89,7 +91,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		finishButton.addClickHandler(new FinishTaskClickHandler());
 		VLayout currentTask = new VLayout();
 		currentTask.setMembersMargin(LayoutConstant.MARGIN_SMALL);
-		taskForms.addCard(FORM_EMPTY, new EmptyForm());
+		taskForms.addCard(FORM_EMPTY, new EmptyForm(false));
 		taskForms.addCard(FORM_DISCUSS_EVALUATION, new DiscussEvaluationForm());
 		taskForms.addCard(FORM_EVALUATE_OR_FINISH, new EvaluateOrFinishForm());
 		taskForms.addCard(FORM_PROVINCIAL_RESULT, new ProvincialResultForm());
@@ -99,6 +101,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		taskForms.addCard(FORM_REVIEW_START, new VerifyAndSendEmailForm(KtunaxaConstant.Email.START));
 		taskForms.addCard(FORM_REVIEW_CHANGE, new VerifyAndSendEmailForm(KtunaxaConstant.Email.CHANGE));
 		taskForms.addCard(FORM_REVIEW_RESULT, new ReviewResultForm());
+		taskForms.addCard(FORM_FILE_FINAL_REPORT, new EmptyForm(true));
 		taskForms.setWidth100();
 		currentTask.addMember(taskForms);
 		currentTask.addMember(finishButton);

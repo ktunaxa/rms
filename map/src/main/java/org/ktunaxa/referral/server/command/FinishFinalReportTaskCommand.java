@@ -22,6 +22,7 @@ import org.geomajas.layer.VectorLayerService;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.InternalFeature;
 import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.geomajas.layer.feature.attribute.DateAttribute;
 import org.geomajas.layer.feature.attribute.LongAttribute;
 import org.geomajas.layer.feature.attribute.OneToManyAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
@@ -140,6 +141,7 @@ public class FinishFinalReportTaskCommand
 			log.debug("Got referral {}", referralId);
 			InternalFeature referral = orgReferral.clone();
 			Map<String, Attribute> attributes = referral.getAttributes();
+			attributes.put(KtunaxaConstant.ATTRIBUTE_RESPONSE_DATE, new DateAttribute(new Date()));
 			List<InternalFeature> newFeatures = new ArrayList<InternalFeature>();
 			newFeatures.add(referral);
 			OneToManyAttribute orgDocuments = (OneToManyAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENTS);

@@ -70,6 +70,7 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE = "provincialAssessmentLevel";
 	String ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL = "finalAssessmentLevel";
 	String ATTRIBUTE_RESPONSE_DEADLINE = "responseDeadline";
+	String ATTRIBUTE_RESPONSE_DATE = "responseDate";
 	String ATTRIBUTE_TARGET_REFERRAL = "targetReferral";
 	String ATTRIBUTE_DOCUMENTS = "documents";
 	String ATTRIBUTE_COMMENTS = "comments";

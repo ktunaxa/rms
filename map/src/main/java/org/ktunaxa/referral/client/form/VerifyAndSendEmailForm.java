@@ -6,17 +6,28 @@
 
 package org.ktunaxa.referral.client.form;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
+import org.geomajas.command.CommandResponse;
+import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
+import org.geomajas.layer.feature.FeatureTransaction;
+import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.geomajas.layer.feature.attribute.DateAttribute;
+import org.geomajas.layer.feature.attribute.LongAttribute;
+import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
+import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
@@ -183,15 +194,47 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 			} else {
 				valid.run();
 			}
+			afterSendEmail();
 		} else {
 			invalid.run();
 		}
 	}
 
 	/**
+	 * Actions to do after sending the e-mail.
+	 */
+	private void afterSendEmail() {
+		if (KtunaxaConstant.Email.LEVEL_0.equals(notifier)) {
+			// need to mark referral as finished and set the response date
+		MapLayout mapLayout = MapLayout.getInstance();
+		VectorLayer layer = mapLayout.getReferralLayer();
+		Feature current = mapLayout.getCurrentReferral();
+		Feature previous = new org.geomajas.gwt.client.map.feature.Feature(current, layer).toDto();
+		Map<String, Attribute> attributes = current.getAttributes();
+		attributes.put(KtunaxaConstant.ATTRIBUTE_RESPONSE_DATE, new DateAttribute(new Date()));
+		attributes.put(KtunaxaConstant.ATTRIBUTE_STATUS, new ManyToOneAttribute(new AssociationValue(
+							new LongAttribute(3L), new HashMap<String, PrimitiveAttribute<?>>())));
+		final FeatureTransaction ft = new FeatureTransaction();
+		ft.setLayerId(layer.getServerLayerId());
+		ft.setOldFeatures(new Feature[] {previous});
+		ft.setNewFeatures(new Feature[] {current});
+		PersistTransactionRequest request = new PersistTransactionRequest();
+		request.setFeatureTransaction(ft);
+		request.setCrs(layer.getMapModel().getCrs());
+		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
+		command.setCommandRequest(request);
+		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback<CommandResponse>() {
+			public void execute(CommandResponse response) {
+				// all fine
+			}
+		});
+		}
+	}
+
+	/**
 	 * Should the e-mail be sent or not?
 	 *
-	 * @return truen when -email should be sent
+	 * @return true when e-mail should be sent
 	 */
 	protected boolean isSendMail() {
 		return sendMail.getValueAsBoolean();

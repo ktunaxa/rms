@@ -108,7 +108,7 @@
       <documentation>Discuss decision about referral.</documentation>
     </userTask>
     <sequenceFlow id="flow28" name="" sourceRef="appointmentDecision" targetRef="discussDecision"></sequenceFlow>
-    <userTask id="fileReports" name="File reports" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
+    <userTask id="fileReports" name="File reports" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/fileFinalReport.form">
       <documentation>File final report.</documentation>
     </userTask>
     <sequenceFlow id="flow29" name="" sourceRef="discussDecision" targetRef="fileReports"></sequenceFlow>

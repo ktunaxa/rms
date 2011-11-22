@@ -1263,7 +1263,7 @@
     <documentation text="Discuss decision about referral."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow28" name="" sourceRef="appointmentDecision" targetRef="discussDecision"/>
-  <bpmn2:UserTask id="fileReports" name="File reports" incoming="flow29" outgoing="flow30" candidateGroups="/69" formKey="diagrams/redirect.form" dueDate="">
+  <bpmn2:UserTask id="fileReports" name="File reports" incoming="flow29" outgoing="flow30" candidateGroups="/69" formKey="diagrams/fileFinalReport.form" dueDate="">
     <documentation text="File final report."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow29" name="" sourceRef="discussDecision" targetRef="fileReports"/>
