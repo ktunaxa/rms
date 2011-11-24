@@ -221,11 +221,13 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	}
 
 	private String getDocumentDisplayUrl() {
-		return CmisUtil.addGuestAccess((String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL));
+		return CmisUtil.addGuestAccess((String) getValue().getAttributeValue(
+				KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL));
 	}
 
 	private String getDocumentDownloadUrl() {
-		return CmisUtil.addGuestAccess((String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
+		return CmisUtil.addGuestAccess((String) getValue().getAttributeValue(
+				KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
 	}
 
 	private Date getAdditionDate() {

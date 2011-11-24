@@ -79,7 +79,7 @@ public class ReferralInfoPage extends WizardPage<ReferralData> {
 	}
 
 	@Override
-	protected void show() {
+	public void show() {
 		if (editor == null) {
 			editor = new FeatureAttributeEditor(getWizardData().getLayer(), false, new ReferralInfoFormFactory());
 			editor.setWidth100();

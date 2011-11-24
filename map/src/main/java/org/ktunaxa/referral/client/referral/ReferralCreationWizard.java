@@ -49,32 +49,37 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 	public void init() {
 		addPage(new ReferralInfoPage());
 		addPage(new AddGeometryPage());
-		addPage(new AttachDocumentPage());
 		addPage(new ReferralConfirmPage());
+		addPage(new AttachDocumentPage());
 		start();
 	}
 
-	@Override
-	protected void onCancel() {
+	public void onCancel() {
 		// start();
 		finishAction.run();
 	}
 
-	@Override
-	protected void onFinish() {
-		SC.ask("Are you sure you want to create the referral ?", new BooleanCallback() {
+	public void onFinish() {
+		// update referral, mark status as "in progress" and create business process
+		SC.ask("Are you sure you want to finish the referral, creating the process ?", new BooleanCallback() {
 
 			public void execute(Boolean value) {
 				if (value != null && value) {
 					getView().setLoading(true);
 					VectorLayer layer = data.getLayer();
 
+					Feature[] old;
+					if (null == data.getFeature().getId()) {
+						old = new Feature[0];
+					} else {
+						old = new Feature[] {data.getFeature()};
+					}
+
 					// KTU-257 update status to in-progress
 					data.getFeature().setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_STATUS, new AssociationValue(
 							new LongAttribute(2L), new HashMap<String, PrimitiveAttribute<?>>()));
 
-					final FeatureTransaction ft = new FeatureTransaction(layer, new Feature[0], new Feature[] { data
-							.getFeature() });
+					final FeatureTransaction ft = new FeatureTransaction(layer, old, new Feature[] {data.getFeature()});
 					PersistTransactionRequest request = new PersistTransactionRequest();
 					request.setFeatureTransaction(ft.toDto());
 					final MapModel mapModel = layer.getMapModel();
@@ -147,8 +152,8 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 	public static class ReferralWizardView extends WizardWidget<ReferralData> {
 
 		public ReferralWizardView() {
-			super("Referral Creation Wizard", "Follow the steps below to create a "
-					+ "new referral and add it to the system:");
+			super("Referral Creation Wizard",
+					"Follow the steps below to create a new referral and add it to the system:");
 		}
 
 	}

@@ -72,7 +72,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 	}
 
 	@Override
-	protected void setWizardData(ReferralData wizardData) {
+	public void setWizardData(ReferralData wizardData) {
 		super.setWizardData(wizardData);
 		setFeature(wizardData.getFeature());
 	}
@@ -133,7 +133,7 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 	}
 	
 	@Override
-	protected void show() {
+	public void show() {
 		if (null == currentDocument) {
 			init();
 		} else {
@@ -208,6 +208,6 @@ public class AttachDocumentPage extends WizardPage<ReferralData> implements Uplo
 	}
 
 	@Override
-	protected void clear() {
+	public void clear() {
 	}
 }

@@ -30,9 +30,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 public class UploadNoGeometryPanel extends VLayout implements UploadGeometryPanel {
 
 	public static final String NAME = "UploadNoGeometryPanel";
-	
-	private DynamicForm form;
-	
+
 	private CheckboxItem box;
 
 	private HTMLFlow note;
@@ -41,7 +39,7 @@ public class UploadNoGeometryPanel extends VLayout implements UploadGeometryPane
 	
 	public UploadNoGeometryPanel() {
 		setMembersMargin(LayoutConstant.MARGIN_SMALL);
-		form = new DynamicForm();
+		DynamicForm form = new DynamicForm();
 		form.setColWidths("4%", "*");
 		box = new CheckboxItem();
 		box.setValue(valid);

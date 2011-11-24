@@ -93,7 +93,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	}
 
 	@Override
-	protected void setWizardData(ReferralData wizardData) {
+	public void setWizardData(ReferralData wizardData) {
 		super.setWizardData(wizardData);
 		for (UploadGeometryPanel panel : panelMap.values()) {
 			panel.setFeature(wizardData.getFeature());
@@ -101,7 +101,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	}
 
 	@Override
-	protected void show() {
+	public void show() {
 		if (gfxGeometry != null) {
 			mapWidget.unregisterWorldPaintable(gfxGeometry);
 		}
@@ -230,7 +230,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	}
 	
 	@Override
-	protected boolean doValidate() {
+	public boolean doValidate() {
 		boolean validate = getWizardData().getFeature().isGeometryLoaded();
 		if (!validate) {
 			validate = noGeometryPanel.validate();
