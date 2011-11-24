@@ -10,6 +10,7 @@ import java.util.Date;
 import com.google.gwt.user.client.Window;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.ktunaxa.referral.client.CmisUtil;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -36,9 +37,6 @@ public class DocumentBlock extends AbstractAttributeBlock {
 			"[ISOMORPHIC]/skins/ActivitiBlue/images/MultiUploadItem/icon_remove_files.png";
 	private static final String BLOCK_STYLE = "documentBlock";
 	private static final String BLOCK_TITLE_STYLE = "documentBlockTitle";
-	private static final String GUEST_ACCESS_PARAMETER = "guest=true";
-	private static final String PARAMETER_SEPARATOR_FIRST = "?";
-	private static final String PARAMETER_SEPARATOR_MORE = "&";
 
 	private HLayout title;
 
@@ -223,21 +221,11 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	}
 
 	private String getDocumentDisplayUrl() {
-		return addGuestAccess((String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL));
-	}
-
-	public static String addGuestAccess(String url) {
-		if (url.contains(GUEST_ACCESS_PARAMETER)) {
-			return url;
-		} else if (url.contains(PARAMETER_SEPARATOR_FIRST)) {
-			return url + PARAMETER_SEPARATOR_MORE + GUEST_ACCESS_PARAMETER;
-		} else {
-			return url + PARAMETER_SEPARATOR_FIRST + GUEST_ACCESS_PARAMETER;
-		}
+		return CmisUtil.addGuestAccess((String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL));
 	}
 
 	private String getDocumentDownloadUrl() {
-		return addGuestAccess((String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
+		return CmisUtil.addGuestAccess((String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
 	}
 
 	private Date getAdditionDate() {
