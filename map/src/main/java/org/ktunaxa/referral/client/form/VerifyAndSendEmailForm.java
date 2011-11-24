@@ -171,6 +171,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		Feature currentReferral = MapLayout.getInstance().getCurrentReferral();
 		Attribute<String> email = currentReferral.getAttributes().get(KtunaxaConstant.ATTRIBUTE_EMAIL);
 		to.setValue(email.getValue());
+		sendMail.setValue(true);
 	}
 
 	@Override
