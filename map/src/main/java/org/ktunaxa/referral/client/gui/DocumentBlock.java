@@ -28,7 +28,6 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
  * Block that shows document information.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class DocumentBlock extends AbstractAttributeBlock {
 

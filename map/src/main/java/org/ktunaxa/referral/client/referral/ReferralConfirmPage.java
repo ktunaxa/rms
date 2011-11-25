@@ -101,7 +101,8 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 					GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 					command.setCommandRequest(request);
 
-					GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<PersistTransactionResponse>() {
+					GwtCommandDispatcher.getInstance().execute(command,
+							new AbstractCommandCallback<PersistTransactionResponse>() {
 
 						public void execute(PersistTransactionResponse response) {
 							mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(),
