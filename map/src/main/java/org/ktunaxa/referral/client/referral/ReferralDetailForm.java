@@ -69,6 +69,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 		ENABLED_FIELDS_ADMIN.add(KtunaxaConstant.ATTRIBUTE_EXTERNAL_FILE_ID);
 		ENABLED_FIELDS_ADMIN.add(KtunaxaConstant.ATTRIBUTE_EXTERNAL_PROJECT_ID);
 		ENABLED_FIELDS_ADMIN.add(KtunaxaConstant.ATTRIBUTE_APPLICANT_NAME);
+		ENABLED_FIELDS_ADMIN.add(KtunaxaConstant.ATTRIBUTE_EMAIL);
 	}
 
 	private FormItemList formItems;
