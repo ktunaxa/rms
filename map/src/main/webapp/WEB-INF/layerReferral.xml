@@ -1253,6 +1253,16 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                     <property name="strokeColor" value="#990000"/>
                     <property name="strokeOpacity" value=".8"/>
                     <property name="strokeWidth" value="2"/>
+					<property name="symbol">
+						<bean class="org.geomajas.configuration.SymbolInfo">
+							<property name="rect">
+								<bean class="org.geomajas.configuration.RectInfo">
+									<property name="w" value="5" />
+									<property name="h" value="5" />
+								</bean>
+							</property>
+						</bean>
+					</property>
                 </bean>
             </list>
 		</property>
