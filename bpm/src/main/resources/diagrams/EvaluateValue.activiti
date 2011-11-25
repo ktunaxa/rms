@@ -2281,11 +2281,11 @@
   <bpmn2:SequenceFlow id="flow53" name="" sourceRef="startevent1" targetRef="usertask1"/>
   <bpmn2:ParallelGateway id="parallelgateway2" name="Parallel Gateway" incoming="flow55" outgoing="flow56 flow57 flow58 flow59 flow60 flow61 flow93 flow94 flow95"/>
   <bpmn2:SequenceFlow id="flow55" name="" sourceRef="usertask1" targetRef="parallelgateway2"/>
-  <bpmn2:UserTask id="usertask3" name="Evaluate archaeological values" incoming="flow81" outgoing="flow75" candidateGroups="/70" formKey="diagrams/redirect.form">
-    <documentation text="Evaluate archaeological values."/>
+  <bpmn2:UserTask id="usertask3" name="Evaluate archaeological values" incoming="flow81" outgoing="flow75" candidateGroups="/70" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Evaluate archaeological values and enter comments."/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask4" name="Evaluate aquatic values" incoming="flow80" outgoing="flow74" candidateGroups="/74" formKey="diagrams/redirect.form">
-    <documentation text="Evaluate aquatic values"/>
+  <bpmn2:UserTask id="usertask4" name="Evaluate aquatic values" incoming="flow80" outgoing="flow74" candidateGroups="/74" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Evaluate aquatic values and enter comments."/>
   </bpmn2:UserTask>
   <bpmn2:ManualTask id="manualtask1" name="Auto evaluate aquatic values" incoming="flow65" outgoing="flow80"/>
   <bpmn2:ManualTask id="manualtask2" name="Auto evaluate archaeological values" incoming="flow64" outgoing="flow81"/>
@@ -2295,14 +2295,14 @@
   <bpmn2:UserTask id="usertask6" name="Notify Akisqnuk community" incoming="flow71" outgoing="flow85" candidateGroups="/105" formKey="diagrams/redirect.form">
     <documentation text="Notify Akisqnuk community."/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask7" name="Evaluate cultural values" incoming="flow82" outgoing="flow76" candidateGroups="/71" formKey="diagrams/redirect.form">
-    <documentation text="Evaluate cultural values."/>
+  <bpmn2:UserTask id="usertask7" name="Evaluate cultural values" incoming="flow82" outgoing="flow76" candidateGroups="/71" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Evaluate cultural values and enter comments."/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask8" name="Evaluate ecological values" incoming="flow83" outgoing="flow77" candidateGroups="/72" formKey="diagrams/redirect.form">
-    <documentation text="Evaluate ecological values."/>
+  <bpmn2:UserTask id="usertask8" name="Evaluate ecological values" incoming="flow83" outgoing="flow77" candidateGroups="/72" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Evaluate ecological values and enter comments."/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask9" name="Evaluate treaty values" incoming="flow84" outgoing="flow78" candidateGroups="/73" formKey="diagrams/redirect.form">
-    <documentation text="Evaluate treaty values."/>
+  <bpmn2:UserTask id="usertask9" name="Evaluate treaty values" incoming="flow84" outgoing="flow78" candidateGroups="/73" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Evaluate treaty values and enter comments."/>
   </bpmn2:UserTask>
   <bpmn2:UserTask id="usertask10" name="Process Akisqnuk community input" incoming="flow85" outgoing="flow79" candidateGroups="/106" formKey="diagrams/redirect.form">
     <documentation text="Advertise referral to Akisqnuk community, schedule meeting and process Akisqnuk community input."/>

@@ -167,7 +167,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.1" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Send change notification"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.1" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Send change notification e-mail"/>
         <link businessObjects="usertask2"/>
       </children>
       <children visible="true">
@@ -184,7 +184,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.1" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Receive/start notification"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.1" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Send start notification e-mail"/>
         <link businessObjects="usertask3"/>
       </children>
       <children visible="true">
@@ -1178,13 +1178,13 @@
   </bpmn2:SequenceFlow>
   <bpmn2:ExclusiveGateway id="exclusivegateway2" name="Exclusive Gateway" incoming="flow5" outgoing="flow6 flow7"/>
   <bpmn2:SequenceFlow id="flow5" name="" sourceRef="parallelgateway1" targetRef="exclusivegateway2"/>
-  <bpmn2:UserTask id="usertask2" name="Send change notification" incoming="flow6" outgoing="flow8" candidateGroups="/59" formKey="diagrams/reviewChangeNotification.form" dueDate="">
+  <bpmn2:UserTask id="usertask2" name="Send change notification e-mail" incoming="flow6" outgoing="flow8" candidateGroups="/59" formKey="diagrams/reviewChangeNotification.form" dueDate="">
     <documentation text="Review and optionally send change notification e-mail."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow6" name="diff engagement level" sourceRef="exclusivegateway2" targetRef="usertask2">
     <conditionExpression id="flow6_condition" body="${provinceEngagementLevel != engagementLevel}"/>
   </bpmn2:SequenceFlow>
-  <bpmn2:UserTask id="usertask3" name="Receive/start notification" incoming="flow7 flow10" outgoing="flow11" candidateGroups="/61" formKey="diagrams/reviewStartNotification.form" dueDate="">
+  <bpmn2:UserTask id="usertask3" name="Send start notification e-mail" incoming="flow7 flow10" outgoing="flow11" candidateGroups="/61" formKey="diagrams/reviewStartNotification.form" dueDate="">
     <documentation text="Review and optionally send receive/start notification e-mail."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow7" name="same" sourceRef="exclusivegateway2" targetRef="usertask3">
