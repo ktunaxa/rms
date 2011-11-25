@@ -84,6 +84,13 @@ GROUP BY
 				<bar3DPlot>
 					<plot/>
 					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat>
+							<tickLabelFont>
+								<font size="5"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
 				</bar3DPlot>
 			</bar3DChart>
 		</band>
