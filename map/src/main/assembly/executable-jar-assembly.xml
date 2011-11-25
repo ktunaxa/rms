@@ -45,6 +45,7 @@
 			<fileMode>0755</fileMode>
 			<includes>
 				<include>shapeImport</include>
+				<include>clearCache.sh</include>
 			</includes>
 		</fileSet>
 	</fileSets>
