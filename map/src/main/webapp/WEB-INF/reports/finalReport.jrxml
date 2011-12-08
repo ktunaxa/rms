@@ -138,15 +138,14 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{externalFileId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["-99".equals($F{externalFileId})?"":$F{externalFileId}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement x="453" y="70" width="119" height="15"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA["-99".equals($F{externalProjectId})?"":$F{externalProjectId}
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA["-99".equals($F{externalProjectId})?"":$F{externalProjectId}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="200" y="0" width="176" height="20"/>
