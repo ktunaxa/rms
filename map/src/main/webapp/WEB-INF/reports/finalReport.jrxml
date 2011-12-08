@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="386"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
 	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
 	<parameter name="commentsSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
@@ -147,7 +147,8 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{externalProjectId}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["-99".equals($F{externalProjectId})?"":$F{externalProjectId}
+]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="200" y="0" width="176" height="20"/>
