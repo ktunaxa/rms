@@ -1,7 +1,7 @@
 
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'treatyEvaluator', 1, 'treatyEvaluator', 'assignment');
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'culturalEvaluator', 1, 'culturalEvaluator', 'assignment');
-insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'ecologyEvaluator', 1, 'ecologyEvaluator', 'assignment');
+insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'terrestrialEvaluator', 1, 'terrestrialEvaluator', 'assignment');
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'aquaticEvaluator', 1, 'aquaticEvaluator', 'assignment');
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'archaeologyEvaluator', 1, 'archaeologyEvaluator', 'assignment');
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'communityManager', 1, 'communityManager', 'assignment');
@@ -12,7 +12,7 @@ insert into ACT_ID_MEMBERSHIP values ('KtBpmAdmin', 'admin');
 insert into ACT_ID_MEMBERSHIP values ('KtBpmAdmin', 'manager');
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'treatyEvaluator' );
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'culturalEvaluator' );
-insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'ecologyEvaluator' );
+insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'terrestrialEvaluator' );
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'aquaticEvaluator' );
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'archaeologyEvaluator' );
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'communityManager' );
@@ -30,9 +30,9 @@ insert into ACT_ID_USER values ('cultural', 1, 'Cultural', 'Evaluator', 'cultura
 insert into ACT_ID_MEMBERSHIP values ('cultural', 'user');
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'cultural', 'culturalEvaluator' );
 
-insert into ACT_ID_USER values ('ecology', 1, 'Ecology', 'Evaluator', 'ecology@localhost', 'ygoloce', null);
-insert into ACT_ID_MEMBERSHIP values ('ecology', 'user');
-insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'ecology', 'ecologyEvaluator' );
+insert into ACT_ID_USER values ('terrestrial', 1, 'Terrestrial', 'Evaluator', 'terrestrial@localhost', 'ygoloce', null);
+insert into ACT_ID_MEMBERSHIP values ('terrestrial', 'user');
+insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'terrestrial', 'terrestrialEvaluator' );
 
 insert into ACT_ID_USER values ('aquatic', 1, 'Aquatic', 'Evaluator', 'aquatic@localhost', 'citauqa', null);
 insert into ACT_ID_MEMBERSHIP values ('aquatic', 'user');

@@ -53,6 +53,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 										<value>archaeologyEvaluator</value>
 										<value>culturalEvaluator</value>
 										<value>ecologyEvaluator</value>
+										<value>terrestrialEvaluator</value>
 										<value>treatyEvaluator</value>
 										<value>evaluateEvaluator</value>
 										<value>aquaticEvaluator</value>
@@ -79,6 +80,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 										<value>archaeologyEvaluator</value>
 										<value>culturalEvaluator</value>
 										<value>ecologyEvaluator</value>
+										<value>terrestrialEvaluator</value>
 										<value>treatyEvaluator</value>
 										<value>evaluateEvaluator</value>
 										<value>aquaticEvaluator</value>

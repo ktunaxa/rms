@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * <li>Value Aspect - Aquatic</li>
  * <li>Value Aspect - Archaelogical</li>
  * <li>Value Aspect - Cultural</li>
- * <li>Value Aspect - Ecology</li>
+ * <li>Value Aspect - Terrestrial</li>
  * <li>Value Aspect - Treaty</li>
  * </ul>
  * 
@@ -82,14 +82,14 @@ public class ReferenceLayerType {
 	 * Set the name for this category of layers.
 	 * 
 	 * @param description
-	 *            The new value of description (administrative, TRIM, ecology, cultural, ...).
+	 *            The new value of description (administrative, TRIM, terrestrial, cultural, ...).
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
-	 * Get the name of the category for this type (administrative, TRIM, ecology, cultural, ...).
+	 * Get the name of the category for this type (administrative, TRIM, terrestrial, cultural, ...).
 	 * 
 	 * @return The value of description.
 	 */

@@ -165,7 +165,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="101" height="30" y="20" style="/0/@styles.13" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="auto evaluate ecological values"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="101" height="30" y="20" style="/0/@styles.13" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="auto evaluate terrestrial values"/>
         <link businessObjects="manualtask4"/>
       </children>
       <children visible="true">
@@ -233,7 +233,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="101" height="30" y="20" style="/0/@styles.18" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="Evaluate ecological values"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="101" height="30" y="20" style="/0/@styles.18" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="Evaluate terrestrial values"/>
         <link businessObjects="usertask8"/>
       </children>
       <children visible="true">
@@ -2290,7 +2290,7 @@
   <bpmn2:ManualTask id="manualtask1" name="Auto evaluate aquatic values" incoming="flow65" outgoing="flow80"/>
   <bpmn2:ManualTask id="manualtask2" name="Auto evaluate archaeological values" incoming="flow64" outgoing="flow81"/>
   <bpmn2:ManualTask id="manualtask3" name="Auto evaluate cultural values" incoming="flow66" outgoing="flow82"/>
-  <bpmn2:ManualTask id="manualtask4" name="Auto evaluate ecological values" incoming="flow68" outgoing="flow83"/>
+  <bpmn2:ManualTask id="manualtask4" name="Auto evaluate terrestrial values" incoming="flow68" outgoing="flow83"/>
   <bpmn2:ManualTask id="manualtask5" name="Auto evaluate treaty values" incoming="flow70" outgoing="flow84"/>
   <bpmn2:UserTask id="usertask6" name="Notify Akisqnuk community" incoming="flow71" outgoing="flow85" candidateGroups="/105" formKey="diagrams/redirect.form">
     <documentation text="Notify Akisqnuk community."/>
@@ -2298,8 +2298,8 @@
   <bpmn2:UserTask id="usertask7" name="Evaluate cultural values" incoming="flow82" outgoing="flow76" candidateGroups="/71" formKey="diagrams/redirect.form" dueDate="">
     <documentation text="Evaluate cultural values and enter comments."/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask8" name="Evaluate ecological values" incoming="flow83" outgoing="flow77" candidateGroups="/72" formKey="diagrams/redirect.form" dueDate="">
-    <documentation text="Evaluate ecological values and enter comments."/>
+  <bpmn2:UserTask id="usertask8" name="Evaluate terrestrial values" incoming="flow83" outgoing="flow77" candidateGroups="/72" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Evaluate terrestrial values and enter comments."/>
   </bpmn2:UserTask>
   <bpmn2:UserTask id="usertask9" name="Evaluate treaty values" incoming="flow84" outgoing="flow78" candidateGroups="/73" formKey="diagrams/redirect.form" dueDate="">
     <documentation text="Evaluate treaty values and enter comments."/>
@@ -2344,10 +2344,10 @@
     <conditionExpression id="flow67_condition" body="${!evalCultural}"/>
   </bpmn2:SequenceFlow>
   <bpmn2:SequenceFlow id="flow68" name="" sourceRef="exclusivegateway4" targetRef="manualtask4">
-    <conditionExpression id="flow68_condition" body="${evalEcological}"/>
+    <conditionExpression id="flow68_condition" body="${evalTerrestrial}"/>
   </bpmn2:SequenceFlow>
   <bpmn2:SequenceFlow id="flow69" name="" sourceRef="exclusivegateway4" targetRef="exclusivegateway10">
-    <conditionExpression id="flow69_condition" body="${!evalEcological}"/>
+    <conditionExpression id="flow69_condition" body="${!evalTerrestrial}"/>
   </bpmn2:SequenceFlow>
   <bpmn2:SequenceFlow id="flow70" name="" sourceRef="exclusivegateway5" targetRef="manualtask5">
     <conditionExpression id="flow70_condition" body="${evalTreaty}"/>
@@ -2384,7 +2384,7 @@
   <bpmn2:SequenceFlow id="flow92" name="" sourceRef="exclusivegateway12" targetRef="parallelgateway4"/>
   <bpmn2:CandidateGroup group="archaeologyEvaluator"/>
   <bpmn2:CandidateGroup group="culturalEvaluator"/>
-  <bpmn2:CandidateGroup group="ecologyEvaluator"/>
+  <bpmn2:CandidateGroup group="terrestrialEvaluator"/>
   <bpmn2:CandidateGroup group="treatyEvaluator"/>
   <bpmn2:CandidateGroup group="aquaticEvaluator"/>
   <bpmn2:ExclusiveGateway id="exclusivegateway13" name="Exclusive Gateway" incoming="flow93" outgoing="flow96 flow102"/>

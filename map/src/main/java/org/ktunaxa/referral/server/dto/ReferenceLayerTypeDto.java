@@ -19,7 +19,7 @@ import java.io.Serializable;
  * <li>Value Aspect - Aquatic</li>
  * <li>Value Aspect - Archaelogical</li>
  * <li>Value Aspect - Cultural</li>
- * <li>Value Aspect - Ecology</li>
+ * <li>Value Aspect - Terrestrial</li>
  * <li>Value Aspect - Treaty</li>
  * </ul>
  * 

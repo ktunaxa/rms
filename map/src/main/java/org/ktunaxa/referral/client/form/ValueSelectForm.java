@@ -24,7 +24,7 @@ public class ValueSelectForm extends AbstractTaskForm {
 	private CheckboxItem evalAquatic = new CheckboxItem();
 	private CheckboxItem evalArchaeological = new CheckboxItem();
 	private CheckboxItem evalCultural = new CheckboxItem();
-	private CheckboxItem evalEcological = new CheckboxItem();
+	private CheckboxItem evalTerrestrial = new CheckboxItem();
 	private CheckboxItem evalTreaty = new CheckboxItem();
 	private CheckboxItem communityAInput = new CheckboxItem();
 	private CheckboxItem communityBInput = new CheckboxItem();
@@ -43,8 +43,8 @@ public class ValueSelectForm extends AbstractTaskForm {
 		evalCultural.setName("evalCultural");
 		evalCultural.setTitle("Evaluate cultural values");
 
-		evalEcological.setName("evalEcological");
-		evalEcological.setTitle("Evaluate ecological values");
+		evalTerrestrial.setName("evalTerrestrial");
+		evalTerrestrial.setTitle("Evaluate terrestrial values");
 
 		evalTreaty.setName("evalTreaty");
 		evalTreaty.setTitle("Evaluate treaty values");
@@ -65,7 +65,7 @@ public class ValueSelectForm extends AbstractTaskForm {
 		values.setWidth100();
 		values.setIsGroup(true);
 		values.setGroupTitle("Which values need to be evaluated?");
-		values.setFields(evalAquatic, evalArchaeological, evalCultural, evalEcological, evalTreaty);
+		values.setFields(evalAquatic, evalArchaeological, evalCultural, evalTerrestrial, evalTreaty);
 
 		DynamicForm community = new DynamicForm();
 		community.setWidth100();
@@ -85,8 +85,8 @@ public class ValueSelectForm extends AbstractTaskForm {
 				get(KtunaxaBpmConstant.VAR_EVALUATE_ARCHAEOLOGICAL));
 		evalCultural.setValue(task.getVariables().
 				get(KtunaxaBpmConstant.VAR_EVALUATE_CULTURAL));
-		evalEcological.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.VAR_EVALUATE_ECOLOGICAL));
+		evalTerrestrial.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_EVALUATE_TERRESTRIAL));
 		evalTreaty.setValue(task.getVariables().
 				get(KtunaxaBpmConstant.VAR_EVALUATE_TREATY));
 		communityAInput.setValue(task.getVariables().
@@ -108,8 +108,8 @@ public class ValueSelectForm extends AbstractTaskForm {
 				nullSafeToString(evalArchaeological.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_EVALUATE_CULTURAL + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(evalCultural.getValue()));
-		result.put(KtunaxaBpmConstant.VAR_EVALUATE_ECOLOGICAL + KtunaxaBpmConstant.SET_BOOLEAN,
-				nullSafeToString(evalEcological.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_EVALUATE_TERRESTRIAL + KtunaxaBpmConstant.SET_BOOLEAN,
+				nullSafeToString(evalTerrestrial.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_EVALUATE_TREATY + KtunaxaBpmConstant.SET_BOOLEAN,
 				nullSafeToString(evalTreaty.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_COMMUNITY_A_INPUT + KtunaxaBpmConstant.SET_BOOLEAN,

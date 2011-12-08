@@ -28,8 +28,8 @@
 		<tr>
 			<td>
 				<label>
-					<input type="checkbox" name="evalEcological"/>Evaluate ecological values
-					<input type="hidden" name="evalEcological_boolean" value="true"/>
+					<input type="checkbox" name="evalTerrestrial"/>Evaluate terrestrial values
+					<input type="hidden" name="evalTerrestrial_boolean" value="true"/>
 				</label>
 			</td>
 		</tr>

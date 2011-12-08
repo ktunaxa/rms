@@ -10,7 +10,7 @@ INSERT INTO reference_layer_type (id, description, base_layer) values (5, 'TRIM'
 INSERT INTO reference_layer_type (id, description, base_layer) values (6, 'Aquatic', false); 
 INSERT INTO reference_layer_type (id, description, base_layer) values (7, 'Archaeological', false); 
 INSERT INTO reference_layer_type (id, description, base_layer) values (8, 'Cultural', false); 
-INSERT INTO reference_layer_type (id, description, base_layer) values (9, 'Ecology', false); 
+INSERT INTO reference_layer_type (id, description, base_layer) values (9, 'Terrestrial', false);
 INSERT INTO reference_layer_type (id, description, base_layer) values (10, 'Treaty', false); 
 
 

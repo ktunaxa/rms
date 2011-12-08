@@ -18,7 +18,7 @@
     <manualTask id="manualtask1" name="Auto evaluate aquatic values"></manualTask>
     <manualTask id="manualtask2" name="Auto evaluate archaeological values"></manualTask>
     <manualTask id="manualtask3" name="Auto evaluate cultural values"></manualTask>
-    <manualTask id="manualtask4" name="Auto evaluate ecological values"></manualTask>
+    <manualTask id="manualtask4" name="Auto evaluate terrestrial values"></manualTask>
     <manualTask id="manualtask5" name="Auto evaluate treaty values"></manualTask>
     <userTask id="usertask6" name="Notify Akisqnuk community" activiti:candidateGroups="communityAManager" activiti:formKey="diagrams/redirect.form">
       <documentation>Notify Akisqnuk community.</documentation>
@@ -26,8 +26,8 @@
     <userTask id="usertask7" name="Evaluate cultural values" activiti:candidateGroups="culturalEvaluator" activiti:formKey="diagrams/redirect.form">
       <documentation>Evaluate cultural values and enter comments.</documentation>
     </userTask>
-    <userTask id="usertask8" name="Evaluate ecological values" activiti:candidateGroups="ecologyEvaluator" activiti:formKey="diagrams/redirect.form">
-      <documentation>Evaluate ecological values and enter comments.</documentation>
+    <userTask id="usertask8" name="Evaluate terrestrial values" activiti:candidateGroups="terrestrialEvaluator" activiti:formKey="diagrams/redirect.form">
+      <documentation>Evaluate terrestrial values and enter comments.</documentation>
     </userTask>
     <userTask id="usertask9" name="Evaluate treaty values" activiti:candidateGroups="treatyEvaluator" activiti:formKey="diagrams/redirect.form">
       <documentation>Evaluate treaty values and enter comments.</documentation>
@@ -72,10 +72,10 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!evalCultural}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow68" name="" sourceRef="exclusivegateway4" targetRef="manualtask4">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${evalEcological}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${evalTerrestrial}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow69" name="" sourceRef="exclusivegateway4" targetRef="exclusivegateway10">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!evalEcological}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!evalTerrestrial}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow70" name="" sourceRef="exclusivegateway5" targetRef="manualtask5">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${evalTreaty}]]></conditionExpression>

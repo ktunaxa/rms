@@ -28,7 +28,7 @@ public interface KtunaxaBpmConstant {
 	String VAR_EVALUATE_AQUATIC = "evalAquatic";
 	String VAR_EVALUATE_ARCHAEOLOGICAL = "evalArchaeological";
 	String VAR_EVALUATE_CULTURAL = "evalCultural";
-	String VAR_EVALUATE_ECOLOGICAL = "evalEcological";
+	String VAR_EVALUATE_TERRESTRIAL = "evalTerrestrial";
 	String VAR_EVALUATE_TREATY = "evalTreaty";
 	String VAR_COMMUNITY_A_INPUT = "communityAInput";
 	String VAR_COMMUNITY_B_INPUT = "communityBInput";
@@ -41,7 +41,7 @@ public interface KtunaxaBpmConstant {
 	String ROLE_REFERRAL_MANAGER = "referralManager";
 	String ROLE_ARCHAEOLOGY = "archaeologyEvaluator";
 	String ROLE_CULTURAL = "culturalEvaluator";
-	String ROLE_ECOLOGY = "ecologyEvaluator";
+	String ROLE_TERRESTRIAL = "terrestrialEvaluator";
 	String ROLE_TREATY = "treatyEvaluator";
 	String ROLE_AQUATIC = "aquaticEvaluator";
 	String ROLE_COMMUNITY_AKISQNUK = "communityAManager";

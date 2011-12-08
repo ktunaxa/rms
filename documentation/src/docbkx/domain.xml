@@ -83,7 +83,7 @@
     categories of layers that exist (both base and aspect value).</para>
 
     <para>The ReferenceLayerType object therefore is a definition for a
-    category of layers (base – administrative, base – TRIM, value – ecology,
+    category of layers (base – administrative, base – TRIM, value – terrestrial,
     …). Some categories are meant for base layers other categories represent
     the value aspects.</para>
 
