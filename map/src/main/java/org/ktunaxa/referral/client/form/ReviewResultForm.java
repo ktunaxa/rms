@@ -20,7 +20,6 @@ import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.layer.feature.FeatureTransaction;
@@ -65,8 +64,10 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 	private TextAreaItem conclusion;
 	private Button preview;
 	private boolean initialized;
-	private final ImageUrlService imageUrlService = new ImageUrlServiceImpl();
 
+	/**
+	 * Construct {@link ReviewResultForm}.
+	 */
 	public ReviewResultForm() {
 		super(KtunaxaConstant.Email.RESULT);
 
@@ -191,12 +192,6 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 			request.setReferralId(ReferralUtil.createId(mapLayout.getCurrentReferral()));
 			request.setTaskId(mapLayout.getCurrentTask().getId());
 			request.setVariables(getVariables());
-
-			MapWidget mapWidget = MapLayout.getInstance().getMap();
-			VectorLayer layer = mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
-			imageUrlService.makeRasterizable(mapWidget);
-			request.setReportingRequest(FinalReportClickHandler.getPrepareReportingRequest(
-					mapWidget.getMapModel().getMapInfo(), layer.getFilter()));
 
 			GwtCommand command = new GwtCommand(FinishFinalReportTaskRequest.COMMAND);
 			command.setCommandRequest(request);

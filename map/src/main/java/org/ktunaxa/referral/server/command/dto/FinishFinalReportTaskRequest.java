@@ -6,8 +6,6 @@
 
 package org.ktunaxa.referral.server.command.dto;
 
-import org.geomajas.plugin.reporting.command.dto.PrepareReportingRequest;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +24,6 @@ public class FinishFinalReportTaskRequest extends SendEmailRequest {
 	private String referralId;
 	private String taskId;
 	private Map<String, String> variables = new HashMap<String, String>();
-	private PrepareReportingRequest prepareReportingRequest;
 
 	/**
 	 * Should the e-mail with the report be sent?
@@ -100,21 +97,4 @@ public class FinishFinalReportTaskRequest extends SendEmailRequest {
 		this.variables = variables;
 	}
 
-	/**
-	 * Set the request object to prepare the reporting building.
-	 *
-	 * @param prepareReportingRequest prepare reporting request object
-	 */
-	public void setReportingRequest(PrepareReportingRequest prepareReportingRequest) {
-		this.prepareReportingRequest = prepareReportingRequest;
-	}
-
-	/**
-	 * Get the request object to prepare the reporting building.
-	 *
-	 * @return prepare reporting request object
-	 */
-	public PrepareReportingRequest getPrepareReportingRequest() {
-		return prepareReportingRequest;
-	}
 }

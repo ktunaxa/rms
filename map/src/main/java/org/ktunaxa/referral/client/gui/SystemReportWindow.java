@@ -44,6 +44,9 @@ public class SystemReportWindow extends Window {
 	private final DateItem fromDate = new DateItem();
 	private final DateItem tillDate = new DateItem();
 
+	/**
+	 * Construct window for system reporting.
+	 */
 	public SystemReportWindow() {
 		setWidth(430);
 		setHeight(200);
