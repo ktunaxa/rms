@@ -3,8 +3,6 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
-	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="content" class="java.lang.String"/>
 	<field name="includeInReport" class="java.lang.Boolean"/>

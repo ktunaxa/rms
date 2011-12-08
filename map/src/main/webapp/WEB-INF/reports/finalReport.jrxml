@@ -2,9 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<parameter name="map" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
-	<parameter name="legend" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false"/>
+	<property name="ireport.y" value="142"/>
 	<parameter name="commentsSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<field name="@" class="org.geomajas.layer.feature.InternalFeature"/>
 	<field name="primaryClassificationNumber" class="java.lang.Integer"/>
@@ -244,19 +242,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<textFieldExpression><![CDATA[$F{projectName}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="248" splitType="Stretch">
-			<image scaleImage="RetainShape" hAlign="Right">
-				<reportElement x="0" y="0" width="144" height="144"/>
-				<imageExpression><![CDATA[$P{map}]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="150" y="0" width="50" height="144"/>
-				<imageExpression><![CDATA[$P{legend}]]></imageExpression>
-			</image>
+		<band height="100" splitType="Stretch">
 			<subreport>
-				<reportElement x="2" y="144" width="570" height="104"/>
-				<subreportParameter name="map"/>
-				<subreportParameter name="legend"/>
+				<reportElement x="2" y="0" width="570" height="100"/>
 				<dataSourceExpression><![CDATA[$F{comments}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{commentsSubReport}]]></subreportExpression>
 			</subreport>
