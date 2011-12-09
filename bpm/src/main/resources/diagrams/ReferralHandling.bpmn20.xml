@@ -59,20 +59,13 @@
       <documentation>File angagement report and decide whether final report needs to be produced.</documentation>
     </userTask>
     <sequenceFlow id="flow13" name="" sourceRef="meetingTrain" targetRef="reportOrFinish"></sequenceFlow>
-    <userTask id="appointmentDiscuss" name="Appointment" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Make appointment to discuss the referral.</documentation>
-    </userTask>
     <userTask id="meetDiscuss" name="Meet &amp; discuss" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
       <documentation>Meet and discuss the referral if required.</documentation>
     </userTask>
-    <sequenceFlow id="flow14" name="" sourceRef="appointmentDiscuss" targetRef="meetDiscuss"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway4" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow16" name="" sourceRef="reportOrFinish" targetRef="exclusivegateway4"></sequenceFlow>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
     <sequenceFlow id="flow17" name="" sourceRef="evaluateValues" targetRef="parallelgateway2"></sequenceFlow>
-    <sequenceFlow id="flow18" name="level 2" sourceRef="exclusivegateway3" targetRef="appointmentDiscuss">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 2}]]></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="flow20" name="level 1" sourceRef="exclusivegateway3" targetRef="exclusivegateway6">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 1}]]></conditionExpression>
     </sequenceFlow>
@@ -90,12 +83,6 @@
     <sequenceFlow id="flow24" name="" sourceRef="finalReport" targetRef="provincial"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway5" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow25" name="" sourceRef="provincial" targetRef="exclusivegateway5"></sequenceFlow>
-    <userTask id="appointmentDecision" name="Appointment" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
-      <documentation>Make appointment to discuss decision.</documentation>
-    </userTask>
-    <sequenceFlow id="flow26" name="Needs discussion" sourceRef="exclusivegateway5" targetRef="appointmentDecision">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!concernsAddressed}]]></conditionExpression>
-    </sequenceFlow>
     <endEvent id="endevent1" name="End"></endEvent>
     <sequenceFlow id="flow27" name="accepted" sourceRef="exclusivegateway5" targetRef="endevent1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${concernsAddressed}]]></conditionExpression>
@@ -103,7 +90,6 @@
     <userTask id="discussDecision" name="Discuss decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
       <documentation>Discuss decision about referral.</documentation>
     </userTask>
-    <sequenceFlow id="flow28" name="" sourceRef="appointmentDecision" targetRef="discussDecision"></sequenceFlow>
     <userTask id="fileReports" name="File reports" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/fileFinalReport.form">
       <documentation>File final report.</documentation>
     </userTask>
@@ -115,6 +101,12 @@
     <exclusiveGateway id="exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow33" name="" sourceRef="exclusivegateway6" targetRef="parallelgateway2"></sequenceFlow>
     <sequenceFlow id="flow34" name="" sourceRef="meetDiscuss" targetRef="exclusivegateway6"></sequenceFlow>
+    <sequenceFlow id="flow35" name="level 2" sourceRef="exclusivegateway3" targetRef="meetDiscuss">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 2}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow36" name="concerns not addressed" sourceRef="exclusivegateway5" targetRef="discussDecision">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!concernsAddressed}]]></conditionExpression>
+    </sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_referral-handling">
     <bpmndi:BPMNPlane bpmnElement="referral-handling" id="BPMNPlane_referral-handling">
@@ -157,11 +149,8 @@
       <bpmndi:BPMNShape bpmnElement="reportOrFinish" id="BPMNShape_reportOrFinish">
         <omgdc:Bounds height="55" width="105" x="720" y="218"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="appointmentDiscuss" id="BPMNShape_appointmentDiscuss">
-        <omgdc:Bounds height="55" width="105" x="576" y="70"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="meetDiscuss" id="BPMNShape_meetDiscuss">
-        <omgdc:Bounds height="55" width="105" x="720" y="70"></omgdc:Bounds>
+        <omgdc:Bounds height="55" width="105" x="576" y="70"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="exclusivegateway4" id="BPMNShape_exclusivegateway4">
         <omgdc:Bounds height="40" width="40" x="860" y="225"></omgdc:Bounds>
@@ -178,17 +167,14 @@
       <bpmndi:BPMNShape bpmnElement="exclusivegateway5" id="BPMNShape_exclusivegateway5">
         <omgdc:Bounds height="40" width="40" x="1152" y="225"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="appointmentDecision" id="BPMNShape_appointmentDecision">
-        <omgdc:Bounds height="55" width="105" x="1120" y="141"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
         <omgdc:Bounds height="35" width="35" x="1252" y="290"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="discussDecision" id="BPMNShape_discussDecision">
-        <omgdc:Bounds height="55" width="105" x="1120" y="70"></omgdc:Bounds>
+        <omgdc:Bounds height="55" width="105" x="1120" y="141"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="fileReports" id="BPMNShape_fileReports">
-        <omgdc:Bounds height="55" width="105" x="1120" y="0"></omgdc:Bounds>
+        <omgdc:Bounds height="55" width="105" x="1120" y="71"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="exclusivegateway6" id="BPMNShape_exclusivegateway6">
         <omgdc:Bounds height="40" width="40" x="860" y="148"></omgdc:Bounds>
@@ -248,10 +234,6 @@
         <omgdi:waypoint x="681" y="245"></omgdi:waypoint>
         <omgdi:waypoint x="720" y="245"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
-        <omgdi:waypoint x="681" y="97"></omgdi:waypoint>
-        <omgdi:waypoint x="720" y="97"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
         <omgdi:waypoint x="825" y="245"></omgdi:waypoint>
         <omgdi:waypoint x="860" y="245"></omgdi:waypoint>
@@ -260,11 +242,6 @@
         <omgdi:waypoint x="465" y="27"></omgdi:waypoint>
         <omgdi:waypoint x="940" y="27"></omgdi:waypoint>
         <omgdi:waypoint x="940" y="148"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
-        <omgdi:waypoint x="510" y="225"></omgdi:waypoint>
-        <omgdi:waypoint x="510" y="97"></omgdi:waypoint>
-        <omgdi:waypoint x="576" y="97"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
         <omgdi:waypoint x="510" y="225"></omgdi:waypoint>
@@ -291,25 +268,17 @@
         <omgdi:waypoint x="1080" y="245"></omgdi:waypoint>
         <omgdi:waypoint x="1152" y="245"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
-        <omgdi:waypoint x="1172" y="225"></omgdi:waypoint>
-        <omgdi:waypoint x="1172" y="196"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27">
         <omgdi:waypoint x="1172" y="265"></omgdi:waypoint>
         <omgdi:waypoint x="1252" y="307"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
-        <omgdi:waypoint x="1225" y="168"></omgdi:waypoint>
-        <omgdi:waypoint x="1172" y="125"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29">
-        <omgdi:waypoint x="1225" y="97"></omgdi:waypoint>
-        <omgdi:waypoint x="1172" y="55"></omgdi:waypoint>
+        <omgdi:waypoint x="1225" y="168"></omgdi:waypoint>
+        <omgdi:waypoint x="1172" y="126"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30">
-        <omgdi:waypoint x="1172" y="55"></omgdi:waypoint>
-        <omgdi:waypoint x="1269" y="92"></omgdi:waypoint>
+        <omgdi:waypoint x="1225" y="98"></omgdi:waypoint>
+        <omgdi:waypoint x="1269" y="97"></omgdi:waypoint>
         <omgdi:waypoint x="1269" y="290"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
@@ -322,9 +291,18 @@
         <omgdi:waypoint x="940" y="188"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34">
-        <omgdi:waypoint x="825" y="97"></omgdi:waypoint>
+        <omgdi:waypoint x="681" y="97"></omgdi:waypoint>
         <omgdi:waypoint x="880" y="97"></omgdi:waypoint>
         <omgdi:waypoint x="880" y="148"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35">
+        <omgdi:waypoint x="510" y="225"></omgdi:waypoint>
+        <omgdi:waypoint x="510" y="97"></omgdi:waypoint>
+        <omgdi:waypoint x="576" y="97"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow36" id="BPMNEdge_flow36">
+        <omgdi:waypoint x="1172" y="225"></omgdi:waypoint>
+        <omgdi:waypoint x="1172" y="196"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
