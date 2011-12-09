@@ -24,11 +24,11 @@
     <userTask id="usertask2" name="Send change notification e-mail" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewChangeNotification.form">
       <documentation>Review and optionally send change notification e-mail.</documentation>
     </userTask>
-    <sequenceFlow id="flow6" name="diff engagement level" sourceRef="exclusivegateway2" targetRef="usertask2">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${provinceEngagementLevel != engagementLevel}]]></conditionExpression>
+    <sequenceFlow id="flow6" name="need change notification" sourceRef="exclusivegateway2" targetRef="usertask2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needChangeNotification || incomplete}]]></conditionExpression>
     </sequenceFlow>
     <userTask id="usertask3" name="Send start notification e-mail" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/reviewStartNotification.form">
-      <documentation>Review and optionally send receive/start notification e-mail.</documentation>
+      <documentation>Optionally send receive/start notification e-mail.</documentation>
     </userTask>
     <sequenceFlow id="flow7" name="same" sourceRef="exclusivegateway2" targetRef="usertask3">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${provinceEngagementLevel == engagementLevel}]]></conditionExpression>
@@ -55,8 +55,8 @@
     <sequenceFlow id="flow12" name="level 3" sourceRef="exclusivegateway3" targetRef="meetingTrain">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${engagementLevel == 3}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="reportOrFinish" name="Report or finish" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/evaluateOrFinish.form">
-      <documentation>Should the referral be reported about or stop processing.</documentation>
+    <userTask id="reportOrFinish" name="File engagement report" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/evaluateOrFinish.form">
+      <documentation>File angagement report and decide whether final report needs to be produced.</documentation>
     </userTask>
     <sequenceFlow id="flow13" name="" sourceRef="meetingTrain" targetRef="reportOrFinish"></sequenceFlow>
     <userTask id="appointmentDiscuss" name="Appointment" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">

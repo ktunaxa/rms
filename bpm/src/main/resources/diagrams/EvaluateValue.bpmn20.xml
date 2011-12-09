@@ -4,7 +4,7 @@
     <documentation>Select which values need to be evaluated and evaluate them.</documentation>
     <startEvent id="startevent1" name="Start" activiti:formKey="diagrams/createReferral.form"></startEvent>
     <userTask id="usertask1" name="Determine values to investigate" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/valueSelect.form">
-      <documentation>Determine values to evaluate and/or whether to notify stewardship officer for community input.</documentation>
+      <documentation>Determine values to evaluate and/or whether to notify community liaison.</documentation>
     </userTask>
     <sequenceFlow id="flow53" name="" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>

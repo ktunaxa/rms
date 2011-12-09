@@ -50,16 +50,16 @@ public class ValueSelectForm extends AbstractTaskForm {
 		evalTreaty.setTitle("Evaluate treaty values");
 
 		communityAInput.setName("communityAInput");
-		communityAInput.setTitle("Request Akisqnuk community input");
+		communityAInput.setTitle("Inform Akisqnuk community liaison");
 
 		communityBInput.setName("communityBInput");
-		communityBInput.setTitle("Request Lower Kootenay community input");
+		communityBInput.setTitle("Inform Lower Kootenay community liaison");
 
 		communityCInput.setName("communityCInput");
-		communityCInput.setTitle("Request St. Marys community input");
+		communityCInput.setTitle("Inform St. Marys community liaison");
 
 		communityDInput.setName("communityDInput");
-		communityDInput.setTitle("Request Tobacco Plains community input");
+		communityDInput.setTitle("Inform Tobacco Plains community liaison");
 
 		DynamicForm values = new DynamicForm();
 		values.setWidth100();

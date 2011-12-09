@@ -289,7 +289,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.1" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="Report or finish"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.1" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="File engagement report"/>
         <link businessObjects="reportOrFinish"/>
       </children>
       <children visible="true">
@@ -723,7 +723,7 @@
       <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="1" filled="false" transparency="0.0"/>
       <link businessObjects="flow6"/>
       <connectionDecorators visible="true" active="true" locationRelative="true" location="0.5">
-        <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" transparency="0.0" x="-56" y="-4" style="/0/@styles.1" font="/0/@fonts.0" value="diff engagement level"/>
+        <graphicsAlgorithm xsi:type="al:Text" lineWidth="1" transparency="0.0" x="-66" y="-1" style="/0/@styles.1" font="/0/@fonts.0" value="need change notification"/>
       </connectionDecorators>
       <connectionDecorators visible="true" locationRelative="true" location="1.0">
         <graphicsAlgorithm xsi:type="al:Polygon" lineWidth="1" transparency="0.0" style="/0/@styles.2">
@@ -1149,11 +1149,11 @@
   <bpmn2:UserTask id="usertask2" name="Send change notification e-mail" incoming="flow6" outgoing="flow8" candidateGroups="/56" formKey="diagrams/reviewChangeNotification.form" dueDate="">
     <documentation text="Review and optionally send change notification e-mail."/>
   </bpmn2:UserTask>
-  <bpmn2:SequenceFlow id="flow6" name="diff engagement level" sourceRef="exclusivegateway2" targetRef="usertask2">
-    <conditionExpression id="flow6_condition" body="${provinceEngagementLevel != engagementLevel}"/>
+  <bpmn2:SequenceFlow id="flow6" name="need change notification" sourceRef="exclusivegateway2" targetRef="usertask2">
+    <conditionExpression id="flow6_condition" body="${needChangeNotification || incomplete}"/>
   </bpmn2:SequenceFlow>
   <bpmn2:UserTask id="usertask3" name="Send start notification e-mail" incoming="flow7 flow10" outgoing="flow11" candidateGroups="/58" formKey="diagrams/reviewStartNotification.form" dueDate="">
-    <documentation text="Review and optionally send receive/start notification e-mail."/>
+    <documentation text="Optionally send receive/start notification e-mail."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow7" name="same" sourceRef="exclusivegateway2" targetRef="usertask3">
     <conditionExpression id="flow7_condition" body="${provinceEngagementLevel == engagementLevel}"/>
@@ -1178,8 +1178,8 @@
   <bpmn2:SequenceFlow id="flow12" name="level 3" sourceRef="exclusivegateway3" targetRef="meetingTrain">
     <conditionExpression id="flow12_condition" body="${engagementLevel == 3}"/>
   </bpmn2:SequenceFlow>
-  <bpmn2:UserTask id="reportOrFinish" name="Report or finish" incoming="flow13" outgoing="flow16" candidateGroups="/63" formKey="diagrams/evaluateOrFinish.form" dueDate="">
-    <documentation text="Should the referral be reported about or stop processing."/>
+  <bpmn2:UserTask id="reportOrFinish" name="File engagement report" incoming="flow13" outgoing="flow16" candidateGroups="/63" formKey="diagrams/evaluateOrFinish.form" dueDate="">
+    <documentation text="File angagement report and decide whether final report needs to be produced."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow13" name="" sourceRef="meetingTrain" targetRef="reportOrFinish"/>
   <bpmn2:UserTask id="appointmentDiscuss" name="Appointment" incoming="flow18" outgoing="flow14" candidateGroups="/59" formKey="diagrams/redirect.form" dueDate="">

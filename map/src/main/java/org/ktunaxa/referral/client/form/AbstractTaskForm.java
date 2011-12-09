@@ -25,6 +25,9 @@ public abstract class AbstractTaskForm extends VLayout {
 	private HTMLFlow taskTitle = new HTMLFlow();
 	private DynamicForm[] forms;
 
+	/**
+	 * Constructor.
+	 */
 	public AbstractTaskForm() {
 		super();
 
@@ -35,6 +38,11 @@ public abstract class AbstractTaskForm extends VLayout {
 		addMember(taskTitle);
 	}
 
+	/**
+	 * Refresh the task, restetting the task title.
+	 *
+	 * @param task task
+	 */
 	public void refresh(TaskDto task) {
 		taskTitle.setContents("<h3>" + task.getName() + "</h3>" +
 				"<div>" + task.getDescription() + "</div>");
@@ -120,7 +128,7 @@ public abstract class AbstractTaskForm extends VLayout {
 	 */
 	protected String nullSafeToString(Object object) {
 		if (null == object) {
-			return null;
+			return "";
 		}
 		return object.toString();
 	}

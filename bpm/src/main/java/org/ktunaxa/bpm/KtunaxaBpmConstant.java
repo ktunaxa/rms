@@ -22,6 +22,8 @@ public interface KtunaxaBpmConstant {
 	String VAR_ENGAGEMENT_LEVEL = "engagementLevel";
 	String VAR_ENGAGEMENT_COMMENT = "engagementComment";
 	String VAR_COMPLETION_DEADLINE = "completionDeadline";
+	String VAR_NEED_CHANGE_NOTIFICATION = "needChangeNotification";
+	String VAR_INCOMPLETE = "incomplete";
 	String VAR_FINAL_DECISION_CONSISTENT = "finalDecisionConsistent";
 	String VAR_REPORT_VALUES = "reportValues";
 	String VAR_DECISION_CONSISTENT = "decisionConsistent";

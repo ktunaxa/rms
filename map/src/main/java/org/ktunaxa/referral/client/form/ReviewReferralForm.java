@@ -7,6 +7,7 @@
 package org.ktunaxa.referral.client.form;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.SpinnerItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
@@ -41,21 +42,23 @@ import java.util.Map;
  */
 public class ReviewReferralForm extends AbstractTaskForm {
 
-	private DateItem completionDeadline = new DateItem();
-	private TextAreaItem description = new TextAreaItem();
-	private TextItem email = new TextItem();
-	private SpinnerItem engagementLevel = new SpinnerItem();
-	private TextAreaItem engagementComment = new TextAreaItem();
+	private final TextAreaItem description = new TextAreaItem();
+	private final TextItem email = new TextItem();
+	private final CheckboxItem incomplete = new CheckboxItem();
+	private final CheckboxItem change = new CheckboxItem();
+	private final DateItem completionDeadline = new DateItem();
+	private final SpinnerItem engagementLevel = new SpinnerItem();
+	private final TextAreaItem engagementComment = new TextAreaItem();
 	private String provinceEngagementLevel;
 
+	/** 
+	 * Construct a {@link ReviewReferralForm}.
+	 */
 	public ReviewReferralForm() {
 		super();
 
 		RegExpValidator mailValidator = new RegExpValidator();
 		mailValidator.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
-
-		completionDeadline.setName("completionDeadline");
-		completionDeadline.setTitle("Completion deadline");
 
 		description.setName("referralName");
 		description.setTitle("Referral name");
@@ -65,6 +68,20 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		email.setTitle("Referral e-mail");
 		email.setValidators(mailValidator);
 		email.setWidth("*");
+
+		incomplete.setName("incomplete");
+		incomplete.setTitle("Referral incomplete");
+
+		change.setName("needChangeNotification");
+		change.setTitle("Change proponent choices");
+		change.addChangedHandler(new ChangedHandler() {
+			public void onChanged(ChangedEvent event) {
+				propagateChangeStatus(change.getValueAsBoolean());
+			}
+		});
+
+		completionDeadline.setName("completionDeadline");
+		completionDeadline.setTitle("Completion deadline");
 
 		engagementLevel.setName("engagementLevel");
 		engagementLevel.setTitle("Engagement level");
@@ -76,23 +93,20 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		engagementComment.setWidth("*");
 		engagementComment.setDisabled(true);
 
-		engagementLevel.addChangedHandler(new ChangedHandler() {
-			public void onChanged(ChangedEvent event) {
-				updateEngagementCommentStatus();
-			}
-		});
-
-		setFields(completionDeadline, description, email, engagementLevel, engagementComment);
+		setFields(description, email, incomplete, change, completionDeadline, engagementLevel, engagementComment);
 	}
 
-	private void updateEngagementCommentStatus() {
-		engagementComment.setDisabled(!isEngagementLevelChanged());
+	private void propagateChangeStatus(boolean changeValue) {
+		completionDeadline.setDisabled(!changeValue);
+		engagementLevel.setDisabled(!changeValue);
+		engagementComment.setDisabled(!changeValue);
 	}
 
 	private boolean isEngagementLevelChanged() {
 		String ev = engagementLevel.getValue().toString();
 		return !ev.equals(provinceEngagementLevel);
 	}
+	
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
@@ -104,8 +118,12 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		engagementLevel.setValue(variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL));
 		provinceEngagementLevel = variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL);
 		engagementLevel.setHint("Province:" + provinceEngagementLevel);
-		engagementComment.setValue(variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT));
-		updateEngagementCommentStatus();
+		String comment = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT);
+		engagementComment.setValue(comment);                                           
+		boolean changeValue = isEngagementLevelChanged() || (null != comment && comment.length() > 0); 
+		change.setValue(changeValue);
+		incomplete.setValue(false);
+		propagateChangeStatus(changeValue);
 	}
 
 	@Override
@@ -122,12 +140,15 @@ public class ReviewReferralForm extends AbstractTaskForm {
 				nullSafeToString(email.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL,
 				nullSafeToString(engagementLevel.getValue()));
-		if (isEngagementLevelChanged()) {
-			result.put(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL, 
-					provinceEngagementLevel);
-			result.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT,
-					nullSafeToString(engagementComment.getValue()));
-		}
+		result.put(KtunaxaBpmConstant.VAR_INCOMPLETE + KtunaxaBpmConstant.SET_BOOLEAN,
+				Boolean.toString(incomplete.getValueAsBoolean()));
+		boolean changeValue = change.getValueAsBoolean();
+		result.put(KtunaxaBpmConstant.VAR_NEED_CHANGE_NOTIFICATION + KtunaxaBpmConstant.SET_BOOLEAN,
+				Boolean.toString(changeValue));
+		result.put(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL,
+				provinceEngagementLevel);
+		result.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT,
+				nullSafeToString(engagementComment.getValue()));
 		// update referral itself
 		MapLayout mapLayout = MapLayout.getInstance();
 		VectorLayer layer = mapLayout.getReferralLayer();
