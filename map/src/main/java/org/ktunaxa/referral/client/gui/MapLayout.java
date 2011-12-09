@@ -253,7 +253,7 @@ public final class MapLayout extends VLayout {
 			// open the layers tab
 			infoPane.showCard(LayersPanel.NAME);
 		}
-		handlerManager.fireEvent(new CurrentReferralChangedEvent(referral));
+		handlerManager.fireEvent(new CurrentReferralChangedEvent(referral, task));
 	}
 
 	/**

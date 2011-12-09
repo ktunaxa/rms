@@ -28,8 +28,6 @@ import org.geomajas.layer.feature.attribute.LongAttribute;
 import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.geomajas.layer.feature.attribute.StringAttribute;
-import org.geomajas.plugin.rasterizing.client.image.ImageUrlService;
-import org.geomajas.plugin.rasterizing.client.image.ImageUrlServiceImpl;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.command.dto.FinishFinalReportTaskRequest;

@@ -22,6 +22,8 @@ import org.ktunaxa.referral.client.form.ConcernsAddressedForm;
 import org.ktunaxa.referral.client.form.ReviewReferralForm;
 import org.ktunaxa.referral.client.form.ReviewResultForm;
 import org.ktunaxa.referral.client.form.ValueSelectForm;
+import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
+import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
 import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -72,7 +74,11 @@ public class CurrentTaskBlock extends CardLayout<String> {
 
 	private final CardLayout<String> taskForms = new CardLayout<String>();
 	private final Button finishButton = new Button("Finish task");
+	private boolean changeHandlerInitialized;
 
+	/**
+	 * Construct a {@link CurrentTaskBlock}.
+	 */
 	public CurrentTaskBlock() {
 		super();
 		setWidth100();
@@ -111,6 +117,26 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		showCard(KEY_NO);
 	}
 
+	@Override
+	protected void onDraw() {
+		super.onDraw();
+
+		if (!changeHandlerInitialized) {
+			CurrentReferralChangedHandler currentReferralChangedHandler = new CurrentReferralChangedHandler() {
+				public void onCurrentReferralChanged(CurrentReferralChangedEvent event) {
+					refresh(event.getTask());
+				}
+			};
+			MapLayout.getInstance().addCurrentReferralChangedHandler(currentReferralChangedHandler);
+			changeHandlerInitialized = true;
+		}
+	}
+
+	/**
+	 * Refresh the screen with values from the current task.
+	 * 
+	 * @param task task for values
+	 */
 	public void refresh(TaskDto task) {
 		if (null == task) {
 			showCard(KEY_NO);

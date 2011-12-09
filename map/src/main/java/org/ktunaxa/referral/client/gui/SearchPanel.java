@@ -63,6 +63,11 @@ public class SearchPanel extends VLayout {
 		EMPTY, GEOMETRIC, ATTRIBUTE
 	}
 
+	/**
+	 * Construct a {@link SearchPanel}.
+	 *
+	 * @param mapLayout map layout
+	 */
 	public SearchPanel(MapLayout mapLayout) {
 		setSize("100%", "100%");
 		setOverflow(Overflow.AUTO);

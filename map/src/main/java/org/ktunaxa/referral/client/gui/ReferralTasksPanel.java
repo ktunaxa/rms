@@ -52,6 +52,9 @@ public class ReferralTasksPanel extends VLayout {
 	private TaskListView[] views = new TaskListView[GROUP_TITLES.length];
 	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[GROUP_TITLES.length];
 
+	/**
+	 * Construct a {@link ReferrakTasksPanel}.
+	 */
 	public ReferralTasksPanel() {
 		super();
 		setWidth100();
@@ -78,6 +81,12 @@ public class ReferralTasksPanel extends VLayout {
 		addMember(groups);
 	}
 
+	/**
+	 * Initialize the panel.
+	 *
+	 * @param referralLayer referral layer
+	 * @param referral current referral
+	 */
 	public void init(VectorLayer referralLayer, Feature referral) {
 		if (null == referral) {
 			currentTaskBlock.refresh(MapLayout.getInstance().getCurrentTask());
