@@ -129,12 +129,21 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 			String lcText = text.toLowerCase();
 			String compare;
 			compare = getObject().getName();
-			if (compare != null && compare.toLowerCase().contains(lcText)) {
+			if (null != compare && compare.toLowerCase().contains(lcText)) {
 				return true;
 			}
 			compare = getObject().getDescription();
-			if (compare != null && compare.toLowerCase().contains(lcText)) {
+			if (null != compare && compare.toLowerCase().contains(lcText)) {
 				return true;
+			}
+			compare = getObject().getAssignee();
+			if (null != compare && compare.toLowerCase().contains(lcText)) {
+				return true;
+			}
+			for (String test : getObject().getVariables().values()) {
+				if (null != test && test.toLowerCase().contains(lcText)) {
+					return true;
+				}
 			}
 		}
 		return false;
