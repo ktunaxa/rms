@@ -431,7 +431,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.1" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="Provincial decision"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.1" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="Concerns addressed"/>
         <link businessObjects="provincial"/>
       </children>
       <children visible="true">
@@ -1206,8 +1206,8 @@
     <documentation text="Verify and send final report."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow22" name="" sourceRef="parallelgateway2" targetRef="finalReport"/>
-  <bpmn2:UserTask id="provincial" name="Provincial decision" incoming="flow24" outgoing="flow25" candidateGroups="/65" formKey="diagrams/provincialResult.form" dueDate="">
-    <documentation text="Process provincial decision."/>
+  <bpmn2:UserTask id="provincial" name="Concerns addressed" incoming="flow24" outgoing="flow25" candidateGroups="/65" formKey="diagrams/concernsAddressed.form" dueDate="">
+    <documentation text="Assess whether the government/proponent adequately addressed concerns."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow23" name="" sourceRef="level0Notification" targetRef="endevent1"/>
   <bpmn2:SequenceFlow id="flow24" name="" sourceRef="finalReport" targetRef="provincial"/>
@@ -1217,11 +1217,11 @@
     <documentation text="Make appointment to discuss decision."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow26" name="Needs discussion" sourceRef="exclusivegateway5" targetRef="appointmentDecision">
-    <conditionExpression id="flow26_condition" body="${!decisionConsistent}"/>
+    <conditionExpression id="flow26_condition" body="${!concernsAddressed}"/>
   </bpmn2:SequenceFlow>
   <bpmn2:EndEvent id="endevent1" name="End" incoming="flow27 flow30 flow32 flow23"/>
   <bpmn2:SequenceFlow id="flow27" name="accepted" sourceRef="exclusivegateway5" targetRef="endevent1">
-    <conditionExpression id="flow27_condition" body="${decisionConsistent}"/>
+    <conditionExpression id="flow27_condition" body="${concernsAddressed}"/>
   </bpmn2:SequenceFlow>
   <bpmn2:UserTask id="discussDecision" name="Discuss decision" incoming="flow28" outgoing="flow29" candidateGroups="/67" formKey="diagrams/redirect.form" dueDate="">
     <documentation text="Discuss decision about referral."/>

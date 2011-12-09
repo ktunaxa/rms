@@ -83,8 +83,8 @@
       <documentation>Verify and send final report.</documentation>
     </userTask>
     <sequenceFlow id="flow22" name="" sourceRef="parallelgateway2" targetRef="finalReport"></sequenceFlow>
-    <userTask id="provincial" name="Provincial decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/provincialResult.form">
-      <documentation>Process provincial decision.</documentation>
+    <userTask id="provincial" name="Concerns addressed" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/concernsAddressed.form">
+      <documentation>Assess whether the government/proponent adequately addressed concerns.</documentation>
     </userTask>
     <sequenceFlow id="flow23" name="" sourceRef="level0Notification" targetRef="endevent1"></sequenceFlow>
     <sequenceFlow id="flow24" name="" sourceRef="finalReport" targetRef="provincial"></sequenceFlow>
@@ -94,11 +94,11 @@
       <documentation>Make appointment to discuss decision.</documentation>
     </userTask>
     <sequenceFlow id="flow26" name="Needs discussion" sourceRef="exclusivegateway5" targetRef="appointmentDecision">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!decisionConsistent}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!concernsAddressed}]]></conditionExpression>
     </sequenceFlow>
     <endEvent id="endevent1" name="End"></endEvent>
     <sequenceFlow id="flow27" name="accepted" sourceRef="exclusivegateway5" targetRef="endevent1">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${decisionConsistent}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${concernsAddressed}]]></conditionExpression>
     </sequenceFlow>
     <userTask id="discussDecision" name="Discuss decision" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
       <documentation>Discuss decision about referral.</documentation>

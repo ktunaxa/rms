@@ -18,7 +18,7 @@ import org.ktunaxa.referral.client.form.DiscussEvaluationForm;
 import org.ktunaxa.referral.client.form.VerifyAndSendEmailForm;
 import org.ktunaxa.referral.client.form.EmptyForm;
 import org.ktunaxa.referral.client.form.EvaluateOrFinishForm;
-import org.ktunaxa.referral.client.form.ProvincialResultForm;
+import org.ktunaxa.referral.client.form.ConcernsAddressedForm;
 import org.ktunaxa.referral.client.form.ReviewReferralForm;
 import org.ktunaxa.referral.client.form.ReviewResultForm;
 import org.ktunaxa.referral.client.form.ValueSelectForm;
@@ -49,7 +49,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 	private static final String FORM_EMPTY = "empty";
 	private static final String FORM_DISCUSS_EVALUATION = "discussEvaluationResult.form";
 	private static final String FORM_EVALUATE_OR_FINISH = "evaluateOrFinish.form";
-	private static final String FORM_PROVINCIAL_RESULT = "provincialResult.form";
+	private static final String FORM_CONCERNS_ADDRESSED = "concernsAddressed.form";
 	private static final String FORM_FILE_FINAL_REPORT = "fileFinalReport.form";
 	private static final String FORM_REVIEW_REFERRAL = "reviewReferral.form";
 	private static final String FORM_VALUE_SELECT = "valueSelect.form";
@@ -60,7 +60,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 	private static final String[] TASKS_WITH_FORM = {
 			FORM_DISCUSS_EVALUATION,
 			FORM_EVALUATE_OR_FINISH,
-			FORM_PROVINCIAL_RESULT,
+			FORM_CONCERNS_ADDRESSED,
 			FORM_REVIEW_REFERRAL,
 			FORM_VALUE_SELECT,
 			FORM_REVIEW_LEVEL_0,
@@ -94,7 +94,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		taskForms.addCard(FORM_EMPTY, new EmptyForm(false));
 		taskForms.addCard(FORM_DISCUSS_EVALUATION, new DiscussEvaluationForm());
 		taskForms.addCard(FORM_EVALUATE_OR_FINISH, new EvaluateOrFinishForm());
-		taskForms.addCard(FORM_PROVINCIAL_RESULT, new ProvincialResultForm());
+		taskForms.addCard(FORM_CONCERNS_ADDRESSED, new ConcernsAddressedForm());
 		taskForms.addCard(FORM_REVIEW_REFERRAL, new ReviewReferralForm());
 		taskForms.addCard(FORM_VALUE_SELECT, new ValueSelectForm());
 		taskForms.addCard(FORM_REVIEW_LEVEL_0, new VerifyAndSendEmailForm(KtunaxaConstant.Email.LEVEL_0));

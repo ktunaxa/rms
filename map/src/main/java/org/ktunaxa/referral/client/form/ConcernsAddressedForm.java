@@ -33,16 +33,16 @@ import java.util.Map;
  *
  * @author Joachim Van der Auwera
  */
-public class ProvincialResultForm extends AbstractTaskForm {
+public class ConcernsAddressedForm extends AbstractTaskForm {
 
 	private CheckboxItem decisionConsistent = new CheckboxItem();
 
-	public ProvincialResultForm() {
+	public ConcernsAddressedForm() {
 		super();
 
-		decisionConsistent.setName("decisionConsistent");
-		decisionConsistent.setTitle("Consistent decision");
-		decisionConsistent.setPrompt("Provincial decision is consistent with KLRA response");
+		decisionConsistent.setName("concernsAddressed");
+		decisionConsistent.setTitle("Concerns addressed");
+		decisionConsistent.setPrompt("The KLRA concerns have been addressed by the proponent");
 
 		setFields(decisionConsistent);
 	}
