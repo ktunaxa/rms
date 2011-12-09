@@ -199,7 +199,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="101" height="30" y="20" style="/0/@styles.16" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="Notify Akisqnuk community"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="101" height="30" y="20" style="/0/@styles.16" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="Review referral"/>
         <link businessObjects="usertask6"/>
       </children>
       <children visible="true">
@@ -267,7 +267,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="101" height="30" y="20" style="/0/@styles.20" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="Process Akisqnuk community input"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="101" height="30" y="20" style="/0/@styles.20" font="/0/@fonts.1" horizontalAlignment="ALIGNMENT_CENTER" value="Comments on referral"/>
         <link businessObjects="usertask10"/>
       </children>
       <children visible="true">
@@ -998,7 +998,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Notify Lower Kootenay community"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Review referral"/>
         <link businessObjects="usertask11"/>
       </children>
       <children visible="true">
@@ -1015,7 +1015,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Process Lower Kootenay community input"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Comments on referral"/>
         <link businessObjects="usertask12"/>
       </children>
       <children visible="true">
@@ -1032,7 +1032,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Notify St. Marys community"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Review referral"/>
         <link businessObjects="usertask13"/>
       </children>
       <children visible="true">
@@ -1049,7 +1049,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Process St. Marys community input"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Comments on referral"/>
         <link businessObjects="usertask14"/>
       </children>
       <children visible="true">
@@ -1066,7 +1066,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Notify Tobacco Plains community"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Review referral"/>
         <link businessObjects="usertask15"/>
       </children>
       <children visible="true">
@@ -1083,7 +1083,7 @@
         <graphicsAlgorithm xsi:type="al:Ellipse" filled="false" lineVisible="false"/>
       </anchors>
       <children visible="true">
-        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Process Tobacco Plains community input"/>
+        <graphicsAlgorithm xsi:type="al:MultiText" lineWidth="1" transparency="0.0" width="105" height="30" y="20" style="/0/@styles.60" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Comments on referral"/>
         <link businessObjects="usertask16"/>
       </children>
       <children visible="true">
@@ -2292,8 +2292,8 @@
   <bpmn2:ManualTask id="manualtask3" name="Auto evaluate cultural values" incoming="flow66" outgoing="flow82"/>
   <bpmn2:ManualTask id="manualtask4" name="Auto evaluate terrestrial values" incoming="flow68" outgoing="flow83"/>
   <bpmn2:ManualTask id="manualtask5" name="Auto evaluate treaty values" incoming="flow70" outgoing="flow84"/>
-  <bpmn2:UserTask id="usertask6" name="Notify Akisqnuk community" incoming="flow71" outgoing="flow85" candidateGroups="/105" formKey="diagrams/redirect.form">
-    <documentation text="Notify Akisqnuk community."/>
+  <bpmn2:UserTask id="usertask6" name="Review referral" incoming="flow71" outgoing="flow85" candidateGroups="/105" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Review the location and details about this referral, and discuss with Akisqnuk community members or staff if required."/>
   </bpmn2:UserTask>
   <bpmn2:UserTask id="usertask7" name="Evaluate cultural values" incoming="flow82" outgoing="flow76" candidateGroups="/71" formKey="diagrams/redirect.form" dueDate="">
     <documentation text="Evaluate cultural values and enter comments."/>
@@ -2304,8 +2304,8 @@
   <bpmn2:UserTask id="usertask9" name="Evaluate treaty values" incoming="flow84" outgoing="flow78" candidateGroups="/73" formKey="diagrams/redirect.form" dueDate="">
     <documentation text="Evaluate treaty values and enter comments."/>
   </bpmn2:UserTask>
-  <bpmn2:UserTask id="usertask10" name="Process Akisqnuk community input" incoming="flow85" outgoing="flow79" candidateGroups="/106" formKey="diagrams/redirect.form">
-    <documentation text="Advertise referral to Akisqnuk community, schedule meeting and process Akisqnuk community input."/>
+  <bpmn2:UserTask id="usertask10" name="Comments on referral" incoming="flow85" outgoing="flow79" candidateGroups="/106" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Enter comments under the comments tab."/>
   </bpmn2:UserTask>
   <bpmn2:ExclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" incoming="flow56" outgoing="flow62 flow65"/>
   <bpmn2:ExclusiveGateway id="exclusivegateway2" name="Exclusive Gateway" incoming="flow57" outgoing="flow63 flow64"/>
@@ -2408,35 +2408,35 @@
   <bpmn2:SequenceFlow id="flow99" name="" sourceRef="exclusivegateway16" targetRef="parallelgateway4"/>
   <bpmn2:SequenceFlow id="flow100" name="" sourceRef="exclusivegateway17" targetRef="parallelgateway4"/>
   <bpmn2:SequenceFlow id="flow101" name="" sourceRef="exclusivegateway18" targetRef="parallelgateway4"/>
-  <bpmn2:UserTask id="usertask11" name="Notify Lower Kootenay community" incoming="flow102" outgoing="flow103" candidateGroups="/108" formKey="diagrams/redirect.form">
-    <documentation text="Notify Lower Kootenay community."/>
+  <bpmn2:UserTask id="usertask11" name="Review referral" incoming="flow102" outgoing="flow103" candidateGroups="/108" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Review the location and details about this referral, and discuss with Lower Kootenays community members or staff if required."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow102" name="" sourceRef="exclusivegateway13" targetRef="usertask11">
     <conditionExpression id="flow102_condition" body="${communityBInput}"/>
   </bpmn2:SequenceFlow>
-  <bpmn2:UserTask id="usertask12" name="Process Lower Kootenay community input" incoming="flow103" outgoing="flow104" candidateGroups="/107" formKey="diagrams/redirect.form">
-    <documentation text="Advertise referral to Lower Kootenay community, schedule meeting and process Lower Kootenay community input."/>
+  <bpmn2:UserTask id="usertask12" name="Comments on referral" incoming="flow103" outgoing="flow104" candidateGroups="/107" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Enter comments under the comments tab."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow103" name="" sourceRef="usertask11" targetRef="usertask12"/>
   <bpmn2:SequenceFlow id="flow104" name="" sourceRef="usertask12" targetRef="exclusivegateway16"/>
-  <bpmn2:UserTask id="usertask13" name="Notify St. Marys community" incoming="flow105" outgoing="flow106" candidateGroups="/112" formKey="diagrams/redirect.form">
-    <documentation text="Notify St. Marys community."/>
+  <bpmn2:UserTask id="usertask13" name="Review referral" incoming="flow105" outgoing="flow106" candidateGroups="/112" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Review the location and details about this referral, and discuss with St. Marys community members or staff if required."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow105" name="" sourceRef="exclusivegateway14" targetRef="usertask13">
     <conditionExpression id="flow105_condition" body="${communityCInput}"/>
   </bpmn2:SequenceFlow>
-  <bpmn2:UserTask id="usertask14" name="Process St. Marys community input" incoming="flow106" outgoing="flow109" candidateGroups="/109" formKey="diagrams/redirect.form">
-    <documentation text="Advertise referral to St. Marys community, schedule meeting and process St. Marys community input."/>
+  <bpmn2:UserTask id="usertask14" name="Comments on referral" incoming="flow106" outgoing="flow109" candidateGroups="/109" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Enter comments under the comments tab."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow106" name="" sourceRef="usertask13" targetRef="usertask14"/>
-  <bpmn2:UserTask id="usertask15" name="Notify Tobacco Plains community" incoming="flow107" outgoing="flow108" candidateGroups="/111" formKey="diagrams/redirect.form">
-    <documentation text="Notify Tobacco Plains community."/>
+  <bpmn2:UserTask id="usertask15" name="Review referral" incoming="flow107" outgoing="flow108" candidateGroups="/111" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Review the location and details about this referral, and discuss with Tobacco Plains community members or staff if required."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow107" name="" sourceRef="exclusivegateway15" targetRef="usertask15">
     <conditionExpression id="flow107_condition" body="${communityDInput}"/>
   </bpmn2:SequenceFlow>
-  <bpmn2:UserTask id="usertask16" name="Process Tobacco Plains community input" incoming="flow108" outgoing="flow110" candidateGroups="/110" formKey="diagrams/redirect.form">
-    <documentation text="Advertise referral to Tobacco Plains community, schedule meeting and process Tobacco Plains community input."/>
+  <bpmn2:UserTask id="usertask16" name="Comments on referral" incoming="flow108" outgoing="flow110" candidateGroups="/110" formKey="diagrams/redirect.form" dueDate="">
+    <documentation text="Enter comments under the comments tab."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow108" name="" sourceRef="usertask15" targetRef="usertask16"/>
   <bpmn2:SequenceFlow id="flow109" name="" sourceRef="usertask14" targetRef="exclusivegateway17"/>
