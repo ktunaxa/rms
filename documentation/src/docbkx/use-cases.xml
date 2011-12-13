@@ -25,7 +25,8 @@
       <para>The process starts by a review of the referral. The referral
       manager can correct some of the main fields, including the engagement
       level, completion deadline and the default e-mail address which should
-      be used for notifications. </para>
+      be used for notifications. You can also indicate if the referral is
+      incomplete.</para>
 
       <para>If the referral manager indicated that the engagement level is 0 ,
       then the process finished by suggesting to send a level 0 notification.
@@ -36,7 +37,28 @@
       "evaluate values" sub-process is called to evaluate the Ktunaxa values
       and notify the communities.</para>
 
-      <para>.....</para>
+      <para>At the bottom the system checks whether the proponent needs to be
+      notified of a change. This will happen when either the referral is
+      incomplete or when the checkbox to change the referral deadline or
+      engagement level was indicated. In that case, a notification is
+      (optionally) sent. The next task will then allow setting the agreed
+      engagement level and response deadline.</para>
+
+      <para>When everything is agreed on, you can send a notification about
+      starting to handle the referral.</para>
+
+      <para>The process then splits based on the engagement level. For all
+      levels there is the parallel evaluation of the values. No additional
+      work is required for engagement level 1. For engagement level 2 there is
+      an option to meet and discuss with the proponent. For level 3 there is
+      the meeting train followed by filing the engagement report. At that
+      point the user can decide whether the final report needs to be
+      produced.</para>
+
+      <para>After the final report, you can indicate in the next task whether
+      the concerns which have been reported by KNC are addressed. If this is
+      not the case, you can discuss with the proponent and then file the final
+      reports.</para>
 
       <figure>
         <title>General (main) business process</title>
