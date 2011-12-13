@@ -41,7 +41,7 @@
         <activiti:in source="requesterEmail" target="requesterEmail"></activiti:in>
       </extensionElements>
     </callActivity>
-    <userTask id="provinceApproval" name="Get approval from province" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/redirect.form">
+    <userTask id="provinceApproval" name="Get approval from province" activiti:candidateGroups="referralManager" activiti:formKey="diagrams/changeConfirmation.form">
       <documentation>Process feedback from province about changed engagement level.</documentation>
     </userTask>
     <sequenceFlow id="flow8" name="" sourceRef="usertask2" targetRef="provinceApproval"></sequenceFlow>

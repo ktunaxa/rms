@@ -14,6 +14,7 @@ import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.widget.utility.gwt.client.widget.CardLayout;
 import org.ktunaxa.referral.client.form.AbstractTaskForm;
+import org.ktunaxa.referral.client.form.ChangeConfirmationForm;
 import org.ktunaxa.referral.client.form.DiscussEvaluationForm;
 import org.ktunaxa.referral.client.form.VerifyAndSendEmailForm;
 import org.ktunaxa.referral.client.form.EmptyForm;
@@ -59,6 +60,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 	private static final String FORM_REVIEW_CHANGE = "reviewChangeNotification.form";
 	private static final String FORM_REVIEW_START = "reviewStartNotification.form";
 	private static final String FORM_REVIEW_RESULT = "reviewResultNotification.form";
+	private static final String FORM_CHANGE_CONFIRMATION = "changeConfirmation.form";
 	private static final String[] TASKS_WITH_FORM = {
 			FORM_DISCUSS_EVALUATION,
 			FORM_EVALUATE_OR_FINISH,
@@ -69,7 +71,8 @@ public class CurrentTaskBlock extends CardLayout<String> {
 			FORM_REVIEW_CHANGE,
 			FORM_REVIEW_START,
 			FORM_FILE_FINAL_REPORT,
-			FORM_REVIEW_RESULT
+			FORM_REVIEW_RESULT,
+			FORM_CHANGE_CONFIRMATION
 	};
 
 	private final CardLayout<String> taskForms = new CardLayout<String>();
@@ -107,6 +110,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 		taskForms.addCard(FORM_REVIEW_START, new VerifyAndSendEmailForm(KtunaxaConstant.Email.START));
 		taskForms.addCard(FORM_REVIEW_CHANGE, new VerifyAndSendEmailForm(KtunaxaConstant.Email.CHANGE));
 		taskForms.addCard(FORM_REVIEW_RESULT, new ReviewResultForm());
+		taskForms.addCard(FORM_CHANGE_CONFIRMATION, new ChangeConfirmationForm());
 		taskForms.addCard(FORM_FILE_FINAL_REPORT, new EmptyForm(true));
 		taskForms.setWidth100();
 		currentTask.addMember(taskForms);

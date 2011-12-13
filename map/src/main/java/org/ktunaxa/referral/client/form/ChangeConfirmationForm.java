@@ -7,13 +7,8 @@
 package org.ktunaxa.referral.client.form;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.SpinnerItem;
-import com.smartgwt.client.widgets.form.fields.TextAreaItem;
-import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
-import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
@@ -26,7 +21,6 @@ import org.geomajas.layer.feature.Feature;
 import org.geomajas.layer.feature.FeatureTransaction;
 import org.geomajas.layer.feature.attribute.DateAttribute;
 import org.geomajas.layer.feature.attribute.IntegerAttribute;
-import org.geomajas.layer.feature.attribute.StringAttribute;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -36,49 +30,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Form to do a quick review of a new referral, verify engagement level and response deadline.
+ * Form to handle the response about changed engagement level, response deadline or referral completeness.
  *
  * @author Joachim Van der Auwera
  */
-public class ReviewReferralForm extends AbstractTaskForm {
+public class ChangeConfirmationForm extends AbstractTaskForm {
 
-	private final TextAreaItem description = new TextAreaItem();
-	private final TextItem email = new TextItem();
-	private final CheckboxItem incomplete = new CheckboxItem();
-	private final CheckboxItem change = new CheckboxItem();
 	private final DateItem completionDeadline = new DateItem();
 	private final SpinnerItem engagementLevel = new SpinnerItem();
-	private final TextAreaItem engagementComment = new TextAreaItem();
-	private String provinceEngagementLevel;
 
-	/** 
-	 * Construct a {@link ReviewReferralForm}.
-	 */
-	public ReviewReferralForm() {
+	/** Construct a {@link org.ktunaxa.referral.client.form.ChangeConfirmationForm}. */
+	public ChangeConfirmationForm() {
 		super();
 
 		RegExpValidator mailValidator = new RegExpValidator();
 		mailValidator.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
-
-		description.setName("referralName");
-		description.setTitle("Referral name");
-		description.setWidth("*");
-
-		email.setName("email");
-		email.setTitle("Referral e-mail");
-		email.setValidators(mailValidator);
-		email.setWidth("*");
-
-		incomplete.setName("incomplete");
-		incomplete.setTitle("Referral incomplete");
-
-		change.setName("needChangeNotification");
-		change.setTitle("Change proponent choices");
-		change.addChangedHandler(new ChangedHandler() {
-			public void onChanged(ChangedEvent event) {
-				propagateChangeStatus(change.getValueAsBoolean());
-			}
-		});
 
 		completionDeadline.setName("completionDeadline");
 		completionDeadline.setTitle("Completion deadline");
@@ -88,42 +54,18 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		engagementLevel.setMin(0);
 		engagementLevel.setMax(3);
 
-		engagementComment.setName("engagementComment");
-		engagementComment.setTitle("Comment about changed engagement level");
-		engagementComment.setWidth("*");
-		engagementComment.setDisabled(true);
-
-		setFields(description, email, incomplete, change, completionDeadline, engagementLevel, engagementComment);
+		setFields(completionDeadline, engagementLevel);
 	}
 
-	private void propagateChangeStatus(boolean changeValue) {
-		completionDeadline.setDisabled(!changeValue);
-		engagementLevel.setDisabled(!changeValue);
-		engagementComment.setDisabled(!changeValue);
-	}
-
-	private boolean isEngagementLevelChanged() {
-		String ev = engagementLevel.getValue().toString();
-		return !ev.equals(provinceEngagementLevel);
-	}
-	
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
 		Map<String, String> variables = task.getVariables();
 		DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
 		completionDeadline.setValue(formatter.parse(variables.get(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE)));
-		description.setValue(variables.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME));
-		email.setValue(variables.get(KtunaxaBpmConstant.VAR_EMAIL));
 		engagementLevel.setValue(variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL));
-		provinceEngagementLevel = variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL);
+		String provinceEngagementLevel = variables.get(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL);
 		engagementLevel.setHint("Province:" + provinceEngagementLevel);
-		String comment = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT);
-		engagementComment.setValue(comment);                                           
-		boolean changeValue = isEngagementLevelChanged() || (null != comment && comment.length() > 0); 
-		change.setValue(changeValue);
-		incomplete.setValue(false);
-		propagateChangeStatus(changeValue);
 	}
 
 	@Override
@@ -134,21 +76,8 @@ public class ReviewReferralForm extends AbstractTaskForm {
 
 		result.put(KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE,
 				formatter.format(completionDeadline.getValueAsDate()));
-		result.put(KtunaxaBpmConstant.VAR_REFERRAL_NAME,
-				nullSafeToString(description.getValue()));
-		result.put(KtunaxaBpmConstant.VAR_EMAIL,
-				nullSafeToString(email.getValue()));
 		result.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL,
 				nullSafeToString(engagementLevel.getValue()));
-		result.put(KtunaxaBpmConstant.VAR_INCOMPLETE + KtunaxaBpmConstant.SET_BOOLEAN,
-				Boolean.toString(incomplete.getValueAsBoolean()));
-		boolean changeValue = change.getValueAsBoolean();
-		result.put(KtunaxaBpmConstant.VAR_NEED_CHANGE_NOTIFICATION + KtunaxaBpmConstant.SET_BOOLEAN,
-				Boolean.toString(changeValue));
-		result.put(KtunaxaBpmConstant.VAR_PROVINCE_ENGAGEMENT_LEVEL,
-				provinceEngagementLevel);
-		result.put(KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT,
-				nullSafeToString(engagementComment.getValue()));
 		// update referral itself
 		MapLayout mapLayout = MapLayout.getInstance();
 		VectorLayer layer = mapLayout.getReferralLayer();
@@ -157,10 +86,6 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		Map<String, Attribute> attributes = current.getAttributes();
 		attributes.put(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL, new IntegerAttribute(
 				Integer.parseInt(result.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL))));
-		attributes.put(KtunaxaConstant.ATTRIBUTE_PROJECT, new StringAttribute(
-				result.get(KtunaxaBpmConstant.VAR_REFERRAL_NAME)));
-		attributes.put(KtunaxaConstant.ATTRIBUTE_EMAIL, new StringAttribute(
-				result.get(KtunaxaBpmConstant.VAR_EMAIL)));
 		attributes.put(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE, new DateAttribute(
 				completionDeadline.getValueAsDate()));
 		final FeatureTransaction ft = new FeatureTransaction();

@@ -1100,7 +1100,7 @@
     <inParameters source="completionDeadline" target="completionDeadline"/>
     <inParameters source="requesterEmail" target="requesterEmail"/>
   </bpmn2:CallActivity>
-  <bpmn2:UserTask id="provinceApproval" name="Get approval from province" incoming="flow8" outgoing="flow10" candidateGroups="/51" formKey="diagrams/redirect.form" dueDate="">
+  <bpmn2:UserTask id="provinceApproval" name="Get approval from province" incoming="flow8" outgoing="flow10" candidateGroups="/51" formKey="diagrams/changeConfirmation.form" dueDate="">
     <documentation text="Process feedback from province about changed engagement level."/>
   </bpmn2:UserTask>
   <bpmn2:SequenceFlow id="flow8" name="" sourceRef="usertask2" targetRef="provinceApproval"/>
