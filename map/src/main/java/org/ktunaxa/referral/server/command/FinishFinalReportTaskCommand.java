@@ -44,7 +44,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -92,6 +96,38 @@ public class FinishFinalReportTaskCommand
 		return new FinishFinalReportTaskResponse();
 	}
 
+	/**
+	 * Get the URL of the server (being the address here, behind the firewall/router).
+	 *
+	 * @return address of application
+	 */
+	private String getServerDispatchUrl() {
+		StringBuilder url = new StringBuilder("http://127.0.0.1");
+
+		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+		if (null == requestAttributes || !(requestAttributes instanceof ServletRequestAttributes)) {
+			return "http://127.0.0.1:8080/map/d/"; // use localhost as back-up, will fail in many cases
+		}
+
+		HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+
+		int port = request.getServerPort();
+		if (9080 == port) {
+			port = 8080; // fix for Ktunaxa server
+		}
+		if (80 != port) {
+			url.append(":");
+			url.append(Integer.toString(port));
+		}
+		String cp = request.getContextPath();
+		if (null != cp && cp.length() > 0) {
+			url.append(request.getContextPath());
+		}
+		url.append("/d/");
+		return url.toString();
+	}
+
+
 	public void execute(FinishFinalReportTaskRequest request, FinishFinalReportTaskResponse response) throws Exception {
 		String referralId = request.getReferralId();
 		if (null == referralId) {
@@ -101,8 +137,7 @@ public class FinishFinalReportTaskCommand
 		String token = securityContext.getToken();
 
 		// build report and save as in referral
-		String reportUrl = dispatcherUrlService.getDispatcherUrl() +
-				"reporting/f/" + KtunaxaConstant.LAYER_REFERRAL_SERVER_ID + "/" +
+		String reportUrl = getServerDispatchUrl() + "reporting/f/" + KtunaxaConstant.LAYER_REFERRAL_SERVER_ID + "/" +
 				FinalReportClickHandler.REPORT_NAME + "." + FinalReportClickHandler.FORMAT + "?filter=" +
 				URLEncoder.encode(ReferralUtil.createFilter(referralId)) +
 				"&userToken=" + securityContext.getToken();
