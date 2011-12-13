@@ -91,8 +91,8 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 						}
 						part.setFileName(filename);
 						String fixedUrl = url;
-						if (fixedUrl.startsWith("..")) {
-							fixedUrl = "http://localhost:8080/" + fixedUrl.substring(2);
+						if (fixedUrl.startsWith("../")) {
+							fixedUrl = "http://localhost:8080/" + fixedUrl.substring(3);
 						}
 						fixedUrl = fixedUrl.replace(" ", "%20");
 						part.setDataHandler(new DataHandler(new URL(fixedUrl)));
