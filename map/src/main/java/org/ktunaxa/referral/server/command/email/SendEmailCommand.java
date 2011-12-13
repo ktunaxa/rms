@@ -90,7 +90,12 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 							filename = filename.substring(pos + 1);
 						}
 						part.setFileName(filename);
-						part.setDataHandler(new DataHandler(new URL(url)));
+						String fixedUrl = url;
+						if (fixedUrl.startsWith("..")) {
+							fixedUrl = "http://localhost:8080/" + fixedUrl.substring(2);
+						}
+						fixedUrl = fixedUrl.replace(" ", "%20");
+						part.setDataHandler(new DataHandler(new URL(fixedUrl)));
 						mp.addBodyPart(part);
 					}
 				}
