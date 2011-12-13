@@ -13,9 +13,9 @@ import org.geomajas.configuration.CircleInfo;
 import org.geomajas.configuration.SymbolInfo;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
+import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.MapView.ZoomOption;
-import org.geomajas.gwt.client.map.event.MapModelEvent;
-import org.geomajas.gwt.client.map.event.MapModelHandler;
+import org.geomajas.gwt.client.spatial.Bbox;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.gwt.client.widget.MapWidget;
@@ -44,16 +44,13 @@ import com.smartgwt.client.widgets.toolbar.ToolStripButton;
  */
 public class AddGeometryPage extends WizardPage<ReferralData> {
 
-	//TODO place in geomajas.css
 	public static final String FLOW_NOTE_STYLE = "font-size:12px; line-height:18px;";
 	public static final String FLOW_INVALID_STYLE = "color:#AA0000; " + FLOW_NOTE_STYLE;
 	public static final String FLOW_TOOL_STYLE = "text-align:right; line-height:32px; font-size:12px;";
-
-	private static final String WORLD_PAINTABLE_ID = "referral-geometry";
-
-	private VLayout vLayout;
 	
-	private HLayout hLayout;
+	private static final String WORLD_PAINTABLE_ID = "referral-geometry";
+	private static final String RADIO_GROUP = "geometry";
+	private VLayout vLayout;
 
 	private CardLayout<String> uploadLayout;
 
@@ -65,8 +62,6 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 
 	private Map<String, UploadGeometryPanel> panelMap;
 
-	private UploadNoGeometryPanel noGeometryPanel;
-	
 	public AddGeometryPage() {
 		super();
 		mapWidget = new MapWidget(KtunaxaConstant.MAP_CREATE_REFERRAL, KtunaxaConstant.APPLICATION);
@@ -98,6 +93,15 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		for (UploadGeometryPanel panel : panelMap.values()) {
 			panel.setFeature(wizardData.getFeature());
 		}
+
+		// reset the map
+		final MapModel mapModel = mapWidget.getMapModel();
+		mapModel.runWhenInitialized(new Runnable() {
+			public void run() {
+				final Bbox initialBounds = new Bbox(mapModel.getMapInfo().getInitialBounds());
+				mapModel.getMapView().applyBounds(initialBounds, ZoomOption.LEVEL_FIT);
+			}
+		});
 	}
 
 	@Override
@@ -111,27 +115,23 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 			gfxGeometry = new GfxGeometry(WORLD_PAINTABLE_ID, geometry, style);
 			SymbolInfo symbol = new SymbolInfo();
 			CircleInfo circle = new CircleInfo();
-			circle.setR(5);
+			circle.setR(5);                                                             
 			symbol.setCircle(circle);
 			gfxGeometry.setSymbolInfo(symbol);
 			mapWidget.setVisible(true);
 			mapWidget.registerWorldPaintable(gfxGeometry);
-			if (mapWidget.getMapModel().isInitialized()) {
-				mapWidget.getMapModel().getMapView().applyBounds(geometry.getBounds(), ZoomOption.LEVEL_FIT);
-			} else {
-				mapWidget.getMapModel().addMapModelHandler(new MapModelHandler() {
-
-					public void onMapModelChange(MapModelEvent event) {
-						mapWidget.getMapModel().getMapView().applyBounds(geometry.getBounds(), ZoomOption.LEVEL_FIT);
-					}
-				});
-			}
+			final MapModel mapModel = mapWidget.getMapModel();
+			mapModel.runWhenInitialized(new Runnable() {
+				public void run() {
+					mapModel.getMapView().applyBounds(geometry.getBounds(), ZoomOption.LEVEL_FIT);
+				}
+			});
 		}
 	}
 
 	private void initGui() {
 		vLayout = new VLayout(LayoutConstant.MARGIN_LARGE);
-		hLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
+		HLayout hLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
 		uploadLayout = new CardLayout<String>();
 		invalidTop = createInvalid();
 		uploadLayout.addMember(invalidTop);
@@ -139,7 +139,7 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		panelMap.put(UploadShapePanel.NAME, new UploadShapePanel());
 		panelMap.put(UploadGeoMarkUrlPanel.NAME, new UploadGeoMarkUrlPanel());
 		panelMap.put(UploadXyCoordinatePanel.NAME, new UploadXyCoordinatePanel());
-		noGeometryPanel = new UploadNoGeometryPanel();
+		UploadNoGeometryPanel noGeometryPanel = new UploadNoGeometryPanel();
 		panelMap.put(UploadNoGeometryPanel.NAME, noGeometryPanel);
 		ShowGeometryOnMapHandler handler = new ShowGeometryOnMapHandler();
 		for (Map.Entry<String, UploadGeometryPanel> entry : panelMap.entrySet()) {
@@ -156,20 +156,20 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 
 		ToolStripButton shapeButton = new ToolStripButton("Shape");
 		shapeButton.setActionType(SelectionType.RADIO);
-		shapeButton.setRadioGroup("geometry");
+		shapeButton.setRadioGroup(RADIO_GROUP);
 		shapeButton.setSelected(true);
 
 		ToolStripButton geoMarkButton = new ToolStripButton("Geomark");
 		geoMarkButton.setActionType(SelectionType.RADIO);
-		geoMarkButton.setRadioGroup("geometry");
+		geoMarkButton.setRadioGroup(RADIO_GROUP);
 
 		ToolStripButton xyButton = new ToolStripButton("X:Y");
 		xyButton.setActionType(SelectionType.RADIO);
-		xyButton.setRadioGroup("geometry");
+		xyButton.setRadioGroup(RADIO_GROUP);
 		
 		ToolStripButton noneButton = new ToolStripButton("No geometry");
 		noneButton.setActionType(SelectionType.RADIO);
-		noneButton.setRadioGroup("geometry");
+		noneButton.setRadioGroup(RADIO_GROUP);
 
 		HTMLFlow cmd = new HTMLFlow(
 				HtmlBuilder.divStyle(FLOW_TOOL_STYLE, "Choose a method:"));
@@ -180,33 +180,11 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		toolStrip.addMember(xyButton);
 		toolStrip.addMember(noneButton);
 
-		shapeButton.addClickHandler(new ClickHandler() {
+		shapeButton.addClickHandler(new GeometryTypeSelect(uploadLayout, UploadShapePanel.NAME));
+		geoMarkButton.addClickHandler(new GeometryTypeSelect(uploadLayout, UploadGeoMarkUrlPanel.NAME));
+		xyButton.addClickHandler(new GeometryTypeSelect(uploadLayout, UploadXyCoordinatePanel.NAME));
+		noneButton.addClickHandler(new GeometryTypeSelect(uploadLayout, UploadNoGeometryPanel.NAME));
 
-			public void onClick(ClickEvent event) {
-				uploadLayout.showCard(UploadShapePanel.NAME);
-			}
-		});
-
-		geoMarkButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				uploadLayout.showCard(UploadGeoMarkUrlPanel.NAME);
-			}
-		});
-
-		xyButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				uploadLayout.showCard(UploadXyCoordinatePanel.NAME);
-			}
-		});
-		
-		noneButton.addClickHandler(new ClickHandler() {
-
-			public void onClick(ClickEvent event) {
-				uploadLayout.showCard(UploadNoGeometryPanel.NAME);
-			}
-		});
 		uploadLayout.setSize("50%", "100%");
 		hLayout.addMember(uploadLayout);
 		mapWidget.setZoomOnScrollEnabled(true);
@@ -231,11 +209,8 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 	
 	@Override
 	public boolean doValidate() {
-		boolean validate = getWizardData().getFeature().isGeometryLoaded();
-		if (!validate) {
-			validate = noGeometryPanel.validate();
-		}
-		invalidTop.setVisible(!validate); 
+		boolean validate = ((UploadGeometryPanel) uploadLayout.getCurrentCard()).validate();
+		invalidTop.setVisible(!validate);
 		return validate;
 	}
 
@@ -253,4 +228,22 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		}
 	}
 
+	/**
+	 * {@link ClickHandler} to select the geometry type.
+	 *
+	 * @author Joachim Van der Auwera
+	 */
+	private static final class GeometryTypeSelect implements ClickHandler {
+		private final CardLayout<String> cardLayout;
+		private final String card;
+				
+		private GeometryTypeSelect(CardLayout<String> cardLayout, String card) {
+			this.cardLayout = cardLayout;
+			this.card = card;
+		}
+		
+		public void onClick(ClickEvent event) {
+			cardLayout.showCard(card);
+		}
+	}
 }

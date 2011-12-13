@@ -34,7 +34,7 @@ import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
- * Panel to upload the referral geometry via a Geomark URL.
+ * Panel to upload the referral geometry via a GeoMark URL.
  * 
  * @author Jan De Moerloose
  */
@@ -51,9 +51,14 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 	private TextItem textItem;
 
 	private Feature feature;
+	
+	private Geometry geometry;
 
 	private HandlerManager handlerManager = new HandlerManager(this);
 
+	/**
+	 * Construct panel to upload geometry using GeoMark URL.
+	 */
 	public UploadGeoMarkUrlPanel() {
 		setLayoutAlign(Alignment.CENTER);
 		HTMLFlow explanation = new HTMLFlow(
@@ -93,12 +98,21 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 		downloadButton.addClickHandler(new DownloadHandler());
 	}
 
+	/** {@inheritDoc} */
 	public void setFeature(Feature feature) {
+		geometry = null;
 		this.feature = feature;
 	}
 
+	/** {@inheritDoc} */
 	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {
 		return handlerManager.addHandler(GeometryUploadHandler.TYPE, handler);
+	}
+
+	/** {@inheritDoc} */
+	public boolean validate() {
+		feature.setGeometry(geometry);
+		return null != geometry;
 	}
 
 	/**
@@ -130,10 +144,11 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 		public void execute(GetGeomarkResponse response) {
 			busyImg.setVisible(false);
 			if (response.getGeometry() != null) {
-				Geometry geometry = GeometryConverter.toGwt(response.getGeometry());
+				Geometry geomarkGeometry = GeometryConverter.toGwt(response.getGeometry());
 				errorFlow.setContents("");
 				errorFlow.setVisible(false);
-				feature.setGeometry(geometry);
+				feature.setGeometry(geomarkGeometry);
+				geometry = geomarkGeometry;
 				handlerManager.fireEvent(new GeometryUploadSuccessEvent());
 			} else {
 				errorFlow.setContents("<div style='color: #AA0000'>Geometry not in this UTM zone, "

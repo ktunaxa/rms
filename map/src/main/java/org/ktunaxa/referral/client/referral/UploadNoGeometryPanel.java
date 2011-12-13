@@ -25,7 +25,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * Panel to not upload a geometry.
  * 
  * @author Emiel Ackermann
- *
  */
 public class UploadNoGeometryPanel extends VLayout implements UploadGeometryPanel {
 
@@ -36,6 +35,8 @@ public class UploadNoGeometryPanel extends VLayout implements UploadGeometryPane
 	private HTMLFlow note;
 	
 	private boolean valid;
+	
+	private Feature feature;
 	
 	public UploadNoGeometryPanel() {
 		setMembersMargin(LayoutConstant.MARGIN_SMALL);
@@ -58,10 +59,12 @@ public class UploadNoGeometryPanel extends VLayout implements UploadGeometryPane
 		addMember(note);
 	}
 
+	/** {@inheritDoc} */
 	public void setFeature(Feature feature) {
-		// no implementation
+		this.feature = feature;
 	}
 
+	/** {@inheritDoc} */
 	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {
 		// no implementation
 		return null;
@@ -76,8 +79,10 @@ public class UploadNoGeometryPanel extends VLayout implements UploadGeometryPane
 		flow.setVisible(false);
 		return flow;
 	}
-	
+
+	/** {@inheritDoc} */
 	public boolean validate() {
+		feature.setGeometry(null);
 		return valid;
 	}
 }

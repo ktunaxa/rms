@@ -63,6 +63,11 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 
 	private HandlerManager handlerManager = new HandlerManager(this);
 
+	private Geometry geometry;
+
+	/**
+	 * Construct panel to select point geometry as coordinates.
+	 */
 	public UploadXyCoordinatePanel() {
 		setLayoutAlign(Alignment.CENTER);
 		form = new DynamicForm();
@@ -119,7 +124,22 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 		addMember(applyButton);
 
 		applyButton.addClickHandler(new TransformHandler());
+	}
 
+	/** {@inheritDoc} */
+	public void setFeature(Feature feature) {
+		this.feature = feature;
+	}
+
+	/** {@inheritDoc} */
+	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {
+		return handlerManager.addHandler(GeometryUploadHandler.TYPE, handler);
+	}
+
+	/** {@inheritDoc} */
+	public boolean validate() {
+		feature.setGeometry(geometry);
+		return null != geometry;
 	}
 
 	/**
@@ -158,7 +178,8 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 			busyImg.setVisible(false);
 			if (response.getGeometry() != null) {
 				if (feature != null) {
-					feature.setGeometry(GeometryConverter.toGwt(response.getGeometry()));
+					geometry = GeometryConverter.toGwt(response.getGeometry());
+					feature.setGeometry(geometry);
 					handlerManager.fireEvent(new GeometryUploadSuccessEvent());
 				}
 			} else {
@@ -174,14 +195,6 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 			errorFlow.setVisible(true);
 		}
 
-	}
-
-	public void setFeature(Feature feature) {
-		this.feature = feature;
-	}
-
-	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {
-		return handlerManager.addHandler(GeometryUploadHandler.TYPE, handler);
 	}
 
 }

@@ -18,7 +18,26 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public interface UploadGeometryPanel {
 
+	/**
+	 * Set the feature for which the geometry needs to be set.
+	 *
+	 * @param feature feature
+	 */
 	void setFeature(Feature feature);
 
+	/**
+	 * Add handler which can be used to display the selected geometry on the map.
+	 *
+	 * @param handler geometry upload handler
+	 * @return handler registration
+	 */
 	HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler);
+
+	/**
+	 * Validate the geometry which is selected on this page and set the geometry in the feature.
+	 *
+	 * @return true when page validation is successful
+	 */
+	boolean validate();
+
 }

@@ -46,6 +46,11 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 
 	private HandlerManager handlerManager = new HandlerManager(this);
 
+	private Geometry geometry;
+
+	/**
+	 * Construct panel to upload shape file.
+	 */
 	public UploadShapePanel() {
 		// base layout, completed when the feature is set
 		setLayoutAlign(Alignment.CENTER);
@@ -61,8 +66,10 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 		addMember(spacer);
 	}
 
+	/** {@inheritDoc} */
 	public void setFeature(Feature referral) {
 		this.feature = referral;
+		this.geometry = null;
 
 		// finish layout, add shape upload form
 
@@ -96,11 +103,12 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 			public void onFileUploadComplete(FileUploadCompleteEvent event) {
 				busyImg.setVisible(false);
 				WktParser wktParser = new WktParser(KtunaxaConstant.LAYER_SRID);
-				Geometry geometry = wktParser.parse(event.getString(KtunaxaConstant.FORM_GEOMETRY));
-				if (geometry != null) {
+				Geometry shapeGeometry = wktParser.parse(event.getString(KtunaxaConstant.FORM_GEOMETRY));
+				if (shapeGeometry != null) {
 					errorFlow.setContents("");
 					errorFlow.setVisible(false);
-					feature.setGeometry(geometry);
+					geometry = shapeGeometry;
+					feature.setGeometry(shapeGeometry);
 					handlerManager.fireEvent(new GeometryUploadSuccessEvent());
 				} else {
 					errorFlow.setContents("<div style='color: #AA0000'>Geometry not in this UTM zone, "
@@ -120,8 +128,15 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 		addMember(btnLayout);
 	}
 
+	/** {@inheritDoc} */
 	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {
 		return handlerManager.addHandler(GeometryUploadHandler.TYPE, handler);
+	}
+
+	/** {@inheritDoc} */
+	public boolean validate() {
+		feature.setGeometry(geometry);
+		return null != geometry;
 	}
 
 }
