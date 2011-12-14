@@ -111,12 +111,12 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 	public void validate(SimpleFeature feature) throws IOException {
 		Geometry geometry = (Geometry) feature.getDefaultGeometry();
 		if (geometry.isEmpty()) {
-			throw new IOException("An empty geometry was found in the shape file. Feature ID=" + feature.getID());
+			log.warn("An empty geometry was found in the shape file. Feature ID=" + feature.getID());
 		}
 		if (!geometry.isValid()) {
 			IsValidOp validOp = new IsValidOp(geometry);
 			TopologyValidationError err = validOp.getValidationError();
-			throw new IOException("An invalid geometry was found in the shape file: " + err.getMessage()
+			log.warn("An invalid geometry was found in the shape file: " + err.getMessage()
 					+ ". Feature ID=" + feature.getID());
 		}
 		if (geometry.getSRID() == 0) {
