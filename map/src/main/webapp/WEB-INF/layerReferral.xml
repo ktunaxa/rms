@@ -28,6 +28,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="crs">
 			<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.LAYER_CRS"/>
 		</property>
+		<property name="allowEmptyGeometries" value="true" />
 		<property name="maxExtent">
 			<bean class="org.geomajas.geometry.Bbox">
 				<property name="x">
