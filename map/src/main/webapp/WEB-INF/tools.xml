@@ -76,7 +76,30 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 				</bean>
 				<bean class="org.geomajas.configuration.Parameter">
 					<property name="name" value="pixelTolerance" />
-					<property name="value" value="10" />
+					<property name="value" value="5" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean name="SelectReferralMode" class="org.geomajas.configuration.client.ClientToolInfo">
+		<property name="parameters">
+			<list>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="clickTimeout" />
+					<property name="value" value="500" />
+				</bean>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="coverageRatio" />
+					<property name="value" value=".8" />
+				</bean>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="priorityToSelectedLayer" />
+					<property name="value" value="true" />
+				</bean>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="pixelTolerance" />
+					<property name="value" value="5" />
 				</bean>
 			</list>
 		</property>

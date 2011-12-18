@@ -30,7 +30,11 @@ public class AppSecurityContext extends DefaultSecurityContext implements AppAut
 		for (Authentication authentication : getSecurityServiceResults()) {
 			for (BaseAuthorization authorization : authentication.getAuthorizations()) {
 				if (authorization instanceof AppAuthorization) {
-					roles.addAll(((AppAuthorization) authorization).getBpmRoles());
+					AppAuthorization appAuthorization = (AppAuthorization) authorization;
+					Set<String> authRoles = appAuthorization.getBpmRoles();
+					if (null != authRoles) {
+						roles.addAll(authRoles);
+					}
 				}
 			}
 		}
