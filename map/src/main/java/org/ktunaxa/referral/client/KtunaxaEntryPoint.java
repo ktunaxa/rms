@@ -6,6 +6,8 @@
 
 package org.ktunaxa.referral.client;
 
+import com.smartgwt.client.data.fields.DataSourceIntegerField;
+import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import org.geomajas.gwt.client.action.ToolCreator;
 import org.geomajas.gwt.client.action.ToolbarBaseAction;
 import org.geomajas.gwt.client.action.toolbar.ToolbarRegistry;
@@ -23,8 +25,8 @@ import org.geomajas.gwt.client.service.ClientConfigurationSetter;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
-import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.DataSourceFieldFactory;
-import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry.FormItemFactory;
+import org.geomajas.gwt.client.widget.attribute.DataSourceFieldFactory;
+import org.geomajas.gwt.client.widget.attribute.FormItemFactory;
 import org.geomajas.plugin.printing.client.util.PrintingLayout;
 import org.geomajas.plugin.staticsecurity.client.StaticSecurityTokenRequestHandler;
 import org.geomajas.plugin.staticsecurity.client.util.SsecLayout;
@@ -46,6 +48,8 @@ import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
+
+import java.util.LinkedHashMap;
 
 /**
  * Entry point and main class for GWT application. This class defines the layout and functionality of this application.
@@ -89,6 +93,23 @@ public class KtunaxaEntryPoint implements EntryPoint {
 				return new SelectReferralModalAction(mapWidget);
 			}
 		});
+		AttributeFormFieldRegistry.registerCustomFormItem("topMiddleBottom", new DataSourceFieldFactory() {
+					public DataSourceField create() {
+						return new DataSourceIntegerField();
+					}
+				}, new FormItemFactory() {
+					public FormItem create() {
+						ComboBoxItem formItem = new ComboBoxItem();
+						LinkedHashMap<String, String> values = new LinkedHashMap<String, String>();
+						values.put("1", "top");
+						values.put("2", "middle");
+						values.put("3", "bottom");
+						formItem.setValueMap(values);
+						formItem.setValue(2);
+						return formItem;
+					}
+				}, null
+		);
 
 		GwtCommandDispatcher.getInstance().setTokenRequestHandler(new StaticSecurityTokenRequestHandler());
 

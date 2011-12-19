@@ -395,7 +395,8 @@ CREATE TABLE referral_comment(
 	created_by character varying(254),
 	include_in_report boolean NOT NULL DEFAULT false,
 	report_content character varying(254),
-	reference_layer_type_id integer,
+	position integer,
+	reference_layer_type_id integer DEFAULT 2,
 	referral_id integer NOT NULL,
 	CONSTRAINT fk_referral_comment_referral FOREIGN KEY (referral_id) REFERENCES referral (id),
 	CONSTRAINT fk_referral_comment_layer_type FOREIGN KEY (reference_layer_type_id) REFERENCES reference_layer_type (id)

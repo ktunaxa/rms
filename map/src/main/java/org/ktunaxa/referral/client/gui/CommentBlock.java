@@ -112,10 +112,6 @@ public class CommentBlock extends AbstractAttributeBlock {
 		return false;
 	}
 
-	public IButton getEditButton() {
-		return editButton;
-	}
-
 	// ------------------------------------------------------------------------
 	// Private methods:
 	// ------------------------------------------------------------------------
@@ -152,8 +148,8 @@ public class CommentBlock extends AbstractAttributeBlock {
 		HLayout infoLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutRightMargin(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutTopMargin(LayoutConstant.MARGIN_SMALL);
-		info = new HTMLFlow("<div class='commentBlockInfo'>Posted by " + getCommentCreatedBy() + " @ "
-				+ getCommentCreationDate().toString() + "</div>");
+		info = new HTMLFlow("<div class='commentBlockInfo'>" + getReportPosition() +
+				" Posted by " + getCommentCreatedBy() + " @ " + getCommentCreationDate().toString() + "</div>");
 		info.setSize(LayoutConstant.BLOCK_INFO_WIDTH, LayoutConstant.BLOCK_INFO_HEIGHT);
 		infoLayout.addMember(info);
 		LayoutSpacer space = new LayoutSpacer();
@@ -187,6 +183,17 @@ public class CommentBlock extends AbstractAttributeBlock {
 	
 	private String getCommentTitle() {
 		return (String) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_TITLE);
+	}
+
+	private String getReportPosition() {
+		int position = (Integer) getValue().getAttributeValue(KtunaxaConstant.ATTRIBUTE_COMMENT_POSITION);
+		if (1 == position) {
+			return "top";
+		} else if (3 == position) {
+			return "bottom";
+		} else {
+			return "middle";
+		}
 	}
 
 	private String getCommentCreatedBy() {

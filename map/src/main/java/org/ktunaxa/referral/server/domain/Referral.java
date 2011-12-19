@@ -7,6 +7,8 @@
 package org.ktunaxa.referral.server.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +26,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Type;
@@ -37,7 +40,7 @@ import com.vividsolutions.jts.geom.Geometry;
  * @author Pieter De Graef
  * @author Joachim Van der Auwera
  */
-@Entity
+@Entity()
 @Table(name = "referral")
 public class Referral {
 
@@ -235,6 +238,7 @@ public class Referral {
 	private List<Document> documents = new ArrayList<Document>();
 
 	/** The collection of all comments made on this referral. */
+	@AccessType("property")
 	@OneToMany(mappedBy = "referral", fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<ReferralComment> comments = new ArrayList<ReferralComment>();
 
@@ -437,6 +441,7 @@ public class Referral {
 	 * @return The list of all comments made on this referral.
 	 */
 	public List<ReferralComment> getComments() {
+		Collections.sort(comments, new ReferralCommentComparator());
 		return comments;
 	}
 
@@ -1017,5 +1022,28 @@ public class Referral {
 	 */
 	public void setFinalReportConclusion(String finalReportConclusion) {
 		this.finalReportConclusion = finalReportConclusion;
+	}
+
+	/**
+	 * Sort the referral comments to sort on position+creationDate.
+	 *
+	 * @author Joachim Van der Auwera
+	 */
+	private class ReferralCommentComparator implements Comparator<ReferralComment> {
+
+		/** {@inheritDoc} */
+		public int compare(ReferralComment left, ReferralComment right) {
+			long result = left.getPosition() - right.getPosition();
+			if (0 == result) {
+				result = left.getCreationDate().getTime() - right.getCreationDate().getTime();
+			}
+			if (result < 0) {
+				return -1;
+			} else if (result > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
 	}
 }

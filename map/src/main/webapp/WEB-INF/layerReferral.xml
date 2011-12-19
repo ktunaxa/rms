@@ -1188,6 +1188,14 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                    						<property name="formInputType" value="textArea" />
 	                                </bean>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Position" />
+	                                    <property name="name" value="position" />
+	                                    <property name="editable" value="true" />
+	                                    <property name="identifying" value="false" />
+	                                    <property name="type" value="INTEGER" />
+                   						<property name="formInputType" value="topMiddleBottom" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
 	                                    <property name="label" value="Created by" />
 	                                    <property name="name" value="createdBy" />
 	                                    <property name="editable" value="true" />

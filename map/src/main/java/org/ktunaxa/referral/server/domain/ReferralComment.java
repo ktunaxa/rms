@@ -64,6 +64,10 @@ public class ReferralComment {
 	@Column(name = "report_content")
 	private String reportContent;
 
+	/** Used for sorting the comments. */
+	@Column(name = "position")
+	private int position;
+
 
 	// ------------------------------------------------------------------------
 	// Getters and setters:
@@ -216,6 +220,23 @@ public class ReferralComment {
 	 */
 	public void setReportContent(String reportContent) {
 		this.reportContent = reportContent;
-	};
+	}
 
+	/**
+	 * Get general position of comment for final report. Sorts the comments (on position+creationDate).
+	 *
+	 * @return position
+	 */
+	public int getPosition() {
+		return position;
+	}
+
+	/**
+	 * Set the general position of comment for final report. Sorts the comments (on position+creationDate).
+	 *
+	 * @param position position
+	 */
+	public void setPosition(int position) {
+		this.position = position;
+	}
 }

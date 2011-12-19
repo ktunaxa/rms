@@ -111,6 +111,7 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_DOCUMENT_ADDITION_DATE = "additionDate";
 	String ATTRIBUTE_COMMENT_TITLE = "title";
 	String ATTRIBUTE_COMMENT_CONTENT = "content";
+	String ATTRIBUTE_COMMENT_POSITION = "position";
 	String ATTRIBUTE_COMMENT_CREATION_DATE = "creationDate";
 	String ATTRIBUTE_COMMENT_CREATED_BY = "createdBy";
 	String ATTRIBUTE_COMMENT_INCLUDE_IN_REPORT = "includeInReport";
