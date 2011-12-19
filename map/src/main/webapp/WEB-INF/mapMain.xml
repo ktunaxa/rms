@@ -23,6 +23,20 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="pointSelectStyle">
 			<bean class="org.geomajas.configuration.FeatureStyleInfo">
 				<property name="fillColor" value="#FFFF00" />
+				<property name="fillOpacity" value="0.5"/>
+				<property name="strokeColor" value="#990000"/>
+				<property name="strokeOpacity" value=".8"/>
+				<property name="strokeWidth" value="2"/>
+				<property name="symbol">
+					<bean class="org.geomajas.configuration.SymbolInfo">
+						<property name="rect">
+							<bean class="org.geomajas.configuration.RectInfo">
+								<property name="w" value="7" />
+								<property name="h" value="7" />
+							</bean>
+						</property>
+					</bean>
+				</property>
 			</bean>
 		</property>
 		<property name="polygonSelectStyle">
@@ -125,6 +139,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 						<ref bean="ToolbarSeparator" />
 						<ref bean="MeasureDistanceMode" />
 						<ref bean="SelectionMode" />
+						<ref bean="SelectReferralMode" />
 						<ref bean="FeatureInfoMode" />
 						<ref bean="ToolbarSeparator" />
 						<ref bean="Geocoder" />

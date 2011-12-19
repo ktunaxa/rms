@@ -34,6 +34,7 @@ import org.ktunaxa.referral.client.action.ZoomKtunaxaTerritoryModalAction;
 import org.ktunaxa.referral.client.gui.DocumentItem;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
+import org.ktunaxa.referral.client.referral.SelectReferralModalAction;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
@@ -55,6 +56,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 
 	public static final String TOOL_ZOOM_KTUNAXA_TERRITORY = "ZoomKtunaxaTerritory";
 	public static final String TOOL_ZOOM_CURRENT_REFERRAL = "ZoomCurrentReferral";
+	public static final String TOOL_SELECT_REFERRAL = "SelectReferralMode";
 
 	private GetReferralMapResponse appInfo;
 
@@ -73,15 +75,18 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		SsecLayout.tokenRequestWindowHeight = "240";
 
 		ToolbarRegistry.put(TOOL_ZOOM_KTUNAXA_TERRITORY, new ToolCreator() {
-
 			public ToolbarBaseAction createTool(MapWidget mapWidget) {
 				return new ZoomKtunaxaTerritoryModalAction(mapWidget);
 			}
 		});
 		ToolbarRegistry.put(TOOL_ZOOM_CURRENT_REFERRAL, new ToolCreator() {
-
 			public ToolbarBaseAction createTool(MapWidget mapWidget) {
 				return new ZoomCurrentReferralModalAction(mapWidget);
+			}
+		});
+		ToolbarRegistry.put(TOOL_SELECT_REFERRAL, new ToolCreator() {
+			public ToolbarBaseAction createTool(MapWidget mapWidget) {
+				return new SelectReferralModalAction(mapWidget);
 			}
 		});
 

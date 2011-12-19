@@ -76,7 +76,7 @@ public final class ReferralUtil {
 	 * Create a CQL filter from a referral ID.
 	 * 
 	 * @param referralId
-	 *            The referral ID, as created in the <code>createId</code> method.
+	 *            The referral ID, as created in the {@link #createId(Integer, Integer, Integer, Integer)} method.
 	 * @return The CQL filter.
 	 */
 	public static String createFilter(String referralId) {
@@ -117,6 +117,13 @@ public final class ReferralUtil {
 		return result;
 	}
 
+	/**
+	 * Pad a string representing a number with zero characters to reach the requested length.
+	 * 
+	 * @param s input string
+	 * @param i requested length
+	 * @return string with minimum length of i, padded by zeros on the left to reach that length
+	 */
 	public static String pad(String s, int i) {
 		int padLength = i - s.length();
 		while (padLength-- > 0) {
@@ -125,25 +132,17 @@ public final class ReferralUtil {
 		return s;
 	}
 
+	/**
+	 * Full full referral id from a {@link Record} instance.
+	 * 
+	 * @param record record for the referral
+	 * @return full referral id
+	 */
 	public static String createId(Record record) {
 		return createId(record.getAttributeAsInt(KtunaxaConstant.ATTRIBUTE_PRIMARY),
 				record.getAttributeAsInt(KtunaxaConstant.ATTRIBUTE_SECONDARY),
 				record.getAttributeAsInt(KtunaxaConstant.ATTRIBUTE_YEAR),
 				record.getAttributeAsInt(KtunaxaConstant.ATTRIBUTE_NUMBER));
-	}
-
-	public static String getDbId(String id) {
-		if (id.contains("-") && id.contains("/")) {
-			String[] values = parse(id);
-			String result = values[3];
-			// remove padding
-			while (result.length() > 1 && result.charAt(0) == '0') {
-				result = result.substring(1);
-			}
-			return result;
-		} else {
-			return id;
-		}
 	}
 
 	/**
