@@ -44,7 +44,7 @@ public class ShapeReaderServiceTest {
 	}
 
 	@Test
-	public void testsubDirectory() throws IOException {
+	public void testSubDirectory() throws IOException {
 		Assert.assertNotNull(service);
 		File[] files = service.getAllFiles("sub");
 		Assert.assertNotNull(files);
@@ -68,12 +68,7 @@ public class ShapeReaderServiceTest {
 		File[] files = service.getAllFiles(null);
 		Assert.assertNotNull(files);
 		Assert.assertTrue(files.length == NR_SHAPES);
-		try {
-			service.validateFormat(service.read(getFile(files, "OK.shp")));
-			Assert.assertTrue(true);
-		} catch (IOException e) {
-			Assert.fail(); // should never get here.
-		}
+		service.validateFormat(service.read(getFile(files, "OK.shp")));
 		try {
 			service.validateFormat(service.read(getFile(files, "NoStyle.shp")));
 			Assert.fail(); // should never get here.
@@ -81,12 +76,7 @@ public class ShapeReaderServiceTest {
 			System.err.println(e.getMessage() + " ..... as expected.");
 			Assert.assertTrue(true);
 		}
-		try {
-			service.validateFormat(service.read(getFile(files, "Invalid.shp")));
-			Assert.assertTrue(true);
-		} catch (IOException e) {
-			Assert.fail(); // should never get here.
-		}
+		service.validateFormat(service.read(getFile(files, "Invalid.shp")));
 	}
 
 	private File getFile(File[] files, String nameSuffix) {
@@ -112,18 +102,9 @@ public class ShapeReaderServiceTest {
 		ReferenceLayer layer = service.getAllLayers().get(0);
 		File[] files = service.getAllFiles(null);
 
-		try {
-			service.persist(layer, service.read(getFile(files, "Invalid.shp")));
-			Assert.fail(); // should never get here.
-		} catch (IOException e) {
-			System.err.println(e.getMessage() + " ..... as expected.");
-			Assert.assertTrue(true);
-		}
-		try {
-			service.persist(layer, service.read(getFile(files, "OK.shp")));
-			Assert.assertTrue(true);
-		} catch (IOException e) {
-			Assert.fail(); // should never get here.
-		}
+		// invalid shapes should now be accepted, though with a  warning
+		service.persist(layer, service.read(getFile(files, "Invalid.shp")));
+
+		service.persist(layer, service.read(getFile(files, "OK.shp")));
 	}
 }
