@@ -14,7 +14,6 @@ import org.geomajas.gwt.client.map.event.FeatureSelectionHandler;
 import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
 import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.util.EqualsUtil;
 import org.geomajas.gwt.client.widget.MapWidget;
 
 import com.smartgwt.client.widgets.events.ClickEvent;
