@@ -89,9 +89,9 @@ public class LayersPanel extends VLayout {
 				bgStack.addSection(section);
 
 				Layer<?> referral = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
-				LayerBlock referralClock = new LayerBlock(referral);
+				LayerBlock referralBlock = new ReferralLayerBlock(referral);
 				VLayout referralStackLayout = new VLayout();
-				referralStackLayout.addMember(referralClock);
+				referralStackLayout.addMember(referralBlock);
 
 				SectionStackSection sectionStackSection = new SectionStackSection("Referral");
 				sectionStackSection.setExpanded(true);
