@@ -72,4 +72,4 @@ ALTER TABLE document_comment ALTER COLUMN content TYPE character varying(2048);
 -- INSERT INTO referral_type (id, title, description) values (41, 'Other', '');
 
 -- KTU-285 field to order comments in final report
-ALTER TABLE referral_comment ADD COLUMN position integer DEFAULT 2;
+-- ALTER TABLE referral_comment ADD COLUMN position integer DEFAULT 2;
