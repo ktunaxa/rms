@@ -22,17 +22,21 @@ import java.util.LinkedHashMap;
  */
 public class ReferralLayerBlock extends LayerBlock {
 
-	private VectorLayer layer;
-	private DynamicForm form = new DynamicForm();
-	ComboBoxItem status = new ComboBoxItem("Status");
-	ComboBoxItem agency = new ComboBoxItem("ExternalAgencyType");
-	ComboBoxItem type = new ComboBoxItem("Type");
+	private final VectorLayer layer;
+	private final DynamicForm form = new DynamicForm();
+	private final ReferralDateFilterForm dateForm1;
+	private final ReferralDateFilterForm dateForm2;
+	private final ComboBoxItem status = new ComboBoxItem("Status");
+	private final ComboBoxItem agency = new ComboBoxItem("ExternalAgencyType");
+	private final ComboBoxItem type = new ComboBoxItem("Type");
 
 	public ReferralLayerBlock(Layer<?> referral) {
 		super(referral);
 		this.layer = (VectorLayer) referral;
-		
+
 		ChangedHandler filterChangedHandler = new FilterChangedHandler();
+		dateForm1 = new ReferralDateFilterForm(filterChangedHandler);
+		dateForm2 = new ReferralDateFilterForm(filterChangedHandler);
 
 		form.setWidth100();
 		// @todo hardcoded options, ideally the options should be read from the database when the application starts
@@ -107,22 +111,31 @@ public class ReferralLayerBlock extends LayerBlock {
 		type.addChangedHandler(filterChangedHandler);
 		form.setFields(status, agency, type);
 		addMember(form);
+		addMember(dateForm1);
+		addMember(dateForm2);
 	}
 
 	@Override
 	protected void updateLayerEnabled(boolean enabled) {
 		super.updateLayerEnabled(enabled);
 		form.setDisabled(!enabled);
+		dateForm1.setDisabled(!enabled);
+		dateForm2.setDisabled(!enabled);
 	}
 
+	/**
+	 * Handler for updating the current referral filter.
+	 *
+	 * @author Joachim Van der Auwera
+	 */
 	private class FilterChangedHandler implements ChangedHandler {
 
 		public void onChanged(ChangedEvent changedEvent) {
 			StringBuilder filter = new StringBuilder();
-			
+
 			String statusValue = status.getValueAsString();
 			if (!"".equals(statusValue)) {
-				filter.append("status.id = ");
+				filter.append("status.\"id\" = ");
 				filter.append(statusValue);
 			}
 
@@ -131,7 +144,7 @@ public class ReferralLayerBlock extends LayerBlock {
 				if (filter.length() > 0) {
 					filter.append(" AND ");
 				}
-				filter.append("externalAgencyType.id = ");
+				filter.append("externalAgencyType.\"id\" = ");
 				filter.append(agencyValue);
 			}
 
@@ -140,8 +153,23 @@ public class ReferralLayerBlock extends LayerBlock {
 				if (filter.length() > 0) {
 					filter.append(" AND ");
 				}
-				filter.append("type.id = ");
+				filter.append("type.\"id\" = ");
 				filter.append(typeValue);
+			}
+
+			String dateFilter1 = dateForm1.getFilter();
+			if (!"".equals(dateFilter1)) {
+				if (filter.length() > 0) {
+					filter.append(" AND ");
+				}
+				filter.append(dateFilter1);
+			}
+			String dateFilter2 = dateForm2.getFilter();
+			if (!"".equals(dateFilter2)) {
+				if (filter.length() > 0) {
+					filter.append(" AND ");
+				}
+				filter.append(dateFilter2);
 			}
 
 			layer.setFilter(filter.toString());

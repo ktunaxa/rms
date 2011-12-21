@@ -45,7 +45,7 @@ public class MenuBar extends ToolStrip {
 	/**
 	 * Add a navigation button to the left tool strip.
 	 * 
-	 * @param navMember
+	 * @param navMember navigation member
 	 */
 	public void addNavigationButton(Canvas navMember) {
 		if (navStrip.getMembers().length > 0) {
@@ -57,7 +57,7 @@ public class MenuBar extends ToolStrip {
 	/**
 	 * Add an action button to the right tool strip.
 	 * 
-	 * @param navMember
+	 * @param actionMember action member
 	 */
 	public void addActionButton(Canvas actionMember) {
 		if (actionStrip.getMembers().length > 0) {

@@ -6,7 +6,6 @@
 package org.ktunaxa.referral.client.gui;
 
 import org.geomajas.gwt.client.map.event.LayerChangedHandler;
-import org.geomajas.gwt.client.map.event.LayerFilteredEvent;
 import org.geomajas.gwt.client.map.event.LayerLabeledEvent;
 import org.geomajas.gwt.client.map.event.LayerShownEvent;
 import org.geomajas.gwt.client.util.WidgetLayout;
@@ -35,8 +34,6 @@ public class ReferenceLayerBlock extends HLayout {
 
 	private IButton visibleBtn;
 
-	private HTMLFlow title;
-
 	/**
 	 * Testing it all.
 	 * 
@@ -50,7 +47,7 @@ public class ReferenceLayerBlock extends HLayout {
 		setStyleName("layerBlock");
 
 		setLayoutLeftMargin(LayoutConstant.MARGIN_LARGE);
-		title = new HTMLFlow("<div style='line-height:26px;'>" + subLayer.getDto().getName() + "</div>");
+		HTMLFlow title = new HTMLFlow("<div style='line-height:26px;'>" + subLayer.getDto().getName() + "</div>");
 		title.setWidth100();
 		title.setLayoutAlign(VerticalAlignment.CENTER);
 		addMember(title);
@@ -102,22 +99,20 @@ public class ReferenceLayerBlock extends HLayout {
 	}
 
 	/**
-	 * Updtes status icons.
+	 * Updates status icons.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public class StatusUpdater implements LayerChangedHandler {
 
+		/** {@inheritDoc} */
 		public void onVisibleChange(LayerShownEvent event) {
 			updateIcons();
 		}
 
+		/** {@inheritDoc} */
 		public void onLabelChange(LayerLabeledEvent event) {
-		}
-
-		public void onFilterChange(LayerFilteredEvent event) {
-			updateIcons();
+			// nothing to do // NOSONAR
 		}
 
 	}
@@ -126,10 +121,10 @@ public class ReferenceLayerBlock extends HLayout {
 	 * Set the layer to visible/invisible.
 	 * 
 	 * @author Jan De Moerloose
-	 * 
 	 */
 	public class SetVisibleHandler implements ClickHandler {
 
+		/** {@inheritDoc} */
 		public void onClick(ClickEvent event) {
 			subLayer.setVisible(visibleBtn.isSelected());
 			updateIcons();
