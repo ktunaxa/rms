@@ -441,7 +441,9 @@ public class Referral {
 	 * @return The list of all comments made on this referral.
 	 */
 	public List<ReferralComment> getComments() {
-		Collections.sort(comments, new ReferralCommentComparator());
+		if (null != comments) {
+			Collections.sort(comments, new ReferralCommentComparator());
+		}
 		return comments;
 	}
 
