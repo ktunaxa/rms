@@ -53,7 +53,7 @@ public class ReferralTasksPanel extends VLayout {
 	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[GROUP_TITLES.length];
 
 	/**
-	 * Construct a {@link ReferrakTasksPanel}.
+	 * Construct a {@link ReferralTasksPanel}.
 	 */
 	public ReferralTasksPanel() {
 		super();
@@ -82,29 +82,9 @@ public class ReferralTasksPanel extends VLayout {
 	}
 
 	/**
-	 * Initialize the panel.
-	 *
-	 * @param referralLayer referral layer
-	 * @param referral current referral
+	 * Refresh the tasks displayed in the pane.
 	 */
-	public void init(VectorLayer referralLayer, Feature referral) {
-		if (null == referral) {
-			currentTaskBlock.refresh(MapLayout.getInstance().getCurrentTask());
-		}
-	}
-
-	@Override
-	public void show() {
-		super.show();
-
-		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
-			if (GROUP_CURRENT != i) {
-				sections[i].setTitle(GROUP_TITLES[i]);
-				lists[i].clear();
-				views[i].populate(lists[i]);
-			}
-		}
-
+	public void refresh() {
 		MapLayout mapLayout = MapLayout.getInstance();
 		org.geomajas.layer.feature.Feature referral = mapLayout.getCurrentReferral();
 		if (null != referral) {
@@ -114,42 +94,53 @@ public class ReferralTasksPanel extends VLayout {
 			command.setCommandRequest(request);
 			GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
 				public void execute(GetTasksResponse response) {
-					UserContext user = UserContext.getInstance();
-
-					for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
-						if (GROUP_CURRENT != i) {
-							lists[i].clear(); // clear again to avoid double AJAX calls causing duplicates
-						}
-					}
-					for (TaskDto task : response.getTasks()) {
-						if ((user.isReferralManager() && task.isHistory() ) || user.hasBpmRole(task.getCandidates())) {
-							TaskBlock block = new TaskBlock(task);
-							if (!task.isHistory()) {
-								lists[GROUP_OPEN].add(block);
-							} else {
-								lists[GROUP_FINISHED].add(block);
-							}
-						}
-					}
-					for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
-						if (GROUP_CURRENT != i) {
-							int count = lists[i].size();
-							if (count > 0) {
-								sections[i].setTitle(GROUP_TITLES[i] +
-										"  (<span style=\"font-weight:bold;\">" + count + "</span>)");
-							}
-							views[i].populate(lists[i]);
-						}
-					}
-					TaskDto task = MapLayout.getInstance().getCurrentTask();
-					currentTaskBlock.refresh(task);
-					if (null != task) {
-						sections[GROUP_CURRENT].setExpanded(true);
-					} else {
-						sections[GROUP_OPEN].setExpanded(true);
-					}
+					refresh(response.getTasks());
 				}
 			});
+		} else {
+			refresh(null);
 		}
+	}
+
+	private void refresh(List<TaskDto> tasks) {
+		UserContext user = UserContext.getInstance();
+
+		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
+			if (GROUP_CURRENT != i) {
+				sections[i].setTitle(GROUP_TITLES[i]);
+				lists[i].clear(); // clear again to avoid double AJAX calls causing duplicates
+				views[i].populate(lists[i]);
+			}
+		}
+		if (null != tasks) {
+			for (TaskDto task : tasks) {
+				if ((user.isReferralManager() && task.isHistory() ) || user.hasBpmRole(task.getCandidates())) {
+					TaskBlock block = new TaskBlock(task);
+					if (!task.isHistory()) {
+						lists[GROUP_OPEN].add(block);
+					} else {
+						lists[GROUP_FINISHED].add(block);
+					}
+				}
+			}
+			for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
+				if (GROUP_CURRENT != i) {
+					int count = lists[i].size();
+					if (count > 0) {
+						sections[i].setTitle(GROUP_TITLES[i] +
+								"  (<span style=\"font-weight:bold;\">" + count + "</span>)");
+					}
+					views[i].populate(lists[i]);
+				}
+			}
+		}
+		TaskDto task = MapLayout.getInstance().getCurrentTask();
+		currentTaskBlock.refresh(task);
+		if (null != task) {
+			sections[GROUP_CURRENT].setExpanded(true);
+		} else {
+			sections[GROUP_OPEN].setExpanded(true);
+		}
+
 	}
 }

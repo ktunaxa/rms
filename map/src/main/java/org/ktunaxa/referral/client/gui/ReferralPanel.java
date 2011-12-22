@@ -68,7 +68,7 @@ public class ReferralPanel extends VLayout {
 		panelDetail.init(referralLayer, referral);
 		panelDocuments.init(referralLayer, referral);
 		panelComments.init(referralLayer, referral);
-		panelTasks.init(referralLayer, referral);
+		panelTasks.refresh();
 	}
 
 	public String getName() {
