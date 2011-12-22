@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ This is part of the Ktunaxa referral system.
-  ~
-  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
-  -->
-
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="570" pageHeight="1008" columnWidth="530" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -97,11 +91,11 @@ GROUP BY
 				<text><![CDATA[External agency type]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="137" y="0" width="310" height="15"/>
+				<reportElement x="137" y="0" width="117" height="15"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<text><![CDATA[Activity]]></text>
+				<text><![CDATA[Engagement Level]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="457" y="0" width="73" height="15"/>
@@ -109,6 +103,13 @@ GROUP BY
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[Count]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="0" width="179" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Response]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -128,11 +129,11 @@ GROUP BY
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="137" y="3" width="310" height="15"/>
+				<reportElement x="137" y="3" width="117" height="15"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{referral_type_title}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{final_assessment_level}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="457" y="3" width="73" height="15"/>
@@ -140,6 +141,13 @@ GROUP BY
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="268" y="3" width="179" height="15"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{response}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
