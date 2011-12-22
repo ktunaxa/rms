@@ -5,6 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="dateFrom" class="java.util.Date"/>
 	<parameter name="dateTill" class="java.util.Date"/>
+	<parameter name="totalCount" class="java.lang.Long"/>
 	<queryString>
 		<![CDATA[SELECT
   count(*),
@@ -38,6 +39,10 @@ GROUP BY
   referral_external_agency_type.id,
   referral_external_agency_type.title,
   referral_external_agency_type.description,
+  referral.final_assessment_level,
+  response
+ORDER BY
+  referral_external_agency_type.title,
   referral.final_assessment_level,
   response
 ;]]>

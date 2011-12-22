@@ -105,6 +105,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<subreportParameter name="dateTill">
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="totalCount">
+					<subreportParameterExpression><![CDATA[$F{count}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{eaTypePieSubReport}]]></subreportExpression>
 			</subreport>
@@ -117,6 +120,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				</subreportParameter>
 				<subreportParameter name="dateTill">
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="totalCount">
+					<subreportParameterExpression><![CDATA[$F{count}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{eaTypeRespSubReport}]]></subreportExpression>
@@ -131,6 +137,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<subreportParameter name="dateTill">
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="totalCount">
+					<subreportParameterExpression><![CDATA[$F{count}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{eaTypeRespListSubReport}]]></subreportExpression>
 			</subreport>
@@ -143,6 +152,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				</subreportParameter>
 				<subreportParameter name="dateTill">
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="totalCount">
+					<subreportParameterExpression><![CDATA[$F{count}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{eaTypeElSubReport}]]></subreportExpression>
@@ -157,6 +169,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<subreportParameter name="dateTill">
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="totalCount">
+					<subreportParameterExpression><![CDATA[$F{count}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{eaTypeElListSubReport}]]></subreportExpression>
 			</subreport>
@@ -169,6 +184,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				</subreportParameter>
 				<subreportParameter name="dateTill">
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="totalCount">
+					<subreportParameterExpression><![CDATA[$F{count}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{eaTypeElRespSubReport}]]></subreportExpression>
@@ -183,6 +201,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<subreportParameter name="dateTill">
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="totalCount">
+					<subreportParameterExpression><![CDATA[$F{count}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{eaTypeElRespListSubReport}]]></subreportExpression>
 			</subreport>
@@ -195,6 +216,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				</subreportParameter>
 				<subreportParameter name="dateTill">
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="totalCount">
+					<subreportParameterExpression><![CDATA[$F{count}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{eaTypeActivitySubReport}]]></subreportExpression>
