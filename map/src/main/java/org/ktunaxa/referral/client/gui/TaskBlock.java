@@ -246,8 +246,8 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		assignButton.setHoverWidth(LayoutConstant.ICON_BUTTON_LARGE_HOVER_WIDTH);
 		assignButton.setLayoutAlign(VerticalAlignment.CENTER);
 		assignButton.setShowRollOver(false);
-		if (!UserContext.getInstance().isReferralManager()) {
-			// disable when already assigned
+		if (!UserContext.getInstance().isReferralManager() || task.isHistory()) {
+			// disable when no rights to assign or assign is impossible
 			assignButton.setDisabled(true);
 		}
 		assignButton.addClickHandler(new ClickHandler() {
