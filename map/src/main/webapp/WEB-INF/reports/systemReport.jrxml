@@ -5,10 +5,12 @@
 	<property name="ireport.y" value="725"/>
 	<parameter name="eaTypePieSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="eaTypeRespSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="eaTypeRespListSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="statusPieSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
-	<parameter name="eaSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="eaTypeElSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="eaTypeElListSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="eaTypeElRespSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="eaTypeElRespListSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="eaTypeActivitySubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<parameter name="dateFrom" class="java.util.Date"/>
 	<parameter name="dateTill" class="java.util.Date"/>
@@ -130,7 +132,33 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{eaTypeRespListSubReport}]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="105" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="572" height="104"/>
+				<subreportParameter name="dateFrom">
+					<subreportParameterExpression><![CDATA[$P{dateFrom}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dateTill">
+					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{eaTypeElSubReport}]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="105" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="572" height="104"/>
+				<subreportParameter name="dateFrom">
+					<subreportParameterExpression><![CDATA[$P{dateFrom}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="dateTill">
+					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{eaTypeElListSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -156,7 +184,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{eaTypeActivitySubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{eaTypeElRespListSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">
@@ -169,7 +197,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 					<subreportParameterExpression><![CDATA[$P{dateTill}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{eaSubReport}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{eaTypeActivitySubReport}]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="105" splitType="Stretch">

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+  -->
+
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="570" pageHeight="1008" columnWidth="530" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -10,15 +16,26 @@
   count(*),
   referral_external_agency_type.id,
   referral_external_agency_type.title,
-  referral_type.id as referral_type_id,
-  referral_type.title as referral_type_title,
-  referral.application_type_id
+  referral_external_agency_type.description,
+  referral.final_assessment_level,
+  CASE WHEN referral.response_date <= referral.response_deadline THEN
+    CASE WHEN referral.status_id = 1 THEN 'NEW'
+         WHEN referral.status_id = 2 THEN 'In progress'
+         WHEN referral.status_id = 3 THEN 'In time'
+         WHEN referral.status_id = 4 THEN 'Removed'
+         ELSE '?? in time'
+    END
+  ELSE
+    CASE WHEN referral.status_id = 1 THEN 'NEW'
+         WHEN referral.status_id = 2 THEN 'In progress - over time'
+         WHEN referral.status_id = 3 THEN 'Over time'
+         WHEN referral.status_id = 4 THEN 'Removed'
+         ELSE '?? over time'
+    END
+  END as response
 FROM
-  referral
-  left outer join referral_external_agency_type
+  referral left outer join referral_external_agency_type
   on referral_external_agency_type.id = referral.external_agency_type_id
-  left outer join referral_type
-  on referral_type.id = referral.type_id
 WHERE
   referral.create_date >= $P{dateFrom}
   AND referral.create_date <= $P{dateTill}
@@ -26,20 +43,17 @@ WHERE
 GROUP BY
   referral_external_agency_type.id,
   referral_external_agency_type.title,
-  referral_type.id,
-  referral_type.title,
-  referral.application_type_id
-ORDER BY
-  referral_external_agency_type.title,
-  referral_type.title
+  referral_external_agency_type.description,
+  referral.final_assessment_level,
+  response
 ;]]>
 	</queryString>
 	<field name="count" class="java.lang.Long"/>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
-	<field name="referral_type_id" class="java.lang.Integer"/>
-	<field name="referral_type_title" class="java.lang.String"/>
-	<field name="application_type_id" class="java.lang.Integer"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="final_assessment_level" class="java.lang.Integer"/>
+	<field name="response" class="java.lang.String"/>
 	<variable name="count" class="java.lang.Long" resetType="Group" resetGroup="externalAgencyType" calculation="Sum">
 		<variableExpression><![CDATA[$F{count}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -71,15 +85,7 @@ ORDER BY
 		</groupFooter>
 	</group>
 	<title>
-		<band height="15">
-			<staticText>
-				<reportElement x="0" y="0" width="530" height="15"/>
-				<textElement>
-					<font size="11" isBold="true" isItalic="true" pdfFontName="Helvetica-BoldOblique"/>
-				</textElement>
-				<text><![CDATA[Activity by external agency type]]></text>
-			</staticText>
-		</band>
+		<band/>
 	</title>
 	<columnHeader>
 		<band height="15" splitType="Stretch">
