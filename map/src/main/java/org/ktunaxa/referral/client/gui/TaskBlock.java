@@ -188,9 +188,14 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		title.setCursor(Cursor.HAND);
 		titleImage.setLayoutAlign(VerticalAlignment.CENTER);
 		title.addMember(titleImage);
+		String titlePrefix;
+		if (task.isHistory()) {
+			titlePrefix = "";
+		} else {
+			titlePrefix = variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID) + ": ";
+		}
 		HTMLFlow titleText = new HTMLFlow("<div class='taskBlockTitleText'>" +
-				variables.get(KtunaxaBpmConstant.VAR_REFERRAL_ID) +
-				": " + HtmlBuilder.htmlEncode(task.getName()) +
+				titlePrefix + HtmlBuilder.htmlEncode(task.getName()) +
 				"</div>");
 		titleText.setSize(LayoutConstant.BLOCK_TITLE_WIDTH, LayoutConstant.BLOCK_TITLE_HEIGHT);
 		title.addMember(titleText);
