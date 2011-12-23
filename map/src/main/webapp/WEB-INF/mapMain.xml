@@ -114,6 +114,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="layers">
 			<list>
 				<ref bean="clientLayerOsm" />
+				<ref bean="clientLayerHillShade" />
 				<ref bean="clientLayerReferenceBase" />
 				<ref bean="clientLayerReferenceValue" />
 				<ref bean="clientLayerReferral" />
@@ -220,6 +221,13 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	<bean id="clientLayerOsm" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
 		<property name="serverLayerId" value="layerOsm" />
 		<property name="label" value="OpenStreetMap" />
+		<property name="visible" value="true" />
+		<property name="style" value="1" />
+	</bean>
+
+	<bean id="clientLayerHillShade" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+		<property name="serverLayerId" value="layerHillShade" />
+		<property name="label" value="Hill shade" />
 		<property name="visible" value="true" />
 		<property name="style" value="1" />
 	</bean>

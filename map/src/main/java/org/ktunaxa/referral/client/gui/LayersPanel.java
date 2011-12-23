@@ -77,10 +77,13 @@ public class LayersPanel extends VLayout {
 				referralStack.setPadding(LayoutConstant.MARGIN_SMALL);
 				tabReferrals.setPane(referralStack);
 
-				Layer<?> layer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_OSM_ID);
-				LayerBlock osmBlock = new LayerBlock(layer);
+				Layer<?> osmLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_OSM_ID);
+				LayerBlock osmBlock = new LayerBlock(osmLayer);
+				Layer<?> hillShadeLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_HILL_SHADE_ID);
+				LayerBlock hillShadeBlock = new LayerBlock(hillShadeLayer);
 				VLayout sectionStackLayout = new VLayout();
 				sectionStackLayout.addMember(osmBlock);
+				sectionStackLayout.addMember(hillShadeBlock);
 
 				SectionStackSection section = new SectionStackSection("Background raster");
 				section.setExpanded(true);
