@@ -26,6 +26,14 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
 		<!--<property name="baseWmsUrl" value="http://64.141.44.210:9080/geoserver/Ktunaxa/wms" />-->
 		<property name="baseWmsUrl" value="http://192.168.1.205:8080/geoserver/Ktunaxa/wms" />
 		<property name="useCache" value="true" />
+		<property name="parameters">
+			<list>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="transparent" />
+					<property name="value" value="true" />
+				</bean>
+			</list>
+		</property>
 	</bean>
 
 </beans>
