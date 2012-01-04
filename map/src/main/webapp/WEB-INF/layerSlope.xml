@@ -1,0 +1,45 @@
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+  -->
+
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+		>
+
+	<bean name="layerSlopeInfo" class="org.geomajas.configuration.RasterLayerInfo">
+		<property name="crs" value="EPSG:900913" />
+		<property name="dataSourceName" value="Ktunaxa:slope0_20per" />
+		<property name="maxExtent">
+			<bean class="org.geomajas.geometry.Bbox">
+				<property name="x" value="-13229665.314975819" />
+				<property name="y" value="6267734.956684794" />
+				<property name="maxX" value="-12664462.342852626" />
+				<property name="maxY" value="6892622.175660782" />
+			</bean>
+		</property>
+		<property name="tileHeight" value="512" />
+		<property name="tileWidth" value="512" />
+	</bean>
+
+	<bean name="layerSlope" class="org.geomajas.layer.wms.WmsLayer" >
+		<property name="layerInfo" ref="layerSlopeInfo" />
+		<!--<property name="baseWmsUrl" value="http://64.141.44.210:9080/geoserver/Ktunaxa/wms" />-->
+		<property name="baseWmsUrl" value="http://192.168.1.205:8080/geoserver/Ktunaxa/wms" />
+		<property name="useCache" value="true" />
+		<property name="parameters">
+			<list>
+				<bean class="org.geomajas.configuration.Parameter">
+					<property name="name" value="transparent" />
+					<property name="value" value="true" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

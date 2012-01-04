@@ -52,11 +52,11 @@ public class LayerBlock extends VLayout {
 		visibleBtn.setLayoutAlign(VerticalAlignment.CENTER);
 		visibleBtn.setShowTitle(false);
 		visibleBtn.setSize("24", "22");
-		visibleBtn.setIcon(WidgetLayout.iconLayerShow);
 		visibleBtn.setIconSize(16);
 		visibleBtn.setActionType(SelectionType.CHECKBOX);
 		visibleBtn.setSelected(layer.getLayerInfo().isVisible());
 		visibleBtn.addClickHandler(new SetVisibleHandler());
+		updateIcons();
 		layout.addMember(visibleBtn);
 		addMember(layout);
 	}

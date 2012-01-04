@@ -79,11 +79,17 @@ public class LayersPanel extends VLayout {
 
 				Layer<?> osmLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_OSM_ID);
 				LayerBlock osmBlock = new LayerBlock(osmLayer);
+				Layer<?> aspectLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_ASPECT_ID);
+				LayerBlock aspectBlock = new LayerBlock(aspectLayer);
+				Layer<?> slopeLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_SLOPE_ID);
+				LayerBlock slopeBlock = new LayerBlock(slopeLayer);
 				Layer<?> hillShadeLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_HILL_SHADE_ID);
 				LayerBlock hillShadeBlock = new LayerBlock(hillShadeLayer);
 				VLayout sectionStackLayout = new VLayout();
 				sectionStackLayout.addMember(osmBlock);
 				sectionStackLayout.addMember(hillShadeBlock);
+				sectionStackLayout.addMember(aspectBlock);
+				sectionStackLayout.addMember(slopeBlock);
 
 				SectionStackSection section = new SectionStackSection("Background raster");
 				section.setExpanded(true);

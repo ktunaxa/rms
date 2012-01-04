@@ -115,6 +115,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 			<list>
 				<ref bean="clientLayerOsm" />
 				<ref bean="clientLayerHillShade" />
+				<ref bean="clientLayerAspect" />
+				<ref bean="clientLayerSlope" />
 				<ref bean="clientLayerReferenceBase" />
 				<ref bean="clientLayerReferenceValue" />
 				<ref bean="clientLayerReferral" />
@@ -228,7 +230,21 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	<bean id="clientLayerHillShade" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
 		<property name="serverLayerId" value="layerHillShade" />
 		<property name="label" value="Hill shade" />
-		<property name="visible" value="true" />
+		<property name="visible" value="false" />
+		<property name="style" value="1" />
+	</bean>
+
+	<bean id="clientLayerAspect" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+		<property name="serverLayerId" value="layerAspect" />
+		<property name="label" value="Aspect s" />
+		<property name="visible" value="false" />
+		<property name="style" value="1" />
+	</bean>
+
+	<bean id="clientLayerSlope" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+		<property name="serverLayerId" value="layerSlope" />
+		<property name="label" value="Slope 0 20per" />
+		<property name="visible" value="false" />
 		<property name="style" value="1" />
 	</bean>
 
