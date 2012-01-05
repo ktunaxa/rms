@@ -158,38 +158,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
 
 	<bean class="org.geomajas.configuration.NamedStyleInfo" name="referenceValueStyleInfo">
-		<property name="featureStyles">
-            <list>
-                <bean class="org.geomajas.configuration.FeatureStyleInfo">
-                    <property name="name" value="Everything else"/>
-                    <property name="fillColor" value="#FFFFFF"/>
-                    <property name="fillOpacity" value="0"/>
-                    <property name="strokeColor" value="#000000"/>
-                    <property name="strokeOpacity" value=".8"/>
-                    <property name="strokeWidth" value="1"/>
-                </bean>
-            </list>
-		</property>
-		<property name="labelStyle">
-			<bean class="org.geomajas.configuration.LabelStyleInfo">
-               <property name="labelAttributeName" value="label"/>
-                <property name="fontStyle">
-					<bean class="org.geomajas.configuration.FontStyleInfo">
-						<property name="color" value="#000000" />
-						<property name="opacity" value="1" />
-					</bean>
-                </property>
-                <property name="backgroundStyle">
-                    <bean class="org.geomajas.configuration.FeatureStyleInfo">
-                        <property name="fillColor" value="#FFFFFF"/>
-                        <property name="fillOpacity" value=".7"/>
-                        <property name="strokeColor" value="#000099"/>
-                        <property name="strokeOpacity" value="1"/>
-                        <property name="strokeWidth" value="1"/>
-                    </bean>
-                </property>
-			</bean>
-		</property>
-	</bean>
+		<property name="sldLocation" value="WEB-INF/layerReferenceValue.sld"/>
+ 	</bean>
 
 </beans>

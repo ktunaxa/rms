@@ -47,6 +47,35 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>gwt-maven-plugin</artifactId>
+										<versionRange>[2.4.0,)</versionRange>
+										<goals>
+											<goal>compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 
 	<dependencyManagement>
@@ -95,7 +124,51 @@
 
 			<dependency>
 				<groupId>org.geotools</groupId>
+				<artifactId>gt-api</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-render</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-main</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-cql</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geotools</groupId>
 				<artifactId>gt-epsg-wkt</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-jdbc</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-referencing</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-xml</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geotools.xsd</groupId>
+				<artifactId>gt-xsd-sld</artifactId>
 				<version>${geotools.version}</version>
 			</dependency>
 
@@ -163,7 +236,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.geotools</groupId>
-				<artifactId>gt-postgis</artifactId>
+				<artifactId>gt-jdbc-postgis</artifactId>
 				<version>${geotools.version}</version>
 			</dependency>
 			<dependency>
@@ -337,7 +410,7 @@
 
 	<properties>
 		<activiti.version>5.7</activiti.version>
-		<geotools.version>2.7.0.1</geotools.version>
+		<geotools.version>2.7.4-GBE-260</geotools.version>
 		<gwt.version>2.4.0</gwt.version>
 		<alfresco.version>3.4.a</alfresco.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
