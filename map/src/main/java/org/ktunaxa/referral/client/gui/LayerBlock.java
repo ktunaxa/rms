@@ -18,7 +18,6 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
-import org.geomajas.gwt.client.util.WidgetLayout;
 
 /**
  * Layer block that display a panel for turning a layer (a real layer) on and off.
