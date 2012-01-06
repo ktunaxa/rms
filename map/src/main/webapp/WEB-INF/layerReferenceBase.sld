@@ -458,6 +458,39 @@
 					</PolygonSymbolizer>
 				</Rule>
 				<Rule>
+					<Name>TRIM1 Transmission Line</Name>
+					<Title>TRIM1 Transmission Line</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM1_TL</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+						<Stroke>
+							<CssParameter name="stroke">#FFFFFF</CssParameter>
+							<CssParameter name="stroke-width">0</CssParameter>
+						</Stroke>
+					</LineSymbolizer>
+					<LineSymbolizer>
+						<Stroke>
+							<GraphicStroke>
+								<Graphic>
+									<Mark>
+										<WellKnownName>circle</WellKnownName>
+										<Stroke>
+											<CssParameter name="fill">#4E4E4E</CssParameter>
+										</Stroke>
+									</Mark>
+									<Size>5</Size>
+								</Graphic>
+							</GraphicStroke>
+							<CssParameter name="stroke-dasharray">5 15</CssParameter>
+							<CssParameter name="stroke-dashoffset">7.5</CssParameter>
+						</Stroke>
+					</LineSymbolizer>
+				</Rule>
+				<Rule>
 					<Name>TRIM2 Road (Paved)</Name>
 					<Title>Road (Paved)</Title>
 					<ogc:Filter>
@@ -486,22 +519,6 @@
 					  <Stroke>
 					    <CssParameter name="stroke">#732600</CssParameter>
 					    <CssParameter name="stroke-width">2</CssParameter>    
-					  </Stroke>
-					</LineSymbolizer>
-		       	</Rule>
-		        <Rule>
-					<Name>TRIM2 Bridge</Name>
-					<Title>Bridge</Title>
-					<ogc:Filter>
-						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
-							<ogc:Literal>TRIM2_TRANS_BR</ogc:Literal>
-						</ogc:PropertyIsEqualTo>
-					</ogc:Filter>
-					<LineSymbolizer>
-					  <Stroke>
-					    <CssParameter name="stroke">#ECB989</CssParameter>
-					    <CssParameter name="stroke-width">3</CssParameter>    
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -554,6 +571,88 @@
 					</LineSymbolizer>
 		       	</Rule>
 		        <Rule>
+					<Name>TRIM2 Airport/Airfield</Name>
+					<Title>Airport/Airfield</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_TRANS_AIR</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#FF0000</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+						<CssParameter name="stroke-dasharray">5 4</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+		        <Rule>
+					<Name>TRIM2 Ferry Route</Name>
+					<Title>Ferry Route</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_TRANS_FER</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#FF0000</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+						<CssParameter name="stroke-dasharray">7 2</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+		        <Rule>
+					<Name>TRIM2 Bridge</Name>
+					<Title>Bridge</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_TRANS_BR</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#ECB989</CssParameter>
+					    <CssParameter name="stroke-width">3</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+		        <Rule>
+					<Name>TRIM2 Cut (Road / Railway)</Name>
+					<Title>Cut (Road / Railway)</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_TRANS_CUT</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#686868</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+				</Rule>
+		        <Rule>
+					<Name>TRIM2 Embankment/Fill</Name>
+					<Title>Embankment/Fill</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_TRANS_EF</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#686868</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+				</Rule>
+		        <Rule>
 					<Name>TRIM2 Tunnel</Name>
 					<Title>Tunnel/Snow Shed/Bridge Trestle-Foot</Title>
 					<ogc:Filter>
@@ -565,7 +664,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#686868</CssParameter>
-					    <CssParameter name="stroke-width">3</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>    
 					  </Stroke>
 					</LineSymbolizer>
 				</Rule>
@@ -575,7 +674,7 @@
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
 							<ogc:PropertyName>styleCode</ogc:PropertyName>
-							<ogc:Literal>TRIM2_WC_RSD</ogc:Literal>
+							<ogc:Literal>TRIM2_WL_RSD</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
 					<LineSymbolizer>
@@ -585,7 +684,256 @@
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
+		        <Rule>
+					<Name>TRIM2 River/Stream Indefinite</Name>
+					<Title>TRIM2 River/Stream Indefinite</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_RSI</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#00A9E6</CssParameter>
+					    <CssParameter name="stroke-width">2</CssParameter>    
+						<CssParameter name="stroke-dasharray">4 4</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+		        <Rule>
+					<Name>TRIM2 River/Lake Definite</Name>
+					<Title>TRIM2 River/Lake Definite</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_LD</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#00A9E6</CssParameter>
+					    <CssParameter name="stroke-width">2</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+		        <Rule>
+					<Name>TRIM2 River/Lake Indefinite</Name>
+					<Title>TRIM2 River/Lake Indefinite</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_LI</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#00A9E6</CssParameter>
+					    <CssParameter name="stroke-width">2</CssParameter>    
+						<CssParameter name="stroke-dasharray">4 4</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM2 Marsh/Swamp</Name>
+					<Title>TRIM2 Marsh/Swamp</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_MS</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#98E600</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+						<CssParameter name="stroke-dasharray">6 6</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM2 Glacier/Icefield</Name>
+					<Title>TRIM2 Glacier/Icefield</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_GI</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#004DA8</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+						<CssParameter name="stroke-dasharray">4 4</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM2 Sand/Gravel Bar</Name>
+					<Title>TRIM2 Sand/Gravel Bar</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_SG</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#E69800</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+						<CssParameter name="stroke-dasharray">7 1</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM2 Canal/Ditch/Island</Name>
+					<Title>TRIM2 Canal/Ditch/Island</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_CDI</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#004DA8</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM2 Dams (General)</Name>
+					<Title>TRIM2 Dams (General)</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_DA</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#FFFFFF</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM2 Rapids/Falls</Name>
+					<Title>TRIM2 Rapids/Falls</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_RF</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#FFFFFF</CssParameter>
+					    <CssParameter name="stroke-width">2</CssParameter>    
+						<CssParameter name="stroke-dasharray">5 2</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM2 Flooded land</Name>
+					<Title>TRIM2 Flooded land</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_FL</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#FFFFFF</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+						<CssParameter name="stroke-dasharray">4 4</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM2 Reservoir</Name>
+					<Title>TRIM2 Reservoir</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM2_WL_RES</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#A80000</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>    
+						<CssParameter name="stroke-dasharray">4 1</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+		       	
+ 		        <Rule>
+					<Name>TRIM1 Contour - Index</Name>
+					<Title>TRIM1 Contour - Index</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM1_C_IND</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#686868</CssParameter>
+					    <CssParameter name="stroke-width">0</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
  			
+ 		        <Rule>
+					<Name>TRIM1 Contour - Intermediate</Name>
+					<Title>TRIM1 Contour - Intermediate</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM1_C_INT</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#9C9C9C</CssParameter>
+					    <CssParameter name="stroke-width">0</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM1 Contour - Cliff</Name>
+					<Title>TRIM1 Contour - Cliff</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM1_C_CLF</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#FFBEE8</CssParameter>
+					    <CssParameter name="stroke-width">0</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>TRIM1 Contour - Area of exclusion</Name>
+					<Title>TRIM1 Contour - Area of exclusion</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>TRIM1_C_AOE</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#B02792</CssParameter>
+					    <CssParameter name="stroke-width">0</CssParameter>    
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
  			<!-- TRIM_Features.pdf stop -->
 			</FeatureTypeStyle>
 		</UserStyle>
