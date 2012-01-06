@@ -124,51 +124,7 @@
 
 			<dependency>
 				<groupId>org.geotools</groupId>
-				<artifactId>gt-api</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>org.geotools</groupId>
-				<artifactId>gt-render</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.geotools</groupId>
-				<artifactId>gt-main</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.geotools</groupId>
-				<artifactId>gt-cql</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.geotools</groupId>
 				<artifactId>gt-epsg-wkt</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.geotools</groupId>
-				<artifactId>gt-jdbc</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
-			
-			<dependency>
-				<groupId>org.geotools</groupId>
-				<artifactId>gt-referencing</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.geotools</groupId>
-				<artifactId>gt-xml</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.geotools.xsd</groupId>
-				<artifactId>gt-xsd-sld</artifactId>
 				<version>${geotools.version}</version>
 			</dependency>
 
@@ -202,6 +158,13 @@
 			</dependency>
 			<dependency>
 				<groupId>org.geomajas.plugin</groupId>
+				<artifactId>geomajas-plugin-geotools-all</artifactId>
+				<version>1.9.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.geomajas.plugin</groupId>
 				<artifactId>geomajas-plugin-wms-all</artifactId>
 				<version>1.9.0-SNAPSHOT</version>
 				<type>pom</type>
@@ -229,16 +192,6 @@
 				<scope>import</scope>
 			</dependency>
 
-			<dependency>
-				<groupId>org.geotools</groupId>
-				<artifactId>gt-shapefile</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.geotools</groupId>
-				<artifactId>gt-jdbc-postgis</artifactId>
-				<version>${geotools.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-infinispan</artifactId>
