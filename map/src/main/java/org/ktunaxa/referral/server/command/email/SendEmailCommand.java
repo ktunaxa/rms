@@ -89,6 +89,10 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 						if (pos >= 0) {
 							filename = filename.substring(pos + 1);
 						}
+						pos = filename.indexOf('?');
+						if (pos >= 0) {
+							filename = filename.substring(0, pos);
+						}
 						part.setFileName(filename);
 						String fixedUrl = url;
 						if (fixedUrl.startsWith("../")) {
