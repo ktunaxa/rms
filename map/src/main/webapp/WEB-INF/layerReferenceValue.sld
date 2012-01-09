@@ -583,6 +583,40 @@
 					</PolygonSymbolizer>
 				</Rule>
 			<!-- TreatyRelated_Features.pdf stop -->
+				<Rule>
+					<Name>Default point - everything else</Name>
+					<Title>Default point - everything else</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:Function name="geometryType">
+								<ogc:PropertyName>geom</ogc:PropertyName>
+							</ogc:Function>
+							<ogc:Literal>Point</ogc:Literal>
+							<ogc:Literal>MultiPoint</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<PointSymbolizer>
+						<Graphic>
+							<Mark>
+								<WellKnownName>circle</WellKnownName>
+								<Fill>
+									<CssParameter name="fill">#FFCCFF</CssParameter>
+								</Fill>
+							</Mark>
+							<Size>6</Size>
+						</Graphic>
+					</PointSymbolizer>
+				</Rule>
+				<Rule>
+					<Name>Default - everything else</Name>
+					<Title>Default - everything else</Title>
+					<LineSymbolizer>
+						<Stroke>
+							<CssParameter name="stroke">#FFCCFF</CssParameter>
+							<CssParameter name="stroke-width">0</CssParameter>
+						</Stroke>
+					</LineSymbolizer>
+				</Rule>
 			</FeatureTypeStyle>
 		</UserStyle>
 	</NamedLayer>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<StyledLayerDescriptor version="1.0.0" 
-    xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd" 
-    xmlns="http://www.opengis.net/sld" 
-    xmlns:ogc="http://www.opengis.net/ogc" 
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
+<StyledLayerDescriptor version="1.0.0"
+    xsi:schemaLocation="http://www.opengis.net/sld StyledLayerDescriptor.xsd http://www.opengis.net/ogc"
+    xmlns="http://www.opengis.net/sld"
+    xmlns:ogc="http://www.opengis.net/ogc"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<NamedLayer>
 		<Name>layerReferenceBase</Name>
@@ -58,7 +58,7 @@
 							<CssParameter name="fill">#A8A800</CssParameter>
 						</Fill>
 					</PolygonSymbolizer>
-					
+
 					<PolygonSymbolizer>
 						<Fill>
 							<GraphicFill>
@@ -231,7 +231,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#00A9E6</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -292,7 +292,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#E69800</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 				</Rule>
@@ -308,7 +308,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#732600</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -324,7 +324,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#ECB989</CssParameter>
-					    <CssParameter name="stroke-width">3</CssParameter>    
+					    <CssParameter name="stroke-width">3</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -340,7 +340,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#8400A8</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -388,12 +388,12 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#686868</CssParameter>
-					    <CssParameter name="stroke-width">3</CssParameter>    
+					    <CssParameter name="stroke-width">3</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 				</Rule>
  			<!-- NTS_Features.pdf stop -->
- 			
+
  			<!-- TRIM_Features.pdf start -->
 				<Rule>
 					<Name>TRIM2_WaterBodies</Name>
@@ -502,7 +502,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#E69800</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 				</Rule>
@@ -518,7 +518,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#732600</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -534,7 +534,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#8400A8</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -582,7 +582,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#FF0000</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 						<CssParameter name="stroke-dasharray">5 4</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
@@ -599,7 +599,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#FF0000</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 						<CssParameter name="stroke-dasharray">7 2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
@@ -616,7 +616,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#ECB989</CssParameter>
-					    <CssParameter name="stroke-width">3</CssParameter>    
+					    <CssParameter name="stroke-width">3</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -632,7 +632,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#686868</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 				</Rule>
@@ -648,7 +648,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#686868</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 				</Rule>
@@ -664,7 +664,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#686868</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 				</Rule>
@@ -680,7 +680,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#00A9E6</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -696,7 +696,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#00A9E6</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 						<CssParameter name="stroke-dasharray">4 4</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
@@ -713,7 +713,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#00A9E6</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -729,7 +729,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#00A9E6</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 						<CssParameter name="stroke-dasharray">4 4</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
@@ -746,7 +746,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#98E600</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 						<CssParameter name="stroke-dasharray">6 6</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
@@ -763,7 +763,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#004DA8</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 						<CssParameter name="stroke-dasharray">4 4</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
@@ -780,7 +780,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#E69800</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 						<CssParameter name="stroke-dasharray">7 1</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
@@ -797,7 +797,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#004DA8</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -813,7 +813,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#FFFFFF</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -829,7 +829,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#FFFFFF</CssParameter>
-					    <CssParameter name="stroke-width">2</CssParameter>    
+					    <CssParameter name="stroke-width">2</CssParameter>
 						<CssParameter name="stroke-dasharray">5 2</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
@@ -846,7 +846,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#FFFFFF</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 						<CssParameter name="stroke-dasharray">4 4</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
@@ -863,12 +863,12 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#A80000</CssParameter>
-					    <CssParameter name="stroke-width">1</CssParameter>    
+					    <CssParameter name="stroke-width">1</CssParameter>
 						<CssParameter name="stroke-dasharray">4 1</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
-		       	
+
  		        <Rule>
 					<Name>TRIM1 Contour - Index</Name>
 					<Title>TRIM1 Contour - Index</Title>
@@ -881,11 +881,11 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#686868</CssParameter>
-					    <CssParameter name="stroke-width">0</CssParameter>    
+					    <CssParameter name="stroke-width">0</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
- 			
+
  		        <Rule>
 					<Name>TRIM1 Contour - Intermediate</Name>
 					<Title>TRIM1 Contour - Intermediate</Title>
@@ -898,7 +898,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#9C9C9C</CssParameter>
-					    <CssParameter name="stroke-width">0</CssParameter>    
+					    <CssParameter name="stroke-width">0</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -914,7 +914,7 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#FFBEE8</CssParameter>
-					    <CssParameter name="stroke-width">0</CssParameter>    
+					    <CssParameter name="stroke-width">0</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
@@ -930,11 +930,45 @@
 					<LineSymbolizer>
 					  <Stroke>
 					    <CssParameter name="stroke">#B02792</CssParameter>
-					    <CssParameter name="stroke-width">0</CssParameter>    
+					    <CssParameter name="stroke-width">0</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
  			<!-- TRIM_Features.pdf stop -->
+ 		        <Rule>
+					<Name>Default point - everything else</Name>
+					<Title>Default point - everything else</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:Function name="geometryType">
+								<ogc:PropertyName>geom</ogc:PropertyName>
+							</ogc:Function>
+							<ogc:Literal>Point</ogc:Literal>
+							<ogc:Literal>MultiPoint</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<PointSymbolizer>
+					 <Graphic>
+					   <Mark>
+						 <WellKnownName>circle</WellKnownName>
+						 <Fill>
+						   <CssParameter name="fill">#FFCCFF</CssParameter>
+						 </Fill>
+					   </Mark>
+					   <Size>6</Size>
+					 </Graphic>
+					</PointSymbolizer>
+		       	</Rule>
+ 		        <Rule>
+					<Name>Default - everything else</Name>
+					<Title>Default - everything else</Title>
+					<LineSymbolizer>
+					  <Stroke>
+					    <CssParameter name="stroke">#FFCCFF</CssParameter>
+					    <CssParameter name="stroke-width">0</CssParameter>
+					  </Stroke>
+					</LineSymbolizer>
+		       	</Rule>
 			</FeatureTypeStyle>
 		</UserStyle>
 	</NamedLayer>
