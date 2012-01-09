@@ -9,7 +9,7 @@
   layer-by-layer uploads of the base and value reference data.</para>
 
   <section>
-    <title>Upload script for referral layers (base and value)</title>
+    <title>Upload script for reference layers (base and value)</title>
 
     <para>The upload script is released as a zip-file which contains the java
     application and a batch script for Windows and Unix.</para>
@@ -62,7 +62,7 @@
     style attribute to existing shapefile columns. The name of the shapefile
     should be used as the entry's <code>key</code> and the shapefile column as
     its <code>value</code>. If you don't specify these entries, the following
-    columns shuold be present in the shape file (dbf part):</para>
+    columns should be present in the shape file (dbf part):</para>
 
     <itemizedlist>
       <listitem>
@@ -75,6 +75,708 @@
         type)</para>
       </listitem>
     </itemizedlist>
+
+    <para>The values of the RMS_STYLE column should correspond to the property
+    filter names defined in the SLD style definition files (see next chapter).
+    Currently, the following style attribute values have been defined:</para>
+
+    <para><table>
+        <title>Value reference styles</title>
+
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Layer name</entry>
+
+              <entry>Style name</entry>
+
+              <entry>style code</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>Groundwater wells (32)</entry>
+
+              <entry>GroundWaterWells</entry>
+
+              <entry>GWW</entry>
+            </row>
+
+            <row>
+              <entry>Water Diversion Points (33)</entry>
+
+              <entry>WaterDiversionPoints</entry>
+
+              <entry>WDP</entry>
+            </row>
+
+            <row>
+              <entry>Fish Distribution Historic (31)</entry>
+
+              <entry>FishDistribution_Historic</entry>
+
+              <entry>FDH</entry>
+            </row>
+
+            <row>
+              <entry>Fresh Water Obstructions (29)</entry>
+
+              <entry>CWB_FreshwaterObstructions (Artificial Waterfall)</entry>
+
+              <entry>FWO_AW</entry>
+            </row>
+
+            <row>
+              <entry>Fresh Water Obstructions (29)</entry>
+
+              <entry>CWB_FreshwaterObstructions (Beaver Dam)</entry>
+
+              <entry>FWO_BD</entry>
+            </row>
+
+            <row>
+              <entry>Fresh Water Obstructions (29)</entry>
+
+              <entry>CWB_FreshwaterObstructions (Dam)</entry>
+
+              <entry>FWO_D</entry>
+            </row>
+
+            <row>
+              <entry>Fresh Water Obstructions (29)</entry>
+
+              <entry>CWB_FreshwaterObstructions (Falls)</entry>
+
+              <entry>FWO_F</entry>
+            </row>
+
+            <row>
+              <entry>Fresh Water Obstructions (29)</entry>
+
+              <entry>CWB_FreshwaterObstructions (Flattened Waterfall)</entry>
+
+              <entry>FWO_FW</entry>
+            </row>
+
+            <row>
+              <entry>Fresh Water Obstructions (29)</entry>
+
+              <entry>CWB_FreshwaterObstructions (Rapids/Cascades)</entry>
+
+              <entry>FWO_RC</entry>
+            </row>
+
+            <row>
+              <entry>Fresh Water Obstructions (29)</entry>
+
+              <entry>CWB_FreshwaterObstructions (SinkHole)</entry>
+
+              <entry>FWO_SH</entry>
+            </row>
+
+            <row>
+              <entry>Designated Flood Plains (30)</entry>
+
+              <entry>DesignatedFloodPlainAreas (Floodplain Area)</entry>
+
+              <entry>DFPA_FA</entry>
+            </row>
+
+            <row>
+              <entry>Designated Flood Plains (30)</entry>
+
+              <entry>DesignatedFloodPlainAreas (Alluvial Fan)</entry>
+
+              <entry>DFPA_AF</entry>
+            </row>
+
+            <row>
+              <entry>Archaelogical Sites (37)</entry>
+
+              <entry>Registered_Archaeological_Sites</entry>
+
+              <entry>ARC_RAS</entry>
+            </row>
+
+            <row>
+              <entry>Archaelogical Polygons (36)</entry>
+
+              <entry>AOA_Polygons_WCandArcas</entry>
+
+              <entry>ARC_APWCA</entry>
+            </row>
+
+            <row>
+              <entry>Preferred Model (35)</entry>
+
+              <entry>Registered_Archaeological_Polygons</entry>
+
+              <entry>ARC_RAP</entry>
+            </row>
+
+            <row>
+              <entry>Kootenay West (34)</entry>
+
+              <entry>AOA_Polygons_Kootenay_West</entry>
+
+              <entry>ARC_APKW</entry>
+            </row>
+
+            <row>
+              <entry>Ungulate Winter Range (80)</entry>
+
+              <entry>UngulateWinterRange</entry>
+
+              <entry>UWR</entry>
+            </row>
+
+            <row>
+              <entry>National Parks (78)</entry>
+
+              <entry>National Parks</entry>
+
+              <entry>NP</entry>
+            </row>
+
+            <row>
+              <entry>Provincial Parks (79)</entry>
+
+              <entry>Provincial Parks</entry>
+
+              <entry>PP</entry>
+            </row>
+
+            <row>
+              <entry>Conservation Covenant Land (77)</entry>
+
+              <entry>East Kootenay Conservation Covenats Lands</entry>
+
+              <entry>EKCCL</entry>
+            </row>
+
+            <row>
+              <entry>Rare Endangered Species (81)</entry>
+
+              <entry>Rare_Endangered_Species</entry>
+
+              <entry>RES</entry>
+            </row>
+
+            <row>
+              <entry>Biogeoclimatic (76)</entry>
+
+              <entry>IMA: Interior Mountain-Heather Alpine</entry>
+
+              <entry>BEC_IMA</entry>
+            </row>
+
+            <row>
+              <entry>Biogeoclimatic (76)</entry>
+
+              <entry>ESSF: Engelmann Spruce - Subalpine Fir</entry>
+
+              <entry>BEC_ESSF</entry>
+            </row>
+
+            <row>
+              <entry>Biogeoclimatic (76)</entry>
+
+              <entry>ICH: Interior Cedar - Hemlock</entry>
+
+              <entry>BEC_ICH</entry>
+            </row>
+
+            <row>
+              <entry>Biogeoclimatic (76)</entry>
+
+              <entry>IDF: Interior Douglas-Fir</entry>
+
+              <entry>BEC_IDF</entry>
+            </row>
+
+            <row>
+              <entry>Biogeoclimatic (76)</entry>
+
+              <entry>MS: Montane Spruce</entry>
+
+              <entry>BEC_MS</entry>
+            </row>
+
+            <row>
+              <entry>Biogeoclimatic (76)</entry>
+
+              <entry>PP: Ponderosa Pine</entry>
+
+              <entry>NP</entry>
+            </row>
+
+            <row>
+              <entry>Treaty Identified Lands (83)</entry>
+
+              <entry>Treaty - Identified</entry>
+
+              <entry>TRT_ID</entry>
+            </row>
+
+            <row>
+              <entry>Ktunaxa Statement of Intent (82)</entry>
+
+              <entry>Ktunaxa Nation Consultative Area</entry>
+
+              <entry>TRT_KNCA</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table><table>
+        <title>Base reference styles</title>
+
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry>Layer name</entry>
+
+              <entry>Style name</entry>
+
+              <entry>Style code</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>Landscape Units (3)</entry>
+
+              <entry>LandscapeUnits</entry>
+
+              <entry>LU</entry>
+            </row>
+
+            <row>
+              <entry>Registered Traplines (4)</entry>
+
+              <entry>RegisteredTraplines</entry>
+
+              <entry>RT</entry>
+            </row>
+
+            <row>
+              <entry>Wildlife Habitat (5)</entry>
+
+              <entry>WildlifeHabitatAreas</entry>
+
+              <entry>WHA</entry>
+            </row>
+
+            <row>
+              <entry>Municipalities (1)</entry>
+
+              <entry>Municipalities</entry>
+
+              <entry>MU</entry>
+            </row>
+
+            <row>
+              <entry>Native Communities (2)</entry>
+
+              <entry>NativeCommunities</entry>
+
+              <entry>NC</entry>
+            </row>
+
+            <row>
+              <entry>Private Parcels (6)</entry>
+
+              <entry>PrivateParcels</entry>
+
+              <entry>PP</entry>
+            </row>
+
+            <row>
+              <entry>Coal Fields (7)</entry>
+
+              <entry>CoalFields</entry>
+
+              <entry>MIN_CF</entry>
+            </row>
+
+            <row>
+              <entry>Coal Tenures (8)</entry>
+
+              <entry>CoalTenures</entry>
+
+              <entry>MIN_CT</entry>
+            </row>
+
+            <row>
+              <entry>Dominion Coal Blocks (9)</entry>
+
+              <entry>DominionCoalBlocks</entry>
+
+              <entry>MIN_DCB</entry>
+            </row>
+
+            <row>
+              <entry>Streams (17)</entry>
+
+              <entry>NTS_Streams</entry>
+
+              <entry>NTS_STR</entry>
+            </row>
+
+            <row>
+              <entry>Glaciers (14)</entry>
+
+              <entry>NTS_Glaciers</entry>
+
+              <entry>NTS_G</entry>
+            </row>
+
+            <row>
+              <entry>Lakes (15)</entry>
+
+              <entry>NTS_Lakes</entry>
+
+              <entry>NTS_L</entry>
+            </row>
+
+            <row>
+              <entry>Rivers (16)</entry>
+
+              <entry>NTS_Rivers</entry>
+
+              <entry>NTS_R</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>Road (Paved)</entry>
+
+              <entry>TRANS_RP</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>Road (Loose, Gravel)</entry>
+
+              <entry>TRANS_RLG</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>Bridge</entry>
+
+              <entry>TRANS_BR</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>Trail</entry>
+
+              <entry>TRANS_TR</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>Railway</entry>
+
+              <entry>TRANS_RW</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>Tunnel</entry>
+
+              <entry>TRANS_TUN</entry>
+            </row>
+
+            <row>
+              <entry>Waterbody (26)</entry>
+
+              <entry>TRIM2_WaterBodies</entry>
+
+              <entry>TRIM2_WB</entry>
+            </row>
+
+            <row>
+              <entry>Rivers (23)</entry>
+
+              <entry>TRIM2_WaterCourses_Rivers</entry>
+
+              <entry>TRIM2_WCR</entry>
+            </row>
+
+            <row>
+              <entry>Wetlands (25)</entry>
+
+              <entry>TRIM2_WetLands</entry>
+
+              <entry>TRIM2_WL</entry>
+            </row>
+
+            <row>
+              <entry>Icemass (22)</entry>
+
+              <entry>TRIM2_IceMass</entry>
+
+              <entry>TRIM2_ICE</entry>
+            </row>
+
+            <row>
+              <entry>Transmissionline (20)</entry>
+
+              <entry>TRIM1 Transmission Line</entry>
+
+              <entry>TRIM1_TL</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Road (Paved)</entry>
+
+              <entry>TRIM2_TRANS_RP</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Road (Loose, Gravel)</entry>
+
+              <entry>TRIM2_TRANS_RLG</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Trails</entry>
+
+              <entry>TRIM2_TRANS_TR</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Railway</entry>
+
+              <entry>TRIM2_TRANS_RW</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Airport/Airfield</entry>
+
+              <entry>TRIM2_TRANS_AIR</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Ferry Route</entry>
+
+              <entry>TRIM2_TRANS_FER</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Bridge</entry>
+
+              <entry>TRIM2_TRANS_BR</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Cut (Road / Railway)</entry>
+
+              <entry>TRIM2_TRANS_CUT</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Embankment/Fill</entry>
+
+              <entry>TRIM2_TRANS_EF</entry>
+            </row>
+
+            <row>
+              <entry>Transportation (18)</entry>
+
+              <entry>TRIM2 Tunnel</entry>
+
+              <entry>TRIM2_TRANS_TUN</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 River/Stream Definite</entry>
+
+              <entry>TRIM2_WL_RSD</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 River/Stream Indefinite</entry>
+
+              <entry>TRIM2_WL_RSI</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 River/Lake Definite</entry>
+
+              <entry>TRIM2_WL_LD</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 River/Lake Indefinite</entry>
+
+              <entry>TRIM2_WL_LI</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 Marsh/Swamp</entry>
+
+              <entry>TRIM2_WL_MS</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 Glacier/Icefield</entry>
+
+              <entry>TRIM2_WL_GI</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 Sand/Gravel Bar</entry>
+
+              <entry>TRIM2_WL_SG</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 Canal/Ditch/Island</entry>
+
+              <entry>TRIM2_WL_CDI</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 Dams (General)</entry>
+
+              <entry>TRIM2_WL_DA</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 Rapids/Falls</entry>
+
+              <entry>TRIM2_WL_RF</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 Flooded land</entry>
+
+              <entry>TRIM2_WL_FL</entry>
+            </row>
+
+            <row>
+              <entry>Waterlines (27)</entry>
+
+              <entry>TRIM2 Reservoir</entry>
+
+              <entry>TRIM2_WL_RES</entry>
+            </row>
+
+            <row>
+              <entry>Contour (21)</entry>
+
+              <entry>TRIM1 Contour - Index</entry>
+
+              <entry>TRIM1_C_IND</entry>
+            </row>
+
+            <row>
+              <entry>Contour (21)</entry>
+
+              <entry>TRIM1 Contour - Intermediate</entry>
+
+              <entry>TRIM1_C_INT</entry>
+            </row>
+
+            <row>
+              <entry>Contour (21)</entry>
+
+              <entry>TRIM1 Contour - Cliff</entry>
+
+              <entry>TRIM1_C_CLF</entry>
+            </row>
+
+            <row>
+              <entry>Contour (21)</entry>
+
+              <entry>TRIM1 Contour - Area of exclusion</entry>
+
+              <entry>TRIM1_C_AOE</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table></para>
+  </section>
+
+  <section>
+    <title>SLD (Styled Layer Descriptor) configuration</title>
+
+    <para>The SLD configurations for the base and value layers are defined in
+    the following files respectively:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>layerReferenceBase.sld</para>
+      </listitem>
+
+      <listitem>
+        <para>layerReferenceValue.sld</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>Each style corresponds to a single rule. The rule filter is
+    typically defined as follows, by filtering on the property name styleCode:
+    </para>
+
+    <programlisting> &lt;ogc:Filter&gt;
+   &lt;ogc:PropertyIsEqualTo&gt;
+    &lt;ogc:PropertyName&gt;<emphasis>styleCode</emphasis>&lt;/ogc:PropertyName&gt;
+    &lt;ogc:Literal&gt;<emphasis>LU</emphasis>&lt;/ogc:Literal&gt;
+   &lt;/ogc:PropertyIsEqualTo&gt;
+ &lt;/ogc:Filter&gt;
+</programlisting>
+
+    <para>For each rule the symbolizer corresponding to its geometry type is
+    defined.</para>
   </section>
 
   <section>
