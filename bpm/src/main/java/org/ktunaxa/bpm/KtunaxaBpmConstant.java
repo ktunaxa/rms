@@ -26,7 +26,7 @@ public interface KtunaxaBpmConstant {
 	String VAR_INCOMPLETE = "incomplete";
 	String VAR_FINAL_DECISION_CONSISTENT = "finalDecisionConsistent";
 	String VAR_REPORT_VALUES = "reportValues";
-	String VAR_DECISION_CONSISTENT = "decisionConsistent";
+	String VAR_CONCERNS_ADDRESSED = "concernsAddressed";
 	String VAR_EVALUATE_AQUATIC = "evalAquatic";
 	String VAR_EVALUATE_ARCHAEOLOGICAL = "evalArchaeological";
 	String VAR_EVALUATE_CULTURAL = "evalCultural";

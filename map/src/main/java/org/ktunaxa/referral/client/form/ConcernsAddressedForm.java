@@ -35,36 +35,36 @@ import java.util.Map;
  */
 public class ConcernsAddressedForm extends AbstractTaskForm {
 
-	private CheckboxItem decisionConsistent = new CheckboxItem();
+	private CheckboxItem concernsAddressed = new CheckboxItem();
 
 	public ConcernsAddressedForm() {
 		super();
 
-		decisionConsistent.setName("concernsAddressed");
-		decisionConsistent.setTitle("Concerns addressed");
-		decisionConsistent.setPrompt("The KLRA concerns have been addressed by the proponent");
+		concernsAddressed.setName("concernsAddressed");
+		concernsAddressed.setTitle("Concerns addressed");
+		concernsAddressed.setPrompt("The KLRA concerns have been addressed by the proponent");
 
-		setFields(decisionConsistent);
+		setFields(concernsAddressed);
 	}
 
 	@Override
 	public void refresh(TaskDto task) {
 		super.refresh(task);
-		decisionConsistent.setValue(task.getVariables().
-				get(KtunaxaBpmConstant.VAR_DECISION_CONSISTENT));
+		concernsAddressed.setValue(task.getVariables().
+				get(KtunaxaBpmConstant.VAR_CONCERNS_ADDRESSED));
 	}
 
 	@Override
 	public Map<String, String> getVariables() {
 		Map<String, String> result = new HashMap<String, String>();
-		result.put(KtunaxaBpmConstant.VAR_DECISION_CONSISTENT + KtunaxaBpmConstant.SET_BOOLEAN,
-				nullSafeToString(decisionConsistent.getValue()));
+		result.put(KtunaxaBpmConstant.VAR_CONCERNS_ADDRESSED + KtunaxaBpmConstant.SET_BOOLEAN,
+				nullSafeToString(concernsAddressed.getValue()));
 		return result;
 	}
 
 	@Override
 	public boolean validate() {
-		if (decisionConsistent.getValueAsBoolean()) {
+		if (concernsAddressed.getValueAsBoolean()) {
 			// need to mark referral as finished
 			MapLayout mapLayout = MapLayout.getInstance();
 			VectorLayer layer = mapLayout.getReferralLayer();
