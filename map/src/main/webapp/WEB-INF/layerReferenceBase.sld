@@ -952,7 +952,7 @@
 					   <Mark>
 						 <WellKnownName>circle</WellKnownName>
 						 <Fill>
-						   <CssParameter name="fill">#FFCCFF</CssParameter>
+						   <CssParameter name="fill">#660066</CssParameter>
 						 </Fill>
 					   </Mark>
 					   <Size>6</Size>
@@ -964,8 +964,8 @@
 					<Title>Default - everything else</Title>
 					<LineSymbolizer>
 					  <Stroke>
-					    <CssParameter name="stroke">#FFCCFF</CssParameter>
-					    <CssParameter name="stroke-width">0</CssParameter>
+					    <CssParameter name="stroke">#660066</CssParameter>
+					    <CssParameter name="stroke-width">1</CssParameter>
 					  </Stroke>
 					</LineSymbolizer>
 		       	</Rule>
