@@ -589,7 +589,7 @@
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
 							<ogc:Function name="geometryType">
-								<ogc:PropertyName>geom</ogc:PropertyName>
+								<ogc:PropertyName>geometry</ogc:PropertyName>
 							</ogc:Function>
 							<ogc:Literal>Point</ogc:Literal>
 							<ogc:Literal>MultiPoint</ogc:Literal>
