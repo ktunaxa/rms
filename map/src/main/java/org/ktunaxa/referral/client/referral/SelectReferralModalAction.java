@@ -61,6 +61,7 @@ public class SelectReferralModalAction extends SelectionModalAction {
 		}
 		mapModel.addMapModelChangedHandler(new RegisterSelectReferralHandler());
 		setTooltip("Select referral");
+		setIcon("[ISOMORPHIC]/images/selectReferral.png");
 	}
 
 	/** {@inheritDoc} */
