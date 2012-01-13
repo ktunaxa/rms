@@ -73,7 +73,7 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		incomplete.setTitle("Referral incomplete");
 
 		change.setName("needChangeNotification");
-		change.setTitle("Change proponent choices");
+		change.setTitle("Suggest new timeline/engagement level");
 		change.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
 				propagateChangeStatus(change.getValueAsBoolean());
