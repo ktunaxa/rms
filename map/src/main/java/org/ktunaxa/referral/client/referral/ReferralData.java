@@ -35,7 +35,8 @@ public class ReferralData {
 		// set defaults, TODO: make generic implementation calling FeatureModel.newInstance() on the server
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_PRIMARY, 3500);
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_SECONDARY, 10);
-		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_YEAR, 11);
+		int year = new Date().getYear() - 100;
+		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_YEAR, year);
 		feature.setStringAttribute(KtunaxaConstant.ATTRIBUTE_EXTERNAL_PROJECT_ID, "-99");
 		feature.setStringAttribute(KtunaxaConstant.ATTRIBUTE_EXTERNAL_FILE_ID, "-99");
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ACTIVE_RETENTION_PERIOD, 2);
