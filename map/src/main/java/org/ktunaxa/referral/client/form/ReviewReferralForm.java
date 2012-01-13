@@ -69,16 +69,16 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		email.setValidators(mailValidator);
 		email.setWidth("*");
 
-		incomplete.setName("incomplete");
-		incomplete.setTitle("Referral incomplete");
-
 		change.setName("needChangeNotification");
-		change.setTitle("Suggest new timeline/engagement level");
+		change.setTitle("Suggest new timeline/engagement level/feedback");
 		change.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {
 				propagateChangeStatus(change.getValueAsBoolean());
 			}
 		});
+
+		incomplete.setName("incomplete");
+		incomplete.setTitle("Referral incomplete");
 
 		completionDeadline.setName("completionDeadline");
 		completionDeadline.setTitle("Completion deadline");
@@ -89,14 +89,15 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		engagementLevel.setMax(3);
 
 		engagementComment.setName("engagementComment");
-		engagementComment.setTitle("Comment about changed engagement level");
+		engagementComment.setTitle("Comment");
 		engagementComment.setWidth("*");
 		engagementComment.setDisabled(true);
 
-		setFields(description, email, incomplete, change, completionDeadline, engagementLevel, engagementComment);
+		setFields(description, email, change, incomplete, completionDeadline, engagementLevel, engagementComment);
 	}
 
 	private void propagateChangeStatus(boolean changeValue) {
+		incomplete.setDisabled(!changeValue);
 		completionDeadline.setDisabled(!changeValue);
 		engagementLevel.setDisabled(!changeValue);
 		engagementComment.setDisabled(!changeValue);
