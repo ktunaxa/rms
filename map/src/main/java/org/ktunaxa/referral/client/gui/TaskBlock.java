@@ -26,10 +26,10 @@ import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.Html;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.gwt.client.util.WidgetLayout;
+import org.geomajas.gwt.client.widget.KeepInScreenWindow;
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.plugin.staticsecurity.command.dto.GetUsersRequest;
 import org.geomajas.plugin.staticsecurity.command.dto.GetUsersResponse;
-import org.geomajas.widget.utility.gwt.client.widget.InScreenWindow;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
@@ -330,7 +330,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 	}
 
 	private void assignWindow(TaskDto task, GetUsersResponse response, ClickEvent clickEvent) {
-		final Window assignWindow = new InScreenWindow();
+		final Window assignWindow = new KeepInScreenWindow();
 		assignWindow.setTitle("Assign task for " + task.getVariables().get(KtunaxaBpmConstant.VAR_REFERRAL_ID));
 		assignWindow.setAutoSize(true);
 		assignWindow.setCanDragReposition(true);
