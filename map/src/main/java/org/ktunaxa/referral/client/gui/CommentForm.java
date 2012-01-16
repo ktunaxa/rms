@@ -14,7 +14,10 @@ import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultAttributeProvider;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
+import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.geomajas.layer.feature.attribute.IntegerAttribute;
+import org.geomajas.layer.feature.attribute.OneToManyAttribute;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -92,6 +95,16 @@ public class CommentForm extends DefaultFeatureForm {
 		isIncludeInReportAndDisable();
 		createdBy.setDisabled(true);
 		creationDate.setDisabled(true);
+	}
+
+	@Override
+	public void toForm(String name, Attribute<?> attribute) {
+		if (KtunaxaConstant.ATTRIBUTE_COMMENT_POSITION.equals(name)) {
+			if (attribute instanceof IntegerAttribute && null == attribute.getValue()) {
+				((IntegerAttribute) attribute).setValue(2);
+			}
+		}
+		super.toForm(name, attribute);
 	}
 
 	@Override
