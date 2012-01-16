@@ -82,6 +82,12 @@ textarea {
 }
 
 
+.editTemplateComment,
+.editTemplateComment div,
+.editTemplateComment ul {
+    padding: 0 10px 2px 10px;
+}
+
 
 /*------------- SEARCH -------------*/
 
@@ -363,3 +369,4 @@ SECTIONSTACK WITH LISTS
 .taskBlock {
     margin: 0 5px 0 15px;
 }
+

@@ -9,6 +9,7 @@ package org.ktunaxa.referral.server.command.email;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -22,23 +23,35 @@ import freemarker.template.TemplateException;
  * {@link TaskDto} variables using the FreeMarker package.
  * 
  * @author Emiel Ackermann
- *
  */
-
 public class TemplateFiller {
 	
 	private String filledSubject;
 	private String filledMessage;
-	
+
+	/**
+	 * No-arguments constructor, used to verify a template when the task is unknown.
+	 */
 	public TemplateFiller() {
 	}
-	
-	public TemplateFiller(TaskDto task, 
+
+	/**
+	 * Fill a template for a specific task and e-mail templates.
+	 *
+	 * @param task task
+	 * @param attributes referral attributes
+	 * @param domain template DTO
+	 * @throws IOException IO Exception
+	 * @throws TemplateException problem filling template
+	 */
+	public TemplateFiller(TaskDto task, Map<String, String> attributes,
 			org.ktunaxa.referral.server.domain.Template domain) throws IOException, TemplateException {
 		Configuration cfg = new Configuration();
 		Template titleTpl = new Template("SubjectTemplate", new StringReader(domain.getSubject()), cfg);
 		Template messageTpl = new Template("ContentTemplate", new StringReader(domain.getStringContent()), cfg);
-		Map<String, String> variables = task.getVariables();
+		Map<String, String> variables = new HashMap<String, String>();
+		variables.putAll(task.getVariables());
+		variables.putAll(attributes);
 		StringWriter titleWriter = new StringWriter();
 		titleTpl.process(variables, titleWriter);
 		filledSubject = titleWriter.toString();
@@ -58,13 +71,14 @@ public class TemplateFiller {
 	/**
 	 * Fills the given String containing ${} placeholders with the given Map,
 	 * as long as the keys of the map coincide with the placeholders.
-	 * @param template
-	 * @param variables
+	 *
+	 * @param template name of template to fill
+	 * @param variables variables map
 	 * @return
 	 * @throws IOException 
 	 * @throws TemplateException 
 	 */
-	public String fillStringWithData(String template, Map<String, String> variables) 
+	public String fillStringWithData(String template, Map<String, String> variables)
 													throws IOException, TemplateException {
 		String filled = "";
 		Configuration cfg = new Configuration();

@@ -18,6 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.HashMap;
+
+import static org.fest.assertions.Assertions.assertThat;
+
 /**
  * Test for {@link GetEmailDataCommand}.
  *
@@ -36,12 +40,14 @@ public class GetEmailDataTest {
 		TaskDto task = new TaskDto();
 		task.addVariable("referralId", "12345");
 		task.addVariable("referralName", "Test referral");
-		GetEmailDataRequest request = new GetEmailDataRequest(KtunaxaConstant.Email.LEVEL_0);
+		GetEmailDataRequest request = new GetEmailDataRequest();
+		request.setNotifier(KtunaxaConstant.Email.LEVEL_0);
 		request.setTask(task);
+		request.setAttributes(new HashMap<String, String>());
 		GetEmailDataResponse response = (GetEmailDataResponse) dispatcher.execute(
 				GetEmailDataRequest.COMMAND, request, null, "en");
 		String from = response.getFrom();
-		Assert.assertTrue("bla@ktunaxa.org".equals(from));
+		assertThat(from).isEqualTo("bla@ktunaxa.org");
 		String body = response.getBody();
 		Assert.assertEquals("Referral 12345 Test referral\n\nWe have received this referral but do not think we " +
 				"need to take action to process it. For us it has engagement level 0.\n\nKind regards,\n" +

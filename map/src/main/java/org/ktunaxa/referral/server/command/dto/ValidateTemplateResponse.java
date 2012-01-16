@@ -24,7 +24,7 @@ public class ValidateTemplateResponse extends CommandResponse {
 		return corruptPlaceholder;
 	}
 	
-	public void setCorruptPlaceholder(String corruptPlaceholder) {
+	public void setInvalidPlaceholder(String corruptPlaceholder) {
 		this.corruptPlaceholder = corruptPlaceholder;
 	}
 	

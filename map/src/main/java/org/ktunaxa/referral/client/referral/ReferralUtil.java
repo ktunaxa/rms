@@ -6,13 +6,17 @@
 
 package org.ktunaxa.referral.client.referral;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.layer.feature.SearchCriterion;
 
 import com.smartgwt.client.data.Record;
+import org.geomajas.layer.feature.attribute.DateAttribute;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,6 +25,48 @@ import java.util.Map;
  * @author Jan De Moerloose
  */
 public final class ReferralUtil {
+	
+	public static final String[] TEMPLATE_VARIABLES = {
+			KtunaxaConstant.ATTRIBUTE_FULL_ID,
+			KtunaxaConstant.ATTRIBUTE_PRIMARY,
+			KtunaxaConstant.ATTRIBUTE_SECONDARY,
+			KtunaxaConstant.ATTRIBUTE_YEAR,
+			KtunaxaConstant.ATTRIBUTE_NUMBER,
+			KtunaxaConstant.ATTRIBUTE_PROJECT,
+			KtunaxaConstant.ATTRIBUTE_EMAIL,
+			KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE,
+			KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL,
+			KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE,
+			KtunaxaConstant.ATTRIBUTE_RESPONSE_DATE,
+			KtunaxaConstant.ATTRIBUTE_TARGET_REFERRAL,
+			KtunaxaConstant.ATTRIBUTE_DOCUMENTS,
+			KtunaxaConstant.ATTRIBUTE_COMMENTS,
+			KtunaxaConstant.ATTRIBUTE_APPLICANT_NAME,
+			KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY_TYPE,
+			KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY,
+			KtunaxaConstant.ATTRIBUTE_PRIORITY,
+			KtunaxaConstant.ATTRIBUTE_PROJECT_LOCATION,
+			KtunaxaConstant.ATTRIBUTE_PROJECT_DESCRIPTION,
+			KtunaxaConstant.ATTRIBUTE_PROJECT_BACKGROUND,
+			KtunaxaConstant.ATTRIBUTE_FINAL_DISPOSITION,
+			KtunaxaConstant.ATTRIBUTE_APPLICATION_TYPE,
+			KtunaxaConstant.ATTRIBUTE_STATUS,
+			KtunaxaConstant.ATTRIBUTE_STOP_REASON,
+			KtunaxaConstant.ATTRIBUTE_DECISION,
+			KtunaxaConstant.ATTRIBUTE_PROVINCIAL_DECISION,
+			KtunaxaConstant.ATTRIBUTE_CONTACT_NAME,
+			KtunaxaConstant.ATTRIBUTE_CONTACT_PHONE,
+			KtunaxaConstant.ATTRIBUTE_CONTACT_ADDRESS,
+			KtunaxaConstant.ATTRIBUTE_TYPE,
+			KtunaxaConstant.ATTRIBUTE_EXTERNAL_PROJECT_ID,
+			KtunaxaConstant.ATTRIBUTE_EXTERNAL_FILE_ID,
+			KtunaxaConstant.ATTRIBUTE_ACTIVE_RETENTION_PERIOD,
+			KtunaxaConstant.ATTRIBUTE_SEMI_ACTIVE_RETENTION_PERIOD,
+			KtunaxaConstant.ATTRIBUTE_CONFIDENTIAL,
+			KtunaxaConstant.ATTRIBUTE_FINAL_REPORT_INTRODUCTION,
+			KtunaxaConstant.ATTRIBUTE_FINAL_REPORT_CONCLUSION,
+	};
+			
 
 	private ReferralUtil() {
 		// hide constructor
@@ -153,5 +199,33 @@ public final class ReferralUtil {
 	 */
 	public static String getYear(String referralId) {
 		return "20" + parse(referralId)[2];
+	}
+
+	/**
+	 * Get the variables which can be used in an e-mail template for this referral.
+	 * 
+	 * @param feature feature to get variables for
+	 * @return map of variables which can be used
+	 */
+	public static Map<String, String> getTemplateVariables(Feature feature) {
+		Map<String, String> variables = new HashMap<String, String>();
+		if (null != feature) {
+			Map<String, Attribute> attributes = feature.getAttributes();
+			for (String key : TEMPLATE_VARIABLES) {
+				Attribute attribute = attributes.get(key);
+				String value = null;
+				if (attribute instanceof DateAttribute) {
+					// nicely format date...
+					DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
+					value = formatter.format(((DateAttribute) attribute).getValue());
+				} else {
+					if (null != attribute.getValue()) {
+						value = attribute.getValue().toString();
+					}
+				}
+				variables.put(key, value);
+			}
+		}
+		return variables;
 	}
 }

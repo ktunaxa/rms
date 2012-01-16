@@ -7,10 +7,10 @@
 package org.ktunaxa.referral.client.gui;
 
 import org.geomajas.gwt.client.util.WidgetLayout;
+import org.geomajas.gwt.client.widget.KeepInScreenWindow;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
-import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
@@ -20,7 +20,7 @@ import com.smartgwt.client.widgets.events.CloseClientEvent;
  *
  * @author Emiel Ackermann
  */
-public class EditEmailWindow extends Window {
+public class EditEmailWindow extends KeepInScreenWindow {
 
 	private static final String EDIT_EMAIL_TEMPLATE = "Edit email template";
 	private final TaskDto dummy = new TaskDto();
@@ -45,7 +45,7 @@ public class EditEmailWindow extends Window {
 				hide();
 			}
 		});
-		form.getEditButton().addClickHandler(new ClickHandler() {
+		form.getSaveButton().addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
 				form.validate();

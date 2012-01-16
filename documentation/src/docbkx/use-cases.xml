@@ -252,5 +252,68 @@
 
       <para>...</para>
     </section>
+
+    <section>
+      <title>E-mail templates</title>
+
+      <para>When editing e-mail templates, there is a set of fields which
+      depends on the e-mail used (mentioned on the edit screen). </para>
+
+      <para>Using a variable can be done using the following two
+      constructs:</para>
+
+      <programlisting>${applicantName}
+
+
+${stopReason!"In progress."}
+${externalFileId!""}</programlisting>
+
+      <para>The top construct requires a value to be available. The bottom
+      construct contains a default value in case the referral attribute is
+      null.</para>
+
+      <para>You can also use the following referral fields:</para>
+
+      <itemizedlist>
+        <listitem><para>fullId</para></listitem>
+		<listitem><para>primaryClassificationNumber</para></listitem>
+			<listitem><para>secondaryClassificationNumber</para></listitem>
+			<listitem><para>calendarYear</para></listitem>
+			<listitem><para>number</para></listitem>
+			<listitem><para>projectName</para></listitem>
+			<listitem><para>contactEmail</para></listitem>
+			<listitem><para>provincialAssessmentLevel</para></listitem>
+			<listitem><para>finalAssessmentLevel</para></listitem>
+			<listitem><para>responseDeadline</para></listitem>
+			<listitem><para>responseDate</para></listitem>
+			<listitem><para>targetReferral</para></listitem>
+			<listitem><para>documents</para></listitem>
+			<listitem><para>comments</para></listitem>
+			<listitem><para>applicantName</para></listitem>
+			<listitem><para>externalAgencyType</para></listitem>
+			<listitem><para>externalAgencyName</para></listitem>
+			<listitem><para>priority</para></listitem>
+			<listitem><para>projectLocation</para></listitem>
+			<listitem><para>projectDescription</para></listitem>
+			<listitem><para>projectBackground</para></listitem>
+			<listitem><para>finalDisposition</para></listitem>
+			<listitem><para>applicationType</para></listitem>
+			<listitem><para>status</para></listitem>
+			<listitem><para>stopReason</para></listitem>
+			<listitem><para>decision</para></listitem>
+			<listitem><para>provincialDecision</para></listitem>
+			<listitem><para>contactName</para></listitem>
+			<listitem><para>contactPhone</para></listitem>
+			<listitem><para>contactAddress</para></listitem>
+			<listitem><para>type</para></listitem>
+			<listitem><para>externalProjectId</para></listitem>
+			<listitem><para>externalFileId</para></listitem>
+			<listitem><para>activeRetentionPeriod</para></listitem>
+			<listitem><para>semiActiveRetentionPeriod</para></listitem>
+			<listitem><para>confidential</para></listitem>
+			<listitem><para>finalReportIntroduction</para></listitem>
+			<listitem><para>finalReportConclusion</para></listitem>
+      </itemizedlist>
+    </section>
   </section>
 </chapter>

@@ -23,6 +23,7 @@ import org.geomajas.gwt.client.util.Html;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.form.AbstractTaskForm;
+import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
 import org.ktunaxa.referral.server.command.dto.UpdateEmailDataRequest;
@@ -54,13 +55,14 @@ import java.util.Map;
  */
 public class EditEmailTemplateForm extends AbstractTaskForm {
 
+	private static final String COMMENT_STYLE = "editTemplateComment";
 	private final TextItem from = new TextItem();
 	private final TextItem subject = new TextItem();
 	private final TextAreaItem message = new TextAreaItem();
 	private TaskDto task;
 	private final Button cancelButton = new Button("Cancel");
 	private final Button resetButton = new Button("Reset");
-	private final Button editButton = new Button("Edit");
+	private final Button saveButton = new Button("Save");
 	private final HTMLFlow label = new HTMLFlow();
 	private Runnable finishHandler;
 	private String templateTitle;
@@ -108,9 +110,9 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 			}
 		});
 		resetButton.setDisabled(true);
-		editButton.setShowRollOver(false);
-		editButton.setLayoutAlign(VerticalAlignment.CENTER);
-		editButton.setDisabled(true);
+		saveButton.setShowRollOver(false);
+		saveButton.setLayoutAlign(VerticalAlignment.CENTER);
+		saveButton.setDisabled(true);
 		
 		setEditForm();
 	}
@@ -136,7 +138,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		buttons.addMember(new LayoutSpacer());
 		buttons.addMember(cancelButton);
 		buttons.addMember(resetButton);
-		buttons.addMember(editButton);
+		buttons.addMember(saveButton);
 		
 		addMember(buttons);
 	}
@@ -144,8 +146,8 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 
 	public void refresh(String templateTitle, TaskDto task) {
 		this.task = task;
-		fillTemplate();
 		this.templateTitle = templateTitle;
+		fillTemplate();
 		updateExplanation();
 	}
 
@@ -153,8 +155,13 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 	 * Get email data from db and put/convert it into values for the items of the form.
 	 */
 	public void fillTemplate() {
-		GetEmailDataRequest request = new GetEmailDataRequest(templateTitle);
+		from.setValue("");
+		subject.setValue("");
+		message.setValue("");
+		GetEmailDataRequest request = new GetEmailDataRequest();
+		request.setNotifier(templateTitle);
 		request.setTask(task);
+		request.setAttributes(ReferralUtil.getTemplateVariables(MapLayout.getInstance().getCurrentReferral()));
 		GwtCommand command = new GwtCommand(GetEmailDataRequest.COMMAND);
 		command.setCommandRequest(request);
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {
@@ -170,9 +177,9 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 	 * Provides explanation with allowed placeholders, based on notifier String.
 	 */
 	private void updateExplanation() {
-		StringBuilder explanation = new StringBuilder(HtmlBuilder.divClass("commentBlockInfo", 
+		StringBuilder explanation = new StringBuilder(HtmlBuilder.divClass(COMMENT_STYLE,
 				"Text between '${' and '}' is replaced with referral data, before the template is shown to a user. " +
-		"Allowed placeholders for this template are:"));
+		"Apart from the referral variables, the following placeholders can be used in this template:"));
 //		id, name for all notifiers.
 		explanation.append(HtmlBuilder.openTagStyleHtmlContent(Html.Tag.UL, "font-weight:bold",  
 				HtmlBuilder.tag(Html.Tag.LI, "${" + KtunaxaBpmConstant.VAR_REFERRAL_ID + "}"),
@@ -190,12 +197,14 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 					"${" + KtunaxaBpmConstant.VAR_ENGAGEMENT_COMMENT + "}"));
 			explanation.append(HtmlBuilder.tag(Html.Tag.LI, 
 					"${" + KtunaxaBpmConstant.VAR_COMPLETION_DEADLINE + "}"));
+			explanation.append(HtmlBuilder.tag(Html.Tag.LI,
+					"${" + KtunaxaBpmConstant.VAR_INCOMPLETE + "}"));
 		}
 		explanation.append(HtmlBuilder.closeTag(Html.Tag.UL));
-		explanation.append(HtmlBuilder.divClassHtmlContent("commentBlockInfo",
+		explanation.append(HtmlBuilder.divClassHtmlContent(COMMENT_STYLE,
 				HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", "Tip: ") +
 		"Copy/paste a placeholder to use it in the template."));
-		explanation.append(HtmlBuilder.divClassHtmlContent("commentBlockInfo", 
+		explanation.append(HtmlBuilder.divClassHtmlContent(COMMENT_STYLE,
 				HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", "Note: ") + 
 		"Using non-allowed text between the '${' and '}', will break the template."));
 		label.setContents(explanation.toString());  
@@ -210,13 +219,13 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		return cancelButton;
 	}
 	
-	public Button getEditButton() {
-		return editButton;
+	public Button getSaveButton() {
+		return saveButton;
 	}
 	
 	public void disableButtons() {
 		resetButton.setDisabled(true);
-		editButton.setDisabled(true);
+		saveButton.setDisabled(true);
 	}
 
 	@Override
@@ -225,6 +234,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		if (valid) {
 			ValidateTemplateRequest request = new ValidateTemplateRequest();
 			request.setTask(task);
+			request.setAttributes(ReferralUtil.getTemplateVariables(MapLayout.getInstance().getCurrentReferral()));
 			request.setBody(message.getValueAsString());
 			request.setSubject(subject.getValueAsString());
 			GwtCommand command = new GwtCommand(ValidateTemplateRequest.COMMAND);
@@ -289,7 +299,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		
 		public void onChanged(ChangedEvent event) {
 			resetButton.setDisabled(false);
-			editButton.setDisabled(false);
+			saveButton.setDisabled(false);
 		}
 	}
 

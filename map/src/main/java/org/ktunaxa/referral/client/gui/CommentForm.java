@@ -17,7 +17,6 @@ import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.IntegerAttribute;
-import org.geomajas.layer.feature.attribute.OneToManyAttribute;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 

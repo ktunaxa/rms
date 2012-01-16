@@ -29,6 +29,7 @@ import org.geomajas.layer.feature.attribute.LongAttribute;
 import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.ktunaxa.referral.client.gui.MapLayout;
+import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
 import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
@@ -156,8 +157,10 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 	 */
 	@SuppressWarnings("unchecked")
 	public void fillTemplate() {
-		GetEmailDataRequest request = new GetEmailDataRequest(notifier);
+		GetEmailDataRequest request = new GetEmailDataRequest();
+		request.setNotifier(notifier);
 		request.setTask(task);
+		request.setAttributes(ReferralUtil.getTemplateVariables(MapLayout.getInstance().getCurrentReferral()));
 		GwtCommand command = new GwtCommand(GetEmailDataRequest.COMMAND);
 		command.setCommandRequest(request);
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {

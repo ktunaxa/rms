@@ -51,9 +51,9 @@ public class TopBar extends HLayout {
 	/**
 	 * Menu item titles.
 	 */
-	private static final String REJECTED = "Rejected";
+	private static final String REJECTED = "Rejected, Level 0";
 	private static final String STARTED = "Started";
-	private static final String ENGAGEMENT_CHANGED = "Engagement changed";
+	private static final String CHANGE_INCOMPLETE = "Changed/incomplete";
 	private static final String FINISHED = "Finished";
 	private static final String LOGOUT = "Logout";
 	private static final String ADMIN = "Admin";
@@ -144,10 +144,10 @@ public class TopBar extends HLayout {
 		MenuItem editEmails = new MenuItem("Edit email template...");
 		Menu emailTemplates = new Menu();
 		emailTemplates.setItems(
-					new EmailItem(REJECTED),
-					new EmailItem(STARTED),
-					new EmailItem(ENGAGEMENT_CHANGED),
-					new EmailItem(FINISHED));
+					new EmailItem(REJECTED, KtunaxaConstant.Email.LEVEL_0),
+					new EmailItem(STARTED, KtunaxaConstant.Email.START),
+					new EmailItem(CHANGE_INCOMPLETE, KtunaxaConstant.Email.CHANGE),
+					new EmailItem(FINISHED, KtunaxaConstant.Email.RESULT));
 		editEmails.setSubmenu(emailTemplates);
 
 		MenuItem closeReferral = new MenuItem("Close current referral");
@@ -218,24 +218,12 @@ public class TopBar extends HLayout {
 	 */
 	private class EmailItem extends MenuItem {
 		
-		public EmailItem(final String title) {
+		public EmailItem(final String title, final String notifier) {
 			super(title);
 			
 			addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
 				
 				public void onClick(MenuItemClickEvent event) {
-					String notifier;
-					if (REJECTED.equals(title)) {
-						notifier = KtunaxaConstant.Email.LEVEL_0;
-					} else if (STARTED.equals(title)) {
-						notifier = KtunaxaConstant.Email.START;
-					} else if (ENGAGEMENT_CHANGED.equals(title)) {
-						notifier = KtunaxaConstant.Email.CHANGE;
-					} else if (FINISHED.equals(title)) {
-						notifier = KtunaxaConstant.Email.RESULT;
-					} else {
-						throw new IllegalArgumentException("Unknown template.");
-					}
 					emailWindow.setEmailTemplate(notifier);
 					emailWindow.show();
 				}
