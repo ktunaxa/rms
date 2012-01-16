@@ -9,7 +9,7 @@ import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
-import org.geomajas.configuration.AttributeInfo;
+import org.geomajas.configuration.AbstractReadOnlyAttributeInfo;
 import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultAttributeProvider;
@@ -38,7 +38,7 @@ public class CommentForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected FormItem createItem(AttributeInfo info) {
+	protected FormItem createItem(AbstractReadOnlyAttributeInfo info) {
 		FormItem item = super.createItem(info);
 		if (KtunaxaConstant.ATTRIBUTE_COMMENT_CONTENT.equals(info.getName())) {
 			content = item;
