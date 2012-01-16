@@ -10,6 +10,7 @@ import java.util.Date;
 
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -163,8 +164,9 @@ public class CommentBlock extends AbstractAttributeBlock {
 		editButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
 		editButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
 		editButton.setTooltip("Edit comment");
+		editButton.setDisabled(UserContext.getInstance().isGuest());
 		infoLayout.addMember(editButton);
-		
+
 		deleteButton = new IButton();
 		deleteButton.setIcon(WidgetLayout.iconRemove);
 		deleteButton.setIconWidth(LayoutConstant.ICON_BUTTON_SMALL_ICON_WIDTH);
@@ -173,6 +175,7 @@ public class CommentBlock extends AbstractAttributeBlock {
 		deleteButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
 		deleteButton.setTooltip("Delete comment");
 		deleteButton.setHoverWrap(false);
+		deleteButton.setDisabled(UserContext.getInstance().isGuest());
 		infoLayout.addMember(deleteButton);
 		addMember(infoLayout);
 

@@ -9,8 +9,8 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.geomajas.configuration.AbstractAttributeInfo;
 import org.geomajas.configuration.AssociationAttributeInfo;
-import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.util.AttributeUtil;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
@@ -56,7 +56,7 @@ public class CommentsForm implements FeatureForm<Canvas> {
 				KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY));
 		AttributeBlockList listView = new AttributeBlockList(sortAttributes);
 		listView.setDefaultCollapsed(true);
-		for (AttributeInfo info : referralLayer.getLayerInfo().getFeatureInfo().getAttributes()) {
+		for (AbstractAttributeInfo info : referralLayer.getLayerInfo().getFeatureInfo().getAttributes()) {
 			if (info.getName().equals(KtunaxaConstant.ATTRIBUTE_COMMENTS)) {
 				attributeInfo = ((AssociationAttributeInfo) info);
 				commentForm = new CommentForm(attributeInfo.getFeature(), referralLayer);

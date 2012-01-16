@@ -83,7 +83,7 @@ public class CommentPanel extends VLayout {
 	}
 
 	/**
-	 * callback to show the edited feature.
+	 * Callback to show the edited feature.
 	 * 
 	 * @author Jan De Moerloose
 	 */

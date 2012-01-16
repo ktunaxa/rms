@@ -143,4 +143,13 @@ public final class UserContext {
 		this.bpmRoles.clear();
 		this.bpmRoles.addAll(bpmRoles);
 	}
+
+	/**
+	 * Is the current user a guest? A guest user has no BPM roles.
+	 *
+	 * @return true when current user is a guest
+	 */
+	public boolean isGuest() {
+		return bpmRoles.isEmpty();
+	}
 }

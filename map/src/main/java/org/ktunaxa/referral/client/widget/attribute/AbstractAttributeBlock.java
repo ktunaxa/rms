@@ -26,8 +26,14 @@ public abstract class AbstractAttributeBlock extends VLayout {
 		this.value = value;
 	}
 
+	/**
+	 * Expand the attribute block, showing all information.
+	 */
 	protected abstract void expand();
 
+	/**
+	 * Collapse the attribute block, showing a summary.
+	 */
 	protected abstract void collapse();
 
 	protected abstract boolean valueEquals(AbstractAttributeBlock other);

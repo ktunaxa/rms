@@ -11,6 +11,7 @@ import com.google.gwt.user.client.Window;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.referral.client.CmisUtil;
+import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -183,6 +184,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		editButton.setWidth(LayoutConstant.ICON_BUTTON_SMALL_WIDTH);
 		editButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
 		editButton.setTooltip("Edit document");
+		editButton.setDisabled(UserContext.getInstance().isGuest());
 		infoLayout.addMember(editButton);
 
 		deleteButton = new IButton();
@@ -193,6 +195,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		deleteButton.setHeight(LayoutConstant.ICON_BUTTON_SMALL_HEIGHT);
 		deleteButton.setTooltip("Delete document");
 		deleteButton.setHoverWrap(false);
+		deleteButton.setDisabled(UserContext.getInstance().isGuest());
 		infoLayout.addMember(deleteButton);
 		addMember(infoLayout);
 
