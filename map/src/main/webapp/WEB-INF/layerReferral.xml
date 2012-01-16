@@ -71,11 +71,20 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
         <property name="attributes">
             <list>
+				<bean class="org.geomajas.configuration.SyntheticAttributeInfo">
+					<property name="label" value="Full ID"/>
+					<property name="name" value="fullId"/>
+					<property name="identifying" value="true"/>
+					<property name="attributeBuilder">
+						<bean class="org.ktunaxa.referral.server.FullIdAttributeBuilder" />
+					</property>
+					<property name="formInputType" value="STRING" />
+				</bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Primary Classification nr"/>
                     <property name="name" value="primaryClassificationNumber"/>
                     <property name="editable" value="false"/>
-                    <property name="identifying" value="true"/>
+                    <property name="identifying" value="false"/>
                     <property name="type" value="INTEGER"/>
 					<property name="validator">
 						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
@@ -93,11 +102,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 						</bean>
 					</property>
                 </bean>
-               <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+            	<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
                     <property name="label" value="Secondary Classification nr"/>
                     <property name="name" value="secondaryClassificationNumber"/>
                     <property name="editable" value="true"/>
-                    <property name="identifying" value="true"/>
+                    <property name="identifying" value="false"/>
                     <property name="type" value="INTEGER"/>
 					<property name="validator">
 						<bean class="org.geomajas.configuration.validation.ValidatorInfo">
@@ -119,7 +128,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                     <property name="label" value="Year"/>
                     <property name="name" value="calendarYear"/>
                     <property name="editable" value="true"/>
-                    <property name="identifying" value="true"/>
+                    <property name="identifying" value="false"/>
                     <property name="type" value="INTEGER"/>
                 </bean>
                 <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">

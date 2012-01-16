@@ -5,9 +5,9 @@
  */
 package org.ktunaxa.referral.client.referral;
 
+import org.geomajas.configuration.AbstractReadOnlyAttributeInfo;
 import org.geomajas.configuration.AssociationAttributeInfo;
 import org.geomajas.configuration.AssociationType;
-import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
 import org.ktunaxa.referral.client.security.UserContext;
@@ -34,6 +34,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 	private static final String REFERRAL_FORM_STYLE = "attributeForm";
 
 	private static final String[] SKIPPED_NAMES = new String[] {
+			KtunaxaConstant.ATTRIBUTE_FULL_ID,
 			KtunaxaConstant.ATTRIBUTE_PRIMARY,
 			KtunaxaConstant.ATTRIBUTE_SECONDARY,
 			KtunaxaConstant.ATTRIBUTE_NUMBER,
@@ -80,7 +81,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected FormItem createItem(AttributeInfo info) {
+	protected FormItem createItem(AbstractReadOnlyAttributeInfo info) {
 		FormItem formItem = super.createItem(info);
 		if (KtunaxaConstant.ATTRIBUTE_TARGET_REFERRAL.equals(info.getName())) {
 			SelectItem targetItem = (SelectItem) formItem;
@@ -103,7 +104,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected boolean isIncluded(AttributeInfo info) {
+	protected boolean isIncluded(AbstractReadOnlyAttributeInfo info) {
 		for (String name : SKIPPED_NAMES) {
 			if (info.getName().equals(name)) {
 				return false;

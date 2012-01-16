@@ -5,9 +5,9 @@
  */
 package org.ktunaxa.referral.client.referral;
 
+import org.geomajas.configuration.AbstractReadOnlyAttributeInfo;
 import org.geomajas.configuration.AssociationAttributeInfo;
 import org.geomajas.configuration.AssociationType;
-import org.geomajas.configuration.AttributeInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -45,7 +45,7 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected FormItem createItem(AttributeInfo info) {
+	protected FormItem createItem(AbstractReadOnlyAttributeInfo info) {
 		FormItem formItem = super.createItem(info);
 		if (KtunaxaConstant.ATTRIBUTE_NUMBER.equals(info.getName())) {
 			formItem.setVisible(false);
@@ -72,7 +72,7 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected boolean isIncluded(AttributeInfo info) {
+	protected boolean isIncluded(AbstractReadOnlyAttributeInfo info) {
 		for (String name : SKIPPED_NAMES) {
 			if (info.getName().equals(name)) {
 				return false;

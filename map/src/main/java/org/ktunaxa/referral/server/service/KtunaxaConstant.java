@@ -64,6 +64,7 @@ public interface KtunaxaConstant {
 	String LAYER_REFERRAL_ID = "clientLayerReferral";
 	String LAYER_REFERRAL_SERVER_ID = "layerReferral";
 
+	String ATTRIBUTE_FULL_ID = "fullId";
 	String ATTRIBUTE_PRIMARY = "primaryClassificationNumber";
 	String ATTRIBUTE_SECONDARY = "secondaryClassificationNumber";
 	String ATTRIBUTE_YEAR = "calendarYear";
