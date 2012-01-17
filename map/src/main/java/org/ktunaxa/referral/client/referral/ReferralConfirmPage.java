@@ -10,7 +10,8 @@ import com.smartgwt.client.util.SC;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.command.dto.PersistTransactionResponse;
-import org.geomajas.configuration.AttributeInfo;
+import org.geomajas.configuration.AbstractAttributeInfo;
+import org.geomajas.configuration.AbstractReadOnlyAttributeInfo;
 import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
@@ -33,6 +34,7 @@ import org.geomajas.widget.utility.gwt.client.wizard.WizardView;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Page to confirm creation of a new referral.
@@ -135,12 +137,33 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 
 	private String valueToString(Object value) {
 		if (null != value) {
-			if (value instanceof AssociationValue) {
+			if (value instanceof List) {
+				List list = (List) value;
+				if (1 == list.size()) {
+					// just one item, no brackets
+					return valueToString(list.get(0));
+				} else {
+					StringBuilder sb = new StringBuilder();
+					sb.append("[");
+					boolean started = false;
+					for (Object item : list) {
+						if (!started) {
+							sb.append(",");
+						}
+						sb.append(valueToString(item));
+						started = true;
+					}
+					sb.append("]");
+					return sb.toString();
+				}
+			} else if (value instanceof AssociationValue) {
 				AssociationValue asso = (AssociationValue) value;
 				// is there a better way ?
 				Collection<Attribute<?>> attributes = asso.getAllAttributes().values();
 				if (null != attributes && attributes.size() > 0) {
 					return valueToString(attributes.iterator().next().getValue());
+				} else {
+					return valueToString(asso.getId().getValue());
 				}
 			}
 			return value.toString();
@@ -162,12 +185,15 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 		summaryLayout.setMembers();
 		boolean even = true;
 		FeatureInfo featureInfo = getWizardData().getLayer().getLayerInfo().getFeatureInfo();
-		for (AttributeInfo info : featureInfo.getAttributes()) {
-			Object value = getWizardData().getFeature().getAttributeValue(info.getName());
-			SummaryLine line = new SummaryLine(info.getLabel(), valueToString(value));
-			line.setStyleName(even ? "summaryLine" : "summaryLineDark");
-			summaryLayout.addMember(line);
-			even = !even;
+		for (AbstractAttributeInfo info : featureInfo.getAttributes()) {
+			if (info instanceof AbstractReadOnlyAttributeInfo) {
+				Object value = getWizardData().getFeature().getAttributeValue(info.getName());
+				SummaryLine line = new SummaryLine(((AbstractReadOnlyAttributeInfo) info).getLabel(),
+						valueToString(value));
+				line.setStyleName(even ? "summaryLine" : "summaryLineDark");
+				summaryLayout.addMember(line);
+				even = !even;
+			}
 		}
 	}
 
