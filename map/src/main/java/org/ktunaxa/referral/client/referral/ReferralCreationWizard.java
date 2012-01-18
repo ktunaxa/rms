@@ -69,9 +69,15 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 					VectorLayer layer = data.getLayer();
 
 					Feature[] old;
-					if (null == data.getFeature().getId()) {
+					String id = data.getFeature().getId();
+					if (null == id) {
 						old = new Feature[0];
 					} else {
+						// get feature from feature store to make sure the documents are correct
+						Feature got = layer.getFeatureStore().getPartialFeature(id);
+						if (null != got) {
+							data.setFeature(got);
+						}
 						old = new Feature[] {data.getFeature()};
 					}
 
