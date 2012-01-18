@@ -215,7 +215,7 @@ public final class MapLayout extends VLayout {
 			Feature feature = new Feature(referral, referralLayer);
 			referralPanel.init(referralLayer, feature);
 			Geometry geometry = feature.getGeometry();
-			if (null != geometry) {
+			if (null != geometry && !geometry.isEmpty()) {
 				Bbox bounds = new Bbox(geometry.getBounds());
 				if (geometry instanceof MultiPoint || geometry instanceof Point) {
 					bounds = new Bbox(0, 0, 500, 500);
