@@ -181,14 +181,20 @@ public final class MapLayout extends VLayout {
 		return layerPanel;
 	}
 
-	public ReferralPanel getReferralPanel() {
-		return referralPanel;
-	}
-
+	/**
+	 * Get the current task.
+	 *
+	 * @return current task
+	 */
 	public TaskDto getCurrentTask() {
 		return currentTask;
 	}
 
+	/**
+	 * Get the current referral.
+	 *
+	 * @return current referral
+	 */
 	public org.geomajas.layer.feature.Feature getCurrentReferral() {
 		return currentReferral;
 	}
@@ -209,13 +215,15 @@ public final class MapLayout extends VLayout {
 			Feature feature = new Feature(referral, referralLayer);
 			referralPanel.init(referralLayer, feature);
 			Geometry geometry = feature.getGeometry();
-			Bbox bounds = new Bbox(geometry.getBounds());
-			if (geometry instanceof MultiPoint || geometry instanceof Point) {
-				bounds = new Bbox(0, 0, 500, 500);
-				bounds.setCenterPoint(geometry.getBounds().getCenterPoint());
+			if (null != geometry) {
+				Bbox bounds = new Bbox(geometry.getBounds());
+				if (geometry instanceof MultiPoint || geometry instanceof Point) {
+					bounds = new Bbox(0, 0, 500, 500);
+					bounds.setCenterPoint(geometry.getBounds().getCenterPoint());
+				}
+				// Now display feature on this page!
+				getMap().getMapModel().getMapView().applyBounds(bounds, MapView.ZoomOption.LEVEL_FIT);
 			}
-			// Now display feature on this page!
-			getMap().getMapModel().getMapView().applyBounds(bounds, MapView.ZoomOption.LEVEL_FIT);
 			// highlight the feature
 			SymbolInfo symbolInfo = null;
 			if (feature.getStyleId() != null) {
