@@ -12,7 +12,10 @@ import org.geomajas.layer.feature.Feature;
 import org.geomajas.layer.feature.SearchCriterion;
 
 import com.smartgwt.client.data.Record;
+import org.geomajas.layer.feature.attribute.AssociationAttribute;
+import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.DateAttribute;
+import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -219,7 +222,23 @@ public final class ReferralUtil {
 					DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
 					value = formatter.format(((DateAttribute) attribute).getValue());
 				} else {
-					if (null != attribute.getValue()) {
+					if (attribute instanceof AssociationAttribute) {
+						if (attribute instanceof ManyToOneAttribute) {
+							AssociationValue av = ((ManyToOneAttribute) attribute).getValue();
+							if (null != av) {
+								Object title = av.getAttributeValue("title");
+								if (null != title) {
+									value = title.toString();
+								} else {
+									value = av.getId().getValue().toString();
+								}
+							} else {
+								value = null;
+							}
+						} else {
+							value = null;
+						}
+					} else  if (null != attribute.getValue()) {
 						value = attribute.getValue().toString();
 					}
 				}
