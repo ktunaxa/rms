@@ -56,6 +56,7 @@ public class TopBar extends HLayout {
 	private static final String CHANGE_INCOMPLETE = "Changed/incomplete";
 	private static final String FINISHED = "Finished";
 	private static final String LOGOUT = "Logout";
+	private static final String ABOUT = "About";
 	private static final String ADMIN = "Admin";
 
 	private HTMLFlow leftLabel;
@@ -64,6 +65,7 @@ public class TopBar extends HLayout {
 	
 	private EditEmailWindow emailWindow = new EditEmailWindow();
 	private SystemReportWindow systemReportWindow = new SystemReportWindow();
+	private AboutWindow aboutWindow = new AboutWindow();
 	private ToolStripSeparator separator;
 	private ToolStripMenuButton menuButton;
 
@@ -118,7 +120,16 @@ public class TopBar extends HLayout {
 			}
 		});
 		headerBar.addMember(logoutButton);
-		headerBar.addSpacer(LayoutConstant.SPACER_SMALL);
+
+		headerBar.addSeparator();
+		ToolStripButton aboutButton = new ToolStripButton(ABOUT);
+		aboutButton.addClickHandler(new ClickHandler() {
+
+			public void onClick(ClickEvent clickEvent) {
+				aboutWindow.show();
+			}
+		});
+		headerBar.addMember(aboutButton);
 		addMember(headerBar);
 	}
 

@@ -131,7 +131,7 @@
 			<dependency>
 				<groupId>org.geomajas</groupId>
 				<artifactId>geomajas-backend</artifactId>
-				<version>1.10.0</version>
+				<version>${geomajas.backend.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -369,6 +369,7 @@
 	</pluginRepositories>
 
 	<properties>
+		<geomajas.backend.version>1.10.0</geomajas.backend.version>
 		<activiti.version>5.7</activiti.version>
 		<geotools.version>2.7.4-GBE-260</geotools.version>
 		<gwt.version>2.4.0</gwt.version>
