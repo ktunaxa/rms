@@ -1,5 +1,5 @@
 export BAKTS="`date +%Y%m%d-%H%M`"
-cp /var/lib/tomcat-6/webapps/map.war ./map.$BAKTS.bak.war
+cp /opt/tomcat-6/webapps/map.war ./map.$BAKTS.bak.war
 cd ~geosparc/ktunaxa
 svn update
 mvn -U -DskipTests -Dcheckstyle.skip clean install
