@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Ktunaxa Referral Management System.
+  ~
+  ~ Copyright (C) see version control system
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN'
+		'http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd'>
+<chapter id="chapter-introduction">
+  <title>Introduction</title>
+
+  <para>...</para>
+
+  <section>
+    <title>Setup</title>
+
+    <section>
+      <title>Database setup</title>
+
+      <para>The database setup requires you to have Postgresql 8.4 or higher
+      and PostGIS 1.5 or higher installed</para>
+
+      <para>Use the pgAdmin or command-line psql to create a user
+      <code>referral</code> and user group <code>referral_group</code> (and
+      user and group for alfresco):</para>
+
+      <programlisting>CREATE ROLE referral_group NOSUPERUSER INHERIT CREATEDB NOCREATEROLE;
+CREATE ROLE referral LOGIN UNENCRYPTED PASSWORD 'referral' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE;
+GRANT referral_group TO referral;
+
+CREATE ROLE alfresco_group NOSUPERUSER INHERIT CREATEDB NOCREATEROLE;
+CREATE ROLE alfresco LOGIN UNENCRYPTED PASSWORD 'alfresco' NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE;
+GRANT alfresco_group TO alfresco;</programlisting>
+
+      <para>From the mapping dashboard, use the following commands to setup
+      and initialise the database (you may need to uncomment the creation of
+      the Alfresco database):</para>
+
+      <programlisting>mvn -P db process-resources</programlisting>
+
+      <para>This will create a new database, initialise the schema and
+      pre-populate it. The alfresco and activiti schemata are created and
+      pre-populated by the web applications on startup.</para>
+
+      <para>For general database management, the PgAdmin application that
+      comes with the Postgresql installation provides the necessary
+      tools.</para>
+
+      <para>You can also update the database schema to update to the latest
+      version:</para>
+
+      <programlisting>mvn -Pupdatedb process-resources</programlisting>
+
+      <para>Note that Alfresco automatically creates the database
+      structure and provides default information in there (including
+      admin/admin login). You will probably want to create a new user for
+      integration with the map dashboard. To allow this user to be used
+      with CMIS, the user needs to be
+      added in the Alfresco administrator group.</para>
+    </section>
+
+    <section>
+      <title>Web application deployment (automated with maven)</title>
+
+      <para>A maven project has been created with different deployment
+      profiles for each server setup. Go to the maven project
+      <code>deploy</code> and use the following command to generate the 4 web
+      applications:</para>
+
+      <programlisting>mvn -P &lt;put the profile name here&gt; process-resources</programlisting>
+
+      <para>The the following profiles are defined:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><code>dev</code> : (development profile) this profile allows
+          to deploy the 4 web applications in the IDE (from the
+          <code>map</code> project)</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>The following properties have to be defined for each
+      profile:</para>
+
+      <table>
+        <title>Profile properties for deployment</title>
+
+        <tgroup cols="2">
+          <tbody>
+            <row>
+              <entry>ktunaxa.deploy.dir</entry>
+
+              <entry>deployment directory: the web apps are exploded in this
+              directory</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.explorer.context</entry>
+
+              <entry>web context name of activiti-explorer (= BPM or task
+              dashboard) application</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.probe.context</entry>
+
+              <entry>web context name of activiti-probe application</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.map.context</entry>
+
+              <entry>web context name of map dashboard application</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.alfresco.context</entry>
+
+              <entry>web context name of alfresco application</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.rest.context</entry>
+
+              <entry>web context name of activiti-rest service
+              application</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.map.url</entry>
+
+              <entry>absolute url of map dashboard application</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.bpm.url</entry>
+
+              <entry>absolute url of task/bpm dashboard application</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.cmis.username</entry>
+
+              <entry>Alfresco username</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.cmis.password</entry>
+
+              <entry>Alfresco password</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.cmis.url.server</entry>
+
+              <entry>Alfresco URL as used on the server side.</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.cmis.url.browse</entry>
+
+              <entry>Alfresco URL as used when passing URLs to the
+              browser.</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.cmis.repository</entry>
+
+              <entry>Alfresco repository name</entry>
+            </row>
+
+            <row>
+              <entry>ktunaxa.cmis.folder</entry>
+
+              <entry>Alfresco folder name</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <para>After execution, the generated web applications can be found in
+      the directory <code>${ktunaxa.deploy.dir}</code>.</para>
+    </section>
+
+    <section>
+      <title>Development setup (Eclipse)</title>
+
+      <para>Go to the maven <code>deploy</code> project and run the following
+      command:</para>
+
+      <programlisting>mvn -P dev process-resources</programlisting>
+
+      <para>This will copy the web applications to the path
+      <code>src/main/activiti</code> in the <code>map</code> project.</para>
+
+      <para>Import the map project in Eclipse and run the project as a normal
+      java application by using the class <code>tools.JettyAll</code> as main
+      class.</para>
+
+      <para>This will start a Jetty server with the 4 web applications.</para>
+
+      <para>Now run the project as a GWT application using the option
+      <code>Run as -&gt; Web application (running on external
+      server)</code></para>
+
+      <para>Open your browser at
+      <code>http://localhost:8888/map/index.html?gwt.codesvr=127.0.0.1:9997</code></para>
+    </section>
+
+    <section>
+      <title>Change reference or value layer zoom level data</title>
+
+      <para>The minimum and maximum zoom levels at which the base and value
+      layers can be displayed are configured in PostGIS using the scale_min
+      and scale_max fields in the reference_layer table. The
+      visible_by_default fields allows you to toggle whether the layer should
+      or should not be visible by default.</para>
+    </section>
+
+    <section>
+      <title>Changing the reports</title>
+
+      <para>You can use iReport (http://) to edit the reports. Just download
+      and install the application. The report files can be found in
+      ${source-root}/map/src/main/webapp/WEB-INF/reports. When reports or
+      images need to be added, you also need to update
+      ${source-root}/map/src/main/webapp/WEB-INF/webContext.xml.</para>
+    </section>
+
+    <section>
+      <title>Backups</title>
+
+      <para>To backup the application you should include the following;</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>war files for the Ktunaxa RMS and Alfresco.</para>
+        </listitem>
+
+        <listitem>
+          <para>database</para>
+        </listitem>
+
+        <listitem>
+          <para>alfresco data directory as configured in the deploy
+          script</para>
+        </listitem>
+
+        <listitem>
+          <para>deploy script (as contains customizations)</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+</chapter>
