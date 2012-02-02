@@ -128,12 +128,6 @@ GRANT alfresco_group TO alfresco;</programlisting>
             </row>
 
             <row>
-              <entry>ktunaxa.alfresco.context</entry>
-
-              <entry>web context name of alfresco application</entry>
-            </row>
-
-            <row>
               <entry>ktunaxa.rest.context</entry>
 
               <entry>web context name of activiti-rest service

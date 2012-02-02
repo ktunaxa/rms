@@ -1,0 +1,388 @@
+<!--
+  ~ This is part of the Ktunaxa referral system.
+  ~
+  ~ Copyright 2011 Ktunaxa Nation Council, http://www.ktunaxa.org/, Canada.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- Replace security context by our implementation. -->
+	<bean name="security.SecurityManager"
+		  class="org.ktunaxa.referral.server.security.AppSecurityManager" />
+	<bean name="security.SecurityContext" scope="thread"
+		  class="org.ktunaxa.referral.server.security.AppSecurityContext">
+		<aop:scoped-proxy/>
+  	</bean>
+
+	<bean name="security.securityInfo" class="org.geomajas.security.SecurityInfo">
+		<property name="loopAllServices" value="false"/>
+		<property name="securityServices">
+			<list>
+				<bean class="org.geomajas.plugin.staticsecurity.security.StaticSecurityService"/>
+				<bean class="org.geomajas.plugin.staticsecurity.security.LoginAllowedSecurityService"/>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- Define roles. -->
+
+	<bean name="roleAdmin" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="admin" value="true" />
+	</bean>
+	<bean name="roleAdminAll" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>referralManager</value>
+				<value>archaeologyEvaluator</value>
+				<value>culturalEvaluator</value>
+				<value>ecologyEvaluator</value> <!-- for backwards compatibility and old processes -->
+				<value>terrestrialEvaluator</value>
+				<value>treatyEvaluator</value>
+				<value>evaluateEvaluator</value>
+				<value>aquaticEvaluator</value>
+				<value>communityAManager</value>
+				<value>communityBManager</value>
+				<value>communityCManager</value>
+				<value>communityDManager</value>
+			</set>
+		</property>
+		<property name="admin" value="true" />
+	</bean>
+
+	<bean name="roleReferralManager" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>referralManager</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean name="roleTreatyEvaluator" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>treatyEvaluator</value>
+			</set>
+		</property>
+	</bean>
+	<bean name="roleCulturalEvaluator" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>culturalEvaluator</value>
+			</set>
+		</property>
+	</bean>
+	<bean name="roleTerrestrialEvaluator" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>ecologyEvaluator</value> <!-- for backwards compatibility and old processes -->
+				<value>terrestrialEvaluator</value>
+			</set>
+		</property>
+	</bean>
+	<bean name="roleAquaticEvaluator" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>aquaticEvaluator</value>
+			</set>
+		</property>
+	</bean>
+	<bean name="roleArchaeologyEvaluator" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>archaeologyEvaluator</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean name="roleCommunityAllLiaison" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>communityAManager</value>
+				<value>communityBManager</value>
+				<value>communityCManager</value>
+				<value>communityDManager</value>
+			</set>
+		</property>
+	</bean>
+	<bean name="roleCommunityALiaison" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>communityAManager</value>
+			</set>
+		</property>
+	</bean>
+	<bean name="roleCommunityBLiaison" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>communityBManager</value>
+			</set>
+		</property>
+	</bean>
+	<bean name="roleCommunityCLiaison" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>communityCManager</value>
+			</set>
+		</property>
+	</bean>
+	<bean name="roleCommunityDLiaison" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="bpmRoles">
+			<set>
+				<value>communityDManager</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean name="roleViewer" class="org.geomajas.plugin.staticsecurity.configuration.LayerAuthorizationInfo">
+		<property name="commandsInclude">
+			<list><value>.*</value></list>
+		</property>
+		<property name="toolsInclude">
+			<list><value>.*</value></list>
+		</property>
+		<property name="visibleLayersInclude">
+			<list><value>.*</value></list>
+		</property>
+	</bean>
+
+
+	<!-- Configuration of staticsecurity security service. -->
+
+	<bean class="org.geomajas.plugin.staticsecurity.configuration.SecurityServiceInfo">
+		<!-- LDAP authentication. -->
+		<property name="authenticationServices">
+			<list>
+				<bean class="org.geomajas.plugin.staticsecurity.security.StaticAuthenticationService" />
+				<bean class="org.geomajas.plugin.staticsecurity.ldap.LdapAuthenticationService">
+					<property name="serverHost" value="${rms.ldap.serverHost}"/>
+					<property name="serverPort" value="${rms.ldap.serverPort}" />
+					<property name="allowAllSocketFactory" value="true"/>
+					<property name="userDnTemplate" value="${rms.ldap.userDlTemplate}" />
+					<property name="givenNameAttribute" value="givenName" />
+					<property name="surNameAttribute" value="sn" />
+					<property name="localeAttribute" value="locale" />
+					<property name="organizationAttribute" value="o" />
+					<property name="divisionAttribute" value="ou" />
+					<property name="rolesAttribute" value="groupMembership" />
+					<property name="defaultRole">
+						<list>
+							<ref bean="roleViewer"/>
+						</list>
+					</property>
+					<property name="roles">
+						<map>
+							<entry key="cn=LandsAdmin,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleAdmin"/>
+								</list>
+							</entry>
+							<entry key="cn=referralManager,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleReferralManager"/>
+								</list>
+							</entry>
+							<entry key="cn=aquaticEvaluator,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleAquaticEvaluator"/>
+								</list>
+							</entry>
+							<entry key="cn=archaeologyEvaluator,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleArchaeologyEvaluator"/>
+								</list>
+							</entry>
+							<entry key="cn=culturalEvaluator,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleCulturalEvaluator"/>
+								</list>
+							</entry>
+							<entry key="cn=ecologyEvaluator,ou=Referral-Roles,ou=LND,o=KN">
+								<list> <!-- for backwards compatibility -->
+									<ref bean="roleTerrestrialEvaluator"/>
+								</list>
+							</entry>
+							<entry key="cn=terrestrialEvaluator,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleTerrestrialEvaluator"/>
+								</list>
+							</entry>
+							<entry key="cn=treatyEvaluator,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleTreatyEvaluator"/>
+								</list>
+							</entry>
+							<entry key="cn=AkisqnukCommunityManager,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleCommunityALiaison"/>
+								</list>
+							</entry>
+							<entry key="cn=LowerKootenayCommunityManager,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleCommunityBLiaison"/>
+								</list>
+							</entry>
+							<entry key="cn=StMarysCommunityManager,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleCommunityCLiaison"/>
+								</list>
+							</entry>
+							<entry key="cn=TobaccoPlainsCommunityManager,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleCommunityDLiaison"/>
+								</list>
+							</entry>
+						</map>
+					</property>
+				</bean>
+			</list>
+		</property>
+
+		<!-- Some statically configured users. -->
+		<property name="users">
+			<list>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="${rms.admin.user}"/>
+					<property name="password" value="${rms.admin.password}"/>
+					<property name="userName" value="Ktunaxa admin"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleAdminAll"/>
+						</list>
+					</property>
+				</bean>
+				<!--
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="refman"/>
+					<property name="password" value="b5DHqVxqrXNfI6kdoumdlA"/> <!++ "namfer" ++>
+					<property name="userName" value="Referral manager"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleReferralManager"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="treaty"/>
+					<property name="password" value="mhXNf9h4e7Vd9OPbsLRvxg"/> <!++ "ytaert" ++>
+					<property name="userName" value="Treaty evaluator"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleTreatyEvaluator"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="cultural"/>
+					<property name="password" value="BWFPa7ffuMNTrppXSGwmKQ"/> <!++ "larutluc" ++>
+					<property name="userName" value="Cultural evaluator"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleCulturalEvaluator"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="terrestrial"/>
+					<property name="password" value="98mg33HI2rHEFLUYI8e2Sg"/> <!++ "laitrserret" ++>
+					<property name="userName" value="Terrestrial evaluator"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleTerrestrialEvaluator"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="aquatic"/>
+					<property name="password" value="9aIjUpQ8ynO2qc0roh6COw"/> <!++ "citauqa" ++>
+					<property name="userName" value="Aquatic evaluator"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleAquaticEvaluator"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="arch"/>
+					<property name="password" value="KQFuwZnWeRSrY0wXOwgA3Q"/> <!++ "hcra" ++>
+					<property name="userName" value="Archaeology evaluator"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleArchaeologyEvaluator"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="comm"/>
+					<property name="password" value="lwEy/WONVF7soeK3mGsi8g"/> <!++ "mocc" ++>
+					<property name="userName" value="Community manager"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleCommunityAllLiaison"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="commA"/>
+					<property name="password" value="PrO0lBpLdd7eaHzAndExaA"/> <!++ "mmocA" ++>
+					<property name="userName" value="Akisqnuk manager"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleCommunityALiaison"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="commB"/>
+					<property name="password" value="qtl8J+xyxQc+UoMoSBkwhw"/> <!++ "mmocB" ++>
+					<property name="userName" value="Lower Kootenay manager"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleCommunityBLiaison"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="commC"/>
+					<property name="password" value="90x3Q9GfOsuJrGB/s3RMaQ"/> <!++ "mmocC" ++>
+					<property name="userName" value="St. Marys manager"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleCommunityCLiaison"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="commD"/>
+					<property name="password" value="foClozEH1lM/WEqt5UsKkQ"/> <!++ "mmocD" ++>
+					<property name="userName" value="Tobacco Plains manager"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleCommunityDLiaison"/>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
+					<property name="userId" value="viewer"/>
+					<property name="password" value="dQEqFF88z6o69Z3a/qZXzA"/> <!++ "reweiv" ++>
+					<property name="userName" value="Tobacco Plains manager"/>
+					<property name="authorizations">
+						<list>
+							<ref bean="roleViewer"/>
+						</list>
+					</property>
+				</bean>
+				-->
+			</list>
+		</property>
+	</bean>
+
+</beans>

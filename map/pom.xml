@@ -369,6 +369,25 @@
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+							<includes>
+								<include>WEB-INF/security.xml</include>
+								<include>WEB-INF/cmis.xml</include>
+								<include>WEB-INF/bpm.xml</include>
+								<include>WEB-INF/mail.xml</include>
+								<!-- include any other file types you want to filter -->
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -690,6 +709,25 @@
 		<dbHostPort>localhost:5432</dbHostPort>
 		<dbAdminUser>postgres</dbAdminUser>
 		<dbAdminPassword>postgres</dbAdminPassword>
+
+		<rms.admin.user>admin</rms.admin.user>
+		<rms.admin.password>An15ntAAWKOge7uSsdAhuA</rms.admin.password> <!-- admin -->
+		<rms.mail.host>localhost</rms.mail.host>
+		<rms.ldap.serverHost>localhost</rms.ldap.serverHost>
+		<rms.ldap.serverPort>636</rms.ldap.serverPort>
+		<rms.ldap.userDnTemplate>cn={},ou=LND,o=KN</rms.ldap.userDnTemplate>
+
+
+		<rms.cmis.username>ktunaxa</rms.cmis.username>
+		<rms.cmis.password>nasukin3</rms.cmis.password>
+		<rms.cmis.db.username>alfresco</rms.cmis.db.username>
+		<rms.cmis.db.password>alfresco</rms.cmis.db.password>
+		<!--  different port to run on tomcat, cannot run in same jetty -->
+		<rms.cmis.url.server>http://localhost:8080/alfresco/</rms.cmis.url.server>
+		<rms.cmis.url.browse>http://localhost:8080/alfresco/</rms.cmis.url.browse>
+		<rms.cmis.repository>Main Repository</rms.cmis.repository>
+		<rms.cmis.folder>ktunaxa</rms.cmis.folder>
+		<rms.cmis.data>${project.basedir}/var/data/alfresco</rms.cmis.data>
 
 		<gwt.compiler.skip>false</gwt.compiler.skip>
 	</properties>

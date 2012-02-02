@@ -27,7 +27,7 @@
            http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.ibbt.be"/>  <!-- smtp.ibbt.be or smtp.skynet.be -->
+		<property name="host" value="${rms.mail.host}"/>
 	</bean>
 
 </beans>
