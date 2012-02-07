@@ -30,13 +30,6 @@
 	<packaging>jar</packaging>
 	<name>Documentation</name>
 	<description>Documentation for Tkunaxa referral system</description>
-	<url>http://www.ktunaxa.org/</url>
-
-	<scm>
-		<connection>scm:svn:https://svn.geomajas.org/geosparc/projects/ktunaxa/documentation</connection>
-		<developerConnection>scm:svn:https://svn.geomajas.org/geosparc/projects/ktunaxa/documentation</developerConnection>
-		<url>https://svn.geomajas.org/geosparc/projects/ktunaxa/documentation</url>
-	</scm>
 
 	<build>
 		<resources>

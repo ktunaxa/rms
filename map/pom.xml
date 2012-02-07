@@ -29,13 +29,6 @@
 	<packaging>war</packaging>
 	<name>Mapping dashboard</name>
 	<description>Mapping dashboard for Ktunaxa referral system</description>
-	<url>http://www.ktunaxa.org/</url>
-
-	<scm>
-		<connection>scm:svn:https://svn.geomajas.org/geosparc/projects/ktunaxa/map</connection>
-		<developerConnection>scm:svn:https://svn.geomajas.org/geosparc/projects/ktunaxa/map</developerConnection>
-		<url>https://svn.geomajas.org/geosparc/projects/ktunaxa/map</url>
-	</scm>
 
 	<dependencies>
 		<!-- fix conflicts over xerces/xalan versions -->
@@ -678,32 +671,6 @@
 		</profile>
 	</profiles>
 
-	<repositories>
-
-		<repository>
-			<id>Geomajas</id>
-			<name>Geomajas repository</name>
-			<url>http://apps.geomajas.org/nexus/content/groups/released/</url>
-		</repository>
-
-		<!-- uncomment if you want to use Geomajas snapshots, comment for faster builds  -->
-		<repository>
-			<id>Geomajas snapshots</id>
-			<name>Geomajas snapshot repository</name>
-			<url>http://apps.geomajas.org/nexus/content/groups/latest/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>Geomajas</id>
-			<name>Geomajas repository</name>
-			<url>http://maven.geomajas.org/</url>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<dbHostPort>localhost:5432</dbHostPort>
@@ -716,7 +683,6 @@
 		<rms.ldap.serverHost>localhost</rms.ldap.serverHost>
 		<rms.ldap.serverPort>636</rms.ldap.serverPort>
 		<rms.ldap.userDnTemplate>cn={},ou=LND,o=KN</rms.ldap.userDnTemplate>
-
 
 		<rms.cmis.username>ktunaxa</rms.cmis.username>
 		<rms.cmis.password>nasukin3</rms.cmis.password>

@@ -65,10 +65,10 @@ done
 export JAVA_HOME
 
 # Directory where the Tomcat 6 binary distribution resides
-CATALINA_HOME=/var/lib/$NAME
+CATALINA_HOME=/opt/$NAME
 
 # Directory for per-instance configuration files and webapps
-CATALINA_BASE=/var/lib/$NAME
+CATALINA_BASE=/opt/$NAME
 
 # Use the Java security manager? (yes/no)
 TOMCAT6_SECURITY=no
