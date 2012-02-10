@@ -181,6 +181,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!--
 			<dependency>
 				<groupId>org.geomajas.plugin</groupId>
 				<artifactId>geomajas-plugin-hibernate-all</artifactId>
@@ -202,6 +203,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			-->
 			<dependency>
 				<groupId>org.geomajas.plugin</groupId>
 				<artifactId>geomajas-plugin-wms-all</artifactId>
@@ -209,6 +211,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!--
 			<dependency>
 				<groupId>org.geomajas.plugin</groupId>
 				<artifactId>geomajas-plugin-rasterizing-all</artifactId>
@@ -216,6 +219,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			-->
 			<dependency>
 				<groupId>org.geomajas.widget</groupId>
 				<artifactId>geomajas-widget-utility-all</artifactId>
@@ -223,6 +227,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!--
 			<dependency>
 				<groupId>org.geomajas.plugin</groupId>
 				<artifactId>geomajas-plugin-geocoder-all</artifactId>
@@ -230,6 +235,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			-->
 
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -249,6 +255,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!--
 			<dependency>
 				<groupId>org.geomajas.plugin</groupId>
 				<artifactId>geomajas-plugin-printing-all</artifactId>
@@ -256,6 +263,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			-->
 			<dependency>
 				<groupId>org.geomajas.plugin</groupId>
 				<artifactId>geomajas-plugin-reporting-all</artifactId>
@@ -267,7 +275,7 @@
 			<dependency>
 				<groupId>org.geomajas</groupId>
 				<artifactId>geomajas-dep</artifactId>
-				<version>1.11.36</version>
+				<version>1.12.4</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

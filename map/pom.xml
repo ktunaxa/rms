@@ -94,6 +94,11 @@
 
 		<!-- Geomajas dependencies -->
 		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-plugin-profiling</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.geomajas</groupId>
 			<artifactId>geomajas-gwt-client</artifactId>
 		</dependency>
@@ -684,8 +689,8 @@
 		<rms.ldap.serverPort>636</rms.ldap.serverPort>
 		<rms.ldap.userDnTemplate>cn={},ou=LND,o=KN</rms.ldap.userDnTemplate>
 
-		<rms.cmis.username>ktunaxa</rms.cmis.username>
-		<rms.cmis.password>nasukin3</rms.cmis.password>
+		<rms.cmis.username>admin</rms.cmis.username>
+		<rms.cmis.password>admin</rms.cmis.password>
 		<rms.cmis.db.username>alfresco</rms.cmis.db.username>
 		<rms.cmis.db.password>alfresco</rms.cmis.db.password>
 		<!--  different port to run on tomcat, cannot run in same jetty -->
