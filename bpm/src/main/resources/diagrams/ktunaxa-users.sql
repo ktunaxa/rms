@@ -7,7 +7,7 @@ insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'archaeologyEvaluato
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'communityManager', 1, 'communityManager', 'assignment');
 insert into ACT_ID_GROUP (ID_, REV_, NAME_, TYPE_) values ( 'referralManager', 1, 'referralManager', 'assignment');
 
-insert into ACT_ID_USER values ('KtBpmAdmin', 1, 'Ktunaxa', 'BPM Admin', 'admin@localhost', 'nasukin3', null);
+insert into ACT_ID_USER values ('KtBpmAdmin', 1, 'Ktunaxa', 'BPM Admin', 'admin@localhost', 'changeme', null);
 insert into ACT_ID_MEMBERSHIP values ('KtBpmAdmin', 'admin');
 insert into ACT_ID_MEMBERSHIP values ('KtBpmAdmin', 'manager');
 insert into ACT_ID_MEMBERSHIP (USER_ID_, GROUP_ID_) values ( 'KtBpmAdmin', 'treatyEvaluator' );

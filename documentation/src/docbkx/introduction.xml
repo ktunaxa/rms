@@ -17,9 +17,8 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
-<!DOCTYPE chapter PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN'
-		'http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd'>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <chapter id="chapter-introduction">
   <title>Introduction</title>
 
@@ -65,11 +64,10 @@ GRANT alfresco_group TO alfresco;</programlisting>
 
       <programlisting>mvn -Pupdatedb process-resources</programlisting>
 
-      <para>Note that Alfresco automatically creates the database
-      structure and provides default information in there (including
-      admin/admin login). You will probably want to create a new user for
-      integration with the map dashboard. To allow this user to be used
-      with CMIS, the user needs to be
+      <para>Note that Alfresco automatically creates the database structure
+      and provides default information in there (including admin/admin login).
+      You will probably want to create a new user for integration with the map
+      dashboard. To allow this user to be used with CMIS, the user needs to be
       added in the Alfresco administrator group.</para>
     </section>
 
@@ -259,5 +257,18 @@ GRANT alfresco_group TO alfresco;</programlisting>
         </listitem>
       </itemizedlist>
     </section>
+  </section>
+
+  <section>
+    <title>IDE support</title>
+
+    <para>The system uses properties and property expansion to manage the
+    local settings for testng and deployment. Unfortunately this is not
+    applied when starting the application from your IDE. For that case, the
+    spring property-placeholder support is used. This in turn gives a few
+    problems in combination with the included sources (for GWT) from some of
+    the Geomajas plug-ins which results in failed dependency check when the
+    application starts. To fix that, pass "-DskipPluginDependencyCheck=true"
+    when starting the application.</para>
   </section>
 </chapter>

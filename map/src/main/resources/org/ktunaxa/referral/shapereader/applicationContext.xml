@@ -46,6 +46,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<bean name="shapeReaderService"
 		class="org.ktunaxa.referral.shapereader.ShapeReaderServiceImpl">
 		<property name="basePath" value="shapes" />
+	</bean>
+
+	<bean name="layerPersistService"
+		class="org.ktunaxa.referral.shapereader.LayerPersistServiceImpl">
 		<property name="labelAttributeMap">
 			<map>
 				<entry key="LandscapeUnits" value="LU_NAME" />

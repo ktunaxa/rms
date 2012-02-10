@@ -1,3 +1,4 @@
+
 <!--
   ~ Ktunaxa Referral Management System.
   ~
@@ -57,33 +58,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 					<property name="userId" value="luc"/>
 					<property name="password" value="b7NMSP1pZN3Hi6nJGVe9JA"/> <!-- "luc" -->
 					<property name="userName" value="Luc Van Lierde"/>
-					<property name="authorizations">
-						<list>
-							<bean class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
-								<property name="bpmRoles">
-									<set>
-										<value>referralManager</value>
-										<value>archaeologyEvaluator</value>
-										<value>culturalEvaluator</value>
-										<value>ecologyEvaluator</value>
-										<value>terrestrialEvaluator</value>
-										<value>treatyEvaluator</value>
-										<value>evaluateEvaluator</value>
-										<value>aquaticEvaluator</value>
-										<value>communityAManager</value>
-										<value>communityBManager</value>
-										<value>communityCManager</value>
-										<value>communityDManager</value>
-									</set>
-								</property>
-							</bean>
-						</list>
-					</property>
-				</bean>
-				<bean class="org.geomajas.plugin.staticsecurity.configuration.UserInfo">
-					<property name="userId" value="KtBpmAdmin"/>
-					<property name="password" value="MV1K7aoB45cISwkF+QaMqw"/> <!-- "nasukin3" -->
-					<property name="userName" value="Ktunaxa admin"/>
 					<property name="authorizations">
 						<list>
 							<bean class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">

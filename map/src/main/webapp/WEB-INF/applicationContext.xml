@@ -34,6 +34,8 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 
 	<task:annotation-driven />
 
+	<context:property-placeholder location="classpath:defaults.properties"/>
+
 	<bean name="app" class="org.geomajas.configuration.client.ClientApplicationInfo">
 		<property name="maps">
 			<list>
