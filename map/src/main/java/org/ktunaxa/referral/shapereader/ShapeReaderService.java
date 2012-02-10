@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.geotools.data.DataStore;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
-import org.opengis.filter.expression.Expression;
 
 /**
  * <p>
@@ -99,21 +98,5 @@ public interface ShapeReaderService {
 	 *             the original state.
 	 */
 	void persist(ReferenceLayer layer, DataStore dataStore) throws IOException;
-	
-	/**
-	 * Returns the expression to evaluate to obtain the label attribute of a feature.
-	 *
-	 * @param typeName type name
-	 * @return the expression
-	 */
-	Expression getLabelAttributeExpression(String typeName);
-	
-	/**
-	 * Returns the expression to evaluate to obtain the style attribute of a feature.
-	 *
-	 * @param typeName type name
-	 * @return the expression
-	 */
-	Expression getStyleAttributeExpression(String typeName);
-	
+
 }

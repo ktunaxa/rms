@@ -21,8 +21,12 @@ package org.ktunaxa.referral.shapereader;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.geotools.filter.text.cql2.CQL;
+import org.geotools.filter.text.cql2.CQLException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.ktunaxa.referral.server.domain.ReferenceBase;
@@ -51,18 +55,23 @@ import com.vividsolutions.jts.operation.valid.TopologyValidationError;
  * 
  * @author Pieter De Graef
  */
-@Component
+@Component("layerPersistService")
 public class LayerPersistServiceImpl implements LayerPersistService {
 
 	private final Logger log = LoggerFactory.getLogger(LayerPersistServiceImpl.class);
 
+	private static final String STYLE_ATTRIBUTE = "RMS_STYLE";
+
+	private static final String LABEL_ATTRIBUTE = "RMS_LABEL";
+
 	private int srid = KtunaxaConstant.LAYER_SRID;
+
+	private Map<String, String> styleAttributeMap = new HashMap<String, String>();
+
+	private Map<String, String> labelAttributeMap = new HashMap<String, String>();
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
-	@Autowired
-	private ShapeReaderService shapeReaderService;
 
 	/**
 	 * Return the code for the SRID that all features/geometries should match.
@@ -153,8 +162,8 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 		base.setLayer(layer);
 		base.setGeometry((Geometry) feature.getDefaultGeometry());
 		SimpleFeatureType type = feature.getFeatureType();
-		Expression labelExpr = shapeReaderService.getLabelAttributeExpression(type.getTypeName());
-		Expression styleExpr = shapeReaderService.getStyleAttributeExpression(type.getTypeName());
+		Expression labelExpr = getLabelAttributeExpression(type.getTypeName());
+		Expression styleExpr = getStyleAttributeExpression(type.getTypeName());
 		Object temp = labelExpr.evaluate(feature);
 		if (temp != null) {
 			base.setLabel(temp.toString());
@@ -206,8 +215,8 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 		value.setLayer(layer);
 		value.setGeometry((Geometry) feature.getDefaultGeometry());
 		SimpleFeatureType type = feature.getFeatureType();
-		Expression labelExpr = shapeReaderService.getLabelAttributeExpression(type.getTypeName());
-		Expression styleExpr = shapeReaderService.getStyleAttributeExpression(type.getTypeName());
+		Expression labelExpr = getLabelAttributeExpression(type.getTypeName());
+		Expression styleExpr = getStyleAttributeExpression(type.getTypeName());
 		Object temp = labelExpr.evaluate(feature);
 		if (temp != null) {
 			value.setLabel(temp.toString());
@@ -275,4 +284,37 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 		sessionFactory.getCurrentSession().flush();
 		sessionFactory.getCurrentSession().clear();
 	}
+
+	public void setStyleAttributeMap(Map<String, String> styleAttributeMap) {
+		this.styleAttributeMap = styleAttributeMap;
+	}
+
+	public void setLabelAttributeMap(Map<String, String> labelAttributeMap) {
+		this.labelAttributeMap = labelAttributeMap;
+	}
+
+	public Expression getLabelAttributeExpression(String typeName) {
+		try {
+			if (labelAttributeMap.containsKey(typeName)) {
+				return CQL.toExpression(labelAttributeMap.get(typeName));
+			} else {
+				return CQL.toExpression(LABEL_ATTRIBUTE);
+			}
+		} catch (CQLException e) {
+			return Expression.NIL;
+		}
+	}
+
+	public Expression getStyleAttributeExpression(String typeName) {
+		try {
+			if (styleAttributeMap.containsKey(typeName)) {
+				return CQL.toExpression(styleAttributeMap.get(typeName));
+			} else {
+				return CQL.toExpression(STYLE_ATTRIBUTE);
+			}
+		} catch (CQLException e) {
+			return Expression.NIL;
+		}
+	}
+
 }

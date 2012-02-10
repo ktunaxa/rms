@@ -25,6 +25,7 @@ import org.ktunaxa.referral.server.domain.ReferenceBase;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceValue;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.filter.expression.Expression;
 
 /**
  * <p>
@@ -110,4 +111,21 @@ public interface LayerPersistService {
 	 * Flushes the in-memory session.
 	 */
 	void flushSession();
+
+	/**
+	 * Returns the expression to evaluate to obtain the label attribute of a feature.
+	 *
+	 * @param typeName type name
+	 * @return the expression
+	 */
+	Expression getLabelAttributeExpression(String typeName);
+
+	/**
+	 * Returns the expression to evaluate to obtain the style attribute of a feature.
+	 *
+	 * @param typeName type name
+	 * @return the expression
+	 */
+	Expression getStyleAttributeExpression(String typeName);
+
 }

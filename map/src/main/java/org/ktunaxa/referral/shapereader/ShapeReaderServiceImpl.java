@@ -23,16 +23,12 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStoreFactory;
 import org.geotools.feature.FeatureIterator;
-import org.geotools.filter.text.cql2.CQL;
-import org.geotools.filter.text.cql2.CQLException;
 import org.geotools.referencing.CRS;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -74,15 +70,6 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 
 	private String basePath;
 
-	private static final String STYLE_ATTRIBUTE = "RMS_STYLE";
-
-	private static final String LABEL_ATTRIBUTE = "RMS_LABEL";
-
-	private Map<String, String> styleAttributeMap = new HashMap<String, String>();
-
-	private Map<String, String> labelAttributeMap = new HashMap<String, String>();
-
-	
 	private final Logger log = LoggerFactory.getLogger(ShapeReaderServiceImpl.class);
 
 	// ------------------------------------------------------------------------
@@ -179,8 +166,8 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 		String[] typeNames = dataStore.getTypeNames();
 		for (String typeName : typeNames) {
 			SimpleFeatureType schema = dataStore.getSchema(typeName);
-			Expression style = getStyleAttributeExpression(typeName);
-			Expression label = getLabelAttributeExpression(typeName);
+			Expression style = persistService.getStyleAttributeExpression(typeName);
+			Expression label = persistService.getLabelAttributeExpression(typeName);
 			if (style == Expression.NIL) {
 				throw new IOException("Can't evaluate attribute expression");
 			}
@@ -293,38 +280,6 @@ public class ShapeReaderServiceImpl implements ShapeReaderService {
 		this.basePath = basePath;
 	}
 
-	public void setStyleAttributeMap(Map<String, String> styleAttributeMap) {
-		this.styleAttributeMap = styleAttributeMap;
-	}
-
-	public void setLabelAttributeMap(Map<String, String> labelAttributeMap) {
-		this.labelAttributeMap = labelAttributeMap;
-	}
-
-	public Expression getLabelAttributeExpression(String typeName) {
-		try {
-			if (labelAttributeMap.containsKey(typeName)) {
-				return CQL.toExpression(labelAttributeMap.get(typeName));
-			} else {
-				return CQL.toExpression(LABEL_ATTRIBUTE);
-			}
-		} catch (CQLException e) {
-			return Expression.NIL;
-		}
-	}
-
-	public Expression getStyleAttributeExpression(String typeName) {
-		try {
-			if (styleAttributeMap.containsKey(typeName)) {
-				return CQL.toExpression(styleAttributeMap.get(typeName));
-			} else {
-				return CQL.toExpression(STYLE_ATTRIBUTE);
-			}
-		} catch (CQLException e) {
-			return Expression.NIL;
-		}
-	}
-	
 	private boolean isValid(Expression expression, SimpleFeatureType schema) {
 		// can only validate if property
 		if (expression instanceof PropertyName) {
