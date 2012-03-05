@@ -138,7 +138,7 @@
 					</execution>
 					<execution>
 						<id>map-war</id>
-						<phase>process-resources</phase> 
+						<phase>process-resources</phase>
 						<goals>
 							<goal>single</goal>
 						</goals>
