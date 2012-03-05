@@ -126,44 +126,45 @@ public class DocumentItem extends CanvasItem {
 		uploadLayout.setMembersMargin(LayoutConstant.MARGIN_LARGE);
 		uploadLayout.setWidth("*");
 		uploadLayout.setHeight(16);
-		form = new FileUploadForm("Select a file", GWT.getModuleBaseURL() + KtunaxaConstant.URL_DOCUMENT_UPLOAD,
-				ReferralUtil.createId(MapLayout.getInstance().getCurrentReferral()));
+		// only show upload for the current referrel
+		if (MapLayout.getInstance().getCurrentReferral() != null) {
+			form = new FileUploadForm("Select a file", GWT.getModuleBaseURL() + KtunaxaConstant.URL_DOCUMENT_UPLOAD,
+					ReferralUtil.createId(MapLayout.getInstance().getCurrentReferral()));
+			HLayout messageLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
+			busyImg = new Img(LayoutConstant.LOADING_IMAGE,
+					LayoutConstant.LOADING_IMAGE_WIDTH, LayoutConstant.LOADING_IMAGE_HEIGHT);
+			busyImg.setVisible(false);
+			messageLayout.addMember(busyImg);
+			errorFlow.setHeight(16);
+			errorFlow.setWidth100();
+			errorFlow.setVisible(false);
+			messageLayout.addMember(errorFlow);
 
-		HLayout messageLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
-		busyImg = new Img(LayoutConstant.LOADING_IMAGE,
-				LayoutConstant.LOADING_IMAGE_WIDTH, LayoutConstant.LOADING_IMAGE_HEIGHT);
-		busyImg.setVisible(false);
-		messageLayout.addMember(busyImg);
-		errorFlow.setHeight(16);
-		errorFlow.setWidth100();
-		errorFlow.setVisible(false);
-		messageLayout.addMember(errorFlow);
+			form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
 
-		form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
+				public void onFileUploadComplete(FileUploadCompleteEvent event) {
+					documentId = event.getString(KtunaxaConstant.FORM_DOCUMENT_ID);
+					documentTitle = event.getString(KtunaxaConstant.FORM_DOCUMENT_TITLE);
+					documentDisplayUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL);
+					documentDownLoadUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DOWNLOAD_URL);
+					setValue(documentId);
+					busyImg.setVisible(false);
+					uploadSuccess = true;
+					fireEvent(new ChangedEvent(jsObj));
+				}
 
-			public void onFileUploadComplete(FileUploadCompleteEvent event) {
-				documentId = event.getString(KtunaxaConstant.FORM_DOCUMENT_ID);
-				documentTitle = event.getString(KtunaxaConstant.FORM_DOCUMENT_TITLE);
-				documentDisplayUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL);
-				documentDownLoadUrl = event.getString(KtunaxaConstant.FORM_DOCUMENT_DOWNLOAD_URL);
-				setValue(documentId);
-				busyImg.setVisible(false);
-				uploadSuccess = true;
-				fireEvent(new ChangedEvent(jsObj));
-			}
+				public void onFileUploadFailed(FileUploadFailedEvent event) {
+					busyImg.setVisible(false);
+					errorFlow.setContents("<div style='color: #AA0000'>" + event.getErrorMessage() + "</div>");
+					errorFlow.setVisible(true);
+					uploadSuccess = false;
+					fireEvent(new ChangedEvent(jsObj));
+				}
+			});
 
-			public void onFileUploadFailed(FileUploadFailedEvent event) {
-				busyImg.setVisible(false);
-				errorFlow.setContents("<div style='color: #AA0000'>" + event.getErrorMessage() + "</div>");
-				errorFlow.setVisible(true);
-				uploadSuccess = false;
-				fireEvent(new ChangedEvent(jsObj));
-			}
-		});
-
-		uploadLayout.addMember(form);
-		uploadLayout.addMember(messageLayout);
-
+			uploadLayout.addMember(form);
+			uploadLayout.addMember(messageLayout);
+		}
 		return uploadLayout;
 	}
 

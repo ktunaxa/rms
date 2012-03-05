@@ -21,18 +21,10 @@ package org.ktunaxa.referral.client.referral;
 
 import org.geomajas.gwt.client.action.toolbar.SelectionModalAction;
 import org.geomajas.gwt.client.map.MapModel;
-import org.geomajas.gwt.client.map.event.FeatureDeselectedEvent;
-import org.geomajas.gwt.client.map.event.FeatureSelectedEvent;
-import org.geomajas.gwt.client.map.event.FeatureSelectionHandler;
-import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
-import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
-import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.MapWidget;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.widgets.events.ClickEvent;
-import org.geomajas.layer.feature.Feature;
-import org.ktunaxa.referral.client.gui.MapLayout;
-import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
  * <p>
@@ -67,56 +59,15 @@ public class SelectReferralModalAction extends SelectionModalAction {
 	 */
 	public SelectReferralModalAction(MapWidget mapWidget) {
 		super(mapWidget);
-		mapModel = mapWidget.getMapModel();
-		if (mapModel.isInitialized()) {
-			VectorLayer layer = mapModel.getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
-			layer.addFeatureSelectionHandler(new ReferralSelectHandler());
-		}
-		mapModel.addMapModelChangedHandler(new RegisterSelectReferralHandler());
 		setTooltip("Select referral");
 		setIcon("[ISOMORPHIC]/images/selectReferral.png");
 	}
 
 	/** {@inheritDoc} */
 	public void onSelect(ClickEvent event) {
+		// activate layer
 		mapModel.selectLayer(mapModel.getLayer(KtunaxaConstant.LAYER_REFERRAL_ID));
 		super.onSelect(event);
-	}
-
-	/**
-	 * Handler to register the {@link ReferralSelectHandler}.
-	 *
-	 * @author Joachim Van der Auwera
-	 */
-	private static class RegisterSelectReferralHandler implements MapModelChangedHandler {
-		/** {@inheritDoc} */
-		public void onMapModelChanged(MapModelChangedEvent event) {
-			VectorLayer layer = event.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
-			layer.addFeatureSelectionHandler(new ReferralSelectHandler());
-		}
-	}
-
-	/**
-	 * Handler to make a referral current when selected.
-	 *
-	 * @author Joachim Van der Auwera
-	 */
-	private static class ReferralSelectHandler implements FeatureSelectionHandler {
-		/** {@inheritDoc} */
-		public void onFeatureSelected(FeatureSelectedEvent event) {
-			Feature referral = event.getFeature().toDto();
-			MapLayout mapLayout = MapLayout.getInstance();
-			Feature prev = mapLayout.getCurrentReferral();
-			// select referral only when different, prevent possible loops
-			if (null == prev || !referral.getId().equals(prev.getId())) {
-				mapLayout.setReferralAndTask(referral, null);
-			}
-		}
-
-		/** {@inheritDoc} */
-		public void onFeatureDeselected(FeatureDeselectedEvent event) {
-			// nothing to do
-		}
 	}
 
 }
