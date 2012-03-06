@@ -259,16 +259,4 @@ GRANT alfresco_group TO alfresco;</programlisting>
     </section>
   </section>
 
-  <section>
-    <title>IDE support</title>
-
-    <para>The system uses properties and property expansion to manage the
-    local settings for testng and deployment. Unfortunately this is not
-    applied when starting the application from your IDE. For that case, the
-    spring property-placeholder support is used. This in turn gives a few
-    problems in combination with the included sources (for GWT) from some of
-    the Geomajas plug-ins which results in failed dependency check when the
-    application starts. To fix that, pass "-DskipPluginDependencyCheck=true"
-    when starting the application.</para>
-  </section>
 </chapter>
