@@ -14,7 +14,7 @@ At the end of the process, a report with the evaluation result is produced and e
 
 During the evaluation, comments and documents can be added in the system. The documents are stored in a document management system. You can indicate which comments and which documents need to be included in the result e-mail.
 
-![screenshot](screenshot.png)
+![screenshot](https://github.com/ktunaxa/rms/raw/master/screenshot.png)
 
 The application is built in Java using the [Geomajas](http://geomajas.org) spatial application framework for displaying the map, using [Activiti](http://www.activit.org/) for the workflows, [Hibernate](http://hibernate.org/) [spatial](http://www.hibernatespatial.org/) for persistence, [FreeMarker](http://freemarker.sourceforge.net/) for template handling, [Alfresco](http://www.alfresco.com/) as document management system (accessed using CMIS), [GWT](http://code.google.com/webtoolkit/) for the UI, [Jasperreports](http://jasperforge.org/projects/jasperreports) for the reporting.
 
