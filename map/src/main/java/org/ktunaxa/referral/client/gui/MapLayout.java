@@ -166,7 +166,7 @@ public final class MapLayout extends VLayout {
 		addMember(topBar);
 		addMember(menuBar);
 		VLayout subHeader = new VLayout();
-		subHeader.setSize("100%", "15px");
+		subHeader.setSize("100%", "8px");
 		subHeader.setStyleName("subHeader");
 		addMember(subHeader);
 
