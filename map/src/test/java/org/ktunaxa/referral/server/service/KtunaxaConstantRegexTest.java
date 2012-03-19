@@ -83,7 +83,7 @@ public class KtunaxaConstantRegexTest {
 	public void testOneMailRegexFail2() {
         Pattern p = Pattern.compile(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
         Matcher m = p.matcher("bla@ktunaxa.canada.org");
-        Assert.assertFalse(m.matches());
+        Assert.assertTrue(m.matches());
 	}
 	
 	@Test
