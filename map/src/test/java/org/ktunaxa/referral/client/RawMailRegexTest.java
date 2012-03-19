@@ -33,13 +33,19 @@ import java.util.regex.Pattern;
 public class RawMailRegexTest {
 
 	@Test
-	public void testRawMailRegex() throws Exception {
-		Pattern pattern = Pattern.compile(KtunaxaConstant.RAW_MAIL_REGEX);
+	public void testMailValidatorRegex() throws Exception {
+		Pattern pattern = Pattern.compile(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
 		Assert.assertTrue(pattern.matcher("joachim@geosparc.com").matches());
 		Assert.assertTrue(pattern.matcher("j.v.d.a@geosparc.com").matches());
 		Assert.assertTrue(pattern.matcher("joachim@geo.sparc.com").matches());
 		Assert.assertTrue(pattern.matcher("joa-chim@geo.sparc.com").matches());
 		Assert.assertTrue(pattern.matcher("joa-chim@geo-sparc.com").matches());
+		Assert.assertTrue(pattern.matcher("joa%chim@geo-sparc.com").matches());
+		Assert.assertTrue(pattern.matcher("joa_chim@geo-sparc.com").matches());
+		Assert.assertTrue(pattern.matcher("joa+chim@geo-sparc.com").matches());
+		Assert.assertFalse(pattern.matcher("joachim@geo%sparc.com").matches());
+		Assert.assertFalse(pattern.matcher("joachim@geo_sparc.com").matches());
+		Assert.assertFalse(pattern.matcher("joa@chim@geo-sparc.com").matches());
 		Assert.assertFalse(pattern.matcher("@geosparc.c").matches());
 		Assert.assertFalse(pattern.matcher("joachim@").matches());
 		Assert.assertFalse(pattern.matcher("joachim.geosparc.c").matches());
@@ -47,7 +53,7 @@ public class RawMailRegexTest {
 		Assert.assertFalse(pattern.matcher("joachim@geosparc.c-m").matches());
 		Assert.assertFalse(pattern.matcher("joachim@geosparc.c").matches());
 		Assert.assertFalse(pattern.matcher("joachim@geo.sparc").matches());
-		Assert.assertFalse(pattern.matcher("jöachím@geo.sparc").matches());
+		Assert.assertFalse(pattern.matcher("jöachím@geosparc.com").matches());
 		Assert.assertFalse(pattern.matcher("joachim@géosparc").matches());
 	}
 }

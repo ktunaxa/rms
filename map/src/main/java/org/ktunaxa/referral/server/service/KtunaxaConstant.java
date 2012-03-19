@@ -147,7 +147,7 @@ public interface KtunaxaConstant {
 	String DECISION_APPROVED = "Approved";
 	String DECISION_DENIED = "Denied";
 
-	String RAW_MAIL_REGEX = "([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z]{2,4}";
+	String RAW_MAIL_REGEX = "[a-zA-Z0-9_.+%-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,4}";
 	String MAIL_VALIDATOR_REGEX = "^" + RAW_MAIL_REGEX + "$";
 	String MULTIPLE_MAIL_VALIDATOR_REGEX = "(" + RAW_MAIL_REGEX + "(,|;)\\s)*" + RAW_MAIL_REGEX + "$";
 
