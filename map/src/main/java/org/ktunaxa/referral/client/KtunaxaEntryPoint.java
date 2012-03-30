@@ -19,8 +19,8 @@
 
 package org.ktunaxa.referral.client;
 
-import com.smartgwt.client.data.fields.DataSourceIntegerField;
-import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
+import java.util.LinkedHashMap;
+
 import org.geomajas.gwt.client.action.ToolCreator;
 import org.geomajas.gwt.client.action.ToolbarBaseAction;
 import org.geomajas.gwt.client.action.toolbar.ToolbarRegistry;
@@ -49,7 +49,7 @@ import org.ktunaxa.referral.client.action.ZoomKtunaxaTerritoryModalAction;
 import org.ktunaxa.referral.client.gui.DocumentItem;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
-import org.ktunaxa.referral.client.referral.SelectReferralModalAction;
+import org.ktunaxa.referral.client.referral.MakeReferralCurrentModalAction;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
@@ -58,11 +58,11 @@ import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Window;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.fields.DataSourceIntegerField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
+import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
-
-import java.util.LinkedHashMap;
 
 /**
  * Entry point and main class for GWT application. This class defines the layout and functionality of this application.
@@ -103,7 +103,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		});
 		ToolbarRegistry.put(TOOL_SELECT_REFERRAL, new ToolCreator() {
 			public ToolbarBaseAction createTool(MapWidget mapWidget) {
-				return new SelectReferralModalAction(mapWidget);
+				return new MakeReferralCurrentModalAction(mapWidget);
 			}
 		});
 		AttributeFormFieldRegistry.registerCustomFormItem("topMiddleBottom", new DataSourceFieldFactory() {
