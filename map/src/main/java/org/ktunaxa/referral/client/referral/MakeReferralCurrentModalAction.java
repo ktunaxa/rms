@@ -33,21 +33,20 @@ import com.smartgwt.client.widgets.events.ClickEvent;
  */
 public class MakeReferralCurrentModalAction extends ToolbarModalAction {
 
+	/** Number of pixels that describes the tolerance allowed when trying to select features. */
+	private static final int PIXEL_TOLERANCE = 5;
+
 	private MapWidget mapWidget;
 
 	private MakeReferralCurrentController controller;
 
-	/** Number of pixels that describes the tolerance allowed when trying to select features. */
-	private int pixelTolerance = 5;
-
 	// Constructor:
 
 	public MakeReferralCurrentModalAction(MapWidget mapWidget) {
-		super("Select referral and make current", "[ISOMORPHIC]/images/selectReferral.png");
-		controller = new MakeReferralCurrentController(mapWidget, pixelTolerance);
+		super("[ISOMORPHIC]/images/selectReferral.png", "Select referral and make current");
+		this.mapWidget = mapWidget;
+		controller = new MakeReferralCurrentController(mapWidget, PIXEL_TOLERANCE);
 	}
-
-	// ToolbarModalAction implementation:
 
 	@Override
 	public void onSelect(ClickEvent event) {
@@ -57,15 +56,5 @@ public class MakeReferralCurrentModalAction extends ToolbarModalAction {
 	@Override
 	public void onDeselect(ClickEvent event) {
 		mapWidget.setController(null);
-	}
-
-	// Getters and setters:
-
-	public int getPixelTolerance() {
-		return pixelTolerance;
-	}
-
-	public void setPixelTolerance(int pixelTolerance) {
-		this.pixelTolerance = pixelTolerance;
 	}
 }

@@ -27,7 +27,7 @@ import org.geomajas.command.dto.SearchByLocationResponse;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.geometry.service.GeometryService;
 import org.geomajas.global.GeomajasConstant;
-import org.geomajas.gwt.client.command.CommandCallback;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.controller.AbstractGraphicsController;
@@ -46,7 +46,6 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
  * Makes a referral current by clicking on it.
  * 
  * @author Jan De Moerloose
- * 
  */
 public class MakeReferralCurrentController extends AbstractGraphicsController {
 
@@ -76,10 +75,10 @@ public class MakeReferralCurrentController extends AbstractGraphicsController {
 
 		GwtCommand commandRequest = new GwtCommand(SearchByLocationRequest.COMMAND);
 		commandRequest.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(commandRequest, new CommandCallback<SearchByLocationResponse>() {
+		GwtCommandDispatcher.getInstance().execute(commandRequest,
+				new AbstractCommandCallback<SearchByLocationResponse>() {
 
-			public void execute(SearchByLocationResponse commandResponse) {
-				SearchByLocationResponse response = (SearchByLocationResponse) commandResponse;
+			public void execute(SearchByLocationResponse response) {
 				Map<String, List<org.geomajas.layer.feature.Feature>> featureMap = response.getFeatureMap();
 				List<org.geomajas.layer.feature.Feature> orgFeatures = featureMap
 						.get(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID);
