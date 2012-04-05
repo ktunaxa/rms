@@ -119,7 +119,7 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 		form.setDataSource(dataSource);
 		form.setFields(xItem, yItem);
 
-		busyImg = new Img("[ISOMORPHIC]/images/loading.gif", 16, 16);
+		busyImg = new Img(LayoutConstant.LOADING_IMAGE, 16, 16);
 		busyImg.setVisible(false);
 
 		IButton applyButton = new IButton("Apply");
