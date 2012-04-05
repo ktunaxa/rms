@@ -31,6 +31,7 @@ public class GetEmailDataRequest extends AbstractTaskAttributesRequest {
 	public static final String COMMAND = "command.email.GetEmailData";
 
 	private String notifier;
+	private boolean raw;
 
 	/** No-arguments constructor. */
 	public GetEmailDataRequest() {
@@ -53,5 +54,23 @@ public class GetEmailDataRequest extends AbstractTaskAttributesRequest {
 	 */
 	public String getNotifier() {
 		return notifier;
+	}
+
+	/**
+	 * Should the template be returned in raw form, or after processing?
+	 *
+	 * @return true when template is returned unprocessed
+	 */
+	public boolean isRaw() {
+		return raw;
+	}
+
+	/**
+	 * Should the template be returned in raw form, or after processing?
+	 *
+	 * @param raw true when template should be returned unprocessed
+	 */
+	public void setRaw(boolean raw) {
+		this.raw = raw;
 	}
 }

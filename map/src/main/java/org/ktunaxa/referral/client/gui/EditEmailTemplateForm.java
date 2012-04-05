@@ -175,6 +175,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		request.setNotifier(templateTitle);
 		request.setTask(task);
 		request.setAttributes(ReferralUtil.getTemplateVariables(MapLayout.getInstance().getCurrentReferral()));
+		request.setRaw(true);
 		GwtCommand command = new GwtCommand(GetEmailDataRequest.COMMAND);
 		command.setCommandRequest(request);
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {
@@ -293,7 +294,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<UpdateEmailDataResponse>() {
 			public void execute(UpdateEmailDataResponse response) {
 				if (response.isUpdated()) {
-					SC.say("Template has been successfully edited.");
+					SC.say("Template has been successfully updated.");
 				}
 			}
 		});
