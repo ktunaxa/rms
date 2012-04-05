@@ -30,7 +30,7 @@ import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
-import org.geomajas.gwt.client.command.CommandCallback;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
@@ -186,7 +186,7 @@ public class ReviewReferralForm extends AbstractTaskForm {
 		request.setCrs(layer.getMapModel().getCrs());
 		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new CommandCallback<CommandResponse>() {
+		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<CommandResponse>() {
 			public void execute(CommandResponse response) {
 				// all fine
 			}

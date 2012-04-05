@@ -22,12 +22,11 @@ package org.ktunaxa.referral.client.gui;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.geomajas.command.CommandResponse;
 import org.geomajas.command.EmptyCommandRequest;
 import org.geomajas.command.dto.CopyrightRequest;
 import org.geomajas.command.dto.CopyrightResponse;
 import org.geomajas.global.CopyrightInfo;
-import org.geomajas.gwt.client.command.CommandCallback;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.WidgetLayout;
@@ -71,41 +70,39 @@ public class AboutWindow extends KeepInScreenWindow {
 		layout.addMember(copyrightWidget);
 		GwtCommand commandRequest = new GwtCommand(CopyrightRequest.COMMAND);
 		commandRequest.setCommandRequest(new EmptyCommandRequest());
-		GwtCommandDispatcher.getInstance().execute(commandRequest, new CommandCallback() {
+		GwtCommandDispatcher.getInstance().execute(commandRequest, new AbstractCommandCallback<CopyrightResponse>() {
 
-			public void execute(CommandResponse response) {
-				if (response instanceof CopyrightResponse) {
-					Collection<CopyrightInfo> copyrights = ((CopyrightResponse) response).getCopyrights();
-					StringBuilder sb = new StringBuilder("<h2>");
-					sb.append("Copyright info:");
-					sb.append("</h2><ul>");
-					for (CopyrightInfo copyright : copyrights) {
-						sb.append("<li>");
-						sb.append(copyright.getKey());
-						sb.append(" : ");
-						sb.append("Licensed as:");
+			public void execute(CopyrightResponse response) {
+				Collection<CopyrightInfo> copyrights = response.getCopyrights();
+				StringBuilder sb = new StringBuilder("<h2>");
+				sb.append("Copyright info:");
+				sb.append("</h2><ul>");
+				for (CopyrightInfo copyright : copyrights) {
+					sb.append("<li>");
+					sb.append(copyright.getKey());
+					sb.append(" : ");
+					sb.append("Licensed as:");
+					sb.append(" ");
+					sb.append(copyright.getCopyright());
+					sb.append(" : <a target=\"_blank\" href=\"");
+					sb.append(copyright.getLicenseUrl());
+					sb.append("\">");
+					sb.append(copyright.getLicenseName());
+					sb.append("</a>");
+					if (null != copyright.getSourceUrl()) {
 						sb.append(" ");
-						sb.append(copyright.getCopyright());
-						sb.append(" : <a target=\"_blank\" href=\"");
-						sb.append(copyright.getLicenseUrl());
+						sb.append("Source URL");
+						sb.append(" : ");
+						sb.append(" <a target=\"_blank\" href=\"");
+						sb.append(copyright.getSourceUrl());
 						sb.append("\">");
-						sb.append(copyright.getLicenseName());
+						sb.append(copyright.getSourceUrl());
 						sb.append("</a>");
-						if (null != copyright.getSourceUrl()) {
-							sb.append(" ");
-							sb.append("Source URL");
-							sb.append(" : ");
-							sb.append(" <a target=\"_blank\" href=\"");
-							sb.append(copyright.getSourceUrl());
-							sb.append("\">");
-							sb.append(copyright.getSourceUrl());
-							sb.append("</a>");
-						}
-						sb.append("</li>");
 					}
-					sb.append("</ul>");
-					copyrightWidget.setContents(sb.toString());
+					sb.append("</li>");
 				}
+				sb.append("</ul>");
+				copyrightWidget.setContents(sb.toString());
 			}
 		});
 
