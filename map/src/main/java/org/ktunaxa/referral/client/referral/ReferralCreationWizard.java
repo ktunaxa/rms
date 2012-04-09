@@ -109,7 +109,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 					command.setCommandRequest(request);
 
 					GwtCommandDispatcher.getInstance().execute(command,
-							new AbstractCommandCallback<CommandResponse> () {
+							new AbstractCommandCallback<CommandResponse>() {
 
 						public void execute(CommandResponse response) {
 							if (response instanceof PersistTransactionResponse) {
