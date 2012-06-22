@@ -34,7 +34,10 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
 
 	<task:annotation-driven />
 
-	<context:property-placeholder location="classpath:defaults.properties"/>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath:defaults.properties"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
 
 	<bean name="app" class="org.geomajas.configuration.client.ClientApplicationInfo">
 		<property name="maps">
