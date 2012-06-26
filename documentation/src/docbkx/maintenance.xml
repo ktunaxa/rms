@@ -47,15 +47,15 @@
     <para>The <code>spring-hibernate.xml</code> configuration file contains
     the database connection parameters:</para>
 
-    <para><programlisting>&lt;bean id="postgisDataSource" class="org.apache.commons.dbcp.BasicDataSource"&gt;
-  &lt;property name="driverClassName" value="org.postgresql.Driver" /&gt;
-  &lt;property name="url" value="jdbc:postgresql://localhost:5432/referral" /&gt;
+    <para><programlisting>&lt;bean id="postgisDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close"&gt;
+  &lt;property name="driverClass" value="org.postgresql.Driver" /&gt;
+  &lt;property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/referral" /&gt;
   &lt;property name="username" value="referral" /&gt;
   &lt;property name="password" value="referral" /&gt;
-  &lt;property name="maxWait" value="250" /&gt;
+  ...
 &lt;/bean&gt;
 </programlisting>Change the username and password to the production values and
-    modify the url if necessary.</para>
+    modify the jdbcUrl if necessary.</para>
 
     <para>The applicationContext.xml file contains the location of the
     shapefile directory:</para>
