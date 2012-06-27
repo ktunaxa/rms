@@ -409,10 +409,10 @@
 	</pluginRepositories>
 
 	<properties>
-		<geomajas.backend.version>1.11.0-SNAPSHOT</geomajas.backend.version>
-		<geomajas.face.gwt.version>1.11.0-SNAPSHOT</geomajas.face.gwt.version>
+		<geomajas.backend.version>1.11.0</geomajas.backend.version>
+		<geomajas.face.gwt.version>1.11.0</geomajas.face.gwt.version>
 		<activiti.version>5.7</activiti.version>
-		<geotools.version>2.7.4-GBE-260</geotools.version>
+		<geotools.version>2.7.5</geotools.version>
 		<gwt.version>2.4.0</gwt.version>
 		<alfresco.version>3.4.a</alfresco.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
