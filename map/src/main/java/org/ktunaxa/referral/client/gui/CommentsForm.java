@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.geomajas.configuration.AbstractAttributeInfo;
 import org.geomajas.configuration.AssociationAttributeInfo;
+import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.util.AttributeUtil;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
@@ -79,22 +80,27 @@ public class CommentsForm implements FeatureForm<Canvas> {
 		commentsLayout.setWidth100();
 	}
 
+	@Override
 	public Canvas getWidget() {
 		return commentsLayout;
 	}
 
+	@Override
 	public void setDisabled(boolean disabled) {
 
 	}
 
+	@Override
 	public boolean isDisabled() {
 		return false;
 	}
 
+	@Override
 	public boolean validate() {
 		return true;
 	}
 
+	@Override
 	public HandlerRegistration addItemChangedHandler(ItemChangedHandler handler) {
 		final ItemChangedHandler h = handler;
 		return commentsLayout.addChangedHandler(new ChangedHandler() {
@@ -105,35 +111,48 @@ public class CommentsForm implements FeatureForm<Canvas> {
 		});
 	}
 
+	@Override
 	public void fireEvent(GwtEvent<?> event) {
 		commentsLayout.fireEvent(event);
 	}
 
+	@Override
 	public void toForm(String name, Attribute<?> attribute) {
 		if (name.equals(KtunaxaConstant.ATTRIBUTE_COMMENTS) && attribute instanceof OneToManyAttribute) {
 			commentsLayout.toLayout((OneToManyAttribute) attribute);
 		}
 	}
 
+	@Override
 	public void fromForm(String name, Attribute<?> attribute) {
 		if (name.equals(KtunaxaConstant.ATTRIBUTE_COMMENTS) && attribute instanceof OneToManyAttribute) {
 			commentsLayout.fromLayout((OneToManyAttribute) attribute);
 		}
 	}
 
+	@Override
 	public void clear() {
 
 	}
 
+	@Override
 	public void toForm(AssociationValue value) {
 		toForm(KtunaxaConstant.ATTRIBUTE_COMMENTS,
 				value.getAllAttributes().get(KtunaxaConstant.ATTRIBUTE_COMMENTS));
 	}
 
+	@Override
 	public void fromForm(AssociationValue value) {
 		fromForm(KtunaxaConstant.ATTRIBUTE_COMMENTS,
 				value.getAllAttributes().get(KtunaxaConstant.ATTRIBUTE_COMMENTS));
 	}
+
+	@Override
+	public void toForm(Feature feature) {
+		toForm(KtunaxaConstant.ATTRIBUTE_COMMENTS,
+				feature.getAttributes().get(KtunaxaConstant.ATTRIBUTE_COMMENTS));
+	}
+
 
 	/**
 	 * Block layout for comments.
@@ -159,6 +178,7 @@ public class CommentsForm implements FeatureForm<Canvas> {
 		}
 	}
 
+	@Override
 	public boolean silentValidate() {
 		return true;
 	}

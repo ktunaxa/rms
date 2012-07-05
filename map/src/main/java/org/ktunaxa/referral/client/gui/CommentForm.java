@@ -27,6 +27,7 @@ import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultAttributeProvider;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
+import org.geomajas.gwt.client.widget.attribute.FormItemList;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.IntegerAttribute;
@@ -53,7 +54,7 @@ public class CommentForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected FormItem createItem(AbstractReadOnlyAttributeInfo info) {
+	public FormItem createItem(AbstractReadOnlyAttributeInfo info) {
 		FormItem item = super.createItem(info);
 		if (KtunaxaConstant.ATTRIBUTE_COMMENT_CONTENT.equals(info.getName())) {
 			content = item;
@@ -74,7 +75,7 @@ public class CommentForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected void prepareForm(FormItemList formItems, DataSource source) {
+	public void prepareForm(FormItemList formItems, DataSource source) {
 		super.prepareForm(formItems, source);
 		includeInReport.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {

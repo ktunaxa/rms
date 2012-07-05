@@ -27,6 +27,7 @@ import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultAttributeProvider;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
+import org.geomajas.gwt.client.widget.attribute.FormItemList;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.StringAttribute;
@@ -59,7 +60,7 @@ public class DocumentForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected FormItem createItem(AbstractReadOnlyAttributeInfo info) {
+	public FormItem createItem(AbstractReadOnlyAttributeInfo info) {
 		FormItem item = super.createItem(info);
 		// intercept the document item
 		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID.equals(info.getName())) {
@@ -118,7 +119,7 @@ public class DocumentForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected boolean isIncluded(AbstractReadOnlyAttributeInfo info) {
+	public boolean isIncluded(AbstractReadOnlyAttributeInfo info) {
 		return !(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE.equals(info.getName()) ||
 				KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL.equals(info.getName()) ||
 				KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL.equals(info.getName())) && super.isIncluded(info);
@@ -133,7 +134,7 @@ public class DocumentForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected void prepareForm(FormItemList formItems, DataSource source) {
+	public void prepareForm(FormItemList formItems, DataSource source) {
 		super.prepareForm(formItems, source);
 		confidential.addChangedHandler(new ChangedHandler() {
 			public void onChanged(ChangedEvent event) {

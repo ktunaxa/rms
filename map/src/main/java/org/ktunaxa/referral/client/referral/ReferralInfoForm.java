@@ -23,6 +23,7 @@ import org.geomajas.configuration.AssociationAttributeInfo;
 import org.geomajas.configuration.AssociationType;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultFeatureForm;
+import org.geomajas.gwt.client.widget.attribute.FormItemList;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.data.DataSource;
@@ -58,7 +59,7 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected FormItem createItem(AbstractReadOnlyAttributeInfo info) {
+	public FormItem createItem(AbstractReadOnlyAttributeInfo info) {
 		FormItem formItem = super.createItem(info);
 		if (KtunaxaConstant.ATTRIBUTE_NUMBER.equals(info.getName())) {
 			formItem.setVisible(false);
@@ -85,7 +86,7 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected boolean isIncluded(AbstractReadOnlyAttributeInfo info) {
+	public boolean isIncluded(AbstractReadOnlyAttributeInfo info) {
 		for (String name : SKIPPED_NAMES) {
 			if (info.getName().equals(name)) {
 				return false;
@@ -104,7 +105,7 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 	}
 
 	@Override
-	protected void prepareForm(FormItemList formItems, DataSource source) {
+	public void prepareForm(FormItemList formItems, DataSource source) {
 		HeaderItem projectHeader = new HeaderItem("project-info-header");
 		projectHeader.setDefaultValue("General project information");
 		formItems.insertBefore(KtunaxaConstant.ATTRIBUTE_PRIMARY, projectHeader);

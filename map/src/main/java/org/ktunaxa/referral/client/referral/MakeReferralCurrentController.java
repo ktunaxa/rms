@@ -82,7 +82,7 @@ public class MakeReferralCurrentController extends AbstractGraphicsController {
 				Map<String, List<org.geomajas.layer.feature.Feature>> featureMap = response.getFeatureMap();
 				List<org.geomajas.layer.feature.Feature> orgFeatures = featureMap
 						.get(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID);
-				if (orgFeatures.size() > 0) {
+				if (null != orgFeatures && orgFeatures.size() > 0) {
 					// take the nearest
 					double minDistance = Double.MAX_VALUE;
 					org.geomajas.layer.feature.Feature referral = null;
