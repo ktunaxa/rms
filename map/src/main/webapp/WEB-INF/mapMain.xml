@@ -127,6 +127,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="layers">
 			<list>
 				<ref bean="clientLayerOsm" />
+				<ref bean="clientLayerGoogleNormal" />
+				<ref bean="clientLayerGoogleSatellite" />
+				<ref bean="clientLayerGooglePhysical" />
 				<ref bean="clientLayerHillShade" />
 				<ref bean="clientLayerAspect" />
 				<ref bean="clientLayerSlope" />
@@ -242,6 +245,28 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="visible" value="true" />
 		<property name="style" value="1" />
 	</bean>
+
+	<bean  id="clientLayerGoogleNormal" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+		<property name="serverLayerId" value="layerGoogle" />
+		<property name="label" value="Google Normal" />
+		<property name="visible" value="false" />
+		<property name="style" value="1" />
+	</bean>
+	
+	<bean  id="clientLayerGoogleSatellite" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+		<property name="serverLayerId" value="layerGoogle" />
+		<property name="label" value="Google Satellite" />
+		<property name="visible" value="false" />
+		<property name="style" value="1" />
+	</bean>
+
+	<bean  id="clientLayerGooglePhysical" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+		<property name="serverLayerId" value="layerGoogle" />
+		<property name="label" value="Google Terrain" />
+		<property name="visible" value="false" />
+		<property name="style" value="1" />
+	</bean>
+	
 
 	<bean id="clientLayerHillShade" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
 		<property name="serverLayerId" value="layerHillShade" />

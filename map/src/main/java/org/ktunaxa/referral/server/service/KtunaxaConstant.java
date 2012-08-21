@@ -67,6 +67,9 @@ public interface KtunaxaConstant {
 	String URL_DOCUMENT_UPLOAD = "../d/upload/referral/document";
 
 	String LAYER_OSM_ID = "clientLayerOsm";
+	String LAYER_GOOGLE_NORMAL_ID = "clientLayerGoogleNormal";
+	String LAYER_GOOGLE_SATELLITE_ID = "clientLayerGoogleSatellite";
+	String LAYER_GOOGLE_PHYSICAL_ID = "clientLayerGooglePhysical";
 	String LAYER_HILL_SHADE_ID = "clientLayerHillShade";
 	String LAYER_ASPECT_ID = "clientLayerAspect";
 	String LAYER_SLOPE_ID = "clientLayerSlope";

@@ -131,7 +131,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
-			<artifactId>geomajas-layer-google</artifactId>
+			<artifactId>geomajas-layer-google-gwt</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
@@ -682,7 +682,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<dbHostPort>localhost:5432</dbHostPort>
 		<dbAdminUser>postgres</dbAdminUser>
-		<dbAdminPassword>postgres</dbAdminPassword>
+		<dbAdminPassword>postgis</dbAdminPassword>
 
 		<rms.admin.user>admin</rms.admin.user>
 		<rms.admin.password>An15ntAAWKOge7uSsdAhuA</rms.admin.password> <!-- admin -->

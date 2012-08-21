@@ -27,6 +27,8 @@
 	<inherits name="org.geomajas.plugin.printing.Printing" />
 	<inherits name="org.geomajas.plugin.staticsecurity.StaticSecurity" />
 	<inherits name="org.geomajas.plugin.reporting.GeomajasReporting" />
+	<inherits name="org.geomajas.layer.google.gwt.GeomajasGoogle"/>
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
 
 	<inherits name="com.smartclient.theme.simplicity.Simplicity" />
     <inherits name="org.ktunaxa.referral.theme.ActivitiBlue" /> 

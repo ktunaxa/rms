@@ -24,9 +24,11 @@ import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.layer.Layer;
 import org.geomajas.gwt.client.widget.Legend;
 import org.geomajas.gwt.client.widget.MapWidget;
+import org.geomajas.layer.google.gwt.client.GoogleAddon;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
 import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.VisibilityMode;
@@ -35,7 +37,6 @@ import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
-import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
  * Panel that displays the base and value layer trees.
@@ -89,9 +90,34 @@ public class LayersPanel extends VLayout {
 				referralStack.setVisibilityMode(VisibilityMode.MUTEX);
 				referralStack.setPadding(LayoutConstant.MARGIN_SMALL);
 				tabReferrals.setPane(referralStack);
+				
+				// initialize the google addon
+				GoogleAddon addon = new GoogleAddon("google", mapWidget, GoogleAddon.MapType.NORMAL);
+				mapWidget.registerMapAddon(addon);
+				addon.setVisible(false);
 
 				Layer<?> osmLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_OSM_ID);
 				LayerBlock osmBlock = new LayerBlock(osmLayer);
+				Layer<?> normalGoogleLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_GOOGLE_NORMAL_ID);
+				LayerBlock normalGoogleBlock = new GoogleLayerBlock(normalGoogleLayer, addon,
+						GoogleAddon.MapType.NORMAL);
+				Layer<?> satelliteGoogleLayer = mapWidget.getMapModel().getLayer(
+						KtunaxaConstant.LAYER_GOOGLE_SATELLITE_ID);
+				LayerBlock satelliteGoogleBlock = new GoogleLayerBlock(satelliteGoogleLayer, addon,
+						GoogleAddon.MapType.SATELLITE);
+				Layer<?> physicalGoogleLayer = mapWidget.getMapModel().getLayer(
+						KtunaxaConstant.LAYER_GOOGLE_PHYSICAL_ID);
+				LayerBlock physicalGoogleBlock = new GoogleLayerBlock(physicalGoogleLayer, addon,
+						GoogleAddon.MapType.PHYSICAL);
+				
+				// osm and google in radiogroup
+				LayerBlockRadioGroup group = new LayerBlockRadioGroup();
+				group.addLayerBlock(osmBlock);
+				group.addLayerBlock(normalGoogleBlock);
+				group.addLayerBlock(satelliteGoogleBlock);
+				group.addLayerBlock(physicalGoogleBlock);
+				group.init();
+				
 				Layer<?> aspectLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_ASPECT_ID);
 				LayerBlock aspectBlock = new LayerBlock(aspectLayer);
 				Layer<?> slopeLayer = mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_SLOPE_ID);
@@ -100,6 +126,9 @@ public class LayersPanel extends VLayout {
 				LayerBlock hillShadeBlock = new LayerBlock(hillShadeLayer);
 				VLayout sectionStackLayout = new VLayout();
 				sectionStackLayout.addMember(osmBlock);
+				sectionStackLayout.addMember(normalGoogleBlock);
+				sectionStackLayout.addMember(satelliteGoogleBlock);
+				sectionStackLayout.addMember(physicalGoogleBlock);
 				sectionStackLayout.addMember(hillShadeBlock);
 				sectionStackLayout.addMember(aspectBlock);
 				sectionStackLayout.addMember(slopeBlock);

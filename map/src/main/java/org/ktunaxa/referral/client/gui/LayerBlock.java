@@ -19,9 +19,12 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.widgets.layout.VLayout;
 import org.geomajas.gwt.client.action.layertree.LayerTreeModalAction;
 import org.geomajas.gwt.client.action.layertree.LayerVisibleModalAction;
+import org.geomajas.gwt.client.map.event.LayerChangedHandler;
+import org.geomajas.gwt.client.map.event.LayerLabeledEvent;
+import org.geomajas.gwt.client.map.event.LayerShownEvent;
+import org.geomajas.gwt.client.map.layer.AbstractLayer;
 import org.geomajas.gwt.client.map.layer.Layer;
 
 import com.smartgwt.client.types.SelectionType;
@@ -31,6 +34,7 @@ import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Layer block that display a panel for turning a layer (a real layer) on and off.
@@ -68,10 +72,12 @@ public class LayerBlock extends VLayout {
 		visibleBtn.setActionType(SelectionType.CHECKBOX);
 		visibleBtn.setSelected(layer.getLayerInfo().isVisible());
 		visibleBtn.addClickHandler(new SetVisibleHandler());
+		layer.addLayerChangedHandler(new LayerHandler());
 		updateIcons();
 		layout.addMember(visibleBtn);
 		addMember(layout);
 	}
+	
 
 	private void updateIcons() {
 		if (visibleBtn.isSelected()) {
@@ -89,6 +95,11 @@ public class LayerBlock extends VLayout {
 			visibleBtn.setTooltip(modalAction.getDeselectedTooltip());
 		}
 	}
+	
+	public Layer<?> getLayer() {
+		return layer;
+	}
+
 
 	/**
 	 * Toggle whether layer is enabled/visible.
@@ -108,7 +119,28 @@ public class LayerBlock extends VLayout {
 
 		public void onClick(ClickEvent event) {
 			updateLayerEnabled(visibleBtn.isSelected());
-			updateIcons();
 		}
 	}
+	
+	/**
+	 * Handles button state when a layer is hidden/shown.
+	 * 
+	 * @author Jan De Moerloose
+	 *
+	 */
+	private class LayerHandler implements LayerChangedHandler {
+
+		@Override
+		public void onVisibleChange(LayerShownEvent event) {
+			visibleBtn.setSelected(((AbstractLayer<?>) layer).isVisible());
+			updateIcons();
+		}
+
+		@Override
+		public void onLabelChange(LayerLabeledEvent event) {
+
+		}
+
+	}
+
 }
