@@ -1,12 +1,12 @@
 -- KTU-161 content field in comment table is now allowed to be NULL
-ALTER TABLE referral_comment ALTER COLUMN content DROP NOT NULL;
+-- ALTER TABLE referral_comment ALTER COLUMN content DROP NOT NULL;
 
 
 -- KTU-113 also need sender e-mail
 -- ALTER TABLE template ADD COLUMN mail_sender character varying(254) NOT NULL;
 -- ALTER TABLE template ADD COLUMN subject text;
 -- ALTER TABLE template ADD COLUMN string_content text;
-ALTER TABLE template ALTER COLUMN content DROP NOT NULL;
+-- ALTER TABLE template ALTER COLUMN content DROP NOT NULL;
 
 
 -- KTU-254 split status in status, decision and provincialDecision
@@ -41,15 +41,15 @@ ALTER TABLE template ALTER COLUMN content DROP NOT NULL;
 
 
 -- update field lengths to be larger for textarea fields
-ALTER TABLE referral ALTER COLUMN project_description TYPE character varying(2048);
-ALTER TABLE referral ALTER COLUMN project_background TYPE character varying(2048);
-ALTER TABLE referral ALTER COLUMN contact_address TYPE character varying(2048);
+-- ALTER TABLE referral ALTER COLUMN project_description TYPE character varying(2048);
+-- ALTER TABLE referral ALTER COLUMN project_background TYPE character varying(2048);
+-- ALTER TABLE referral ALTER COLUMN contact_address TYPE character varying(2048);
 
 
 -- KTU-259 increase length of content field in referral_comment
-ALTER TABLE referral_comment ALTER COLUMN content TYPE character varying(2048);
-ALTER TABLE referral_comment ALTER COLUMN report_content TYPE character varying(2048);
-ALTER TABLE document_comment ALTER COLUMN content TYPE character varying(2048);
+-- ALTER TABLE referral_comment ALTER COLUMN content TYPE character varying(2048);
+-- ALTER TABLE referral_comment ALTER COLUMN report_content TYPE character varying(2048);
+-- ALTER TABLE document_comment ALTER COLUMN content TYPE character varying(2048);
 
 
 -- KTU-262 update referral types
@@ -73,3 +73,10 @@ ALTER TABLE document_comment ALTER COLUMN content TYPE character varying(2048);
 
 -- KTU-285 field to order comments in final report
 -- ALTER TABLE referral_comment ADD COLUMN position integer DEFAULT 2;
+
+-- AAD-20 add 2 layers
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (84, 'Grassland Eco System', 9, '1:150000', '1:1', false, 84); 
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (85, 'Riparian', 9, '1:150000', '1:1', false, 85); 
+-- AAD-22 add 1 layer
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (86, 'Guidance Zones', 6, '1:150000', '1:1', false, 86); 
+

@@ -101,6 +101,9 @@ INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by
 INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (81, 'Rare Endangered Species', 9, '1:150000', '1:1', false, 81); 
 INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (82, 'Ktunaxa Statement of Intent', 10, '1:10000000', '1:1', true, 82); 
 INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (83, 'Treaty Identified Lands', 10, '1:1000000', '1:1', true, 83); 
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (84, 'Grassland Eco System', 9, '1:150000', '1:1', false, 84); 
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (85, 'Riparian', 9, '1:150000', '1:1', false, 85); 
+INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (86, 'Guidance Zones', 6, '1:150000', '1:1', false, 86); 
 
 
 -- ----------------------------------------------------------------------------

@@ -602,6 +602,159 @@
 					</PolygonSymbolizer>
 				</Rule>
 			<!-- TreatyRelated_Features.pdf stop -->
+
+
+			<!-- New Layer Styling.pdf start -->
+				<Rule>
+					<Name>Grassland Ecosystem</Name>
+					<Title>Grassland Ecosystem</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>GRASS</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<PolygonSymbolizer>
+						<Fill>
+                      		<CssParameter name="fill">#E9FFBE</CssParameter>
+						</Fill>
+					</PolygonSymbolizer>
+					<PolygonSymbolizer>
+						<Fill>
+							<GraphicFill>
+								<Graphic>
+									<Mark>
+										<WellKnownName>shape://slash</WellKnownName>
+										<Stroke>
+											<CssParameter name="stroke">#787A74</CssParameter>
+											<CssParameter name="stroke-width">1</CssParameter>
+										</Stroke>
+									</Mark>
+									<Size>14</Size>
+								</Graphic>
+							</GraphicFill>
+						</Fill>
+			            <Stroke>
+			              <CssParameter name="stroke">#98E600</CssParameter>
+			              <CssParameter name="stroke-width">0</CssParameter>
+			            </Stroke>
+					</PolygonSymbolizer>
+				</Rule>
+
+				<Rule>
+					<Name>Shoreline Management Units</Name>
+					<Title>Shoreline Management Units</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>BEC_SMU</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+			            <Stroke>
+			              <CssParameter name="stroke">#005CE6</CssParameter>
+			              <CssParameter name="stroke-width">0</CssParameter>
+				          <CssParameter name="stroke-dasharray">10 5</CssParameter>
+			            </Stroke>
+					</LineSymbolizer>
+				</Rule>
+
+				<Rule>
+					<Name>Deciduous Forest</Name>
+					<Title>Deciduous Forest</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>RIP_DEC</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<PolygonSymbolizer>
+						<Fill>
+							<CssParameter name="fill">#EEF1A0</CssParameter>
+						</Fill>
+			            <Stroke>
+			              <CssParameter name="stroke">#A8A800</CssParameter>
+			            </Stroke>
+					</PolygonSymbolizer>
+				</Rule>
+			
+				<Rule>
+					<Name>Common Reparian Subhygric</Name>
+					<Title>Common Reparian Subhygric</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>RIP_CRS</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<PolygonSymbolizer>
+						<Fill>
+							<CssParameter name="fill">#73FFDF</CssParameter>
+						</Fill>
+			            <Stroke>
+			              <CssParameter name="stroke">#00FFC5</CssParameter>
+			            </Stroke>
+					</PolygonSymbolizer>
+				</Rule>
+
+				<Rule>
+					<Name>Uncommon Reparian Subhygric</Name>
+					<Title>Uncommon Reparian Subhygric</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>RIP_URS</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<PolygonSymbolizer>
+						<Fill>
+							<CssParameter name="fill">#0070FF</CssParameter>
+						</Fill>
+			            <Stroke>
+			              <CssParameter name="stroke">#005CE6</CssParameter>
+			            </Stroke>
+					</PolygonSymbolizer>
+				</Rule>
+
+				<Rule>
+					<Name>Common Reparian Hygric</Name>
+					<Title>Common Reparian Hygric</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>RIP_CRH</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<PolygonSymbolizer>
+						<Fill>
+							<CssParameter name="fill">#00A9E6</CssParameter>
+						</Fill>
+			            <Stroke>
+			              <CssParameter name="stroke">#004C73</CssParameter>
+			            </Stroke>
+					</PolygonSymbolizer>
+				</Rule>
+
+				<Rule>
+					<Name>Uncommon Reparian Hygric</Name>
+					<Title>Uncommon Reparian Hygric</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>RIP_URH</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<PolygonSymbolizer>
+						<Fill>
+							<CssParameter name="fill">#BED2FF</CssParameter>
+						</Fill>
+			            <Stroke>
+			              <CssParameter name="stroke">#73B2FF</CssParameter>
+			            </Stroke>
+					</PolygonSymbolizer>
+				</Rule>
+			<!-- New Layer Styling.pdf stop -->
+
 				<Rule>
 					<Name>Default point - everything else</Name>
 					<Title>Default point - everything else</Title>
