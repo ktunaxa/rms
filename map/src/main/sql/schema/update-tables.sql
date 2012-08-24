@@ -75,8 +75,8 @@
 -- ALTER TABLE referral_comment ADD COLUMN position integer DEFAULT 2;
 
 -- AAD-20 add 2 layers
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (84, 'Grassland Eco System', 9, '1:150000', '1:1', false, 84); 
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (85, 'Riparian', 9, '1:150000', '1:1', false, 85); 
+--INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (84, 'Grassland Eco System', 9, '1:150000', '1:1', false, 84); 
+--INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (85, 'Riparian', 9, '1:150000', '1:1', false, 85); 
 -- AAD-22 add 1 layer
-INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (86, 'Guidance Zones', 6, '1:150000', '1:1', false, 86); 
+--INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (86, 'Guidance Zones', 6, '1:150000', '1:1', false, 86); 
 
