@@ -78,7 +78,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="geometryType">
             <bean class="org.geomajas.configuration.GeometryAttributeInfo">
                 <property name="name" value="geometry"/>
-                <property name="editable" value="false"/>
+                <property name="editable" value="true"/>
             </bean>
         </property>
 
