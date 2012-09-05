@@ -295,7 +295,16 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		});
 		infoLayout.addMember(claimButton);
 		addMember(infoLayout);
+		String htmlContent = buildHtmlContent(task);
+		content = new HTMLFlow(htmlContent);
+		content.setStyleName(BLOCK_CONTENT_STYLE);
+		content.setWidth100();
+		addMember(content);
+	}
+
+	private String buildHtmlContent(final TaskDto task) {
 		List<String> rows = new ArrayList<String>();
+		Map<String, String> variables = task.getVariables();
 		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
 		if (task.isHistory()) {
 			rows.add(HtmlBuilder.trHtmlContent(
@@ -336,10 +345,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 			array[i] = rows.get(i);
 		} 
 		String htmlContent = HtmlBuilder.tableClassHtmlContent(BLOCK_CONTENT_TABLE_STYLE, array);
-		content = new HTMLFlow(htmlContent);
-		content.setStyleName(BLOCK_CONTENT_STYLE);
-		content.setWidth100();
-		addMember(content);
+		return htmlContent;
 	}
 
 	private void assignWindow(TaskDto task, GetUsersResponse response, ClickEvent clickEvent) {
@@ -444,6 +450,9 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 			public void execute(GetReferralResponse response) {
 				setStartButtonStatus(task);
 				setClaimButtonStatus(task);
+				task.setAssignee(assignee);
+				String htmlContent = buildHtmlContent(task);
+				content.setContents(htmlContent);
 				if (start) {
 					start(task, response.getReferral());
 				} else {
