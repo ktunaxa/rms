@@ -18,6 +18,13 @@
  */
 package org.ktunaxa.referral.client.referral;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.geomajas.configuration.AbstractReadOnlyAttributeInfo;
 import org.geomajas.configuration.AssociationAttributeInfo;
 import org.geomajas.configuration.AssociationType;
@@ -32,9 +39,6 @@ import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.HeaderItem;
 import com.smartgwt.client.widgets.form.fields.RowSpacerItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Form for editing referral details in mapping dashboard.
@@ -139,46 +143,124 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 	@Override
 	public void prepareForm(FormItemList formItems, DataSource source) {
 		this.formItems = formItems;
-
+		
+		Map<String, FormItem> itemMap = new HashMap<String, FormItem>();
+		for (FormItem formItem : formItems) {
+			itemMap.put(formItem.getName(), formItem);
+		}
+		formItems.clear();
+		
 		HeaderItem projectHeader = new HeaderItem("project-info-header");
 		projectHeader.setDefaultValue("General project information");
-		formItems.insertBefore("applicantName", projectHeader);
-
+		formItems.add(projectHeader);
+		
+		List<FormItem> projectItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_APPLICANT_NAME,
+				KtunaxaConstant.ATTRIBUTE_PROJECT,
+				KtunaxaConstant.ATTRIBUTE_PROJECT_LOCATION,
+				KtunaxaConstant.ATTRIBUTE_PROJECT_DESCRIPTION,
+				KtunaxaConstant.ATTRIBUTE_PROJECT_BACKGROUND
+		);
+		formItems.addAll(projectItems);
+		
 		RowSpacerItem externalSpacer = new RowSpacerItem("external-info-spacer");
 		HeaderItem externalHeader = new HeaderItem("external-info-header");
 		externalHeader.setDefaultValue("External project information");
 		externalHeader.setColSpan(COLSPAN);
-		formItems.insertBefore("externalProjectId", externalSpacer, externalHeader);
-
+		formItems.add(externalSpacer);
+		formItems.add(externalHeader);
+		
+		List<FormItem> externalItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_EXTERNAL_PROJECT_ID,
+				KtunaxaConstant.ATTRIBUTE_EXTERNAL_FILE_ID,
+				KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY_TYPE,
+				KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY,
+				KtunaxaConstant.ATTRIBUTE_PRIORITY
+		);
+		formItems.addAll(externalItems);
+		
 		RowSpacerItem contactSpacer = new RowSpacerItem("contact-info-spacer");
 		HeaderItem contactHeader = new HeaderItem("contact-info-header");
 		contactHeader.setDefaultValue("Referral contact information");
 		contactHeader.setColSpan(COLSPAN);
-		formItems.insertBefore("contactName", contactSpacer, contactHeader);
+		formItems.add(contactSpacer);
+		formItems.add(contactHeader);
+		
+		List<FormItem> contactItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_CONTACT_NAME,
+				KtunaxaConstant.ATTRIBUTE_EMAIL,
+				KtunaxaConstant.ATTRIBUTE_CONTACT_PHONE,
+				KtunaxaConstant.ATTRIBUTE_CONTACT_ADDRESS);
+		formItems.addAll(contactItems);
 
 		RowSpacerItem typeSpacer = new RowSpacerItem("type-info-spacer");
 		HeaderItem typeHeader = new HeaderItem("type-info-header");
 		typeHeader.setDefaultValue("General information regarding the referral");
 		typeHeader.setColSpan(COLSPAN);
-		formItems.insertBefore("referralType", typeSpacer, typeHeader);
+		formItems.add(typeSpacer);
+		formItems.add(typeHeader);
+
+		List<FormItem> typeItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_TYPE,
+				KtunaxaConstant.ATTRIBUTE_STATUS,
+				KtunaxaConstant.ATTRIBUTE_STOP_REASON,
+				KtunaxaConstant.ATTRIBUTE_DECISION,
+				KtunaxaConstant.ATTRIBUTE_PROVINCIAL_DECISION,
+				KtunaxaConstant.ATTRIBUTE_APPLICATION_TYPE,
+				KtunaxaConstant.ATTRIBUTE_TARGET_REFERRAL,
+				KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE,
+				KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL,
+				KtunaxaConstant.ATTRIBUTE_CONFIDENTIAL);
+		formItems.addAll(typeItems);
 
 		RowSpacerItem dateSpacer = new RowSpacerItem("date-info-spacer");
 		HeaderItem dateHeader = new HeaderItem("date-info-header");
 		dateHeader.setDefaultValue("Project deadline information");
 		dateHeader.setColSpan(COLSPAN);
-		formItems.insertBefore("receiveDate", dateSpacer, dateHeader);
+		formItems.add(dateSpacer);
+		formItems.add(dateHeader);
 
-		RowSpacerItem documentSpacer = new RowSpacerItem("document-info-spacer");
-		HeaderItem documentHeader = new HeaderItem("document-info-header");
-		documentHeader.setDefaultValue("Document management classification");
-		documentHeader.setColSpan(COLSPAN);
-		formItems.insertBefore("activeRetentionPeriod", documentSpacer, documentHeader);
+		List<FormItem> dateItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_RECEIVED_DATE,
+				KtunaxaConstant.ATTRIBUTE_RESPONSE_DATE,
+				KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE);
+		formItems.addAll(dateItems);
+		
+		// Shouldn't crash when someone adds more attributes !
+		if (itemMap.size() > 0) {
+			RowSpacerItem otherSpacer = new RowSpacerItem("other-info-spacer");
+			HeaderItem otherHeader = new HeaderItem("other-info-header");
+			otherHeader.setDefaultValue("Other information");
+			otherHeader.setColSpan(COLSPAN);
+			formItems.add(otherSpacer);
+			formItems.add(otherHeader);
+			formItems.addAll(itemMap.values());
+		}
 
 		getWidget().setWidth("100%");
 		getWidget().setNumCols(2);
 		getWidget().setColWidths(175, "50%");
 
 		setDisabledStatusOnFields(false);
+	}
+
+	/**
+	 * Grab a list of items from the map of items. Removes the items so they can only be used once.
+	 * @param itemMap
+	 * @param names
+	 * @return the list
+	 */
+	private List<FormItem> grabList(Map<String, FormItem> itemMap, String... names) {
+		List<FormItem> items = new ArrayList<FormItem>();
+		for (String name : names) {
+			if (itemMap.containsKey(name)) {
+				items.add(itemMap.get(name));
+			}
+		}
+		for (String name : names) {
+			itemMap.remove(name);
+		}
+		return items;
 	}
 
 	@Override
