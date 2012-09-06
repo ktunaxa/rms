@@ -21,6 +21,7 @@ package org.ktunaxa.referral.server.command.bpm;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.geomajas.command.Command;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.geometry.Crs;
@@ -120,8 +121,12 @@ public class CloseReferralCommand implements Command<CloseReferralRequest, Comma
 
 				// stop process instances (contrary to the names, these are all the executions for the process instance)
 				for (ProcessInstance processInstance : processInstances) {
-					runtimeService.deleteProcessInstance(processInstance.getId(),
-							"Requested by user " + securityContext.getUserId());
+					ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
+					// Must check if the instance is still there as delete cascades to sub-processes !
+					if (!query.processInstanceId(processInstance.getId()).list().isEmpty()) {
+						runtimeService.deleteProcessInstance(processInstance.getId(), "Requested by user "
+								+ securityContext.getUserId());
+					}
 				}
 			}
 		}
