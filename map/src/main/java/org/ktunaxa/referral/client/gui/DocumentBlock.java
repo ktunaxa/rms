@@ -20,9 +20,11 @@ package org.ktunaxa.referral.client.gui;
 
 import java.util.Date;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.CmisUtil;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
@@ -105,8 +107,9 @@ public class DocumentBlock extends AbstractAttributeBlock {
 	@Override
 	public void redrawValue() {
 		titleText.setContents("<div class='documentBlockTitleText'>" + getDocumentTitle() + "</div>");
-		info.setContents("<div class='documentBlockInfo'>Added by " + getAddedBy() + " @ " + getAdditionDate()
-				+ "</div>");
+		DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
+		info.setContents("<div class='documentBlockInfo'>Added by " + getAddedBy() + " @ "
+				+ formatter.format(getAdditionDate()) + "</div>");
 		content.setContents("<div class='documentBlockType'>" + "Description: " + getDocumentDescription()
 				+ "<br>Type: " + getDocumentTypeTitle());
 		if (isIncludeInReport()) {

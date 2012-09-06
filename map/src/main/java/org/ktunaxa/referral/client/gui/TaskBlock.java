@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.Record;
@@ -306,23 +307,24 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		List<String> rows = new ArrayList<String>();
 		Map<String, String> variables = task.getVariables();
 		String engagementLevel = variables.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL);
+		DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
 		if (task.isHistory()) {
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())));
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Started: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getStartTime() + ""))); // NOSONAR cfr GWT
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, formatter.format(task.getStartTime()))));
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getEndTime() + ""))); // NOSONAR cfr GWT
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, formatter.format(task.getEndTime()))));
 		} else {
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Assignee: "),
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getAssignee())));
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Created: "),
-					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, task.getCreateTime() + ""))); // NOSONAR cfr GWT
+					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE, formatter.format(task.getCreateTime()))));
 			rows.add(HtmlBuilder.trHtmlContent(
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_NAME, "Completion deadline: "),
 					HtmlBuilder.tdStyle(STYLE_VARIABLE_VALUE,

@@ -23,10 +23,12 @@ import java.util.Date;
 
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.HTMLFlow;
@@ -162,8 +164,9 @@ public class CommentBlock extends AbstractAttributeBlock {
 		HLayout infoLayout = new HLayout(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutRightMargin(LayoutConstant.MARGIN_SMALL);
 		infoLayout.setLayoutTopMargin(LayoutConstant.MARGIN_SMALL);
-		info = new HTMLFlow("<div class='commentBlockInfo'>" + getReportPosition() +
-				" Posted by " + getCommentCreatedBy() + " @ " + getCommentCreationDate().toString() + "</div>");
+		DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
+		info = new HTMLFlow("<div class='commentBlockInfo'>" + getReportPosition() + " Posted by "
+				+ getCommentCreatedBy() + " @ " + formatter.format(getCommentCreationDate()) + "</div>");
 		info.setSize(LayoutConstant.BLOCK_INFO_WIDTH, LayoutConstant.BLOCK_INFO_HEIGHT);
 		infoLayout.addMember(info);
 		LayoutSpacer space = new LayoutSpacer();
@@ -260,8 +263,9 @@ public class CommentBlock extends AbstractAttributeBlock {
 	@Override
 	public void redrawValue() {
 		titleText.setContents("<div class='commentBlockTitleText'>" + getCommentTitle() + "</div>");
+		DateTimeFormat formatter = DateTimeFormat.getFormat(KtunaxaBpmConstant.DATE_FORMAT);
 		info.setContents("<div class='commentBlockInfo'>Posted by " + getCommentCreatedBy() + " @ "
-				+ getCommentCreationDate().toString() + "</div>");
+				+ formatter.format(getCommentCreationDate()) + "</div>");
 		content.setContents("<div class='commentBlockContent'>" + getCommentContent() + "</div>");
 		if (isCommentIncludeInReport()) {
 			checked.setSrc(ICON_ADD_FILES);
