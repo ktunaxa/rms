@@ -167,6 +167,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 					<property name="serverPort" value="${rms.ldap.serverPort}" />
 					<property name="allowAllSocketFactory" value="true"/>
 					<property name="userDnTemplate" value="${rms.ldap.userDnTemplate}" />
+					<property name="allUsersDn" value="${rms.ldap.allUsersDn}" />
 					<property name="givenNameAttribute" value="givenName" />
 					<property name="surNameAttribute" value="sn" />
 					<property name="localeAttribute" value="locale" />

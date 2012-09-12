@@ -20,20 +20,10 @@
 package org.ktunaxa.referral.client.gui;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.smartgwt.client.data.DataSource;
-import com.smartgwt.client.data.DataSourceField;
-import com.smartgwt.client.data.Record;
-import com.smartgwt.client.data.fields.DataSourceTextField;
-import com.smartgwt.client.widgets.Window;
-import com.smartgwt.client.widgets.events.CloseClickHandler;
-import com.smartgwt.client.widgets.events.CloseClientEvent;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.SelectItem;
-import com.smartgwt.client.widgets.layout.VLayout;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
@@ -42,25 +32,36 @@ import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.KeepInScreenWindow;
 import org.geomajas.layer.feature.Feature;
-import org.geomajas.plugin.staticsecurity.command.dto.GetUsersRequest;
-import org.geomajas.plugin.staticsecurity.command.dto.GetUsersResponse;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
 import org.ktunaxa.referral.server.command.dto.AssignTaskRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralResponse;
+import org.ktunaxa.referral.server.command.dto.GetUsersRequest;
+import org.ktunaxa.referral.server.command.dto.GetUsersResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.smartgwt.client.data.DataSource;
+import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.Record;
+import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.CloseClickHandler;
+import com.smartgwt.client.widgets.events.CloseClientEvent;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Implementation of {@link AbstractCollapsibleListBlock} that handles {@link TaskDto} type objects. Instances of this
@@ -268,6 +269,9 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 
 			public void onClick(final ClickEvent clickEvent) {
 				GwtCommand command = new GwtCommand(GetUsersRequest.COMMAND);
+				GetUsersRequest request = new GetUsersRequest();
+				request.setRoles(new HashSet<String>(task.getCandidates()));
+				command.setCommandRequest(request);
 				GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetUsersResponse>() {
 					public void execute(GetUsersResponse response) {
 						assignWindow(task, response, clickEvent);
