@@ -65,7 +65,7 @@ public class AppAuthorizationInfo extends LayerAuthorizationInfo {
 	 *
 	 * @return BPM roles
 	 */
-	Set<String> getBpmRoles() {
+	public Set<String> getBpmRoles() {
 		return bpmRoles;
 	}
 
