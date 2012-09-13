@@ -19,11 +19,10 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotNull;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.smartgwt.client.util.BooleanCallback;
-import com.smartgwt.client.util.SC;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
@@ -36,8 +35,13 @@ import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.command.dto.CloseReferralRequest;
+import org.ktunaxa.referral.server.command.dto.DeleteReferralRequest;
+import org.ktunaxa.referral.server.command.dto.ResetReferralRequest;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -50,8 +54,6 @@ import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 import com.smartgwt.client.widgets.toolbar.ToolStripMenuButton;
 import com.smartgwt.client.widgets.toolbar.ToolStripSeparator;
-
-import java.util.Date;
 
 /**
  * Top menu bar of the general layout. The top bar has a user section (login/logout,status) on the right and a list of
@@ -174,12 +176,29 @@ public class TopBar extends HLayout {
 					new EmailItem(FINISHED, KtunaxaConstant.Email.RESULT));
 		editEmails.setSubmenu(emailTemplates);
 
-		MenuItem closeReferral = new MenuItem("Close current referral");
-		closeReferral.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
+		MenuItem referral = new MenuItem("Referral");
+		Menu referralActions = new Menu();
+		MenuItem closeAction = new MenuItem("Close current referral");
+		closeAction.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
 			public void onClick(MenuItemClickEvent menuItemClickEvent) {
 				closeCurrentReferral();
 			}
 		});
+		MenuItem resetAction = new MenuItem("Reset current referral");
+		resetAction.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
+			public void onClick(MenuItemClickEvent menuItemClickEvent) {
+				resetCurrentReferral();
+			}
+		});
+		MenuItem deleteAction = new MenuItem("Delete current referral");
+		deleteAction.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
+			public void onClick(MenuItemClickEvent menuItemClickEvent) {
+				deleteCurrentReferral();
+			}
+		});
+		referralActions.setItems(closeAction, resetAction, deleteAction);
+		referral.setSubmenu(referralActions);
+
 
 		MenuItem systemReport = new MenuItem("System report");
 		systemReport.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
@@ -188,7 +207,7 @@ public class TopBar extends HLayout {
 			}
 		});
 
-		menu.setItems(editEmails, closeReferral, systemReport);
+		menu.setItems(editEmails, referral, systemReport);
 
 		return new ToolStripMenuButton(ADMIN, menu);
 	}
@@ -227,6 +246,57 @@ public class TopBar extends HLayout {
 									}
 								});
 
+						MapLayout.getInstance().setReferralAndTask(null, null);
+					}
+				}
+			});
+		}
+	}
+
+	private void resetCurrentReferral() {
+		final Feature referral = MapLayout.getInstance().getCurrentReferral();
+		if (null == referral) {
+			SC.say("There is no current referral.");
+		} else {
+			SC.ask("Are you sure you want to reset referral " + ReferralUtil.createId(referral), new BooleanCallback() {
+				public void execute(Boolean close) {
+					if (close) {
+						ResetReferralRequest request = new ResetReferralRequest();
+						request.setReferralId(ReferralUtil.createId(referral));
+						GwtCommand command = new GwtCommand(ResetReferralRequest.COMMAND);
+						command.setCommandRequest(request);
+						GwtCommandDispatcher.getInstance()
+								.execute(command, new AbstractCommandCallback<CommandResponse>() {
+									public void execute(CommandResponse response) {
+										// nothing to do // NOSONAR
+									}
+								});
+						MapLayout.getInstance().setReferralAndTask(null, null);
+					}
+				}
+			});
+		}
+	}
+
+	private void deleteCurrentReferral() {
+		final Feature referral = MapLayout.getInstance().getCurrentReferral();
+		if (null == referral) {
+			SC.say("There is no current referral.");
+		} else {
+			SC.ask("Are you sure you want to delete referral " + ReferralUtil.createId(referral), 
+			new BooleanCallback() {
+				public void execute(Boolean close) {
+					if (close) {
+						DeleteReferralRequest request = new DeleteReferralRequest();
+						request.setReferralId(ReferralUtil.createId(referral));
+						GwtCommand command = new GwtCommand(DeleteReferralRequest.COMMAND);
+						command.setCommandRequest(request);
+						GwtCommandDispatcher.getInstance()
+								.execute(command, new AbstractCommandCallback<CommandResponse>() {
+									public void execute(CommandResponse response) {
+										// nothing to do // NOSONAR
+									}
+								});
 						MapLayout.getInstance().setReferralAndTask(null, null);
 					}
 				}
