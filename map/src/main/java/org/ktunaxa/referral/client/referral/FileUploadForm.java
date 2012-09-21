@@ -98,6 +98,17 @@ public class FileUploadForm extends DynamicForm {
 		// true if a file has been chosen
 		return fileItem.getValue() != null; 
 	}
+	
+	public void submit(boolean override) {
+		if (!override) {
+			submit();
+		} else {
+			String action = getAction();
+			setAction(action + "&" + KtunaxaConstant.FORM_OVERRIDE + "=true");
+			submit();
+			setAction(action);
+		}
+	}
 
 	private static void uploadComplete(JavaScriptObject result) {
 		JSONObject json = new JSONObject(result);

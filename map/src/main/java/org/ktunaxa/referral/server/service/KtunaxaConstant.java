@@ -45,6 +45,7 @@ public interface KtunaxaConstant {
 
 	String FORM_ID = "formId";
 	String FORM_REFERRAL = "refId";
+	String FORM_OVERRIDE = "override";
 	String FORM_FILE = "file";
 	String FORM_GEOMETRY = "geometry";
 	String FORM_ERROR_MESSAGE = "errorMessage";

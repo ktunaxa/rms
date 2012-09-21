@@ -26,6 +26,8 @@ import org.ktunaxa.referral.client.referral.event.FileUploadFailedEvent;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.Img;
@@ -158,7 +160,17 @@ public class DocumentItem extends CanvasItem {
 					errorFlow.setContents("<div style='color: #AA0000'>" + event.getErrorMessage() + "</div>");
 					errorFlow.setVisible(true);
 					uploadSuccess = false;
-					fireEvent(new ChangedEvent(jsObj));
+					SC.ask("Would you like to replace the existing document ?", new BooleanCallback() {
+						
+						@Override
+						public void execute(Boolean value) {
+							if (!value) {
+								fireEvent(new ChangedEvent(jsObj));
+							} else {
+								form.submit(true);
+							}
+						}
+					});
 				}
 			});
 

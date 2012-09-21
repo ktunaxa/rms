@@ -737,7 +737,7 @@
 		<rms.cmis.db.password>alfresco</rms.cmis.db.password>
 		<!--  different port to run on tomcat, cannot run in same jetty -->
 		<rms.cmis.url.server>http://localhost:8080/alfresco/</rms.cmis.url.server>
-		<rms.cmis.url.browse>http://apps.geomajas.org/alfresco/</rms.cmis.url.browse>
+		<rms.cmis.url.browse>http://localhost:8080/alfresco/</rms.cmis.url.browse>
 		<rms.cmis.repository>Main Repository</rms.cmis.repository>
 		<rms.cmis.folder>ktunaxa</rms.cmis.folder>
 		<rms.cmis.data>${project.basedir}/var/data/alfresco</rms.cmis.data>
