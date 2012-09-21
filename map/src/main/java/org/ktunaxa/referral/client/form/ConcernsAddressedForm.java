@@ -19,12 +19,13 @@
 
 package org.ktunaxa.referral.client.form;
 
-import com.smartgwt.client.widgets.form.fields.CheckboxItem;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
@@ -35,11 +36,11 @@ import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.gui.MapLayout;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 
 /**
  * Empty task form, not requiring input of any values.
@@ -95,11 +96,11 @@ public class ConcernsAddressedForm extends AbstractTaskForm {
 			request.setCrs(layer.getMapModel().getCrs());
 			GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 			command.setCommandRequest(request);
-			GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<CommandResponse>() {
+			CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
 				public void execute(CommandResponse response) {
 					// all fine
 				}
-			});
+			}, "Saving changes...");
 		}
 		return super.validate();
 	}

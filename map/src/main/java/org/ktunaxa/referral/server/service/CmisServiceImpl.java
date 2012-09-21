@@ -21,6 +21,7 @@ package org.ktunaxa.referral.server.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -145,9 +146,19 @@ public class CmisServiceImpl implements CmisService {
 		String docId = document.getId().replaceAll("://", "/");
 		return config.getUrlBrowse() + restCommand + docId + "/" + document.getContentStreamFileName();
 	}
+	
+	public Document saveOrUpdate(String documentName, String mimeType, InputStream in, long contentLength,
+			String... folderNames) throws IOException {
+		return create(documentName, mimeType, in, contentLength, true, folderNames);
+	}
 
-	public Document create(String documentName, String mimeType, InputStream in, String... folderNames)
-			throws IOException {
+	public Document create(String documentName, String mimeType, InputStream in, long contentLength,
+			String... folderNames) throws IOException {
+		return create(documentName, mimeType, in, contentLength, false, folderNames);
+	}
+
+	protected Document create(String documentName, String mimeType, InputStream in, long contentLength,
+			boolean canUpdate, String... folderNames) throws IOException {
 		Folder folder = getWorkingFolder();
 
 		for (String folderName : folderNames) {
@@ -157,21 +168,38 @@ public class CmisServiceImpl implements CmisService {
 		// Go over all children and see if the document already exists:
 		for (CmisObject object : folder.getChildren()) {
 			if (documentName.equals(object.getName())) {
-				throw new IOException("Document '" + documentName + "' already exists.");
+				// update if allowed
+				if (canUpdate) {
+					Document document = (Document) object;
+					document.deleteAllVersions();
+				} else {
+					throw new IOException("Document '" + documentName + "' already exists.");
+				}
 			}
 		}
 
 		// New create the actual document:
+		log.debug("Creating document " + documentName);
 		Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put(PropertyIds.OBJECT_TYPE_ID, "cmis:document");
 		properties.put(PropertyIds.NAME, documentName);
 		properties.put(PropertyIds.CREATED_BY, config.getUserName());
 		properties.put(PropertyIds.CHECKIN_COMMENT, "Create new document.");
+		log.debug("Updating document " + documentName);
+		log.debug(PropertyIds.OBJECT_TYPE_ID + "=cmis:document");
+		log.debug(PropertyIds.NAME + "=" + documentName);
+		log.debug(PropertyIds.CREATED_BY + "=" + config.getUserName());
+		log.debug(PropertyIds.CHECKIN_COMMENT + "=Create new document.");
+		log.debug("stream = " + in);
 
 		ContentStreamImpl contentStream = new ContentStreamImpl();
 		contentStream.setFileName(documentName);
 		contentStream.setMimeType(mimeType);
 		contentStream.setStream(in);
+		if (contentLength >= 0) {
+			log.debug("length=" + BigInteger.valueOf(contentLength));
+			contentStream.setLength(BigInteger.valueOf(contentLength));
+		}
 
 		return folder.createDocument(properties, contentStream, VersioningState.NONE);
 	}

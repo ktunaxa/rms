@@ -23,6 +23,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.geomajas.command.Command;
 import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
+import org.ktunaxa.referral.server.command.KtunaxaException;
 import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
 import org.ktunaxa.referral.server.command.dto.SendEmailResponse;
 import org.slf4j.Logger;
@@ -127,6 +128,7 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 			response.setSuccess(true);
 		} catch (MailException me) {
 			log.error("Could not send e-mail", me);
+			throw new KtunaxaException(KtunaxaException.CODE_MAIL_ERROR, "Could not send e-mail");
 		}
 	}
 

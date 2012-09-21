@@ -25,7 +25,6 @@ import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.CommandExceptionCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.spatial.geometry.GeometryFactory;
@@ -33,6 +32,7 @@ import org.geomajas.gwt.client.util.GeometryConverter;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.event.shared.HandlerManager;
@@ -173,7 +173,7 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 				request.setTargetCrs(KtunaxaConstant.MAP_CRS);
 				GwtCommand command = new GwtCommand(TransformGeometryRequest.COMMAND);
 				command.setCommandRequest(request);
-				GwtCommandDispatcher.getInstance().execute(command, new GeometryHandler());
+				CommunicationHandler.get().execute(command, new GeometryHandler(), "Transforming coordinate...");
 				busyImg.setVisible(true);
 			}
 		}

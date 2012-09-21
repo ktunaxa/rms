@@ -359,7 +359,7 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-          		<artifactId>maven-surefire-plugin</artifactId>
+				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<excludes>
 						<exclude>tools/*.java</exclude>
@@ -382,12 +382,52 @@
 								<include>WEB-INF/cmis.xml</include>
 								<include>WEB-INF/bpm.xml</include>
 								<include>WEB-INF/mail.xml</include>
+								<include>WEB-INF/dispatcher.xml</include>
 								<!-- include any other file types you want to filter -->
 							</includes>
 						</resource>
 					</webResources>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.2.1</version>
+		
+				<configuration>
+		
+					<!-- Container configuration -->
+					<container>
+						<containerId>tomcat7x</containerId>
+						<type>remote</type>
+					</container>
+		
+					<!-- Configuration to use with the container -->
+					<configuration>
+						<type>runtime</type>
+						<properties>
+							<cargo.remote.username>${dev.deploy.username}</cargo.remote.username>
+							<cargo.remote.password>${dev.deploy.password}</cargo.remote.password>
+							<cargo.remote.uri>${dev.deploy.uri}</cargo.remote.uri>
+						</properties>
+					</configuration>
+					<deployer>
+						<deployables>
+							<deployable>
+								<groupId>org.ktunaxa.referral</groupId>
+								<artifactId>ktunaxa-map</artifactId>
+								<type>war</type>
+								<properties>
+									<context>rms</context>
+								</properties>
+							</deployable>
+						</deployables>
+					</deployer>
+		
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -697,10 +737,11 @@
 		<rms.cmis.db.password>alfresco</rms.cmis.db.password>
 		<!--  different port to run on tomcat, cannot run in same jetty -->
 		<rms.cmis.url.server>http://localhost:8080/alfresco/</rms.cmis.url.server>
-		<rms.cmis.url.browse>http://localhost:8080/alfresco/</rms.cmis.url.browse>
+		<rms.cmis.url.browse>http://apps.geomajas.org/alfresco/</rms.cmis.url.browse>
 		<rms.cmis.repository>Main Repository</rms.cmis.repository>
 		<rms.cmis.folder>ktunaxa</rms.cmis.folder>
 		<rms.cmis.data>${project.basedir}/var/data/alfresco</rms.cmis.data>
+		<rms.local.dispatcher.url>http://localhost:8080/rms/d/</rms.local.dispatcher.url>
 
 		<gwt.compiler.skip>false</gwt.compiler.skip>
 	</properties>

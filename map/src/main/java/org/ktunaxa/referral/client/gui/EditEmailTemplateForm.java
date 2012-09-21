@@ -26,17 +26,16 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.widgets.form.fields.TextAreaItem;
-import com.smartgwt.client.widgets.form.fields.TextItem;
-import com.smartgwt.client.widgets.form.validator.RegExpValidator;
+import java.util.Map;
+
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.Html;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.form.AbstractTaskForm;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
 import org.ktunaxa.referral.server.command.dto.UpdateEmailDataRequest;
@@ -54,12 +53,13 @@ import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.TextAreaItem;
+import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
-
-import java.util.Map;
 
 /**
  * Form used for editing a {@link org.ktunaxa.referral.server.domain.Template} found in a linked database.
@@ -178,13 +178,14 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		request.setRaw(true);
 		GwtCommand command = new GwtCommand(GetEmailDataRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {
+		CommunicationHandler.get().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {
+
 			public void execute(GetEmailDataResponse response) {
 				from.setValue(response.getFrom());
 				subject.setValue(response.getSubject());
 				message.setValue(response.getBody());
 			}
-		});
+		}, "Fetching email data...");
 	}
 
 	/**
@@ -253,7 +254,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 			request.setSubject(subject.getValueAsString());
 			GwtCommand command = new GwtCommand(ValidateTemplateRequest.COMMAND);
 			command.setCommandRequest(request);
-			GwtCommandDispatcher.getInstance().execute(command, 
+			CommunicationHandler.get().execute(command, 
 					new AbstractCommandCallback<ValidateTemplateResponse>() {
 				public void execute(ValidateTemplateResponse response) {
 					if (!response.isValid()) {
@@ -276,7 +277,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 						disableButtons();
 					}
 				}
-			});
+			}, "Validating email...");
 		}
 		return false;
 	}
@@ -291,13 +292,13 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		request.setBody(message.getValueAsString());
 		GwtCommand command = new GwtCommand(UpdateEmailDataRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<UpdateEmailDataResponse>() {
+		CommunicationHandler.get().execute(command, new AbstractCommandCallback<UpdateEmailDataResponse>() {
 			public void execute(UpdateEmailDataResponse response) {
 				if (response.isUpdated()) {
 					SC.say("Template has been successfully updated.");
 				}
 			}
-		});
+		}, "Updating template...");
 	}
 
 	public void setFinishHandler(Runnable runnable) {

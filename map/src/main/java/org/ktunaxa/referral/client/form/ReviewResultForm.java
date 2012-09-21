@@ -19,16 +19,14 @@
 
 package org.ktunaxa.referral.client.form;
 
-import com.smartgwt.client.widgets.Button;
-import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
-import com.smartgwt.client.widgets.form.fields.TextAreaItem;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
@@ -42,14 +40,19 @@ import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.geomajas.layer.feature.attribute.StringAttribute;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.FinishFinalReportTaskRequest;
 import org.ktunaxa.referral.server.command.dto.FinishFinalReportTaskResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.smartgwt.client.widgets.Button;
+import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
+import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 
 /**
  * Form for sending evaluating the result and sending the result notification.
@@ -154,13 +157,7 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 		super.setForms(elements);
 	}
 
-	@Override
-	public Map<String, String> getVariables() {
-		updateReferral(null);
-		return super.getVariables();
-	}
-
-	private void updateReferral(final Runnable onUpdate) {
+	private void updateReferral(Runnable onUpdate) {
 		// update referral itself
 		MapLayout mapLayout = MapLayout.getInstance();
 		VectorLayer layer = mapLayout.getReferralLayer();
@@ -183,44 +180,45 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 		request.setCrs(layer.getMapModel().getCrs());
 		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<CommandResponse>() {
-			public void execute(CommandResponse response) {
-				if (null != onUpdate) {
-					onUpdate.run();
-				}
-			}
-		});
+		CommandCallback<CommandResponse> callback = new UpdatingCallback(onUpdate);
+		CommunicationHandler.get().execute(command, callback, "Updating referral...");
 	}
 
 	@Override
 	public void validate(Runnable valid, final Runnable invalid) {
-		if (validate()) {
-			FinishFinalReportTaskRequest request = new FinishFinalReportTaskRequest();
-			setEmailRequest(request);
-			request.setSendMail(isSendMail());
-			MapLayout mapLayout = MapLayout.getInstance();
-			request.setReferralId(ReferralUtil.createId(mapLayout.getCurrentReferral()));
-			request.setTaskId(mapLayout.getCurrentTask().getId());
-			request.setVariables(getVariables());
+		updateReferral(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (validate()) {
+					FinishFinalReportTaskRequest request = new FinishFinalReportTaskRequest();
+					setEmailRequest(request);
+					request.setSendMail(isSendMail());
+					MapLayout mapLayout = MapLayout.getInstance();
+					request.setReferralId(ReferralUtil.createId(mapLayout.getCurrentReferral()));
+					request.setTaskId(mapLayout.getCurrentTask().getId());
+					request.setVariables(getVariables());
 
-			GwtCommand command = new GwtCommand(FinishFinalReportTaskRequest.COMMAND);
-			command.setCommandRequest(request);
-			GwtCommandDispatcher.getInstance().execute(command,
-					new AbstractCommandCallback<FinishFinalReportTaskResponse>() {
-						public void execute(FinishFinalReportTaskResponse response) {
-							if (response.isSuccess()) {
-								MapLayout mapLayout = MapLayout.getInstance();
-								mapLayout.setReferralAndTask(mapLayout.getCurrentReferral(), null); // clear task
-								mapLayout.focusBpm();
-							} else {
-								GwtCommandDispatcher.getInstance().onCommandException(response);
-								invalid.run();
-							}
-						}
-					});
-		} else {
-			invalid.run();
-		}
+					GwtCommand command = new GwtCommand(FinishFinalReportTaskRequest.COMMAND);
+					command.setCommandRequest(request);
+					CommunicationHandler.get().execute(command,
+							new AbstractCommandCallback<FinishFinalReportTaskResponse>() {
+								public void execute(FinishFinalReportTaskResponse response) {
+									if (response.isSuccess()) {
+										MapLayout mapLayout = MapLayout.getInstance();
+										mapLayout.refreshReferral(true); // clear task
+										mapLayout.focusBpm();
+									} else {
+										GwtCommandDispatcher.getInstance().onCommandException(response);
+										invalid.run();
+									}
+								}						
+							}, "Preparing final report... ", invalid);
+				} else {
+					invalid.run();
+				}
+			}
+		});
 	}
 
 	/**
@@ -256,4 +254,29 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 			finalReportClickHandler.onClick(new ClickEvent(null));
 		}
 	}
+	
+	/**
+	 * Performs update on callback.
+	 * @author Jan De Moerloose
+	 *
+	 */
+	private class UpdatingCallback implements CommandCallback<CommandResponse> {
+		
+		private Runnable onUpdate;
+
+		public UpdatingCallback(Runnable onUpdate) {
+			this.onUpdate = onUpdate;
+		}
+
+		@Override
+		public void execute(CommandResponse response) {
+			if (onUpdate != null) {
+				onUpdate.run();
+			}
+
+		}
+
+	}
+
+
 }

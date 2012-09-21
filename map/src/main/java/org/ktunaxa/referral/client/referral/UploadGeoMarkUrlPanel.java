@@ -22,13 +22,13 @@ import org.geomajas.command.CommandResponse;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.CommandExceptionCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.util.GeometryConverter;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadHandler;
 import org.ktunaxa.referral.client.referral.event.GeometryUploadSuccessEvent;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.GetGeomarkRequest;
 import org.ktunaxa.referral.server.command.dto.GetGeomarkResponse;
 
@@ -141,7 +141,7 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 				request.setGeomark(textItem.getValueAsString());
 				GwtCommand command = new GwtCommand(GetGeomarkRequest.COMMAND);
 				command.setCommandRequest(request);
-				GwtCommandDispatcher.getInstance().execute(command, new GeometryHandler());
+				CommunicationHandler.get().execute(command, new GeometryHandler(), "Downloading geometry...");
 				busyImg.setVisible(true);
 			}
 		}

@@ -159,10 +159,11 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
 	<bean class="org.geomajas.plugin.staticsecurity.configuration.SecurityServiceInfo">
 		<!-- LDAP authentication. -->
+		<property name="excludeDefault" value="true"/>
 		<property name="authenticationServices">
 			<list>
-				<bean class="org.geomajas.plugin.staticsecurity.security.StaticAuthenticationService" />
-				<bean class="org.geomajas.plugin.staticsecurity.ldap.LdapAuthenticationService">
+				<bean class="org.ktunaxa.referral.server.security.AppStaticAuthenticationService" />
+				<bean class="org.ktunaxa.referral.server.security.AppLdapAuthenticationService">
 					<property name="serverHost" value="${rms.ldap.serverHost}"/>
 					<property name="serverPort" value="${rms.ldap.serverPort}" />
 					<property name="allowAllSocketFactory" value="true"/>

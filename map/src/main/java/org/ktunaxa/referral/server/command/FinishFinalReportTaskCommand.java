@@ -19,6 +19,14 @@
 
 package org.ktunaxa.referral.server.command;
 
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -43,6 +51,7 @@ import org.geomajas.security.SecurityContext;
 import org.geomajas.service.DispatcherUrlService;
 import org.geomajas.service.FilterService;
 import org.geomajas.service.GeoService;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.CmisUtil;
 import org.ktunaxa.referral.client.form.FinalReportClickHandler;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
@@ -57,17 +66,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Command to finish the final report task. This will create the report, save it as attachment in the CMS and send the
@@ -115,29 +113,7 @@ public class FinishFinalReportTaskCommand
 	 * @return address of application
 	 */
 	private String getServerDispatchUrl() {
-		StringBuilder url = new StringBuilder("http://127.0.0.1");
-
-		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-		if (null == requestAttributes || !(requestAttributes instanceof ServletRequestAttributes)) {
-			return "http://127.0.0.1:8080/map/d/"; // use localhost as back-up, will fail in many cases
-		}
-
-		HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-
-		int port = request.getServerPort();
-		if (9080 == port) {
-			port = 8080; // fix for Ktunaxa server
-		}
-		if (80 != port) {
-			url.append(":");
-			url.append(Integer.toString(port));
-		}
-		String cp = request.getContextPath();
-		if (null != cp && cp.length() > 0) {
-			url.append(request.getContextPath());
-		}
-		url.append("/d/");
-		return url.toString();
+		return dispatcherUrlService.getLocalDispatcherUrl();
 	}
 
 
@@ -159,10 +135,23 @@ public class FinishFinalReportTaskCommand
 		// download report and upload as document in Alfresco
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(reportUrl);
-		HttpResponse httpResponse = httpClient.execute(httpGet);
-		String filename = referralId.replace('/', '_') + "-finalReport.pdf";
-		Document cmisDocument = cmisService.create(filename, MIME_PDF, httpResponse.getEntity().getContent(),
-				ReferralUtil.getYear(referralId), referralId);
+		HttpResponse httpResponse;
+		try {
+			httpResponse = httpClient.execute(httpGet);
+		} catch (Exception e1) {
+			log.error("Could not create report.", e1);
+			throw new KtunaxaException(KtunaxaException.CODE_REPORT_ERROR, "Could not create report.");			
+		}
+		SimpleDateFormat timeFormat = new SimpleDateFormat(KtunaxaBpmConstant.TIMESTAMP_FORMAT);
+		String filename = referralId.replace('/', '_') + "-finalReport-" + timeFormat.format(new Date()) + ".pdf";
+		Document cmisDocument;
+		try {
+			cmisDocument = cmisService.saveOrUpdate(filename, MIME_PDF, httpResponse.getEntity().getContent(),
+					-1, ReferralUtil.getYear(referralId), referralId);
+		} catch (Exception e) {
+			log.error("Could not save report in Alfresco.", e);
+			throw new KtunaxaException(KtunaxaException.CODE_ALFRESCO_ERROR, "Could not save report in Alfresco.");
+		}
 		log.debug("Uploaded in Alfresco");
 		if (!httpGet.isAborted()) {
 			httpGet.abort(); // assure low level resources are released
@@ -228,7 +217,7 @@ public class FinishFinalReportTaskCommand
 				response.getErrors().addAll(emailResponse.getErrors());
 				response.getErrorMessages().addAll(emailResponse.getErrorMessages());
 				response.getExceptions().addAll(emailResponse.getExceptions());
-				throw new GeomajasException(ExceptionCode.UNEXPECTED_PROBLEM, "Could not send e-mail.");
+				throw new KtunaxaException(KtunaxaException.CODE_MAIL_ERROR, "Could not send e-mail.");
 			}
 			log.debug("Final report e-mail sent.");
 		}

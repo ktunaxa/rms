@@ -20,26 +20,28 @@
 package org.ktunaxa.referral.client.gui;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.Html;
 import org.geomajas.gwt.client.util.HtmlBuilder;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.KeepInScreenWindow;
 import org.geomajas.layer.feature.Feature;
+import org.geomajas.plugin.staticsecurity.command.dto.GetUsersRequest;
+import org.geomajas.plugin.staticsecurity.command.dto.GetUsersResponse;
+import org.geomajas.plugin.staticsecurity.security.dto.OrUserFilter;
+import org.geomajas.plugin.staticsecurity.security.dto.UserFilter;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.AssignTaskRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralResponse;
-import org.ktunaxa.referral.server.command.dto.GetUsersRequest;
-import org.ktunaxa.referral.server.command.dto.GetUsersResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
+import org.ktunaxa.referral.server.security.dto.BpmRoleUserFilter;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.smartgwt.client.data.DataSource;
@@ -270,13 +272,17 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 			public void onClick(final ClickEvent clickEvent) {
 				GwtCommand command = new GwtCommand(GetUsersRequest.COMMAND);
 				GetUsersRequest request = new GetUsersRequest();
-				request.setRoles(new HashSet<String>(task.getCandidates()));
+				UserFilter filter = new OrUserFilter();
+				for (String role : task.getCandidates()) {
+					filter = filter.or(new BpmRoleUserFilter(role));
+				}
+				request.setFilter(filter);
 				command.setCommandRequest(request);
-				GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetUsersResponse>() {
+				CommunicationHandler.get().execute(command, new AbstractCommandCallback<GetUsersResponse>() {
 					public void execute(GetUsersResponse response) {
 						assignWindow(task, response, clickEvent);
 					}
-				});
+				}, "Getting users...");
 			}
 		});
 		infoLayout.addMember(assignButton);
@@ -451,7 +457,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		request.setAssignee(assignee);
 		GwtCommand command = new GwtCommand(AssignTaskRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetReferralResponse>() {
+		CommunicationHandler.get().execute(command, new AbstractCommandCallback<GetReferralResponse>() {
 
 			public void execute(GetReferralResponse response) {
 				setStartButtonStatus(task);
@@ -465,7 +471,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 					TaskBlock.this.setDisabled(true);
 				}
 			}
-		});
+		}, start ? "Starting task..." : "Assigning task...");
 	}
 
 	private void start(TaskDto task, Feature referral) {

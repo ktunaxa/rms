@@ -753,6 +753,91 @@
 			            </Stroke>
 					</PolygonSymbolizer>
 				</Rule>
+				
+				<Rule>
+					<Name>Red Shoreline</Name>
+					<Title>Red Shoreline</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>LSG_RED</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+			            <Stroke>
+			              <CssParameter name="stroke">#FF0000</CssParameter>
+			              <CssParameter name="stroke-width">2</CssParameter>
+			            </Stroke>
+					</LineSymbolizer>
+				</Rule>
+
+				<Rule>
+					<Name>Red Shoreline</Name>
+					<Title>Red Shoreline</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>LSG_RED</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+			            <Stroke>
+			              <CssParameter name="stroke">#FF0000</CssParameter>
+			              <CssParameter name="stroke-width">2</CssParameter>
+			            </Stroke>
+					</LineSymbolizer>
+				</Rule>
+
+				<Rule>
+					<Name>Orange Shoreline</Name>
+					<Title>Orange Shoreline</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>LSG_ORA</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+			            <Stroke>
+			              <CssParameter name="stroke">#FF9900</CssParameter>
+			              <CssParameter name="stroke-width">2</CssParameter>
+			            </Stroke>
+					</LineSymbolizer>
+				</Rule>
+
+				<Rule>
+					<Name>Yellow Shoreline</Name>
+					<Title>Yellow Shoreline</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>LSG_YEL</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+			            <Stroke>
+			              <CssParameter name="stroke">#FFFF00</CssParameter>
+			              <CssParameter name="stroke-width">2</CssParameter>
+			            </Stroke>
+					</LineSymbolizer>
+				</Rule>
+				
+				<Rule>
+					<Name>Grey Shoreline</Name>
+					<Title>Grey Shoreline</Title>
+					<ogc:Filter>
+						<ogc:PropertyIsEqualTo>
+							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:Literal>LSG_GRE</ogc:Literal>
+						</ogc:PropertyIsEqualTo>
+					</ogc:Filter>
+					<LineSymbolizer>
+			            <Stroke>
+			              <CssParameter name="stroke">#888888</CssParameter>
+			              <CssParameter name="stroke-width">2</CssParameter>
+			            </Stroke>
+					</LineSymbolizer>
+				</Rule>
 			<!-- New Layer Styling.pdf stop -->
 
 				<Rule>

@@ -33,6 +33,7 @@
 			WEB-INF/applicationContext.xml
 			WEB-INF/spring-hibernate.xml
 			WEB-INF/bpm.xml
+			WEB-INF/dispatcher.xml
 			WEB-INF/crs.xml
 			WEB-INF/cmis.xml
 			WEB-INF/security.xml

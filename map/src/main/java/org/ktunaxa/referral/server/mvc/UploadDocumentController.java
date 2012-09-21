@@ -56,7 +56,7 @@ public class UploadDocumentController {
 			String year = "20" + referralId.substring(8, 10);
 			String originalFilename = file.getOriginalFilename();
 			Document document = cmisService.create(originalFilename, file.getContentType(),
-					file.getInputStream(), year, referralId);
+					file.getInputStream(), file.getSize(), year, referralId);
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_TITLE, originalFilename);
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_ID, document.getId());
 			response.addObject(KtunaxaConstant.FORM_DOCUMENT_DISPLAY_URL, cmisService.getDisplayUrl(document));

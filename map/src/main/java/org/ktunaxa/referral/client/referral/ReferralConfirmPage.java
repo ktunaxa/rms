@@ -18,9 +18,9 @@
  */
 package org.ktunaxa.referral.client.referral;
 
-import com.smartgwt.client.util.BooleanCallback;
-import com.smartgwt.client.util.SC;
-import org.geomajas.command.CommandResponse;
+import java.util.Collection;
+import java.util.List;
+
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.command.dto.PersistTransactionResponse;
 import org.geomajas.configuration.AbstractAttributeInfo;
@@ -28,26 +28,25 @@ import org.geomajas.configuration.AbstractReadOnlyAttributeInfo;
 import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.geomajas.widget.utility.gwt.client.wizard.WizardPage;
+import org.geomajas.widget.utility.gwt.client.wizard.WizardView;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.BooleanCallback;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.geomajas.widget.utility.gwt.client.wizard.WizardPage;
-import org.geomajas.widget.utility.gwt.client.wizard.WizardView;
-import org.ktunaxa.referral.client.gui.LayoutConstant;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Page to confirm creation of a new referral.
@@ -115,34 +114,28 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 
 					GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 					command.setCommandRequest(request);
+					Runnable onError = new Runnable() {
 
-					GwtCommandDispatcher.getInstance().execute(command,
+						@Override
+						public void run() {
+							wizardView.setLoading(false);
+							failureCallback.run();
+						}
+					};
+
+					CommunicationHandler.get().execute(command,
 							new AbstractCommandCallback<PersistTransactionResponse>() {
 
-						public void execute(PersistTransactionResponse response) {
-							mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(),
-									response.getFeatureTransaction()));
-							Feature newFeature =
-									new Feature(response.getFeatureTransaction().getNewFeatures()[0], ft.getLayer());
-							getWizardData().setFeature(newFeature);
-							wizardView.setLoading(false);
-							successCallback.run();
-						}
-
-						@Override
-						public void onCommunicationException(Throwable error) {
-							super.onCommunicationException(error);
-							wizardView.setLoading(false);
-							failureCallback.run();
-						}
-
-						@Override
-						public void onCommandException(CommandResponse response) {
-							super.onCommandException(response);
-							wizardView.setLoading(false);
-							failureCallback.run();
-						}
-					});
+								public void execute(PersistTransactionResponse response) {
+									mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(), response
+											.getFeatureTransaction()));
+									Feature newFeature = new Feature(
+											response.getFeatureTransaction().getNewFeatures()[0], ft.getLayer());
+									getWizardData().setFeature(newFeature);
+									wizardView.setLoading(false);
+									successCallback.run();
+								}
+							}, "Creating referral...", onError);
 				}
 			}
 		});

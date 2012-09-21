@@ -24,11 +24,11 @@ import java.util.List;
 
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -69,7 +69,8 @@ public class MyTasksPanel extends VLayout {
 		request.setAssignee(UserContext.getInstance().getUser());
 		GwtCommand command = new GwtCommand(GetTasksRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
+		CommunicationHandler.get().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
+
 			public void execute(GetTasksResponse response) {
 				list.clear(); // clear again to avoid double AJAX calls causing duplicates
 				for (TaskDto task : response.getTasks()) {
@@ -78,7 +79,7 @@ public class MyTasksPanel extends VLayout {
 				}
 				view.populate(list);
 			}
-		});
+		}, "Getting all tasks...");
 	}
 
 }

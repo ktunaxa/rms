@@ -51,6 +51,7 @@ public interface KtunaxaBpmConstant {
 	String VAR_COMMUNITY_D_INPUT = "communityDInput";
 
 	String DATE_FORMAT = "yyyy-MM-dd";
+	String TIMESTAMP_FORMAT = "yyyy-MM-dd_HH-mm-ss";
 	String SET_BOOLEAN = "_Boolean";
 
 	String ROLE_REFERRAL_MANAGER = "referralManager";

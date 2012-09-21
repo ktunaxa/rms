@@ -21,18 +21,18 @@ package org.ktunaxa.referral.client.gui;
 
 import java.util.List;
 
-import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.event.shared.HandlerRegistration;
-
 import org.geomajas.configuration.FeatureStyleInfo;
 import org.geomajas.configuration.SymbolInfo;
+import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
 import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
 import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
+import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.map.store.VectorLayerStore;
 import org.geomajas.gwt.client.spatial.Bbox;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.spatial.geometry.MultiPoint;
@@ -45,12 +45,16 @@ import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.client.widget.ResizableLeftLayout;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -275,6 +279,29 @@ public final class MapLayout extends VLayout {
 			infoPane.showCard(LayersPanel.NAME);
 		}
 		handlerManager.fireEvent(new CurrentReferralChangedEvent(referral, task));
+	}
+	
+	/**
+	 * Refresh the referral, optionally clearing the task.
+	 * @param clearTask
+	 */
+	public void refreshReferral(final boolean clearTask) {
+		if (currentReferral != null) {
+			final Window window = CommunicationHandler.get().createWindow("Reloading referral...", true);
+			VectorLayerStore store = mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID)
+					.getFeatureStore();
+			store.removeFeature(currentReferral.getId());
+			store.getFeature(currentReferral.getId(), GeomajasConstant.FEATURE_INCLUDE_ALL, new LazyLoadCallback() {
+
+				public void execute(List<org.geomajas.gwt.client.map.feature.Feature> response) {
+					if (response.size() > 0) {
+						setReferralAndTask(response.get(0).toDto(), clearTask ? null : currentTask);
+						focusBpm();
+					}
+					window.destroy();
+				}
+			});
+		}
 	}
 
 	/**

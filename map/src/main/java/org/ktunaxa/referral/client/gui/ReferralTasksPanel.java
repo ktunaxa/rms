@@ -24,10 +24,10 @@ import java.util.List;
 
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.GetTasksRequest;
 import org.ktunaxa.referral.server.command.dto.GetTasksResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -103,11 +103,11 @@ public class ReferralTasksPanel extends VLayout {
 			request.setReferralId(ReferralUtil.createId(referral));
 			GwtCommand command = new GwtCommand(GetTasksRequest.COMMAND);
 			command.setCommandRequest(request);
-			GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
+			CommunicationHandler.get().execute(command, new AbstractCommandCallback<GetTasksResponse>() {
 				public void execute(GetTasksResponse response) {
 					refresh(response.getTasks());
 				}
-			});
+			}, "Getting tasks...");
 		} else {
 			refresh(null);
 		}

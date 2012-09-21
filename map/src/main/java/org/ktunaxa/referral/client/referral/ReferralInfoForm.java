@@ -18,6 +18,11 @@
  */
 package org.ktunaxa.referral.client.referral;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.geomajas.configuration.AbstractReadOnlyAttributeInfo;
 import org.geomajas.configuration.AssociationAttributeInfo;
 import org.geomajas.configuration.AssociationType;
@@ -63,6 +68,8 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 		FormItem formItem = super.createItem(info);
 		if (KtunaxaConstant.ATTRIBUTE_NUMBER.equals(info.getName())) {
 			formItem.setVisible(false);
+		} else if (KtunaxaConstant.ATTRIBUTE_FULL_ID.equals(info.getName())) {
+			formItem.setVisible(false);
 		} else if (KtunaxaConstant.ATTRIBUTE_TARGET_REFERRAL.equals(info.getName())) {
 			SelectItem targetItem = (SelectItem) formItem;
 			targetItem.setOptionDataSource(new ReferralManyToOneDataSource(info,
@@ -106,44 +113,131 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 
 	@Override
 	public void prepareForm(FormItemList formItems, DataSource source) {
+		
+		Map<String, FormItem> itemMap = new HashMap<String, FormItem>();
+		for (FormItem formItem : formItems) {
+			itemMap.put(formItem.getName(), formItem);
+		}
+		formItems.clear();
+		
+		List<FormItem> idItem = grabList(itemMap, KtunaxaConstant.ATTRIBUTE_FULL_ID);
+		formItems.addAll(idItem);
+		
 		HeaderItem projectHeader = new HeaderItem("project-info-header");
 		projectHeader.setDefaultValue("General project information");
-		formItems.insertBefore(KtunaxaConstant.ATTRIBUTE_PRIMARY, projectHeader);
-
+		formItems.add(projectHeader);
+		
+		List<FormItem> projectItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_PRIMARY,
+				KtunaxaConstant.ATTRIBUTE_SECONDARY,
+				KtunaxaConstant.ATTRIBUTE_YEAR,
+				KtunaxaConstant.ATTRIBUTE_APPLICANT_NAME,
+				KtunaxaConstant.ATTRIBUTE_PROJECT,
+				KtunaxaConstant.ATTRIBUTE_PROJECT_LOCATION,
+				KtunaxaConstant.ATTRIBUTE_PROJECT_DESCRIPTION,
+				KtunaxaConstant.ATTRIBUTE_PROJECT_BACKGROUND
+				
+		);
+		formItems.addAll(projectItems);
+		
 		RowSpacerItem externalSpacer = new RowSpacerItem("external-info-spacer");
 		HeaderItem externalHeader = new HeaderItem("external-info-header");
 		externalHeader.setDefaultValue("External project information");
 		externalHeader.setColSpan(COLUMN_COUNT);
-		formItems.insertBefore("externalProjectId", externalSpacer, externalHeader);
-
+		formItems.add(externalSpacer);
+		formItems.add(externalHeader);
+		
+		List<FormItem> externalItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_EXTERNAL_PROJECT_ID,
+				KtunaxaConstant.ATTRIBUTE_EXTERNAL_FILE_ID,
+				KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY_TYPE,
+				KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY,
+				KtunaxaConstant.ATTRIBUTE_PRIORITY
+		);
+		formItems.addAll(externalItems);
+		
 		RowSpacerItem contactSpacer = new RowSpacerItem("contact-info-spacer");
 		HeaderItem contactHeader = new HeaderItem("contact-info-header");
 		contactHeader.setDefaultValue("Referral contact information");
 		contactHeader.setColSpan(COLUMN_COUNT);
-		formItems.insertBefore("contactName", contactSpacer, contactHeader);
+		formItems.add(contactSpacer);
+		formItems.add(contactHeader);
+		
+		List<FormItem> contactItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_CONTACT_NAME,
+				KtunaxaConstant.ATTRIBUTE_EMAIL,
+				KtunaxaConstant.ATTRIBUTE_CONTACT_PHONE,
+				KtunaxaConstant.ATTRIBUTE_CONTACT_ADDRESS);
+		formItems.addAll(contactItems);
 
 		RowSpacerItem typeSpacer = new RowSpacerItem("type-info-spacer");
 		HeaderItem typeHeader = new HeaderItem("type-info-header");
 		typeHeader.setDefaultValue("General information regarding the referral");
 		typeHeader.setColSpan(COLUMN_COUNT);
-		formItems.insertBefore("referralType", typeSpacer, typeHeader);
+		formItems.add(typeSpacer);
+		formItems.add(typeHeader);
+
+		List<FormItem> typeItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_TYPE,
+				KtunaxaConstant.ATTRIBUTE_APPLICATION_TYPE,
+				KtunaxaConstant.ATTRIBUTE_TARGET_REFERRAL,
+				KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE,
+				KtunaxaConstant.ATTRIBUTE_CONFIDENTIAL);
+		formItems.addAll(typeItems);
 
 		RowSpacerItem dateSpacer = new RowSpacerItem("date-info-spacer");
 		HeaderItem dateHeader = new HeaderItem("date-info-header");
 		dateHeader.setDefaultValue("Project deadline information");
 		dateHeader.setColSpan(COLUMN_COUNT);
-		formItems.insertBefore("receiveDate", dateSpacer, dateHeader);
+		formItems.add(dateSpacer);
+		formItems.add(dateHeader);
+
+		List<FormItem> dateItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_RECEIVED_DATE,
+				KtunaxaConstant.ATTRIBUTE_RESPONSE_DATE,
+				KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE);
+		formItems.addAll(dateItems);
 
 		RowSpacerItem documentSpacer = new RowSpacerItem("document-info-spacer");
 		HeaderItem documentHeader = new HeaderItem("document-info-header");
 		documentHeader.setDefaultValue("Document management classificiation");
 		documentHeader.setColSpan(COLUMN_COUNT);
-		formItems.insertBefore("activeRetentionPeriod", documentSpacer, documentHeader);
+		formItems.add(documentSpacer);
+		formItems.add(documentHeader);
+
+		List<FormItem> docItems = grabList(itemMap, 
+				KtunaxaConstant.ATTRIBUTE_ACTIVE_RETENTION_PERIOD,
+				KtunaxaConstant.ATTRIBUTE_SEMI_ACTIVE_RETENTION_PERIOD,
+				KtunaxaConstant.ATTRIBUTE_FINAL_DISPOSITION);
+		formItems.addAll(docItems);
+		
+		// add the rest (all invisible)
+		formItems.addAll(itemMap.values());
 
 		getWidget().setWidth("100%");
 		getWidget().setNumCols(COLUMN_COUNT);
 		getWidget().setColWidths(175, "50%", 225, "50%");
 	}
+	
+	/**
+	 * Grab a list of items from the map of items. Removes the items so they can only be used once.
+	 * @param itemMap
+	 * @param names
+	 * @return the list
+	 */
+	private List<FormItem> grabList(Map<String, FormItem> itemMap, String... names) {
+		List<FormItem> items = new ArrayList<FormItem>();
+		for (String name : names) {
+			if (itemMap.containsKey(name)) {
+				items.add(itemMap.get(name));
+			}
+		}
+		for (String name : names) {
+			itemMap.remove(name);
+		}
+		return items;
+	}
+
 
 	/**
 	 * Re(sets) the referral Id when a component changes.

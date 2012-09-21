@@ -26,7 +26,6 @@ import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.command.dto.PersistTransactionResponse;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
@@ -37,6 +36,7 @@ import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.geomajas.widget.utility.gwt.client.wizard.Wizard;
 import org.geomajas.widget.utility.gwt.client.wizard.WizardWidget;
 import org.ktunaxa.referral.client.gui.MapLayout;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.CreateProcessRequest;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -108,7 +108,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 					GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 					command.setCommandRequest(request);
 
-					GwtCommandDispatcher.getInstance().execute(command,
+					CommunicationHandler.get().execute(command,
 							new AbstractCommandCallback<CommandResponse>() {
 
 						public void execute(CommandResponse response) {
@@ -121,7 +121,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 								createProcess(newFeature);
 							}
 						}
-					});
+					}, "Creating referral...");
 				}
 			}
 		});
@@ -145,7 +145,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 		GwtCommand command = new GwtCommand(CreateProcessRequest.COMMAND);
 		command.setCommandRequest(request);
 
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<CommandResponse>() {
+		CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
 
 			public void execute(CommandResponse response) {
 				getView().setLoading(false);
@@ -161,7 +161,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 					}
 				});
 			}
-		});
+		}, "Creating referral...");
 	}
 
 	/**

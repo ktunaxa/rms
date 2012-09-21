@@ -29,7 +29,6 @@ import org.geomajas.geometry.service.GeometryService;
 import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.controller.AbstractGraphicsController;
 import org.geomajas.gwt.client.map.RenderSpace;
 import org.geomajas.gwt.client.spatial.Mathlib;
@@ -38,6 +37,7 @@ import org.geomajas.gwt.client.spatial.geometry.Point;
 import org.geomajas.gwt.client.util.GeometryConverter;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.ktunaxa.referral.client.gui.MapLayout;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.event.dom.client.MouseUpEvent;
@@ -75,7 +75,7 @@ public class MakeReferralCurrentController extends AbstractGraphicsController {
 
 		GwtCommand commandRequest = new GwtCommand(SearchByLocationRequest.COMMAND);
 		commandRequest.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(commandRequest,
+		CommunicationHandler.get().execute(commandRequest,
 				new AbstractCommandCallback<SearchByLocationResponse>() {
 
 			public void execute(SearchByLocationResponse response) {
@@ -98,7 +98,7 @@ public class MakeReferralCurrentController extends AbstractGraphicsController {
 					}
 				}
 			}
-		});
+		}, "Searching referral...");
 	}
 
 	private double calculateBufferFromPixelTolerance() {

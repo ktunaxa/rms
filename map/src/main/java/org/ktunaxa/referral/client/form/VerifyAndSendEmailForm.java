@@ -23,14 +23,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.form.fields.TextAreaItem;
-import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
@@ -42,6 +38,7 @@ import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
 import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
@@ -50,11 +47,14 @@ import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
+import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangeEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangeHandler;
+import com.smartgwt.client.widgets.form.validator.RegExpValidator;
 
 /**
  * Form used to display a pre formed default email using {@link org.ktunaxa.referral.server.domain.Template}.
@@ -175,13 +175,14 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		request.setAttributes(ReferralUtil.getTemplateVariables(MapLayout.getInstance().getCurrentReferral()));
 		GwtCommand command = new GwtCommand(GetEmailDataRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {
+		CommunicationHandler.get().execute(command, new AbstractCommandCallback<GetEmailDataResponse>() {
+
 			public void execute(GetEmailDataResponse response) {
 				from.setValue(response.getFrom());
 				subject.setValue(response.getSubject());
 				message.setValue(response.getBody());
 			}
-		});
+		}, "Getting email data...");
 		cc.setValue(""); // clear the cc field of old values.
 		Feature currentReferral = MapLayout.getInstance().getCurrentReferral();
 		Attribute<String> email = currentReferral.getAttributes().get(KtunaxaConstant.ATTRIBUTE_EMAIL);
@@ -197,7 +198,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 				setEmailRequest(request);
 				GwtCommand command = new GwtCommand(SendEmailRequest.COMMAND);
 				command.setCommandRequest(request);
-				GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<SendEmailResponse>() {
+				CommunicationHandler.get().execute(command, new AbstractCommandCallback<SendEmailResponse>() {
 					public void execute(SendEmailResponse response) {
 						if (response.isSuccess()) {
 							valid.run();
@@ -206,7 +207,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 							invalid.run();
 						}
 					}
-				});
+				}, "Sending email...");
 			} else {
 				valid.run();
 			}
@@ -239,11 +240,11 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		request.setCrs(layer.getMapModel().getCrs());
 		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 		command.setCommandRequest(request);
-		GwtCommandDispatcher.getInstance().execute(command, new AbstractCommandCallback<CommandResponse>() {
+		CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
 			public void execute(CommandResponse response) {
 				// all fine
 			}
-		});
+		}, "Marking referral as finished...");
 		}
 	}
 

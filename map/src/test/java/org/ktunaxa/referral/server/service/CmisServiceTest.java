@@ -68,7 +68,7 @@ public class CmisServiceTest {
 		// First we create a new document:
 		Document document = null;
 		try {
-			document = service.create(documentName, mimeType, in);
+			document = service.create(documentName, mimeType, in, -1L);
 		} catch (IOException e) {
 			// If a previous test failed, then the document might still exist.
 			service.delete(documentName);

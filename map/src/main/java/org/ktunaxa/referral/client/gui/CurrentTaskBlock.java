@@ -24,20 +24,20 @@ import java.util.Map;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.widget.utility.gwt.client.widget.CardLayout;
 import org.ktunaxa.referral.client.form.AbstractTaskForm;
 import org.ktunaxa.referral.client.form.ChangeConfirmationForm;
+import org.ktunaxa.referral.client.form.ConcernsAddressedForm;
 import org.ktunaxa.referral.client.form.DiscussEvaluationForm;
-import org.ktunaxa.referral.client.form.VerifyAndSendEmailForm;
 import org.ktunaxa.referral.client.form.EmptyForm;
 import org.ktunaxa.referral.client.form.EvaluateOrFinishForm;
-import org.ktunaxa.referral.client.form.ConcernsAddressedForm;
 import org.ktunaxa.referral.client.form.ReviewReferralForm;
 import org.ktunaxa.referral.client.form.ReviewResultForm;
 import org.ktunaxa.referral.client.form.ValueSelectForm;
+import org.ktunaxa.referral.client.form.VerifyAndSendEmailForm;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -53,27 +53,40 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Block which displays the current task with the ability to set variables and finish the task.
- *
+ * 
  * @author Joachim Van der Auwera
  */
 public class CurrentTaskBlock extends CardLayout<String> {
 
 	private static final String KEY_NO = "no";
+
 	private static final String KEY_CURRENT = "curr";
-	
+
 	// form names should match task names for the form
 	private static final String FORM_EMPTY = "empty";
+
 	private static final String FORM_DISCUSS_EVALUATION = "discussEvaluationResult.form";
+
 	private static final String FORM_EVALUATE_OR_FINISH = "evaluateOrFinish.form";
+
 	private static final String FORM_CONCERNS_ADDRESSED = "concernsAddressed.form";
+
 	private static final String FORM_FILE_FINAL_REPORT = "fileFinalReport.form";
+
 	private static final String FORM_REVIEW_REFERRAL = "reviewReferral.form";
+
 	private static final String FORM_VALUE_SELECT = "valueSelect.form";
+
 	private static final String FORM_REVIEW_LEVEL_0 = "reviewLevel0Notification.form";
+
 	private static final String FORM_REVIEW_CHANGE = "reviewChangeNotification.form";
+
 	private static final String FORM_REVIEW_START = "reviewStartNotification.form";
+
 	private static final String FORM_REVIEW_RESULT = "reviewResultNotification.form";
+
 	private static final String FORM_CHANGE_CONFIRMATION = "changeConfirmation.form";
+
 	private static final String[] TASKS_WITH_FORM = {
 			FORM_DISCUSS_EVALUATION,
 			FORM_EVALUATE_OR_FINISH,
@@ -89,7 +102,9 @@ public class CurrentTaskBlock extends CardLayout<String> {
 	};
 
 	private final CardLayout<String> taskForms = new CardLayout<String>();
+
 	private final Button finishButton = new Button("Finish task");
+
 	private boolean changeHandlerInitialized;
 
 	/**
@@ -140,6 +155,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 
 		if (!changeHandlerInitialized) {
 			CurrentReferralChangedHandler currentReferralChangedHandler = new CurrentReferralChangedHandler() {
+
 				public void onCurrentReferralChanged(CurrentReferralChangedEvent event) {
 					refresh(event.getTask());
 				}
@@ -159,7 +175,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 			showCard(KEY_NO);
 		} else {
 			String formKey = FORM_EMPTY;
-			for (int i = TASKS_WITH_FORM.length - 1 ; i >= 0 ; i--) {
+			for (int i = TASKS_WITH_FORM.length - 1; i >= 0; i--) {
 				if (null != task.getFormKey() && task.getFormKey().endsWith(TASKS_WITH_FORM[i])) {
 					formKey = TASKS_WITH_FORM[i];
 				}
@@ -178,7 +194,7 @@ public class CurrentTaskBlock extends CardLayout<String> {
 
 	/**
 	 * Click handler for the "Finish task" button.
-	 *
+	 * 
 	 * @author Joachim Van der Auwera
 	 */
 	private class FinishTaskClickHandler implements ClickHandler {
@@ -190,31 +206,43 @@ public class CurrentTaskBlock extends CardLayout<String> {
 				final TaskDto currentTask = MapLayout.getInstance().getCurrentTask();
 				if (null != currentTask) {
 					finishButton.disable();
-					taskForm.validate(new Runnable() {
-								public void run() {
-									Map<String, String> variables = taskForm.getVariables();
-									FinishTaskRequest request = new FinishTaskRequest();
-									request.setTaskId(currentTask.getId());
-									request.setVariables(variables);
-									GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
-									command.setCommandRequest(request);
-									GwtCommandDispatcher.getInstance().execute(command,
-											new AbstractCommandCallback<CommandResponse>() {
-												public void execute(CommandResponse response) {
-													MapLayout mapLayout = MapLayout.getInstance();
-													mapLayout.setReferralAndTask(mapLayout.getCurrentReferral(),
-															null); // clear task
-													mapLayout.focusBpm();
-													showCard(KEY_NO);
-												}
-											});
+					final MapLayout mapLayout = MapLayout.getInstance();
+					final Runnable onError = new Runnable() {
+
+						public void run() {
+							mapLayout.refreshReferral(false);
+							finishButton.enable();
+						}
+					};
+					
+					Runnable onValid = new Runnable() {
+
+						public void run() {
+							// finish the task
+							Map<String, String> variables = taskForm.getVariables();
+							FinishTaskRequest request = new FinishTaskRequest();
+							request.setTaskId(currentTask.getId());
+							request.setVariables(variables);
+							GwtCommand command = new GwtCommand(FinishTaskRequest.COMMAND);
+							command.setCommandRequest(request);
+							CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
+
+								public void execute(CommandResponse response) {
+									mapLayout.refreshReferral(true); // clear task
+									showCard(KEY_NO);
 								}
-							}, new Runnable() {
+
+							}, "Finishing task...", onError);
+						}
+					};
+
+					Runnable onInvalid = new Runnable() {
+
 						public void run() {
 							finishButton.enable();
 						}
-					}
-					);
+					};
+					taskForm.validate(onValid, onInvalid);
 				}
 			}
 		}

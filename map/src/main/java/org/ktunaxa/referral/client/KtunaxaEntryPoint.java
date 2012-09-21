@@ -51,6 +51,7 @@ import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
 import org.ktunaxa.referral.client.referral.MakeReferralCurrentModalAction;
 import org.ktunaxa.referral.client.security.UserContext;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapRequest;
 import org.ktunaxa.referral.server.command.dto.GetReferralMapResponse;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -136,8 +137,8 @@ public class KtunaxaEntryPoint implements EntryPoint {
 			public void loadClientApplicationInfo(final String applicationId, final ClientConfigurationSetter setter) {
 				GwtCommand commandRequest = new GwtCommand(GetReferralMapRequest.COMMAND);
 				commandRequest.setCommandRequest(new GetReferralMapRequest(applicationId));
-				GwtCommandDispatcher dispatcher = GwtCommandDispatcher.getInstance();
-				dispatcher.execute(commandRequest, new AbstractCommandCallback<GetReferralMapResponse>() {
+				CommunicationHandler.get().execute(commandRequest,
+						new AbstractCommandCallback<GetReferralMapResponse>() {
 
 					public void execute(GetReferralMapResponse response) {
 						UserContext.getInstance().setBpmRoles(response.getBpmRoles());
@@ -146,7 +147,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 						setter.set(applicationId, response.getApplication());
 					}
 
-				});
+				}, "Loading RMS...");
 			}
 		});
 

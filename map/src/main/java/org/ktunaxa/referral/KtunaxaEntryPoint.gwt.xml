@@ -36,10 +36,13 @@
 	<inherits name="org.ktunaxa.KtunaxaBpm" />
 
 	<!-- Source -->    
-	<source path="client" />
-		<source path="client/wkt">
+	<source path="client">
 		<exclude name="*Test*.java"/>
 	</source>
+	<source path="client/wkt">
+		<exclude name="*Test*.java"/>
+	</source>
+    <source path="server/security/dto" />
     <source path="server/dto" />
     <source path="server/command/dto" />
     <source path="server/service">
