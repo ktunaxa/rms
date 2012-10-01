@@ -222,7 +222,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		explanation.append(HtmlBuilder.divClassHtmlContent(COMMENT_STYLE,
 				HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", "Note: ") + 
 		"Using non-allowed text between the '${' and '}', will break the template."));
-		label.setContents(explanation.toString());  
+		label.setContents(explanation.toString());
 	}
 
 	@Override
@@ -265,7 +265,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 									HtmlBuilder.tagHtmlContent(Html.Tag.P, "First placeholder which is not allowed: ",
 											HtmlBuilder.tagClass(Html.Tag.SPAN, "commentBlockTitleText", 
 													corruptPlaceholder)), 
-									HtmlBuilder.tag(Html.Tag.P, "Please, correct the used placeholders.")));
+									HtmlBuilder.tag(Html.Tag.P, "Please correct the used placeholders.")));
 						} else {
 							SC.warn("Unknown problem occurred while editing the template.");
 						}

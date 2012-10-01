@@ -225,8 +225,13 @@ public final class ReferralUtil {
 	 */
 	public static Map<String, String> getTemplateVariables(Feature feature) {
 		Map<String, String> variables = new HashMap<String, String>();
+		// add all variables as place holders (in case feature == null) 
+		for (String key : TEMPLATE_VARIABLES) {
+			variables.put(key, "${" + key + "}");
+		}
+		Map<String, Attribute> attributes;
 		if (null != feature) {
-			Map<String, Attribute> attributes = feature.getAttributes();
+			attributes = feature.getAttributes();
 			for (String key : TEMPLATE_VARIABLES) {
 				Attribute attribute = attributes.get(key);
 				String value = null;

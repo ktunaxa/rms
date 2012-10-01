@@ -21,7 +21,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="503"/>
+	<property name="ireport.y" value="2"/>
 	<parameter name="commentsSubReport" class="net.sf.jasperreports.engine.JasperReport"/>
 	<field name="@" class="org.geomajas.layer.feature.InternalFeature"/>
 	<field name="primaryClassificationNumber" class="java.lang.Integer"/>
@@ -87,13 +87,13 @@
 	<pageHeader>
 		<band height="100" splitType="Stretch">
 			<image>
-				<reportElement x="2" y="0" width="181" height="74"/>
+				<reportElement x="2" y="19" width="90" height="30"/>
 				<imageExpression><![CDATA["reports/Header_KNC_Logo.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="200" y="0" width="372" height="45" forecolor="#6B6B6B"/>
+				<reportElement x="200" y="15" width="372" height="38" forecolor="#6B6B6B"/>
 				<textElement>
-					<font size="11"/>
+					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Ktunaxa Nation Council - Lands & Resource Agency
 7468 Mission Road, Cranbrook, BC  V1C 7E5
@@ -267,7 +267,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<subreportExpression><![CDATA[$P{commentsSubReport}]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="19">
+		<band height="50">
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="0" width="572" height="15"/>
 				<textElement>
@@ -276,9 +276,9 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<textFieldExpression><![CDATA[$F{finalReportConclusion}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="151">
+		<band height="151" splitType="Prevent">
 			<image scaleImage="RetainShape" hAlign="Right">
-				<reportElement x="0" y="15" width="213" height="62"/>
+				<reportElement x="0" y="15" width="110" height="31"/>
 				<imageExpression><![CDATA["reports/Letter_Signature.jpg"]]></imageExpression>
 			</image>
 			<staticText>
