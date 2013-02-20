@@ -159,7 +159,7 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 			for (String part : recipients.split("[,;\\s]")) {
 				String address = part.trim();
 				if (address.length() > 0) {
-					mimeMessage.setRecipient(recipientType, new InternetAddress(address));
+					mimeMessage.addRecipient(recipientType, new InternetAddress(address));
 				}
 			}
 		}
