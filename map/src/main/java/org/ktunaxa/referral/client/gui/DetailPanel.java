@@ -57,6 +57,8 @@ public class DetailPanel extends VLayout {
 
 	private String referralId;
 
+	private RefreshButton refreshButton;
+
 	private EditButton editButton;
 
 	private SaveButton saveButton;
@@ -91,12 +93,14 @@ public class DetailPanel extends VLayout {
 		toolStrip.setHeight(32);
 		toolStrip.setBackgroundImage("");
 		toolStrip.setBorder("none");
+		refreshButton = new RefreshButton();
 		editButton = new EditButton();
 		saveButton = new SaveButton();
 		cancelButton = new CancelButton();
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setWidth("*");
 		toolStrip.addMember(spacer);
+		toolStrip.addMember(refreshButton);
 		toolStrip.addMember(editButton);
 		toolStrip.addMember(saveButton);
 		toolStrip.addMember(cancelButton);
@@ -214,6 +218,28 @@ public class DetailPanel extends VLayout {
 			editor.reset();
 			editor.setDisabled(true);
 			updateButtonState(false);
+		}
+	}
+
+	/**
+	 * Button that refreshes the referral.
+	 * 
+	 * @author Jan De Moerloose
+	 */
+	private class RefreshButton extends IButton implements com.smartgwt.client.widgets.events.ClickHandler {
+
+		public RefreshButton() {
+			setIcon(WidgetLayout.iconRefresh);
+			setIconWidth(LayoutConstant.ICON_BUTTON_LARGE_ICON_WIDTH);
+			setIconHeight(LayoutConstant.ICON_BUTTON_LARGE_ICON_HEIGHT);
+			setWidth(LayoutConstant.ICON_BUTTON_LARGE_WIDTH);
+			setHeight(LayoutConstant.ICON_BUTTON_LARGE_HEIGHT);
+			setTooltip("Refresh referral");
+			addClickHandler(this);
+		}
+
+		public void onClick(ClickEvent event) {
+			MapLayout.getInstance().refreshReferral(false, false);
 		}
 	}
 

@@ -26,8 +26,8 @@ import org.ktunaxa.referral.server.dto.TaskDto;
 
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.CloseClickEvent;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
-import com.smartgwt.client.widgets.events.CloseClientEvent;
 /**
  * Shows an {@link EditEmailTemplateForm} used for editing {@link org.ktunaxa.referral.server.domain.Template}s.
  *
@@ -98,7 +98,7 @@ public class EditEmailWindow extends KeepInScreenWindow {
 			form.disableButtons();
 		}
 
-		public void onCloseClick(CloseClientEvent event) {
+		public void onCloseClick(CloseClickEvent event) {
 			onClick(null);
 		}
 	}

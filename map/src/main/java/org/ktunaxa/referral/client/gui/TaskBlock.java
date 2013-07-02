@@ -57,8 +57,8 @@ import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.CloseClickEvent;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
-import com.smartgwt.client.widgets.events.CloseClientEvent;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -371,7 +371,7 @@ public class TaskBlock extends AbstractCollapsibleListBlock<TaskDto> {
 		assignWindow.setShowModalMask(true);
 		assignWindow.setIsModal(true);
 		assignWindow.addCloseClickHandler(new CloseClickHandler() {
-			public void onCloseClick(CloseClientEvent closeClientEvent) {
+			public void onCloseClick(CloseClickEvent closeClientEvent) {
 				assignWindow.destroy();
 			}
 		});

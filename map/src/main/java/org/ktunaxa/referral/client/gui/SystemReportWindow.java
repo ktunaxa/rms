@@ -19,25 +19,26 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import java.util.Date;
+
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.util.WidgetLayout;
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.CloseClickEvent;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
-import com.smartgwt.client.widgets.events.CloseClientEvent;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
-import org.geomajas.gwt.client.util.WidgetLayout;
-import org.ktunaxa.bpm.KtunaxaBpmConstant;
-import org.ktunaxa.referral.server.service.KtunaxaConstant;
-
-import java.util.Date;
 
 /**
  * Window to allow administrators to create a system report.
@@ -72,7 +73,7 @@ public class SystemReportWindow extends Window {
 		setCanDragResize(true);
 		setShowMinimizeButton(false);
 		addCloseClickHandler(new CloseClickHandler() {
-			public void onCloseClick(CloseClientEvent event) {
+			public void onCloseClick(CloseClickEvent event) {
 				hide();
 			}
 		});

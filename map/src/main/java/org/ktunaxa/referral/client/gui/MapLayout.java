@@ -286,6 +286,14 @@ public final class MapLayout extends VLayout {
 	 * @param clearTask
 	 */
 	public void refreshReferral(final boolean clearTask) {
+		refreshReferral(clearTask, true);
+	}
+	
+	/**
+	 * Refresh the referral, optionally clearing the task and focussing on tasks.
+	 * @param clearTask
+	 */
+	public void refreshReferral(final boolean clearTask, final boolean focusBpm) {
 		if (currentReferral != null) {
 			final Window window = CommunicationHandler.get().createWindow("Reloading referral...", true);
 			VectorLayerStore store = mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID)
@@ -296,7 +304,11 @@ public final class MapLayout extends VLayout {
 				public void execute(List<org.geomajas.gwt.client.map.feature.Feature> response) {
 					if (response.size() > 0) {
 						setReferralAndTask(response.get(0).toDto(), clearTask ? null : currentTask);
-						focusBpm();
+						if (focusBpm) {
+							focusBpm();
+						} else {
+							focusReferral();
+						}
 					}
 					window.destroy();
 				}
@@ -318,7 +330,7 @@ public final class MapLayout extends VLayout {
 	 * Put the focus on the current task.
 	 */
 	public void focusCurrentTask() {
-		infoPane.showCard(referralPanel.getName());
+		infoPane.showCard(ReferralPanel.NAME);
 		referralPanel.focusCurrentTask();
 	}
 
@@ -327,6 +339,14 @@ public final class MapLayout extends VLayout {
 	 */
 	public void focusBpm() {
 		infoPane.showCard(taskManagerPanel.getName());
+	}
+
+	/**
+	 * Put the focus on the current referral.
+	 */
+	public void focusReferral() {
+		infoPane.showCard(ReferralPanel.NAME);
+		referralPanel.focusDetail();
 	}
 
 	/**
