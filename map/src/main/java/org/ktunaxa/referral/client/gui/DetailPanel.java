@@ -33,8 +33,10 @@ import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
+import org.ktunaxa.referral.client.gui.MapLayout.Focus;
 import org.ktunaxa.referral.client.referral.ReferralDetailForm;
 
+import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -67,7 +69,6 @@ public class DetailPanel extends VLayout {
 
 	public DetailPanel() {
 		super(LayoutConstant.MARGIN_LARGE);
-		setSize("100%", "100%");
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
@@ -86,6 +87,7 @@ public class DetailPanel extends VLayout {
 			}
 
 		});
+		editor.setOverflow(Overflow.AUTO);
 		ToolStrip toolStrip = new ToolStrip();
 		toolStrip.setWidth100();
 		toolStrip.setPadding(2);
@@ -239,7 +241,7 @@ public class DetailPanel extends VLayout {
 		}
 
 		public void onClick(ClickEvent event) {
-			MapLayout.getInstance().refreshReferral(false, false);
+			MapLayout.getInstance().refreshReferral(false, Focus.REFERRAL_DETAIL);
 		}
 	}
 

@@ -63,6 +63,8 @@ public class ReferralTasksPanel extends VLayout {
 	private TaskListView[] views = new TaskListView[GROUP_TITLES.length];
 	private List<AbstractCollapsibleListBlock<TaskDto>>[] lists = new List[GROUP_TITLES.length];
 
+	private SectionStack groups;
+
 	/**
 	 * Construct a {@link ReferralTasksPanel}.
 	 */
@@ -70,15 +72,16 @@ public class ReferralTasksPanel extends VLayout {
 		super();
 		setWidth100();
 		currentTaskBlock.setStyleName(STYLE_BLOCK);
-
-		SectionStack groups = new SectionStack();
+		currentTaskBlock.setOverflow(Overflow.AUTO);
+		
+		groups = new SectionStack();
 		groups.setWidth100();
-		groups.setOverflow(Overflow.AUTO);
 		groups.setVisibilityMode(VisibilityMode.MULTIPLE);
 		
 		for (int i = 0 ; i < GROUP_TITLES.length ; i++) {
 			sections[i] = new SectionStackSection(GROUP_TITLES[i]);
 			views[i] = new TaskListView();
+			views[i].setOverflow(Overflow.AUTO);
 			views[i].setStyleName(STYLE_BLOCK);
 			lists[i] = new ArrayList<AbstractCollapsibleListBlock<TaskDto>>();
 			if (GROUP_CURRENT == i) {

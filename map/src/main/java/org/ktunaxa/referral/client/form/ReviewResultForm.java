@@ -207,7 +207,7 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 									if (response.isSuccess()) {
 										MapLayout mapLayout = MapLayout.getInstance();
 										mapLayout.refreshReferral(true); // clear task
-										mapLayout.focusBpm();
+										mapLayout.focusTaskManager();
 									} else {
 										GwtCommandDispatcher.getInstance().onCommandException(response);
 										invalid.run();

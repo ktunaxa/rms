@@ -70,6 +70,12 @@ import edu.umd.cs.findbugs.annotations.Nullable;
  * @author Pieter De Graef
  */
 public final class MapLayout extends VLayout {
+	
+	enum Focus {
+		REFERRAL_DETAIL,
+		REFERRAL_TASK,
+		TASKMANAGER
+	}
 
 	private static final MapLayout INSTANCE = new MapLayout();
 
@@ -286,14 +292,14 @@ public final class MapLayout extends VLayout {
 	 * @param clearTask
 	 */
 	public void refreshReferral(final boolean clearTask) {
-		refreshReferral(clearTask, true);
+		refreshReferral(clearTask, Focus.REFERRAL_TASK);
 	}
 	
 	/**
 	 * Refresh the referral, optionally clearing the task and focussing on tasks.
 	 * @param clearTask
 	 */
-	public void refreshReferral(final boolean clearTask, final boolean focusBpm) {
+	public void refreshReferral(final boolean clearTask, final Focus focus) {
 		if (currentReferral != null) {
 			final Window window = CommunicationHandler.get().createWindow("Reloading referral...", true);
 			VectorLayerStore store = mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID)
@@ -304,10 +310,17 @@ public final class MapLayout extends VLayout {
 				public void execute(List<org.geomajas.gwt.client.map.feature.Feature> response) {
 					if (response.size() > 0) {
 						setReferralAndTask(response.get(0).toDto(), clearTask ? null : currentTask);
-						if (focusBpm) {
-							focusBpm();
-						} else {
-							focusReferral();
+						switch(focus) {
+							case REFERRAL_DETAIL:
+								focusReferralDetail();
+								break;
+							case REFERRAL_TASK:
+								focusReferralTask();
+								break;
+							case TASKMANAGER:
+								focusTaskManager();
+								break;
+							
 						}
 					}
 					window.destroy();
@@ -335,18 +348,26 @@ public final class MapLayout extends VLayout {
 	}
 
 	/**
-	 * Put the focus on the current task.
+	 * Put the focus on the task manager.
 	 */
-	public void focusBpm() {
+	public void focusTaskManager() {
 		infoPane.showCard(taskManagerPanel.getName());
 	}
 
 	/**
-	 * Put the focus on the current referral.
+	 * Put the focus on the current referral detail.
 	 */
-	public void focusReferral() {
+	public void focusReferralDetail() {
 		infoPane.showCard(ReferralPanel.NAME);
 		referralPanel.focusDetail();
+	}
+
+	/**
+	 * Put the focus on the current task.
+	 */
+	public void focusReferralTask() {
+		infoPane.showCard(ReferralPanel.NAME);
+		referralPanel.focusCurrentTask();
 	}
 
 	/**
