@@ -124,92 +124,97 @@ public class FinishFinalReportTaskCommand
 		}
 
 		String token = securityContext.getToken();
+		OneToManyAttribute newDocuments = null;
+		if (!request.isSkipReportUpload()) {
 
-		// build report and save as in referral
-		String reportUrl = getServerDispatchUrl() + "reporting/f/" + KtunaxaConstant.LAYER_REFERRAL_SERVER_ID + "/" +
-				FinalReportClickHandler.REPORT_NAME + "." + FinalReportClickHandler.FORMAT + "?filter=" +
-				URLEncoder.encode(ReferralUtil.createFilter(referralId)) +
-				"&userToken=" + securityContext.getToken();
-		log.debug("Report URL {}", reportUrl);
+			// build report and save as in referral
+			String reportUrl = getServerDispatchUrl() + "reporting/f/" + KtunaxaConstant.LAYER_REFERRAL_SERVER_ID + "/"
+					+ FinalReportClickHandler.REPORT_NAME + "." + FinalReportClickHandler.FORMAT + "?filter="
+					+ URLEncoder.encode(ReferralUtil.createFilter(referralId), "UTF-8") + "&userToken="
+					+ securityContext.getToken();
+			log.debug("Report URL {}", reportUrl);
 
-		// download report and upload as document in Alfresco
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(reportUrl);
-		HttpResponse httpResponse;
-		try {
-			httpResponse = httpClient.execute(httpGet);
-		} catch (Exception e1) {
-			log.error("Could not create report.", e1);
-			throw new KtunaxaException(KtunaxaException.CODE_REPORT_ERROR, "Could not create report.");			
-		}
-		SimpleDateFormat timeFormat = new SimpleDateFormat(KtunaxaBpmConstant.TIMESTAMP_FORMAT);
-		String filename = referralId.replace('/', '_') + "-finalReport-" + timeFormat.format(new Date()) + ".pdf";
-		Document cmisDocument;
-		try {
-			cmisDocument = cmisService.saveOrUpdate(filename, MIME_PDF, httpResponse.getEntity().getContent(),
-					-1, ReferralUtil.getYear(referralId), referralId);
-		} catch (Exception e) {
-			log.error("Could not save report in Alfresco.", e);
-			throw new KtunaxaException(KtunaxaException.CODE_ALFRESCO_ERROR, "Could not save report in Alfresco.");
-		}
-		log.debug("Uploaded in Alfresco");
-		if (!httpGet.isAborted()) {
-			httpGet.abort(); // assure low level resources are released
-		}
-		log.debug("Aborted input for safety");
+			// download report and upload as document in Alfresco
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpGet httpGet = new HttpGet(reportUrl);
+			HttpResponse httpResponse;
+			try {
+				httpResponse = httpClient.execute(httpGet);
+			} catch (Exception e1) {
+				log.error("Could not create report.", e1);
+				throw new KtunaxaException(KtunaxaException.CODE_REPORT_ERROR, "Could not create report.");			
+			}
+			SimpleDateFormat timeFormat = new SimpleDateFormat(KtunaxaBpmConstant.TIMESTAMP_FORMAT);
+			String filename = referralId.replace('/', '_') + "-finalReport-" + timeFormat.format(new Date()) + ".pdf";
+			Document cmisDocument;
+			try {
+				cmisDocument = cmisService.saveOrUpdate(filename, MIME_PDF, httpResponse.getEntity().getContent(),
+						-1, ReferralUtil.getYear(referralId), referralId);
+			} catch (Exception e) {
+				log.error("Could not save report in Alfresco.", e);
+				throw new KtunaxaException(KtunaxaException.CODE_ALFRESCO_ERROR, "Could not save report in Alfresco.");
+			}
+			log.debug("Uploaded in Alfresco");
+			if (!httpGet.isAborted()) {
+				httpGet.abort(); // assure low level resources are released
+			}
+			log.debug("Aborted input for safety");
 
-		// add document in referral
-		Crs crs = geoService.getCrs2(KtunaxaConstant.LAYER_CRS);
-		List<InternalFeature> features = vectorLayerService.getFeatures(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID,
-				crs,
-				filterService.parseFilter(ReferralUtil.createFilter(referralId)), null,
-				VectorLayerService.FEATURE_INCLUDE_ATTRIBUTES);
-		InternalFeature orgReferral = features.get(0);
-		log.debug("Got referral {}", referralId);
-		InternalFeature referral = orgReferral.clone();
-		Map<String, Attribute> attributes = referral.getAttributes();
-		attributes.put(KtunaxaConstant.ATTRIBUTE_RESPONSE_DATE, new DateAttribute(new Date()));
-		List<InternalFeature> newFeatures = new ArrayList<InternalFeature>();
-		newFeatures.add(referral);
-		OneToManyAttribute orgDocuments = (OneToManyAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENTS);
-		List<AssociationValue> documents = new ArrayList<AssociationValue>(orgDocuments.getValue());
-		AssociationValue finalReportDocument = new AssociationValue();
-		finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ADDED_BY,
-				securityContext.getUserId());
-		finalReportDocument.setDateAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ADDITION_DATE, new Date());
-		finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, "final report");
-		finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL,
-				cmisService.getDisplayUrl(cmisDocument));
-		finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL,
-				cmisService.getDownloadUrl(cmisDocument));
-		finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID, filename);
-		finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, filename);
-		finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT, true);
-		finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL, false);
-		finalReportDocument.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE,
-				new AssociationValue(new LongAttribute(1L), // official response
-						new HashMap<String, PrimitiveAttribute<?>>()));
-		documents.add(finalReportDocument);
-		OneToManyAttribute newDocuments = new OneToManyAttribute(documents);
-		attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, newDocuments);
-		log.debug("Going to add document in referral");
-		vectorLayerService.saveOrUpdate(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID, crs, features, newFeatures);
-		log.debug("Document added in referral");
+			// add document in referral
+			Crs crs = geoService.getCrs2(KtunaxaConstant.LAYER_CRS);
+			List<InternalFeature> features = vectorLayerService.getFeatures(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID,
+					crs,
+					filterService.parseFilter(ReferralUtil.createFilter(referralId)), null,
+					VectorLayerService.FEATURE_INCLUDE_ATTRIBUTES);
+			InternalFeature orgReferral = features.get(0);
+			log.debug("Got referral {}", referralId);
+			InternalFeature referral = orgReferral.clone();
+			Map<String, Attribute> attributes = referral.getAttributes();
+			attributes.put(KtunaxaConstant.ATTRIBUTE_RESPONSE_DATE, new DateAttribute(new Date()));
+			List<InternalFeature> newFeatures = new ArrayList<InternalFeature>();
+			newFeatures.add(referral);
+			OneToManyAttribute orgDocuments = (OneToManyAttribute) attributes.get(KtunaxaConstant.ATTRIBUTE_DOCUMENTS);
+			List<AssociationValue> documents = new ArrayList<AssociationValue>(orgDocuments.getValue());
+			AssociationValue finalReportDocument = new AssociationValue();
+			finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ADDED_BY,
+					securityContext.getUserId());
+			finalReportDocument.setDateAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ADDITION_DATE, new Date());
+			finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DESCRIPTION, "final report");
+			finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DISPLAY_URL,
+					cmisService.getDisplayUrl(cmisDocument));
+			finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL,
+					cmisService.getDownloadUrl(cmisDocument));
+			finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID, filename);
+			finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, filename);
+			finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT, true);
+			finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL, false);
+			finalReportDocument.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE,
+					new AssociationValue(new LongAttribute(1L), // official response
+							new HashMap<String, PrimitiveAttribute<?>>()));
+			documents.add(finalReportDocument);
+			newDocuments = new OneToManyAttribute(documents);
+			attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, newDocuments);
+			log.debug("Going to add document in referral");
+			vectorLayerService.saveOrUpdate(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID, crs, features, newFeatures);
+			log.debug("Document added in referral");
+		}
 
 		// send e-mail with final report
 		if (request.isSendMail()) {
-			List<String> attachments = new ArrayList<String>();
-			for (AssociationValue doc : newDocuments.getValue()) {
-				log.debug("include " + doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT));
-				if ((Boolean) doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT)) {
-					String url = CmisUtil.addGuestAccess(
-							(String) doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
-					log.debug("Add attachment {}", url);
-					attachments.add(url);
+			if(!request.isSkipReportUpload()) {
+				List<String> attachments = new ArrayList<String>();
+				for (AssociationValue doc : newDocuments.getValue()) {
+					log.debug("include " + doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT));
+					if ((Boolean) doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT)) {
+						String url = CmisUtil.addGuestAccess(
+								(String) doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
+						log.debug("Add attachment {}", url);
+						attachments.add(url);
+					}
 				}
+				log.debug("e-mail attachments {}", attachments);
+				request.setAttachmentUrls(attachments);
 			}
-			log.debug("e-mail attachments {}", attachments);
-			request.setAttachmentUrls(attachments);
 			log.debug("Going to send final report e-mail.");
 			CommandResponse emailResponse = commandDispatcher.execute(SendEmailRequest.COMMAND, request, token, null);
 			if (emailResponse.isError() || !(emailResponse instanceof SuccessCommandResponse) ||

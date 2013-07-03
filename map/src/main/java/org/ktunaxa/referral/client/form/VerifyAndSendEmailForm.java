@@ -72,6 +72,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 	private final TextItem to = new TextItem();
 	private final TextItem cc = new TextItem();
 	private final CheckboxItem sendMail = new CheckboxItem();
+	private final CheckboxItem skipReportUpload = new CheckboxItem();
 	private final RegExpValidator oneAddress;
 	private final RegExpValidator multiAddress;
 	private TaskDto task;
@@ -135,6 +136,9 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 				}
 			} 
 		});
+		
+		skipReportUpload.setTitle("Skip final report upload");
+		skipReportUpload.setValue(false);
 		setSendForm();
 	}
 
@@ -150,11 +154,12 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		messageForm.setFields(message);
 		messageForm.setHeight("*");
 		
-		DynamicForm checkBox = new DynamicForm();
-		checkBox.setWidth100();
-		checkBox.setFields(sendMail);
-		checkBox.setTitleWidth("70%");
-		setForms(mail, messageForm, checkBox);
+		DynamicForm checkBoxForm = new DynamicForm();
+		checkBoxForm.setNumCols(4);
+		checkBoxForm.setWidth100();
+		checkBoxForm.setFields(skipReportUpload, sendMail);
+		checkBoxForm.setTitleWidth("70%");
+		setForms(mail, messageForm, checkBoxForm);
 	}
 
 	@Override
@@ -255,6 +260,15 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 	 */
 	protected boolean isSendMail() {
 		return sendMail.getValueAsBoolean();
+	}
+
+	/**
+	 * Should the report creation, upload to Alfresco and attachment to the referral be skipped ?
+	 *
+	 * @return true when all of this should be skipped
+	 */
+	protected boolean isSkipReportUpload() {
+		return skipReportUpload.getValueAsBoolean();
 	}
 
 	/**

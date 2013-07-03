@@ -34,6 +34,7 @@ public class FinishFinalReportTaskRequest extends SendEmailRequest {
 	public static final String COMMAND = "command.FinishFinalReportTask";
 
 	private boolean sendMail;
+	private boolean skipReportUpload;
 	private String referralId;
 	private String taskId;
 	private Map<String, String> variables = new HashMap<String, String>();
@@ -54,6 +55,25 @@ public class FinishFinalReportTaskRequest extends SendEmailRequest {
 	 */
 	public void setSendMail(boolean sendMail) {
 		this.sendMail = sendMail;
+	}
+	
+	/**
+	 * Should the report creation, upload to Alfresco and attachment to the referral be skipped ?
+	 *
+	 * @return true when all of this should be skipped
+	 */
+	public boolean isSkipReportUpload() {
+		return skipReportUpload;
+	}
+
+	
+	/**
+	 * Should the report creation, upload to Alfresco and attachment to the referral be skipped ?
+	 *
+	 * @param skipReportUpload true when all of this should be skipped
+	 */
+	public void setSkipReportUpload(boolean skipReportUpload) {
+		this.skipReportUpload = skipReportUpload;
 	}
 
 	/**

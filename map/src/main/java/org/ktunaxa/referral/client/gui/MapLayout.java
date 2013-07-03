@@ -71,10 +71,16 @@ import edu.umd.cs.findbugs.annotations.Nullable;
  */
 public final class MapLayout extends VLayout {
 	
+	/**
+	 * Focus options after refreshing the referral.
+	 * 
+	 * @author Jan De Moerloose
+	 *
+	 */
 	enum Focus {
-		REFERRAL_DETAIL,
-		REFERRAL_TASK,
-		TASKMANAGER
+		REFERRAL_DETAIL, // focus on referral tab /detail
+		REFERRAL_TASK, // focus on referral tab/taks
+		TASKMANAGER // focus on Task manager tab
 	}
 
 	private static final MapLayout INSTANCE = new MapLayout();

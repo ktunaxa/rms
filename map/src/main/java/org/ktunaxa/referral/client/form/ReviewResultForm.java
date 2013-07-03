@@ -194,6 +194,7 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 					FinishFinalReportTaskRequest request = new FinishFinalReportTaskRequest();
 					setEmailRequest(request);
 					request.setSendMail(isSendMail());
+					request.setSkipReportUpload(isSkipReportUpload());
 					MapLayout mapLayout = MapLayout.getInstance();
 					request.setReferralId(ReferralUtil.createId(mapLayout.getCurrentReferral()));
 					request.setTaskId(mapLayout.getCurrentTask().getId());
@@ -201,8 +202,10 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 
 					GwtCommand command = new GwtCommand(FinishFinalReportTaskRequest.COMMAND);
 					command.setCommandRequest(request);
-					CommunicationHandler.get().execute(command,
+					CommunicationHandler.get().execute(
+							command,
 							new AbstractCommandCallback<FinishFinalReportTaskResponse>() {
+
 								public void execute(FinishFinalReportTaskResponse response) {
 									if (response.isSuccess()) {
 										MapLayout mapLayout = MapLayout.getInstance();
@@ -212,8 +215,10 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 										GwtCommandDispatcher.getInstance().onCommandException(response);
 										invalid.run();
 									}
-								}						
-							}, "Preparing final report... ", invalid);
+								}
+							},
+							request.isSkipReportUpload() ? "Finishing task, skipping final report..."
+									: "Preparing final report... ", invalid);
 				} else {
 					invalid.run();
 				}
