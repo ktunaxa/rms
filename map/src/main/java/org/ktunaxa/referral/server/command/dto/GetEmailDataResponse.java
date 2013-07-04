@@ -32,6 +32,7 @@ public class GetEmailDataResponse extends CommandResponse {
 
 	private String from;
 	private String subject;
+	private String cc;
 	private String body;
 
 	/**
@@ -50,6 +51,24 @@ public class GetEmailDataResponse extends CommandResponse {
 	 */
 	public void setFrom(String from) {
 		this.from = from;
+	}
+	
+	/**
+	 * Get e-mail CC addresses.
+	 *
+	 * @return CC addresses
+	 */
+	public String getCc() {
+		return cc;
+	}
+
+	/**
+	 * Set e-mail CC addresses.
+	 *
+	 * @param cc CC addresses
+	 */
+	public void setCc(String cc) {
+		this.cc = cc;
 	}
 
 	/**

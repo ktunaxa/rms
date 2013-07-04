@@ -73,6 +73,7 @@ public class GetEmailDataCommand implements Command<GetEmailDataRequest, GetEmai
 			Template result = (Template) list.get(0);
 			if (null != result) {
 				response.setFrom(result.getMailSender());
+				response.setCc(result.getCc());
 				TemplateFiller filler = new TemplateFiller(task, attributes, result);
 				if (request.isRaw()) {
 					response.setSubject(result.getSubject());

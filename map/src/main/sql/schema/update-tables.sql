@@ -74,14 +74,17 @@
 -- KTU-285 field to order comments in final report
 -- ALTER TABLE referral_comment ADD COLUMN position integer DEFAULT 2;
 -- AAD-18 remove size constraint from comment
-ALTER TABLE referral_comment ALTER COLUMN "content" type character varying;
-ALTER TABLE referral_comment ALTER COLUMN "report_content" type character varying;
-ALTER TABLE document_comment ALTER COLUMN "content" type character varying;
-ALTER TABLE document_comment ALTER COLUMN "report_content" type character varying;
+-- ALTER TABLE referral_comment ALTER COLUMN "content" type character varying;
+-- ALTER TABLE referral_comment ALTER COLUMN "report_content" type character varying;
+-- ALTER TABLE document_comment ALTER COLUMN "content" type character varying;
+-- ALTER TABLE document_comment ALTER COLUMN "report_content" type character varying;
 
 -- AAD-20 add 2 layers
 --INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (84, 'Grassland Eco System', 9, '1:150000', '1:1', false, 84); 
 --INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (85, 'Riparian', 9, '1:150000', '1:1', false, 85); 
 -- AAD-22 add 1 layer
 --INSERT INTO reference_layer (id, name, type_id, scale_min, scale_max, visible_by_default, code) VALUES (86, 'Guidance Zones', 6, '1:150000', '1:1', false, 86); 
+
+-- KTU-113 also need sender e-mail
+ALTER TABLE template ADD COLUMN cc text;
 

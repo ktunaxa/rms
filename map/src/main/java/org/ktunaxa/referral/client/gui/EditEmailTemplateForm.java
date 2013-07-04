@@ -71,6 +71,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 	private static final String COMMENT_STYLE = "editTemplateComment";
 	private final TextItem from = new TextItem();
 	private final TextItem subject = new TextItem();
+	private final TextItem cc = new TextItem();
 	private final TextAreaItem message = new TextAreaItem();
 	private TaskDto task;
 	private final Button cancelButton = new Button("Cancel");
@@ -87,6 +88,10 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		oneAddress.setExpression(KtunaxaConstant.MAIL_VALIDATOR_REGEX);
 		oneAddress.setErrorMessage("Invalid email address.");
 
+		RegExpValidator multiAddress = new RegExpValidator();
+		multiAddress.setExpression(KtunaxaConstant.MULTIPLE_MAIL_VALIDATOR_REGEX);
+		multiAddress.setErrorMessage("Invalid email address(es). Separate with ', ' or '; '");
+
 		from.setName(KtunaxaConstant.Email.FROM_NAME);
 		from.setTitle("From");
 		from.setValidators(oneAddress);
@@ -97,7 +102,12 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		subject.setName(KtunaxaConstant.Email.SUBJECT_NAME);
 		subject.setTitle("Subject");
 		subject.setWidth("100%");
-
+		
+		cc.setName(KtunaxaConstant.Email.CC_NAME);
+		cc.setTitle("CC");
+		cc.setWidth("100%");
+		cc.setValidators(multiAddress);
+		
 		message.setShowTitle(false);
 		message.setName(KtunaxaConstant.Email.MESSAGE_NAME);
 		message.setColSpan(2);
@@ -108,6 +118,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		FormChangedHandler handler = new FormChangedHandler();
 		from.addChangedHandler(handler);
 		subject.addChangedHandler(handler);
+		cc.addChangedHandler(handler);
 		message.addChangedHandler(handler);
 		
 		cancelButton.setShowRollOver(false);
@@ -136,7 +147,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		DynamicForm mail = new DynamicForm();
 		mail.setWidth100();
 		mail.setColWidths("13%", "87%");
-		mail.setFields(from, subject);
+		mail.setFields(from, subject, cc);
 		
 		DynamicForm messageForm = new DynamicForm();
 		messageForm.setWidth("87%");
@@ -170,6 +181,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 	public void fillTemplate() {
 		from.setValue("");
 		subject.setValue("");
+		cc.setValue("");
 		message.setValue("");
 		GetEmailDataRequest request = new GetEmailDataRequest();
 		request.setNotifier(templateTitle);
@@ -183,6 +195,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 			public void execute(GetEmailDataResponse response) {
 				from.setValue(response.getFrom());
 				subject.setValue(response.getSubject());
+				cc.setValue(response.getCc());
 				message.setValue(response.getBody());
 			}
 		}, "Fetching email data...");
@@ -289,6 +302,7 @@ public class EditEmailTemplateForm extends AbstractTaskForm {
 		UpdateEmailDataRequest request = new UpdateEmailDataRequest(templateTitle);
 		request.setSubject(subject.getValueAsString());
 		request.setFrom(from.getValueAsString());
+		request.setCc(cc.getValueAsString());
 		request.setBody(message.getValueAsString());
 		GwtCommand command = new GwtCommand(UpdateEmailDataRequest.COMMAND);
 		command.setCommandRequest(request);

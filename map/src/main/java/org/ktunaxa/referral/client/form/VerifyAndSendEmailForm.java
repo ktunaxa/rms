@@ -96,6 +96,11 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		from.setRequired(true);
 		from.setRequiredMessage("Sender email address required.");
 
+		cc.setName(KtunaxaConstant.Email.CC_NAME);
+		cc.setTitle("Cc");
+		cc.setValidators(multiAddress);
+		cc.setWidth("100%");
+
 		subject.setName(KtunaxaConstant.Email.SUBJECT_NAME);
 		subject.setTitle("Subject");
 		subject.setWidth("100%");
@@ -112,10 +117,6 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		to.setDisabled(true);
 		to.setWidth("100%");
 		
-		cc.setName(KtunaxaConstant.Email.CC_NAME);
-		cc.setTitle("Cc");
-		cc.setValidators(multiAddress);
-		cc.setWidth("100%");
 
 		sendMail.setTitle("Send mail when finished");
 		sendMail.setValue(true);
@@ -145,7 +146,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 	private void setSendForm() {
 		DynamicForm mail = new DynamicForm();
 		mail.setWidth100();
-		mail.setFields(from, to, cc, subject);
+		mail.setFields(from, cc, to, subject);
 		mail.setColWidths("13%", "*");
 		
 		DynamicForm messageForm = new DynamicForm();
@@ -184,6 +185,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 
 			public void execute(GetEmailDataResponse response) {
 				from.setValue(response.getFrom());
+				cc.setValue(response.getCc());
 				subject.setValue(response.getSubject());
 				message.setValue(response.getBody());
 			}

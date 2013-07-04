@@ -57,6 +57,10 @@ public class Template {
 	@Column(nullable = false, name = "mail_sender")
 	private String mailSender;
 
+	/** The CC of the email. */
+	@Column(name = "cc")
+	private String cc;
+
 	/** The XML contents of the template. */
 	@Column(nullable = true, name = "content")
 	private byte[] content;
@@ -242,4 +246,23 @@ public class Template {
 	public String getSubject() {
 		return subject;
 	}
+	
+	/**
+	 * Get e-mail CC addresses.
+	 *
+	 * @return CC addresses
+	 */
+	public String getCc() {
+		return cc;
+	}
+
+	/**
+	 * Set e-mail CC addresses.
+	 *
+	 * @param cc CC addresses
+	 */
+	public void setCc(String cc) {
+		this.cc = cc;
+	}
+	
 }

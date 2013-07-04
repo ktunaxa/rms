@@ -48,9 +48,10 @@ public class UpdateEmailDataCommand implements Command<UpdateEmailDataRequest, U
 	public void execute(UpdateEmailDataRequest request, UpdateEmailDataResponse response) throws Exception {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("UPDATE Template SET subject= :subject, " +
-				"mail_sender= :from, string_content= :body WHERE title= :title");
+				"mail_sender= :from, cc= :cc, string_content= :body WHERE title= :title");
 		query.setString("subject", request.getSubject());
 		query.setString("from", request.getFrom());
+		query.setString("cc", request.getCc());
 		query.setString("body", request.getBody());
 		query.setString("title", request.getNotifier());
 		response.setUpdated(1 == query.executeUpdate());

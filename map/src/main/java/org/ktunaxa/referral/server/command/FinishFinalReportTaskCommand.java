@@ -201,13 +201,13 @@ public class FinishFinalReportTaskCommand
 
 		// send e-mail with final report
 		if (request.isSendMail()) {
-			if(!request.isSkipReportUpload()) {
+			if (!request.isSkipReportUpload()) {
 				List<String> attachments = new ArrayList<String>();
 				for (AssociationValue doc : newDocuments.getValue()) {
 					log.debug("include " + doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT));
 					if ((Boolean) doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT)) {
-						String url = CmisUtil.addGuestAccess(
-								(String) doc.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
+						String url = CmisUtil.addGuestAccess((String) doc
+								.getAttributeValue(KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL));
 						log.debug("Add attachment {}", url);
 						attachments.add(url);
 					}

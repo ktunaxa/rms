@@ -35,6 +35,7 @@ public class UpdateEmailDataRequest implements CommandRequest {
 	private String notifier;
 	private String subject;
 	private String from;
+	private String cc;
 	private String body;
 
 	public UpdateEmailDataRequest() {
@@ -58,6 +59,14 @@ public class UpdateEmailDataRequest implements CommandRequest {
 
 	public void setFrom(String from) {
 		this.from = from;
+	}
+	
+	public String getCc() {
+		return cc;
+	}
+	
+	public void setCc(String cc) {
+		this.cc = cc;
 	}
 
 	public String getBody() {
