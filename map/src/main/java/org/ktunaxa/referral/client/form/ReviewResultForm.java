@@ -19,8 +19,11 @@
 
 package org.ktunaxa.referral.client.form;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.geomajas.command.CommandResponse;
@@ -51,6 +54,8 @@ import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
+import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 
@@ -72,6 +77,7 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 			"potential infringements on Aboriginal Rights and Title was used and considered in the decision-making " +
 			"process. If you have any questions, please contact Dora Gunn at 250-417-4022, extension 3115.";
 
+	private CheckboxItem skipReportUpload;
 	private RadioGroupItem decision;
 	private TextAreaItem introduction;
 	private TextAreaItem conclusion;
@@ -124,6 +130,10 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 	public void setForms(DynamicForm... forms) {
 		preview = new Button("Preview");
 		super.addMember(preview);
+		
+		skipReportUpload = new CheckboxItem();
+		skipReportUpload.setTitle("Skip final report upload");
+		skipReportUpload.setValue(false);
 
 		introduction = new TextAreaItem();
 		introduction.setTitle("Report introduction");
@@ -143,17 +153,28 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 		messageForm.setColWidths("13%", "*");
 		messageForm.setFields(decision, introduction, conclusion);
 		messageForm.setHeight("*");
+		
+		DynamicForm checkBoxForm = forms[forms.length - 1];
+		// put all checkboxes on  top of each other
+		checkBoxForm.setNumCols(2);
+		checkBoxForm.setWidth100();
+		List<FormItem> checkBoxes = new ArrayList<FormItem>();
+		for (FormItem c : checkBoxForm.getFields()) {
+			checkBoxes.add(c);
+		}
+		checkBoxes.add(skipReportUpload);
+		checkBoxForm.setFields(checkBoxes.toArray(new FormItem[checkBoxes.size()]));
+		checkBoxForm.setTitleWidth("70%");
 
 		HTMLFlow divider = new HTMLFlow("<hr/>");
 		divider.setWidth100();
 		divider.setHeight(5);
 		super.addMember(divider);
 
-		// Add extra fields in the form
+		// add the message form before
 		DynamicForm[] elements = new DynamicForm[forms.length + 1];
-		elements[0] = messageForm;
+		elements[0] = messageForm; // add message before
 		System.arraycopy(forms, 0, elements, 1, forms.length);
-
 		super.setForms(elements);
 	}
 
@@ -183,6 +204,16 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 		CommandCallback<CommandResponse> callback = new UpdatingCallback(onUpdate);
 		CommunicationHandler.get().execute(command, callback, "Updating referral...");
 	}
+	
+	/**
+	 * Should the report creation, upload to Alfresco and attachment to the referral be skipped ?
+	 *
+	 * @return true when all of this should be skipped
+	 */
+	protected boolean isSkipReportUpload() {
+		return skipReportUpload.getValueAsBoolean();
+	}
+
 
 	@Override
 	public void validate(Runnable valid, final Runnable invalid) {
@@ -194,6 +225,7 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 					FinishFinalReportTaskRequest request = new FinishFinalReportTaskRequest();
 					setEmailRequest(request);
 					request.setSendMail(isSendMail());
+					request.setSaveMail(isSaveMail());
 					request.setSkipReportUpload(isSkipReportUpload());
 					MapLayout mapLayout = MapLayout.getInstance();
 					request.setReferralId(ReferralUtil.createId(mapLayout.getCurrentReferral()));

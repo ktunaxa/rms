@@ -33,29 +33,9 @@ public class FinishFinalReportTaskRequest extends SendEmailRequest {
 
 	public static final String COMMAND = "command.FinishFinalReportTask";
 
-	private boolean sendMail;
 	private boolean skipReportUpload;
-	private String referralId;
 	private String taskId;
 	private Map<String, String> variables = new HashMap<String, String>();
-
-	/**
-	 * Should the e-mail with the report be sent?
-	 *
-	 * @return true when mail should be sent
-	 */
-	public boolean isSendMail() {
-		return sendMail;
-	}
-
-	/**
-	 * Should the e-mail with the report be sent?
-	 *
-	 * @param sendMail true when mail should be sent
-	 */
-	public void setSendMail(boolean sendMail) {
-		this.sendMail = sendMail;
-	}
 	
 	/**
 	 * Should the report creation, upload to Alfresco and attachment to the referral be skipped ?
@@ -74,24 +54,6 @@ public class FinishFinalReportTaskRequest extends SendEmailRequest {
 	 */
 	public void setSkipReportUpload(boolean skipReportUpload) {
 		this.skipReportUpload = skipReportUpload;
-	}
-
-	/**
-	 * Full id for referral to close (eg "3500-12/10-201").
-	 *
-	 * @return referral id
-	 */
-	public String getReferralId() {
-		return referralId;
-	}
-
-	/**
-	 * Full id for referral to close (eg "3500-12/10-201").
-	 *
-	 * @param referralId referral id
-	 */
-	public void setReferralId(String referralId) {
-		this.referralId = referralId;
 	}
 
 	/**

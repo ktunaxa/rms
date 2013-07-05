@@ -72,7 +72,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 	private final TextItem to = new TextItem();
 	private final TextItem cc = new TextItem();
 	private final CheckboxItem sendMail = new CheckboxItem();
-	private final CheckboxItem skipReportUpload = new CheckboxItem();
+	private final CheckboxItem saveMail = new CheckboxItem();
 	private final RegExpValidator oneAddress;
 	private final RegExpValidator multiAddress;
 	private TaskDto task;
@@ -138,8 +138,9 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 			} 
 		});
 		
-		skipReportUpload.setTitle("Skip final report upload");
-		skipReportUpload.setValue(false);
+		saveMail.setTitle("Save mail as comment");
+		saveMail.setValue(false);
+		
 		setSendForm();
 	}
 
@@ -158,7 +159,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		DynamicForm checkBoxForm = new DynamicForm();
 		checkBoxForm.setNumCols(4);
 		checkBoxForm.setWidth100();
-		checkBoxForm.setFields(skipReportUpload, sendMail);
+		checkBoxForm.setFields(saveMail, sendMail);
 		checkBoxForm.setTitleWidth("70%");
 		setForms(mail, messageForm, checkBoxForm);
 	}
@@ -200,8 +201,12 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 	@Override
 	public void validate(final Runnable valid, final Runnable invalid) {
 		if (validate()) {
-			if (isSendMail()) {
+			// send/save email request
+			if (isSendMail() || isSaveMail()) {
 				SendEmailRequest request = new SendEmailRequest();
+				request.setSendMail(isSendMail());
+				request.setSaveMail(isSaveMail());
+				request.setReferralId(ReferralUtil.createId(MapLayout.getInstance().getCurrentReferral()));
 				setEmailRequest(request);
 				GwtCommand command = new GwtCommand(SendEmailRequest.COMMAND);
 				command.setCommandRequest(request);
@@ -264,13 +269,14 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		return sendMail.getValueAsBoolean();
 	}
 
+
 	/**
-	 * Should the report creation, upload to Alfresco and attachment to the referral be skipped ?
+	 * Should the e-mail be saved as a comment or not ?
 	 *
-	 * @return true when all of this should be skipped
+	 * @return true when e-mail should be saved
 	 */
-	protected boolean isSkipReportUpload() {
-		return skipReportUpload.getValueAsBoolean();
+	protected boolean isSaveMail() {
+		return saveMail.getValueAsBoolean();
 	}
 
 	/**

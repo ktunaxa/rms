@@ -19,13 +19,41 @@
 
 package org.ktunaxa.referral.server.command.email;
 
+import java.io.ByteArrayOutputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.activation.DataHandler;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
 import org.apache.http.client.methods.HttpGet;
 import org.geomajas.command.Command;
+import org.geomajas.geometry.Crs;
 import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
+import org.geomajas.layer.VectorLayerService;
+import org.geomajas.layer.feature.Attribute;
+import org.geomajas.layer.feature.InternalFeature;
+import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.geomajas.layer.feature.attribute.OneToManyAttribute;
+import org.geomajas.service.FilterService;
+import org.geomajas.service.GeoService;
+import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.command.KtunaxaException;
 import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
 import org.ktunaxa.referral.server.command.dto.SendEmailResponse;
+import org.ktunaxa.referral.server.security.AppSecurityContext;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,32 +61,35 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
-
-import javax.activation.DataHandler;
-import javax.mail.Address;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Send an email.
- *
+ * Send and/or save an email as comment.
+ * 
  * @author Emiel Ackermann
+ * @author Jan De Moerloose
  * @author Joachim Van der Auwera
  */
 @Component
+@Transactional(rollbackFor = { Exception.class })
 public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResponse> {
 
 	private final Logger log = LoggerFactory.getLogger(SendEmailCommand.class);
 
 	@Autowired
 	private JavaMailSenderImpl mailSender;
+
+	@Autowired
+	private VectorLayerService vectorLayerService;
+
+	@Autowired
+	private FilterService filterService;
+
+	@Autowired
+	private GeoService geoService;
+
+	@Autowired
+	private AppSecurityContext securitycontext;
 
 	public SendEmailResponse getEmptyCommandResponse() {
 		return new SendEmailResponse();
@@ -87,7 +118,7 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 				addReplyTo(mimeMessage, request.getReplyTo());
 				mimeMessage.setFrom(new InternetAddress(from));
 				mimeMessage.setSubject(request.getSubject());
-				//mimeMessage.setText(request.getText());
+				// mimeMessage.setText(request.getText());
 
 				List<String> attachments = request.getAttachmentUrls();
 				MimeMultipart mp = new MimeMultipart();
@@ -122,9 +153,52 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 			}
 		};
 		try {
-			mailSender.send(preparator);
-			cleanAttachmentConnection(attachmentConnections);
-			log.debug("mail sent");
+			if (request.isSendMail()) {
+				mailSender.send(preparator);
+				cleanAttachmentConnection(attachmentConnections);
+				log.debug("mail sent");
+			}
+			if (request.isSaveMail()) {
+				MimeMessage mimeMessage = new MimeMessage((Session) null);
+				preparator.prepare(mimeMessage);
+				// overwrite multipart body as we don't need the attachments
+				mimeMessage.setText(request.getText());
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				mimeMessage.writeTo(baos);
+				// add document in referral
+				Crs crs = geoService.getCrs2(KtunaxaConstant.LAYER_CRS);
+				List<InternalFeature> features = vectorLayerService.getFeatures(
+						KtunaxaConstant.LAYER_REFERRAL_SERVER_ID, crs,
+						filterService.parseFilter(ReferralUtil.createFilter(request.getReferralId())), null,
+						VectorLayerService.FEATURE_INCLUDE_ATTRIBUTES);
+				InternalFeature orgReferral = features.get(0);
+				log.debug("Got referral {}", request.getReferralId());
+				InternalFeature referral = orgReferral.clone();
+				List<InternalFeature> newFeatures = new ArrayList<InternalFeature>();
+				newFeatures.add(referral);
+				Map<String, Attribute> attributes = referral.getAttributes();
+				OneToManyAttribute orgComments = (OneToManyAttribute) attributes
+						.get(KtunaxaConstant.ATTRIBUTE_COMMENTS);
+				List<AssociationValue> comments = new ArrayList<AssociationValue>(orgComments.getValue());
+				AssociationValue emailAsComment = new AssociationValue();
+				emailAsComment.setStringAttribute(KtunaxaConstant.ATTRIBUTE_COMMENT_TITLE,
+						"Mail: " + request.getSubject());
+				emailAsComment.setStringAttribute(KtunaxaConstant.ATTRIBUTE_COMMENT_CONTENT,
+						new String(baos.toByteArray()));
+				emailAsComment.setStringAttribute(KtunaxaConstant.ATTRIBUTE_COMMENT_CREATED_BY,
+						securitycontext.getUserName());
+				emailAsComment.setDateAttribute(KtunaxaConstant.ATTRIBUTE_COMMENT_CREATION_DATE, new Date());
+				emailAsComment.setStringAttribute(KtunaxaConstant.ATTRIBUTE_COMMENT_CONTENT,
+						new String(baos.toByteArray()));
+				emailAsComment.setStringAttribute(KtunaxaConstant.ATTRIBUTE_COMMENT_CONTENT,
+						new String(baos.toByteArray()));
+				emailAsComment.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_COMMENT_INCLUDE_IN_REPORT, false);
+				comments.add(emailAsComment);
+				OneToManyAttribute newComments = new OneToManyAttribute(comments);
+				attributes.put(KtunaxaConstant.ATTRIBUTE_COMMENTS, newComments);
+				log.debug("Going to add mail as comment to referral");
+				vectorLayerService.saveOrUpdate(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID, crs, features, newFeatures);
+			}
 			response.setSuccess(true);
 		} catch (MailException me) {
 			log.error("Could not send e-mail", me);
@@ -165,4 +239,3 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 		}
 	}
 }
-

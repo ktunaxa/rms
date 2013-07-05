@@ -199,8 +199,8 @@ public class FinishFinalReportTaskCommand
 			log.debug("Document added in referral");
 		}
 
-		// send e-mail with final report
-		if (request.isSendMail()) {
+		// send/save e-mail with final report
+		if (request.isSendMail() || request.isSaveMail()) {
 			if (!request.isSkipReportUpload()) {
 				List<String> attachments = new ArrayList<String>();
 				for (AssociationValue doc : newDocuments.getValue()) {

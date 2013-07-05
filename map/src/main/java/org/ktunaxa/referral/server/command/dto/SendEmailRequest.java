@@ -43,6 +43,10 @@ public class SendEmailRequest implements CommandRequest {
 	private String subject;
 	private String text;
 	private List<String> attachmentUrls;
+	
+	private boolean sendMail;
+	private boolean saveMail;
+	private String referralId;
 
 	/**
 	 * From address for the e-mail. Required.
@@ -187,4 +191,60 @@ public class SendEmailRequest implements CommandRequest {
 	public void setAttachmentUrls(List<String> attachmentUrls) {
 		this.attachmentUrls = attachmentUrls;
 	}
+	
+	/**
+	 * Should the e-mail be saved as a comment or not ?
+	 *
+	 * @return true when e-mail should be saved
+	 */
+	public boolean isSaveMail() {
+		return saveMail;
+	}
+	
+	/**
+	 * Should the e-mail with the report be sent?
+	 *
+	 * @return true when mail should be sent
+	 */
+	public boolean isSendMail() {
+		return sendMail;
+	}
+
+	/**
+	 * Should the e-mail with the report be sent?
+	 *
+	 * @param sendMail true when mail should be sent
+	 */
+	public void setSendMail(boolean sendMail) {
+		this.sendMail = sendMail;
+	}
+
+	/**
+	 * Should the e-mail be saved as a comment or not ?
+	 *
+	 * @param saveMail true when e-mail should be saved
+	 */
+	public void setSaveMail(boolean saveMail) {
+		this.saveMail = saveMail;
+	}
+	
+	/**
+	 * Full id for referral to close (eg "3500-12/10-201").
+	 *
+	 * @return referral id
+	 */
+	public String getReferralId() {
+		return referralId;
+	}
+
+	/**
+	 * Full id for referral to close (eg "3500-12/10-201").
+	 *
+	 * @param referralId referral id
+	 */
+	public void setReferralId(String referralId) {
+		this.referralId = referralId;
+	}
+
+
 }
