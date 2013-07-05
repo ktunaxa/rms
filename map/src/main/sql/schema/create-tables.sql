@@ -454,6 +454,7 @@ CREATE TABLE template(
 	id serial PRIMARY KEY,
 	title character varying(254) NOT NULL,
 	subject character varying(254) NOT NULL,
+	cc text,
 	description character varying(254) NOT NULL,
 	mail_sender character varying(254) NOT NULL,
 	string_content text,
