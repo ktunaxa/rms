@@ -314,6 +314,13 @@
 				<artifactId>activiti-engine</artifactId>
 				<version>${activiti.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-root</artifactId>
+				<version>${activiti.version}</version>
+			</dependency>
+			
 			<dependency>
 				<groupId>org.activiti</groupId>
 				<artifactId>activiti-spring</artifactId>
@@ -394,6 +401,13 @@
 				<artifactId>freemarker</artifactId>
 				<version>2.3.18</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>javax.mail</groupId>
+				<artifactId>mail</artifactId>
+				<version>1.4.1</version>
+			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 
