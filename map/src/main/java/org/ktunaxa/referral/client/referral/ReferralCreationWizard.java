@@ -97,6 +97,9 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 					// KTU-257 update status to in-progress
 					data.getFeature().setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_STATUS, new AssociationValue(
 							new LongAttribute(2L), new HashMap<String, PrimitiveAttribute<?>>()));
+					
+					// AAD-36 let database assign the year !
+					data.getFeature().setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_YEAR, null);
 
 					final FeatureTransaction ft = new FeatureTransaction(layer, old, new Feature[] {data.getFeature()});
 					PersistTransactionRequest request = new PersistTransactionRequest();

@@ -42,6 +42,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -76,8 +77,9 @@ public class Referral {
 	@Column(name = "secondary_classificiation_nr", nullable = false, updatable = false)
 	private int secondaryClassificationNumber = 10;
 
-	@Column(name = "calendar_year", nullable = true, updatable = false)
-	private int calendarYear = 11;
+	@Column(name = "calendar_year", nullable = true, insertable = false, updatable = false)
+	@Generated(GenerationTime.INSERT)
+	private int calendarYear;
 
 	/** Lands referral unique number 1 -> 9999 (sequence, resets after each new year). */
 	@Column(name = "number", nullable = true, insertable = false, updatable = false)
