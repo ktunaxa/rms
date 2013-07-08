@@ -189,7 +189,7 @@ public class FinishFinalReportTaskCommand
 			finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT, true);
 			finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL, false);
 			finalReportDocument.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE,
-					new AssociationValue(new LongAttribute(1L), // official response
+					new AssociationValue(new LongAttribute(5L), // External - Initial Referral Notification
 							new HashMap<String, PrimitiveAttribute<?>>()));
 			documents.add(finalReportDocument);
 			newDocuments = new OneToManyAttribute(documents);
