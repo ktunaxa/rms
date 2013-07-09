@@ -31,7 +31,7 @@ public class FinishFinalReportTaskRequest extends SendEmailRequest {
 
 	private static final long serialVersionUID = 100L;
 
-	public static final String COMMAND = "command.FinishFinalReportTask";
+	public static final String COMMAND = "command.bpm.FinishFinalReportTask";
 
 	private boolean skipReportUpload;
 	private String taskId;

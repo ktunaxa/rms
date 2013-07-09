@@ -24,6 +24,9 @@ import java.util.List;
 import org.geomajas.configuration.FeatureStyleInfo;
 import org.geomajas.configuration.SymbolInfo;
 import org.geomajas.global.GeomajasConstant;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
+import org.geomajas.gwt.client.command.event.TokenChangedEvent;
+import org.geomajas.gwt.client.command.event.TokenChangedHandler;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
@@ -45,6 +48,7 @@ import org.ktunaxa.referral.client.referral.ReferralCreationWizard;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
+import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.client.widget.ResizableLeftLayout;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -122,6 +126,13 @@ public final class MapLayout extends VLayout {
 	private MapLayout() {
 		super();
 		handlerManager = new HandlerManager(this);
+		GwtCommandDispatcher.getInstance().addTokenChangedHandler(new TokenChangedHandler() {
+
+			public void onTokenChanged(TokenChangedEvent event) {
+				// update GUI to reflect user rights
+				updateRights();
+			}
+		});
 
 		setWidth100();
 		setHeight100();
@@ -143,8 +154,6 @@ public final class MapLayout extends VLayout {
 		referralButton.setDisabled(true); // no referral at start
 		SearchPanel searchPanel = new SearchPanel(this);
 		infoPane.addCard(searchPanel.getName(), "Search", searchPanel);
-		taskManagerPanel = new TaskManagerPanel();
-		infoPane.addCard(taskManagerPanel.getName(), "Referral process", taskManagerPanel);
 		// top bar
 		topBar = new TopBar();
 		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
@@ -196,6 +205,13 @@ public final class MapLayout extends VLayout {
 		hLayout.addMember(mapLayout);
 		bodyLayout.addMember(hLayout);
 		addMember(bodyLayout);
+	}
+
+	protected void updateRights() {
+		if (!(UserContext.getInstance().isGuest() || UserContext.getInstance().isDataEntry())) {
+			taskManagerPanel = new TaskManagerPanel();
+			infoPane.addCard(taskManagerPanel.getName(), "Referral process", taskManagerPanel);
+		}
 	}
 
 	public MapWidget getMap() {

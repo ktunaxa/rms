@@ -99,6 +99,15 @@ public final class UserContext {
 	}
 
 	/**
+	 * Return whether the currently logged in user has data entry role.
+	 *
+	 * @return true when having data entry role
+	 */
+	public boolean isDataEntry() {
+		return hasBpmRole(KtunaxaBpmConstant.ROLE_REFERRAL_MANAGER);
+	}
+
+	/**
 	 * Return whether the currently logged in user is a referral manager.
 	 *
 	 * @return true when referral manager

@@ -153,6 +153,59 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 			<list><value>.*</value></list>
 		</property>
 	</bean>
+	
+<!-- 
+	<bean name="roleGuest" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="commandsExclude">
+			<list>
+				<value>command.bpm.*</value>
+				<value>command.email.*</value>
+				<value>*.PersistTransactionCommand</value>
+			</list>
+		</property>
+		<property name="commandsInclude">
+			<list><value>.*</value></list>
+		</property>
+		<property name="toolsInclude">
+			<list><value>.*</value></list>
+		</property>
+		<property name="visibleLayersInclude">
+			<list><value>.*</value></list>
+		</property>
+		<property name="bpmRoles">
+			<set>
+				<value>guest</value>
+			</set>
+		</property>
+	</bean>
+ -->
+
+<!-- DataEntry can create referral but not delete it or execute any tasks -->
+	<bean name="roleDataEntry" class="org.ktunaxa.referral.server.security.AppAuthorizationInfo">
+		<property name="commandsExclude">
+			<list>
+				<value>command.bpm.*ReferralCommand*</value>
+				<value>command.bpm.*ProcessCommand*</value>
+				<value>command.bpm.*TaskCommand*</value>
+				<value>command.email.*</value>
+			</list>
+		</property>
+		<property name="commandsInclude">
+			<list><value>.*</value></list>
+		</property>
+		<property name="toolsInclude">
+			<list><value>.*</value></list>
+		</property>
+		<property name="visibleLayersInclude">
+			<list><value>.*</value></list>
+		</property>
+		<property name="bpmRoles">
+			<set>
+				<value>dataEntry</value>
+			</set>
+		</property>
+	</bean>
+	
 
 
 	<!-- Configuration of staticsecurity security service. -->
@@ -240,6 +293,11 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 							<entry key="cn=TobaccoPlainsCommunityManager,ou=Referral-Roles,ou=LND,o=KN">
 								<list>
 									<ref bean="roleCommunityDLiaison"/>
+								</list>
+							</entry>
+							<entry key="cn=DataEntry,ou=Referral-Roles,ou=LND,o=KN">
+								<list>
+									<ref bean="roleDataEntry"/>
 								</list>
 							</entry>
 						</map>

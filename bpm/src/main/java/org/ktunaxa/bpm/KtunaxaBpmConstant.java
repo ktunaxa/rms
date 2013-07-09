@@ -64,4 +64,5 @@ public interface KtunaxaBpmConstant {
 	String ROLE_COMMUNITY_LOWER_KOOTENAY = "communityBManager";
 	String ROLE_COMMUNITY_ST_MARYS = "communityCManager";
 	String ROLE_COMMUNITY_TOBACCO_PLAINS = "communityDManager";
+	String ROLE_DATA_ENTRY = "dataEntry";
 }
