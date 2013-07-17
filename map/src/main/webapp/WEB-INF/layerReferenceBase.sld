@@ -35,7 +35,7 @@
 					<Title>LandscapeUnits</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>LU</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -52,7 +52,7 @@
 					<Title>RegisteredTraplines</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>RT</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -68,7 +68,7 @@
 					<Title>WildlifeHabitatAreas</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>WHA</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -104,7 +104,7 @@
 					<Title>Municipalities</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>MU</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -134,7 +134,7 @@
 					<Title>NativeCommunities</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>NC</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -153,7 +153,7 @@
 					<Title>PrivateParcels</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>PP</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -174,7 +174,7 @@
 					<Title>CoalFields</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>MIN_CF</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -209,7 +209,7 @@
 					<Title>CoalTenures</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>MIN_CT</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -225,7 +225,7 @@
 					<Title>DominionCoalBlocks</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>MIN_DCB</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -243,7 +243,7 @@
 					<Title>NTS_Streams</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>NTS_STR</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -259,7 +259,7 @@
 					<Title>NTS_Glaciers</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>NTS_G</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -274,7 +274,7 @@
 					<Title>NTS_Lakes</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>NTS_L</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -289,7 +289,7 @@
 					<Title>NTS_Rivers</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>NTS_R</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -304,7 +304,7 @@
 					<Title>Road (Paved)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRANS_RP</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -320,7 +320,7 @@
 					<Title>Road (Loose, Gravel)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRANS_RLG</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -336,7 +336,7 @@
 					<Title>Bridge</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRANS_BR</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -352,7 +352,7 @@
 					<Title>Trail</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRANS_TR</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -368,7 +368,7 @@
 					<Title>Railway</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRANS_RW</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -400,7 +400,7 @@
 					<Title>Tunnel</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRANS_TUN</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -419,7 +419,7 @@
 					<Title>TRIM2_WaterBodies</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WB</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -434,7 +434,7 @@
 					<Title>TRIM2_WaterCourses_Rivers</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WCR</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -449,7 +449,7 @@
 					<Title>TRIM2_WetLands</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -466,7 +466,7 @@
 					<Title>TRIM2_IceMass</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_ICE</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -481,7 +481,7 @@
 					<Title>TRIM1 Transmission Line</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM1_TL</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -514,7 +514,7 @@
 					<Title>Road (Paved)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_RP</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -530,7 +530,7 @@
 					<Title>Road (Loose, Gravel)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_RLG</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -546,7 +546,7 @@
 					<Title>Trails</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_TR</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -562,7 +562,7 @@
 					<Title>Railway</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_RW</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -594,7 +594,7 @@
 					<Title>Airport/Airfield</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_AIR</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -611,7 +611,7 @@
 					<Title>Ferry Route</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_FER</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -628,7 +628,7 @@
 					<Title>Bridge</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_BR</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -644,7 +644,7 @@
 					<Title>Cut (Road / Railway)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_CUT</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -660,7 +660,7 @@
 					<Title>Embankment/Fill</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_EF</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -676,7 +676,7 @@
 					<Title>Tunnel/Snow Shed/Bridge Trestle-Foot</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_TRANS_TUN</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -692,7 +692,7 @@
 					<Title>TRIM2 River/Stream Definite</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_RSD</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -708,7 +708,7 @@
 					<Title>TRIM2 River/Stream Indefinite</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_RSI</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -725,7 +725,7 @@
 					<Title>TRIM2 River/Lake Definite</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_LD</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -741,7 +741,7 @@
 					<Title>TRIM2 River/Lake Indefinite</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_LI</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -758,7 +758,7 @@
 					<Title>TRIM2 Marsh/Swamp</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_MS</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -775,7 +775,7 @@
 					<Title>TRIM2 Glacier/Icefield</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_GI</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -792,7 +792,7 @@
 					<Title>TRIM2 Sand/Gravel Bar</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_SG</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -809,7 +809,7 @@
 					<Title>TRIM2 Canal/Ditch/Island</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_CDI</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -825,7 +825,7 @@
 					<Title>TRIM2 Dams (General)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_DA</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -841,7 +841,7 @@
 					<Title>TRIM2 Rapids/Falls</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_RF</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -858,7 +858,7 @@
 					<Title>TRIM2 Flooded land</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_FL</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -875,7 +875,7 @@
 					<Title>TRIM2 Reservoir</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM2_WL_RES</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -893,7 +893,7 @@
 					<Title>TRIM1 Contour - Index</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM1_C_IND</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -910,7 +910,7 @@
 					<Title>TRIM1 Contour - Intermediate</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM1_C_INT</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -926,7 +926,7 @@
 					<Title>TRIM1 Contour - Cliff</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM1_C_CLF</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -942,7 +942,7 @@
 					<Title>TRIM1 Contour - Area of exclusion</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRIM1_C_AOE</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -960,7 +960,7 @@
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
 							<ogc:Function name="geometryType">
-								<ogc:PropertyName>geometry</ogc:PropertyName>
+								<ogc:PropertyName>geom</ogc:PropertyName>
 							</ogc:Function>
 							<ogc:Literal>Point</ogc:Literal>
 							<ogc:Literal>MultiPoint</ogc:Literal>

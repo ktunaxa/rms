@@ -76,8 +76,10 @@ public interface KtunaxaConstant {
 	String LAYER_SLOPE_ID = "clientLayerSlope";
 	String LAYER_REFERENCE_BASE_ID = "clientLayerReferenceBase";
 	String LAYER_REFERENCE_BASE_SERVER_ID = "layerReferenceBase";
+	String LAYER_REFERENCE_BASE_SERVER_HIB_ID = "layerReferenceBaseHib";
 	String LAYER_REFERENCE_VALUE_ID = "clientLayerReferenceValue";
 	String LAYER_REFERENCE_VALUE_SERVER_ID = "layerReferenceValue";
+	String LAYER_REFERENCE_VALUE_SERVER_HIB_ID = "layerReferenceValueHib";
 	String LAYER_REFERRAL_ID = "clientLayerReferral";
 	String LAYER_REFERRAL_SERVER_ID = "layerReferral";
 

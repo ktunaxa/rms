@@ -22,20 +22,14 @@ package org.ktunaxa.referral.client.form;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.geomajas.command.CommandResponse;
-import org.geomajas.command.dto.PersistTransactionRequest;
-import org.geomajas.gwt.client.command.AbstractCommandCallback;
-import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
-import org.geomajas.layer.feature.FeatureTransaction;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.LongAttribute;
 import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.ktunaxa.referral.client.gui.MapLayout;
-import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
@@ -68,20 +62,7 @@ public final class EmptyForm extends AbstractTaskForm {
 			Map<String, Attribute> attributes = current.getAttributes();
 			attributes.put(KtunaxaConstant.ATTRIBUTE_STATUS, new ManyToOneAttribute(new AssociationValue(
 					new LongAttribute(3L), new HashMap<String, PrimitiveAttribute<?>>())));
-			final FeatureTransaction ft = new FeatureTransaction();
-			ft.setLayerId(layer.getServerLayerId());
-			ft.setOldFeatures(new Feature[] {previous});
-			ft.setNewFeatures(new Feature[] {current});
-			PersistTransactionRequest request = new PersistTransactionRequest();
-			request.setFeatureTransaction(ft);
-			request.setCrs(layer.getMapModel().getCrs());
-			GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
-			command.setCommandRequest(request);
-			CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
-				public void execute(CommandResponse response) {
-					// all fine
-				}
-			}, "Saving changes...");
+			persistReferral(previous, current);
 		}
 		return super.validate();
 	}

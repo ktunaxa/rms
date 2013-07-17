@@ -192,17 +192,7 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 		attributes.put(KtunaxaConstant.ATTRIBUTE_DECISION, new ManyToOneAttribute(new AssociationValue(
 				new LongAttribute(Long.parseLong(decision.getValueAsString())),
 				new HashMap<String, PrimitiveAttribute<?>>())));
-		final FeatureTransaction ft = new FeatureTransaction();
-		ft.setLayerId(layer.getServerLayerId());
-		ft.setOldFeatures(new Feature[] {previous});
-		ft.setNewFeatures(new Feature[] {current});
-		PersistTransactionRequest request = new PersistTransactionRequest();
-		request.setFeatureTransaction(ft);
-		request.setCrs(layer.getMapModel().getCrs());
-		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
-		command.setCommandRequest(request);
-		CommandCallback<CommandResponse> callback = new UpdatingCallback(onUpdate);
-		CommunicationHandler.get().execute(command, callback, "Updating referral...");
+		persistReferral(previous, current);
 	}
 	
 	/**

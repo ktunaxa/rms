@@ -33,7 +33,7 @@
 					<Title>GroundWaterWells</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>GWW</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -53,7 +53,7 @@
 					<Title>WaterDiversionPoints</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>WDP</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -73,7 +73,7 @@
 					<Title>FishDistribution_Historic</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>FDH</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -93,7 +93,7 @@
 					<Title>CWB_FreshwaterObstructions (Artificial Waterfall)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>FWO_AW</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -113,7 +113,7 @@
 					<Title>CWB_FreshwaterObstructions (Beaver Dam)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>FWO_BD</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -133,7 +133,7 @@
 					<Title>CWB_FreshwaterObstructions (Dam)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>FWO_D</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -153,7 +153,7 @@
 					<Title>CWB_FreshwaterObstructions (Falls)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>FWO_F</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -173,7 +173,7 @@
 					<Title>CWB_FreshwaterObstructions (Flattened Waterfall)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>FWO_FW</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -193,7 +193,7 @@
 					<Title>CWB_FreshwaterObstructions (Rapids/Cascades)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>FWO_RC</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -213,7 +213,7 @@
 					<Title>CWB_FreshwaterObstructions (SinkHole)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>FWO_SH</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -233,7 +233,7 @@
 					<Title>DesignatedFloodPlainAreas (Floodplain Area)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>DFPA_FA</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -263,7 +263,7 @@
 					<Title>DesignatedFloodPlainAreas (Alluvial Fan)</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>DFPA_AF</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -296,7 +296,7 @@
 					<Title>Registered_Archaeological_Sites</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>ARC_RAS</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -316,7 +316,7 @@
 					<Title>AOA_Polygons_WCandArcas</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>ARC_APWCA</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -335,7 +335,7 @@
 					<Title>Registered_Archaeological_Polygons</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>ARC_RAP</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -354,7 +354,7 @@
 					<Title>AOA_Polygons_Kootenay_West</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>ARC_APKW</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -374,7 +374,7 @@
 					<Title>UngulateWinterRange</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>UWR</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -389,7 +389,7 @@
 					<Title>National Parks</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>NP</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -404,7 +404,7 @@
 					<Title>Provincial Parks</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>PP</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -419,7 +419,7 @@
 					<Title>East Kootenay Conservation Covenats Lands</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>EKCCL</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -449,7 +449,7 @@
 					<Title>Rare_Endangered_Species</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>RES</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -479,7 +479,7 @@
 					<Title>IMA: Interior Mountain-Heather Alpine</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>BEC_IMA</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -494,7 +494,7 @@
 					<Title>ESSF: Engelmann Spruce - Subalpine Fir</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>BEC_ESSF</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -509,7 +509,7 @@
 					<Title>ICH: Interior Cedar - Hemlock</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>BEC_ICH</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -524,7 +524,7 @@
 					<Title>IDF: Interior Douglas-Fir</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>BEC_IDF</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -539,7 +539,7 @@
 					<Title>MS: Montane Spruce</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>BEC_MS</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -554,7 +554,7 @@
 					<Title>PP: Ponderosa Pine</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>NP</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -572,7 +572,7 @@
 					<Title>Treaty - Identified</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRT_ID</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -589,7 +589,7 @@
 					<Title>Ktunaxa Nation Consultative Area</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>TRT_KNCA</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -610,7 +610,7 @@
 					<Title>Grassland Ecosystem</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>GRASS</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -646,7 +646,7 @@
 					<Title>Shoreline Management Units</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>BEC_SMU</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -664,7 +664,7 @@
 					<Title>Deciduous Forest</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>RIP_DEC</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -683,7 +683,7 @@
 					<Title>Common Reparian Subhygric</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>RIP_CRS</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -702,7 +702,7 @@
 					<Title>Uncommon Reparian Subhygric</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>RIP_URS</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -721,7 +721,7 @@
 					<Title>Common Reparian Hygric</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>RIP_CRH</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -740,7 +740,7 @@
 					<Title>Uncommon Reparian Hygric</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>RIP_URH</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -759,7 +759,7 @@
 					<Title>Red Shoreline</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>LSG_RED</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -776,7 +776,7 @@
 					<Title>Red Shoreline</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>LSG_RED</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -793,7 +793,7 @@
 					<Title>Orange Shoreline</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>LSG_ORA</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -810,7 +810,7 @@
 					<Title>Yellow Shoreline</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>LSG_YEL</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -827,7 +827,7 @@
 					<Title>Grey Shoreline</Title>
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
-							<ogc:PropertyName>styleCode</ogc:PropertyName>
+							<ogc:PropertyName>style_code</ogc:PropertyName>
 							<ogc:Literal>LSG_GRE</ogc:Literal>
 						</ogc:PropertyIsEqualTo>
 					</ogc:Filter>
@@ -846,7 +846,7 @@
 					<ogc:Filter>
 						<ogc:PropertyIsEqualTo>
 							<ogc:Function name="geometryType">
-								<ogc:PropertyName>geometry</ogc:PropertyName>
+								<ogc:PropertyName>geom</ogc:PropertyName>
 							</ogc:Function>
 							<ogc:Literal>Point</ogc:Literal>
 							<ogc:Literal>MultiPoint</ogc:Literal>

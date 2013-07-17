@@ -19,15 +19,7 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import java.util.List;
-
-import org.geomajas.global.GeomajasConstant;
-import org.geomajas.gwt.client.action.menu.SaveEditingAction;
-import org.geomajas.gwt.client.map.MapModel;
-import org.geomajas.gwt.client.map.event.FeatureTransactionEvent;
-import org.geomajas.gwt.client.map.event.FeatureTransactionHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
-import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
@@ -43,7 +35,6 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.events.ItemChangedEvent;
 import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
-import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 
 /**
@@ -51,11 +42,7 @@ import com.smartgwt.client.widgets.toolbar.ToolStrip;
  * 
  * @author Jan De Moerloose
  */
-public class DetailPanel extends VLayout {
-
-	private FeatureAttributeEditor editor;
-
-	private VectorLayer referralLayer;
+public class DetailPanel extends FeatureEditorPanel {
 
 	private String referralId;
 
@@ -68,17 +55,15 @@ public class DetailPanel extends VLayout {
 	private CancelButton cancelButton;
 
 	public DetailPanel() {
-		super(LayoutConstant.MARGIN_LARGE);
+		setMembersMargin(LayoutConstant.MARGIN_LARGE);
 	}
 
 	public void init(VectorLayer referralLayer, Feature referral) {
 		// clean up (TODO update code)
 		removeMembers(getMembers());
-		this.referralLayer = referralLayer;
+		setReferralLayer(referralLayer);
 		this.referralId = referral.getId();
-		MapModel mapModel = referralLayer.getMapModel();
-		mapModel.addFeatureTransactionHandler(new EditingCallBack());
-		editor = new FeatureAttributeEditor(referralLayer, true, new ReferralDetailFormFactory());
+		FeatureAttributeEditor editor = new FeatureAttributeEditor(referralLayer, true, new ReferralDetailFormFactory());
 		editor.setFeature(referral);
 		editor.addItemChangedHandler(new ItemChangedHandler() {
 
@@ -88,6 +73,7 @@ public class DetailPanel extends VLayout {
 
 		});
 		editor.setOverflow(Overflow.AUTO);
+		setEditor(editor);
 		ToolStrip toolStrip = new ToolStrip();
 		toolStrip.setWidth100();
 		toolStrip.setPadding(2);
@@ -112,12 +98,12 @@ public class DetailPanel extends VLayout {
 	}
 
 	private void updateButtonState(boolean formChanged) {
-		if (editor.isDisabled()) {
+		if (getEditor().isDisabled()) {
 			saveButton.setDisabled(true);
 			cancelButton.setDisabled(true);
 			editButton.setDisabled(false);
 		} else if (formChanged) {
-			if (editor.validate()) {
+			if (getEditor().validate()) {
 				saveButton.setDisabled(false);
 			} else {
 				saveButton.setDisabled(true);
@@ -162,8 +148,8 @@ public class DetailPanel extends VLayout {
 		}
 
 		public void onClick(ClickEvent event) {
-			if (editor.isDisabled()) {
-				editor.setDisabled(false);
+			if (getEditor().isDisabled()) {
+				getEditor().setDisabled(false);
 			}
 			updateButtonState(false);
 		}
@@ -188,12 +174,7 @@ public class DetailPanel extends VLayout {
 		}
 
 		public void onClick(ClickEvent event) {
-			MapModel mapModel = referralLayer.getMapModel();
-			mapModel.getFeatureEditor().startEditing(new Feature[] { editor.getFeature() },
-					new Feature[] { editor.getFeature() });
-			SaveEditingAction action = new SaveEditingAction(mapModel);
-			action.onClick(null);
-			editor.setDisabled(true);
+			persistFeature();
 			updateButtonState(false);
 		}
 	}
@@ -217,8 +198,8 @@ public class DetailPanel extends VLayout {
 		}
 
 		public void onClick(ClickEvent event) {
-			editor.reset();
-			editor.setDisabled(true);
+			getEditor().reset();
+			getEditor().setDisabled(true);
 			updateButtonState(false);
 		}
 	}
@@ -242,24 +223,6 @@ public class DetailPanel extends VLayout {
 
 		public void onClick(ClickEvent event) {
 			MapLayout.getInstance().refreshReferral(false, Focus.REFERRAL_DETAIL);
-		}
-	}
-
-	/**
-	 * callback to show the edited feature.
-	 * 
-	 * @author Jan De Moerloose
-	 * 
-	 */
-	public class EditingCallBack implements LazyLoadCallback, FeatureTransactionHandler {
-
-		public void execute(List<Feature> response) {
-			editor.setFeature(response.iterator().next());
-			updateButtonState(false);
-		}
-
-		public void onTransactionSuccess(FeatureTransactionEvent event) {
-			referralLayer.getFeatureStore().getFeature(referralId, GeomajasConstant.FEATURE_INCLUDE_ALL, this);
 		}
 	}
 }

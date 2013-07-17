@@ -110,7 +110,7 @@ public class ReferenceLayer {
 				} else {
 					builder.append(" or ");
 				}
-				builder.append("layer.code = ");
+				builder.append("layer_id = ");
 				builder.append(id);
 			}
 		}

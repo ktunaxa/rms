@@ -23,19 +23,31 @@ import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.layout.VLayout;
+
+import org.geomajas.command.CommandResponse;
+import org.geomajas.command.dto.PersistTransactionRequest;
+import org.geomajas.geometry.Geometry;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.layer.feature.Feature;
+import org.geomajas.layer.feature.FeatureTransaction;
 import org.ktunaxa.referral.client.gui.LayoutConstant;
+import org.ktunaxa.referral.client.gui.MapLayout;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
 import java.util.Map;
 
 /**
  * Base class for building a task form.
- *
+ * 
  * @author Joachim Van der Auwera
  */
 public abstract class AbstractTaskForm extends VLayout {
 
 	private HTMLFlow taskTitle = new HTMLFlow();
+
 	private DynamicForm[] forms;
 
 	/**
@@ -53,17 +65,16 @@ public abstract class AbstractTaskForm extends VLayout {
 
 	/**
 	 * Refresh the task, restetting the task title.
-	 *
+	 * 
 	 * @param task task
 	 */
 	public void refresh(TaskDto task) {
-		taskTitle.setContents("<h3>" + task.getName() + "</h3>" +
-				"<div>" + task.getDescription() + "</div>");
+		taskTitle.setContents("<h3>" + task.getName() + "</h3>" + "<div>" + task.getDescription() + "</div>");
 	}
 
 	/**
 	 * Set the form field items.
-	 *
+	 * 
 	 * @param formItems form field items
 	 */
 	public void setFields(FormItem... formItems) {
@@ -77,7 +88,7 @@ public abstract class AbstractTaskForm extends VLayout {
 
 	/**
 	 * Set the forms for this task form. This method should only be called once!
-	 *
+	 * 
 	 * @param forms forms to add
 	 */
 	public void setForms(DynamicForm... forms) {
@@ -93,9 +104,8 @@ public abstract class AbstractTaskForm extends VLayout {
 	}
 
 	/**
-	 * Validate the form value and return whether validation succeeded.
-	 * This will display validation markers if needed.
-	 *
+	 * Validate the form value and return whether validation succeeded. This will display validation markers if needed.
+	 * 
 	 * @return true when validation succeeded
 	 */
 	public boolean validate() {
@@ -110,7 +120,7 @@ public abstract class AbstractTaskForm extends VLayout {
 
 	/**
 	 * Validate the form value using callbacks for the correct case. Display validation markers if needed.
-	 *
+	 * 
 	 * @param valid action to run when validation succeeded
 	 * @param invalid action to run when validation failed
 	 */
@@ -128,14 +138,14 @@ public abstract class AbstractTaskForm extends VLayout {
 
 	/**
 	 * Get the variables from the form.
-	 *
+	 * 
 	 * @return form values
 	 */
 	public abstract Map<String, String> getVariables();
 
 	/**
 	 * Convert object to string in a way that works when the object is null.
-	 *
+	 * 
 	 * @param object object to convert to string
 	 * @return string for the object or null if null was passed
 	 */
@@ -145,4 +155,37 @@ public abstract class AbstractTaskForm extends VLayout {
 		}
 		return object.toString();
 	}
+
+	/**
+	 * Persist a referral.
+	 * 
+	 * @param previous
+	 * @param current
+	 */
+	protected void persistReferral(Feature previous, Feature current) {
+		VectorLayer referralLayer = MapLayout.getInstance().getReferralLayer();
+		final FeatureTransaction ft = new FeatureTransaction();
+		ft.setLayerId(referralLayer.getServerLayerId());
+		ft.setOldFeatures(new Feature[] { previous });
+		ft.setNewFeatures(new Feature[] { current });
+		// set geometry to null for the request
+		Geometry geometry = previous.getGeometry();
+		previous.setGeometry(null);
+		current.setGeometry(null);
+		PersistTransactionRequest request = new PersistTransactionRequest();
+		request.setFeatureTransaction(ft);
+		request.setCrs(referralLayer.getMapModel().getCrs());
+		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
+		command.setCommandRequest(request);
+		CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
+
+			public void execute(CommandResponse response) {
+				// all fine
+			}
+		}, "Saving changes...");
+		// reset geometry
+		previous.setGeometry(geometry);
+		current.setGeometry(geometry);
+	}
+
 }

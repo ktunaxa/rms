@@ -31,6 +31,21 @@
 	<description>Mapping dashboard for Ktunaxa referral system</description>
 
 	<dependencies>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools.jdbc</groupId>
+			<artifactId>gt-jdbc-postgis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-shapefile</artifactId>
+		</dependency>
 		<!-- fix conflicts over xerces/xalan versions -->
 		<dependency>
 			<groupId>xerces</groupId>
@@ -162,8 +177,9 @@
 			<artifactId>postgis-jdbc</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>postgresql</groupId>
+			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+			<version>9.2-1003-jdbc4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.jolbox</groupId>

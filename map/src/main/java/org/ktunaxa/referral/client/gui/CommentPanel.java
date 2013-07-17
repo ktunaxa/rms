@@ -21,17 +21,24 @@ package org.ktunaxa.referral.client.gui;
 
 import java.util.List;
 
+import org.geomajas.command.dto.PersistTransactionRequest;
+import org.geomajas.command.dto.PersistTransactionResponse;
 import org.geomajas.global.GeomajasConstant;
-import org.geomajas.gwt.client.action.menu.SaveEditingAction;
+import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.GwtCommand;
+import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.event.FeatureTransactionEvent;
 import org.geomajas.gwt.client.map.event.FeatureTransactionHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
+import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
+import org.ktunaxa.referral.client.widget.CommunicationHandler;
+import org.ktunaxa.referral.server.command.PersistReferralCommand;
 
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.events.ItemChangedEvent;
@@ -45,13 +52,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
  * 
  * @author Pieter De Graef
  */
-public class CommentPanel extends VLayout {
-
-	private FeatureAttributeEditor editor;
-
-	private VectorLayer referralLayer;
-
-	private String referralId;
+public class CommentPanel extends FeatureEditorPanel {
 
 	public CommentPanel() {
 		setWidth100();
@@ -59,12 +60,10 @@ public class CommentPanel extends VLayout {
 
 	public void init(VectorLayer referralLayer, Feature referral) {
 		removeMembers(getMembers());
-		this.referralLayer = referralLayer;
-		this.referralId = referral.getId();
-		editor = new FeatureAttributeEditor(referralLayer, false, new CommentsFormFactory());
+		setReferralLayer(referralLayer);
+		FeatureAttributeEditor editor = new FeatureAttributeEditor(referralLayer, false, new CommentsFormFactory());
 		editor.setFeature(referral);
-		MapModel mapModel = referralLayer.getMapModel();
-		mapModel.addFeatureTransactionHandler(new EditingCallBack());
+		setEditor(editor);
 		addMember(editor);
 		LayoutSpacer spacer = new LayoutSpacer();
 		spacer.setHeight("*");
@@ -84,30 +83,11 @@ public class CommentPanel extends VLayout {
 			form.addItemChangedHandler(new ItemChangedHandler() {
 
 				public void onItemChanged(ItemChangedEvent event) {
-					MapModel mapModel = referralLayer.getMapModel();
-					mapModel.getFeatureEditor().startEditing(new Feature[] { editor.getFeature() },
-							new Feature[] { editor.getFeature() });
-					SaveEditingAction action = new SaveEditingAction(mapModel);
-					action.onClick(null);
+					persistFeature();
 				}
 			});
 			return form;
 		}
 	}
 
-	/**
-	 * Callback to show the edited feature.
-	 * 
-	 * @author Jan De Moerloose
-	 */
-	public class EditingCallBack implements LazyLoadCallback, FeatureTransactionHandler {
-
-		public void execute(List<Feature> response) {
-			editor.setFeature(response.iterator().next());
-		}
-
-		public void onTransactionSuccess(FeatureTransactionEvent event) {
-			referralLayer.getFeatureStore().getFeature(referralId, GeomajasConstant.FEATURE_INCLUDE_ALL, this);
-		}
-	}
 }

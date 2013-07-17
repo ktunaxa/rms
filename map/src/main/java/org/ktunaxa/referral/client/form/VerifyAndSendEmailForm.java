@@ -64,17 +64,27 @@ import com.smartgwt.client.widgets.form.validator.RegExpValidator;
  * @author Emiel Ackermann
  */
 public class VerifyAndSendEmailForm extends AbstractTaskForm {
-	
+
 	private final String notifier;
+
 	private final TextItem from = new TextItem();
+
 	private final TextItem subject = new TextItem();
+
 	private final TextAreaItem message = new TextAreaItem();
+
 	private final TextItem to = new TextItem();
+
 	private final TextItem cc = new TextItem();
+
 	private final CheckboxItem sendMail = new CheckboxItem();
+
 	private final CheckboxItem saveMail = new CheckboxItem();
+
 	private final RegExpValidator oneAddress;
+
 	private final RegExpValidator multiAddress;
+
 	private TaskDto task;
 
 	public VerifyAndSendEmailForm(String notifier) {
@@ -111,17 +121,16 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		message.setWidth("100%");
 		message.setMinHeight(100);
 		message.setHeight("*");
-		
+
 		to.setName(KtunaxaConstant.Email.TO_NAME);
 		to.setTitle("To");
 		to.setDisabled(true);
 		to.setWidth("100%");
-		
 
 		sendMail.setTitle("Send mail when finished");
 		sendMail.setValue(true);
 		sendMail.addChangeHandler(new ChangeHandler() {
-			
+
 			public void onChange(ChangeEvent event) {
 				Boolean disable = sendMail.getValueAsBoolean(); // == pre-change value.
 				from.setDisabled(disable);
@@ -135,12 +144,12 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 					from.setValidators(oneAddress);
 					cc.setValidators(multiAddress);
 				}
-			} 
+			}
 		});
-		
+
 		saveMail.setTitle("Save mail as comment");
 		saveMail.setValue(false);
-		
+
 		setSendForm();
 	}
 
@@ -149,13 +158,13 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 		mail.setWidth100();
 		mail.setFields(from, cc, to, subject);
 		mail.setColWidths("13%", "*");
-		
+
 		DynamicForm messageForm = new DynamicForm();
 		messageForm.setWidth("87%");
 		messageForm.setLayoutAlign(Alignment.RIGHT);
 		messageForm.setFields(message);
 		messageForm.setHeight("*");
-		
+
 		DynamicForm checkBoxForm = new DynamicForm();
 		checkBoxForm.setNumCols(4);
 		checkBoxForm.setWidth100();
@@ -211,6 +220,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 				GwtCommand command = new GwtCommand(SendEmailRequest.COMMAND);
 				command.setCommandRequest(request);
 				CommunicationHandler.get().execute(command, new AbstractCommandCallback<SendEmailResponse>() {
+
 					public void execute(SendEmailResponse response) {
 						if (response.isSuccess()) {
 							valid.run();
@@ -235,44 +245,30 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 	private void afterSendEmail() {
 		if (KtunaxaConstant.Email.LEVEL_0.equals(notifier)) {
 			// need to mark referral as finished and set the response date
-		MapLayout mapLayout = MapLayout.getInstance();
-		VectorLayer layer = mapLayout.getReferralLayer();
-		Feature current = mapLayout.getCurrentReferral();
-		Feature previous = new org.geomajas.gwt.client.map.feature.Feature(current, layer).toDto();
-		Map<String, Attribute> attributes = current.getAttributes();
-		attributes.put(KtunaxaConstant.ATTRIBUTE_RESPONSE_DATE, new DateAttribute(new Date()));
-		attributes.put(KtunaxaConstant.ATTRIBUTE_STATUS, new ManyToOneAttribute(new AssociationValue(
-							new LongAttribute(3L), new HashMap<String, PrimitiveAttribute<?>>())));
-		final FeatureTransaction ft = new FeatureTransaction();
-		ft.setLayerId(layer.getServerLayerId());
-		ft.setOldFeatures(new Feature[] {previous});
-		ft.setNewFeatures(new Feature[] {current});
-		PersistTransactionRequest request = new PersistTransactionRequest();
-		request.setFeatureTransaction(ft);
-		request.setCrs(layer.getMapModel().getCrs());
-		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
-		command.setCommandRequest(request);
-		CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
-			public void execute(CommandResponse response) {
-				// all fine
-			}
-		}, "Marking referral as finished...");
+			MapLayout mapLayout = MapLayout.getInstance();
+			VectorLayer layer = mapLayout.getReferralLayer();
+			Feature current = mapLayout.getCurrentReferral();
+			Feature previous = new org.geomajas.gwt.client.map.feature.Feature(current, layer).toDto();
+			Map<String, Attribute> attributes = current.getAttributes();
+			attributes.put(KtunaxaConstant.ATTRIBUTE_RESPONSE_DATE, new DateAttribute(new Date()));
+			attributes.put(KtunaxaConstant.ATTRIBUTE_STATUS, new ManyToOneAttribute(new AssociationValue(
+					new LongAttribute(3L), new HashMap<String, PrimitiveAttribute<?>>())));
+			persistReferral(previous, current);
 		}
 	}
 
 	/**
 	 * Should the e-mail be sent or not?
-	 *
+	 * 
 	 * @return true when e-mail should be sent
 	 */
 	protected boolean isSendMail() {
 		return sendMail.getValueAsBoolean();
 	}
 
-
 	/**
 	 * Should the e-mail be saved as a comment or not ?
-	 *
+	 * 
 	 * @return true when e-mail should be saved
 	 */
 	protected boolean isSaveMail() {
@@ -281,7 +277,7 @@ public class VerifyAndSendEmailForm extends AbstractTaskForm {
 
 	/**
 	 * Fill the parameters for sending the e-mail from the form.
-	 *
+	 * 
 	 * @param request {@link SendEmailRequest} request object
 	 */
 	protected void setEmailRequest(SendEmailRequest request) {

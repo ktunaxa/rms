@@ -120,8 +120,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="preferredPixelsPerTile">
 			<bean class="org.geomajas.configuration.client.ClientPreferredPixelsPerTile">
 				<property name="preferredPixelsPerTileType" value="CONFIGURED" />
-				<property name="width" value="256" />
-				<property name="height" value="256" />
+				<property name="width" value="512" />
+				<property name="height" value="512" />
 			</bean>
 		</property>
 		<property name="layers">
@@ -135,6 +135,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 				<ref bean="clientLayerSlope" />
 				<ref bean="clientLayerReferenceBase" />
 				<ref bean="clientLayerReferenceValue" />
+				<ref bean="clientLayerReferenceBaseHib" />
+				<ref bean="clientLayerReferenceValueHib" />
 				<ref bean="clientLayerReferral" />
 			</list>
 		</property>
@@ -233,6 +235,26 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="serverLayerId" value="layerReferenceBase" />
 		<property name="label" value="Reference Base" />
 		<property name="visible" value="true" />
+		<property name="maximumScale" value="1000000000:1" />
+		<property name="minimumScale" value="1:1000000000" />
+		<property name="zoomToPointScale" value="1:6000" />
+		<property name="namedStyleInfo" ref="referenceBaseStyleInfo" />
+	</bean>
+
+	<bean id="clientLayerReferenceValueHib" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
+		<property name="serverLayerId" value="layerReferenceValueHib" />
+		<property name="label" value="Reference Value" />
+		<property name="visible" value="false" />
+		<property name="maximumScale" value="1000000000:1" />
+		<property name="minimumScale" value="1:1000000000" />
+		<property name="zoomToPointScale" value="1:6000" />
+		<property name="namedStyleInfo" ref="referenceValueStyleInfo" />
+	</bean>
+
+	<bean id="clientLayerReferenceBaseHib" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
+		<property name="serverLayerId" value="layerReferenceBaseHib" />
+		<property name="label" value="Reference Base" />
+		<property name="visible" value="false" />
 		<property name="maximumScale" value="1000000000:1" />
 		<property name="minimumScale" value="1:1000000000" />
 		<property name="zoomToPointScale" value="1:6000" />

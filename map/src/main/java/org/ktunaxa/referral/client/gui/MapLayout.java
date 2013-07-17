@@ -282,6 +282,7 @@ public final class MapLayout extends VLayout {
 			}
 			GfxGeometry highlight = new GfxGeometry("referral-highlight", geometry, new ShapeStyle("#FF00FF", 0.5f,
 					"#FF00FF", 0.8f, 1), symbolInfo);
+			getMap().unregisterWorldPaintable(highlight);
 			getMap().registerWorldPaintable(highlight);
 			String referralDescription = feature.getAttributeValue(KtunaxaConstant.ATTRIBUTE_PROJECT).toString();
 			String referralId = ReferralUtil.createId(referral);

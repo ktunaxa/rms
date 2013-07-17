@@ -87,20 +87,7 @@ public class ConcernsAddressedForm extends AbstractTaskForm {
 			Map<String, Attribute> attributes = current.getAttributes();
 			attributes.put(KtunaxaConstant.ATTRIBUTE_STATUS, new ManyToOneAttribute(new AssociationValue(
 					new LongAttribute(3L), new HashMap<String, PrimitiveAttribute<?>>())));
-			final FeatureTransaction ft = new FeatureTransaction();
-			ft.setLayerId(layer.getServerLayerId());
-			ft.setOldFeatures(new Feature[] {previous});
-			ft.setNewFeatures(new Feature[] {current});
-			PersistTransactionRequest request = new PersistTransactionRequest();
-			request.setFeatureTransaction(ft);
-			request.setCrs(layer.getMapModel().getCrs());
-			GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
-			command.setCommandRequest(request);
-			CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
-				public void execute(CommandResponse response) {
-					// all fine
-				}
-			}, "Saving changes...");
+			persistReferral(previous, current);
 		}
 		return super.validate();
 	}

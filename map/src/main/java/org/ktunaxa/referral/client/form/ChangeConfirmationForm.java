@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
+import org.geomajas.geometry.Geometry;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
@@ -102,22 +103,10 @@ public class ChangeConfirmationForm extends AbstractTaskForm {
 				Integer.parseInt(result.get(KtunaxaBpmConstant.VAR_ENGAGEMENT_LEVEL))));
 		attributes.put(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE, new DateAttribute(
 				completionDeadline.getValueAsDate()));
-		final FeatureTransaction ft = new FeatureTransaction();
-		ft.setLayerId(layer.getServerLayerId());
-		ft.setOldFeatures(new Feature[] {previous});
-		ft.setNewFeatures(new Feature[] {current});
-		PersistTransactionRequest request = new PersistTransactionRequest();
-		request.setFeatureTransaction(ft);
-		request.setCrs(layer.getMapModel().getCrs());
-		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
-		command.setCommandRequest(request);
-		CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
-			public void execute(CommandResponse response) {
-				// all fine
-			}
-		}, "Saving changes...");
-
+		persistReferral(previous, current);
 		// return result
 		return result;
 	}
+
+	
 }
