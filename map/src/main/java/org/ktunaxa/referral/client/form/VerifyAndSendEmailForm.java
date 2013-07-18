@@ -23,14 +23,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.geomajas.command.CommandResponse;
-import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
-import org.geomajas.layer.feature.FeatureTransaction;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.DateAttribute;
 import org.geomajas.layer.feature.attribute.LongAttribute;

@@ -19,32 +19,16 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import java.util.List;
-
-import org.geomajas.command.dto.PersistTransactionRequest;
-import org.geomajas.command.dto.PersistTransactionResponse;
-import org.geomajas.global.GeomajasConstant;
-import org.geomajas.gwt.client.command.AbstractCommandCallback;
-import org.geomajas.gwt.client.command.GwtCommand;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
-import org.geomajas.gwt.client.map.MapModel;
-import org.geomajas.gwt.client.map.event.FeatureTransactionEvent;
-import org.geomajas.gwt.client.map.event.FeatureTransactionHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
-import org.geomajas.gwt.client.map.feature.FeatureTransaction;
-import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
-import org.ktunaxa.referral.client.widget.CommunicationHandler;
-import org.ktunaxa.referral.server.command.PersistReferralCommand;
 
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.form.events.ItemChangedEvent;
 import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
-import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Panel for managing the comments of a referral. This panel display the full list of comments or a more detailed view

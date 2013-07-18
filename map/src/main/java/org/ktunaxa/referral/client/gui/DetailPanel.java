@@ -63,7 +63,8 @@ public class DetailPanel extends FeatureEditorPanel {
 		removeMembers(getMembers());
 		setReferralLayer(referralLayer);
 		this.referralId = referral.getId();
-		FeatureAttributeEditor editor = new FeatureAttributeEditor(referralLayer, true, new ReferralDetailFormFactory());
+		FeatureAttributeEditor editor = new FeatureAttributeEditor(referralLayer, true,
+				new ReferralDetailFormFactory());
 		editor.setFeature(referral);
 		editor.addItemChangedHandler(new ItemChangedHandler() {
 

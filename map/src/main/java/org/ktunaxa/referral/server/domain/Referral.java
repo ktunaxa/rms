@@ -42,7 +42,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.AccessType;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import com.vividsolutions.jts.geom.Geometry;

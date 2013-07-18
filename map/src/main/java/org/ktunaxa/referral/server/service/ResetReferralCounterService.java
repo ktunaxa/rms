@@ -63,8 +63,9 @@ public class ResetReferralCounterService implements PreInsertEventListener {
 			SQLQuery q1 = session
 					.createSQLQuery(
 							"SELECT count(*) as cnt, to_char(current_date, 'yyyy') as yr "
-									+ "FROM referral WHERE calendar_year = cast(to_char(current_date, 'yy') as integer)")
-					.addScalar("cnt", new IntegerType()).addScalar("yr", new StringType());
+									+ "FROM referral WHERE calendar_year = cast(to_char(current_date, 'yy')"
+									+ " as integer)").addScalar("cnt", new IntegerType())
+					.addScalar("yr", new StringType());
 			Object[] result = (Object[]) q1.uniqueResult();
 			Integer cnt = (Integer) result[0];
 			String yr = (String) result[1];
