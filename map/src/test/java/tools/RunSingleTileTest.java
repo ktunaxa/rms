@@ -20,6 +20,7 @@
 package tools;
 
 import java.io.ByteArrayOutputStream;
+import java.net.ConnectException;
 import java.util.Random;
 
 import org.apache.http.HttpEntity;
@@ -34,10 +35,13 @@ import org.geomajas.configuration.NamedStyleInfo;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.layer.tile.TileCode;
 import org.geotools.geometry.jts.JTS;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.remoting.RemoteConnectFailureException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -50,9 +54,24 @@ public class RunSingleTileTest {
 
 	@Autowired
 	private CommandDispatcher commandDispatcher;
-	
+
 	public static void main(String[] args) {
-		System.out.println(new WKTWriter().write(JTS.toGeometry(new Envelope(552400.0312770917,553200.168752717, 5519618.311531207,5520922.667338479))));
+		System.out.println(new WKTWriter().write(JTS.toGeometry(new Envelope(552400.0312770917, 553200.168752717,
+				5519618.311531207, 5520922.667338479))));
+	}
+
+	@Before
+	public void before() {
+		Assume.assumeTrue(isLocalServerRunning());
+	}
+
+	private boolean isLocalServerRunning() {
+		try {
+			commandDispatcher.execute("", new GetVectorTileRequest(), "", null);
+			return true;
+		} catch (RemoteConnectFailureException re) {
+			return false;
+		}
 	}
 
 	@Test
@@ -88,19 +107,19 @@ public class RunSingleTileTest {
 		request.setCode(code);
 		request.setLayerId(KtunaxaConstant.LAYER_REFERENCE_BASE_SERVER_ID);
 		request.setCrs(KtunaxaConstant.MAP_CRS);
-//		request.setScale(0.006541332273339661);
+		// request.setScale(0.006541332273339661);
 		request.setPanOrigin(new Coordinate(-1.2803202237767024E7, 6306054.833527042));
 		NamedStyleInfo style = new NamedStyleInfo();
 		style.setName("referenceBaseStyleInfo");
 		request.setStyleInfo(style);
-		request.setScale(0.05233065818671729 + rand.nextDouble()/1000);
+		request.setScale(0.05233065818671729 + rand.nextDouble() / 1000);
 		request.setPaintGeometries(true);
 		request.setPaintLabels(false);
-		request.setFilter("layer_id = 1 or layer_id = 2 or layer_id = 5 or layer_id = 6 or layer_id = 7 or " +
-				"layer_id = 8 or layer_id = 9 or layer_id = 19 or layer_id = 20 or layer_id = 20 or " +
-				"layer_id = 22 or layer_id = 22 or layer_id = 24 or layer_id = 25 or layer_id = 26 or " +
-				"layer_id = 27 or layer_id = 28 or layer_id = 34 or layer_id = 78 or layer_id = 79 or " +
-				"layer_id = 82 or layer_id = 83");
+		request.setFilter("layer_id = 1 or layer_id = 2 or layer_id = 5 or layer_id = 6 or layer_id = 7 or "
+				+ "layer_id = 8 or layer_id = 9 or layer_id = 19 or layer_id = 20 or layer_id = 20 or "
+				+ "layer_id = 22 or layer_id = 22 or layer_id = 24 or layer_id = 25 or layer_id = 26 or "
+				+ "layer_id = 27 or layer_id = 28 or layer_id = 34 or layer_id = 78 or layer_id = 79 or "
+				+ "layer_id = 82 or layer_id = 83");
 		return request;
 	}
 }

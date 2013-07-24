@@ -737,6 +737,30 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>cargo</id>
+			<activation>
+				<property>
+					<name>cargo</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>redeploy</goal>
+								</goals>
+								<phase>deploy</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 
 	<properties>

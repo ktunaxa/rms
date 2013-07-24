@@ -25,10 +25,14 @@ import java.io.InputStream;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.Session;
+import org.geomajas.command.dto.GetVectorTileRequest;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.remoting.RemoteConnectFailureException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -44,6 +48,21 @@ public class CmisServiceTest {
 
 	@Autowired
 	private CmisService service;
+	
+	@Before
+	public void before() {
+		Assume.assumeTrue(isCmisRunning());
+	}
+	
+	private boolean isCmisRunning() {
+		try {
+			service.createSession();
+			return true;
+		} catch (Exception re) {
+			return false;
+		}
+	}
+
 
 	@Test
 	public void testConnection() {
