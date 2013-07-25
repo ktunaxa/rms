@@ -43,6 +43,18 @@
 		</license>
 	</licenses>
 
+	<distributionManagement>
+		<repository>
+			<id>private-nexus-releases</id>
+			<url>http://apps.geomajas.org/nexus/content/repositories/rms-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>private-nexus-snapshots</id>
+			<url>http://apps.geomajas.org/nexus/content/repositories/rms-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
 	<developers>
 		<developer>
 			<id>jvda</id>
