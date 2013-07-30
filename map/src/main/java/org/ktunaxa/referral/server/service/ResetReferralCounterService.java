@@ -75,7 +75,7 @@ public class ResetReferralCounterService implements PreInsertEventListener {
 						+ ", resetting sequence before adding the first referral");
 				// in the (unlikely) case that multiple referrals are committed concurrently,
 				// this may cause loss of one or more concurrent referrals because of duplicate key errors
-				session.createSQLQuery("setvalue('referral_number_seq',0)");
+				session.createSQLQuery("select setval('referral_number_seq',1,false)");
 			}
 		} finally {
 			session.close();

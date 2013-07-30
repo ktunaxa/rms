@@ -250,7 +250,7 @@ CREATE TABLE referral
   id serial PRIMARY KEY,
   primary_classificiation_nr integer NOT NULL, 
   secondary_classificiation_nr integer NOT NULL,
-  calendar_year integer NOT NULL,
+  calendar_year integer NOT NULL DEFAULT (to_char((('now'::text)::date)::timestamp with time zone, 'yy'::text))::integer,
   number integer DEFAULT nextval('referral_number_seq'),
   applicant_name character varying(254) NOT NULL,
   project_name character varying(254) NOT NULL,

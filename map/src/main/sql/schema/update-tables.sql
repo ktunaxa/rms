@@ -87,4 +87,7 @@
 
 -- KTU-113 also need sender e-mail
 ALTER TABLE template ADD COLUMN cc text;
+alter table referral alter column calendar_year set NOT NULL;
+alter table referral alter column calendar_year  set DEFAULT (to_char((('now'::text)::date)::timestamp with time zone, 'yy'::text))::integer
+
 

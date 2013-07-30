@@ -104,7 +104,7 @@ public final class UserContext {
 	 * @return true when having data entry role
 	 */
 	public boolean isDataEntry() {
-		return hasBpmRole(KtunaxaBpmConstant.ROLE_REFERRAL_MANAGER);
+		return hasBpmRole(KtunaxaBpmConstant.ROLE_DATA_ENTRY);
 	}
 
 	/**
