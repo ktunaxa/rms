@@ -1,0 +1,184 @@
+<!--
+  ~ Ktunaxa Referral Management System.
+  ~
+  ~ Copyright (C) see version control system
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+		>
+
+	<bean name="layerReferenceBaseHib" class="org.geomajas.layer.hibernate.HibernateLayer">
+		<property name="layerInfo" ref="referenceBaseHibInfo" />
+		<property name="featureModel">
+			<bean class="org.geomajas.layer.hibernate.HibernateFeatureModel">
+				<property name="sessionFactory" ref="postgisSessionFactory" />
+			</bean>
+		</property>
+		<property name="sessionFactory" ref="postgisSessionFactory" />
+		<property name="dateFormat" ref="simpleDateFormat" />
+	</bean>
+
+	<bean name="referenceBaseHibInfo" class="org.geomajas.configuration.VectorLayerInfo">
+		<property name="layerType" value="GEOMETRY"/>
+		<property name="crs">
+			<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.LAYER_CRS"/>
+		</property>
+		<property name="maxExtent">
+			<bean class="org.geomajas.geometry.Bbox">
+				<property name="x">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_BUFFER_MIN_X"/>
+				</property>
+				<property name="y">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_BUFFER_MIN_Y"/>
+				</property>
+				<property name="maxX">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_BUFFER_MAX_X"/>
+				</property>
+				<property name="maxY">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_BUFFER_MAX_Y"/>
+				</property>
+			</bean>
+		</property>
+		<property name="featureInfo" ref="referenceBaseHibFeatureInfo" />
+		<property name="namedStyleInfos">
+			<list>
+				<ref bean="referenceBaseHibStyleInfo" />
+			</list>
+		</property>
+	</bean>
+
+    <bean class="org.geomajas.configuration.FeatureInfo" name="referenceBaseHibFeatureInfo">
+        <property name="dataSourceName" value="org.ktunaxa.referral.server.domain.ReferenceBase"/>
+        <property name="identifier">
+            <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                <property name="label" value="Id"/>
+                <property name="name" value="id"/>
+                <property name="type" value="LONG"/>
+            </bean>
+        </property>
+        <property name="geometryType">
+            <bean class="org.geomajas.configuration.GeometryAttributeInfo">
+                <property name="name" value="geometry"/>
+                <property name="editable" value="false"/>
+            </bean>
+        </property>
+
+        <property name="attributes">
+            <list>
+                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="Name"/>
+                    <property name="name" value="label"/>
+                    <property name="editable" value="false"/>
+                    <property name="identifying" value="true"/>
+                    <property name="type" value="STRING"/>
+                </bean>
+                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="Code"/>
+                    <property name="name" value="styleCode"/>
+                    <property name="editable" value="false"/>
+                    <property name="identifying" value="true"/>
+                    <property name="type" value="STRING"/>
+                </bean>
+	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
+	                <property name="label" value="Layer" />
+	                <property name="name" value="layer" />
+	                <property name="editable" value="false" />
+	                <property name="identifying" value="false" />
+	                <property name="type" value="MANY_TO_ONE" />
+	                <property name="feature">
+	                    <bean class="org.geomajas.configuration.FeatureInfo">
+	                        <property name="dataSourceName" value="org.ktunaxa.referral.server.domain.ReferenceLayer" />
+	                        <property name="identifier">
+	                            <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                <property name="label" value="Id" />
+	                                <property name="name" value="id" />
+	                                <property name="type" value="LONG" />
+	                            </bean>
+	                        </property>
+	                        <property name="attributes">
+	                            <list>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Name" />
+	                                    <property name="name" value="name" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="STRING" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Code" />
+	                                    <property name="name" value="code" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="LONG" />
+	                                </bean>
+	                            </list>
+	                        </property>
+	                    </bean>
+	                </property>
+	            </bean>
+	            <bean class="org.geomajas.configuration.AssociationAttributeInfo">
+	                <property name="label" value="Attributes" />
+	                <property name="name" value="attributes" />
+	                <property name="editable" value="false" />
+	                <property name="identifying" value="false" />
+	                <property name="type" value="ONE_TO_MANY" />
+	                <property name="feature">
+	                    <bean class="org.geomajas.configuration.FeatureInfo">
+	                        <property name="dataSourceName" value="org.ktunaxa.referral.server.domain.ReferenceBaseAttribute" />
+	                        <property name="identifier">
+	                            <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                <property name="label" value="Id" />
+	                                <property name="name" value="id" />
+	                                <property name="type" value="LONG" />
+	                            </bean>
+	                        </property>
+	                        <property name="attributes">
+	                            <list>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Key" />
+	                                    <property name="name" value="key" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="STRING" />
+	                                </bean>
+	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+	                                    <property name="label" value="Value" />
+	                                    <property name="name" value="value" />
+	                                    <property name="editable" value="false" />
+	                                    <property name="identifying" value="true" />
+	                                    <property name="type" value="STRING" />
+	                                </bean>
+	                            </list>
+	                        </property>
+	                    </bean>
+	                </property>
+	            </bean>
+            </list>
+        </property>
+    </bean>
+
+	<bean class="org.geomajas.configuration.NamedStyleInfo" name="referenceBaseHibStyleInfo">
+		<property name="sldLocation" value="WEB-INF/layerReferenceBase.sld"/>
+ 	</bean>
+
+</beans>
