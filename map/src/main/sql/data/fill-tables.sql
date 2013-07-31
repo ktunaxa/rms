@@ -129,48 +129,47 @@ INSERT INTO referral_decision (id, title, description) values (3, 'Denied', 'The
 -- Table: REFERRAL TYPE
 -- ----------------------------------------------------------------------------
 
-INSERT INTO referral_type (id, title, description) values (1, 'Adventure Tourism', ''); 
-INSERT INTO referral_type (id, title, description) values (2, 'Agriculture', ''); 
-INSERT INTO referral_type (id, title, description) values (3, 'Aquaculture', ''); 
-INSERT INTO referral_type (id, title, description) values (4, 'Clean Energy', ''); 
-INSERT INTO referral_type (id, title, description) values (5, 'Commercial', ''); 
-INSERT INTO referral_type (id, title, description) values (6, 'Communication Sites', ''); 
-INSERT INTO referral_type (id, title, description) values (7, 'Community & Institutional', ''); 
-INSERT INTO referral_type (id, title, description) values (8, 'Contaminated Sites and Restoration', ''); 
-INSERT INTO referral_type (id, title, description) values (9, 'Land Sales', ''); 
-INSERT INTO referral_type (id, title, description) values (10, 'Flood Protection', ''); 
-INSERT INTO referral_type (id, title, description) values (11, 'Forestry', ''); 
-INSERT INTO referral_type (id, title, description) values (12, 'Grazing', ''); 
-INSERT INTO referral_type (id, title, description) values (13, 'Guide Outfitting', ''); 
-INSERT INTO referral_type (id, title, description) values (14, 'Industrial', ''); 
-INSERT INTO referral_type (id, title, description) values (15, 'Mining: Placer', ''); 
-INSERT INTO referral_type (id, title, description) values (16, 'Mining: Aggregate and Quarry', ''); 
-INSERT INTO referral_type (id, title, description) values (17, 'Mining: Mine Development', ''); 
---INSERT INTO referral_type (id, title, description) values (18, 'Oil and Gas', '');
-INSERT INTO referral_type (id, title, description) values (19, 'Private Moorage', ''); 
-INSERT INTO referral_type (id, title, description) values (20, 'Property Development', ''); 
-INSERT INTO referral_type (id, title, description) values (21, 'Public Recreation - Parks', ''); 
-INSERT INTO referral_type (id, title, description) values (22, 'Public Recreation - General', ''); 
-INSERT INTO referral_type (id, title, description) values (23, 'Residential', ''); 
-INSERT INTO referral_type (id, title, description) values (24, 'Resort Development', ''); 
-INSERT INTO referral_type (id, title, description) values (25, 'Roads/Bridges', '');
-INSERT INTO referral_type (id, title, description) values (26, 'Utilities', ''); 
-INSERT INTO referral_type (id, title, description) values (27, 'Crown Grant', '');
-INSERT INTO referral_type (id, title, description) values (28, 'Mineral Exploration', '');
-INSERT INTO referral_type (id, title, description) values (29, 'Oil and Gas Production', '');
-INSERT INTO referral_type (id, title, description) values (30, 'Oil and Gas Exploration', '');
-INSERT INTO referral_type (id, title, description) values (31, 'Oil and Gas Infrastructure', '');
-INSERT INTO referral_type (id, title, description) values (32, 'Zoning, DPA or OCP Changes', '');
-INSERT INTO referral_type (id, title, description) values (33, 'Subdivision Application', '');
-INSERT INTO referral_type (id, title, description) values (34, 'Water Diversion', '');
-INSERT INTO referral_type (id, title, description) values (35, 'Changes in/about stream/waterbody', '');
-INSERT INTO referral_type (id, title, description) values (36, 'Waste Discharge', '');
-INSERT INTO referral_type (id, title, description) values (37, 'Pest Management', '');
-INSERT INTO referral_type (id, title, description) values (38, 'Assignment (name change)', '');
-INSERT INTO referral_type (id, title, description) values (39, 'Follow up letter', '');
-INSERT INTO referral_type (id, title, description) values (40, 'Multiple', '');
-INSERT INTO referral_type (id, title, description) values (41, 'Other', '');
 
+INSERT INTO referral_type (id, title, description) values (1,E'Alternative Energy: Investigation',E'The exploration phase of a potential future alternative energy facility. Alternative energy could include water power, wind power, ocean power, geothermal power etc. Investigation may include a license of occupation, geothermal test hole etc.');
+INSERT INTO referral_type (id, title, description) values (2,E'Alternative Energy: Production',E'Includes permits required for the production phase of an alternative energy facility. (Water power, wind power, ocean power, geothermal). Could include a lease, a water license etc.');
+INSERT INTO referral_type (id, title, description) values (3,E'Environment: Contaminated Sites and Hazardous Waste',E'Site designation or delisting, clean up (remediation), hazardous waste facility approval…');
+INSERT INTO referral_type (id, title, description) values (4,E'Environment: Guide Outfitting',E'Anything related to a guide outfitter operation. Could include new cabins, transfers, renewals etc.');
+INSERT INTO referral_type (id, title, description) values (5,E'Environment: Park Planning or Operations',E'Park management planning, forest health or firee management within parks, or facility development, vegetation management etc within a park, and generally conducted by Parks.');
+INSERT INTO referral_type (id, title, description) values (6,E'Environment: Park Use Permit',E'Applications by external individuals forr activities within a park. E.g. food vending, research, film production etc. ');
+INSERT INTO referral_type (id, title, description) values (7,E'Environment: Pest Management',E'E.g. Vegetation control, mosquito control, forest pest management');
+INSERT INTO referral_type (id, title, description) values (8,E'Environment: Trapline',E'Anything related to traplines including cabins, transfers, renewals etc.');
+INSERT INTO referral_type (id, title, description) values (9,E'Environment: Waste Discharge',E'Includes sewage discarge, solid waste (lanfills), and air pollution permitting.');
+INSERT INTO referral_type (id, title, description) values (10,E'Environment: Wildlife/Hunting/Angling',E'Anything related to hunting/fishing regulations, species management plans, guidelines/BMPs re wildlife, habitat areas.');
+INSERT INTO referral_type (id, title, description) values (11,E'Forestry: FSP, WLP',E'New Forest Stewardhsip Plans / Woodlot License Plans, or changes/extenstions to existing plans');
+INSERT INTO referral_type (id, title, description) values (12,E'Forestry: General',E'Anything forestry related that doesn\'t fall into the other forestry categories (e.g. licence to cut - LtC)');
+INSERT INTO referral_type (id, title, description) values (13,E'Forestry: Provincial Planning/Administration',E'Annual Allowable Cut (AAC), private land deletion, Tree Farm Licence transfer, Forest Management Planning etc.');
+INSERT INTO referral_type (id, title, description) values (14,E'Forestry: Roads, bridges and cutblocks',E'Typically we receive these directly from industry - notifications of planned road development and cutblocks');
+INSERT INTO referral_type (id, title, description) values (15,E'Lands: Adventure Tourism',E'Tenures for things like adventure races, heli-skiing, commercial (guided) hiking, mountain biking…');
+INSERT INTO referral_type (id, title, description) values (16,E'Lands: Commercial/Industrial',E'Tenures for e.g. ofice buildings, malls, golf courses, campgrounds, processing facility, machine shops, mills etc');
+INSERT INTO referral_type (id, title, description) values (17,E'Lands: Communication Sites',E'Tenures for sites required for transmission/reception of signals - e.g. radio, television, microwave, satellite, cell phone');
+INSERT INTO referral_type (id, title, description) values (18,E'Lands: Community & Institutional ',E'Tenures for e.g. regional park, community center, hospital, town hall etc.');
+INSERT INTO referral_type (id, title, description) values (19,E'Lands: Crown Grant / Sales',E'Transfer of crown (public) land to private land');
+INSERT INTO referral_type (id, title, description) values (20,E'Lands: Private Moorage/ Marrinas',E'Tenures for lands required for personal docks (i.e. not public or commercial docks), or marinas and yacht clubs. Can include associated restaurants, gas docks etc.');
+INSERT INTO referral_type (id, title, description) values (21,E'Lands: General and Renewals',E'E.g. Other tenures (film, agriculture, aquaculture), assignments, tenure renewals, etc');
+INSERT INTO referral_type (id, title, description) values (22,E'Lands: Resorts',E'Any approvals for resorts - e.g. operating agreement, master development agreement.');
+INSERT INTO referral_type (id, title, description) values (23,E'Lands: Roadways & Bridges',E'Tenures for roads and bridges (e.g. s.80 roadway) - not major highways (see Transportation/Infrastructure) or forest roads/bridges (see Forestry)');
+INSERT INTO referral_type (id, title, description) values (24,E'Lands: Utilities',E'Tenures for utilities e.g. distribution lines, pipelines, flow lines, sewer and water systems, electrical transmission and distribution lines etc');
+INSERT INTO referral_type (id, title, description) values (25,E'Local Govt: OCP, Zoning ',E'New or changes to an Official Community Plan (OCP) or zoning bylaw, includes changes to accommodate a subdivision');
+INSERT INTO referral_type (id, title, description) values (26,E'Mining: Aggregate and Quarry',E'Permits, NoW, or leases for gravel, sand, landscaping rock etc.');
+INSERT INTO referral_type (id, title, description) values (27,E'Mining: Mineral and Coal Exploration',E'Licences, notices of work, bulk sample for exploration purposes for mineral or coal mining');
+INSERT INTO referral_type (id, title, description) values (28,E'Mining: Mineral and Coal Production',E'Leases or other approvals for mineral or coal mining - production');
+INSERT INTO referral_type (id, title, description) values (29,E'Mining: Placer',E'Permits, NoW, leases for placer (usually gold) operations');
+INSERT INTO referral_type (id, title, description) values (30,E'Misc: Multiple',E'');
+INSERT INTO referral_type (id, title, description) values (31,E'Misc: Other',E'');
+INSERT INTO referral_type (id, title, description) values (32,E'Oil and Gas: All',E'Any permits related to exploration, infrastructure or production of oil and gas including coal bed methane gas');
+INSERT INTO referral_type (id, title, description) values (33,E'Range: All',E'Range (grazing) permits, leases, transfers, amendments etc.');
+INSERT INTO referral_type (id, title, description) values (34,E'Recreation Sites and Trails: All',E'Establish or cancel recreation sites or trails + any associated authorizations');
+INSERT INTO referral_type (id, title, description) values (35,E'Transportation/Infrastructure: Highways',E'Includes any highways projects including planning, land acquisition, bridge or road construction, maintenance, designations, approvals. ');
+INSERT INTO referral_type (id, title, description) values (36,E'Transportation/Infrastructure: Subdivision Approvals',E'Provincial approvals for subdivisions');
+INSERT INTO referral_type (id, title, description) values (37,E'Water: Changes in/about stream',E'Applications for modifications to a stream or lake. Usually related to construction or maintenance of a structure like a bridge, retaining wall, rip rap etc.');
+INSERT INTO referral_type (id, title, description) values (38,E'Water: General',E'Any other water related decisions - e.g. transfer of appurtenancy, short term use, notifications, etc');
+INSERT INTO referral_type (id, title, description) values (39,E'Water: Licenses',E'Enables use of water for a variety of purposes (domestic, agricultural, industrial…). Also includes amendments and transfers of licences.');
+INSERT INTO referral_type (id, title, description) values (40,E'Water: Planning',E'Water use plans, water management plans');
 
 -- ----------------------------------------------------------------------------
 -- Table: REFERRAL APPLICATION TYPE
