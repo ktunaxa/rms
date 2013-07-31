@@ -19,10 +19,13 @@
 
 package org.ktunaxa.referral.client.security;
 
-import org.ktunaxa.bpm.KtunaxaBpmConstant;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
+
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * Static holder of the user context.
@@ -36,6 +39,7 @@ public final class UserContext {
 	private String name = "???";
 	private Set<String> bpmRoles = new HashSet<String>();
 	private boolean admin;
+	private final HandlerManager manager = new HandlerManager(this);
 
 	private UserContext() {
 		// hide constructor
@@ -50,6 +54,11 @@ public final class UserContext {
 		return INSTANCE;
 	}
 
+	/** {@inheritDoc} */
+	public HandlerRegistration addUserContextChangedHandler(UserContextChangedHandler handler) {
+		return manager.addHandler(UserContextChangedHandler.TYPE, handler);
+	}
+
 	/**
 	 * Initialise user context.
 	 *
@@ -60,6 +69,7 @@ public final class UserContext {
 		this.user = user;
 		this.name = name;
 		bpmRoles.clear();
+		manager.fireEvent(new UserContextChangedEvent());
 	}
 
 	/**
@@ -96,6 +106,7 @@ public final class UserContext {
 	 */
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+		manager.fireEvent(new UserContextChangedEvent());
 	}
 
 	/**
@@ -164,6 +175,7 @@ public final class UserContext {
 	public void setBpmRoles(Set<String> bpmRoles) {
 		this.bpmRoles.clear();
 		this.bpmRoles.addAll(bpmRoles);
+		manager.fireEvent(new UserContextChangedEvent());
 	}
 
 	/**
