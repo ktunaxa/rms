@@ -22,6 +22,7 @@ package org.ktunaxa.referral.client.gui;
 import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
 import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.layer.Layer;
+import org.geomajas.gwt.client.widget.Legend;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.layer.google.gwt.client.GoogleAddon;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
@@ -64,10 +65,10 @@ public class LayersPanel extends VLayout {
 		final Tab tabReferrals = new Tab("Referrals");
 		Tab tabLegend = new Tab("Legend");
 
-//		Legend legend = new Legend(mapWidget.getMapModel());
-//		legend.setHeight100();
-//		legend.setWidth100();
-//		tabLegend.setPane(legend);
+		Legend legend = new RefreshLegend(mapWidget.getMapModel());
+		legend.setHeight100();
+		legend.setWidth100();
+		tabLegend.setPane(legend);
 
 		tabs.setTabs(tabLegend, tabBackGround, tabBase, tabValue, tabReferrals);
 		tabs.selectTab(tabValue);
