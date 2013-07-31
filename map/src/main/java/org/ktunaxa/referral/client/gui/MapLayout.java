@@ -208,7 +208,7 @@ public final class MapLayout extends VLayout {
 
 	protected void updateRights() {
 		if (!(UserContext.getInstance().isGuest() || UserContext.getInstance().isDataEntry())) {
-			if(taskManagerPanel == null) {
+			if (taskManagerPanel == null) {
 				taskManagerPanel = new TaskManagerPanel();
 				infoPane.addCard(taskManagerPanel.getName(), "Referral process", taskManagerPanel);
 				menuBar.addNavigationButton(getLastButton());
