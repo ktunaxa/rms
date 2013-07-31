@@ -24,9 +24,6 @@ import java.util.List;
 import org.geomajas.configuration.FeatureStyleInfo;
 import org.geomajas.configuration.SymbolInfo;
 import org.geomajas.global.GeomajasConstant;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
-import org.geomajas.gwt.client.command.event.TokenChangedEvent;
-import org.geomajas.gwt.client.command.event.TokenChangedHandler;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
@@ -49,6 +46,8 @@ import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
 import org.ktunaxa.referral.client.security.UserContext;
+import org.ktunaxa.referral.client.security.UserContextChangedEvent;
+import org.ktunaxa.referral.client.security.UserContextChangedHandler;
 import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.client.widget.ResizableLeftLayout;
 import org.ktunaxa.referral.server.dto.TaskDto;
@@ -126,9 +125,9 @@ public final class MapLayout extends VLayout {
 	private MapLayout() {
 		super();
 		handlerManager = new HandlerManager(this);
-		GwtCommandDispatcher.getInstance().addTokenChangedHandler(new TokenChangedHandler() {
+		UserContext.getInstance().addUserContextChangedHandler(new UserContextChangedHandler() {
 
-			public void onTokenChanged(TokenChangedEvent event) {
+			public void onChanged(UserContextChangedEvent event) {
 				// update GUI to reflect user rights
 				updateRights();
 			}
@@ -209,8 +208,11 @@ public final class MapLayout extends VLayout {
 
 	protected void updateRights() {
 		if (!(UserContext.getInstance().isGuest() || UserContext.getInstance().isDataEntry())) {
-			taskManagerPanel = new TaskManagerPanel();
-			infoPane.addCard(taskManagerPanel.getName(), "Referral process", taskManagerPanel);
+			if(taskManagerPanel == null) {
+				taskManagerPanel = new TaskManagerPanel();
+				infoPane.addCard(taskManagerPanel.getName(), "Referral process", taskManagerPanel);
+				menuBar.addNavigationButton(getLastButton());
+			}
 		}
 	}
 
