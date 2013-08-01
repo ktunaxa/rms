@@ -88,7 +88,7 @@
 -- KTU-113 also need sender e-mail
 ALTER TABLE template ADD COLUMN cc text;
 alter table referral alter column calendar_year set NOT NULL;
-alter table referral alter column calendar_year set DEFAULT (to_char((('now'::text)::date)::timestamp with time zone, 'yy'::text))::integer
+alter table referral alter column calendar_year set DEFAULT (to_char((('now'::text)::date)::timestamp with time zone, 'yy'::text))::integer;
 INSERT INTO referral_type (title, description) values (E'Alternative Energy: Investigation',E'The exploration phase of a potential future alternative energy facility. Alternative energy could include water power, wind power, ocean power, geothermal power etc. Investigation may include a license of occupation, geothermal test hole etc.');
 INSERT INTO referral_type (title, description) values (E'Alternative Energy: Production',E'Includes permits required for the production phase of an alternative energy facility. (Water power, wind power, ocean power, geothermal). Could include a lease, a water license etc.');
 INSERT INTO referral_type (title, description) values (E'Environment: Contaminated Sites and Hazardous Waste',E'Site designation or delisting, clean up (remediation), hazardous waste facility approval…');
