@@ -145,9 +145,12 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	<bean name="roleViewer" class="org.geomajas.plugin.staticsecurity.configuration.LayerAuthorizationInfo">
 		<property name="commandsExclude">
 			<list>
-				<value>command.bpm.*</value>
+				<value>command.bpm.*ReferralCommand*</value>
+				<value>command.bpm.*ProcessCommand*</value>
+				<value>command.bpm.*TaskCommand*</value>
 				<value>command.email.*</value>
-				<value>*.PersistTransactionCommand</value>
+				<value>command.PersistReferral</value>
+				<value>command.feature.PersistTransaction</value>
 			</list>
 		</property>
 		<property name="commandsInclude">
