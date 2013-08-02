@@ -111,6 +111,8 @@ public final class MapLayout extends VLayout {
 	private TaskDto currentTask;
 
 	private ToolStripButton referralButton;
+	
+	private ToolStripButton newButton;
 
 	private org.geomajas.layer.feature.Feature currentReferral;
 
@@ -166,7 +168,7 @@ public final class MapLayout extends VLayout {
 		for (ToolStripButton button : infoPane.getButtons()) {
 			menuBar.addNavigationButton(button);
 		}
-		ToolStripButton newButton = new ToolStripButton("NEW");
+		newButton = new ToolStripButton("NEW");
 		newButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
@@ -214,6 +216,7 @@ public final class MapLayout extends VLayout {
 				menuBar.addNavigationButton(getLastButton());
 			}
 		}
+		newButton.setVisible(!UserContext.getInstance().isGuest());
 	}
 
 	public MapWidget getMap() {

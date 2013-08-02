@@ -67,6 +67,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 	private static final Set<String> ENABLED_FIELDS_ADMIN = new HashSet<String>();
 	private static final Set<String> ENABLED_FIELDS_REFERRAL_MANAGER = new HashSet<String>();
 	private static final Set<String> ENABLED_FIELDS_OTHER = new HashSet<String>();
+	private static final Set<String> ENABLED_FIELDS_GUEST = new HashSet<String>();
 
 	static {
 		ENABLED_FIELDS_OTHER.add(KtunaxaConstant.ATTRIBUTE_PROJECT_BACKGROUND);
@@ -278,9 +279,10 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 		Set<String> enabled = ENABLED_FIELDS_OTHER;
 		if (UserContext.getInstance().isReferralManager()) {
 			enabled = ENABLED_FIELDS_REFERRAL_MANAGER;
-		}
-		if (UserContext.getInstance().isAdmin()) {
+		} else if (UserContext.getInstance().isAdmin() || UserContext.getInstance().isDataEntry()) {
 			enabled = ENABLED_FIELDS_ADMIN;
+		} else if(UserContext.getInstance().isGuest()){
+			enabled = ENABLED_FIELDS_GUEST;
 		}
 		for (FormItem formItem : formItems) {
 			formItem.setDisabled(base || !enabled.contains(formItem.getName()));

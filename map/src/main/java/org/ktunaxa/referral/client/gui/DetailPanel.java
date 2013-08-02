@@ -27,6 +27,7 @@ import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.gwt.client.widget.attribute.FeatureFormFactory;
 import org.ktunaxa.referral.client.gui.MapLayout.Focus;
 import org.ktunaxa.referral.client.referral.ReferralDetailForm;
+import org.ktunaxa.referral.client.security.UserContext;
 
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.IButton;
@@ -102,7 +103,8 @@ public class DetailPanel extends FeatureEditorPanel {
 		if (getEditor().isDisabled()) {
 			saveButton.setDisabled(true);
 			cancelButton.setDisabled(true);
-			editButton.setDisabled(false);
+			// disable if guest, enable otherwise
+			editButton.setDisabled(UserContext.getInstance().isGuest());
 		} else if (formChanged) {
 			if (getEditor().validate()) {
 				saveButton.setDisabled(false);
