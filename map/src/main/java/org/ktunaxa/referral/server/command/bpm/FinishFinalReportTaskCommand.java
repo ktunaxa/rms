@@ -60,6 +60,7 @@ import org.ktunaxa.referral.server.command.dto.FinishFinalReportTaskRequest;
 import org.ktunaxa.referral.server.command.dto.FinishFinalReportTaskResponse;
 import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
 import org.ktunaxa.referral.server.command.dto.SendEmailRequest;
+import org.ktunaxa.referral.server.domain.DocumentType;
 import org.ktunaxa.referral.server.service.CmisService;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.slf4j.Logger;
@@ -190,7 +191,7 @@ public class FinishFinalReportTaskCommand
 			finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT, true);
 			finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL, false);
 			finalReportDocument.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE,
-					new AssociationValue(new LongAttribute(5L), // External - Initial Referral Notification
+					new AssociationValue(new LongAttribute(DocumentType.KLRA_RESPONSE.getId()), // Official KLRA response
 							new HashMap<String, PrimitiveAttribute<?>>()));
 			documents.add(finalReportDocument);
 			newDocuments = new OneToManyAttribute(documents);

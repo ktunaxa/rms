@@ -26,6 +26,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
+
 /**
  * Definition of type of documents that can be attached to a referral.
  * 
@@ -34,10 +36,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "document_type")
 public class DocumentType {
+
 	public static final DocumentType DEFAULT;
+
+	public static final DocumentType KLRA_RESPONSE;
+	
 	static {
-		DEFAULT = new DocumentType(2, "KLRA General Communication",
-				"A general communication document. Can be anything.");
+		DEFAULT = new DocumentType(KtunaxaConstant.DOCUMENT_TYPE_DEFAULT_ID,
+				"External - Initial Referral Notification", "External document describing the referral notification.");
+		KLRA_RESPONSE = new DocumentType(KtunaxaConstant.DOCUMENT_TYPE_KLRA_RESPONSE_ID, "KLRA Response",
+				"The official response to the referral by the KLRA.");
 	}
 
 	@Id

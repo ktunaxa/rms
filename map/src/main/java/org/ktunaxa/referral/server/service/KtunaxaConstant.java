@@ -153,6 +153,9 @@ public interface KtunaxaConstant {
 	String DECISION_UNKNOWN = "Unknown";
 	String DECISION_APPROVED = "Approved";
 	String DECISION_DENIED = "Denied";
+	
+	long DOCUMENT_TYPE_DEFAULT_ID = 5; 
+	long DOCUMENT_TYPE_KLRA_RESPONSE_ID = 1; 
 
 	String RAW_MAIL_REGEX = "[a-zA-Z0-9_.+%-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,4}";
 	String MAIL_VALIDATOR_REGEX = "^" + RAW_MAIL_REGEX + "$";
