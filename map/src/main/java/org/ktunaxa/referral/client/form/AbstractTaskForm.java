@@ -28,6 +28,7 @@ import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.geometry.Geometry;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
+import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.layer.feature.Feature;
@@ -155,7 +156,7 @@ public abstract class AbstractTaskForm extends VLayout {
 		}
 		return object.toString();
 	}
-
+	
 	/**
 	 * Persist a referral.
 	 * 
@@ -163,6 +164,16 @@ public abstract class AbstractTaskForm extends VLayout {
 	 * @param current
 	 */
 	protected void persistReferral(Feature previous, Feature current) {
+		persistReferral(previous, current, null);
+	}
+
+	/**
+	 * Persist a referral.
+	 * 
+	 * @param previous
+	 * @param current
+	 */
+	protected void persistReferral(Feature previous, Feature current, Runnable onUpdate) {
 		VectorLayer referralLayer = MapLayout.getInstance().getReferralLayer();
 		final FeatureTransaction ft = new FeatureTransaction();
 		ft.setLayerId(referralLayer.getServerLayerId());
@@ -177,15 +188,34 @@ public abstract class AbstractTaskForm extends VLayout {
 		request.setCrs(referralLayer.getMapModel().getCrs());
 		GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 		command.setCommandRequest(request);
-		CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
-
-			public void execute(CommandResponse response) {
-				// all fine
-			}
-		}, "Saving changes...");
+		CommandCallback<CommandResponse> callback = new UpdatingCallback(onUpdate);
+		CommunicationHandler.get().execute(command, callback, "Saving changes...");
 		// reset geometry
 		previous.setGeometry(geometry);
 		current.setGeometry(geometry);
+	}
+
+	/**
+	 * Performs update on callback.
+	 * @author Jan De Moerloose
+	 *
+	 */
+	private class UpdatingCallback implements CommandCallback<CommandResponse> {
+		
+		private Runnable onUpdate;
+		
+		public UpdatingCallback(Runnable onUpdate) {
+			this.onUpdate = onUpdate;
+		}
+
+		@Override
+		public void execute(CommandResponse response) {
+			if (onUpdate != null) {
+				onUpdate.run();
+			}
+
+		}
+
 	}
 
 }

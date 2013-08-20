@@ -189,7 +189,7 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 		attributes.put(KtunaxaConstant.ATTRIBUTE_DECISION, new ManyToOneAttribute(new AssociationValue(
 				new LongAttribute(Long.parseLong(decision.getValueAsString())),
 				new HashMap<String, PrimitiveAttribute<?>>())));
-		persistReferral(previous, current);
+		persistReferral(previous, current, onUpdate);
 	}
 	
 	/**
@@ -277,29 +277,6 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 			}
 			finalReportClickHandler.onClick(new ClickEvent(null));
 		}
-	}
-	
-	/**
-	 * Performs update on callback.
-	 * @author Jan De Moerloose
-	 *
-	 */
-	private class UpdatingCallback implements CommandCallback<CommandResponse> {
-		
-		private Runnable onUpdate;
-
-		public UpdatingCallback(Runnable onUpdate) {
-			this.onUpdate = onUpdate;
-		}
-
-		@Override
-		public void execute(CommandResponse response) {
-			if (onUpdate != null) {
-				onUpdate.run();
-			}
-
-		}
-
 	}
 
 
