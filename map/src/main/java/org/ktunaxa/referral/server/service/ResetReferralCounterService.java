@@ -28,6 +28,7 @@ import org.hibernate.event.PreInsertEventListener;
 import org.hibernate.impl.SessionFactoryImpl;
 import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
+import org.ktunaxa.referral.server.domain.Referral;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,29 +57,32 @@ public class ResetReferralCounterService implements PreInsertEventListener {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean onPreInsert(PreInsertEvent event) {
-		// using the current session causes flush, followed by rg.hibernate.AssertionFailure: null id in
-		// org.ktunaxa.referral.server.domain.Referral entry ?!!
-		Session session = sessionFactoryImpl.openSession();
-		try {
-			SQLQuery q1 = session
-					.createSQLQuery(
-							"SELECT count(*) as cnt, to_char(current_date, 'yyyy') as yr "
-									+ "FROM referral WHERE calendar_year = cast(to_char(current_date, 'yy')"
-									+ " as integer)").addScalar("cnt", new IntegerType())
-					.addScalar("yr", new StringType());
-			Object[] result = (Object[]) q1.uniqueResult();
-			Integer cnt = (Integer) result[0];
-			String yr = (String) result[1];
-			log.info("Found " + cnt + " referrals for the current year " + yr);
-			if (cnt == 0) {
-				log.info("No referrals found for the current year " + yr
-						+ ", resetting sequence before adding the first referral");
-				// in the (unlikely) case that multiple referrals are committed concurrently,
-				// this may cause loss of one or more concurrent referrals because of duplicate key errors
-				session.createSQLQuery("select setval('referral_number_seq',1,false)");
+		Object object = event.getEntity();
+		if(object instanceof Referral) {
+			// using the current session causes flush, followed by rg.hibernate.AssertionFailure: null id in
+			// org.ktunaxa.referral.server.domain.Referral entry ?!!
+			Session session = sessionFactoryImpl.openSession();
+			try {
+				SQLQuery q1 = session
+						.createSQLQuery(
+								"SELECT count(*) as cnt, to_char(current_date, 'yyyy') as yr "
+										+ "FROM referral WHERE calendar_year = cast(to_char(current_date, 'yy')"
+										+ " as integer)").addScalar("cnt", new IntegerType())
+						.addScalar("yr", new StringType());
+				Object[] result = (Object[]) q1.uniqueResult();
+				Integer cnt = (Integer) result[0];
+				String yr = (String) result[1];
+				log.info("Found " + cnt + " referrals for the current year " + yr);
+				if (cnt == 0) {
+					log.info("No referrals found for the current year " + yr
+							+ ", resetting sequence before adding the first referral");
+					// in the (unlikely) case that multiple referrals are committed concurrently,
+					// this may cause loss of one or more concurrent referrals because of duplicate key errors
+					session.createSQLQuery("select setval('referral_number_seq',1,false)");
+				}
+			} finally {
+				session.close();
 			}
-		} finally {
-			session.close();
 		}
 		return false;
 	}
