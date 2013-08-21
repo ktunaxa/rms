@@ -190,9 +190,9 @@ public class FinishFinalReportTaskCommand
 			finalReportDocument.setStringAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TITLE, filename);
 			finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_INCLUDE_IN_REPORT, true);
 			finalReportDocument.setBooleanAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_CONFIDENTIAL, false);
-			finalReportDocument.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE,
-					new AssociationValue(new LongAttribute(DocumentType.KLRA_RESPONSE.getId()), // Official KLRA response
-							new HashMap<String, PrimitiveAttribute<?>>()));
+			finalReportDocument.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DOCUMENT_TYPE, new AssociationValue(
+					new LongAttribute(DocumentType.KLRA_RESPONSE.getId()), // Official KLRA response
+					new HashMap<String, PrimitiveAttribute<?>>()));
 			documents.add(finalReportDocument);
 			newDocuments = new OneToManyAttribute(documents);
 			attributes.put(KtunaxaConstant.ATTRIBUTE_DOCUMENTS, newDocuments);

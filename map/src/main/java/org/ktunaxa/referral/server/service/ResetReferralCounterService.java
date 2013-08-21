@@ -58,7 +58,7 @@ public class ResetReferralCounterService implements PreInsertEventListener {
 	@Override
 	public boolean onPreInsert(PreInsertEvent event) {
 		Object object = event.getEntity();
-		if(object instanceof Referral) {
+		if (object instanceof Referral) {
 			// using the current session causes flush, followed by rg.hibernate.AssertionFailure: null id in
 			// org.ktunaxa.referral.server.domain.Referral entry ?!!
 			Session session = sessionFactoryImpl.openSession();

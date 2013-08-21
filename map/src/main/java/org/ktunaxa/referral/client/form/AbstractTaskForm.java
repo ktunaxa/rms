@@ -27,7 +27,6 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.geometry.Geometry;
-import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.CommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.map.layer.VectorLayer;

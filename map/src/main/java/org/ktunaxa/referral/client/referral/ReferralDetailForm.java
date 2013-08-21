@@ -281,7 +281,7 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 			enabled = ENABLED_FIELDS_REFERRAL_MANAGER;
 		} else if (UserContext.getInstance().isAdmin() || UserContext.getInstance().isDataEntry()) {
 			enabled = ENABLED_FIELDS_ADMIN;
-		} else if(UserContext.getInstance().isGuest()){
+		} else if (UserContext.getInstance().isGuest()) {
 			enabled = ENABLED_FIELDS_GUEST;
 		}
 		for (FormItem formItem : formItems) {
