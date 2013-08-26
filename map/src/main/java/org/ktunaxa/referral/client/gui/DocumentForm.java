@@ -97,6 +97,9 @@ public class DocumentForm extends DefaultFeatureForm {
 		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL.equals(name)) {
 			documentItem.setDocumentDownLoadUrl((String) attribute.getValue());
 		}
+		if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID.equals(name)) {
+			documentItem.setDocumentId((String) attribute.getValue());
+		}
 	}
 
 	@Override
@@ -107,6 +110,8 @@ public class DocumentForm extends DefaultFeatureForm {
 			((UrlAttribute) attribute).setValue(documentItem.getDocumentDisplayUrl());
 		} else if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_DOWNLOAD_URL.equals(name) && attribute instanceof UrlAttribute) {
 			((UrlAttribute) attribute).setValue(documentItem.getDocumentDownLoadUrl());
+		}  else if (KtunaxaConstant.ATTRIBUTE_DOCUMENT_ID.equals(name) && attribute instanceof StringAttribute) {
+			((StringAttribute) attribute).setValue(documentItem.getDocumentId());
 		} else {
 			super.fromForm(name, attribute);
 		}

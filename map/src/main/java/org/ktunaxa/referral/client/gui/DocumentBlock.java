@@ -216,7 +216,7 @@ public class DocumentBlock extends AbstractAttributeBlock {
 		addMember(infoLayout);
 
 		content = new HTMLFlow();
-		content.setHeight(20);
+		content.setHeight(22);
 		content.setWidth100();
 		redrawValue();
 		addMember(content);
