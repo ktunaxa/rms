@@ -141,8 +141,8 @@ update referral set type_id = t.id from referral_type t where referral.type_id =
 update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Forestry' and description = '') and t.title = E'Forestry: General';
 update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Grazing' and description = '') and t.title = E'Range: All';
 update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Guide Outfitting' and description = '') and t.title = E'Environment: Guide Outfitting';
-update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Mining: Placer' and description = '') and t.title = E'Mining: Placer';
-update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Mining: Aggregate and Quarry' and description = '') and t.title = E'Mining: Aggregate and Quarry';
+update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Mining: Placer' and description = '') and t.title = E'Mining: Placer' and t.description != '';
+update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Mining: Aggregate and Quarry' and description = '') and t.title = E'Mining: Aggregate and Quarry' and t.description != '';
 update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Mining: Mine Development' and description = '') and t.title = E'Mining: Mineral and Coal Production';
 update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Private Moorage' and description = '') and t.title = E'Lands: Private Moorage/ Marrinas';
 update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Public Recreation - Parks' and description = '') and t.title = E'Misc: Other';
@@ -157,7 +157,9 @@ update referral set type_id = t.id from referral_type t where referral.type_id =
 update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Assignment (name change)' and description = '') and t.title = E'Lands: General and Renewals';
 update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Multiple' and description = '') and t.title = E'Misc: Multiple';
 update referral set type_id = t.id from referral_type t where referral.type_id = (select id from referral_type where title =E'Other' and description = '') and t.title = E'Misc: Other';
-
- 
+-- MUST HAVE id=1 to initialize option box !!!!
+INSERT INTO referral_type (id, title, description) values (1, E'Alternative Energy: Investigation',E'The exploration phase of a potential future alternative energy facility. Alternative energy could include water power, wind power, ocean power, geothermal power etc. Investigation may include a license of occupation, geothermal test hole etc.');
+update referral set type_id=1 where type_id=43;
+delete from referral_type where id=43; 
 
 

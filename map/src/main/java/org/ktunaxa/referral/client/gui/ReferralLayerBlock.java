@@ -152,6 +152,12 @@ public class ReferralLayerBlock extends LayerBlock {
 		}
 	}
 
+	/**
+	 * Callback to set option lists.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
 	public class ProviderCallback implements AttributeProviderCallBack {
 
 		private ComboBoxItem item;
