@@ -28,6 +28,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
 	<bean name="layerGoogle" class="org.geomajas.layer.google.GoogleLayer" >
 		<property name="layerInfo" ref="layerGoogleInfo" />
 		<property name="maxZoomLevel" value="21" />
+		<property name="tilesEnabled" value="false"/>
 	</bean>
 	
 	<bean name="layerGoogleInfo" class="org.geomajas.configuration.RasterLayerInfo">
