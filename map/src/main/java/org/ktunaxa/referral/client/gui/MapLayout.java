@@ -269,11 +269,13 @@ public final class MapLayout extends VLayout {
 			if (null != geometry && !geometry.isEmpty()) {
 				Bbox bounds = new Bbox(geometry.getBounds());
 				if (geometry instanceof MultiPoint || geometry instanceof Point) {
-					bounds = new Bbox(0, 0, 500, 500);
-					bounds.setCenterPoint(geometry.getBounds().getCenterPoint());
+					// Zoom to 1/23000!
+					getMap().getMapModel().getMapView().setCenterPosition(bounds.getCenterPoint());
+					getMap().getMapModel().getMapView().setCurrentScale(0.10466131637343458, MapView.ZoomOption.LEVEL_CLOSEST);
+				} else {
+					// Now display feature on this page!
+					getMap().getMapModel().getMapView().applyBounds(bounds, MapView.ZoomOption.LEVEL_FIT);
 				}
-				// Now display feature on this page!
-				getMap().getMapModel().getMapView().applyBounds(bounds, MapView.ZoomOption.LEVEL_FIT);
 			}
 			// highlight the feature
 			SymbolInfo symbolInfo = null;

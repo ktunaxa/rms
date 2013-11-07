@@ -20,9 +20,12 @@
 package org.ktunaxa.referral.client.action;
 
 import com.smartgwt.client.widgets.events.ClickEvent;
+
 import org.geomajas.gwt.client.action.ToolbarAction;
 import org.geomajas.gwt.client.map.MapView;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
+import org.geomajas.gwt.client.spatial.geometry.MultiPoint;
+import org.geomajas.gwt.client.spatial.geometry.Point;
 import org.geomajas.gwt.client.util.GeometryConverter;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.layer.feature.Feature;
@@ -48,7 +51,16 @@ public class ZoomCurrentReferralModalAction extends ToolbarAction {
 			org.geomajas.geometry.Geometry referralGeometry = referral.getGeometry();
 			if (null != referralGeometry) {
 				Geometry geometry = GeometryConverter.toGwt(referralGeometry);
-				mapWidget.getMapModel().getMapView().applyBounds(geometry.getBounds(), MapView.ZoomOption.LEVEL_FIT);
+				if (geometry instanceof MultiPoint || geometry instanceof Point) {
+					// Zoom to 1/23000!
+					mapWidget.getMapModel().getMapView().setCenterPosition(geometry.getBounds().getCenterPoint());
+					mapWidget.getMapModel().getMapView()
+							.setCurrentScale(0.8372905309874766, MapView.ZoomOption.LEVEL_CLOSEST);
+				} else {
+					// Now display feature on this page!
+					mapWidget.getMapModel().getMapView()
+							.applyBounds(geometry.getBounds(), MapView.ZoomOption.LEVEL_FIT);
+				}
 			}
 		}
 	}
