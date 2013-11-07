@@ -28,8 +28,12 @@ import org.ktunaxa.referral.client.SortedManyToOneItem;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.ButtonItem;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
+import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 
 /**
  * {@link LayerBlock} for a referral layer.
@@ -51,12 +55,19 @@ public class ReferralLayerBlock extends LayerBlock {
 	private final SortedManyToOneItem agency = new SortedManyToOneItem("ExternalAgencyType");
 
 	private final SortedManyToOneItem type = new SortedManyToOneItem("Type");
+	
+	private final ButtonItem clearStatus = new ButtonItem("Reset");
+	
+	private final ButtonItem clearAgency = new ButtonItem("Reset");
+	
+	private final ButtonItem clearType = new ButtonItem("Reset");
+	
 
 	public ReferralLayerBlock(Layer<?> referral) {
 		super(referral);
 		this.layer = (VectorLayer) referral;
 
-		ChangedHandler filterChangedHandler = new FilterChangedHandler();
+		final ChangedHandler filterChangedHandler = new FilterChangedHandler();
 		dateForm1 = new ReferralDateFilterForm(filterChangedHandler);
 		dateForm2 = new ReferralDateFilterForm(filterChangedHandler);
 
@@ -68,6 +79,37 @@ public class ReferralLayerBlock extends LayerBlock {
 				KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY_TYPE);
 		AssociationAttributeInfo typeInfo = (AssociationAttributeInfo) featureInfo.getAttributesMap().get(
 				KtunaxaConstant.ATTRIBUTE_TYPE);
+		
+		clearStatus.setStartRow(false);
+		clearStatus.setEndRow(false);		
+		clearStatus.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				status.clearValue();
+				filterChangedHandler.onChanged(null);
+			}
+		});
+		clearAgency.setStartRow(false);
+		clearAgency.setEndRow(false);		
+		clearAgency.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				agency.clearValue();				
+				filterChangedHandler.onChanged(null);
+			}
+		});
+		clearType.setStartRow(false);
+		clearType.setEndRow(false);		
+		clearType.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				type.clearValue();				
+				filterChangedHandler.onChanged(null);
+			}
+		});
 
 		form.setWidth100();
 		status.getItem().setTitle("Status");
@@ -79,7 +121,8 @@ public class ReferralLayerBlock extends LayerBlock {
 		type.getItem().setTitle("Type");
 		type.getItem().addChangedHandler(filterChangedHandler);
 		type.init(typeInfo, new DefaultAttributeProvider(layer, typeInfo.getName()));
-		form.setFields(status.getItem(), agency.getItem(), type.getItem());
+		form.setNumCols(4);
+		form.setFields(status.getItem(), clearStatus, agency.getItem(), clearAgency, type.getItem(), clearType);
 		addMember(form);
 		addMember(dateForm1);
 		addMember(dateForm2);
