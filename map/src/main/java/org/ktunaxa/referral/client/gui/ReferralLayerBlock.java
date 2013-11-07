@@ -19,19 +19,18 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.ComboBoxItem;
-import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
-import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import org.geomajas.configuration.AssociationAttributeInfo;
+import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.Layer;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.widget.attribute.AttributeProviderCallBack;
 import org.geomajas.gwt.client.widget.attribute.DefaultAttributeProvider;
-import org.geomajas.layer.feature.Attribute;
-import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
+import org.geomajas.gwt.client.widget.attribute.ManyToOneDataSource;
+import org.ktunaxa.referral.client.SortedManyToOneItem;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 
 /**
  * {@link LayerBlock} for a referral layer.
@@ -48,11 +47,11 @@ public class ReferralLayerBlock extends LayerBlock {
 
 	private final ReferralDateFilterForm dateForm2;
 
-	private final ComboBoxItem status = new ComboBoxItem("Status");
+	private final SortedManyToOneItem status = new SortedManyToOneItem("Status");
 
-	private final ComboBoxItem agency = new ComboBoxItem("ExternalAgencyType");
+	private final SortedManyToOneItem agency = new SortedManyToOneItem("ExternalAgencyType");
 
-	private final ComboBoxItem type = new ComboBoxItem("Type");
+	private final SortedManyToOneItem type = new SortedManyToOneItem("Type");
 
 	public ReferralLayerBlock(Layer<?> referral) {
 		super(referral);
@@ -62,33 +61,29 @@ public class ReferralLayerBlock extends LayerBlock {
 		dateForm1 = new ReferralDateFilterForm(filterChangedHandler);
 		dateForm2 = new ReferralDateFilterForm(filterChangedHandler);
 
+		FeatureInfo featureInfo = layer.getLayerInfo().getFeatureInfo();
+
+		AssociationAttributeInfo statusInfo = (AssociationAttributeInfo) featureInfo.getAttributesMap().get(
+				KtunaxaConstant.ATTRIBUTE_STATUS);
+		AssociationAttributeInfo agencyTypeInfo = (AssociationAttributeInfo) featureInfo.getAttributesMap().get(
+				KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY_TYPE);
+		AssociationAttributeInfo typeInfo = (AssociationAttributeInfo) featureInfo.getAttributesMap().get(
+				KtunaxaConstant.ATTRIBUTE_TYPE);
+
 		form.setWidth100();
-		status.setTitle("Status");
-		status.addChangedHandler(filterChangedHandler);
-		LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
-		valueMap.put("-1", "Any");
-		status.setValueMap(valueMap);
-		status.setValue("-1");
-		agency.setTitle("External Agency Type");
-		agency.addChangedHandler(filterChangedHandler);
-		valueMap = new LinkedHashMap<String, String>();
-		valueMap.put("-1", "Any");
-		agency.setValueMap(valueMap);
-		agency.setValue("-1");
-		type.setTitle("Type");
-		type.addChangedHandler(filterChangedHandler);
-		valueMap = new LinkedHashMap<String, String>();
-		valueMap.put("-1", "Any");
-		type.setValueMap(valueMap);
-		type.setValue("-1");
-		form.setFields(status, agency, type);
+		status.getItem().setTitle("Status");
+		status.getItem().addChangedHandler(filterChangedHandler);
+		status.init(statusInfo, new DefaultAttributeProvider(layer, statusInfo.getName()));
+		agency.getItem().setTitle("External Agency Type");
+		agency.getItem().addChangedHandler(filterChangedHandler);
+		agency.init(agencyTypeInfo, new DefaultAttributeProvider(layer, agencyTypeInfo.getName()));
+		type.getItem().setTitle("Type");
+		type.getItem().addChangedHandler(filterChangedHandler);
+		type.init(typeInfo, new DefaultAttributeProvider(layer, typeInfo.getName()));
+		form.setFields(status.getItem(), agency.getItem(), type.getItem());
 		addMember(form);
 		addMember(dateForm1);
 		addMember(dateForm2);
-		new DefaultAttributeProvider(layer.getServerLayerId(), "status").getAttributes(new ProviderCallback(status));
-		new DefaultAttributeProvider(layer.getServerLayerId(), "externalAgencyType")
-				.getAttributes(new ProviderCallback(agency));
-		new DefaultAttributeProvider(layer.getServerLayerId(), "type").getAttributes(new ProviderCallback(type));
 	}
 
 	@Override
@@ -109,14 +104,14 @@ public class ReferralLayerBlock extends LayerBlock {
 		public void onChanged(ChangedEvent changedEvent) {
 			StringBuilder filter = new StringBuilder();
 
-			String statusValue = status.getValueAsString();
-			if (!"-1".equals(statusValue)) {
+			String statusValue = status.getItem().getValueAsString();
+			if (!isEmpty(statusValue)) {
 				filter.append("status.\"id\" = ");
 				filter.append(statusValue);
 			}
 
-			String agencyValue = agency.getValueAsString();
-			if (!"-1".equals(agencyValue)) {
+			String agencyValue = agency.getItem().getValueAsString();
+			if (!isEmpty(agencyValue)) {
 				if (filter.length() > 0) {
 					filter.append(" AND ");
 				}
@@ -124,8 +119,8 @@ public class ReferralLayerBlock extends LayerBlock {
 				filter.append(agencyValue);
 			}
 
-			String typeValue = type.getValueAsString();
-			if (!"-1".equals(typeValue)) {
+			String typeValue = type.getItem().getValueAsString();
+			if (!isEmpty(typeValue)) {
 				if (filter.length() > 0) {
 					filter.append(" AND ");
 				}
@@ -134,14 +129,14 @@ public class ReferralLayerBlock extends LayerBlock {
 			}
 
 			String dateFilter1 = dateForm1.getFilter();
-			if (!"".equals(dateFilter1)) {
+			if (!isEmpty(dateFilter1)) {
 				if (filter.length() > 0) {
 					filter.append(" AND ");
 				}
 				filter.append(dateFilter1);
 			}
 			String dateFilter2 = dateForm2.getFilter();
-			if (!"".equals(dateFilter2)) {
+			if (!isEmpty(dateFilter2)) {
 				if (filter.length() > 0) {
 					filter.append(" AND ");
 				}
@@ -150,41 +145,10 @@ public class ReferralLayerBlock extends LayerBlock {
 
 			layer.setFilter(filter.toString());
 		}
-	}
 
-	/**
-	 * Callback to set option lists.
-	 * 
-	 * @author Jan De Moerloose
-	 * 
-	 */
-	public class ProviderCallback implements AttributeProviderCallBack {
-
-		private ComboBoxItem item;
-
-		public ProviderCallback(ComboBoxItem item) {
-			this.item = item;
+		private boolean isEmpty(String s) {
+			return s == null || s.isEmpty();
 		}
-
-		@Override
-		public void onSuccess(List<Attribute<?>> attributes) {
-			LinkedHashMap<String, String> valueMap = new LinkedHashMap<String, String>();
-			valueMap.put("-1", "Any");
-			for (Attribute<?> attribute : attributes) {
-				if (attribute instanceof ManyToOneAttribute) {
-					ManyToOneAttribute mto = (ManyToOneAttribute) attribute;
-					String title = (String) mto.getValue().getAttributeValue("title");
-					valueMap.put(mto.getValue().getId().getValue().toString(), title);
-				}
-			}
-			item.setValueMap(valueMap);
-			item.setValue("-1");
-		}
-
-		@Override
-		public void onError(List<String> errorMessages) {
-		}
-
 	}
 
 }

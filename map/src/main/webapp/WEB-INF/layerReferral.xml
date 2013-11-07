@@ -109,6 +109,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	                                <property name="type" value="LONG" />
 	                            </bean>
 	                        </property>
+	                        <property name="displayAttributeName" value="title" />
 	                        <property name="attributes">
 	                            <list>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
@@ -186,6 +187,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	                <property name="editable" value="true" />
 	                <property name="identifying" value="true" />
 	                <property name="type" value="MANY_TO_ONE" />
+                    <property name="formInputType" value="many-to-one-sorted" />
 	                <property name="feature">
 	                    <bean class="org.geomajas.configuration.FeatureInfo">
 	                        <property name="dataSourceName" value="org.ktunaxa.referral.server.domain.ReferralType" />
@@ -196,6 +198,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	                                <property name="type" value="LONG" />
 	                            </bean>
 	                        </property>
+	                        <property name="displayAttributeName" value="title" />
 	                        <property name="attributes">
 	                            <list>
 	                                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
@@ -415,6 +418,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 									<property name="type" value="LONG" />
 								</bean>
 							</property>
+	                        <property name="displayAttributeName" value="title" />
 							<property name="attributes">
 								<list>
 									<bean class="org.geomajas.configuration.PrimitiveAttributeInfo">

@@ -27,27 +27,34 @@ import com.smartgwt.client.widgets.form.fields.RadioGroupItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
+
 import org.geomajas.gwt.client.util.WidgetLayout;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 /**
  * Form which allows you to set build a referral filter on a date.
- *
+ * 
  * @author Joachim Van der Auwera
  */
 public class ReferralDateFilterForm extends HLayout {
 
 	private static final String BEFORE = "before";
+
 	private static final String AFTER = "after";
 
+	private static final String CQL_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZZ";
+
 	private final DateItem date = new DateItem();
+
 	private final ComboBoxItem field = new ComboBoxItem();
+
 	private final RadioGroupItem compare = new RadioGroupItem();
 
 	/**
 	 * Constructor.
-	 *
+	 * 
 	 * @param changedHandler changed handler which updates the layer filter (probably using {@link #getFilter()}
 	 */
 	public ReferralDateFilterForm(ChangedHandler changedHandler) {
@@ -91,14 +98,25 @@ public class ReferralDateFilterForm extends HLayout {
 
 	/**
 	 * Get filter which is built in this form.
-	 *
+	 * 
 	 * @return filter string, empty string when no filter defined
 	 */
 	public String getFilter() {
 		String fieldName = field.getValueAsString();
 		if (!"".equals(fieldName)) {
-			DateTimeFormat format = DateTimeFormat.getFormat("yyyy-MM-dd");
-			return fieldName + " " + compare.getValue() + " " + format.format(date.getValueAsDate()) + "T00:00:00Z";
+			DateTimeFormat format = DateTimeFormat.getFormat(CQL_TIME_FORMAT);
+			String filter = fieldName + " " + compare.getValue();
+			String valueString = format.format(date.getValueAsDate());
+			if (compare.getValue().equals("AFTER")) {
+				// we can't discriminate between date and timestamp values yet,
+				// use end of day for now
+				filter += " " + valueString.replaceAll("\\d\\d:\\d\\d:\\d\\d", "23:59:59");
+			} else {
+				// we can't discriminate between date and timestamp values yet,
+				// use start of day for now
+				filter += " " + valueString.replaceAll("\\d\\d:\\d\\d:\\d\\d", "00:00:00");
+			}
+			return filter;
 		}
 		return "";
 	}

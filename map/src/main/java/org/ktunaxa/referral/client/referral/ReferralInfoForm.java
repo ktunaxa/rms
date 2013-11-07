@@ -75,6 +75,7 @@ public class ReferralInfoForm extends DefaultFeatureForm {
 			targetItem.setOptionDataSource(new ReferralManyToOneDataSource(info,
 					KtunaxaConstant.LAYER_REFERRAL_SERVER_ID));
 			targetItem.setDisplayField(ReferralManyToOneDataSource.LAND_REFERRAL_ID_FIELD);
+			targetItem.setSortField(KtunaxaConstant.ATTRIBUTE_NUMBER);
 		}
 		if (KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY.equals(info.getName())) {
 			formItem.setColSpan(COLUMN_COUNT);

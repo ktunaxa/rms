@@ -21,6 +21,7 @@ package org.ktunaxa.referral.client;
 
 import java.util.LinkedHashMap;
 
+import org.geomajas.configuration.AssociationType;
 import org.geomajas.gwt.client.action.ToolCreator;
 import org.geomajas.gwt.client.action.ToolbarBaseAction;
 import org.geomajas.gwt.client.action.toolbar.ToolbarRegistry;
@@ -37,8 +38,10 @@ import org.geomajas.gwt.client.service.ClientConfigurationService;
 import org.geomajas.gwt.client.service.ClientConfigurationSetter;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.MapWidget;
+import org.geomajas.gwt.client.widget.attribute.AssociationItem;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.DataSourceFieldFactory;
+import org.geomajas.gwt.client.widget.attribute.DefaultManyToOneItem;
 import org.geomajas.gwt.client.widget.attribute.FormItemFactory;
 import org.geomajas.plugin.printing.client.util.PrintingLayout;
 import org.geomajas.plugin.staticsecurity.client.StaticSecurityTokenRequestHandler;
@@ -124,6 +127,23 @@ public class KtunaxaEntryPoint implements EntryPoint {
 					}
 				}, null
 		);
+		
+		// TYPE: MANY_TO_ONE
+		AttributeFormFieldRegistry.registerCustomFormItem("many-to-one-sorted", new DataSourceFieldFactory() {
+
+			public DataSourceField create() {
+				// Don't use a DataSourceEnumField, as it doesn't work together with the SelectItem's OptionDataSource.
+				return new DataSourceTextField();
+			}
+		}, new FormItemFactory() {
+
+			public FormItem create() {
+				SortedManyToOneItem manyToOneItem = new SortedManyToOneItem();
+				manyToOneItem.getItem().setAttribute(AssociationItem.ASSOCIATION_ITEM_ATTRIBUTE_KEY, manyToOneItem);
+				return manyToOneItem.getItem();
+			}
+		}, null);
+
 
 		GwtCommandDispatcher.getInstance().setTokenRequestHandler(new StaticSecurityTokenRequestHandler());
 

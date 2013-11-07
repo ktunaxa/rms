@@ -78,6 +78,7 @@ import org.opengis.filter.temporal.OverlappedBy;
 import org.opengis.filter.temporal.TContains;
 import org.opengis.filter.temporal.TEquals;
 import org.opengis.filter.temporal.TOverlaps;
+import org.opengis.temporal.Instant;
 import org.opengis.temporal.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -522,7 +523,14 @@ public class CriteriaVisitor implements FilterVisitor {
 
 	@Override
 	public Object visit(After after, Object extraData) {
-		throw new UnsupportedOperationException("visit(Object userData)");
+		String propertyName = getPropertyName(after.getExpression1());
+		String finalName = parsePropertyName(propertyName, after);
+		Object literal = getLiteralValue(after.getExpression2());
+		if (literal instanceof Date) {
+			return Restrictions.gt(finalName, literal);
+		} else {
+			throw new UnsupportedOperationException("visit(Object userData)");
+		}
 	}
 
 	@Override
@@ -532,7 +540,14 @@ public class CriteriaVisitor implements FilterVisitor {
 
 	@Override
 	public Object visit(Before before, Object extraData) {
-		throw new UnsupportedOperationException("visit(Object userData)");
+		String propertyName = getPropertyName(before.getExpression1());
+		String finalName = parsePropertyName(propertyName, before);
+		Object literal = getLiteralValue(before.getExpression2());
+		if (literal instanceof Date) {
+			return Restrictions.lt(finalName, literal);
+		} else {
+			throw new UnsupportedOperationException("visit(Object userData)");
+		}
 	}
 
 	@Override

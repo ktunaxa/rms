@@ -187,6 +187,7 @@ public final class MapLayout extends VLayout {
 		toolbar.setBorder("none");
 
 		mapLayout.addMember(toolbar);
+		mapWidget.setOverflow(Overflow.HIDDEN);
 		mapLayout.addMember(mapWidget);
 
 		addMember(topBar);
