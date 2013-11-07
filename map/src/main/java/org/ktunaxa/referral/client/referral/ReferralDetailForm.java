@@ -277,10 +277,10 @@ public class ReferralDetailForm extends DefaultFeatureForm {
 	 */
 	private void setDisabledStatusOnFields(boolean base) {
 		Set<String> enabled = ENABLED_FIELDS_OTHER;
-		if (UserContext.getInstance().isReferralManager()) {
-			enabled = ENABLED_FIELDS_REFERRAL_MANAGER;
-		} else if (UserContext.getInstance().isAdmin() || UserContext.getInstance().isDataEntry()) {
+		if (UserContext.getInstance().isAdmin() || UserContext.getInstance().isDataEntry()) {
 			enabled = ENABLED_FIELDS_ADMIN;
+		} else if (UserContext.getInstance().isReferralManager()) {
+			enabled = ENABLED_FIELDS_REFERRAL_MANAGER;
 		} else if (UserContext.getInstance().isGuest()) {
 			enabled = ENABLED_FIELDS_GUEST;
 		}
