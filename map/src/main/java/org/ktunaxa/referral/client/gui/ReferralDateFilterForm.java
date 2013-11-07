@@ -107,7 +107,7 @@ public class ReferralDateFilterForm extends HLayout {
 			DateTimeFormat format = DateTimeFormat.getFormat(CQL_TIME_FORMAT);
 			String filter = fieldName + " " + compare.getValue();
 			String valueString = format.format(date.getValueAsDate());
-			if (compare.getValue().equals("AFTER")) {
+			if ("AFTER".equals(compare.getValue())) {
 				// we can't discriminate between date and timestamp values yet,
 				// use end of day for now
 				filter += " " + valueString.replaceAll("\\d\\d:\\d\\d:\\d\\d", "23:59:59");
@@ -120,5 +120,4 @@ public class ReferralDateFilterForm extends HLayout {
 		}
 		return "";
 	}
-
 }

@@ -78,7 +78,6 @@ import org.opengis.filter.temporal.OverlappedBy;
 import org.opengis.filter.temporal.TContains;
 import org.opengis.filter.temporal.TEquals;
 import org.opengis.filter.temporal.TOverlaps;
-import org.opengis.temporal.Instant;
 import org.opengis.temporal.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
