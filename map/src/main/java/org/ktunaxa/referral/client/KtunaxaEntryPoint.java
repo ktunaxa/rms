@@ -21,7 +21,6 @@ package org.ktunaxa.referral.client;
 
 import java.util.LinkedHashMap;
 
-import org.geomajas.configuration.AssociationType;
 import org.geomajas.gwt.client.action.ToolCreator;
 import org.geomajas.gwt.client.action.ToolbarBaseAction;
 import org.geomajas.gwt.client.action.toolbar.ToolbarRegistry;
@@ -41,7 +40,6 @@ import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.attribute.AssociationItem;
 import org.geomajas.gwt.client.widget.attribute.AttributeFormFieldRegistry;
 import org.geomajas.gwt.client.widget.attribute.DataSourceFieldFactory;
-import org.geomajas.gwt.client.widget.attribute.DefaultManyToOneItem;
 import org.geomajas.gwt.client.widget.attribute.FormItemFactory;
 import org.geomajas.plugin.printing.client.util.PrintingLayout;
 import org.geomajas.plugin.staticsecurity.client.StaticSecurityTokenRequestHandler;

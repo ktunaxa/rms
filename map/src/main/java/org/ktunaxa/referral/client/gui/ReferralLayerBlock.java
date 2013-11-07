@@ -24,7 +24,6 @@ import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.Layer;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.attribute.DefaultAttributeProvider;
-import org.geomajas.gwt.client.widget.attribute.ManyToOneDataSource;
 import org.ktunaxa.referral.client.SortedManyToOneItem;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 

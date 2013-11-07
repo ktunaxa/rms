@@ -44,15 +44,16 @@ import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 
 /**
  * Adjusted from see {@link AttributeCriterionPane} to work with AttributeCriterion.
- *
+ * 
  * @author Pieter De Graef
  * @author Kristof Heirwegh
  */
 public class AttributeCriterionPane extends Canvas {
 
 	private static final String CQL_WILDCARD = "*";
+
 	private static final String CQL_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZZ";
-	
+
 	private static final String ID_SUFFIX = ".@id";
 
 	private SelectItem attributeSelect;
@@ -72,7 +73,7 @@ public class AttributeCriterionPane extends Canvas {
 	/**
 	 * Create a search criterion pane, for the given vector layer. The layer is required, as it's list of attribute
 	 * definitions are a vital part of the search criteria.
-	 *
+	 * 
 	 * @param layer layer to create criterion for
 	 */
 	public AttributeCriterionPane(VectorLayer layer) {
@@ -88,7 +89,7 @@ public class AttributeCriterionPane extends Canvas {
 
 	/**
 	 * Validate the value that the user filled in. If it is not valid, don't ask for the SearchCriterion.
-	 *
+	 * 
 	 * @return true when user entered invalid value
 	 */
 	public boolean hasErrors() {
@@ -121,7 +122,7 @@ public class AttributeCriterionPane extends Canvas {
 
 	/**
 	 * Return the actual search criterion object, or null if not all fields have been properly filled.
-	 *
+	 * 
 	 * @return search criterion
 	 */
 	public AttributeCriterion getSearchCriterion() {
@@ -129,8 +130,8 @@ public class AttributeCriterionPane extends Canvas {
 		Object value = valueItem.getValue();
 
 		if (selectedAttribute != null && operator != null) {
-			String operatorString = org.geomajas.gwt.client.widget.attribute.AttributeCriterionPane.
-					getOperatorCodeFromLabel(operator.toString());
+			String operatorString = org.geomajas.gwt.client.widget.attribute.AttributeCriterionPane
+					.getOperatorCodeFromLabel(operator.toString());
 			String valueString = "";
 			String nameString = selectedAttribute.getName();
 			String displayText = nameString + " " + operatorString + " " + valueItem.getDisplayValue();
@@ -163,13 +164,13 @@ public class AttributeCriterionPane extends Canvas {
 							String startOfDay = valueString.replaceAll("\\d\\d:\\d\\d:\\d\\d", "00:00:00");
 							// 1 day period, starting at 0h00
 							valueString = startOfDay + "/P1D";
-						} else if  ("AFTER".equals(operatorString)) {
+						} else if ("AFTER".equals(operatorString)) {
 							// we can't discriminate between date and timestamp values yet, use end of day for now
-							valueString = valueString.replaceAll("\\d\\d:\\d\\d:\\d\\d", "23:59:59");							
-						}  else if  ("BEFORE".equals(operatorString)) {
+							valueString = valueString.replaceAll("\\d\\d:\\d\\d:\\d\\d", "23:59:59");
+						} else if ("BEFORE".equals(operatorString)) {
 							// we can't discriminate between date and timestamp values yet, use start of day for now
-							valueString = valueString.replaceAll("\\d\\d:\\d\\d:\\d\\d", "00:00:00");							
-						} 
+							valueString = valueString.replaceAll("\\d\\d:\\d\\d:\\d\\d", "00:00:00");
+						}
 					}
 				}
 			} else if (selectedAttribute instanceof AssociationAttributeInfo) {
@@ -191,27 +192,26 @@ public class AttributeCriterionPane extends Canvas {
 		return null;
 	}
 
-
 	public static String getLabelFromOperatorCode(String operator) {
 		if (operator != null) {
 			if ("=".equals(operator)) {
 				return I18nProvider.getSearch().operatorEquals();
 			} else if ("<>".equals(operator)) {
-				return  I18nProvider.getSearch().operatorNotEquals();
+				return I18nProvider.getSearch().operatorNotEquals();
 			} else if ("<".equals(operator)) {
-				return  I18nProvider.getSearch().operatorST();
+				return I18nProvider.getSearch().operatorST();
 			} else if ("<=".equals(operator)) {
-				return  I18nProvider.getSearch().operatorSE();
+				return I18nProvider.getSearch().operatorSE();
 			} else if (">".equals(operator)) {
-				return  I18nProvider.getSearch().operatorBT();
+				return I18nProvider.getSearch().operatorBT();
 			} else if (">=".equals(operator)) {
-				return  I18nProvider.getSearch().operatorBE();
+				return I18nProvider.getSearch().operatorBE();
 			} else if ("LIKE".equalsIgnoreCase(operator)) {
-				return  I18nProvider.getSearch().operatorContains();
+				return I18nProvider.getSearch().operatorContains();
 			} else if ("BEFORE".equalsIgnoreCase(operator)) {
-				return  I18nProvider.getSearch().operatorBefore();
+				return I18nProvider.getSearch().operatorBefore();
 			} else if ("AFTER".equalsIgnoreCase(operator)) {
-				return  I18nProvider.getSearch().operatorAfter();
+				return I18nProvider.getSearch().operatorAfter();
 			}
 		}
 		return operator;
@@ -227,8 +227,8 @@ public class AttributeCriterionPane extends Canvas {
 		attributeSelect = new SelectItem("attributeItem");
 		attributeSelect.setWidth(140);
 		attributeSelect.setShowTitle(false);
-		attributeSelect.setValueMap(org.geomajas.gwt.client.widget.attribute.AttributeCriterionPane.
-				getSearchableAttributes(layer));
+		attributeSelect.setValueMap(org.geomajas.gwt.client.widget.attribute.AttributeCriterionPane
+				.getSearchableAttributes(layer));
 		attributeSelect.setHint(I18nProvider.getSearch().gridChooseAttribute());
 		attributeSelect.setShowHintInField(true);
 
@@ -254,6 +254,7 @@ public class AttributeCriterionPane extends Canvas {
 
 		// Mechanisms:
 		attributeSelect.addChangedHandler(new ChangedHandler() {
+
 			public void onChanged(ChangedEvent event) {
 				attributeChanged();
 			}
@@ -272,8 +273,8 @@ public class AttributeCriterionPane extends Canvas {
 		if (selectedAttribute != null) {
 			// Adjust operator value map and enabled:
 			operatorSelect.setDisabled(false);
-			String[] operators = org.geomajas.gwt.client.widget.attribute.AttributeCriterionPane.
-					getOperatorsForAttributeType(selectedAttribute);
+			String[] operators = org.geomajas.gwt.client.widget.attribute.AttributeCriterionPane
+					.getOperatorsForAttributeType(selectedAttribute);
 			operatorSelect.setValueMap(operators);
 			operatorSelect.setValue(operators[0]);
 
@@ -287,8 +288,8 @@ public class AttributeCriterionPane extends Canvas {
 		Object value = attributeSelect.getValue();
 		if (value != null) {
 			for (AbstractAttributeInfo attributeInfo : layer.getLayerInfo().getFeatureInfo().getAttributes()) {
-				if (attributeInfo instanceof AbstractReadOnlyAttributeInfo && value.equals(
-						((AbstractReadOnlyAttributeInfo) attributeInfo).getLabel())) {
+				if (attributeInfo instanceof AbstractReadOnlyAttributeInfo
+						&& value.equals(((AbstractReadOnlyAttributeInfo) attributeInfo).getLabel())) {
 					return (AbstractReadOnlyAttributeInfo) attributeInfo;
 				}
 			}
@@ -315,7 +316,7 @@ public class AttributeCriterionPane extends Canvas {
 	 * <code>TextItem</code>. In order to create the correct representation for each kind of attribute, a
 	 * {@link AttributeFormFieldRegistry} is used.
 	 * </p>
-	 *
+	 * 
 	 * @author Pieter De Graef
 	 */
 	private class AttributeFormItem extends CanvasItem {
@@ -331,7 +332,7 @@ public class AttributeCriterionPane extends Canvas {
 		/**
 		 * Create the form item with the given name. An internal form will already be created, and in that form a
 		 * <code>TextItem</code> will be shown.
-		 *
+		 * 
 		 * @param name form item name
 		 */
 		public AttributeFormItem(String name) {
@@ -354,7 +355,7 @@ public class AttributeCriterionPane extends Canvas {
 		 * Set a new attribute information object. This will alter the internal form, to display a new
 		 * <code>FormItem</code> for the new type of attribute. In order to accomplish this, a
 		 * {@link AttributeFormFieldRegistry} is used.
-		 *
+		 * 
 		 * @param attributeInfo The new attribute definition for which to display the correct <code>FormItem</code>.
 		 */
 		public void setAttributeInfo(AbstractReadOnlyAttributeInfo attributeInfo) {
@@ -370,8 +371,8 @@ public class AttributeCriterionPane extends Canvas {
 
 		/**
 		 * Set a new width on this instance. Delegates to the internal form.
-		 *
-		 * @param  width width
+		 * 
+		 * @param width width
 		 */
 		public void setWidth(int width) {
 			form.setWidth(width);
@@ -382,7 +383,7 @@ public class AttributeCriterionPane extends Canvas {
 
 		/**
 		 * Get the current value form the internal <code>FormItem</code>.
-		 *
+		 * 
 		 * @return value
 		 */
 		public Object getValue() {
@@ -401,7 +402,7 @@ public class AttributeCriterionPane extends Canvas {
 
 		/**
 		 * Get the display value form the internal <code>FormItem</code>.
-		 *
+		 * 
 		 * @return value
 		 */
 		public String getDisplayValue() {
@@ -413,7 +414,7 @@ public class AttributeCriterionPane extends Canvas {
 
 		/**
 		 * Return the form for the inner FormItem. On the returned form, validation will work.
-		 *
+		 * 
 		 * @return form
 		 */
 		public DynamicForm getForm() {
