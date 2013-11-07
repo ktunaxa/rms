@@ -271,7 +271,8 @@ public final class MapLayout extends VLayout {
 				if (geometry instanceof MultiPoint || geometry instanceof Point) {
 					// Zoom to 1/23000!
 					getMap().getMapModel().getMapView().setCenterPosition(bounds.getCenterPoint());
-					getMap().getMapModel().getMapView().setCurrentScale(0.10466131637343458, MapView.ZoomOption.LEVEL_CLOSEST);
+					getMap().getMapModel().getMapView()
+							.setCurrentScale(0.10466131637343458, MapView.ZoomOption.LEVEL_CLOSEST);
 				} else {
 					// Now display feature on this page!
 					getMap().getMapModel().getMapView().applyBounds(bounds, MapView.ZoomOption.LEVEL_FIT);
