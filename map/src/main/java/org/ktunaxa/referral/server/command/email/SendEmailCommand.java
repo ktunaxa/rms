@@ -154,7 +154,7 @@ public class SendEmailCommand implements Command<SendEmailRequest, SendEmailResp
 		};
 		try {
 			if (request.isSendMail()) {
-				mailSender.send(preparator);
+				//mailSender.send(preparator);
 				cleanAttachmentConnection(attachmentConnections);
 				log.debug("mail sent");
 			}

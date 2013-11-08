@@ -73,7 +73,7 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 	}
 
 	public void onFinish() {
-		if(getCurrentPage().validate()) {
+		if (getCurrentPage().validate()) {
 			// update referral, mark status as "in progress" and create business process
 			SC.ask("Are you sure you want to finish the referral, creating the process ?", new BooleanCallback() {
 
@@ -87,17 +87,20 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 						if (null == id) {
 							old = new Feature[0];
 						} else {
-							old = new Feature[] {data.getFeature()};
+							old = new Feature[] { data.getFeature() };
 						}
 
 						// KTU-257 update status to in-progress
-						data.getFeature().setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_STATUS, new AssociationValue(
-								new LongAttribute(2L), new HashMap<String, PrimitiveAttribute<?>>()));
-						
+						data.getFeature().setManyToOneAttribute(
+								KtunaxaConstant.ATTRIBUTE_STATUS,
+								new AssociationValue(new LongAttribute(2L),
+										new HashMap<String, PrimitiveAttribute<?>>()));
+
 						// AAD-36 let database assign the year !
 						data.getFeature().setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_YEAR, null);
 
-						final FeatureTransaction ft = new FeatureTransaction(layer, old, new Feature[] {data.getFeature()});
+						final FeatureTransaction ft = new FeatureTransaction(layer, old, new Feature[] { data
+								.getFeature() });
 						PersistTransactionRequest request = new PersistTransactionRequest();
 						request.setFeatureTransaction(ft.toDto());
 						final MapModel mapModel = layer.getMapModel();
@@ -107,16 +110,15 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 						GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
 						command.setCommandRequest(request);
 
-						CommunicationHandler.get().execute(command,
-								new AbstractCommandCallback<CommandResponse>() {
+						CommunicationHandler.get().execute(command, new AbstractCommandCallback<CommandResponse>() {
 
 							public void execute(CommandResponse response) {
 								if (response instanceof PersistTransactionResponse) {
 									PersistTransactionResponse ptr = (PersistTransactionResponse) response;
 									mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(), ptr
 											.getFeatureTransaction()));
-									Feature newFeature = new Feature(ptr.getFeatureTransaction().getNewFeatures()[0], ft
-											.getLayer());
+									Feature newFeature = new Feature(ptr.getFeatureTransaction().getNewFeatures()[0],
+											ft.getLayer());
 									createProcess(newFeature);
 								}
 							}
@@ -149,17 +151,17 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 
 			public void execute(CommandResponse response) {
 				getView().setLoading(false);
-				SC.ask("Referral " + referralId + " successfully created.<br /><br />" +
-						" Create a new referral?", new BooleanCallback() {
+				SC.ask("Referral " + referralId + " successfully created.<br /><br />" + " Create a new referral?",
+						new BooleanCallback() {
 
-					public void execute(Boolean value) {
-						if (value != null && value) {
-							start();
-						} else {
-							finishAction.run();
-						}
-					}
-				});
+							public void execute(Boolean value) {
+								if (value != null && value) {
+									start();
+								} else {
+									finishAction.run();
+								}
+							}
+						});
 			}
 		}, "Creating referral...");
 	}
