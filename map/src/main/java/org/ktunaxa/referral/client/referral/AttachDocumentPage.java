@@ -49,7 +49,12 @@ public class AttachDocumentPage extends WizardPage<ReferralData> {
 	}
 
 	public boolean doValidate() {
-		return true;
+		boolean validate = documentPanel.getEditor().validate();
+		if (validate) {
+			// must copy feature back !
+			getWizardData().setFeature(documentPanel.getEditor().getFeature());
+		}
+		return validate;
 	}
 
 	public Canvas asWidget() {

@@ -39,6 +39,10 @@ public class CmisConfig {
 	private String folder;
 
 	private String proxyHost;
+	
+	private String objectFactoryClass = "org.alfresco.cmis.client.impl.AlfrescoObjectFactoryImpl";
+	
+	private String atomPubExtension = "service/cmis";
 
 	private int proxyPort;
 
@@ -115,4 +119,24 @@ public class CmisConfig {
 	public void setProxyPort(int proxyPort) {
 		this.proxyPort = proxyPort;
 	}
+	
+	public String getObjectFactoryClass() {
+		return objectFactoryClass;
+	}
+	
+	public void setObjectFactoryClass(String objectFactoryClass) {
+		this.objectFactoryClass = objectFactoryClass;
+	}
+
+	
+	public String getAtomPubExtension() {
+		return atomPubExtension;
+	}
+
+	
+	public void setAtomPubExtension(String atomPubExtension) {
+		this.atomPubExtension = atomPubExtension;
+	}
+	
+	
 }

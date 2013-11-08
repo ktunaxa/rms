@@ -65,7 +65,7 @@ public class CmisServiceImpl implements CmisService {
 	private Repository repository;
 
 	private Map<String, String> parameter = new HashMap<String, String>();
-	
+
 	@PostConstruct
 	public void initialize() {
 		if (StringUtils.hasText(config.getProxyHost())) {
@@ -81,7 +81,7 @@ public class CmisServiceImpl implements CmisService {
 		if (!url.endsWith("/")) {
 			url += "/";
 		}
-		parameter.put(SessionParameter.ATOMPUB_URL, url + "service/cmis");
+		parameter.put(SessionParameter.ATOMPUB_URL, url + config.getAtomPubExtension());
 
 		parameter.put(SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
 
@@ -90,7 +90,7 @@ public class CmisServiceImpl implements CmisService {
 		parameter.put(SessionParameter.LOCALE_ISO639_LANGUAGE, "nl");
 		parameter.put(SessionParameter.LOCALE_VARIANT, "BE");
 
-		parameter.put(SessionParameter.OBJECT_FACTORY_CLASS, "org.alfresco.cmis.client.impl.AlfrescoObjectFactoryImpl");
+		parameter.put(SessionParameter.OBJECT_FACTORY_CLASS, config.getObjectFactoryClass());
 		// parameter.put(SessionParameter.REPOSITORY_ID, "Main Repository");
 
 		// This supposes only one repository is available at the URL.
@@ -146,7 +146,7 @@ public class CmisServiceImpl implements CmisService {
 		String docId = document.getId().replaceAll("://", "/");
 		return config.getUrlBrowse() + restCommand + docId + "/" + document.getContentStreamFileName();
 	}
-	
+
 	public Document saveOrUpdate(String documentName, String mimeType, InputStream in, long contentLength,
 			String... folderNames) throws IOException {
 		return create(documentName, mimeType, in, contentLength, true, folderNames);
@@ -221,6 +221,20 @@ public class CmisServiceImpl implements CmisService {
 		throw new IOException("Document '" + documentName + "' could not be found.");
 	}
 
+	public Document getById(String id) throws IOException {
+		if (id == null) {
+			throw new IOException("No id name was passed when trying to read.");
+		}
+		Folder folder = getWorkingFolder();
+		// Go over all children and see if one matches the document we're looking for:
+		Document doc = findRecursively(folder, id);
+		if (doc != null) {
+			return doc;
+		}
+		// Throw an exception if the document was not found. Don't return null.
+		throw new IOException("Document '" + id + "' could not be found.");
+	}
+
 	public void update(String documentName, String mimeType, InputStream in) throws IOException {
 		Document document = read(documentName);
 
@@ -250,8 +264,8 @@ public class CmisServiceImpl implements CmisService {
 				if (object instanceof Folder) {
 					return (Folder) object;
 				} else {
-					throw new IOException("Folder '" + name +
-							"' cannot be created, file with that name already exists.");
+					throw new IOException("Folder '" + name
+							+ "' cannot be created, file with that name already exists.");
 				}
 			}
 		}
@@ -261,5 +275,20 @@ public class CmisServiceImpl implements CmisService {
 		newFolderProps.put(PropertyIds.OBJECT_TYPE_ID, "cmis:folder");
 		newFolderProps.put(PropertyIds.NAME, name);
 		return parent.createFolder(newFolderProps);
+	}
+
+	private Document findRecursively(Folder folder, String id) {
+		Document result = null;
+		for (CmisObject object : folder.getChildren()) {
+			if (id.equals(object.getId())) {
+				result = (Document) object;
+			} else if (object instanceof Folder) {
+				result = findRecursively((Folder) object, id);
+				if (result != null) {
+					break;
+				}
+			}
+		}
+		return result;
 	}
 }

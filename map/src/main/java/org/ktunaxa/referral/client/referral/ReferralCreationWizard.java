@@ -73,61 +73,58 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 	}
 
 	public void onFinish() {
-		// update referral, mark status as "in progress" and create business process
-		SC.ask("Are you sure you want to finish the referral, creating the process ?", new BooleanCallback() {
+		if(getCurrentPage().validate()) {
+			// update referral, mark status as "in progress" and create business process
+			SC.ask("Are you sure you want to finish the referral, creating the process ?", new BooleanCallback() {
 
-			public void execute(Boolean value) {
-				if (value != null && value) {
-					getView().setLoading(true);
-					VectorLayer layer = data.getLayer();
+				public void execute(Boolean value) {
+					if (value != null && value) {
+						getView().setLoading(true);
+						VectorLayer layer = data.getLayer();
 
-					Feature[] old;
-					String id = data.getFeature().getId();
-					if (null == id) {
-						old = new Feature[0];
-					} else {
-						// get feature from feature store to make sure the documents are correct
-						Feature got = layer.getFeatureStore().getPartialFeature(id);
-						if (null != got) {
-							data.setFeature(got);
+						Feature[] old;
+						String id = data.getFeature().getId();
+						if (null == id) {
+							old = new Feature[0];
+						} else {
+							old = new Feature[] {data.getFeature()};
 						}
-						old = new Feature[] {data.getFeature()};
-					}
 
-					// KTU-257 update status to in-progress
-					data.getFeature().setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_STATUS, new AssociationValue(
-							new LongAttribute(2L), new HashMap<String, PrimitiveAttribute<?>>()));
-					
-					// AAD-36 let database assign the year !
-					data.getFeature().setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_YEAR, null);
+						// KTU-257 update status to in-progress
+						data.getFeature().setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_STATUS, new AssociationValue(
+								new LongAttribute(2L), new HashMap<String, PrimitiveAttribute<?>>()));
+						
+						// AAD-36 let database assign the year !
+						data.getFeature().setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_YEAR, null);
 
-					final FeatureTransaction ft = new FeatureTransaction(layer, old, new Feature[] {data.getFeature()});
-					PersistTransactionRequest request = new PersistTransactionRequest();
-					request.setFeatureTransaction(ft.toDto());
-					final MapModel mapModel = layer.getMapModel();
-					// assume layer crs
-					request.setCrs(mapModel.getCrs());
+						final FeatureTransaction ft = new FeatureTransaction(layer, old, new Feature[] {data.getFeature()});
+						PersistTransactionRequest request = new PersistTransactionRequest();
+						request.setFeatureTransaction(ft.toDto());
+						final MapModel mapModel = layer.getMapModel();
+						// assume layer crs
+						request.setCrs(mapModel.getCrs());
 
-					GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
-					command.setCommandRequest(request);
+						GwtCommand command = new GwtCommand(PersistTransactionRequest.COMMAND);
+						command.setCommandRequest(request);
 
-					CommunicationHandler.get().execute(command,
-							new AbstractCommandCallback<CommandResponse>() {
+						CommunicationHandler.get().execute(command,
+								new AbstractCommandCallback<CommandResponse>() {
 
-						public void execute(CommandResponse response) {
-							if (response instanceof PersistTransactionResponse) {
-								PersistTransactionResponse ptr = (PersistTransactionResponse) response;
-								mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(), ptr
-										.getFeatureTransaction()));
-								Feature newFeature = new Feature(ptr.getFeatureTransaction().getNewFeatures()[0], ft
-										.getLayer());
-								createProcess(newFeature);
+							public void execute(CommandResponse response) {
+								if (response instanceof PersistTransactionResponse) {
+									PersistTransactionResponse ptr = (PersistTransactionResponse) response;
+									mapModel.applyFeatureTransaction(new FeatureTransaction(ft.getLayer(), ptr
+											.getFeatureTransaction()));
+									Feature newFeature = new Feature(ptr.getFeatureTransaction().getNewFeatures()[0], ft
+											.getLayer());
+									createProcess(newFeature);
+								}
 							}
-						}
-					}, "Creating referral...");
+						}, "Creating referral...");
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 
 	private void start() {

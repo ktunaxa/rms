@@ -43,6 +43,7 @@
 			WEB-INF/layer*.xml
 			WEB-INF/geocoder.xml
 			WEB-INF/mail.xml
+			classpath*:developer-context.xml
 		</param-value>
 	</context-param>
 
@@ -76,6 +77,7 @@
 			<param-value>
 				classpath*:META-INF/geomajasWebContext.xml
 				WEB-INF/webContext.xml
+				classpath*:developer-webContext.xml.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>3</load-on-startup>

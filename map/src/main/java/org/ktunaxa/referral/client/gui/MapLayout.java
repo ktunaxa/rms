@@ -430,6 +430,7 @@ public final class MapLayout extends VLayout {
 				wizardBody.destroy();
 				menuBar.removeChild(haze);
 				topBar.setLeft(title);
+				MapLayout.getInstance().refreshReferral(false, Focus.REFERRAL_DETAIL);
 			}
 		});
 		wizardBody.addMember((ReferralCreationWizard.ReferralWizardView) wizard.getView());
