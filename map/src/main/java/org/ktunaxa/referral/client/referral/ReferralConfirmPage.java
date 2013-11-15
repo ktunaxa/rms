@@ -18,13 +18,13 @@
  */
 package org.ktunaxa.referral.client.referral;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.geomajas.command.dto.PersistTransactionRequest;
 import org.geomajas.command.dto.PersistTransactionResponse;
 import org.geomajas.configuration.AbstractAttributeInfo;
 import org.geomajas.configuration.AbstractReadOnlyAttributeInfo;
+import org.geomajas.configuration.AssociationAttributeInfo;
 import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.command.AbstractCommandCallback;
 import org.geomajas.gwt.client.command.GwtCommand;
@@ -32,7 +32,6 @@ import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.widget.utility.gwt.client.wizard.WizardPage;
 import org.geomajas.widget.utility.gwt.client.wizard.WizardView;
@@ -141,13 +140,13 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 		});
 	}
 
-	private String valueToString(Object value) {
+	private String valueToString(Object value, String displayName) {
 		if (null != value) {
 			if (value instanceof List) {
 				List list = (List) value;
 				if (1 == list.size()) {
 					// just one item, no brackets
-					return valueToString(list.get(0));
+					return valueToString(list.get(0), displayName);
 				} else {
 					StringBuilder sb = new StringBuilder();
 					sb.append("[");
@@ -156,7 +155,7 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 						if (!started) {
 							sb.append(",");
 						}
-						sb.append(valueToString(item));
+						sb.append(valueToString(item, displayName));
 						started = true;
 					}
 					sb.append("]");
@@ -165,11 +164,17 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 			} else if (value instanceof AssociationValue) {
 				AssociationValue asso = (AssociationValue) value;
 				// is there a better way ?
-				Collection<Attribute<?>> attributes = asso.getAllAttributes().values();
-				if (null != attributes && attributes.size() > 0) {
-					return valueToString(attributes.iterator().next().getValue());
+				if (asso.getAllAttributes() != null) {
+					if (asso.getAllAttributes().containsKey(displayName)) {
+						return valueToString(asso.getAllAttributes().get(displayName).getValue(), displayName);
+					} else if (asso.getAllAttributes().size() > 0) {
+						return valueToString(asso.getAllAttributes().values().iterator().next().getValue(),
+								displayName);
+					} else {
+						return valueToString(asso.getId().getValue(), displayName);
+					}
 				} else {
-					return valueToString(asso.getId().getValue());
+					return valueToString(asso.getId().getValue(), displayName);
 				}
 			}
 			return value.toString();
@@ -193,9 +198,14 @@ public class ReferralConfirmPage extends WizardPage<ReferralData> {
 		FeatureInfo featureInfo = getWizardData().getLayer().getLayerInfo().getFeatureInfo();
 		for (AbstractAttributeInfo info : featureInfo.getAttributes()) {
 			if (info instanceof AbstractReadOnlyAttributeInfo) {
+				String displayName = null;
+				if (info instanceof AssociationAttributeInfo) {
+					AssociationAttributeInfo assInfo = (AssociationAttributeInfo) info;
+					displayName = assInfo.getFeature().getDisplayAttributeName();
+				}
 				Object value = getWizardData().getFeature().getAttributeValue(info.getName());
-				SummaryLine line = new SummaryLine(((AbstractReadOnlyAttributeInfo) info).getLabel(),
-						valueToString(value));
+				SummaryLine line = new SummaryLine(((AbstractReadOnlyAttributeInfo) info).getLabel(), valueToString(
+						value, displayName));
 				line.setStyleName(even ? "summaryLine" : "summaryLineDark");
 				summaryLayout.addMember(line);
 				even = !even;

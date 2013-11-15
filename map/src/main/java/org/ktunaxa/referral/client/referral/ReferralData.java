@@ -24,12 +24,11 @@ import java.util.HashMap;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.layer.feature.attribute.AssociationValue;
-import org.geomajas.layer.feature.attribute.IntegerAttribute;
 import org.geomajas.layer.feature.attribute.LongAttribute;
 import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
+import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 import com.google.gwt.user.datepicker.client.CalendarUtil;
-import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
 /**
  * Wizard data holding feature under construction.
@@ -58,25 +57,30 @@ public class ReferralData {
 		Date nextMonth = new Date();
 		CalendarUtil.addMonthsToDate(nextMonth, 1);
 		feature.setDateAttribute(KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE, nextMonth);
-		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_TYPE, new AssociationValue(new LongAttribute(1L),
-				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_FINAL_DISPOSITION,
-				new AssociationValue(new IntegerAttribute(1),
-						new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_APPLICATION_TYPE,
-				new AssociationValue(new LongAttribute(1L), new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_STATUS, new AssociationValue(new LongAttribute(1L),
-				new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DECISION, new AssociationValue(new LongAttribute(1L),
-				new HashMap<String, PrimitiveAttribute<?>>()));
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_TYPE, createValue(1));
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_FINAL_DISPOSITION, createValue(1));
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_APPLICATION_TYPE, createValue(1));
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_STATUS,
+				createValue(1L, KtunaxaConstant.ATTRIBUTE_STATUS_TITLE, "New"));
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_DECISION,
+				createValue(1L, KtunaxaConstant.ATTRIBUTE_DECISION_TITLE, "Unknown"));
 		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_PROVINCIAL_DECISION,
-				new AssociationValue(new LongAttribute(1L), new HashMap<String, PrimitiveAttribute<?>>()));
+				createValue(1L, KtunaxaConstant.ATTRIBUTE_DECISION_TITLE, "Unknown"));
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE, 1);
 		feature.setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL, 1);
-		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY_TYPE,
-				new AssociationValue(new LongAttribute(1L), new HashMap<String, PrimitiveAttribute<?>>()));
-		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_PRIORITY, new AssociationValue(new LongAttribute(1L),
-				new HashMap<String, PrimitiveAttribute<?>>()));
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_EXTERNAL_AGENCY_TYPE, createValue(1));
+		feature.setManyToOneAttribute(KtunaxaConstant.ATTRIBUTE_PRIORITY, createValue(1));
+	}
+
+	private AssociationValue createValue(long id) {
+		return new AssociationValue(new LongAttribute(id), new HashMap<String, PrimitiveAttribute<?>>());
+	}
+
+	private AssociationValue createValue(long id, String displayName, String displayValue) {
+		AssociationValue value = new AssociationValue(new LongAttribute(id),
+				new HashMap<String, PrimitiveAttribute<?>>());
+		value.setStringAttribute(displayName, displayValue);
+		return value;
 	}
 
 	public void setFeature(Feature feature) {

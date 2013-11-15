@@ -19,7 +19,6 @@
 package org.ktunaxa.referral.client.referral;
 
 import java.util.Date;
-import java.util.HashMap;
 
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
@@ -30,9 +29,6 @@ import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.layer.feature.attribute.AssociationValue;
-import org.geomajas.layer.feature.attribute.LongAttribute;
-import org.geomajas.layer.feature.attribute.PrimitiveAttribute;
 import org.geomajas.widget.utility.gwt.client.wizard.Wizard;
 import org.geomajas.widget.utility.gwt.client.wizard.WizardWidget;
 import org.ktunaxa.referral.client.gui.MapLayout;
@@ -89,12 +85,6 @@ public class ReferralCreationWizard extends Wizard<ReferralData> {
 						} else {
 							old = new Feature[] { data.getFeature() };
 						}
-
-						// KTU-257 update status to in-progress
-						data.getFeature().setManyToOneAttribute(
-								KtunaxaConstant.ATTRIBUTE_STATUS,
-								new AssociationValue(new LongAttribute(2L),
-										new HashMap<String, PrimitiveAttribute<?>>()));
 
 						// AAD-36 let database assign the year !
 						data.getFeature().setIntegerAttribute(KtunaxaConstant.ATTRIBUTE_YEAR, null);

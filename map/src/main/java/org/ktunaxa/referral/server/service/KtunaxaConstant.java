@@ -19,6 +19,7 @@
 
 package org.ktunaxa.referral.server.service;
 
+
 /**
  * Some constants available to both client and sever.
  * 
@@ -115,6 +116,7 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_CONTACT_PHONE = "contactPhone";
 	String ATTRIBUTE_CONTACT_ADDRESS = "contactAddress";
 	String ATTRIBUTE_TYPE = "type";
+	String ATTRIBUTE_TYPE_TITLE = "title";	
 	String ATTRIBUTE_EXTERNAL_PROJECT_ID = "externalProjectId";
 	String ATTRIBUTE_EXTERNAL_FILE_ID = "externalFileId";
 	String ATTRIBUTE_ACTIVE_RETENTION_PERIOD = "activeRetentionPeriod";
@@ -144,7 +146,7 @@ public interface KtunaxaConstant {
 	String ATTRIBUTE_STATUS_DESCRIPTION = "description";
 	String ATTRIBUTE_DECISION_TITLE = "title";
 	String ATTRIBUTE_DECISION_DESCRIPTION = "description";
-
+	
 	String STATUS_NEW = "New";
 	String STATUS_IN_PROGRESS = "In progress";
 	String STATUS_FINISHED = "Finished";
