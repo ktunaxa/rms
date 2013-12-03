@@ -155,7 +155,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
-			<artifactId>geomajas-layer-google-gwt</artifactId>
+			<artifactId>geomajas-client-gwt-layer-googlemaps</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
@@ -206,7 +206,7 @@
 
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
-			<artifactId>geomajas-plugin-printing-gwt</artifactId>
+			<artifactId>geomajas-plugin-print-gwt</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
@@ -344,17 +344,17 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>2.4.0</version>
+				<version>${gwt-client-gwt-version}</version>
 				<dependencies>
 					<dependency>
 						<groupId>com.google.gwt</groupId>
 						<artifactId>gwt-user</artifactId>
-						<version>${gwt.version}</version>
+						<version>${gwt-client-gwt-version}</version>
 					</dependency>
 					<dependency>
 						<groupId>com.google.gwt</groupId>
 						<artifactId>gwt-dev</artifactId>
-						<version>${gwt.version}</version>
+						<version>${gwt-client-gwt-version}</version>
 					</dependency>
 				</dependencies>
 				<configuration>
@@ -476,7 +476,6 @@
 				<dependency>
 					<groupId>com.google.gwt</groupId>
 					<artifactId>gwt-dev</artifactId>
-					<version>${gwt.version}</version>
 					<scope>provided</scope>
 				</dependency>
 			</dependencies>
