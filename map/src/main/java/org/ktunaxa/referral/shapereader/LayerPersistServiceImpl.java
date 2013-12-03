@@ -176,15 +176,13 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 		List<ReferenceBaseAttribute> attributes = new ArrayList<ReferenceBaseAttribute>();
 		for (AttributeDescriptor descr : feature.getFeatureType().getAttributeDescriptors()) {
 			String key = descr.getLocalName();
-			if (!isPropertyName(labelExpr, key) || isPropertyName(styleExpr, key)) {
-				Object value = feature.getAttribute(key);
-				if (value != null && !(value instanceof Geometry)) {
-					ReferenceBaseAttribute attribute = new ReferenceBaseAttribute();
-					attribute.setReference(base);
-					attribute.setKey(key);
-					attribute.setValue(value.toString());
-					attributes.add(attribute);
-				}
+			Object value = feature.getAttribute(key);
+			if (value != null && !(value instanceof Geometry)) {
+				ReferenceBaseAttribute attribute = new ReferenceBaseAttribute();
+				attribute.setReference(base);
+				attribute.setKey(key);
+				attribute.setValue(value.toString());
+				attributes.add(attribute);
 			}
 		}
 		base.setAttributes(attributes);
@@ -229,15 +227,13 @@ public class LayerPersistServiceImpl implements LayerPersistService {
 		List<ReferenceValueAttribute> attributes = new ArrayList<ReferenceValueAttribute>();
 		for (AttributeDescriptor descr : feature.getFeatureType().getAttributeDescriptors()) {
 			String key = descr.getLocalName();
-			if (isPropertyName(labelExpr, key) || isPropertyName(styleExpr, key)) {
-				Object attributeValue = feature.getAttribute(key);
-				if (attributeValue != null && !(attributeValue instanceof Geometry)) {
-					ReferenceValueAttribute attribute = new ReferenceValueAttribute();
-					attribute.setReference(value);
-					attribute.setKey(key);
-					attribute.setValue(attributeValue.toString());
-					attributes.add(attribute);
-				}
+			Object attributeValue = feature.getAttribute(key);
+			if (attributeValue != null && !(attributeValue instanceof Geometry)) {
+				ReferenceValueAttribute attribute = new ReferenceValueAttribute();
+				attribute.setReference(value);
+				attribute.setKey(key);
+				attribute.setValue(attributeValue.toString());
+				attributes.add(attribute);
 			}
 		}
 		value.setAttributes(attributes);
