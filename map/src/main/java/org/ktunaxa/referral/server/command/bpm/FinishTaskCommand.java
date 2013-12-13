@@ -19,27 +19,21 @@
 
 package org.ktunaxa.referral.server.command.bpm;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.geomajas.command.Command;
 import org.geomajas.command.CommandResponse;
-import org.geomajas.geometry.Crs;
 import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
 import org.geomajas.layer.VectorLayerService;
-import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.InternalFeature;
-import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
 import org.geomajas.security.SecurityContext;
 import org.geomajas.service.FilterService;
 import org.geomajas.service.GeoService;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
-import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.command.dto.FinishTaskRequest;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.slf4j.Logger;
@@ -55,7 +49,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 @Transactional(rollbackFor = { Exception.class })
-public class FinishTaskCommand implements Command<FinishTaskRequest, CommandResponse> {
+public class FinishTaskCommand extends AbstractReferralCommand implements Command<FinishTaskRequest, CommandResponse> {
 
 	private final Logger log = LoggerFactory.getLogger(FinishTaskCommand.class);
 
@@ -94,43 +88,13 @@ public class FinishTaskCommand implements Command<FinishTaskRequest, CommandResp
 		} else {
 			throw new GeomajasException(ExceptionCode.UNEXPECTED_PROBLEM, "task " + taskId + " not found");
 		}
-		setReferralInProgress(referralId);
-	}
-
-	private void setReferralInProgress(String referralId) throws GeomajasException {
-		Crs crs = geoService.getCrs2(KtunaxaConstant.LAYER_CRS);
-		List<InternalFeature> features = vectorLayerService.getFeatures(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID, crs,
-				filterService.parseFilter(ReferralUtil.createFilter(referralId)), null,
-				VectorLayerService.FEATURE_INCLUDE_ATTRIBUTES);
-		if (features.size() != 1) {
-			if (features.isEmpty()) {
-				log.error("Process found but not referral for {}.", referralId);
-			} else {
-				log.error("Multiple ({}) referrals found for id {}.", features.size(), referralId);
-			}
+		// find referral, update status and set reason
+		InternalFeature referral = findReferral(referralId);
+		if(referral != null) {
+			updateStatus(referral, KtunaxaConstant.STATUS_IN_PROGRESS);
 		} else {
-			InternalFeature orgReferral = features.get(0);
-			InternalFeature referral = orgReferral.clone();
-			Map<String, Attribute> attributes = referral.getAttributes();
-			Attribute currentStatus = attributes.get(KtunaxaConstant.ATTRIBUTE_STATUS);
-			// set in progress if new
-			if (KtunaxaConstant.STATUS_NEW.equals(((ManyToOneAttribute) currentStatus).getValue().getAttributeValue(
-					KtunaxaConstant.ATTRIBUTE_STATUS_TITLE))) {
-				List<InternalFeature> newFeatures = new ArrayList<InternalFeature>();
-				newFeatures.add(referral);
-				List<Attribute<?>> statusses = vectorLayerService.getAttributes(
-						KtunaxaConstant.LAYER_REFERRAL_SERVER_ID, KtunaxaConstant.ATTRIBUTE_STATUS,
-						filterService.createTrueFilter());
-				for (Attribute<?> status : statusses) {
-					if (status instanceof ManyToOneAttribute) {
-						if (KtunaxaConstant.STATUS_IN_PROGRESS.equals(((ManyToOneAttribute) status).getValue()
-								.getAttributeValue(KtunaxaConstant.ATTRIBUTE_STATUS_TITLE))) {
-							attributes.put(KtunaxaConstant.ATTRIBUTE_STATUS, status);
-						}
-					}
-				}
-				vectorLayerService.saveOrUpdate(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID, crs, features, newFeatures);
-			}
+			log.warn("Referral " + referralId + " not found");
+			throw new GeomajasException(ExceptionCode.UNEXPECTED_PROBLEM, "referral " + referralId + " not found");
 		}
 	}
 

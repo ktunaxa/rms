@@ -53,27 +53,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 @Transactional(rollbackFor = { Exception.class })
-public class DeleteReferralCommand implements Command<DeleteReferralRequest, CommandResponse> {
+public class DeleteReferralCommand extends AbstractReferralCommand implements
+		Command<DeleteReferralRequest, CommandResponse> {
 
 	private final Logger log = LoggerFactory.getLogger(DeleteReferralCommand.class);
-
-	@Autowired
-	private RuntimeService runtimeService;
-
-	@Autowired
-	private HistoryService historyService;
-
-	@Autowired
-	private SecurityContext securityContext;
-
-	@Autowired
-	private VectorLayerService vectorLayerService;
-
-	@Autowired
-	private FilterService filterService;
-
-	@Autowired
-	private GeoService geoService;
 
 	public CommandResponse getEmptyCommandResponse() {
 		return new CommandResponse();
@@ -84,24 +67,13 @@ public class DeleteReferralCommand implements Command<DeleteReferralRequest, Com
 		if (null == referralId) {
 			throw new GeomajasException(ExceptionCode.PARAMETER_MISSING, "referralId");
 		}
-		List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
-				.variableValueEquals(KtunaxaBpmConstant.VAR_REFERRAL_ID, referralId).list();
-		if (!processInstances.isEmpty()) {
-			// stop process instances (contrary to the names, these are all the executions for the process instance)
-			for (ProcessInstance processInstance : processInstances) {
-				ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-				// Must check if the instance is still there as delete cascades to sub-processes !
-				if (!query.processInstanceId(processInstance.getId()).list().isEmpty()) {
-					runtimeService.deleteProcessInstance(processInstance.getId(), "Requested by user "
-							+ securityContext.getUserId());
-					historyService.deleteHistoricProcessInstance(processInstance.getId());
-				}
-			}
-		}
-		// find referral, update status and set reason
+		// delete the associated processes if any
+		deleteTasks(referralId);			
+		// delete the associated processes if any
+		deleteProcesses(referralId);
+		// delete the referral
 		Crs crs = geoService.getCrs2(KtunaxaConstant.LAYER_CRS);
-		List<InternalFeature> features = vectorLayerService.getFeatures(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID,
-				crs,
+		List<InternalFeature> features = vectorLayerService.getFeatures(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID, crs,
 				filterService.parseFilter(ReferralUtil.createFilter(referralId)), null,
 				VectorLayerService.FEATURE_INCLUDE_ATTRIBUTES);
 		vectorLayerService.saveOrUpdate(KtunaxaConstant.LAYER_REFERRAL_SERVER_ID, crs, features,

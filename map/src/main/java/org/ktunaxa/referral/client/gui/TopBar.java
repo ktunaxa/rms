@@ -36,6 +36,7 @@ import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.command.dto.CloseReferralRequest;
 import org.ktunaxa.referral.server.command.dto.DeleteReferralRequest;
+import org.ktunaxa.referral.server.command.dto.FinishReferralRequest;
 import org.ktunaxa.referral.server.command.dto.ResetReferralRequest;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
@@ -196,7 +197,13 @@ public class TopBar extends HLayout {
 				deleteCurrentReferral();
 			}
 		});
-		referralActions.setItems(closeAction, resetAction, deleteAction);
+		MenuItem finishAction = new MenuItem("Finish current referral");
+		finishAction.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {
+			public void onClick(MenuItemClickEvent menuItemClickEvent) {
+				finishCurrentReferral();
+			}
+		});
+		referralActions.setItems(closeAction, resetAction, deleteAction, finishAction);
 		referral.setSubmenu(referralActions);
 
 
@@ -276,6 +283,7 @@ public class TopBar extends HLayout {
 				}
 			});
 		}
+
 	}
 
 	private void deleteCurrentReferral() {
@@ -303,7 +311,31 @@ public class TopBar extends HLayout {
 			});
 		}
 	}
-
+	
+	private void finishCurrentReferral() {
+		final Feature referral = MapLayout.getInstance().getCurrentReferral();
+		if (null == referral) {
+			SC.say("There is no current referral.");
+		} else {
+			SC.ask("Are you sure you want to finish referral " + ReferralUtil.createId(referral), new BooleanCallback() {
+				public void execute(Boolean close) {
+					if (close) {
+						FinishReferralRequest request = new FinishReferralRequest();
+						request.setReferralId(ReferralUtil.createId(referral));
+						GwtCommand command = new GwtCommand(FinishReferralRequest.COMMAND);
+						command.setCommandRequest(request);
+						GwtCommandDispatcher.getInstance()
+								.execute(command, new AbstractCommandCallback<CommandResponse>() {
+									public void execute(CommandResponse response) {
+										// nothing to do // NOSONAR
+									}
+								});
+						MapLayout.getInstance().setReferralAndTask(null, null);
+					}
+				}
+			});
+		}
+	}
 	/**
 	 * Internal class used for the creation of {@link MenuItem}s for editing of
 	 * {@link org.ktunaxa.referral.server.domain.Template}s.
