@@ -249,7 +249,7 @@ public class TopBar extends HLayout {
 						GwtCommandDispatcher.getInstance()
 								.execute(command, new AbstractCommandCallback<CommandResponse>() {
 									public void execute(CommandResponse response) {
-										// nothing to do // NOSONAR
+										MapLayout.getInstance().refreshReferral(true);
 									}
 								});
 
@@ -275,10 +275,9 @@ public class TopBar extends HLayout {
 						GwtCommandDispatcher.getInstance()
 								.execute(command, new AbstractCommandCallback<CommandResponse>() {
 									public void execute(CommandResponse response) {
-										// nothing to do // NOSONAR
+										MapLayout.getInstance().refreshReferral(true);
 									}
 								});
-						MapLayout.getInstance().setReferralAndTask(null, null);
 					}
 				}
 			});
@@ -327,10 +326,9 @@ public class TopBar extends HLayout {
 						GwtCommandDispatcher.getInstance()
 								.execute(command, new AbstractCommandCallback<CommandResponse>() {
 									public void execute(CommandResponse response) {
-										// nothing to do // NOSONAR
+										MapLayout.getInstance().refreshReferral(true);
 									}
 								});
-						MapLayout.getInstance().setReferralAndTask(null, null);
 					}
 				}
 			});
