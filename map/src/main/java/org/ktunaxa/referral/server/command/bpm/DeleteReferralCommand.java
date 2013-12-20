@@ -22,10 +22,6 @@ package org.ktunaxa.referral.server.command.bpm;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.geomajas.command.Command;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.geometry.Crs;
@@ -33,16 +29,11 @@ import org.geomajas.global.ExceptionCode;
 import org.geomajas.global.GeomajasException;
 import org.geomajas.layer.VectorLayerService;
 import org.geomajas.layer.feature.InternalFeature;
-import org.geomajas.security.SecurityContext;
-import org.geomajas.service.FilterService;
-import org.geomajas.service.GeoService;
-import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.command.dto.DeleteReferralRequest;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

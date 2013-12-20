@@ -29,8 +29,6 @@ import java.util.Map;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
 import org.geomajas.command.Command;
@@ -124,7 +122,8 @@ public class FinishReferralCommand extends AbstractReferralCommand implements
 		String email = getPrimitiveAttributeValue(referral, KtunaxaConstant.ATTRIBUTE_EMAIL);
 		Integer provinceEngagementLevel = getPrimitiveAttributeValue(referral,
 				KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_PROVINCE);
-		Integer engagementLevel = getPrimitiveAttributeValue(referral, KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL);
+		Integer engagementLevel = getPrimitiveAttributeValue(referral,
+				KtunaxaConstant.ATTRIBUTE_ENGAGEMENT_LEVEL_FINAL);
 		String engagementComment = getPrimitiveAttributeValue(referral, KtunaxaConstant.ATTRIBUTE_COMMENT_CONTENT);
 		Date completionDeadline = getPrimitiveAttributeValue(referral, KtunaxaConstant.ATTRIBUTE_RESPONSE_DEADLINE);
 

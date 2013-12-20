@@ -316,22 +316,25 @@ public class TopBar extends HLayout {
 		if (null == referral) {
 			SC.say("There is no current referral.");
 		} else {
-			SC.ask("Are you sure you want to finish referral " + ReferralUtil.createId(referral), new BooleanCallback() {
-				public void execute(Boolean close) {
-					if (close) {
-						FinishReferralRequest request = new FinishReferralRequest();
-						request.setReferralId(ReferralUtil.createId(referral));
-						GwtCommand command = new GwtCommand(FinishReferralRequest.COMMAND);
-						command.setCommandRequest(request);
-						GwtCommandDispatcher.getInstance()
-								.execute(command, new AbstractCommandCallback<CommandResponse>() {
-									public void execute(CommandResponse response) {
-										MapLayout.getInstance().refreshReferral(true);
-									}
-								});
-					}
-				}
-			});
+			SC.ask("Are you sure you want to finish referral " + ReferralUtil.createId(referral),
+					new BooleanCallback() {
+
+						public void execute(Boolean close) {
+							if (close) {
+								FinishReferralRequest request = new FinishReferralRequest();
+								request.setReferralId(ReferralUtil.createId(referral));
+								GwtCommand command = new GwtCommand(FinishReferralRequest.COMMAND);
+								command.setCommandRequest(request);
+								GwtCommandDispatcher.getInstance().execute(command,
+										new AbstractCommandCallback<CommandResponse>() {
+
+											public void execute(CommandResponse response) {
+												MapLayout.getInstance().refreshReferral(true);
+											}
+										});
+							}
+						}
+					});
 		}
 	}
 	/**

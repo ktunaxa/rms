@@ -19,11 +19,7 @@
 
 package org.ktunaxa.referral.server.command.bpm;
 
-import java.util.List;
-
 import org.activiti.engine.RuntimeService;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.geomajas.command.Command;
 import org.geomajas.command.CommandResponse;
 import org.geomajas.global.ExceptionCode;
@@ -33,7 +29,6 @@ import org.geomajas.layer.feature.InternalFeature;
 import org.geomajas.security.SecurityContext;
 import org.geomajas.service.FilterService;
 import org.geomajas.service.GeoService;
-import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.command.dto.CloseReferralRequest;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 import org.slf4j.Logger;
@@ -81,7 +76,7 @@ public class CloseReferralCommand extends AbstractReferralCommand implements
 		deleteProcesses(referralId);
 		// find referral, update status and set reason
 		InternalFeature referral = findReferral(request.getReferralId());
-		if(referral != null) {
+		if (referral != null) {
 			updateStatus(referral, KtunaxaConstant.STATUS_STOPPED, request.getReason());
 		} else {
 			log.warn("Referral " + referralId + " not found");

@@ -90,7 +90,7 @@ public class FinishTaskCommand extends AbstractReferralCommand implements Comman
 		}
 		// find referral, update status and set reason
 		InternalFeature referral = findReferral(referralId);
-		if(referral != null) {
+		if (referral != null) {
 			updateStatus(referral, KtunaxaConstant.STATUS_IN_PROGRESS);
 		} else {
 			log.warn("Referral " + referralId + " not found");
