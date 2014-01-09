@@ -19,6 +19,8 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.geomajas.configuration.FeatureStyleInfo;
@@ -60,6 +62,7 @@ import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
@@ -73,12 +76,12 @@ import edu.umd.cs.findbugs.annotations.Nullable;
  * @author Pieter De Graef
  */
 public final class MapLayout extends VLayout {
-	
+
 	/**
 	 * Focus options after refreshing the referral.
 	 * 
 	 * @author Jan De Moerloose
-	 *
+	 * 
 	 */
 	enum Focus {
 		REFERRAL_DETAIL, // focus on referral tab /detail
@@ -111,7 +114,7 @@ public final class MapLayout extends VLayout {
 	private TaskDto currentTask;
 
 	private ToolStripButton referralButton;
-	
+
 	private ToolStripButton newButton;
 
 	private org.geomajas.layer.feature.Feature currentReferral;
@@ -119,6 +122,8 @@ public final class MapLayout extends VLayout {
 	private VectorLayer referralLayer;
 
 	private HandlerManager handlerManager;
+
+	private SearchPanel searchPanel;
 
 	public static MapLayout getInstance() {
 		return INSTANCE;
@@ -153,11 +158,12 @@ public final class MapLayout extends VLayout {
 		infoPane.addCard(referralPanel.getName(), "Manage referral", referralPanel);
 		referralButton = getLastButton();
 		referralButton.setDisabled(true); // no referral at start
-		SearchPanel searchPanel = new SearchPanel(this);
+		searchPanel = new SearchPanel(this);
 		infoPane.addCard(searchPanel.getName(), "Search", searchPanel);
 		// top bar
 		topBar = new TopBar();
 		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
+
 			public void onMapModelChanged(MapModelChangedEvent event) {
 				referralLayer = (VectorLayer) mapWidget.getMapModel().getLayer(KtunaxaConstant.LAYER_REFERRAL_ID);
 				topBar.update();
@@ -231,10 +237,14 @@ public final class MapLayout extends VLayout {
 	public LayersPanel getLayerPanel() {
 		return layerPanel;
 	}
+	
+	public List<String> getSelectedReferrals() {
+		return searchPanel.getSelectedReferrals();
+	}
 
 	/**
 	 * Get the current task.
-	 *
+	 * 
 	 * @return current task
 	 */
 	public TaskDto getCurrentTask() {
@@ -243,7 +253,7 @@ public final class MapLayout extends VLayout {
 
 	/**
 	 * Get the current referral.
-	 *
+	 * 
 	 * @return current referral
 	 */
 	public org.geomajas.layer.feature.Feature getCurrentReferral() {
@@ -253,10 +263,8 @@ public final class MapLayout extends VLayout {
 	/**
 	 * Set the current referral and current task.
 	 * 
-	 * @param referral
-	 *            referral to select
-	 * @param task
-	 *            task to select
+	 * @param referral referral to select
+	 * @param task task to select
 	 */
 	public void setReferralAndTask(@Nullable org.geomajas.layer.feature.Feature referral, @Nullable TaskDto task) {
 		currentReferral = referral;
@@ -281,8 +289,7 @@ public final class MapLayout extends VLayout {
 			// highlight the feature
 			SymbolInfo symbolInfo = null;
 			if (feature.getStyleId() != null) {
-				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().
-						getNamedStyleInfo().getFeatureStyles()) {
+				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().getNamedStyleInfo().getFeatureStyles()) {
 					if (feature.getStyleId().equals(style.getStyleId())) {
 						symbolInfo = style.getSymbol();
 						break;
@@ -318,17 +325,19 @@ public final class MapLayout extends VLayout {
 		}
 		handlerManager.fireEvent(new CurrentReferralChangedEvent(referral, task));
 	}
-	
+
 	/**
 	 * Refresh the referral, optionally clearing the task.
+	 * 
 	 * @param clearTask
 	 */
 	public void refreshReferral(final boolean clearTask) {
 		refreshReferral(clearTask, Focus.REFERRAL_TASK);
 	}
-	
+
 	/**
 	 * Refresh the referral, optionally clearing the task and focussing on tasks.
+	 * 
 	 * @param clearTask
 	 */
 	public void refreshReferral(final boolean clearTask, final Focus focus) {
@@ -342,7 +351,7 @@ public final class MapLayout extends VLayout {
 				public void execute(List<org.geomajas.gwt.client.map.feature.Feature> response) {
 					if (response.size() > 0) {
 						setReferralAndTask(response.get(0).toDto(), clearTask ? null : currentTask);
-						switch(focus) {
+						switch (focus) {
 							case REFERRAL_DETAIL:
 								focusReferralDetail();
 								break;
@@ -352,7 +361,7 @@ public final class MapLayout extends VLayout {
 							case TASKMANAGER:
 								focusTaskManager();
 								break;
-							
+
 						}
 					}
 					window.destroy();
@@ -363,7 +372,7 @@ public final class MapLayout extends VLayout {
 
 	/**
 	 * Add a handler which is invoked when the current referral changes.
-	 *
+	 * 
 	 * @param handler handler for the event
 	 * @return handler registration
 	 */
@@ -423,6 +432,7 @@ public final class MapLayout extends VLayout {
 		final VLayout wizardBody = new VLayout();
 		wizardBody.setMargin(LayoutConstant.MARGIN_SMALL);
 		ReferralCreationWizard wizard = new ReferralCreationWizard(new Runnable() {
+
 			// resets the main window after completing/closing the wizard.
 			public void run() {
 				bodyLayout.removeChild(wizardBody);
@@ -445,5 +455,9 @@ public final class MapLayout extends VLayout {
 
 	public VectorLayer getReferralLayer() {
 		return referralLayer;
+	}
+
+	public void refreshSearch() {
+		searchPanel.refreshSearch();
 	}
 }

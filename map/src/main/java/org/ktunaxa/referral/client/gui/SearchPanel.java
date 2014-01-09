@@ -26,6 +26,7 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+
 import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
@@ -37,6 +38,7 @@ import org.geomajas.gwt.client.widget.MapWidget;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
+
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.widget.searchandfilter.client.widget.attributesearch.AttributeSearchPanel;
 import org.geomajas.widget.searchandfilter.client.widget.geometricsearch.FreeDrawingSearch;
@@ -67,9 +69,13 @@ public class SearchPanel extends VLayout {
 
 	private static final String NAME = "SEARCH";
 
+	private ValueSearchPanel referralSearchTab;
+
+	private ValueSearchPanel referenceValueSearchTab;
+
 	/**
 	 * Card type enumeration.
-	 *
+	 * 
 	 * @author Joachim Van der Auwera
 	 */
 	private enum Card {
@@ -78,7 +84,7 @@ public class SearchPanel extends VLayout {
 
 	/**
 	 * Construct a {@link SearchPanel}.
-	 *
+	 * 
 	 * @param mapLayout map layout
 	 */
 	public SearchPanel(MapLayout mapLayout) {
@@ -89,131 +95,164 @@ public class SearchPanel extends VLayout {
 		Tab tabReferral = new Tab("Referral");
 		Tab tabValues = new Tab("Values");
 
-		// initialization for value searching
-
-		tabReferral.setPane(getSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERRAL_ID));
-		tabValues.setPane(getSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID));
+		referralSearchTab = createSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERRAL_ID);
+		referenceValueSearchTab = createSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
+		tabReferral.setPane(referralSearchTab);
+		tabValues.setPane(referenceValueSearchTab);
 		tabs.setTabs(tabReferral, tabValues);
 		addMember(tabs);
 	}
 
-	private VLayout getSearchTabContent(final MapLayout mapLayout, String layerId) {
-		final MapWidget mapWidget = mapLayout.getMap();
-		final MultiFeatureListGrid valueResultList = new MultiFeatureListGrid(mapWidget);
-		valueResultList.setWidth100();
-		valueResultList.setHeight100();
-		valueResultList.setClearTabsetOnSearch(true);
-		ToolStripButton makeCurrentButton = new ToolStripButton("Make current");
-		makeCurrentButton.setIcon(WidgetLayout.iconSaveAlt);
-		makeCurrentButton.setTooltip("Set as current referral");
-		makeCurrentButton.setShowDisabledIcon(false);
-		makeCurrentButton.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					ListGridRecord[] records = valueResultList.getSelection(KtunaxaConstant.LAYER_REFERRAL_ID);
-					if (null != records && records.length > 0) {
-						String featureId = records[0].getAttribute(FeatureListGrid.FIELD_NAME_FEATURE_ID);
-						mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID).
-								getFeatureStore().getFeature(featureId, GeomajasConstant.FEATURE_INCLUDE_ALL,
-								new LazyLoadCallback() {
-							public void execute(List<org.geomajas.gwt.client.map.feature.Feature> response) {
-								if (response.size() > 0) {
-									mapLayout.setReferralAndTask(response.get(0).toDto(), null);
-								}
-							}
-						});
-					}
-				}
-			});
-		valueResultList.addButton(KtunaxaConstant.LAYER_REFERRAL_ID, makeCurrentButton, 1);
-		CardLayout<Card> searchPanels = new CardLayout<Card>();
-		GeometricSearchPanel geometricSearchPanel = new GeometricSearchPanel(mapWidget);
-		final SelectionSearch selectionSearch = new SelectionSearch();
-		final IButton currentReferralGeometry = new IButton("Use current referral");
-		currentReferralGeometry.setIcon(WidgetLayout.iconOpenAlt);
-		currentReferralGeometry.setShowDisabledIcon(false);
-		currentReferralGeometry.setAutoFit(true);
-		currentReferralGeometry.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				List<Geometry> geometries = new ArrayList<Geometry>();
-				Feature referral = mapLayout.getCurrentReferral();
-				if (null != referral) {
-					geometries.add(GeometryConverter.toGwt(referral.getGeometry()));
-				}
-				selectionSearch.setGeometry(geometries);
-			}
-		});
-		currentReferralGeometry.setDisabled(true); // no current referral yet
-		CurrentReferralChangedHandler currentReferralChangedHandler = new CurrentReferralChangedHandler() {
-			public void onCurrentReferralChanged(CurrentReferralChangedEvent event) {
-				currentReferralGeometry.setDisabled(null == event.getReferral());
-			}
-		};
-		mapLayout.addCurrentReferralChangedHandler(currentReferralChangedHandler);
-		selectionSearch.addSelectButton(currentReferralGeometry);
-		geometricSearchPanel.addSearchMethod(selectionSearch);
-		geometricSearchPanel.addSearchMethod(new FreeDrawingSearch());
-		geometricSearchPanel.setWidth100();
-		geometricSearchPanel.setCanAddToFavourites(false);
-		geometricSearchPanel.setFeatureSearchVectorLayer(layerId);
-		geometricSearchPanel.setCanCancel(true);
-		PanelSearchWidget geometricSearch = new CardPanelSearchWidget("GeometricSearch" + layerId, "Search on geometry",
-				geometricSearchPanel, searchPanels, Card.GEOMETRIC);
-		geometricSearch.setWidth100();
-		AttributeSearchPanel attributeSearchPanel = new AttributeSearchPanel(mapWidget,
-				false, layerId);
-		attributeSearchPanel.setWidth100();
-		attributeSearchPanel.setCanAddToFavourites(false);
-		attributeSearchPanel.setCanCancel(true);
-		PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch" + layerId,
-				"Search on attributes", attributeSearchPanel, searchPanels, Card.ATTRIBUTE);
-		attributeSearch.setWidth100();
-		//PanelSearchWidget favouriteSearch = new CardPanelSearchWidget("FavouritesSearch", "Select favourite",
-		//		new SearchFavouritesListPanel(mapWidget), searchPanels, CARD_FAVOURITE);
-		searchPanels.addCard(Card.EMPTY, new VLayout()); // add empty card option
-		searchPanels.showCard(Card.EMPTY);
-		searchPanels.setHeight(1); // minimum height
-		searchPanels.setOverflow(Overflow.VISIBLE); // but scale
-		List<SearchWidget> searchWidgetList = new ArrayList<SearchWidget>();
-		searchWidgetList.add(attributeSearch);
-		searchWidgetList.add(geometricSearch);
-		//searchWidgetList.add(favouriteSearch);
+	public void refreshSearch() {
+		referralSearchTab.refreshSearch();
+	}
+	
+	private ValueSearchPanel createSearchTabContent(final MapLayout mapLayout, String layerId) {
+		return new ValueSearchPanel(mapLayout, layerId);
+	}
 
-		VLayout valueSearch = new VLayout();
-		CombinedSearchPanel combinedSearchPanel = new CombinedSearchPanel(mapWidget);
-		combinedSearchPanel.initializeList(searchWidgetList);
-		combinedSearchPanel.setCanAddToFavourites(false);
-		combinedSearchPanel.setAlwaysShowElements(false);
-		combinedSearchPanel.setHideButtonsWhenAdding(true);
-		combinedSearchPanel.setCanCancel(false);
-		combinedSearchPanel.setWidth100();
-		PanelSearchWidget combinedSearch = new PanelSearchWidget("PanelSearchWidget" + layerId, "search widget",
-				combinedSearchPanel);
-		SearchController searchController = new SearchController(mapWidget, false);
-		searchController.addSearchHandler(valueResultList);
-		combinedSearch.addSearchRequestHandler(searchController);
-		combinedSearch.setWidth100();
-		valueSearch.addMember(combinedSearch);
-		HTMLFlow divider = new HTMLFlow("<hr />");
-		divider.setWidth100();
-		divider.setHeight(5);
-		valueSearch.addMember(divider);
-		valueSearch.addMember(searchPanels);
-
-		valueSearch.addMember(valueResultList);
-		return valueSearch;
+	public List<String> getSelectedReferrals() {
+		List<String> fullIds = new ArrayList<String>();
+		if(referralSearchTab.getSelection(KtunaxaConstant.LAYER_REFERRAL_ID) != null) {
+			for (ListGridRecord record : referralSearchTab.getSelection(KtunaxaConstant.LAYER_REFERRAL_ID)) {
+				fullIds.add(record.getAttribute(KtunaxaConstant.ATTRIBUTE_FULL_ID));
+			}
+		}
+		return fullIds;
 	}
 
 	public String getName() {
 		return NAME;
 	}
 
+	private static class ValueSearchPanel extends VLayout {
+
+		private MultiFeatureListGrid valueResultList;
+		private PanelSearchWidget combinedSearch;
+
+		public ValueSearchPanel(final MapLayout mapLayout, String layerId) {
+			final MapWidget mapWidget = mapLayout.getMap();
+			valueResultList = new MultiFeatureListGrid(mapWidget);
+			valueResultList.setWidth100();
+			valueResultList.setHeight100();
+			valueResultList.setClearTabsetOnSearch(true);
+			ToolStripButton makeCurrentButton = new ToolStripButton("Make current");
+			makeCurrentButton.setIcon(WidgetLayout.iconSaveAlt);
+			makeCurrentButton.setTooltip("Set as current referral");
+			makeCurrentButton.setShowDisabledIcon(false);
+			makeCurrentButton.addClickHandler(new ClickHandler() {
+
+				public void onClick(ClickEvent event) {
+					ListGridRecord[] records = valueResultList.getSelection(KtunaxaConstant.LAYER_REFERRAL_ID);
+					if (null != records && records.length > 0) {
+						String featureId = records[0].getAttribute(FeatureListGrid.FIELD_NAME_FEATURE_ID);
+						mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID).getFeatureStore()
+								.getFeature(featureId, GeomajasConstant.FEATURE_INCLUDE_ALL, new LazyLoadCallback() {
+
+									public void execute(List<org.geomajas.gwt.client.map.feature.Feature> response) {
+										if (response.size() > 0) {
+											mapLayout.setReferralAndTask(response.get(0).toDto(), null);
+										}
+									}
+								});
+					}
+				}
+			});
+			valueResultList.addButton(KtunaxaConstant.LAYER_REFERRAL_ID, makeCurrentButton, 1);
+			CardLayout<Card> searchPanels = new CardLayout<Card>();
+			GeometricSearchPanel geometricSearchPanel = new GeometricSearchPanel(mapWidget);
+			final SelectionSearch selectionSearch = new SelectionSearch();
+			final IButton currentReferralGeometry = new IButton("Use current referral");
+			currentReferralGeometry.setIcon(WidgetLayout.iconOpenAlt);
+			currentReferralGeometry.setShowDisabledIcon(false);
+			currentReferralGeometry.setAutoFit(true);
+			currentReferralGeometry.addClickHandler(new ClickHandler() {
+
+				public void onClick(ClickEvent event) {
+					List<Geometry> geometries = new ArrayList<Geometry>();
+					Feature referral = mapLayout.getCurrentReferral();
+					if (null != referral) {
+						geometries.add(GeometryConverter.toGwt(referral.getGeometry()));
+					}
+					selectionSearch.setGeometry(geometries);
+				}
+			});
+			currentReferralGeometry.setDisabled(true); // no current referral yet
+			CurrentReferralChangedHandler currentReferralChangedHandler = new CurrentReferralChangedHandler() {
+
+				public void onCurrentReferralChanged(CurrentReferralChangedEvent event) {
+					currentReferralGeometry.setDisabled(null == event.getReferral());
+				}
+			};
+			mapLayout.addCurrentReferralChangedHandler(currentReferralChangedHandler);
+			selectionSearch.addSelectButton(currentReferralGeometry);
+			geometricSearchPanel.addSearchMethod(selectionSearch);
+			geometricSearchPanel.addSearchMethod(new FreeDrawingSearch());
+			geometricSearchPanel.setWidth100();
+			geometricSearchPanel.setCanAddToFavourites(false);
+			geometricSearchPanel.setFeatureSearchVectorLayer(layerId);
+			geometricSearchPanel.setCanCancel(true);
+			PanelSearchWidget geometricSearch = new CardPanelSearchWidget("GeometricSearch" + layerId,
+					"Search on geometry", geometricSearchPanel, searchPanels, Card.GEOMETRIC);
+			geometricSearch.setWidth100();
+			AttributeSearchPanel attributeSearchPanel = new AttributeSearchPanel(mapWidget, false, layerId);
+			attributeSearchPanel.setWidth100();
+			attributeSearchPanel.setCanAddToFavourites(false);
+			attributeSearchPanel.setCanCancel(true);
+			PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch" + layerId,
+					"Search on attributes", attributeSearchPanel, searchPanels, Card.ATTRIBUTE);
+			attributeSearch.setWidth100();
+			// PanelSearchWidget favouriteSearch = new CardPanelSearchWidget("FavouritesSearch", "Select favourite",
+			// new SearchFavouritesListPanel(mapWidget), searchPanels, CARD_FAVOURITE);
+			searchPanels.addCard(Card.EMPTY, new VLayout()); // add empty card option
+			searchPanels.showCard(Card.EMPTY);
+			searchPanels.setHeight(1); // minimum height
+			searchPanels.setOverflow(Overflow.VISIBLE); // but scale
+			List<SearchWidget> searchWidgetList = new ArrayList<SearchWidget>();
+			searchWidgetList.add(attributeSearch);
+			searchWidgetList.add(geometricSearch);
+			// searchWidgetList.add(favouriteSearch);
+			CombinedSearchPanel combinedSearchPanel = new CombinedSearchPanel(mapWidget);
+			combinedSearchPanel.initializeList(searchWidgetList);
+			combinedSearchPanel.setCanAddToFavourites(false);
+			combinedSearchPanel.setAlwaysShowElements(false);
+			combinedSearchPanel.setHideButtonsWhenAdding(true);
+			combinedSearchPanel.setCanCancel(false);
+			combinedSearchPanel.setWidth100();
+			combinedSearch = new PanelSearchWidget("PanelSearchWidget" + layerId, "search widget",
+					combinedSearchPanel);
+			SearchController searchController = new SearchController(mapWidget, false);
+			searchController.addSearchHandler(valueResultList);
+			combinedSearch.addSearchRequestHandler(searchController);
+			combinedSearch.setWidth100();
+			addMember(combinedSearch);
+			HTMLFlow divider = new HTMLFlow("<hr />");
+			divider.setWidth100();
+			divider.setHeight(5);
+			addMember(divider);
+			addMember(searchPanels);
+			addMember(valueResultList);
+		}
+
+		public void refreshSearch() {
+			combinedSearch.startSearch();
+		}
+
+		public ListGridRecord[] getSelection(String layerId) {
+			return valueResultList.getSelection(layerId);
+		}
+
+	}
+
 	/**
 	 * Specific {@link PanelSearchWidget} to put as card inside {@link CardLayout}.
-	 *
+	 * 
 	 * @author Joachim Van der Auwera
 	 */
 	private static class CardPanelSearchWidget extends PanelSearchWidget {
+
 		private CardLayout<Card> cardLayout;
+
 		private Card cardKey;
 
 		public CardPanelSearchWidget(String id, String name, AbstractSearchPanel searchPanel,
@@ -245,4 +284,5 @@ public class SearchPanel extends VLayout {
 			super.show();
 		}
 	}
+
 }
