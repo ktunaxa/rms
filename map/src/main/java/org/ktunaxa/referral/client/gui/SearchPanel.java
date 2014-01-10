@@ -19,13 +19,8 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.IButton;
-import com.smartgwt.client.widgets.events.ClickEvent;
-import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
-import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
@@ -34,11 +29,6 @@ import org.geomajas.gwt.client.util.GeometryConverter;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.FeatureListGrid;
 import org.geomajas.gwt.client.widget.MapWidget;
-
-import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.tab.Tab;
-import com.smartgwt.client.widgets.tab.TabSet;
-
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.widget.searchandfilter.client.widget.attributesearch.AttributeSearchPanel;
 import org.geomajas.widget.searchandfilter.client.widget.geometricsearch.FreeDrawingSearch;
@@ -55,8 +45,16 @@ import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tab.Tab;
+import com.smartgwt.client.widgets.tab.TabSet;
+import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 
 /**
  * Panel that displays search tools: search for referral and geographical search / spatial operations.
@@ -106,14 +104,14 @@ public class SearchPanel extends VLayout {
 	public void refreshSearch() {
 		referralSearchTab.refreshSearch();
 	}
-	
+
 	private ValueSearchPanel createSearchTabContent(final MapLayout mapLayout, String layerId) {
 		return new ValueSearchPanel(mapLayout, layerId);
 	}
 
 	public List<String> getSelectedReferrals() {
 		List<String> fullIds = new ArrayList<String>();
-		if(referralSearchTab.getSelection(KtunaxaConstant.LAYER_REFERRAL_ID) != null) {
+		if (referralSearchTab.getSelection(KtunaxaConstant.LAYER_REFERRAL_ID) != null) {
 			for (ListGridRecord record : referralSearchTab.getSelection(KtunaxaConstant.LAYER_REFERRAL_ID)) {
 				fullIds.add(record.getAttribute(KtunaxaConstant.ATTRIBUTE_FULL_ID));
 			}
@@ -125,9 +123,16 @@ public class SearchPanel extends VLayout {
 		return NAME;
 	}
 
+	/**
+	 * Refreshable search panel.
+	 * 
+	 * @author Jan De Moerloose
+	 * 
+	 */
 	private static class ValueSearchPanel extends VLayout {
 
 		private MultiFeatureListGrid valueResultList;
+
 		private PanelSearchWidget combinedSearch;
 
 		public ValueSearchPanel(final MapLayout mapLayout, String layerId) {
@@ -219,8 +224,7 @@ public class SearchPanel extends VLayout {
 			combinedSearchPanel.setHideButtonsWhenAdding(true);
 			combinedSearchPanel.setCanCancel(false);
 			combinedSearchPanel.setWidth100();
-			combinedSearch = new PanelSearchWidget("PanelSearchWidget" + layerId, "search widget",
-					combinedSearchPanel);
+			combinedSearch = new PanelSearchWidget("PanelSearchWidget" + layerId, "search widget", combinedSearchPanel);
 			SearchController searchController = new SearchController(mapWidget, false);
 			searchController.addSearchHandler(valueResultList);
 			combinedSearch.addSearchRequestHandler(searchController);

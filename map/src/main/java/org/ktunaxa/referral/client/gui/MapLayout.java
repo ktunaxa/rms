@@ -19,8 +19,6 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.geomajas.configuration.FeatureStyleInfo;
@@ -62,7 +60,6 @@ import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
@@ -289,7 +286,8 @@ public final class MapLayout extends VLayout {
 			// highlight the feature
 			SymbolInfo symbolInfo = null;
 			if (feature.getStyleId() != null) {
-				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().getNamedStyleInfo().getFeatureStyles()) {
+				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().getNamedStyleInfo()
+						.getFeatureStyles()) {
 					if (feature.getStyleId().equals(style.getStyleId())) {
 						symbolInfo = style.getSymbol();
 						break;
