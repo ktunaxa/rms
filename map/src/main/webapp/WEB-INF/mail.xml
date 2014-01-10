@@ -28,6 +28,7 @@
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="${rms.mail.host}"/>
+		<property name="port" value="${rms.mail.port}"/>
 	</bean>
 
 </beans>
