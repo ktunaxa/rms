@@ -25,6 +25,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import org.ktunaxa.referral.client.gui.LayoutConstant;
+
 import com.smartgwt.client.types.KeyNames;
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.VerticalAlignment;
@@ -44,7 +46,6 @@ import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
-import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * Definition of a view that lists a group of objects of type T in the form of collapsible blocks. This view has
@@ -52,8 +53,7 @@ import org.ktunaxa.referral.client.gui.LayoutConstant;
  * 
  * @author Pieter De Graef
  * 
- * @param <T>
- *            The main object of interest. These are usually objects of the domain model of the application.
+ * @param <T> The main object of interest. These are usually objects of the domain model of the application.
  */
 public class ListView<T extends Serializable> extends VLayout {
 
@@ -69,8 +69,6 @@ public class ListView<T extends Serializable> extends VLayout {
 
 	private String sortedBy;
 
-	private boolean sortedInverse;
-
 	private List<AbstractCollapsibleListBlock<T>> blocks;
 
 	// ------------------------------------------------------------------------
@@ -81,9 +79,8 @@ public class ListView<T extends Serializable> extends VLayout {
 	 * Create a new list view instance with the given sort parameters. The ListView will have a create button and search
 	 * option.
 	 * 
-	 * @param sortAttributes
-	 *            A mapping of sort attribute names (used in the GUI) with respective comparators. These comparators
-	 *            should be able to sort the actual collapsible blocks.
+	 * @param sortAttributes A mapping of sort attribute names (used in the GUI) with respective comparators. These
+	 *        comparators should be able to sort the actual collapsible blocks.
 	 */
 	public ListView(Map<String, Comparator<AbstractCollapsibleListBlock<T>>> sortAttributes) {
 		this(true, true, sortAttributes);
@@ -92,12 +89,11 @@ public class ListView<T extends Serializable> extends VLayout {
 	/**
 	 * Create a new list view instance with the given sort parameters. The ListView will have a create button and search
 	 * option.
-	 *
+	 * 
 	 * @param canCreate true when creating new items is allowed
 	 * @param canSearch true when searching is allowed
-	 * @param sortAttributes
-	 *            A mapping of sort attribute names (used in the GUI) with respective comparators. These comparators
-	 *            should be able to sort the actual collapsible blocks.
+	 * @param sortAttributes A mapping of sort attribute names (used in the GUI) with respective comparators. These
+	 *        comparators should be able to sort the actual collapsible blocks.
 	 */
 	public ListView(boolean canCreate, boolean canSearch,
 			Map<String, Comparator<AbstractCollapsibleListBlock<T>>> sortAttributes) {
@@ -116,11 +112,10 @@ public class ListView<T extends Serializable> extends VLayout {
 	/**
 	 * Populate the list with a given list of collapsible blocks.
 	 * 
-	 * @param blocks
-	 *            The actual list.
+	 * @param blocks The actual list.
 	 */
 	public void populate(List<AbstractCollapsibleListBlock<T>> blocks) {
-		removeBlocksFromLayout();
+		blockLayout.clear();
 		this.blocks = blocks;
 		for (AbstractCollapsibleListBlock<?> block : blocks) {
 			blockLayout.addMember(block);
@@ -150,8 +145,7 @@ public class ListView<T extends Serializable> extends VLayout {
 	 * Search for a certain filter within the entire list. Leave only those blocks visible that actually contain the
 	 * text.
 	 * 
-	 * @param filter
-	 *            The actual filtering text to search for. If 'null', all blocks will be made visible.
+	 * @param filter The actual filtering text to search for. If 'null', all blocks will be made visible.
 	 */
 	public void search(String filter) {
 		for (Canvas member : blockLayout.getMembers()) {
@@ -173,28 +167,21 @@ public class ListView<T extends Serializable> extends VLayout {
 	/**
 	 * Sort the list by a certain attribute. If the list was already sorted by that attribute, then use inverse sorting.
 	 * 
-	 * @param attribute
-	 *            The attribute to sort for. Must be part of the sort parameter mapping that was given to the
-	 *            constructor.
+	 * @param attribute The attribute to sort for. Must be part of the sort parameter mapping that was given to the
+	 *        constructor.
 	 */
 	public void sort(String attribute) {
 		if (sortAttributes != null && attribute != null) {
 			Comparator<AbstractCollapsibleListBlock<T>> comparator = sortAttributes.get(attribute);
 			if (comparator != null) {
-				removeBlocksFromLayout();
-
 				// See if we need to inverse the sort:
-				if (attribute.equals(sortedBy) && !sortedInverse) {
-					sortedInverse = true;
-					comparator = new InverseComparator(sortAttributes.get(attribute));
+				if (attribute.equals(sortedBy)) {
+					Collections.reverse(blocks);
 				} else {
-					sortedInverse = false;
+					Collections.sort(blocks, comparator);
 				}
-
-				// Execute the sort:
-				Collections.sort(blocks, comparator);
-				for (AbstractCollapsibleListBlock<?> block : blocks) {
-					blockLayout.addMember(block);
+				for (int i = 0; i < blocks.size(); i++) {
+					blockLayout.reorderMember(blockLayout.getMemberNumber(blocks.get(i)), i);
 				}
 				sortedBy = attribute;
 			}
@@ -213,13 +200,6 @@ public class ListView<T extends Serializable> extends VLayout {
 	// ------------------------------------------------------------------------
 	// Private methods concerning GUI:
 	// ------------------------------------------------------------------------
-
-	private void removeBlocksFromLayout() {
-		// Empty the blockLayout:
-		for (int i = blockLayout.getMembers().length - 1; i >= 0; i--) {
-			blockLayout.removeMember(blockLayout.getMembers()[i]);
-		}
-	}
 
 	private void buildGui() {
 		ToolStrip toolStrip = new ToolStrip();
@@ -331,25 +311,4 @@ public class ListView<T extends Serializable> extends VLayout {
 		return searchForm;
 	}
 
-	// ------------------------------------------------------------------------
-	// Private classes:
-	// ------------------------------------------------------------------------
-
-	/**
-	 * Comparator implementation that inverses the result of another comparator.
-	 * 
-	 * @author Pieter De Graef
-	 */
-	private class InverseComparator implements Comparator<AbstractCollapsibleListBlock<T>> {
-
-		private Comparator<AbstractCollapsibleListBlock<T>> original;
-
-		public InverseComparator(Comparator<AbstractCollapsibleListBlock<T>> original) {
-			this.original = original;
-		}
-
-		public int compare(AbstractCollapsibleListBlock<T> o1, AbstractCollapsibleListBlock<T> o2) {
-			return -original.compare(o1, o2);
-		}
-	}
 }
