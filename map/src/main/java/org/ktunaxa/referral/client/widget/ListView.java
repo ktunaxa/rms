@@ -115,11 +115,8 @@ public class ListView<T extends Serializable> extends VLayout {
 	 * @param blocks The actual list.
 	 */
 	public void populate(List<AbstractCollapsibleListBlock<T>> blocks) {
-		blockLayout.clear();
 		this.blocks = blocks;
-		for (AbstractCollapsibleListBlock<?> block : blocks) {
-			blockLayout.addMember(block);
-		}
+		blockLayout.setMembers(blocks.toArray(new Canvas[blocks.size()]));
 	}
 
 	/** Expend all blocks within the list. */
@@ -180,9 +177,7 @@ public class ListView<T extends Serializable> extends VLayout {
 				} else {
 					Collections.sort(blocks, comparator);
 				}
-				for (int i = 0; i < blocks.size(); i++) {
-					blockLayout.reorderMember(blockLayout.getMemberNumber(blocks.get(i)), i);
-				}
+				blockLayout.setMembers(blocks.toArray(new Canvas[blocks.size()]));
 				sortedBy = attribute;
 			}
 		}
