@@ -57,7 +57,7 @@ import org.springframework.util.StringUtils;
 @Component
 public class CmisServiceImpl implements CmisService {
 
-	private final Logger log = LoggerFactory.getLogger(CmisConfig.class);
+	private final Logger log = LoggerFactory.getLogger(CmisServiceImpl.class);
 
 	@Autowired
 	private CmisConfig config;

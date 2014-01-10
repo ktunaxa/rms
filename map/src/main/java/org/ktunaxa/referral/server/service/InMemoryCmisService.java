@@ -47,7 +47,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class InMemoryCmisService extends CmisServiceImpl {
 
-	private final Logger log = LoggerFactory.getLogger(CmisConfig.class);
+	private final Logger log = LoggerFactory.getLogger(InMemoryCmisService.class);
 
 	@Autowired
 	private CmisConfig config;
