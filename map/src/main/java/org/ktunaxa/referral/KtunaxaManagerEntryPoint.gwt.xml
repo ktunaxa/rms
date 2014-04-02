@@ -18,17 +18,22 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<module rename-to="Ktunaxa">
+<module rename-to="KtunaxaManager">
     <inherits name="org.geomajas.gwt.GeomajasClient"/>
 	<inherits name="org.geomajas.widget.searchandfilter.SearchAndFilter" />
 	<inherits name="org.geomajas.widget.utility.gwt.GwtUtilityWidgets" />
-	<inherits name="org.geomajas.widget.layer.Layer" />
 	<inherits name="org.geomajas.plugin.geocoder.Geocoder" />
 	<inherits name="org.geomajas.plugin.printing.Printing" />
 	<inherits name="org.geomajas.plugin.staticsecurity.StaticSecurity" />
 	<inherits name="org.geomajas.plugin.reporting.GeomajasReporting" />
 	<inherits name="org.geomajas.layer.google.gwt.GeomajasGoogle"/>
+	<inherits name="org.geomajas.widget.layer.Layer" />
+	<inherits name="org.geomajas.widget.layer.editor.LayerEditor" />
 	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+	
+	<inherits name="org.geomajas.plugin.deskmanager.Geodesk"/>
+    <inherits name="org.geomajas.plugin.deskmanager.Manager"/>
+	
 
 	<inherits name="com.smartclient.theme.simplicity.Simplicity" />
     <inherits name="org.ktunaxa.referral.theme.ActivitiBlue" /> 
@@ -56,7 +61,8 @@
 
 	<!-- set target browser to compile for, use this to limit to the browser used for testing -->
 	<!-- where value = "ie6/opera/gecko1_8/safari/gecko" , "gecko1_8" is FireFox 3 -->
+	<!-- set-property name="user.agent" value="gecko1_8" /> -->
 	<set-property name="user.agent" value="gecko1_8" />
 
-    <entry-point class="org.ktunaxa.referral.client.KtunaxaEntryPoint"/>
+    <entry-point class="org.ktunaxa.referral.client.deskmanager.KtunaxaManagerEntryPoint"/>
 </module>

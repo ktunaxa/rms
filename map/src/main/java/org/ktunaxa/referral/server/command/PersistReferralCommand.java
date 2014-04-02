@@ -32,8 +32,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class PersistReferralCommand extends PersistTransactionCommand {
 
-	public static final String COMMAND = "command.PersistReferral";
-
 	@Override
 	public void execute(PersistTransactionRequest request, PersistTransactionResponse response) throws Exception {
 		super.execute(request, response);
