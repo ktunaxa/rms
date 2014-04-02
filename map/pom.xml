@@ -24,7 +24,6 @@
 		<artifactId>ktunaxa-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<groupId>org.ktunaxa.referral</groupId>
 	<artifactId>ktunaxa-map</artifactId>
 	<packaging>war</packaging>
 	<name>Mapping dashboard</name>
@@ -165,12 +164,27 @@
 			<groupId>org.geomajas</groupId>
 			<artifactId>geomajas-testdata</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-plugin-deskmanager-gwt</artifactId>
+		</dependency>
 
+		<dependency>
+		  <groupId>org.geomajas.widget</groupId>
+		  <artifactId>geomajas-widget-layer-gwt</artifactId>
+		</dependency>
+
+		<dependency>
+		  <groupId>org.geomajas.widget</groupId>
+		  <artifactId>geomajas-widget-layer-editor</artifactId>
+		</dependency>
 		<!-- Hibernate layer can be removed if not needed, but the "Road" class needs the Hibernate stuff -->
 		<dependency>
 			<groupId>org.geomajas.plugin</groupId>
 			<artifactId>geomajas-layer-hibernate</artifactId>
 		</dependency>
+		
 		<!-- uncomment if you want to use Hibernate with postgis, for another db you will need similar dependencies -->
 		<dependency>
 			<groupId>org.hibernatespatial</groupId>

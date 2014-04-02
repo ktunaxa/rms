@@ -24,7 +24,7 @@
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
-	<bean name="mapMain" class="org.geomajas.configuration.client.ClientMapInfo">
+	<bean name="mainMap" class="org.geomajas.configuration.client.ClientMapInfo">
 		<property name="backgroundColor" value="#FFFFFF" />
 		<property name="lineSelectStyle">
 			<bean class="org.geomajas.configuration.FeatureStyleInfo">
@@ -209,6 +209,34 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 				</property>
 			</bean>
 		</property>
+				<property name="widgetInfo">
+			<map>
+				<entry>
+					<key>
+						<util:constant
+							static-field="org.geomajas.widget.layer.configuration.client.ClientLayerTreeInfo.IDENTIFIER" />
+					</key>
+
+					<bean
+						class="org.geomajas.widget.layer.configuration.client.ClientLayerTreeInfo">
+						<property name="treeNode">
+							<bean
+								class="org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo">
+								<property name="label" value="Datalayers" />
+								<property name="expanded" value="true" />
+								<property name="treeNodes">
+									<list>
+									</list>
+								</property>
+							</bean>
+						</property>
+					</bean>
+				</entry>
+
+			</map>
+
+		</property>
+		
 	</bean>
 
 	<bean id="clientLayerReferral" class="org.geomajas.configuration.client.ClientVectorLayerInfo">

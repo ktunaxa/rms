@@ -61,7 +61,7 @@ public interface KtunaxaConstant {
 	int MAP_SRID = 900913;
 
 	String APPLICATION = "app";
-	String MAP_MAIN = "mapMain";
+	String MAP_MAIN = "mainMap";
 	String MAP_CREATE_REFERRAL = "mapCreateReferral";
 
 	String CREATE_REFERRAL_URL_PARAMETER = "createReferral";
