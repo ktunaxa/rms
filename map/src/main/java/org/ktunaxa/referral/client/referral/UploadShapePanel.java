@@ -61,6 +61,8 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 
 	private Geometry geometry;
 
+	private FileUploadForm uploadForm;
+
 	/**
 	 * Construct panel to upload shape file.
 	 */
@@ -77,18 +79,11 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 
 		addMember(explanation);
 		addMember(spacer);
-	}
-
-	/** {@inheritDoc} */
-	public void setFeature(Feature referral) {
-		this.feature = referral;
-		this.geometry = null;
-
 		// finish layout, add shape upload form
 
-		final FileUploadForm form = new FileUploadForm("Select a file (.zip)", GWT.getModuleBaseURL()
-				+ "../d/upload/referral/geometry/", ReferralUtil.createId(feature));
-		form.setHeight(40);
+	    uploadForm = new FileUploadForm("Select a file (.zip)", GWT.getModuleBaseURL()
+				+ "../d/upload/referral/geometry/", null);
+		uploadForm.setHeight(40);
 
 		HLayout btnLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
 		busyImg = new Img(LayoutConstant.LOADING_IMAGE,
@@ -99,7 +94,7 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 		uploadButton.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
-				form.submit();
+				uploadForm.submit();
 				busyImg.setVisible(true);
 			}
 		});
@@ -111,7 +106,7 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 		errorFlow.setVisible(false);
 		btnLayout.addMember(errorFlow);
 
-		form.addFileUploadDoneHandler(new FileUploadDoneHandler() {
+		uploadForm.addFileUploadDoneHandler(new FileUploadDoneHandler() {
 
 			public void onFileUploadComplete(FileUploadCompleteEvent event) {
 				busyImg.setVisible(false);
@@ -137,8 +132,15 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 			}
 		});
 
-		addMember(form);
+		addMember(uploadForm);
 		addMember(btnLayout);
+	}
+
+	/** {@inheritDoc} */
+	public void setFeature(Feature referral) {
+		this.feature = referral;
+		this.geometry = null;
+		uploadForm.setReferralId(ReferralUtil.createId(feature));
 	}
 
 	/** {@inheritDoc} */
