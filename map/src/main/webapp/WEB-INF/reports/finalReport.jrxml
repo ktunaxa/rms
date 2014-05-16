@@ -236,7 +236,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<textElement>
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{externalAgencyName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{applicantName}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="62" y="101" width="510" height="15"/>
