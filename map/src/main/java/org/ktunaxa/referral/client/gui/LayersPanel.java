@@ -22,7 +22,6 @@ package org.ktunaxa.referral.client.gui;
 import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
 import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.layer.Layer;
-import org.geomajas.gwt.client.widget.Legend;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.layer.google.gwt.client.GoogleAddon;
 import org.geomajas.widget.layer.client.widget.CombinedLayertree;

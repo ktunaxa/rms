@@ -20,15 +20,8 @@
 package org.ktunaxa.referral.server.security;
 
 import org.geomajas.internal.security.DefaultSecurityContext;
-import org.geomajas.plugin.deskmanager.domain.BaseGeodesk;
-import org.geomajas.plugin.deskmanager.domain.Geodesk;
-import org.geomajas.plugin.deskmanager.domain.LayerModel;
-import org.geomajas.plugin.deskmanager.domain.security.Territory;
-import org.geomajas.plugin.deskmanager.domain.security.dto.Role;
-import org.geomajas.plugin.deskmanager.security.DeskmanagerSecurityContext;
 import org.geomajas.security.Authentication;
 import org.geomajas.security.BaseAuthorization;
-import org.hibernate.criterion.Criterion;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 
@@ -41,7 +34,7 @@ import java.util.Set;
  * @author Joachim Van der Auwera
  */
 @Scope(value = "thread", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class AppSecurityContext extends DefaultSecurityContext implements AppAuthorization, DeskmanagerSecurityContext {
+public class AppSecurityContext extends DefaultSecurityContext implements AppAuthorization {
 
 	// new authorization
 
@@ -73,94 +66,5 @@ public class AppSecurityContext extends DefaultSecurityContext implements AppAut
 		}
 		return false;
 	}
-
-	@Override
-	public boolean isGeodeskUseAllowed(String publicGeodeskId) {
-		return true;
-	}
-
-	@Override
-	public boolean saveAllowed(LayerModel layerModel) {
-		return true;
-	}
-
-	@Override
-	public boolean deleteAllowed(LayerModel layerModel) {
-		return false;
-	}
-
-	@Override
-	public boolean readAllowed(LayerModel lm) {
-		return true;
-	}
-
-	@Override
-	public Criterion getFilterLayerModels() {
-		return null;
-	}
-
-	@Override
-	public boolean readAllowed(BaseGeodesk blueprint) {
-		return true;
-	}
-
-	@Override
-	public boolean saveAllowed(BaseGeodesk blueprint) {
-		return true;
-	}
-
-	@Override
-	public boolean deleteAllowed(BaseGeodesk blueprint) {
-		return true;
-	}
-
-	@Override
-	public Criterion getFilterBlueprints() {
-		return null;
-	}
-
-	@Override
-	public boolean readAllowed(Geodesk geodesk) {
-		return true;
-	}
-
-	@Override
-	public boolean saveAllowed(Geodesk geodesk) {
-		return true;
-	}
-
-	@Override
-	public boolean deleteAllowed(Geodesk geodesk) {
-		return true;
-	}
-
-	@Override
-	public Criterion getFilterGeodesks() {
-		return null;
-	}
-
-	@Override
-	public boolean isShapeFileUploadAllowed(String clientLayerId) {
-		return true;
-	}
-
-	@Override
-	public Territory getTerritory() {
-		Territory t = new Territory();
-		t.setId(0);
-		return t;
-	}
-
-	@Override
-	public Role getRole() {
-		return Role.ADMINISTRATOR;
-	}
-
-	@Override
-	public String getFullName() {
-		return "admin";
-	}
-	
-	
 
 }

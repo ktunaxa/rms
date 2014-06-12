@@ -30,21 +30,7 @@
 		<param-value>
 			classpath:org/geomajas/spring/geomajasContext.xml
 			classpath:org/geomajas/plugin/rasterizing/DefaultCachedAndRasterizedPipelines.xml
-			classpath:spring/applicationContext.xml
-			classpath:org/geomajas/plugin/deskmanager/spring/**/*.xml
-			classpath:spring/deskmanager.xml
-			classpath:spring/spring-hibernate.xml
-			classpath:spring/bpm.xml
-			classpath:spring/commands.xml
-			classpath:spring/dispatcher.xml
-			classpath:spring/crs.xml
-			classpath:spring/cmis.xml
-			classpath:spring/security.xml
-			classpath:spring/tools.xml
-			classpath:spring/map*.xml
-			classpath:spring/layer*.xml
-			classpath:spring/geocoder.xml
-			classpath:spring/mail.xml
+			classpath:spring/*.xml
 			classpath*:developer-context.xml
 		</param-value>
 	</context-param>
@@ -86,7 +72,7 @@
 			<description>Spring Web-MVC specific (additional) context files.</description>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-				classpath*:META-INF/geomajasWebContext.xml
+				classpath:org/geomajas/spring/geomajasWebContext.xml
 				WEB-INF/webContext.xml
 				classpath*:developer-webContext.xml.xml
 			</param-value>

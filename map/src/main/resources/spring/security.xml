@@ -28,7 +28,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 			<list>
 				<bean class="org.geomajas.plugin.staticsecurity.security.StaticSecurityService"/>
 				<bean class="org.geomajas.plugin.staticsecurity.security.LoginAllowedSecurityService"/>
-				<ref bean="DeskmanagerSecurityService" />
 			</list>
 		</property>
 	</bean>

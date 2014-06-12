@@ -1,25 +1,16 @@
-<!--
-  ~ Ktunaxa Referral Management System.
-  ~
-  ~ Copyright (C) see version control system
-  ~
-  ~ This program is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU Affero General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ This program is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU Affero General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU Affero General Public License
-  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
+<!-- ~ Ktunaxa Referral Management System. ~ ~ Copyright (C) see version 
+	control system ~ ~ This program is free software: you can redistribute it 
+	and/or modify ~ it under the terms of the GNU Affero General Public License 
+	as published by ~ the Free Software Foundation, either version 3 of the License, 
+	or ~ (at your option) any later version. ~ ~ This program is distributed 
+	in the hope that it will be useful, ~ but WITHOUT ANY WARRANTY; without even 
+	the implied warranty of ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+	See the ~ GNU Affero General Public License for more details. ~ ~ You should 
+	have received a copy of the GNU Affero General Public License ~ along with 
+	this program. If not, see <http://www.gnu.org/licenses/>. -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
@@ -36,10 +27,10 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="pointSelectStyle">
 			<bean class="org.geomajas.configuration.FeatureStyleInfo">
 				<property name="fillColor" value="#FFFF00" />
-				<property name="fillOpacity" value="0.5"/>
-				<property name="strokeColor" value="#990000"/>
-				<property name="strokeOpacity" value=".8"/>
-				<property name="strokeWidth" value="2"/>
+				<property name="fillOpacity" value="0.5" />
+				<property name="strokeColor" value="#990000" />
+				<property name="strokeOpacity" value=".8" />
+				<property name="strokeWidth" value="2" />
 				<property name="symbol">
 					<bean class="org.geomajas.configuration.SymbolInfo">
 						<property name="rect">
@@ -59,7 +50,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 			</bean>
 		</property>
 		<property name="crs">
-			<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.MAP_CRS"/>
+			<util:constant
+				static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.MAP_CRS" />
 		</property>
 		<property name="scaleBarEnabled" value="true" />
 		<property name="panButtonsEnabled" value="true" />
@@ -96,29 +88,34 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="initialBounds">
 			<bean class="org.geomajas.geometry.Bbox">
 				<property name="x">
-					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MIN_X"/>
+					<util:constant
+						static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MIN_X" />
 				</property>
 				<property name="y">
-					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MIN_Y"/>
+					<util:constant
+						static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MIN_Y" />
 				</property>
 				<property name="maxX">
-					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MAX_X"/>
+					<util:constant
+						static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MAX_X" />
 				</property>
 				<property name="maxY">
-					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MAX_Y"/>
+					<util:constant
+						static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_MERCATOR_MAX_Y" />
 				</property>
 			</bean>
 		</property>
 		<property name="maxBounds">
 			<bean class="org.geomajas.geometry.Bbox">
-				<property name="x" value="-20026376.393709917"/>
-				<property name="y" value="-20026376.393709917"/>
-				<property name="width" value="40052752.787419834"/>
-				<property name="height" value="40052752.787419834"/>
+				<property name="x" value="-20026376.393709917" />
+				<property name="y" value="-20026376.393709917" />
+				<property name="width" value="40052752.787419834" />
+				<property name="height" value="40052752.787419834" />
 			</bean>
 		</property>
 		<property name="preferredPixelsPerTile">
-			<bean class="org.geomajas.configuration.client.ClientPreferredPixelsPerTile">
+			<bean
+				class="org.geomajas.configuration.client.ClientPreferredPixelsPerTile">
 				<property name="preferredPixelsPerTileType" value="CONFIGURED" />
 				<property name="width" value="512" />
 				<property name="height" value="512" />
@@ -149,12 +146,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 						<ref bean="ToolbarSeparator" />
 						<ref bean="ShowDefaultPrint" />
 						<ref bean="ToolbarSeparator" />
-						<!--
-						<ref bean="ZoomToRectangleMode" />
-						<ref bean="PanMode" />
-						<ref bean="ZoomToSelection" />
-						<ref bean="ToolbarSeparator" />
-						-->
+						<!-- <ref bean="ZoomToRectangleMode" /> <ref bean="PanMode" /> <ref 
+							bean="ZoomToSelection" /> <ref bean="ToolbarSeparator" /> -->
 						<ref bean="ZoomPrevious" />
 						<ref bean="ZoomNext" />
 						<ref bean="ToolbarSeparator" />
@@ -186,7 +179,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 						<property name="label" value="Layers" />
 						<property name="treeNodes">
 							<list>
-								<bean class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
+								<bean
+									class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
 									<property name="label" value="Base layers" />
 									<property name="layers">
 										<list>
@@ -194,7 +188,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 										</list>
 									</property>
 								</bean>
-								<bean class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
+								<bean
+									class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
 									<property name="label" value="Vector Layers" />
 									<property name="layers">
 										<list>
@@ -209,7 +204,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 				</property>
 			</bean>
 		</property>
-				<property name="widgetInfo">
+		<property name="widgetInfo">
 			<map>
 				<entry>
 					<key>
@@ -219,13 +214,97 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 					<bean
 						class="org.geomajas.widget.layer.configuration.client.ClientLayerTreeInfo">
+						<property name="tools">
+							<list>
+								<ref bean="LayerVisibleTool" />
+								<ref bean="LayerLabeledTool" />
+								<ref bean="ShowTableAction" />
+								<ref bean="LayerRefreshAction" />
+							</list>
+						</property>
 						<property name="treeNode">
 							<bean
 								class="org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo">
-								<property name="label" value="Datalayers" />
-								<property name="expanded" value="true" />
+								<property name="label" value="All" />
+								<property name="expanded" value="false" />
 								<property name="treeNodes">
 									<list>
+										<bean
+											class="org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo">
+											<property name="label" value="Background" />
+											<property name="expanded" value="false" />
+											<property name="treeNodes">
+												<list>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerOsm" />
+													</bean>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerGoogleNormal" />
+													</bean>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerGoogleSatellite" />
+													</bean>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerGooglePhysical" />
+													</bean>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerHillShade" />
+													</bean>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerAspect" />
+													</bean>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerSlope" />
+													</bean>
+												</list>
+											</property>
+										</bean>
+										<bean
+											class="org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo">
+											<property name="label" value="Base Layers" />
+											<property name="expanded" value="false" />
+											<property name="treeNodes">
+												<list>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerReferenceBase" />
+													</bean>
+												</list>
+											</property>
+										</bean>
+										<bean
+											class="org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo">
+											<property name="label" value="Ktunaxa Values" />
+											<property name="expanded" value="false" />
+											<property name="treeNodes">
+												<list>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerReferenceValue" />
+													</bean>
+												</list>
+											</property>
+										</bean>
+										<bean
+											class="org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo">
+											<property name="label" value="Referrals" />
+											<property name="expanded" value="false" />
+											<property name="treeNodes">
+												<list>
+													<bean
+														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+														<property name="layerId" value="clientLayerReferral" />
+													</bean>
+												</list>
+											</property>
+										</bean>
 									</list>
 								</property>
 							</bean>
@@ -236,7 +315,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 			</map>
 
 		</property>
-		
+
 	</bean>
 
 	<bean id="clientLayerReferral" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
@@ -296,27 +375,27 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="style" value="1" />
 	</bean>
 
-	<bean  id="clientLayerGoogleNormal" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+	<bean id="clientLayerGoogleNormal" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
 		<property name="serverLayerId" value="layerGoogle" />
 		<property name="label" value="Google Normal" />
 		<property name="visible" value="false" />
 		<property name="style" value="1" />
 	</bean>
-	
-	<bean  id="clientLayerGoogleSatellite" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+
+	<bean id="clientLayerGoogleSatellite" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
 		<property name="serverLayerId" value="layerGoogle" />
 		<property name="label" value="Google Satellite" />
 		<property name="visible" value="false" />
 		<property name="style" value="1" />
 	</bean>
 
-	<bean  id="clientLayerGooglePhysical" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
+	<bean id="clientLayerGooglePhysical" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
 		<property name="serverLayerId" value="layerGoogle" />
 		<property name="label" value="Google Terrain" />
 		<property name="visible" value="false" />
 		<property name="style" value="1" />
 	</bean>
-	
+
 
 	<bean id="clientLayerHillShade" class="org.geomajas.configuration.client.ClientRasterLayerInfo">
 		<property name="serverLayerId" value="layerHillShade" />
