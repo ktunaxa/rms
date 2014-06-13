@@ -287,13 +287,23 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>META-INF/geomajasContext.xml</include>
-				</includes>
+					<include>spring/security.xml</include>
+					<include>spring/cmis.xml</include>
+					<include>spring/bpm.xml</include>
+					<include>spring/mail.xml</include>
+					<include>spring/dispatcher.xml</include>
+				</includes>				
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>false</filtering>
 				<excludes>
 					<exclude>META-INF/geomajasContext.xml</exclude>
+					<exclude>spring/security.xml</exclude>
+					<exclude>spring/cmis.xml</exclude>
+					<exclude>spring/bpm.xml</exclude>
+					<exclude>spring/mail.xml</exclude>
+					<exclude>spring/dispatcher.xml</exclude>
 					<exclude>developer-context.xml</exclude>
 					<exclude>developer-webContext.xml</exclude>
 				</excludes>
@@ -407,16 +417,7 @@
 				<configuration>
 					<webResources>
 						<resource>
-							<filtering>true</filtering>
 							<directory>src/main/webapp</directory>
-							<includes>
-								<include>WEB-INF/security.xml</include>
-								<include>WEB-INF/cmis.xml</include>
-								<include>WEB-INF/bpm.xml</include>
-								<include>WEB-INF/mail.xml</include>
-								<include>WEB-INF/dispatcher.xml</include>
-								<!-- include any other file types you want to filter -->
-							</includes>
 						</resource>
 					</webResources>
 				</configuration>
