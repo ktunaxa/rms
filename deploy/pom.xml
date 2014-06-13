@@ -110,6 +110,9 @@
 								<copy file="${project.build.directory}/classes/alfresco/alfresco-global.properties"
 									  todir="${rms.deploy.dir}/${rms.alfresco.context}/WEB-INF/classes"
 									  overwrite="true"/>
+								<copy file="${project.build.directory}/classes/alfresco/log4j.properties"
+									  todir="${rms.deploy.dir}/${rms.alfresco.context}/WEB-INF/classes"
+									  overwrite="true"/>
 							</tasks>
 						</configuration>
 						<goals>
@@ -158,7 +161,19 @@
 	<properties>
 		<rms.deploy.dir>${project.build.directory}/deploy</rms.deploy.dir>
 		<rms.alfresco.context>alfresco</rms.alfresco.context>
+		<rms.alfresco.logdir>/var/log/alfresco</rms.alfresco.logdir>
 		<rms.map.context>map</rms.map.context>
+		<rms.cmis.username>admin</rms.cmis.username>
+		<rms.cmis.password>admin</rms.cmis.password>
+		<rms.cmis.db.username>alfresco</rms.cmis.db.username>
+		<rms.cmis.db.password>alfresco</rms.cmis.db.password>
+		<!--  different port to run on tomcat, cannot run in same jetty -->
+		<rms.cmis.url.server>http://localhost:8080/alfresco/</rms.cmis.url.server>
+		<rms.cmis.url.browse>http://localhost:8080/alfresco/</rms.cmis.url.browse>
+		<rms.cmis.repository>Main Repository</rms.cmis.repository>
+		<rms.cmis.folder>ktunaxa</rms.cmis.folder>
+		<rms.cmis.data>${project.basedir}/var/data/alfresco</rms.cmis.data>
+
 	</properties>
 
 </project>
