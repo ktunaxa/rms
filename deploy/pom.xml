@@ -161,7 +161,7 @@
 	<properties>
 		<rms.deploy.dir>${project.build.directory}/deploy</rms.deploy.dir>
 		<rms.alfresco.context>alfresco</rms.alfresco.context>
-		<rms.alfresco.logdir>/var/log/alfresco</rms.alfresco.logdir>
+		<rms.alfresco.logdir>/var/log/tomcat/alfresco</rms.alfresco.logdir>
 		<rms.map.context>map</rms.map.context>
 		<rms.cmis.username>admin</rms.cmis.username>
 		<rms.cmis.password>admin</rms.cmis.password>
