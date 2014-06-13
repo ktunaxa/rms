@@ -161,7 +161,7 @@
 	<properties>
 		<rms.deploy.dir>${project.build.directory}/deploy</rms.deploy.dir>
 		<rms.alfresco.context>alfresco</rms.alfresco.context>
-		<rms.alfresco.logdir>/var/log/tomcat/alfresco</rms.alfresco.logdir>
+		<rms.alfresco.logdir>/var/log/tomcat6/alfresco</rms.alfresco.logdir>
 		<rms.map.context>map</rms.map.context>
 		<rms.cmis.username>admin</rms.cmis.username>
 		<rms.cmis.password>admin</rms.cmis.password>
@@ -172,7 +172,7 @@
 		<rms.cmis.url.browse>http://localhost:8080/alfresco/</rms.cmis.url.browse>
 		<rms.cmis.repository>Main Repository</rms.cmis.repository>
 		<rms.cmis.folder>ktunaxa</rms.cmis.folder>
-		<rms.cmis.data>${project.basedir}/var/data/alfresco</rms.cmis.data>
+		<rms.cmis.data>/var/data/alfresco</rms.cmis.data>
 
 	</properties>
 
