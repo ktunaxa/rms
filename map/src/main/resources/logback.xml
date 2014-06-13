@@ -18,10 +18,10 @@
 	</appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>/var/log/tomcat/rms/rms.log</file>
+            <file>/var/log/tomcat6/rms/rms.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                     <!-- daily rollover -->
-                    <fileNamePattern>/var/log/tomcat/rms/rms.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <fileNamePattern>/var/log/tomcat6/rms/rms.%d{yyyy-MM-dd}.log</fileNamePattern>
 
                     <!-- keep 30 days' worth of history -->
                     <maxHistory>30</maxHistory>
