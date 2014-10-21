@@ -279,7 +279,7 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 		<band height="151" splitType="Prevent">
 			<image scaleImage="RetainShape" hAlign="Right">
 				<reportElement x="0" y="15" width="110" height="31"/>
-				<imageExpression><![CDATA["reports/Letter_Signature.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["reports/KerriGarner.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="0" width="183" height="15"/>
@@ -293,11 +293,11 @@ Tel: (250) 417-4022  ::  Fax: (250) 489-2438  ::  www.ktunaxa.org]]></text>
 				<textElement>
 					<font size="11" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Dora Gunn
+				<text><![CDATA[Kerri Garner
 Manager, Lands Stewardship
 Ktunaxa Nation Council
 250-420-2736
-dgunn@ktunaxa.org]]></text>
+KGarner@ktunaxa.org]]></text>
 			</staticText>
 		</band>
 	</detail>
