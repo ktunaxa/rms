@@ -36,6 +36,8 @@ public class MenuBar extends ToolStrip {
 
 	private ToolStrip actionStrip = new ToolStrip();
 
+	private boolean empty = true;
+
 	/**
 	 * Construct a default menu bar.
 	 */
@@ -61,8 +63,11 @@ public class MenuBar extends ToolStrip {
 	 * @param navMember navigation member
 	 */
 	public void addNavigationButton(Canvas navMember) {
-		if (navStrip.getMembers().length > 0) {
+		// can't check members in new smartgwt !!!???
+		if (!empty) {
 			navStrip.addSeparator();
+		} else {
+			empty = false;
 		}
 		navStrip.addMember(navMember);
 	}
@@ -73,8 +78,11 @@ public class MenuBar extends ToolStrip {
 	 * @param actionMember action member
 	 */
 	public void addActionButton(Canvas actionMember) {
-		if (actionStrip.getMembers().length > 0) {
+		// can't check members in new smartgwt !!!???
+		if (!empty) {
 			actionStrip.addSeparator();
+		} else {
+			empty = false;
 		}
 		actionStrip.addMember(actionMember);
 	}
