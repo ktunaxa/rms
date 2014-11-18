@@ -178,7 +178,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
 
 	<bean class="org.geomajas.configuration.NamedStyleInfo" name="referenceBaseHibStyleInfo">
-		<property name="sldLocation" value="WEB-INF/layerReferenceBase.sld"/>
+		<property name="sldLocation" value="classpath:spring/layerReferenceBase.sld"/>
  	</bean>
 
 </beans>

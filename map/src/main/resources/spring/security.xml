@@ -23,7 +23,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
   	</bean>
 
 	<bean name="security.securityInfo" class="org.geomajas.security.SecurityInfo">
-		<property name="loopAllServices" value="false"/>
+		<property name="loopAllServices" value="true"/>
 		<property name="securityServices">
 			<list>
 				<bean class="org.geomajas.plugin.staticsecurity.security.StaticSecurityService"/>

@@ -35,6 +35,8 @@ public class MenuBar extends ToolStrip {
 	private ToolStrip navStrip = new ToolStrip();
 
 	private ToolStrip actionStrip = new ToolStrip();
+	
+	private boolean empty = true;
 
 	private boolean empty = true;
 

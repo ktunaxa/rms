@@ -30,23 +30,15 @@
 		<param-value>
 			classpath:org/geomajas/spring/geomajasContext.xml
 			classpath:org/geomajas/plugin/rasterizing/DefaultCachedAndRasterizedPipelines.xml
-			WEB-INF/applicationContext.xml
-			WEB-INF/spring-hibernate.xml
-			WEB-INF/bpm.xml
-			WEB-INF/commands.xml
-			WEB-INF/dispatcher.xml
-			WEB-INF/crs.xml
-			WEB-INF/cmis.xml
-			WEB-INF/security.xml
-			WEB-INF/tools.xml
-			WEB-INF/map*.xml
-			WEB-INF/layer*.xml
-			WEB-INF/geocoder.xml
-			WEB-INF/mail.xml
+			classpath:spring/*.xml
 			classpath*:developer-context.xml
 		</param-value>
 	</context-param>
-
+<!-- 	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.geomajas.spring.LoggingApplicationContext</param-value>
+	</context-param>
+ -->
 	<filter>
 	    <filter-name>CacheFilter</filter-name>
 	    <filter-class>org.geomajas.servlet.CacheFilter</filter-class>
@@ -55,6 +47,11 @@
 	<filter-mapping>
 		<filter-name>CacheFilter</filter-name>
 		<url-pattern>/Ktunaxa/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CacheFilter</filter-name>
+		<url-pattern>/KtunaxaManager/*</url-pattern>
 	</filter-mapping>
 
 	<listener>
@@ -87,6 +84,7 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/d/*</url-pattern>
 		<url-pattern>/Ktunaxa/*</url-pattern>
+		<url-pattern>/KtunaxaManager/*</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>

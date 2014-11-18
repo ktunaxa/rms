@@ -28,7 +28,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 	<bean id="finalReportView"
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
-		<property name="url" value="WEB-INF/reports/finalReport.jrxml" />
+		<property name="url" value="classpath:spring/reports/finalReport.jrxml" />
 		<property name="reportDataKey" value="datasource" />
 		<property name="formatKey" value="format" />
 		<property name="formatMappings">
@@ -49,14 +49,14 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		</property>
 		<property name="subReportUrls">
 			<map>
-				<entry key="commentsSubReport" value="/WEB-INF/reports/finalReportComments.jrxml"/>
+				<entry key="commentsSubReport" value="classpath:spring/reports/finalReportComments.jrxml"/>
 			</map>
 		</property>
 	</bean>
 
 	<bean id="systemReportView"
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView">
-		<property name="url" value="WEB-INF/reports/systemReport.jrxml" />
+		<property name="url" value="classpath:spring/reports/systemReport.jrxml" />
 		<property name="reportDataKey" value="datasource" />
 		<property name="formatKey" value="format" />
 		<property name="formatMappings">
@@ -77,16 +77,16 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		</property>
 		<property name="subReportUrls">
 			<map>
-				<entry key="eaTypePieSubReport" value="/WEB-INF/reports/systemReportEaTypePie.jrxml"/>
-				<entry key="eaTypeRespSubReport" value="/WEB-INF/reports/systemReportEaTypeResp.jrxml"/>
-				<entry key="eaTypeRespListSubReport" value="/WEB-INF/reports/systemReportEaTypeRespList.jrxml"/>
-				<entry key="eaSubReport" value="/WEB-INF/reports/systemReportEa.jrxml"/>
-				<entry key="eaTypeActivitySubReport" value="/WEB-INF/reports/systemReportEaTypeActivity.jrxml"/>
-				<entry key="eaTypeElSubReport" value="/WEB-INF/reports/systemReportEaTypeEl.jrxml"/>
-				<entry key="eaTypeElListSubReport" value="/WEB-INF/reports/systemReportEaTypeElList.jrxml"/>
-				<entry key="eaTypeElRespSubReport" value="/WEB-INF/reports/systemReportEaTypeElResp.jrxml"/>
-				<entry key="eaTypeElRespListSubReport" value="/WEB-INF/reports/systemReportEaTypeElRespList.jrxml"/>
-				<entry key="statusPieSubReport" value="/WEB-INF/reports/systemReportStatusPie.jrxml"/>
+				<entry key="eaTypePieSubReport" value="classpath:spring/reports/systemReportEaTypePie.jrxml"/>
+				<entry key="eaTypeRespSubReport" value="classpath:spring/reports/systemReportEaTypeResp.jrxml"/>
+				<entry key="eaTypeRespListSubReport" value="classpath:spring/reports/systemReportEaTypeRespList.jrxml"/>
+				<entry key="eaSubReport" value="classpath:spring/reports/systemReportEa.jrxml"/>
+				<entry key="eaTypeActivitySubReport" value="classpath:spring/reports/systemReportEaTypeActivity.jrxml"/>
+				<entry key="eaTypeElSubReport" value="classpath:spring/reports/systemReportEaTypeEl.jrxml"/>
+				<entry key="eaTypeElListSubReport" value="classpath:spring/reports/systemReportEaTypeElList.jrxml"/>
+				<entry key="eaTypeElRespSubReport" value="classpath:spring/reports/systemReportEaTypeElResp.jrxml"/>
+				<entry key="eaTypeElRespListSubReport" value="classpath:spring/reports/systemReportEaTypeElRespList.jrxml"/>
+				<entry key="statusPieSubReport" value="classpath:spring/reports/systemReportStatusPie.jrxml"/>
 			</map>
 		</property>
 	</bean>

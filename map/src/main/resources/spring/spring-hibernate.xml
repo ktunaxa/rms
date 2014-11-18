@@ -60,11 +60,16 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	</bean>
 
 	<!-- Hibernate SessionFactory -->
-	<bean id="postgisSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	<bean id="postgisSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="postgisDataSource" />
 		<property name="configLocation" value="classpath:/hibernate.cfg.xml" />
 		<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
-	</bean>
+		<property name="packagesToScan">
+			<list>
+				<value>org.geomajas.plugin.deskmanager.domain</value>
+			</list>
+		</property>
+	</bean>	
 
 	<!-- enable the configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="transactionManager" />

@@ -27,7 +27,7 @@ import org.geomajas.gwt.client.map.feature.FeatureTransaction;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.widget.FeatureAttributeEditor;
 import org.ktunaxa.referral.client.widget.CommunicationHandler;
-import org.ktunaxa.referral.server.command.PersistReferralCommand;
+import org.ktunaxa.referral.server.command.dto.PersistReferralRequest;
 
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -52,7 +52,7 @@ public class FeatureEditorPanel extends VLayout {
 		clearGeometries(txDto);
 		request.setFeatureTransaction(txDto);
 		request.setCrs(referralLayer.getMapModel().getCrs());
-		GwtCommand command = new GwtCommand(PersistReferralCommand.COMMAND);
+		GwtCommand command = new GwtCommand(PersistReferralRequest.COMMAND);
 		command.setCommandRequest(request);
 		CommunicationHandler.get().execute(command, new AbstractCommandCallback<PersistTransactionResponse>() {
 
