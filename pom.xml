@@ -380,7 +380,7 @@
 	<properties>
 		<geomajas.gwt.client.version>1.15.1</geomajas.gwt.client.version>
 		<gwt-client-gwt-version>2.5.1</gwt-client-gwt-version>
-		<gwt-client-smartgwt-version>3.1</gwt-client-smartgwt-version>
+		<gwt-client-smartgwt-version>4.1p-2014-04-10</gwt-client-smartgwt-version>
 		<activiti.version>5.7</activiti.version>
 		<alfresco.version>3.4.a</alfresco.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

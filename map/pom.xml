@@ -113,13 +113,11 @@
 		<dependency>
 			<groupId>com.smartgwt</groupId>
 			<artifactId>smartgwt</artifactId>
-			<version>3.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.smartgwt</groupId>
 			<artifactId>smartgwt-skins</artifactId>
-			<version>3.1</version>
 		</dependency>
 
 		<!-- Geomajas dependencies -->
