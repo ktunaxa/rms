@@ -43,25 +43,28 @@ import com.smartgwt.client.widgets.form.fields.UploadItem;
 public class FileUploadForm extends DynamicForm {
 
 	private HandlerManager handlerManager;
-	
+
 	private UploadItem fileItem;
+
+	private String targetUrl;
 
 	public FileUploadForm(String title, String targetUrl, String referralId) {
 		super();
 		if (!targetUrl.contains("?")) {
-			targetUrl += "?";
+			this.targetUrl = targetUrl + "?";
 		} else {
-			targetUrl += "&";
+			this.targetUrl = targetUrl + "&";
 		}
-		targetUrl += KtunaxaConstant.FORM_ID + "=" + getID() + "&" +
-				KtunaxaConstant.FORM_REFERRAL + "=" + referralId.replace("/", "%2F");
+		this.targetUrl += KtunaxaConstant.FORM_ID + "=" + getID();
+		if (referralId != null) {
+			setReferralId(referralId);
+		}
 		String targetFrame = "resFrame" + getID();
 		handlerManager = new HandlerManager(this);
 		initComplete(this);
 		setEncoding(Encoding.MULTIPART);
 		setTarget(targetFrame);
 		setCanSubmit(true);
-		setAction(targetUrl);
 		setWidth100();
 
 		fileItem = new UploadItem(KtunaxaConstant.FORM_FILE);
@@ -71,22 +74,24 @@ public class FileUploadForm extends DynamicForm {
 		fileItem.setHeight(24);
 		fileItem.setCellHeight(24);
 		/*
-		fileItem.addChangeHandler(new ChangeHandler() {
-			public void onChange(ChangeEvent event) {
-				if (fileItem.getEnteredValue().endsWith(".zip")) {
-					uploadButton.enable();
-				} else {
-					uploadButton.disable();
-				}
-			}
-		});
-		*/
+		 * fileItem.addChangeHandler(new ChangeHandler() { public void onChange(ChangeEvent event) { if
+		 * (fileItem.getEnteredValue().endsWith(".zip")) { uploadButton.enable(); } else { uploadButton.disable(); } }
+		 * });
+		 */
 		setFields(fileItem);
 
 		NamedFrame frame = new NamedFrame(targetFrame);
 		frame.setSize("1", "1");
 		frame.setVisible(false);
 		addChild(frame);
+	}
+
+	public void setReferralId(String referralId) {
+		if (referralId != null) {
+			setAction(targetUrl + "&" + KtunaxaConstant.FORM_REFERRAL + "=" + referralId.replace("/", "%2F"));
+		} else {
+			setAction(null);
+		}
 	}
 
 	public final HandlerRegistration addFileUploadDoneHandler(final FileUploadDoneHandler handler) {
@@ -96,9 +101,9 @@ public class FileUploadForm extends DynamicForm {
 	@Override
 	public boolean validate() {
 		// true if a file has been chosen
-		return fileItem.getValue() != null; 
+		return fileItem.getValue() != null;
 	}
-	
+
 	public void submit(boolean override) {
 		if (!override) {
 			submit();
@@ -123,16 +128,17 @@ public class FileUploadForm extends DynamicForm {
 		FileUploadForm form = (FileUploadForm) Canvas.getById(formId);
 		form.handlerManager.fireEvent(new FileUploadFailedEvent(json));
 	}
+
 	// ------------------------------------------------------------------------
 	// Private methods:
 	// ------------------------------------------------------------------------
 
 	@SuppressWarnings("all")
 	private native void initComplete(FileUploadForm upload) /*-{
-		$wnd.uploadComplete = function (response) {
+		$wnd.uploadComplete = function(response) {
 			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadComplete(Lcom/google/gwt/core/client/JavaScriptObject;)(response);
 		};
-		$wnd.uploadFailed = function (error) {
+		$wnd.uploadFailed = function(error) {
 			@org.ktunaxa.referral.client.referral.FileUploadForm::uploadFailed(Lcom/google/gwt/core/client/JavaScriptObject;)(error);
 		};
 	}-*/;
