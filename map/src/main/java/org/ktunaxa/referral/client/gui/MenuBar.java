@@ -38,6 +38,8 @@ public class MenuBar extends ToolStrip {
 	
 	private boolean empty = true;
 
+	private boolean empty = true;
+
 	/**
 	 * Construct a default menu bar.
 	 */

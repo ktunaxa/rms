@@ -74,7 +74,7 @@
 			<param-value>
 				classpath:org/geomajas/spring/geomajasWebContext.xml
 				WEB-INF/webContext.xml
-				classpath*:developer-webContext.xml.xml
+				classpath*:developer-webContext.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>3</load-on-startup>

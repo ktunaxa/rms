@@ -70,7 +70,7 @@ public class ReviewResultForm extends VerifyAndSendEmailForm {
 	private static final String VALUE_CONCLUSION = "In closing I request a response that outlines how the " +
 			"information we have provided and other information you may have gathered from your assessment of " +
 			"potential infringements on Aboriginal Rights and Title was used and considered in the decision-making " +
-			"process. If you have any questions, please contact Dora Gunn at 250-417-4022, extension 3115.";
+			"process. If you have any questions, please contact Kerri Garner at (250) 489-2464.";
 
 	private CheckboxItem skipReportUpload;
 	private RadioGroupItem decision;
