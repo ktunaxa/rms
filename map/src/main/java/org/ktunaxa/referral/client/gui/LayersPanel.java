@@ -70,8 +70,8 @@ public class LayersPanel extends VLayout {
 		legend.setWidth100();
 		tabLegend.setPane(legend);
 
-		tabs.setTabs(tabLegend, tabBackGround, tabBase, tabValue, tabReferrals);
-		tabs.selectTab(tabValue);
+		tabs.setTabs(tabLegend, tabReferrals);
+		tabs.selectTab(tabLegend);
 		addMember(tabs);
 
 		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
