@@ -130,10 +130,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 				<ref bean="clientLayerHillShade" />
 				<ref bean="clientLayerAspect" />
 				<ref bean="clientLayerSlope" />
-				<ref bean="clientLayerReferenceBase" />
-				<ref bean="clientLayerReferenceValue" />
-				<ref bean="clientLayerReferenceBaseHib" />
-				<ref bean="clientLayerReferenceValueHib" />
 				<ref bean="clientLayerReferral" />
 			</list>
 		</property>
@@ -185,15 +181,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 									<property name="layers">
 										<list>
 											<ref bean="clientLayerOsm" />
-										</list>
-									</property>
-								</bean>
-								<bean
-									class="org.geomajas.configuration.client.ClientLayerTreeNodeInfo">
-									<property name="label" value="Vector Layers" />
-									<property name="layers">
-										<list>
-											<ref bean="clientLayerReferenceBase" />
 										</list>
 									</property>
 								</bean>
@@ -267,43 +254,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 											</property>
 										</bean>
 										<bean
-											class="org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo">
-											<property name="label" value="Base Layers" />
-											<property name="expanded" value="false" />
-											<property name="treeNodes">
-												<list>
-													<bean
-														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
-														<property name="layerId" value="clientLayerReferenceBase" />
-													</bean>
-												</list>
-											</property>
-										</bean>
-										<bean
-											class="org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo">
-											<property name="label" value="Ktunaxa Values" />
-											<property name="expanded" value="false" />
-											<property name="treeNodes">
-												<list>
-													<bean
-														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
-														<property name="layerId" value="clientLayerReferenceValue" />
-													</bean>
-												</list>
-											</property>
-										</bean>
-										<bean
-											class="org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo">
-											<property name="label" value="Referrals" />
-											<property name="expanded" value="false" />
-											<property name="treeNodes">
-												<list>
-													<bean
-														class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
-														<property name="layerId" value="clientLayerReferral" />
-													</bean>
-												</list>
-											</property>
+											class="org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo">
+											<property name="layerId" value="clientLayerReferral" />
 										</bean>
 									</list>
 								</property>

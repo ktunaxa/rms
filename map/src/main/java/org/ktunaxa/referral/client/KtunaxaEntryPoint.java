@@ -178,23 +178,23 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		String createReferralParam = Window.Location.getParameter(KtunaxaConstant.CREATE_REFERRAL_URL_PARAMETER);
 
 		MapLayout mapLayout = MapLayout.getInstance();
-		mapLayout.getMap().getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
-			public void onMapModelChanged(MapModelChangedEvent event) {
+		mapLayout.getMap().getMapModel().runWhenInitialized(new Runnable() {
+			public void run() {
 				// Initializes the referral state: map navigation + title.
 				MapLayout mapLayout = MapLayout.getInstance();
 				mapLayout.setReferralAndTask(appInfo.getReferral(), appInfo.getTask());
 
 				// Initializes the layer tree.
-				VectorLayer base = (VectorLayer) mapLayout.getMap().getMapModel()
-						.getLayer(KtunaxaConstant.LAYER_REFERENCE_BASE_ID);
-				VectorLayer value = (VectorLayer) mapLayout.getMap().getMapModel()
-						.getLayer(KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
-				ReferenceLayer baseLayer =
-						new ReferenceLayer(base, appInfo.getLayers(), appInfo.getLayerTypes(), true);
-				ReferenceLayer valueLayer = new ReferenceLayer(value, appInfo.getLayers(),
-						appInfo.getLayerTypes(), false);
-				mapLayout.getLayerPanel().setBaseLayer(baseLayer);
-				mapLayout.getLayerPanel().setValueLayer(valueLayer);
+//				VectorLayer base = (VectorLayer) mapLayout.getMap().getMapModel()
+//						.getLayer(KtunaxaConstant.LAYER_REFERENCE_BASE_ID);
+//				VectorLayer value = (VectorLayer) mapLayout.getMap().getMapModel()
+//						.getLayer(KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
+//				ReferenceLayer baseLayer =
+//						new ReferenceLayer(base, appInfo.getLayers(), appInfo.getLayerTypes(), true);
+//				ReferenceLayer valueLayer = new ReferenceLayer(value, appInfo.getLayers(),
+//						appInfo.getLayerTypes(), false);
+//				mapLayout.getLayerPanel().setBaseLayer(baseLayer);
+//				mapLayout.getLayerPanel().setValueLayer(valueLayer);
 
 			}
 		});

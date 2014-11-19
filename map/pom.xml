@@ -129,6 +129,12 @@
 		</dependency>
 		-->
 		<dependency>
+			<groupId>org.geomajas.plugin</groupId>
+			<artifactId>geomajas-client-gwt2-plugin-wms-server-extension</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.geomajas</groupId>
 			<artifactId>geomajas-gwt-client</artifactId>
 		</dependency>

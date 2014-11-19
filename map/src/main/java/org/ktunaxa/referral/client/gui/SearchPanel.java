@@ -94,10 +94,10 @@ public class SearchPanel extends VLayout {
 		Tab tabValues = new Tab("Values");
 
 		referralSearchTab = createSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERRAL_ID);
-		referenceValueSearchTab = createSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
+//		referenceValueSearchTab = createSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
 		tabReferral.setPane(referralSearchTab);
-		tabValues.setPane(referenceValueSearchTab);
-		tabs.setTabs(tabReferral, tabValues);
+//		tabValues.setPane(referenceValueSearchTab);
+		tabs.setTabs(tabReferral);
 		addMember(tabs);
 	}
 

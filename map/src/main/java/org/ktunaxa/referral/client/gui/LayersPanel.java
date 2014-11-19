@@ -19,10 +19,18 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
 import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
+import org.geomajas.gwt.client.map.layer.ClientWmsLayer;
+import org.geomajas.gwt.client.map.layer.InternalClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.Layer;
+import org.geomajas.gwt.client.map.layer.configuration.ClientWmsLayerInfo;
 import org.geomajas.gwt.client.widget.MapWidget;
+import org.geomajas.gwt2.client.map.layer.tile.TileConfiguration;
+import org.geomajas.gwt2.plugin.wms.client.WmsClient;
+import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration;
+import org.geomajas.gwt2.plugin.wms.client.service.WmsService;
 import org.geomajas.layer.google.gwt.client.GoogleAddon;
 import org.geomajas.widget.layer.client.widget.CombinedLayertree;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
@@ -65,7 +73,7 @@ public class LayersPanel extends VLayout {
 		final Tab tabReferrals = new Tab("Referrals");
 		Tab tabLegend = new Tab("Legend");
 
-		CombinedLayertree legend = new CombinedLayertree(mapWidget);
+		RefreshableLayerTree legend = new RefreshableLayerTree(mapWidget);
 		legend.setHeight100();
 		legend.setWidth100();
 		tabLegend.setPane(legend);
@@ -74,9 +82,10 @@ public class LayersPanel extends VLayout {
 		tabs.selectTab(tabLegend);
 		addMember(tabs);
 
-		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
-
-			public void onMapModelChanged(MapModelChangedEvent event) {
+		mapWidget.getMapModel().runWhenInitialized(new Runnable() {
+			
+			@Override
+			public void run() {
 				final SectionStack bgStack = new SectionStack();
 				bgStack.setSize("100%", "100%");
 				bgStack.setOverflow(Overflow.AUTO);
@@ -149,6 +158,7 @@ public class LayersPanel extends VLayout {
 				sectionStackSection.setCanCollapse(false);
 				sectionStackSection.addItem(referralStackLayout);
 				referralStack.addSection(sectionStackSection);
+				
 			}
 		});
 	}
@@ -186,4 +196,5 @@ public class LayersPanel extends VLayout {
 		}
 		return stack;
 	}
+
 }
