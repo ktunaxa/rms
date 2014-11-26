@@ -27,6 +27,7 @@ import org.hibernate.SessionFactory;
 import org.ktunaxa.referral.server.domain.ReferenceLayer;
 import org.ktunaxa.referral.server.domain.ReferenceLayerType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReferenceLayerServiceImpl implements ReferenceLayerService {
 
 	@Autowired
+	@Qualifier("postgisSessionFactory")
 	private SessionFactory sessionFactory;
 
 	@SuppressWarnings("unchecked")

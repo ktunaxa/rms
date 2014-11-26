@@ -28,6 +28,7 @@ import org.geomajas.gwt.client.command.GwtCommand;
 import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.widget.featureinfo.client.widget.DockableWindow;
 
+import com.google.gwt.core.client.Callback;
 import com.google.gwt.user.client.Timer;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.HTMLPane;
@@ -90,6 +91,22 @@ public class CommunicationHandler {
 
 		});
 		return deferred;
+	}
+	
+	public Callback<Void, Void> startAction(final String title, boolean modal) {
+		final Window window = createWindow(title, modal);
+		return new Callback<Void, Void>() {
+
+			@Override
+			public void onFailure(Void reason) {
+				window.destroy();
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				window.destroy();
+			}
+		};
 	}
 
 	public Window createWindow(final String title, boolean modal) {		

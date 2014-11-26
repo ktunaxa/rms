@@ -1,0 +1,192 @@
+<!--
+  ~ Ktunaxa Referral Management System.
+  ~
+  ~ Copyright (C) see version control system
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:util="http://www.springframework.org/schema/util"
+		xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+		>
+	<!-- Needed when the Hibernate pojo classes contain dates. -->
+	<bean name="simpleDateFormat" class="java.text.SimpleDateFormat">
+	    <constructor-arg type="java.lang.String" value="dd/MM/yyyy" />
+	</bean>
+		
+	<bean id="layersDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+	   <property name="driverClass" value="org.postgresql.Driver" />
+	   <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/referral_layers" />
+	   <property name="username" value="referral"/>
+	   <property name="password" value="referral"/>
+	   <property name="idleConnectionTestPeriod" value="60"/>
+	   <property name="idleMaxAge" value="240"/>
+	   <property name="maxConnectionsPerPartition" value="30"/>
+	   <property name="minConnectionsPerPartition" value="10"/>
+	   <property name="partitionCount" value="3"/>
+	   <property name="acquireIncrement" value="5"/>
+	   <property name="statementsCacheSize" value="100"/>
+	   <property name="releaseHelperThreads" value="3"/>
+	</bean>
+		
+	<!-- Hibernate SessionFactory -->
+	<bean id="layersSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="layersDataSource" />
+		<property name="configLocation" value="classpath:/hibernate-layers.cfg.xml" />
+		<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+	</bean>	
+
+	<bean name="layerFtsLayers" class="org.ktunaxa.referral.server.layer.FullTextSearchLayer">
+		<property name="layerInfo" ref="ftsLayersInfo" />
+		<property name="featureModel">
+			<bean class="org.geomajas.layer.hibernate.HibernateFeatureModel">
+				<property name="sessionFactory" ref="layersSessionFactory" />
+			</bean>
+		</property>
+		<property name="sessionFactory" ref="layersSessionFactory" />
+		<property name="dateFormat" ref="simpleDateFormat" />
+	</bean>
+
+	<bean name="ftsLayersInfo" class="org.geomajas.configuration.VectorLayerInfo">
+		<property name="layerType" value="GEOMETRY"/>
+		<property name="crs">
+			<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.LAYER_CRS"/>
+		</property>
+		<property name="maxExtent">
+			<bean class="org.geomajas.geometry.Bbox">
+				<property name="x">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_BUFFER_MIN_X"/>
+				</property>
+				<property name="y">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_BUFFER_MIN_Y"/>
+				</property>
+				<property name="maxX">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_BUFFER_MAX_X"/>
+				</property>
+				<property name="maxY">
+					<util:constant static-field="org.ktunaxa.referral.server.service.KtunaxaConstant.KTUNAXA_TERRITORY_BUFFER_MAX_Y"/>
+				</property>
+			</bean>
+		</property>
+		<property name="featureInfo" ref="ftsLayersFeatureInfo" />
+		<property name="namedStyleInfos">
+			<list>
+				<ref bean="ftsLayersStyleInfo" />
+			</list>
+		</property>
+	</bean>
+
+    <bean class="org.geomajas.configuration.FeatureInfo" name="ftsLayersFeatureInfo">
+        <property name="dataSourceName" value="org.ktunaxa.referral.server.domain.FtsLayers"/>
+        <property name="identifier">
+            <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                <property name="label" value="Id"/>
+                <property name="name" value="id"/>
+                <property name="type" value="LONG"/>
+            </bean>
+        </property>
+        <property name="geometryType">
+            <bean class="org.geomajas.configuration.GeometryAttributeInfo">
+                <property name="name" value="geometry"/>
+                <property name="editable" value="false"/>
+            </bean>
+        </property>
+
+        <property name="attributes">
+            <list>
+                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="Layer"/>
+                    <property name="name" value="layerName"/>
+                    <property name="editable" value="false"/>
+                    <property name="identifying" value="true"/>
+                    <property name="type" value="STRING"/>
+                </bean>
+                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="Fid"/>
+                    <property name="name" value="fid"/>
+                    <property name="editable" value="false"/>
+                    <property name="identifying" value="true"/>
+                    <property name="type" value="STRING"/>
+                </bean>
+                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="Label"/>
+                    <property name="name" value="label"/>
+                    <property name="editable" value="false"/>
+                    <property name="identifying" value="true"/>
+                    <property name="type" value="STRING"/>
+                </bean>
+                <bean class="org.geomajas.configuration.PrimitiveAttributeInfo">
+                    <property name="label" value="tsv"/>
+                    <property name="name" value="tsv"/>
+                    <property name="editable" value="false"/>
+                    <property name="identifying" value="false"/>
+                    <property name="type" value="STRING"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+	<bean class="org.geomajas.configuration.NamedStyleInfo" name="ftsLayersStyleInfo">
+		<property name="featureStyles">
+            <list>
+                <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                    <property name="name" value="Layers"/>
+                    <property name="fillColor" value="#CC0000"/>
+                    <property name="fillOpacity" value="0.5"/>
+                    <property name="strokeColor" value="#990000"/>
+                    <property name="strokeOpacity" value=".8"/>
+                    <property name="strokeWidth" value="2"/>
+					<property name="symbol">
+						<bean class="org.geomajas.configuration.SymbolInfo">
+							<property name="rect">
+								<bean class="org.geomajas.configuration.RectInfo">
+									<property name="w" value="5" />
+									<property name="h" value="5" />
+								</bean>
+							</property>
+						</bean>
+					</property>
+                </bean>
+            </list>
+		</property>
+		<property name="labelStyle">
+			<bean class="org.geomajas.configuration.LabelStyleInfo">
+               <property name="labelAttributeName" value="label"/>
+                <property name="fontStyle">
+					<bean class="org.geomajas.configuration.FontStyleInfo">
+						<property name="color" value="#000000" />
+						<property name="opacity" value="1" />
+						<property name="size" value="13" />
+					</bean>
+                </property>
+                <property name="backgroundStyle">
+                    <bean class="org.geomajas.configuration.FeatureStyleInfo">
+                        <property name="fillColor" value="#FFFFFF"/>
+                        <property name="fillOpacity" value=".7"/>
+                        <property name="strokeColor" value="#000099"/>
+                        <property name="strokeOpacity" value="1"/>
+                        <property name="strokeWidth" value="1"/>
+                    </bean>
+                </property>
+			</bean>
+		</property>
+	</bean>
+
+</beans>

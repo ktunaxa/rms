@@ -21,9 +21,12 @@ package org.ktunaxa.referral.client.gui;
 import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
 import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.layer.AbstractLayer;
+import org.geomajas.gwt.client.map.layer.ClientWmsLayer;
+import org.geomajas.gwt.client.map.layer.InternalClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.Layer;
 import org.geomajas.gwt.client.map.layer.configuration.ClientWmsLayerInfo;
 import org.geomajas.gwt.client.widget.MapWidget;
+import org.geomajas.gwt2.client.map.layer.LegendUrlSupported;
 import org.geomajas.widget.layer.client.widget.CombinedLayertree;
 import org.geomajas.widget.layer.configuration.client.ClientAbstractNodeInfo;
 import org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo;
@@ -46,6 +49,7 @@ public class RefreshableLayerTree extends CombinedLayertree {
 
 			@Override
 			public void onMapModelChanged(MapModelChangedEvent event) {
+				// make a new tree, quick and dirty way !
 				tree = new MyTree();
 				final TreeNode nodeRoot = new TreeNode("ROOT");
 				tree.setRoot(nodeRoot); // invisible ROOT node (ROOT node is required)
@@ -98,10 +102,13 @@ public class RefreshableLayerTree extends CombinedLayertree {
 		}
 	}
 
-	public class WmsLegendNode extends LayerTreeTreeNode {
+	public class WmsLegendNode extends LayerTreeLegendNode {
+
+		private InternalClientWmsLayer layer;
 
 		public WmsLegendNode(RefreshableTree tree, Layer<?> layer) {
 			super(tree, layer);
+			this.layer = (InternalClientWmsLayer) layer;
 		}
 
 		public AbstractLayer<?> getLayer() {
@@ -109,7 +116,22 @@ public class RefreshableLayerTree extends CombinedLayertree {
 		}
 
 		public void init() {
-			// TODO: WMS legend
+		}
+
+		public RefreshableTree getTree() {
+			return tree;
+		}
+	}
+
+	public class WmsLegendItemNode extends LayerTreeTreeNode {
+
+		public WmsLegendItemNode(WmsLegendNode parent, ClientWmsLayer layer) {
+			super(parent.getTree(), parent.getLayer());
+			setTitle(layer.getTitle());
+			setName(parent.getAttribute("id") + "_legend");
+			if (layer instanceof LegendUrlSupported) {
+				setIcon(((LegendUrlSupported) layer).getLegendImageUrl());
+			}
 		}
 	}
 

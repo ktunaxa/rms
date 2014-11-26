@@ -169,6 +169,7 @@ public interface KtunaxaConstant {
 
 	/** E-mail address which is included as bcc field in all referrals related e-mails sent by the system. */
 	String EMAIL_BCC = "";
+	String ATTRIBUTE_FULL_TEXT = "tsv";
 
 	/**
 	 * Constants used for building and sending emails.

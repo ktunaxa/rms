@@ -26,6 +26,7 @@ import org.hibernate.classic.Session;
 import org.ktunaxa.referral.server.command.dto.UpdateEmailDataRequest;
 import org.ktunaxa.referral.server.command.dto.UpdateEmailDataResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UpdateEmailDataCommand implements Command<UpdateEmailDataRequest, UpdateEmailDataResponse> {
 
 	@Autowired
+	@Qualifier("postgisSessionFactory")
 	private SessionFactory sessionFactory;
 
 	public UpdateEmailDataResponse getEmptyCommandResponse() {

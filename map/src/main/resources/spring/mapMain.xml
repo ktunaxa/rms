@@ -131,6 +131,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 				<ref bean="clientLayerAspect" />
 				<ref bean="clientLayerSlope" />
 				<ref bean="clientLayerReferral" />
+				<ref bean="clientLayerReferenceValue" />
 			</list>
 		</property>
 		<property name="toolbar">
@@ -150,7 +151,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 						<ref bean="MeasureDistanceMode" />
 						<ref bean="SelectionMode" />
 						<ref bean="SelectReferralMode" />
-						<ref bean="FeatureInfoMode" />
+						<ref bean="GetFeatureInfoMode" />
 						<ref bean="ToolbarSeparator" />
 						<ref bean="Geocoder" />
 						<ref bean="ToolbarSeparator" />
@@ -278,12 +279,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 		<property name="minimumScale" value="1:1000000000" />
 		<property name="zoomToPointScale" value="1:6000" />
 		<property name="namedStyleInfo" ref="referralStyleInfo" />
-	</bean>
+	</bean>	
 
 	<bean id="clientLayerReferenceValue" class="org.geomajas.configuration.client.ClientVectorLayerInfo">
-		<property name="serverLayerId" value="layerReferenceValue" />
+		<property name="serverLayerId" value="layerFtsLayers" />
 		<property name="label" value="Reference Value" />
-		<property name="visible" value="true" />
+		<property name="visible" value="false" />
 		<property name="maximumScale" value="1000000000:1" />
 		<property name="minimumScale" value="1:1000000000" />
 		<property name="zoomToPointScale" value="1:6000" />

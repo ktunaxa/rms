@@ -70,7 +70,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
 	<bean name="MeasureDistanceMode" class="org.geomajas.configuration.client.ClientToolInfo" />
 
-	<bean name="FeatureInfoMode" class="org.geomajas.configuration.client.ClientToolInfo" />
+	<bean name="GetFeatureInfoMode" class="org.geomajas.configuration.client.ClientToolInfo" />
 
 	<bean name="SelectionMode" class="org.geomajas.configuration.client.ClientToolInfo">
 		<property name="parameters">

@@ -45,6 +45,7 @@ import org.geomajas.plugin.printing.client.util.PrintingLayout;
 import org.geomajas.plugin.staticsecurity.client.StaticSecurityTokenRequestHandler;
 import org.geomajas.plugin.staticsecurity.client.util.SsecLayout;
 import org.geomajas.widget.searchandfilter.client.util.GsfLayout;
+import org.ktunaxa.referral.client.action.WmsFeatureInfoModalAction;
 import org.ktunaxa.referral.client.action.ZoomCurrentReferralModalAction;
 import org.ktunaxa.referral.client.action.ZoomKtunaxaTerritoryModalAction;
 import org.ktunaxa.referral.client.gui.DocumentItem;
@@ -76,6 +77,7 @@ public class KtunaxaEntryPoint implements EntryPoint {
 	public static final String TOOL_ZOOM_KTUNAXA_TERRITORY = "ZoomKtunaxaTerritory";
 	public static final String TOOL_ZOOM_CURRENT_REFERRAL = "ZoomCurrentReferral";
 	public static final String TOOL_SELECT_REFERRAL = "SelectReferralMode";
+	public static final String TOOL_FEATURE_INFO = "GetFeatureInfoMode";
 
 	private GetReferralMapResponse appInfo;
 
@@ -106,6 +108,11 @@ public class KtunaxaEntryPoint implements EntryPoint {
 		ToolbarRegistry.put(TOOL_SELECT_REFERRAL, new ToolCreator() {
 			public ToolbarBaseAction createTool(MapWidget mapWidget) {
 				return new MakeReferralCurrentModalAction(mapWidget);
+			}
+		});
+		ToolbarRegistry.put(TOOL_FEATURE_INFO, new ToolCreator() {
+			public ToolbarBaseAction createTool(MapWidget mapWidget) {
+				return new WmsFeatureInfoModalAction(mapWidget);
 			}
 		});
 		AttributeFormFieldRegistry.registerCustomFormItem("topMiddleBottom", new DataSourceFieldFactory() {

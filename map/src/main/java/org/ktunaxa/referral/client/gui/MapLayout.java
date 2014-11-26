@@ -23,15 +23,13 @@ import java.util.List;
 
 import org.geomajas.configuration.FeatureStyleInfo;
 import org.geomajas.configuration.SymbolInfo;
+import org.geomajas.configuration.client.ScaleInfo;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.Geomajas;
-import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.gfx.paintable.GfxGeometry;
 import org.geomajas.gwt.client.gfx.style.ShapeStyle;
 import org.geomajas.gwt.client.map.MapView;
-import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
-import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
 import org.geomajas.gwt.client.map.layer.ClientWmsLayer;
@@ -45,14 +43,14 @@ import org.geomajas.gwt.client.spatial.geometry.Point;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt.client.widget.Toolbar;
+import org.geomajas.gwt2.client.map.MapConfigurationImpl;
 import org.geomajas.gwt2.client.map.layer.tile.TileConfiguration;
 import org.geomajas.gwt2.plugin.wms.client.WmsClient;
 import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsGetCapabilitiesInfo;
 import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsLayerInfo;
 import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration;
-import org.geomajas.gwt2.plugin.wms.client.service.WmsService;
 import org.geomajas.gwt2.plugin.wms.client.service.WmsService.WmsVersion;
-import org.geomajas.widget.layer.configuration.client.ClientAbstractNodeInfo;
+import org.geomajas.widget.layer.configuration.client.ClientExtraLayerInfo;
 import org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo;
 import org.geomajas.widget.layer.configuration.client.ClientLayerTreeInfo;
 import org.ktunaxa.referral.client.i18n.LocalizedMessages;
@@ -72,7 +70,6 @@ import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.http.client.URL;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Window;
@@ -91,6 +88,8 @@ import edu.umd.cs.findbugs.annotations.Nullable;
  * @author Pieter De Graef
  */
 public final class MapLayout extends VLayout {
+
+	private static final double METER_PER_INCH = 0.0254;
 
 	/**
 	 * Focus options after refreshing the referral.
@@ -242,6 +241,8 @@ public final class MapLayout extends VLayout {
 	protected void addClientLayers() {
 		// assuming collocated geoserver !!!
 		final String url = Geomajas.getDispatcherUrl().replace("/map/d", "/geoserver/ows");
+//		final String url = "http://127.0.0.1:8888/d/proxy?url=http://64.141.44.215:9090/geoserver/ows";
+		final Callback<Void, Void> callback = CommunicationHandler.get().startAction("Loading layers...", false);
 		WmsClient.getInstance().getWmsService()
 				.getCapabilities(url, WmsVersion.V1_3_0, new Callback<WmsGetCapabilitiesInfo, String>() {
 
@@ -259,6 +260,12 @@ public final class MapLayout extends VLayout {
 							ClientWmsLayer wmsLayer = new ClientWmsLayer(info.getName(), mapWidget.getMapModel()
 									.getMapInfo().getCrs(), wmsConfig, tileConfig);
 							ClientWmsLayerInfo wmsLayerInfo = new ClientWmsLayerInfo(wmsLayer);
+							wmsLayerInfo.setMaximumScale(new ScaleInfo(1/toResolution(info.getMinScaleDenominator())));
+							wmsLayerInfo.setMinimumScale(new ScaleInfo(1/toResolution(info.getMaxScaleDenominator())));
+							ClientExtraLayerInfo extra = new ClientExtraLayerInfo();
+							extra.setLegendUrl(wmsLayer.getLegendImageUrl());
+							extra.setLegendUrlTitle("Legend");
+							wmsLayerInfo.getWidgetInfo().put(ClientExtraLayerInfo.IDENTIFIER, extra);
 							ClientLayerTreeInfo tree = (ClientLayerTreeInfo) mapWidget.getMapModel().getMapInfo()
 									.getWidgetInfo(ClientLayerTreeInfo.IDENTIFIER);
 							ClientLayerNodeInfo node = new ClientLayerNodeInfo();
@@ -266,6 +273,7 @@ public final class MapLayout extends VLayout {
 							tree.getTreeNode().getTreeNodes().add(node);
 							wmsLayerInfo.setVisible(false);
 							mapWidget.getMapModel().addLayer(wmsLayerInfo);
+							callback.onSuccess(null);
 						}
 
 					}
@@ -273,10 +281,17 @@ public final class MapLayout extends VLayout {
 					@Override
 					public void onFailure(String reason) {
 						SC.say("Could not reach geoserver on "+url);
+						callback.onSuccess(null);
 					}
 				});
 
 	}
+	
+	public double toResolution(double scaleDenominator) {
+		double pixelsPerUnit =  METER_PER_INCH / MapConfigurationImpl.DEFAULT_DPI;
+		return pixelsPerUnit * scaleDenominator;
+	}
+
 
 	protected void updateRights() {
 		if (!(UserContext.getInstance().isGuest() || UserContext.getInstance().isDataEntry())) {
@@ -522,28 +537,6 @@ public final class MapLayout extends VLayout {
 
 	public void refreshSearch() {
 		searchPanel.refreshSearch();
-	}
-
-	private ClientWmsLayerInfo addWms(String name, MapWidget mapWidget) {
-
-		WmsLayerConfiguration wmsConfig = new WmsLayerConfiguration();
-		wmsConfig.setFormat("image/png");
-		wmsConfig.setLayers(name);
-		wmsConfig.setVersion(WmsService.WmsVersion.V1_3_0);
-		wmsConfig.setBaseUrl("http://64.141.44.215:9090/geoserver/ows");
-		wmsConfig.setCrs(KtunaxaConstant.MAP_CRS);
-		wmsConfig.setTransparent(true);
-		wmsConfig.setMaximumResolution(Double.MAX_VALUE);
-		wmsConfig.setMinimumResolution(1 / mapWidget.getMapModel().getMapInfo().getMaximumScale());
-
-		TileConfiguration tileConfig = new TileConfiguration(256, 256, new Coordinate(-20037508.343, -20037508.343),
-				mapWidget.getMapModel().getMapView().getResolutions());
-
-		ClientWmsLayer wmsLayer = new ClientWmsLayer(name, mapWidget.getMapModel().getMapInfo().getCrs(), wmsConfig,
-				tileConfig);
-
-		ClientWmsLayerInfo wmsLayerInfo = new ClientWmsLayerInfo(wmsLayer);
-		return wmsLayerInfo;
 	}
 
 }

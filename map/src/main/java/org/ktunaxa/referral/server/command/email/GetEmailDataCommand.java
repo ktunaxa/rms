@@ -33,6 +33,7 @@ import org.ktunaxa.referral.server.command.dto.GetEmailDataResponse;
 import org.ktunaxa.referral.server.domain.Template;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class GetEmailDataCommand implements Command<GetEmailDataRequest, GetEmailDataResponse> {
 
 	@Autowired
+	@Qualifier("postgisSessionFactory")
 	private SessionFactory sessionFactory;
 
 	public GetEmailDataResponse getEmptyCommandResponse() {

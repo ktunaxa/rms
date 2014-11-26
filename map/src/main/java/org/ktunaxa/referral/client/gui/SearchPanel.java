@@ -20,6 +20,7 @@
 package org.ktunaxa.referral.client.gui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.geomajas.global.GeomajasConstant;
@@ -31,6 +32,7 @@ import org.geomajas.gwt.client.widget.FeatureListGrid;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.widget.searchandfilter.client.widget.attributesearch.AttributeSearchPanel;
+import org.geomajas.widget.searchandfilter.client.widget.configuredsearch.ConfiguredSearchPanel;
 import org.geomajas.widget.searchandfilter.client.widget.geometricsearch.FreeDrawingSearch;
 import org.geomajas.widget.searchandfilter.client.widget.geometricsearch.GeometricSearchPanel;
 import org.geomajas.widget.searchandfilter.client.widget.geometricsearch.SelectionSearch;
@@ -40,6 +42,11 @@ import org.geomajas.widget.searchandfilter.client.widget.search.CombinedSearchPa
 import org.geomajas.widget.searchandfilter.client.widget.search.PanelSearchWidget;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchController;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchWidget;
+import org.geomajas.widget.searchandfilter.search.dto.ConfiguredSearch;
+import org.geomajas.widget.searchandfilter.search.dto.ConfiguredSearchAttribute;
+import org.geomajas.widget.searchandfilter.search.dto.ConfiguredSearchAttribute.AttributeType;
+import org.geomajas.widget.searchandfilter.search.dto.ConfiguredSearchAttribute.InputType;
+import org.geomajas.widget.searchandfilter.search.dto.ConfiguredSearchAttribute.Operation;
 import org.geomajas.widget.utility.gwt.client.widget.CardLayout;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedEvent;
 import org.ktunaxa.referral.client.referral.event.CurrentReferralChangedHandler;
@@ -70,6 +77,8 @@ public class SearchPanel extends VLayout {
 	private ValueSearchPanel referralSearchTab;
 
 	private ValueSearchPanel referenceValueSearchTab;
+	
+	private ConfiguredSearchPanel fullTextSearchPanel;
 
 	/**
 	 * Card type enumeration.
@@ -94,10 +103,10 @@ public class SearchPanel extends VLayout {
 		Tab tabValues = new Tab("Values");
 
 		referralSearchTab = createSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERRAL_ID);
-//		referenceValueSearchTab = createSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
+		referenceValueSearchTab = createSearchTabContent(mapLayout, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
 		tabReferral.setPane(referralSearchTab);
-//		tabValues.setPane(referenceValueSearchTab);
-		tabs.setTabs(tabReferral);
+		tabValues.setPane(referenceValueSearchTab);
+		tabs.setTabs(tabReferral, tabValues);
 		addMember(tabs);
 	}
 
@@ -129,7 +138,7 @@ public class SearchPanel extends VLayout {
 	 * @author Jan De Moerloose
 	 * 
 	 */
-	private static class ValueSearchPanel extends VLayout {
+	private class ValueSearchPanel extends VLayout {
 
 		private MultiFeatureListGrid valueResultList;
 
@@ -206,7 +215,7 @@ public class SearchPanel extends VLayout {
 			attributeSearchPanel.setCanCancel(true);
 			PanelSearchWidget attributeSearch = new CardPanelSearchWidget("AttributeSearch" + layerId,
 					"Search on attributes", attributeSearchPanel, searchPanels, Card.ATTRIBUTE);
-			attributeSearch.setWidth100();
+			attributeSearch.setWidth100();			
 			// PanelSearchWidget favouriteSearch = new CardPanelSearchWidget("FavouritesSearch", "Select favourite",
 			// new SearchFavouritesListPanel(mapWidget), searchPanels, CARD_FAVOURITE);
 			searchPanels.addCard(Card.EMPTY, new VLayout()); // add empty card option
@@ -214,8 +223,35 @@ public class SearchPanel extends VLayout {
 			searchPanels.setHeight(1); // minimum height
 			searchPanels.setOverflow(Overflow.VISIBLE); // but scale
 			List<SearchWidget> searchWidgetList = new ArrayList<SearchWidget>();
-			searchWidgetList.add(attributeSearch);
+			if (KtunaxaConstant.LAYER_REFERENCE_VALUE_ID.equals(layerId)) {
+				fullTextSearchPanel = new ConfiguredSearchPanel(mapWidget);
+				fullTextSearchPanel.setWidth100();
+				fullTextSearchPanel.setCanAddToFavourites(false);
+				fullTextSearchPanel.setCanCancel(true);
+				fullTextSearchPanel.setLayerId(layerId);
+				PanelSearchWidget fullTextSearch = new CardPanelSearchWidget("FullTextSearch" + layerId,
+						"Search full text", fullTextSearchPanel, searchPanels, Card.ATTRIBUTE);
+				searchWidgetList.add(fullTextSearch);
+				mapLayout.getMap().getMapModel().runWhenInitialized(new Runnable() {
+					
+					@Override
+					public void run() {
+						ConfiguredSearch searchConfig = new ConfiguredSearch();
+						ConfiguredSearchAttribute searchAttribute = new ConfiguredSearchAttribute();
+						searchAttribute.setAttributeName(KtunaxaConstant.ATTRIBUTE_FULL_TEXT);
+						searchAttribute.setDisplayText("Full text search");
+						searchAttribute.setAttributeType(AttributeType.String);
+						searchAttribute.setInputType(InputType.FreeValue);
+						searchAttribute.setOperation(Operation.EqualToString);
+						searchAttribute.setServerLayerId("layerFtsLayers");
+						searchConfig.setAttributes(Arrays.asList(searchAttribute));
+						fullTextSearchPanel.setSearchConfig(searchConfig, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
+						
+					}
+				});
+			}
 			searchWidgetList.add(geometricSearch);
+			searchWidgetList.add(attributeSearch);
 			// searchWidgetList.add(favouriteSearch);
 			CombinedSearchPanel combinedSearchPanel = new CombinedSearchPanel(mapWidget);
 			combinedSearchPanel.initializeList(searchWidgetList);
