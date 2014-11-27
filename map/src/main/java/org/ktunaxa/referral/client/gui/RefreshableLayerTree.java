@@ -45,29 +45,6 @@ public class RefreshableLayerTree extends CombinedLayertree {
 
 	public RefreshableLayerTree(MapWidget mapWidget) {
 		super(mapWidget);
-		mapWidget.getMapModel().addMapModelChangedHandler(new MapModelChangedHandler() {
-
-			@Override
-			public void onMapModelChanged(MapModelChangedEvent event) {
-				// make a new tree, quick and dirty way !
-				tree = new MyTree();
-				final TreeNode nodeRoot = new TreeNode("ROOT");
-				tree.setRoot(nodeRoot); // invisible ROOT node (ROOT node is required)
-
-				ClientLayerTreeInfo layerTreeInfo = (ClientLayerTreeInfo) mapModel.getMapInfo().getWidgetInfo(
-						ClientLayerTreeInfo.IDENTIFIER);
-				tree.setRoot(nodeRoot); // invisible ROOT node (ROOT node is required)
-				if (layerTreeInfo != null) {
-					for (ClientAbstractNodeInfo node : layerTreeInfo.getTreeNode().getTreeNodes()) {
-						processNode(node, nodeRoot, false);
-					}
-				}
-
-				treeGrid.setData(tree);
-				tree.openFolder(nodeRoot);
-				syncNodeState(false);
-			}
-		});
 	}
 
 	public void onLeafClick(LeafClickEvent event) {
@@ -79,6 +56,26 @@ public class RefreshableLayerTree extends CombinedLayertree {
 		} else {
 			super.onLeafClick(event);
 		}
+	}
+
+	public void refresh() {
+		// make a new tree, quick and dirty way !
+		tree = new MyTree();
+		final TreeNode nodeRoot = new TreeNode("ROOT");
+		tree.setRoot(nodeRoot); // invisible ROOT node (ROOT node is required)
+
+		ClientLayerTreeInfo layerTreeInfo = (ClientLayerTreeInfo) mapModel.getMapInfo().getWidgetInfo(
+				ClientLayerTreeInfo.IDENTIFIER);
+		tree.setRoot(nodeRoot); // invisible ROOT node (ROOT node is required)
+		if (layerTreeInfo != null) {
+			for (ClientAbstractNodeInfo node : layerTreeInfo.getTreeNode().getTreeNodes()) {
+				processNode(node, nodeRoot, false);
+			}
+		}
+
+		treeGrid.setData(tree);
+		tree.openFolder(nodeRoot);
+		syncNodeState(false);
 	}
 
 	@Override
@@ -104,11 +101,10 @@ public class RefreshableLayerTree extends CombinedLayertree {
 
 	public class WmsLegendNode extends LayerTreeLegendNode {
 
-		private InternalClientWmsLayer layer;
-
 		public WmsLegendNode(RefreshableTree tree, Layer<?> layer) {
 			super(tree, layer);
-			this.layer = (InternalClientWmsLayer) layer;
+			InternalClientWmsLayer wmsLayer = (InternalClientWmsLayer) layer;
+			setTitle(wmsLayer.getWmsLayer().getCapabilities().getTitle());
 		}
 
 		public AbstractLayer<?> getLayer() {

@@ -27,6 +27,7 @@ import org.geomajas.gwt.client.map.layer.InternalClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.Layer;
 import org.geomajas.gwt.client.map.layer.configuration.ClientWmsLayerInfo;
 import org.geomajas.gwt.client.widget.MapWidget;
+import org.geomajas.gwt2.client.map.layer.AbstractLayer;
 import org.geomajas.gwt2.client.map.layer.tile.TileConfiguration;
 import org.geomajas.gwt2.plugin.wms.client.WmsClient;
 import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration;
@@ -57,6 +58,8 @@ public class LayersPanel extends VLayout {
 	private final Tab tabBase;
 
 	private final Tab tabValue;
+	
+	private RefreshableLayerTree legend;
 
 	public static final String NAME = "LAYERS";
 
@@ -73,7 +76,7 @@ public class LayersPanel extends VLayout {
 		final Tab tabReferrals = new Tab("Referrals");
 		Tab tabLegend = new Tab("Legend");
 
-		RefreshableLayerTree legend = new RefreshableLayerTree(mapWidget);
+		legend = new RefreshableLayerTree(mapWidget);
 		legend.setHeight100();
 		legend.setWidth100();
 		tabLegend.setPane(legend);
@@ -195,6 +198,10 @@ public class LayersPanel extends VLayout {
 					addMember(new ReferenceLayerBlock(subLayer));
 		}
 		return stack;
+	}
+
+	public RefreshableLayerTree getTree() {
+		return legend;
 	}
 
 }

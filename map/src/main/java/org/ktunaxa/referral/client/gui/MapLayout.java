@@ -19,6 +19,8 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.geomajas.configuration.FeatureStyleInfo;
@@ -50,6 +52,8 @@ import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsGetCapabilitiesInfo;
 import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsLayerInfo;
 import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration;
 import org.geomajas.gwt2.plugin.wms.client.service.WmsService.WmsVersion;
+import org.geomajas.widget.layer.configuration.client.ClientAbstractNodeInfo;
+import org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo;
 import org.geomajas.widget.layer.configuration.client.ClientExtraLayerInfo;
 import org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo;
 import org.geomajas.widget.layer.configuration.client.ClientLayerTreeInfo;
@@ -248,34 +252,21 @@ public final class MapLayout extends VLayout {
 
 					@Override
 					public void onSuccess(WmsGetCapabilitiesInfo result) {
-						for (WmsLayerInfo info : result.getLayers()) {
-							WmsLayerConfiguration wmsConfig = WmsClient.getInstance().createLayerConfig(info,
-									url, WmsVersion.V1_3_0);
-							wmsConfig.setCrs(KtunaxaConstant.MAP_CRS);
-
-							TileConfiguration tileConfig = new TileConfiguration(256, 256, new Coordinate(
-									-20037508.343, -20037508.343), mapWidget.getMapModel().getMapView()
-									.getResolutions());
-
-							ClientWmsLayer wmsLayer = new ClientWmsLayer(info.getName(), mapWidget.getMapModel()
-									.getMapInfo().getCrs(), wmsConfig, tileConfig);
-							ClientWmsLayerInfo wmsLayerInfo = new ClientWmsLayerInfo(wmsLayer);
-							wmsLayerInfo.setMaximumScale(new ScaleInfo(1/toResolution(info.getMinScaleDenominator())));
-							wmsLayerInfo.setMinimumScale(new ScaleInfo(1/toResolution(info.getMaxScaleDenominator())));
-							ClientExtraLayerInfo extra = new ClientExtraLayerInfo();
-							extra.setLegendUrl(wmsLayer.getLegendImageUrl());
-							extra.setLegendUrlTitle("Legend");
-							wmsLayerInfo.getWidgetInfo().put(ClientExtraLayerInfo.IDENTIFIER, extra);
-							ClientLayerTreeInfo tree = (ClientLayerTreeInfo) mapWidget.getMapModel().getMapInfo()
-									.getWidgetInfo(ClientLayerTreeInfo.IDENTIFIER);
-							ClientLayerNodeInfo node = new ClientLayerNodeInfo();
-							node.setLayerId(wmsLayerInfo.getId());
-							tree.getTreeNode().getTreeNodes().add(node);
-							wmsLayerInfo.setVisible(false);
-							mapWidget.getMapModel().addLayer(wmsLayerInfo);
-							callback.onSuccess(null);
+						ClientLayerTreeInfo tree = (ClientLayerTreeInfo) mapWidget.getMapModel().getMapInfo()
+								.getWidgetInfo(ClientLayerTreeInfo.IDENTIFIER);
+						List<ClientWmsLayerInfo> allLayers = new ArrayList<ClientWmsLayerInfo>();
+						for (WmsLayerInfo layer : result.getRootLayer().getLayers()) {
+							if(layer.getLayers().size() > 0) {
+								ClientAbstractNodeInfo branch  = parseRecursively(allLayers, layer);								
+								tree.getTreeNode().getTreeNodes().add(branch);
+							}						
 						}
-
+//						Collections.reverse(allLayers);
+						for (ClientWmsLayerInfo clientWmsLayerInfo : allLayers) {
+							mapWidget.getMapModel().addLayer(clientWmsLayerInfo);
+						}
+						getLayerPanel().getTree().refresh();
+						callback.onSuccess(null);
 					}
 
 					@Override
@@ -287,6 +278,50 @@ public final class MapLayout extends VLayout {
 
 	}
 	
+	protected ClientAbstractNodeInfo parseRecursively(List<ClientWmsLayerInfo> allLayers, WmsLayerInfo layer) {
+		final String url = Geomajas.getDispatcherUrl().replace("/map/d", "/geoserver/ows");
+//		final String url = "http://127.0.0.1:8888/d/proxy?url=http://64.141.44.215:9090/geoserver/ows";
+		ClientLayerNodeInfo node = null;
+		ClientBranchNodeInfo branch =null;
+		if(layer.getName() != null) {
+			// create info and add layer
+			WmsLayerConfiguration wmsConfig = WmsClient.getInstance().createLayerConfig(layer,
+					url, WmsVersion.V1_3_0);
+			wmsConfig.setCrs(KtunaxaConstant.MAP_CRS);
+
+			TileConfiguration tileConfig = new TileConfiguration(256, 256, new Coordinate(
+					-20037508.343, -20037508.343), mapWidget.getMapModel().getMapView()
+					.getResolutions());
+
+			ClientWmsLayer wmsLayer = new ClientWmsLayer(layer.getName(), mapWidget.getMapModel()
+					.getMapInfo().getCrs(), wmsConfig, tileConfig, layer);
+			ClientWmsLayerInfo wmsLayerInfo = new ClientWmsLayerInfo(wmsLayer);
+			wmsLayerInfo.setMaximumScale(new ScaleInfo(1/wmsConfig.getMinimumResolution()));
+			wmsLayerInfo.setMinimumScale(new ScaleInfo(1/wmsConfig.getMaximumResolution()));
+			ClientExtraLayerInfo extra = new ClientExtraLayerInfo();
+			extra.setLegendUrl(wmsLayer.getLegendImageUrl());
+			extra.setLegendUrlTitle("Legend");
+			wmsLayerInfo.getWidgetInfo().put(ClientExtraLayerInfo.IDENTIFIER, extra);
+			wmsLayerInfo.setVisible(false);
+			allLayers.add(wmsLayerInfo);
+			node = new ClientLayerNodeInfo();
+			node.setLayerId(wmsLayerInfo.getId());
+		}
+		if(layer.getLayers().size() > 0) {
+			branch = new ClientBranchNodeInfo();
+			branch.setLabel(layer.getTitle());
+			if(node != null) {
+				branch.getTreeNodes().add(node);
+			}
+			for (WmsLayerInfo info : layer.getLayers()) {
+				ClientAbstractNodeInfo child = parseRecursively(allLayers ,info);
+				branch.getTreeNodes().add(child);
+			}
+			return branch;
+		}
+		return node;
+	}
+
 	public double toResolution(double scaleDenominator) {
 		double pixelsPerUnit =  METER_PER_INCH / MapConfigurationImpl.DEFAULT_DPI;
 		return pixelsPerUnit * scaleDenominator;
