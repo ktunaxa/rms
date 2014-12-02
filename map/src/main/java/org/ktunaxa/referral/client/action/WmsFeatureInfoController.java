@@ -33,10 +33,15 @@ import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerImpl;
 import org.geomajas.gwt2.plugin.wms.client.service.WmsService;
 import org.ktunaxa.referral.client.gui.MapLayout;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.smartgwt.client.types.ContentsType;
+import com.smartgwt.client.types.Overflow;
+import com.smartgwt.client.types.Positioning;
 import com.smartgwt.client.widgets.HTMLPane;
 import com.smartgwt.client.widgets.Window;
+import com.smartgwt.client.widgets.events.CloseClickEvent;
+import com.smartgwt.client.widgets.events.CloseClickHandler;
 
 public class WmsFeatureInfoController extends AbstractGraphicsController {
 
@@ -54,11 +59,19 @@ public class WmsFeatureInfoController extends AbstractGraphicsController {
 	 */
 	public void onMouseUp(MouseUpEvent event) {
 		Coordinate worldPosition = getWorldPosition(event);
-        final Window window = new Window();  
+        final Window window = new ClosingWindow();  
         window.setWidth(MapLayout.getInstance().getLayerPanel().getWidth()); 
         window.setHeight(MapLayout.getInstance().getLayerPanel().getHeight());
         window.setCanDragReposition(true);  
-        window.setCanDragResize(true);  
+        window.setCanDragResize(true); 
+        window.setKeepInParentRect(true);
+        window.addCloseClickHandler(new CloseClickHandler() {
+			
+			@Override
+			public void onCloseClick(CloseClickEvent event) {
+				window.markForDestroy();
+			}
+		});
         StringBuilder sb = null;
 		WmsLayerConfiguration layerConfig = new WmsLayerConfiguration();
 		for (Layer<?> layer : mapWidget.getMapModel().getLayers()) {
@@ -96,17 +109,34 @@ public class WmsFeatureInfoController extends AbstractGraphicsController {
 	        htmlPane.setContentsType(ContentsType.PAGE); 
 	        window.addItem(htmlPane);
 			if(!window.isDrawn()) {
-		        window.showNextTo(MapLayout.getInstance().getMap(), "left");
+				MapLayout.getInstance().addChild(window);
 			}
 		}
 
 	}
+	
+	class ClosingWindow extends Window {
 
-	private double calculateBufferFromPixelTolerance() {
-		WorldViewTransformer transformer = mapWidget.getMapModel().getMapView().getWorldViewTransformer();
-		Coordinate c1 = transformer.viewToWorld(new Coordinate(0, 0));
-		Coordinate c2 = transformer.viewToWorld(new Coordinate(pixelTolerance, 0));
-		return Mathlib.distance(c1, c2);
+		public ClosingWindow() {
+			super();
+			addCloseClickHandler(new CloseClickHandler() {
+				
+				@Override
+				public void onCloseClick(CloseClickEvent event) {
+					close();
+				}
+			});
+		}
+
+		@Override
+		public void close() {
+			clear();
+			hide();
+			markForDestroy();
+		}
+		
+		
+		
 	}
 
 }
