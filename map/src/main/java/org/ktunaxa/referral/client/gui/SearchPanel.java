@@ -148,6 +148,8 @@ public class SearchPanel extends VLayout {
 
 		private PanelSearchWidget combinedSearch;
 
+		private PanelSearchWidget fullTextSearch;
+
 		public ValueSearchPanel(final MapLayout mapLayout, String layerId) {
 			final MapWidget mapWidget = mapLayout.getMap();
 			valueResultList = new MultiFeatureListGrid(mapWidget);
@@ -233,7 +235,7 @@ public class SearchPanel extends VLayout {
 				fullTextSearchPanel.setCanAddToFavourites(false);
 				fullTextSearchPanel.setCanCancel(true);
 				fullTextSearchPanel.setLayerId(layerId);
-				PanelSearchWidget fullTextSearch = new CardPanelSearchWidget("FullTextSearch" + layerId,
+				fullTextSearch = new CardPanelSearchWidget("FullTextSearch" + layerId,
 						"Search full text", fullTextSearchPanel, searchPanels, Card.ATTRIBUTE);
 				searchWidgetList.add(fullTextSearch);
 				mapLayout.getMap().getMapModel().runWhenInitialized(new Runnable() {
@@ -250,7 +252,8 @@ public class SearchPanel extends VLayout {
 						searchAttribute.setServerLayerId("layerFtsLayers");
 						searchConfig.setAttributes(Arrays.asList(searchAttribute));
 						fullTextSearchPanel.setSearchConfig(searchConfig, KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
-						
+						fullTextSearch.reset();
+						fullTextSearch.hide();					
 					}
 				});
 			}
