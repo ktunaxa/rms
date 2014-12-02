@@ -43,6 +43,8 @@ import org.opengis.filter.Filter;
  *
  */
 public class FullTextSearchLayer extends HibernateLayer {
+	
+	private int MAX_FEATURES = 1000;
 
 	@Override
 	public Iterator<?> getElements(Filter filter, int offset, int maxResultSize) throws LayerException {
@@ -70,7 +72,8 @@ public class FullTextSearchLayer extends HibernateLayer {
 				}
 			}
 
-			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);			
+			criteria.setMaxResults(MAX_FEATURES);
 
 			List<?> list = criteria.list();
 			session.close();

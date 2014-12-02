@@ -24,7 +24,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.geomajas.global.GeomajasConstant;
+import org.geomajas.gwt.client.map.MapModel;
 import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
 import org.geomajas.gwt.client.util.GeometryConverter;
 import org.geomajas.gwt.client.util.WidgetLayout;
@@ -42,6 +44,7 @@ import org.geomajas.widget.searchandfilter.client.widget.search.CombinedSearchPa
 import org.geomajas.widget.searchandfilter.client.widget.search.PanelSearchWidget;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchController;
 import org.geomajas.widget.searchandfilter.client.widget.search.SearchWidget;
+import org.geomajas.widget.searchandfilter.client.widget.search.SearchWidget.SearchRequestEvent;
 import org.geomajas.widget.searchandfilter.search.dto.ConfiguredSearch;
 import org.geomajas.widget.searchandfilter.search.dto.ConfiguredSearchAttribute;
 import org.geomajas.widget.searchandfilter.search.dto.ConfiguredSearchAttribute.AttributeType;
@@ -62,6 +65,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+
 
 /**
  * Panel that displays search tools: search for referral and geographical search / spatial operations.
@@ -261,7 +265,7 @@ public class SearchPanel extends VLayout {
 			combinedSearchPanel.setCanCancel(false);
 			combinedSearchPanel.setWidth100();
 			combinedSearch = new PanelSearchWidget("PanelSearchWidget" + layerId, "search widget", combinedSearchPanel);
-			SearchController searchController = new SearchController(mapWidget, false);
+			SearchController searchController = new FullTextSearchController(mapWidget, false);
 			searchController.addSearchHandler(valueResultList);
 			combinedSearch.addSearchRequestHandler(searchController);
 			combinedSearch.setWidth100();
@@ -323,6 +327,28 @@ public class SearchPanel extends VLayout {
 			}
 			super.show();
 		}
+	}
+	
+	class FullTextSearchController extends SearchController {
+
+		private MapModel mapModel;
+
+		public FullTextSearchController(MapWidget mapWidget, boolean modalSearch) {
+			super(mapWidget, modalSearch);
+			mapModel = mapWidget.getMapModel();
+		}
+
+		@Override
+		public void onSearchRequested(SearchRequestEvent event) {
+			VectorLayer referenceValueLayer = (VectorLayer) mapModel.getLayer(KtunaxaConstant.LAYER_REFERENCE_VALUE_ID);
+			// a little hack to not pass the exclude filter !
+			referenceValueLayer.setVisible(false);
+			referenceValueLayer.setFilter(null);
+			super.onSearchRequested(event);
+			referenceValueLayer.setFilter("EXCLUDE");
+			referenceValueLayer.setVisible(true);
+		}
+
 	}
 
 }
