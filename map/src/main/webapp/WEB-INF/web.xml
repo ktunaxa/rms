@@ -84,6 +84,7 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/d/*</url-pattern>
 		<url-pattern>/Ktunaxa/*</url-pattern>
+		<url-pattern>/Sanity/*</url-pattern>
 		<url-pattern>/KtunaxaManager/*</url-pattern>
 	</servlet-mapping>
 

@@ -386,7 +386,10 @@
 					<disableCastChecking>true</disableCastChecking>
 					<disableClassMetadata>true</disableClassMetadata>
 					<extraJvmArgs>-Xmx1500M -Xss1024k -XX:MaxPermSize=128M</extraJvmArgs>
-					<module>org.ktunaxa.referral.KtunaxaEntryPoint</module>
+					<modules>
+						<module>org.ktunaxa.referral.KtunaxaEntryPoint</module>
+						<module>org.ktunaxa.referral.KtunaxaSanityEntryPoint</module>
+					</modules>
 					<runTarget>index.html</runTarget>
 					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
 					<copyWebapp>true</copyWebapp>
