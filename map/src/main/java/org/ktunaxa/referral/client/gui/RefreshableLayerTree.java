@@ -18,20 +18,33 @@
  */
 package org.ktunaxa.referral.client.gui;
 
-import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
-import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.geomajas.gwt.client.map.event.LayerChangedHandler;
+import org.geomajas.gwt.client.map.event.LayerFilteredEvent;
+import org.geomajas.gwt.client.map.event.LayerFilteredHandler;
+import org.geomajas.gwt.client.map.event.LayerLabeledEvent;
+import org.geomajas.gwt.client.map.event.LayerShownEvent;
+import org.geomajas.gwt.client.map.event.LayerStyleChangeEvent;
+import org.geomajas.gwt.client.map.event.LayerStyleChangedHandler;
 import org.geomajas.gwt.client.map.layer.AbstractLayer;
 import org.geomajas.gwt.client.map.layer.ClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.InternalClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.Layer;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.map.layer.configuration.ClientWmsLayerInfo;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt2.client.map.layer.LegendUrlSupported;
 import org.geomajas.widget.layer.client.widget.CombinedLayertree;
+import org.geomajas.widget.layer.client.widget.CombinedLayertree.LayerTreeLegendItemNode;
+import org.geomajas.widget.layer.client.widget.LayerTreeBase.LayerTreeTreeNode;
 import org.geomajas.widget.layer.configuration.client.ClientAbstractNodeInfo;
 import org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo;
 import org.geomajas.widget.layer.configuration.client.ClientLayerTreeInfo;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.smartgwt.client.widgets.tree.TreeNode;
 import com.smartgwt.client.widgets.tree.events.LeafClickEvent;
 
@@ -42,6 +55,8 @@ import com.smartgwt.client.widgets.tree.events.LeafClickEvent;
  *
  */
 public class RefreshableLayerTree extends CombinedLayertree {
+
+	private final List<HandlerRegistration> registrations = new ArrayList<HandlerRegistration>();
 
 	public RefreshableLayerTree(MapWidget mapWidget) {
 		super(mapWidget);
@@ -76,6 +91,57 @@ public class RefreshableLayerTree extends CombinedLayertree {
 		treeGrid.setData(tree);
 		tree.openFolder(nodeRoot);
 		syncNodeState(false);
+		// must handle all layers for visibility state !
+		onUnload(); // drops previous handlers
+		for (Layer<?> layer : mapModel.getLayers()) {
+			registrations.add(layer.addLayerChangedHandler(new LayerChangedHandler() {
+
+				public void onLabelChange(LayerLabeledEvent event) {
+					GWT.log("Legend: onLabelChange() - " + event.getLayer().getLabel());
+					// find the node & update the icon
+					for (TreeNode node : tree.getAllNodes()) {
+						if (node.getName().equals(event.getLayer().getLabel()) && node instanceof LayerTreeTreeNode) {
+							((LayerTreeTreeNode) node).updateIcon();
+						}
+					}
+				}
+
+				public void onVisibleChange(LayerShownEvent event) {
+					GWT.log("Legend: onVisibleChange() - " + event.getLayer().getLabel());
+					// find the node & update the icon
+					for (TreeNode node : tree.getAllNodes()) {
+						if(node instanceof LayerTreeTreeNode) {
+							LayerTreeTreeNode layerTreeTreeNode = (LayerTreeTreeNode)node;
+							if (layerTreeTreeNode.getLayer().equals(event.getLayer())) {
+								((LayerTreeTreeNode) node).updateIcon();
+							}
+						}					
+					}
+					treeGrid.markForRedraw();
+				}
+			}));
+
+			if (layer instanceof VectorLayer) {
+				VectorLayer vl = (VectorLayer) layer;
+				registrations.add(vl.addLayerFilteredHandler(new LayerFilteredHandler() {
+
+					public void onFilterChange(LayerFilteredEvent event) {
+						GWT.log("Legend: onLayerFilterChange() - " + event.getLayer().getLabel());
+						// find the node & update the icon
+						for (TreeNode node : tree.getAllNodes()) {
+							if(node instanceof LayerTreeTreeNode) {
+								LayerTreeTreeNode layerTreeTreeNode = (LayerTreeTreeNode)node;
+								if (layerTreeTreeNode.getLayer().equals(event.getLayer())) {
+									((LayerTreeTreeNode) node).updateIcon();
+								}
+							}					
+						}
+						treeGrid.markForRedraw();
+					}
+				}));
+			}
+		}
+
 	}
 
 	@Override

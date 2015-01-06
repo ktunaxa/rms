@@ -51,6 +51,8 @@ import org.geomajas.gwt2.plugin.wms.client.WmsClient;
 import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsGetCapabilitiesInfo;
 import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsLayerInfo;
 import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration;
+import org.geomajas.gwt2.plugin.wms.client.service.WmsService.WmsRequest;
+import org.geomajas.gwt2.plugin.wms.client.service.WmsService.WmsUrlTransformer;
 import org.geomajas.gwt2.plugin.wms.client.service.WmsService.WmsVersion;
 import org.geomajas.widget.layer.configuration.client.ClientAbstractNodeInfo;
 import org.geomajas.widget.layer.configuration.client.ClientBranchNodeInfo;
@@ -149,6 +151,18 @@ public final class MapLayout extends VLayout {
 
 	private MapLayout() {
 		super();
+		WmsClient.getInstance().getWmsService().setWmsUrlTransformer(new WmsUrlTransformer() {
+
+			@Override
+			public String transform(WmsRequest request, String url) {
+				if (request == WmsRequest.GETMAP) {
+					return url + "&tiled=true";
+				} else {
+					return url;
+				}
+			}
+
+		});
 		handlerManager = new HandlerManager(this);
 		UserContext.getInstance().addUserContextChangedHandler(new UserContextChangedHandler() {
 
@@ -289,7 +303,7 @@ public final class MapLayout extends VLayout {
 					url, WmsVersion.V1_3_0);
 			wmsConfig.setCrs(KtunaxaConstant.MAP_CRS);
 
-			TileConfiguration tileConfig = new TileConfiguration(256, 256, new Coordinate(
+			TileConfiguration tileConfig = new TileConfiguration(512, 512, new Coordinate(
 					-20037508.343, -20037508.343), mapWidget.getMapModel().getMapView()
 					.getResolutions());
 

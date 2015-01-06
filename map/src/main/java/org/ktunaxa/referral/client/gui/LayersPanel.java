@@ -25,6 +25,7 @@ import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
 import org.geomajas.gwt.client.map.layer.ClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.InternalClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.Layer;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.map.layer.configuration.ClientWmsLayerInfo;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt2.client.map.layer.AbstractLayer;
@@ -161,7 +162,6 @@ public class LayersPanel extends VLayout {
 				sectionStackSection.setCanCollapse(false);
 				sectionStackSection.addItem(referralStackLayout);
 				referralStack.addSection(sectionStackSection);
-				
 			}
 		});
 	}
