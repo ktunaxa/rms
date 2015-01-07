@@ -25,7 +25,11 @@ import org.geomajas.gwt.client.widget.MapWidget;
 
 import com.smartgwt.client.widgets.events.ClickEvent;
 
-
+/**
+ * 
+ * @author Jan De Moerloose
+ *
+ */
 public class WmsFeatureInfoModalAction extends ToolbarModalAction {
 
 	private MapWidget mapWidget;

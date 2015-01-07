@@ -19,12 +19,13 @@
 
 package org.ktunaxa.referral.client.referral;
 
-import com.smartgwt.client.widgets.Canvas;
 import org.geomajas.gwt.client.util.GeometryConverter;
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.widget.utility.gwt.client.wizard.WizardPage;
 import org.ktunaxa.referral.client.gui.DocumentPanel;
 import org.ktunaxa.referral.client.gui.MapLayout;
+
+import com.smartgwt.client.widgets.Canvas;
 
 /**
  * Third page in the referral creation wizard: attach documents to the referrals.

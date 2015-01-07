@@ -19,6 +19,8 @@
 
 package org.ktunaxa.referral.server;
 
+import java.util.Map;
+
 import org.geomajas.configuration.SyntheticAttributeInfo;
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.InternalFeature;
@@ -26,8 +28,6 @@ import org.geomajas.layer.feature.SyntheticAttributeBuilder;
 import org.geomajas.layer.feature.attribute.StringAttribute;
 import org.ktunaxa.referral.client.referral.ReferralUtil;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
-
-import java.util.Map;
 
 /**
  * Build the full id synthetic attribute.

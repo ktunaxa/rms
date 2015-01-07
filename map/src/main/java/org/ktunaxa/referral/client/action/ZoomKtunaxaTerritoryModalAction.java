@@ -19,12 +19,13 @@
 
 package org.ktunaxa.referral.client.action;
 
-import com.smartgwt.client.widgets.events.ClickEvent;
 import org.geomajas.gwt.client.action.ToolbarAction;
 import org.geomajas.gwt.client.map.MapView;
 import org.geomajas.gwt.client.spatial.Bbox;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
+
+import com.smartgwt.client.widgets.events.ClickEvent;
 
 /**
  * Tool to zoom to Ktunaxa territory.

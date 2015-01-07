@@ -24,6 +24,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import org.ktunaxa.referral.client.gui.LayoutConstant;
+import org.ktunaxa.referral.client.security.UserContext;
+
 import com.smartgwt.client.types.KeyNames;
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.VerticalAlignment;
@@ -42,8 +45,6 @@ import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
-import org.ktunaxa.referral.client.gui.LayoutConstant;
-import org.ktunaxa.referral.client.security.UserContext;
 
 /**
  * A layout that shows all elements of a one-to-many attribute as blocks in a list.

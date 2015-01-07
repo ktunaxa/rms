@@ -19,10 +19,10 @@
 
 package org.ktunaxa.referral.server.command.dto;
 
+import java.util.List;
+
 import org.geomajas.command.CommandResponse;
 import org.ktunaxa.referral.server.dto.TaskDto;
-
-import java.util.List;
 
 /**
  * Response DTO object for {@link org.ktunaxa.referral.server.command.bpm.GetTasksCommand} command.

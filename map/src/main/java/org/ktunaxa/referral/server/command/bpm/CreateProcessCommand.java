@@ -19,6 +19,11 @@
 
 package org.ktunaxa.referral.server.command.bpm;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.activiti.engine.RuntimeService;
 import org.geomajas.command.Command;
 import org.geomajas.command.CommandResponse;
@@ -28,11 +33,6 @@ import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.command.dto.CreateProcessRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Create a referral handling process.

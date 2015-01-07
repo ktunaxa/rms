@@ -19,13 +19,14 @@
 
 package org.ktunaxa.referral.client.gui;
 
+import org.geomajas.gwt.client.map.feature.Feature;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
+
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.tab.Tab;
 import com.smartgwt.client.widgets.tab.TabSet;
 import com.smartgwt.client.widgets.tab.events.TabSelectedEvent;
 import com.smartgwt.client.widgets.tab.events.TabSelectedHandler;
-import org.geomajas.gwt.client.map.feature.Feature;
-import org.geomajas.gwt.client.map.layer.VectorLayer;
 
 /**
  * Panel that displays the BPM information (my tasks and unassigned tasks).

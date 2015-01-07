@@ -19,12 +19,12 @@
 
 package org.ktunaxa.referral.client.referral;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.Feature;
 import org.geomajas.layer.feature.SearchCriterion;
-
-import com.smartgwt.client.data.Record;
 import org.geomajas.layer.feature.attribute.AssociationAttribute;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.DateAttribute;
@@ -32,8 +32,8 @@ import org.geomajas.layer.feature.attribute.ManyToOneAttribute;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.smartgwt.client.data.Record;
 
 /**
  * Utility for referral id.

@@ -1,15 +1,40 @@
 /*
- * This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+ * Ktunaxa Referral Management System.
  *
- * Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+ * Copyright (C) see version control system
  *
- * The program is available in open source according to the GNU Affero
- * General Public License. All contributions in this program are covered
- * by the Geomajas Contributors License Agreement. For full licensing
- * details, see LICENSE.txt in the project root.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.geomajas.widget.layer.client.widget;
+
+import org.geomajas.gwt.client.i18n.I18nProvider;
+import org.geomajas.gwt.client.map.MapModel;
+import org.geomajas.gwt.client.map.event.LayerDeselectedEvent;
+import org.geomajas.gwt.client.map.event.LayerSelectedEvent;
+import org.geomajas.gwt.client.map.event.LayerSelectionHandler;
+import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
+import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
+import org.geomajas.gwt.client.map.layer.AbstractLayer;
+import org.geomajas.gwt.client.map.layer.Layer;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.gwt.client.util.Log;
+import org.geomajas.gwt.client.widget.MapWidget;
+import org.geomajas.widget.layer.client.util.GltLayout;
+import org.geomajas.widget.layer.client.widget.CombinedLayertree.LayerTreeLegendNode;
+import org.geomajas.widget.layer.configuration.client.ClientAbstractNodeInfo;
+import org.geomajas.widget.layer.configuration.client.ClientLayerTreeInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
@@ -29,22 +54,6 @@ import com.smartgwt.client.widgets.tree.events.FolderOpenedEvent;
 import com.smartgwt.client.widgets.tree.events.FolderOpenedHandler;
 import com.smartgwt.client.widgets.tree.events.LeafClickEvent;
 import com.smartgwt.client.widgets.tree.events.LeafClickHandler;
-import org.geomajas.gwt.client.i18n.I18nProvider;
-import org.geomajas.gwt.client.map.MapModel;
-import org.geomajas.gwt.client.map.event.LayerDeselectedEvent;
-import org.geomajas.gwt.client.map.event.LayerSelectedEvent;
-import org.geomajas.gwt.client.map.event.LayerSelectionHandler;
-import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
-import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
-import org.geomajas.gwt.client.map.layer.AbstractLayer;
-import org.geomajas.gwt.client.map.layer.Layer;
-import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.util.Log;
-import org.geomajas.gwt.client.widget.MapWidget;
-import org.geomajas.widget.layer.client.util.GltLayout;
-import org.geomajas.widget.layer.client.widget.CombinedLayertree.LayerTreeLegendNode;
-import org.geomajas.widget.layer.configuration.client.ClientAbstractNodeInfo;
-import org.geomajas.widget.layer.configuration.client.ClientLayerTreeInfo;
 
 /**
  * The LayerTree shows a tree resembling the available layers for the map. Several actions can be executed on the layers

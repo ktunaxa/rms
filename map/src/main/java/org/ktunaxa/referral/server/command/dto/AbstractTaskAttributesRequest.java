@@ -19,10 +19,10 @@
 
 package org.ktunaxa.referral.server.command.dto;
 
+import java.util.Map;
+
 import org.geomajas.command.CommandRequest;
 import org.ktunaxa.referral.server.dto.TaskDto;
-
-import java.util.Map;
 
 /**
  * Base request object which contains a task DTO and attributes map.

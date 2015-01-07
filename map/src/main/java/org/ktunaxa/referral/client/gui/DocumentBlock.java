@@ -20,8 +20,6 @@ package org.ktunaxa.referral.client.gui;
 
 import java.util.Date;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.Window;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
@@ -30,6 +28,8 @@ import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.widget.attribute.AbstractAttributeBlock;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.smartgwt.client.types.Cursor;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.HTMLFlow;

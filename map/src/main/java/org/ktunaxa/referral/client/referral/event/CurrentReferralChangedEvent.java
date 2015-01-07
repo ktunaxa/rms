@@ -19,9 +19,10 @@
 
 package org.ktunaxa.referral.client.referral.event;
 
-import com.google.gwt.event.shared.GwtEvent;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.referral.server.dto.TaskDto;
+
+import com.google.gwt.event.shared.GwtEvent;
 
 /**
  * Event that is fired when the current referral has changed.

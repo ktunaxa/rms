@@ -19,9 +19,9 @@
 
 package org.ktunaxa.referral.server.command.dto;
 
-import org.geomajas.command.CommandRequest;
-
 import java.util.Date;
+
+import org.geomajas.command.CommandRequest;
 
 /**
  * Request data for {@link org.ktunaxa.referral.server.command.bpm.CreateProcessCommand}.

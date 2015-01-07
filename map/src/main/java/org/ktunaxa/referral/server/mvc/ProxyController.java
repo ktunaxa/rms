@@ -1,7 +1,24 @@
+/*
+ * Ktunaxa Referral Management System.
+ *
+ * Copyright (C) see version control system
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.ktunaxa.referral.server.mvc;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.URLDecoder;
 import java.util.Enumeration;
 
@@ -20,6 +37,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * @author Jan De Moerloose
+ */
 @Controller("/proxy/**")
 public class ProxyController {
 
@@ -37,17 +57,17 @@ public class ProxyController {
 			HttpMethod method = null;
 
 			// Split this according to the type of request
-			if (request.getMethod().equals("GET")) {
+			if ("GET".equals(request.getMethod())) {
 
 				method = new GetMethod(url);
 				NameValuePair[] pairs = new NameValuePair[request.getParameterMap().size()];
-				int i =0;
+				int i = 0;
 				for (Object name : request.getParameterMap().keySet()) {
-					pairs[i++] = new NameValuePair((String)name, request.getParameter((String)name));
+					pairs[i++] = new NameValuePair((String) name, request.getParameter((String) name));
 				}
 				method.setQueryString(pairs);
 
-			} else if (request.getMethod().equals("POST")) {
+			} else if ("POST".equals(request.getMethod())) {
 
 				method = new PostMethod(url);
 
@@ -72,7 +92,7 @@ public class ProxyController {
 			Header[] headers = method.getResponseHeaders();
 			for (Header header : headers) {
 
-				if ("Content-Type".equalsIgnoreCase(header.getName())) {
+				if (header.getName().equalsIgnoreCase("Content-Type")) {
 
 					response.setContentType(header.getValue());
 				}

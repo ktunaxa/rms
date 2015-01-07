@@ -19,10 +19,7 @@
 
 package org.ktunaxa.referral.client.form;
 
-import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.FormItem;
-import com.smartgwt.client.widgets.layout.VLayout;
+import java.util.Map;
 
 import org.geomajas.command.CommandResponse;
 import org.geomajas.command.dto.PersistTransactionRequest;
@@ -37,7 +34,10 @@ import org.ktunaxa.referral.client.gui.MapLayout;
 import org.ktunaxa.referral.client.widget.CommunicationHandler;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
-import java.util.Map;
+import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.FormItem;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * Base class for building a task form.

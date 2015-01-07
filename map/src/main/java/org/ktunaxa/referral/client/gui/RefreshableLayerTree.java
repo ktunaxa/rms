@@ -26,8 +26,6 @@ import org.geomajas.gwt.client.map.event.LayerFilteredEvent;
 import org.geomajas.gwt.client.map.event.LayerFilteredHandler;
 import org.geomajas.gwt.client.map.event.LayerLabeledEvent;
 import org.geomajas.gwt.client.map.event.LayerShownEvent;
-import org.geomajas.gwt.client.map.event.LayerStyleChangeEvent;
-import org.geomajas.gwt.client.map.event.LayerStyleChangedHandler;
 import org.geomajas.gwt.client.map.layer.AbstractLayer;
 import org.geomajas.gwt.client.map.layer.ClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.InternalClientWmsLayer;
@@ -37,8 +35,6 @@ import org.geomajas.gwt.client.map.layer.configuration.ClientWmsLayerInfo;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt2.client.map.layer.LegendUrlSupported;
 import org.geomajas.widget.layer.client.widget.CombinedLayertree;
-import org.geomajas.widget.layer.client.widget.CombinedLayertree.LayerTreeLegendItemNode;
-import org.geomajas.widget.layer.client.widget.LayerTreeBase.LayerTreeTreeNode;
 import org.geomajas.widget.layer.configuration.client.ClientAbstractNodeInfo;
 import org.geomajas.widget.layer.configuration.client.ClientLayerNodeInfo;
 import org.geomajas.widget.layer.configuration.client.ClientLayerTreeInfo;
@@ -58,10 +54,17 @@ public class RefreshableLayerTree extends CombinedLayertree {
 
 	private final List<HandlerRegistration> registrations = new ArrayList<HandlerRegistration>();
 
+	/**
+	 * 
+	 * @param mapWidget
+	 */
 	public RefreshableLayerTree(MapWidget mapWidget) {
 		super(mapWidget);
 	}
 
+	/**
+	 * 
+	 */
 	public void onLeafClick(LeafClickEvent event) {
 		if (event.getLeaf() instanceof WmsLegendNode) {
 			WmsLegendNode n = (WmsLegendNode) event.getLeaf();
@@ -73,6 +76,9 @@ public class RefreshableLayerTree extends CombinedLayertree {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void refresh() {
 		// make a new tree, quick and dirty way !
 		tree = new MyTree();
@@ -110,12 +116,12 @@ public class RefreshableLayerTree extends CombinedLayertree {
 					GWT.log("Legend: onVisibleChange() - " + event.getLayer().getLabel());
 					// find the node & update the icon
 					for (TreeNode node : tree.getAllNodes()) {
-						if(node instanceof LayerTreeTreeNode) {
-							LayerTreeTreeNode layerTreeTreeNode = (LayerTreeTreeNode)node;
+						if (node instanceof LayerTreeTreeNode) {
+							LayerTreeTreeNode layerTreeTreeNode = (LayerTreeTreeNode) node;
 							if (layerTreeTreeNode.getLayer().equals(event.getLayer())) {
 								((LayerTreeTreeNode) node).updateIcon();
 							}
-						}					
+						}
 					}
 					treeGrid.markForRedraw();
 				}
@@ -129,12 +135,12 @@ public class RefreshableLayerTree extends CombinedLayertree {
 						GWT.log("Legend: onLayerFilterChange() - " + event.getLayer().getLabel());
 						// find the node & update the icon
 						for (TreeNode node : tree.getAllNodes()) {
-							if(node instanceof LayerTreeTreeNode) {
-								LayerTreeTreeNode layerTreeTreeNode = (LayerTreeTreeNode)node;
+							if (node instanceof LayerTreeTreeNode) {
+								LayerTreeTreeNode layerTreeTreeNode = (LayerTreeTreeNode) node;
 								if (layerTreeTreeNode.getLayer().equals(event.getLayer())) {
 									((LayerTreeTreeNode) node).updateIcon();
 								}
-							}					
+							}
 						}
 						treeGrid.markForRedraw();
 					}
@@ -165,6 +171,11 @@ public class RefreshableLayerTree extends CombinedLayertree {
 		}
 	}
 
+	/**
+	 * 
+	 * @author Jan De Moerloose
+	 *
+	 */
 	public class WmsLegendNode extends LayerTreeLegendNode {
 
 		public WmsLegendNode(RefreshableTree tree, Layer<?> layer) {
@@ -185,6 +196,11 @@ public class RefreshableLayerTree extends CombinedLayertree {
 		}
 	}
 
+	/**
+	 * 
+	 * @author Jan De Moerloose
+	 *
+	 */
 	public class WmsLegendItemNode extends LayerTreeTreeNode {
 
 		public WmsLegendItemNode(WmsLegendNode parent, ClientWmsLayer layer) {
@@ -197,6 +213,11 @@ public class RefreshableLayerTree extends CombinedLayertree {
 		}
 	}
 
+	/**
+	 * 
+	 * @author Jan De Moerloose
+	 *
+	 */
 	protected class MyTree extends RefreshableTree {
 
 	}

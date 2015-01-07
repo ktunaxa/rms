@@ -19,14 +19,14 @@
 
 package org.ktunaxa.referral.server.security;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.geomajas.internal.security.DefaultSecurityContext;
 import org.geomajas.security.Authentication;
 import org.geomajas.security.BaseAuthorization;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Custom security context for this application.

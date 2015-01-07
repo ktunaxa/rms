@@ -18,10 +18,6 @@
  */
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.data.DataSource;
-import com.smartgwt.client.widgets.form.fields.FormItem;
-import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
-import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import org.geomajas.configuration.AbstractReadOnlyAttributeInfo;
 import org.geomajas.configuration.FeatureInfo;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
@@ -33,6 +29,11 @@ import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.IntegerAttribute;
 import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
+
+import com.smartgwt.client.data.DataSource;
+import com.smartgwt.client.widgets.form.fields.FormItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 
 /**
  * Form for editing comments.

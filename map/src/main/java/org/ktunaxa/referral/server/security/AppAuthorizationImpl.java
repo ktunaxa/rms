@@ -19,9 +19,9 @@
 
 package org.ktunaxa.referral.server.security;
 
-import org.geomajas.plugin.staticsecurity.configuration.LayerAuthorization;
-
 import java.util.Set;
+
+import org.geomajas.plugin.staticsecurity.configuration.LayerAuthorization;
 
 /**
  * Custom authorization implementation.

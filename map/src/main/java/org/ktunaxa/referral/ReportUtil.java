@@ -19,11 +19,11 @@
 
 package org.ktunaxa.referral;
 
+import java.util.Map;
+
 import org.geomajas.layer.feature.Attribute;
 import org.geomajas.layer.feature.InternalFeature;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
-
-import java.util.Map;
 
 /**
  * Utility code for easier report generation.

@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.ktunaxa.referral.client.gui.LayoutConstant;
+
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.SelectionType;
 import com.smartgwt.client.types.VerticalAlignment;
@@ -35,7 +37,6 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
-import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * <p>

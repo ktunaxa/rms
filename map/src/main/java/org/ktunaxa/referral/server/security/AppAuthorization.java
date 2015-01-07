@@ -19,9 +19,9 @@
 
 package org.ktunaxa.referral.server.security;
 
-import org.geomajas.security.BaseAuthorization;
-
 import java.util.Set;
+
+import org.geomajas.security.BaseAuthorization;
 
 /**
  * Custom authorization class for the application.

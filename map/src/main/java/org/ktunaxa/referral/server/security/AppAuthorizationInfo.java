@@ -19,12 +19,12 @@
 
 package org.ktunaxa.referral.server.security;
 
-import org.geomajas.plugin.staticsecurity.configuration.LayerAuthorizationInfo;
-import org.geomajas.security.BaseAuthorization;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import org.geomajas.plugin.staticsecurity.configuration.LayerAuthorizationInfo;
+import org.geomajas.security.BaseAuthorization;
 
 /**
  * Configuration object which includes the custom policy.

@@ -25,6 +25,8 @@ import java.util.List;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.layer.feature.attribute.AssociationValue;
 import org.geomajas.layer.feature.attribute.OneToManyAttribute;
+import org.geomajas.widget.utility.gwt.client.widget.CardLayout;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -36,8 +38,6 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.geomajas.widget.utility.gwt.client.widget.CardLayout;
-import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * Layout for editing one-to-many attributes, consisting of a list view ({@link AttributeBlockList}) and a detail view (

@@ -19,15 +19,15 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import org.ktunaxa.bpm.KtunaxaBpmConstant;
-import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
-import org.ktunaxa.referral.client.widget.ListView;
-import org.ktunaxa.referral.server.dto.TaskDto;
-
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.ktunaxa.bpm.KtunaxaBpmConstant;
+import org.ktunaxa.referral.client.widget.AbstractCollapsibleListBlock;
+import org.ktunaxa.referral.client.widget.ListView;
+import org.ktunaxa.referral.server.dto.TaskDto;
 
 /**
  * {@link ListView} for looking at and sorting {@link TaskDto} instances.

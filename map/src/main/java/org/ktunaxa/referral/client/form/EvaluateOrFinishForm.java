@@ -19,12 +19,13 @@
 
 package org.ktunaxa.referral.client.form;
 
-import com.smartgwt.client.widgets.form.fields.CheckboxItem;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.ktunaxa.bpm.KtunaxaBpmConstant;
 import org.ktunaxa.referral.server.dto.TaskDto;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 
 /**
  * Empty task form, not requiring input of any values.

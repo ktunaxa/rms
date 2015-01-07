@@ -20,7 +20,6 @@
 package org.ktunaxa.referral.client.gui;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.geomajas.configuration.FeatureStyleInfo;
@@ -145,7 +144,7 @@ public final class MapLayout extends VLayout {
 	private HandlerManager handlerManager;
 
 	private SearchPanel searchPanel;
-	
+
 	private WmsLayerConfiguration rootLayerConfiguration;
 
 	public static MapLayout getInstance() {
@@ -262,7 +261,7 @@ public final class MapLayout extends VLayout {
 	protected void addClientLayers() {
 		// assuming collocated geoserver !!!
 		final String url = Geomajas.getDispatcherUrl().replace("/map/d", "/geoserver/ows");
-//		final String url = "http://127.0.0.1:8888/d/proxy?url=http://64.141.44.215:9090/geoserver/ows";
+		// final String url = "http://127.0.0.1:8888/d/proxy?url=http://64.141.44.215:9090/geoserver/ows";
 		final Callback<Void, Void> callback = CommunicationHandler.get().startAction("Loading layers...", false);
 		WmsClient.getInstance().getWmsService()
 				.getCapabilities(url, WmsVersion.V1_3_0, new Callback<WmsGetCapabilitiesInfo, String>() {
@@ -272,18 +271,18 @@ public final class MapLayout extends VLayout {
 						ClientLayerTreeInfo tree = (ClientLayerTreeInfo) mapWidget.getMapModel().getMapInfo()
 								.getWidgetInfo(ClientLayerTreeInfo.IDENTIFIER);
 						List<ClientWmsLayerInfo> allLayers = new ArrayList<ClientWmsLayerInfo>();
-						rootLayerConfiguration = WmsClient.getInstance().createLayerConfig(result.getRootLayer(),
-								url, WmsVersion.V1_3_0);
+						rootLayerConfiguration = WmsClient.getInstance().createLayerConfig(result.getRootLayer(), url,
+								WmsVersion.V1_3_0);
 						rootLayerConfiguration.setCrs(KtunaxaConstant.MAP_CRS);
 						rootLayerConfiguration.setWmsServiceVendor(WmsServiceVendor.GEOSERVER_WMS);
 
 						for (WmsLayerInfo layer : result.getRootLayer().getLayers()) {
-							if(layer.getLayers().size() > 0) {
-								ClientAbstractNodeInfo branch  = parseRecursively(allLayers, layer);								
+							if (layer.getLayers().size() > 0) {
+								ClientAbstractNodeInfo branch = parseRecursively(allLayers, layer);
 								tree.getTreeNode().getTreeNodes().add(branch);
-							}						
+							}
 						}
-//						Collections.reverse(allLayers);
+						// Collections.reverse(allLayers);
 						for (ClientWmsLayerInfo clientWmsLayerInfo : allLayers) {
 							mapWidget.getMapModel().addLayer(clientWmsLayerInfo);
 						}
@@ -293,33 +292,32 @@ public final class MapLayout extends VLayout {
 
 					@Override
 					public void onFailure(String reason) {
-						SC.say("Could not reach geoserver on "+url);
+						SC.say("Could not reach geoserver on " + url);
 						callback.onSuccess(null);
 					}
 				});
 
 	}
-	
+
 	protected ClientAbstractNodeInfo parseRecursively(List<ClientWmsLayerInfo> allLayers, WmsLayerInfo layer) {
 		final String url = Geomajas.getDispatcherUrl().replace("/map/d", "/geoserver/ows");
-//		final String url = "http://127.0.0.1:8888/d/proxy?url=http://64.141.44.215:9090/geoserver/ows";
+		// final String url = "http://127.0.0.1:8888/d/proxy?url=http://64.141.44.215:9090/geoserver/ows";
 		ClientLayerNodeInfo node = null;
-		ClientBranchNodeInfo branch =null;
-		if(layer.getName() != null) {
+		ClientBranchNodeInfo branch = null;
+		if (layer.getName() != null) {
 			// create info and add layer
-			WmsLayerConfiguration wmsConfig = WmsClient.getInstance().createLayerConfig(layer,
-					url, WmsVersion.V1_3_0);
+			WmsLayerConfiguration wmsConfig = WmsClient.getInstance().createLayerConfig(layer, url, WmsVersion.V1_3_0);
 			wmsConfig.setCrs(KtunaxaConstant.MAP_CRS);
 
-			TileConfiguration tileConfig = new TileConfiguration(512, 512, new Coordinate(
-					-20037508.343, -20037508.343), mapWidget.getMapModel().getMapView()
-					.getResolutions());
+			TileConfiguration tileConfig = new TileConfiguration(512, 512,
+					new Coordinate(-20037508.343, -20037508.343),
+					mapWidget.getMapModel().getMapView().getResolutions());
 
-			ClientWmsLayer wmsLayer = new ClientWmsLayer(layer.getName(), mapWidget.getMapModel()
-					.getMapInfo().getCrs(), wmsConfig, tileConfig, layer);
+			ClientWmsLayer wmsLayer = new ClientWmsLayer(layer.getName(),
+					mapWidget.getMapModel().getMapInfo().getCrs(), wmsConfig, tileConfig, layer);
 			ClientWmsLayerInfo wmsLayerInfo = new ClientWmsLayerInfo(wmsLayer);
-			wmsLayerInfo.setMaximumScale(new ScaleInfo(1/wmsConfig.getMinimumResolution()));
-			wmsLayerInfo.setMinimumScale(new ScaleInfo(1/wmsConfig.getMaximumResolution()));
+			wmsLayerInfo.setMaximumScale(new ScaleInfo(1 / wmsConfig.getMinimumResolution()));
+			wmsLayerInfo.setMinimumScale(new ScaleInfo(1 / wmsConfig.getMaximumResolution()));
 			ClientExtraLayerInfo extra = new ClientExtraLayerInfo();
 			extra.setLegendUrl(wmsLayer.getLegendImageUrl());
 			extra.setLegendUrlTitle("Legend");
@@ -329,30 +327,29 @@ public final class MapLayout extends VLayout {
 			node = new ClientLayerNodeInfo();
 			node.setLayerId(wmsLayerInfo.getId());
 		}
-		if(layer.getLayers().size() > 0) {
+		if (layer.getLayers().size() > 0) {
 			branch = new ClientBranchNodeInfo();
 			branch.setLabel(layer.getTitle());
-			if(node != null) {
+			if (node != null) {
 				branch.getTreeNodes().add(node);
 			}
 			for (WmsLayerInfo info : layer.getLayers()) {
-				ClientAbstractNodeInfo child = parseRecursively(allLayers ,info);
+				ClientAbstractNodeInfo child = parseRecursively(allLayers, info);
 				branch.getTreeNodes().add(child);
 			}
 			return branch;
 		}
 		return node;
 	}
-	
+
 	public WmsLayerConfiguration getRootLayerConfiguration() {
 		return rootLayerConfiguration;
 	}
 
 	public double toResolution(double scaleDenominator) {
-		double pixelsPerUnit =  METER_PER_INCH / MapConfigurationImpl.DEFAULT_DPI;
+		double pixelsPerUnit = METER_PER_INCH / MapConfigurationImpl.DEFAULT_DPI;
 		return pixelsPerUnit * scaleDenominator;
 	}
-
 
 	protected void updateRights() {
 		if (!(UserContext.getInstance().isGuest() || UserContext.getInstance().isDataEntry())) {
@@ -428,7 +425,8 @@ public final class MapLayout extends VLayout {
 			// highlight the feature
 			SymbolInfo symbolInfo = null;
 			if (feature.getStyleId() != null) {
-				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().getNamedStyleInfo().getFeatureStyles()) {
+				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().
+						getNamedStyleInfo().getFeatureStyles()) {
 					if (feature.getStyleId().equals(style.getStyleId())) {
 						symbolInfo = style.getSymbol();
 						break;

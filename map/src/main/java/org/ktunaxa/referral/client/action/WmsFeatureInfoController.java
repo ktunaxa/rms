@@ -22,10 +22,7 @@ import org.geomajas.geometry.Coordinate;
 import org.geomajas.gwt.client.controller.AbstractGraphicsController;
 import org.geomajas.gwt.client.map.layer.InternalClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.Layer;
-import org.geomajas.gwt.client.spatial.Mathlib;
-import org.geomajas.gwt.client.spatial.WorldViewTransformer;
 import org.geomajas.gwt.client.widget.MapWidget;
-import org.geomajas.gwt2.client.map.feature.JsonFeatureFactory;
 import org.geomajas.gwt2.plugin.wms.client.WmsClient;
 import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsLayerInfo;
 import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayer;
@@ -34,17 +31,19 @@ import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerImpl;
 import org.geomajas.gwt2.plugin.wms.client.service.WmsService;
 import org.ktunaxa.referral.client.gui.MapLayout;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.smartgwt.client.types.ContentsType;
-import com.smartgwt.client.types.Overflow;
-import com.smartgwt.client.types.Positioning;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.HTMLPane;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.CloseClickEvent;
 import com.smartgwt.client.widgets.events.CloseClickHandler;
 
+/**
+ * 
+ * @author Jan De Moerloose
+ *
+ */
 public class WmsFeatureInfoController extends AbstractGraphicsController {
 
 	/** Number of pixels that describes the tolerance allowed when trying to select features. */
@@ -61,27 +60,27 @@ public class WmsFeatureInfoController extends AbstractGraphicsController {
 	 */
 	public void onMouseUp(MouseUpEvent event) {
 		Coordinate worldPosition = getWorldPosition(event);
-        final Window window = new ClosingWindow();  
-        window.setWidth(MapLayout.getInstance().getLayerPanel().getWidth()); 
-        window.setHeight(MapLayout.getInstance().getLayerPanel().getHeight());
-        window.setCanDragReposition(true);  
-        window.setCanDragResize(true); 
-        window.setKeepInParentRect(true);
-        window.addCloseClickHandler(new CloseClickHandler() {
-			
+		final Window window = new ClosingWindow();
+		window.setWidth(MapLayout.getInstance().getLayerPanel().getWidth());
+		window.setHeight(MapLayout.getInstance().getLayerPanel().getHeight());
+		window.setCanDragReposition(true);
+		window.setCanDragResize(true);
+		window.setKeepInParentRect(true);
+		window.addCloseClickHandler(new CloseClickHandler() {
+
 			@Override
 			public void onCloseClick(CloseClickEvent event) {
 				window.markForDestroy();
 			}
 		});
-        StringBuilder sb = null;
+		StringBuilder sb = null;
 		WmsLayerConfiguration layerConfig = MapLayout.getInstance().getRootLayerConfiguration();
 		for (Layer<?> layer : mapWidget.getMapModel().getLayers()) {
 			if (layer.isShowing() && layer instanceof InternalClientWmsLayer) {
-				InternalClientWmsLayer l = (InternalClientWmsLayer)layer;
+				InternalClientWmsLayer l = (InternalClientWmsLayer) layer;
 				if (!l.getWmsLayer().getCapabilities().getLayers().isEmpty()) {
 					for (WmsLayerInfo info : l.getWmsLayer().getCapabilities().getLayers()) {
-						if(info.isQueryable()) {
+						if (info.isQueryable()) {
 							if (sb == null) {
 								sb = new StringBuilder();
 							} else {
@@ -100,7 +99,7 @@ public class WmsFeatureInfoController extends AbstractGraphicsController {
 				}
 			}
 		}
-		if(sb != null) {
+		if (sb != null) {
 			layerConfig.setLayers(sb.toString());
 			WmsLayer dummy = new WmsLayerImpl("all", layerConfig.getCrs(), layerConfig, null, null);
 			final String url = WmsClient
@@ -110,12 +109,12 @@ public class WmsFeatureInfoController extends AbstractGraphicsController {
 							mapWidget.getMapModel().getMapView().getBounds().toDtoBbox(),
 							1. / mapWidget.getMapModel().getMapView().getCurrentScale(),
 							WmsService.GetFeatureInfoFormat.HTML.toString(), 10);
-			window.setTitle("Features found for "+sb.toString()+":");
-			HTMLPane htmlPane = new HTMLPane();  
-	        htmlPane.setContentsURL(url);  
-	        htmlPane.setContentsType(ContentsType.PAGE); 
-	        window.addItem(htmlPane);
-			if(!window.isDrawn()) {
+			window.setTitle("Features found for " + sb.toString() + ":");
+			HTMLPane htmlPane = new HTMLPane();
+			htmlPane.setContentsURL(url);
+			htmlPane.setContentsType(ContentsType.PAGE);
+			window.addItem(htmlPane);
+			if (!window.isDrawn()) {
 				MapLayout.getInstance().addChild(window);
 			}
 		} else {
@@ -123,13 +122,18 @@ public class WmsFeatureInfoController extends AbstractGraphicsController {
 		}
 
 	}
-	
+
+	/**
+	 * 
+	 * @author Jan De Moerloose
+	 *
+	 */
 	class ClosingWindow extends Window {
 
 		public ClosingWindow() {
 			super();
 			addCloseClickHandler(new CloseClickHandler() {
-				
+
 				@Override
 				public void onCloseClick(CloseClickEvent event) {
 					close();
@@ -143,9 +147,7 @@ public class WmsFeatureInfoController extends AbstractGraphicsController {
 			hide();
 			markForDestroy();
 		}
-		
-		
-		
+
 	}
 
 }

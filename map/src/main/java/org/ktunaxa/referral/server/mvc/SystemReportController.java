@@ -19,6 +19,9 @@
 
 package org.ktunaxa.referral.server.mvc;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
+
 import org.geomajas.plugin.reporting.mvc.ReportingController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,9 +31,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 /**
  * Special controller for system reporting. Uses a direct db connection.

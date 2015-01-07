@@ -19,8 +19,6 @@
 
 package org.ktunaxa.referral.client.action;
 
-import com.smartgwt.client.widgets.events.ClickEvent;
-
 import org.geomajas.gwt.client.action.ToolbarAction;
 import org.geomajas.gwt.client.map.MapView;
 import org.geomajas.gwt.client.spatial.geometry.Geometry;
@@ -30,6 +28,8 @@ import org.geomajas.gwt.client.util.GeometryConverter;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.layer.feature.Feature;
 import org.ktunaxa.referral.client.gui.MapLayout;
+
+import com.smartgwt.client.widgets.events.ClickEvent;
 
 /**
  * Zoom to current referral modal action.

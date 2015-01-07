@@ -21,12 +21,13 @@ package org.ktunaxa.referral.client.widget;
 
 import java.io.Serializable;
 
+import org.ktunaxa.referral.client.gui.LayoutConstant;
+
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.HTMLFlow;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * General definition of the detailed view of a single object of type T. It is possible to add a pane to this widget.

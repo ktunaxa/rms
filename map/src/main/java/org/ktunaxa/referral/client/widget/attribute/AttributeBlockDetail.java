@@ -22,6 +22,7 @@ package org.ktunaxa.referral.client.widget.attribute;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.attribute.FeatureForm;
 import org.geomajas.layer.feature.attribute.AssociationValue;
+import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.smartgwt.client.widgets.IButton;
@@ -31,7 +32,6 @@ import com.smartgwt.client.widgets.form.events.ItemChangedHandler;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
-import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * An {@link AttributeBlockDetail} is a widget that shows a detail form of a one-to-many value.

@@ -81,13 +81,13 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 		addMember(spacer);
 		// finish layout, add shape upload form
 
-	    uploadForm = new FileUploadForm("Select a file (.zip)", GWT.getModuleBaseURL()
+		uploadForm = new FileUploadForm("Select a file (.zip)", GWT.getModuleBaseURL()
 				+ "../d/upload/referral/geometry/", null);
 		uploadForm.setHeight(40);
 
 		HLayout btnLayout = new HLayout(LayoutConstant.MARGIN_LARGE);
-		busyImg = new Img(LayoutConstant.LOADING_IMAGE,
-				LayoutConstant.LOADING_IMAGE_WIDTH, LayoutConstant.LOADING_IMAGE_HEIGHT);
+		busyImg = new Img(LayoutConstant.LOADING_IMAGE, LayoutConstant.LOADING_IMAGE_WIDTH,
+				LayoutConstant.LOADING_IMAGE_HEIGHT);
 		busyImg.setVisible(false);
 		IButton uploadButton = new IButton("Upload ShapeFile");
 		uploadButton.setAutoFit(true);

@@ -1,15 +1,32 @@
 /*
- * This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+ * Ktunaxa Referral Management System.
  *
- * Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+ * Copyright (C) see version control system
  *
- * The program is available in open source according to the GNU Affero
- * General Public License. All contributions in this program are covered
- * by the Geomajas Contributors License Agreement. For full licensing
- * details, see LICENSE.txt in the project root.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.geomajas.widget.layer.client.widget;
+
+import org.geomajas.configuration.client.ScaleInfo;
+import org.geomajas.gwt.client.map.layer.Layer;
+import org.geomajas.gwt.client.map.layer.RasterLayer;
+import org.geomajas.gwt.client.map.layer.VectorLayer;
+import org.geomajas.widget.layer.client.i18n.LayerMessages;
+import org.geomajas.widget.layer.client.util.GltLayout;
+import org.geomajas.widget.layer.client.util.LayerIconUtil;
+import org.geomajas.widget.layer.configuration.client.ClientExtraLayerInfo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.NumberFormat;
@@ -37,14 +54,6 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.geomajas.configuration.client.ScaleInfo;
-import org.geomajas.gwt.client.map.layer.Layer;
-import org.geomajas.gwt.client.map.layer.RasterLayer;
-import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.widget.layer.client.i18n.LayerMessages;
-import org.geomajas.widget.layer.client.util.GltLayout;
-import org.geomajas.widget.layer.client.util.LayerIconUtil;
-import org.geomajas.widget.layer.configuration.client.ClientExtraLayerInfo;
 
 /**
  * A simple layer actions window.
@@ -122,14 +131,14 @@ public class LayerActions extends Window {
 					a.setText(eli.getLegendUrlTitle());
 				}
 				a.addClickHandler(new com.google.gwt.event.dom.client.ClickHandler() {
-					
+
 					@Override
 					public void onClick(com.google.gwt.event.dom.client.ClickEvent event) {
 						Window window = new Window();
 						window.setTitle(a.getText());
 						window.setAutoCenter(true);
-				        window.setCanDragReposition(true);  
-				        window.setCanDragResize(true);  
+						window.setCanDragReposition(true);
+						window.setCanDragResize(true);
 						window.setWidth("60%");
 						window.setHeight("60%");
 						window.setSrc(eli.getLegendUrl());

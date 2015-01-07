@@ -44,7 +44,7 @@ import org.opengis.filter.Filter;
  */
 public class FullTextSearchLayer extends HibernateLayer {
 	
-	private int MAX_FEATURES = 1000;
+	private static final int MAX_FEATURES = 1000;
 
 	@Override
 	public Iterator<?> getElements(Filter filter, int offset, int maxResultSize) throws LayerException {

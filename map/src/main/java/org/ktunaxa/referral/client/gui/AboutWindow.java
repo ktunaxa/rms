@@ -19,9 +19,8 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import com.smartgwt.client.widgets.HTMLFlow;
-import com.smartgwt.client.widgets.Img;
-import com.smartgwt.client.widgets.layout.VLayout;
+import java.util.Collection;
+
 import org.geomajas.command.EmptyCommandRequest;
 import org.geomajas.command.dto.CopyrightRequest;
 import org.geomajas.command.dto.CopyrightResponse;
@@ -32,7 +31,9 @@ import org.geomajas.gwt.client.command.GwtCommandDispatcher;
 import org.geomajas.gwt.client.util.WidgetLayout;
 import org.geomajas.gwt.client.widget.KeepInScreenWindow;
 
-import java.util.Collection;
+import com.smartgwt.client.widgets.HTMLFlow;
+import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
  * About window for the application.

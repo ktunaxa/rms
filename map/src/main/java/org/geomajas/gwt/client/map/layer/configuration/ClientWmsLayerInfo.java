@@ -1,12 +1,20 @@
 /*
- * This is part of Geomajas, a GIS framework, http://www.geomajas.org/.
+ * Ktunaxa Referral Management System.
  *
- * Copyright 2008-2014 Geosparc nv, http://www.geosparc.com/, Belgium.
+ * Copyright (C) see version control system
  *
- * The program is available in open source according to the GNU Affero
- * General Public License. All contributions in this program are covered
- * by the Geomajas Contributors License Agreement. For full licensing
- * details, see LICENSE.txt in the project root.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.geomajas.gwt.client.map.layer.configuration;
 
@@ -26,7 +34,10 @@ public class ClientWmsLayerInfo extends ClientRasterLayerInfo {
 
 	private ClientWmsLayer wmsLayer;
 
-
+	/**
+	 * 
+	 * @param wmsLayer
+	 */
 	public ClientWmsLayerInfo(ClientWmsLayer wmsLayer) {
 		this.wmsLayer = wmsLayer;
 		LayerInfo layerInfo = new LayerInfo();
@@ -34,6 +45,10 @@ public class ClientWmsLayerInfo extends ClientRasterLayerInfo {
 		setLayerInfo(layerInfo);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public ClientWmsLayer getWmsLayer() {
 		return wmsLayer;
 	}
@@ -70,17 +85,17 @@ public class ClientWmsLayerInfo extends ClientRasterLayerInfo {
 
 	@Override
 	public ScaleInfo getMinimumScale() {
-		return new ScaleInfo(1/wmsLayer.getConfiguration().getMaximumResolution());
+		return new ScaleInfo(1 / wmsLayer.getConfiguration().getMaximumResolution());
 	}
 
 	@Override
 	public ScaleInfo getMaximumScale() {
-		return new ScaleInfo(1/wmsLayer.getConfiguration().getMinimumResolution());
+		return new ScaleInfo(1 / wmsLayer.getConfiguration().getMinimumResolution());
 	}
 
 	@Override
 	public String getCrs() {
-		//throw new UnsupportedOperationException();
+		// throw new UnsupportedOperationException();
 		// still return scale value for the moment
 		return super.getCrs();
 	}
@@ -117,14 +132,9 @@ public class ClientWmsLayerInfo extends ClientRasterLayerInfo {
 
 	@Override
 	public String toString() {
-		return "ClientWmsLayerInfo{" +
-				"id=" + getId() + ", " +
-				"layerType=" + getLayerType() + ", " +
-				"label=" + getLabel() + ", " +
-				"minScale=" + getMinimumScale().getPixelPerUnit() + ", " +
-				"maxScale=" + getMaximumScale().getPixelPerUnit() + ", " +
-				"style=" + getStyle() + ", " +
-				"ClientWmsLayer=" + wmsLayer.toString() +
-				'}';
+		return "ClientWmsLayerInfo{" + "id=" + getId() + ", " + "layerType=" + getLayerType() + ", " + "label="
+				+ getLabel() + ", " + "minScale=" + getMinimumScale().getPixelPerUnit() + ", " + "maxScale="
+				+ getMaximumScale().getPixelPerUnit() + ", " + "style=" + getStyle() + ", " + "ClientWmsLayer="
+				+ wmsLayer.toString() + '}';
 	}
 }

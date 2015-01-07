@@ -19,6 +19,9 @@
 
 package org.ktunaxa.referral.server.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.activiti.engine.FormService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.TaskFormData;
@@ -34,9 +37,6 @@ import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.security.AppSecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Spring bean implementation of the DTO converter service interface.

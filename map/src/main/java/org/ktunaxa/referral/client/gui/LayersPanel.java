@@ -19,22 +19,9 @@
 
 package org.ktunaxa.referral.client.gui;
 
-import org.geomajas.geometry.Coordinate;
-import org.geomajas.gwt.client.map.event.MapModelChangedEvent;
-import org.geomajas.gwt.client.map.event.MapModelChangedHandler;
-import org.geomajas.gwt.client.map.layer.ClientWmsLayer;
-import org.geomajas.gwt.client.map.layer.InternalClientWmsLayer;
 import org.geomajas.gwt.client.map.layer.Layer;
-import org.geomajas.gwt.client.map.layer.VectorLayer;
-import org.geomajas.gwt.client.map.layer.configuration.ClientWmsLayerInfo;
 import org.geomajas.gwt.client.widget.MapWidget;
-import org.geomajas.gwt2.client.map.layer.AbstractLayer;
-import org.geomajas.gwt2.client.map.layer.tile.TileConfiguration;
-import org.geomajas.gwt2.plugin.wms.client.WmsClient;
-import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration;
-import org.geomajas.gwt2.plugin.wms.client.service.WmsService;
 import org.geomajas.layer.google.gwt.client.GoogleAddon;
-import org.geomajas.widget.layer.client.widget.CombinedLayertree;
 import org.ktunaxa.referral.client.layer.ReferenceLayer;
 import org.ktunaxa.referral.client.layer.ReferenceSubLayer;
 import org.ktunaxa.referral.server.dto.ReferenceLayerTypeDto;

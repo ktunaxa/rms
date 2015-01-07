@@ -22,12 +22,13 @@ package org.ktunaxa.referral.client.widget;
 import java.io.Serializable;
 import java.util.List;
 
+import org.ktunaxa.referral.client.gui.LayoutConstant;
+
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
-import org.ktunaxa.referral.client.gui.LayoutConstant;
 
 /**
  * General layout for managing a list of objects. This layout can display the full list of objects, but can also focus

@@ -230,7 +230,7 @@ public class SearchPanel extends VLayout {
 			searchPanels.setOverflow(Overflow.VISIBLE); // but scale
 			List<SearchWidget> searchWidgetList = new ArrayList<SearchWidget>();
 			if (KtunaxaConstant.LAYER_REFERENCE_VALUE_ID.equals(layerId)) {
-				fullTextSearchPanel = new ConfiguredSearchPanel(mapWidget);
+				fullTextSearchPanel = new FullTextSearchPanel(mapWidget);
 				fullTextSearchPanel.setWidth100();
 				fullTextSearchPanel.setCanAddToFavourites(false);
 				fullTextSearchPanel.setCanCancel(true);
@@ -256,9 +256,11 @@ public class SearchPanel extends VLayout {
 						fullTextSearch.hide();					
 					}
 				});
+				searchWidgetList.add(geometricSearch);
+			} else {
+				searchWidgetList.add(geometricSearch);
+				searchWidgetList.add(attributeSearch);			
 			}
-			searchWidgetList.add(geometricSearch);
-			searchWidgetList.add(attributeSearch);
 			// searchWidgetList.add(favouriteSearch);
 			CombinedSearchPanel combinedSearchPanel = new CombinedSearchPanel(mapWidget);
 			combinedSearchPanel.initializeList(searchWidgetList);
@@ -332,6 +334,11 @@ public class SearchPanel extends VLayout {
 		}
 	}
 	
+	/**
+	 * 
+	 * @author Jan De Moerloose
+	 *
+	 */
 	class FullTextSearchController extends SearchController {
 
 		private MapModel mapModel;
