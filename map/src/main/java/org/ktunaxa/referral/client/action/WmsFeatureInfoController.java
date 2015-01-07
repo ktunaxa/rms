@@ -27,6 +27,7 @@ import org.geomajas.gwt.client.spatial.WorldViewTransformer;
 import org.geomajas.gwt.client.widget.MapWidget;
 import org.geomajas.gwt2.client.map.feature.JsonFeatureFactory;
 import org.geomajas.gwt2.plugin.wms.client.WmsClient;
+import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsLayerInfo;
 import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayer;
 import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration;
 import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerImpl;
@@ -38,6 +39,7 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.smartgwt.client.types.ContentsType;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.Positioning;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.HTMLPane;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.CloseClickEvent;
@@ -73,24 +75,29 @@ public class WmsFeatureInfoController extends AbstractGraphicsController {
 			}
 		});
         StringBuilder sb = null;
-		WmsLayerConfiguration layerConfig = new WmsLayerConfiguration();
+		WmsLayerConfiguration layerConfig = MapLayout.getInstance().getRootLayerConfiguration();
 		for (Layer<?> layer : mapWidget.getMapModel().getLayers()) {
 			if (layer.isShowing() && layer instanceof InternalClientWmsLayer) {
-				if (sb == null) {
-					sb = new StringBuilder();
-					InternalClientWmsLayer l = (InternalClientWmsLayer)layer;
-					layerConfig.setBaseUrl(l.getWmsLayer().getConfiguration().getBaseUrl());
-					layerConfig.setVersion(l.getWmsLayer().getConfiguration().getVersion());
-					layerConfig.setCrs(l.getWmsLayer().getConfiguration().getCrs());
-					layerConfig.setFormat(l.getWmsLayer().getConfiguration().getFormat());
-					layerConfig.setStyles("");
-					layerConfig.setLegendConfig(l.getWmsLayer().getConfiguration().getLegendConfig());
-					layerConfig.setTransparent(true);
-					layerConfig.setWmsServiceVendor(l.getWmsLayer().getConfiguration().getWmsServiceVendor());
-				} else {
-					sb.append(",");
+				InternalClientWmsLayer l = (InternalClientWmsLayer)layer;
+				if (!l.getWmsLayer().getCapabilities().getLayers().isEmpty()) {
+					for (WmsLayerInfo info : l.getWmsLayer().getCapabilities().getLayers()) {
+						if(info.isQueryable()) {
+							if (sb == null) {
+								sb = new StringBuilder();
+							} else {
+								sb.append(",");
+							}
+							sb.append(info.getName());
+						}
+					}
+				} else if (l.getWmsLayer().getCapabilities().isQueryable()) {
+					if (sb == null) {
+						sb = new StringBuilder();
+					} else {
+						sb.append(",");
+					}
+					sb.append(layer.getId());
 				}
-				sb.append(layer.getId());
 			}
 		}
 		if(sb != null) {
@@ -111,6 +118,8 @@ public class WmsFeatureInfoController extends AbstractGraphicsController {
 			if(!window.isDrawn()) {
 				MapLayout.getInstance().addChild(window);
 			}
+		} else {
+			SC.say("No queryable layers found !");
 		}
 
 	}

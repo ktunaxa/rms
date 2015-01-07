@@ -51,6 +51,7 @@ import org.geomajas.gwt2.plugin.wms.client.WmsClient;
 import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsGetCapabilitiesInfo;
 import org.geomajas.gwt2.plugin.wms.client.capabilities.WmsLayerInfo;
 import org.geomajas.gwt2.plugin.wms.client.layer.WmsLayerConfiguration;
+import org.geomajas.gwt2.plugin.wms.client.layer.WmsServiceVendor;
 import org.geomajas.gwt2.plugin.wms.client.service.WmsService.WmsRequest;
 import org.geomajas.gwt2.plugin.wms.client.service.WmsService.WmsUrlTransformer;
 import org.geomajas.gwt2.plugin.wms.client.service.WmsService.WmsVersion;
@@ -144,6 +145,8 @@ public final class MapLayout extends VLayout {
 	private HandlerManager handlerManager;
 
 	private SearchPanel searchPanel;
+	
+	private WmsLayerConfiguration rootLayerConfiguration;
 
 	public static MapLayout getInstance() {
 		return INSTANCE;
@@ -269,6 +272,11 @@ public final class MapLayout extends VLayout {
 						ClientLayerTreeInfo tree = (ClientLayerTreeInfo) mapWidget.getMapModel().getMapInfo()
 								.getWidgetInfo(ClientLayerTreeInfo.IDENTIFIER);
 						List<ClientWmsLayerInfo> allLayers = new ArrayList<ClientWmsLayerInfo>();
+						rootLayerConfiguration = WmsClient.getInstance().createLayerConfig(result.getRootLayer(),
+								url, WmsVersion.V1_3_0);
+						rootLayerConfiguration.setCrs(KtunaxaConstant.MAP_CRS);
+						rootLayerConfiguration.setWmsServiceVendor(WmsServiceVendor.GEOSERVER_WMS);
+
 						for (WmsLayerInfo layer : result.getRootLayer().getLayers()) {
 							if(layer.getLayers().size() > 0) {
 								ClientAbstractNodeInfo branch  = parseRecursively(allLayers, layer);								
@@ -334,6 +342,10 @@ public final class MapLayout extends VLayout {
 			return branch;
 		}
 		return node;
+	}
+	
+	public WmsLayerConfiguration getRootLayerConfiguration() {
+		return rootLayerConfiguration;
 	}
 
 	public double toResolution(double scaleDenominator) {
