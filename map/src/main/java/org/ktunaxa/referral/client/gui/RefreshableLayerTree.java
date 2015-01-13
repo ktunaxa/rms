@@ -181,7 +181,11 @@ public class RefreshableLayerTree extends CombinedLayertree {
 		public WmsLegendNode(RefreshableTree tree, Layer<?> layer) {
 			super(tree, layer);
 			InternalClientWmsLayer wmsLayer = (InternalClientWmsLayer) layer;
-			setTitle(wmsLayer.getWmsLayer().getCapabilities().getTitle());
+			if (wmsLayer.getWmsLayer().getCapabilities().getLayers().isEmpty()) {
+				setTitle(wmsLayer.getWmsLayer().getCapabilities().getTitle());
+			} else {
+				setTitle(wmsLayer.getWmsLayer().getCapabilities().getTitle() + " (all)");
+			}
 		}
 
 		public AbstractLayer<?> getLayer() {

@@ -68,24 +68,24 @@ public class CommunicationHandler {
 
 	public <R extends CommandResponse> Deferred execute(GwtCommand command, CommandCallback<R> callback,
 			final String title, boolean modal, final Runnable onError) {
-		final Window window = createWindow(title, modal);
+		final MessageBox messageBox = new MessageBox(title, modal);
 		Deferred deferred = GwtCommandDispatcher.getInstance().execute(command, callback);
 		deferred.addCallback(new AbstractCommandCallback<R>() {
 
 			@Override
 			public void execute(R response) {
-				window.destroy();
+				messageBox.stop();
 			}
 
 			@Override
 			public void onCommunicationException(Throwable error) {
-				window.destroy();
+				messageBox.stop();
 				onError.run();
 			}
 
 			@Override
 			public void onCommandException(CommandResponse response) {
-				window.destroy();
+				messageBox.stop();
 				onError.run();
 			}
 
@@ -93,44 +93,12 @@ public class CommunicationHandler {
 		return deferred;
 	}
 	
-	public Callback<Void, Void> startAction(final String title, boolean modal) {
-		final Window window = createWindow(title, modal);
-		return new Callback<Void, Void>() {
-
-			@Override
-			public void onFailure(Void reason) {
-				window.destroy();
-			}
-
-			@Override
-			public void onSuccess(Void result) {
-				window.destroy();
-			}
-		};
+	public MessageBox showMessage(final String title, boolean modal) {
+		return new MessageBox(title, modal);
 	}
 
-	public Window createWindow(final String title, boolean modal) {		
-		if (modal) {
-			Window window = createWindow(title);
-			window.setIsModal(true);
-			window.setShowModalMask(true);
-			window.show();
-			return window;
-		} else {
-			final Window window = createWindow(title);
-			Timer timer = new Timer() {
 
-				@Override
-				public void run() {
-					window.show();
-				}
-			};
-			timer.schedule(3000);
-			return window;
-		}
-	}
-
-	private Window createWindow(String title) {
+	protected Window createWindow(String title) {
 		VLayout layout = new VLayout(5);
 		layout.setLayoutAlign(Alignment.CENTER);
 		layout.setAlign(Alignment.CENTER);
@@ -162,5 +130,40 @@ public class CommunicationHandler {
 		w.setAutoCenter(true);
 		return w;
 	}
+	
+	
+	public class MessageBox {
+		
+		private Window window;
+		
+		private Timer timer;
+		
+		MessageBox(final String title, boolean modal) {		
+			if (modal) {
+				window = createWindow(title);
+				window.setIsModal(true);
+				window.setShowModalMask(true);
+				window.show();
+			} else {
+				window = createWindow(title);
+				timer = new Timer() {
+
+					@Override
+					public void run() {
+						window.show();
+					}
+				};
+				timer.schedule(3000);
+			}
+		}
+		
+		public void stop() {
+			if(timer != null) {
+				timer.cancel();
+			}
+			window.destroy();
+		}
+	}
+
 
 }

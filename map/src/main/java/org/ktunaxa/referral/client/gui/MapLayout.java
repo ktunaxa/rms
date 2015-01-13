@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.geomajas.configuration.FeatureStyleInfo;
 import org.geomajas.configuration.SymbolInfo;
-import org.geomajas.configuration.client.ScaleInfo;
 import org.geomajas.geometry.Coordinate;
 import org.geomajas.global.GeomajasConstant;
 import org.geomajas.gwt.client.Geomajas;
@@ -34,6 +33,7 @@ import org.geomajas.gwt.client.map.MapView;
 import org.geomajas.gwt.client.map.feature.Feature;
 import org.geomajas.gwt.client.map.feature.LazyLoadCallback;
 import org.geomajas.gwt.client.map.layer.ClientWmsLayer;
+import org.geomajas.gwt.client.map.layer.Layer;
 import org.geomajas.gwt.client.map.layer.VectorLayer;
 import org.geomajas.gwt.client.map.layer.configuration.ClientWmsLayerInfo;
 import org.geomajas.gwt.client.map.store.VectorLayerStore;
@@ -68,6 +68,7 @@ import org.ktunaxa.referral.client.security.UserContext;
 import org.ktunaxa.referral.client.security.UserContextChangedEvent;
 import org.ktunaxa.referral.client.security.UserContextChangedHandler;
 import org.ktunaxa.referral.client.widget.CommunicationHandler;
+import org.ktunaxa.referral.client.widget.CommunicationHandler.MessageBox;
 import org.ktunaxa.referral.client.widget.ResizableLeftLayout;
 import org.ktunaxa.referral.server.dto.TaskDto;
 import org.ktunaxa.referral.server.service.KtunaxaConstant;
@@ -78,7 +79,6 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -147,12 +147,17 @@ public final class MapLayout extends VLayout {
 
 	private WmsLayerConfiguration rootLayerConfiguration;
 
+	private String geoserverUrl;
+
 	public static MapLayout getInstance() {
 		return INSTANCE;
 	}
 
 	private MapLayout() {
 		super();
+		geoserverUrl = Geomajas.getDispatcherUrl().replace("/map/d", "/geoserver/ows");
+		// geoserverUrl = "http://127.0.0.1:8888/d/proxy?url=http://64.141.44.215:9090/geoserver/ows";
+
 		WmsClient.getInstance().getWmsService().setWmsUrlTransformer(new WmsUrlTransformer() {
 
 			@Override
@@ -260,9 +265,8 @@ public final class MapLayout extends VLayout {
 
 	protected void addClientLayers() {
 		// assuming collocated geoserver !!!
-		final String url = Geomajas.getDispatcherUrl().replace("/map/d", "/geoserver/ows");
-		// final String url = "http://127.0.0.1:8888/d/proxy?url=http://64.141.44.215:9090/geoserver/ows";
-		final Callback<Void, Void> callback = CommunicationHandler.get().startAction("Loading layers...", false);
+		final String url = geoserverUrl;
+		final MessageBox messageBox = CommunicationHandler.get().showMessage("Loading layers...", false);
 		WmsClient.getInstance().getWmsService()
 				.getCapabilities(url, WmsVersion.V1_3_0, new Callback<WmsGetCapabilitiesInfo, String>() {
 
@@ -286,38 +290,56 @@ public final class MapLayout extends VLayout {
 						for (ClientWmsLayerInfo clientWmsLayerInfo : allLayers) {
 							mapWidget.getMapModel().addLayer(clientWmsLayerInfo);
 						}
+						// force resolutions for groups
+						for(Layer<?> layer : mapWidget.getMapModel().getLayers()) {
+							if(layer.getLayerInfo()  instanceof GroupClientWmsLayerInfo) {
+								((GroupClientWmsLayerInfo)layer.getLayerInfo()).forceResolutionAfterLayerAdded();
+							}
+						}
 						getLayerPanel().getTree().refresh();
-						callback.onSuccess(null);
+						messageBox.stop();
 					}
 
 					@Override
 					public void onFailure(String reason) {
 						SC.say("Could not reach geoserver on " + url);
-						callback.onSuccess(null);
+						messageBox.stop();
 					}
 				});
 
 	}
 
 	protected ClientAbstractNodeInfo parseRecursively(List<ClientWmsLayerInfo> allLayers, WmsLayerInfo layer) {
-		final String url = Geomajas.getDispatcherUrl().replace("/map/d", "/geoserver/ows");
-		// final String url = "http://127.0.0.1:8888/d/proxy?url=http://64.141.44.215:9090/geoserver/ows";
+		// final String url = Geomajas.getDispatcherUrl().replace("/map/d", "/geoserver/ows");
+		final String url = geoserverUrl;
 		ClientLayerNodeInfo node = null;
 		ClientBranchNodeInfo branch = null;
 		if (layer.getName() != null) {
 			// create info and add layer
 			WmsLayerConfiguration wmsConfig = WmsClient.getInstance().createLayerConfig(layer, url, WmsVersion.V1_3_0);
 			wmsConfig.setCrs(KtunaxaConstant.MAP_CRS);
-
 			TileConfiguration tileConfig = new TileConfiguration(512, 512,
-					new Coordinate(-20037508.343, -20037508.343),
-					mapWidget.getMapModel().getMapView().getResolutions());
+					new Coordinate(-20037508.343, -20037508.343), mapWidget.getMapModel().getMapView().getResolutions());
 
-			ClientWmsLayer wmsLayer = new ClientWmsLayer(layer.getName(),
-					mapWidget.getMapModel().getMapInfo().getCrs(), wmsConfig, tileConfig, layer);
-			ClientWmsLayerInfo wmsLayerInfo = new ClientWmsLayerInfo(wmsLayer);
-			wmsLayerInfo.setMaximumScale(new ScaleInfo(1 / wmsConfig.getMinimumResolution()));
-			wmsLayerInfo.setMinimumScale(new ScaleInfo(1 / wmsConfig.getMaximumResolution()));
+			String layerName = null;
+			if (!layer.getLayers().isEmpty()) {
+				layerName = layer.getName() + " (all)";
+			} else {
+				layerName = layer.getName();
+			}
+			ClientWmsLayer wmsLayer = new ClientWmsLayer(layerName, mapWidget.getMapModel().getMapInfo().getCrs(),
+					wmsConfig, tileConfig, layer);
+			ClientWmsLayerInfo wmsLayerInfo = null;
+			// order is important here, wmsLayer should be ready !
+			if (!layer.getLayers().isEmpty()) {
+				double minResolution = getMinResolution(layer.getLayers());
+				double maxResolution = getMaxResolution(layer.getLayers());
+				wmsLayerInfo = new GroupClientWmsLayerInfo(wmsLayer);
+				((GroupClientWmsLayerInfo) wmsLayerInfo).setMinResolution(minResolution);
+				((GroupClientWmsLayerInfo) wmsLayerInfo).setMaxResolution(maxResolution);
+			} else {
+				wmsLayerInfo = new ClientWmsLayerInfo(wmsLayer);
+			}
 			ClientExtraLayerInfo extra = new ClientExtraLayerInfo();
 			extra.setLegendUrl(wmsLayer.getLegendImageUrl());
 			extra.setLegendUrlTitle("Legend");
@@ -340,6 +362,30 @@ public final class MapLayout extends VLayout {
 			return branch;
 		}
 		return node;
+	}
+
+	private double getMaxResolution(List<WmsLayerInfo> layers) {
+		Double maxResolution = null;
+		for (WmsLayerInfo wmsLayerInfo : layers) {
+			double maxSD = wmsLayerInfo.getMaxScaleDenominator();
+			if (maxSD > 0) {
+				double max = toResolution(maxSD);
+				maxResolution = (maxResolution == null ? max : Math.max(max, maxResolution));
+			}
+		}
+		return maxResolution;
+	}
+
+	private double getMinResolution(List<WmsLayerInfo> layers) {
+		Double minResolution = null;
+		for (WmsLayerInfo wmsLayerInfo : layers) {
+			double minSD = wmsLayerInfo.getMinScaleDenominator();
+			if (minSD > 0) {
+				double min = toResolution(minSD);
+				minResolution = (minResolution == null ? min : Math.min(min, minResolution));
+			}
+		}
+		return minResolution;
 	}
 
 	public WmsLayerConfiguration getRootLayerConfiguration() {
@@ -425,8 +471,7 @@ public final class MapLayout extends VLayout {
 			// highlight the feature
 			SymbolInfo symbolInfo = null;
 			if (feature.getStyleId() != null) {
-				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().
-						getNamedStyleInfo().getFeatureStyles()) {
+				for (FeatureStyleInfo style : feature.getLayer().getLayerInfo().getNamedStyleInfo().getFeatureStyles()) {
 					if (feature.getStyleId().equals(style.getStyleId())) {
 						symbolInfo = style.getSymbol();
 						break;
@@ -479,7 +524,7 @@ public final class MapLayout extends VLayout {
 	 */
 	public void refreshReferral(final boolean clearTask, final Focus focus) {
 		if (currentReferral != null) {
-			final Window window = CommunicationHandler.get().createWindow("Reloading referral...", true);
+			final MessageBox messageBox = CommunicationHandler.get().showMessage("Reloading referral...", true);
 			VectorLayerStore store = mapWidget.getMapModel().getVectorLayer(KtunaxaConstant.LAYER_REFERRAL_ID)
 					.getFeatureStore();
 			store.removeFeature(currentReferral.getId());
@@ -501,7 +546,7 @@ public final class MapLayout extends VLayout {
 
 						}
 					}
-					window.destroy();
+					messageBox.stop();
 				}
 			});
 		}
@@ -596,6 +641,39 @@ public final class MapLayout extends VLayout {
 
 	public void refreshSearch() {
 		searchPanel.refreshSearch();
+	}
+
+	class GroupClientWmsLayerInfo extends ClientWmsLayerInfo {
+
+		private double minResolution;
+
+		private double maxResolution;
+
+		public GroupClientWmsLayerInfo(ClientWmsLayer wmsLayer) {
+			super(wmsLayer);
+		}
+
+		public double getMinResolution() {
+			return minResolution;
+		}
+
+		public void setMinResolution(double minResolution) {
+			this.minResolution = minResolution;
+		}
+
+		public double getMaxResolution() {
+			return maxResolution;
+		}
+
+		public void setMaxResolution(double maxResolution) {
+			this.maxResolution = maxResolution;
+		}
+
+		public void forceResolutionAfterLayerAdded() {
+			getWmsLayer().getConfiguration().setMinimumResolution(minResolution);
+			getWmsLayer().getConfiguration().setMaximumResolution(maxResolution);
+		}
+
 	}
 
 }
