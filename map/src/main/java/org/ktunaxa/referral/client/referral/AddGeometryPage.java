@@ -98,6 +98,9 @@ public class AddGeometryPage extends WizardPage<ReferralData> {
 		if (gfxGeometry != null) {
 			mapWidget.unregisterWorldPaintable(gfxGeometry);
 		}
+		for (UploadGeometryPanel geomPanel : panelMap.values()) {
+			geomPanel.clearData();
+		}
 	}
 
 	@Override

@@ -117,6 +117,11 @@ public class UploadGeoMarkUrlPanel extends VLayout implements UploadGeometryPane
 		this.feature = feature;
 	}
 
+	@Override
+	public void clearData() {
+		textItem.clearValue();
+	}
+
 	/** {@inheritDoc} */
 	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {
 		return handlerManager.addHandler(GeometryUploadHandler.TYPE, handler);

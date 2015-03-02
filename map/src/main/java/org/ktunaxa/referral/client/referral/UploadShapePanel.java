@@ -142,6 +142,11 @@ public class UploadShapePanel extends VLayout implements UploadGeometryPanel {
 		this.geometry = null;
 		uploadForm.setReferralId(ReferralUtil.createId(feature));
 	}
+	
+	@Override
+	public void clearData() {
+		uploadForm.clearValues();
+	}
 
 	/** {@inheritDoc} */
 	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {

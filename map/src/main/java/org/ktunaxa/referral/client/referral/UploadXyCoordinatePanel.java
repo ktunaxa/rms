@@ -143,6 +143,11 @@ public class UploadXyCoordinatePanel extends VLayout implements UploadGeometryPa
 	public void setFeature(Feature feature) {
 		this.feature = feature;
 	}
+	
+	@Override
+	public void clearData() {
+		form.clearValues();
+	}
 
 	/** {@inheritDoc} */
 	public HandlerRegistration addGeometryUploadHandler(GeometryUploadHandler handler) {

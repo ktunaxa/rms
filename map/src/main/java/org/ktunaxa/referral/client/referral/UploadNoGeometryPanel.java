@@ -72,6 +72,11 @@ public class UploadNoGeometryPanel extends VLayout implements UploadGeometryPane
 		addMember(note);
 	}
 
+	@Override
+	public void clearData() {
+		// noop
+	}
+
 	/** {@inheritDoc} */
 	public void setFeature(Feature feature) {
 		this.feature = feature;

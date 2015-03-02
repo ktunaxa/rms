@@ -52,5 +52,10 @@ public interface UploadGeometryPanel {
 	 * @return true when page validation is successful
 	 */
 	boolean validate();
+	
+	/**
+	 * Clear user data.
+	 */
+	void clearData();
 
 }
